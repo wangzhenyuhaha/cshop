@@ -1,0 +1,545 @@
+<resources
+    >
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorControlNormal">?android:attr/textColorPrimary</item>
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+    </style>
+
+    <style name="divide_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/divide_line</item>
+    </style>
+
+    <style name="LoadDialog" parent="Base.Theme.AppCompat.Dialog">
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="common_divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_half</item>
+        <item name="android:background">@color/color_E6E6E6</item>
+    </style>
+
+    <style name="style_goods_menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/dimen_4</item>
+        <item name="android:paddingLeft">@dimen/dimen_14</item>
+        <item name="android:paddingRight">@dimen/dimen_14</item>
+        <item name="android:textColor">@color/color_ffffff</item>
+        <item name="android:textSize">@dimen/dimen_10</item>
+    </style>
+
+    <style name="style_goods_category_title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/dimen_9</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+
+    <style name="style_goods_category_indicator">
+        <item name="android:layout_width">22dp</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:layout_marginStart">@dimen/dimen_15</item>
+        <item name="android:background">@color/color_3870EA</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="goods_group_edit_left">
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+
+    <style name="goods_group_edit_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textColorHint">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="goods_group_edit_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/dimen_14</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+
+    <!--  商品发布页 start  -->
+    <style name="goods_publish_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_14</item>
+        <item name="android:layout_marginRight">@dimen/dimen_14</item>
+        <item name="android:paddingLeft">@dimen/dimen_10</item>
+        <item name="android:paddingRight">@dimen/dimen_10</item>
+        <item name="android:layout_marginTop">@dimen/dimen_14</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="goods_publish_sub_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_50</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="goods_publish_left">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+
+    <style name="goods_publish_left_mark" parent="goods_publish_left">
+        <item name="android:drawablePadding">@dimen/dimen_4</item>
+        <item name="android:drawableStart">@mipmap/common_must_input</item>
+    </style>
+
+    <style name="goods_publish_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textColorHint">@color/color_999999</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="goods_publish_right_arrow" parent="goods_publish_right">
+        <item name="android:drawablePadding">@dimen/dimen_11</item>
+        <item name="android:drawableRight">@mipmap/common_arrow_right</item>
+    </style>
+    <!--  商品发布页 end -->
+
+
+    <!--  商品规格设置页 start -->
+    <style name="goods_spec_sub_container">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="goods_spce_item_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingEnd">@dimen/dimen_5</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+    <style name="goods_spce_item_left_mark" parent="goods_spce_item_left">
+        <item name="android:drawableStart">@mipmap/common_must_input</item>
+        <item name="android:drawablePadding">@dimen/dimen_5</item>
+    </style>
+
+    <style name="goods_spec_item_right_edt">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:inputType">numberDecimal</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/color_999999</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/dimen_12</item>
+    </style>
+
+    <style name="goods_spec_setting_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_50</item>
+        <item name="android:layout_marginStart">@dimen/dimen_14</item>
+        <item name="android:layout_marginEnd">@dimen/dimen_14</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="goods_spec_setting_left">
+        <item name="android:layout_width">130dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+
+    <style name="goods_spec_setting_right">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingStart">@dimen/dimen_15</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColorHint">@color/color_999999</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+    <!--  商品规格设置页 end -->
+
+
+    <!--  发货方式 start -->
+    <style name="goods_delivery_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingStart">@dimen/dimen_10</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:paddingEnd">@dimen/dimen_30</item>
+        <item name="android:button">@drawable/selector_goods_delivery_checkbox</item>
+    </style>
+
+    <style name="goods_delivery_row_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_50</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/dimen_14</item>
+        <item name="android:paddingEnd">@dimen/dimen_14</item>
+    </style>
+
+    <style name="goods_delivery_row_left">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@drawable/selector_goods_delivery_child_checkbox</item>
+        <item name="android:paddingStart">@dimen/dimen_10</item>
+        <item name="android:paddingEnd">@dimen/dimen_30</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+
+    <style name="goods_delivery_edit_right" parent="goods_group_edit_right">
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+
+    <style name="goods_delivery_right_arrow" parent="goods_publish_right_arrow"/>
+
+    <!--  发货方式 end -->
+
+    <!--钱包 start -->
+    <style name="checkbox_row">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:button">@drawable/selector_goods_delivery_child_checkbox</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+    <!--钱包 end -->
+
+    <!--首页 start-->
+    <style name="main_data_layout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">25dp</item>
+    </style>
+    <style name="main_data_layout_item">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="yesterday_data_value">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_3870ea_c</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="yesterday_data_hint">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/color_3870ea_c</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="today_data_value">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffcddcff</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="today_data_hint">
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#ffcddcff</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+    <style name="main_tools">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:drawablePadding">5dp</item>
+    </style>
+    <style name="main_parts_hint">
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">left</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!--首页 end-->
+
+    <!--首页工具 start-->
+    <style name="tools_sub_container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:paddingLeft">@dimen/dimen_5</item>
+        <item name="android:paddingRight">@dimen/dimen_15</item>
+        <item name="android:layout_marginTop">@dimen/dimen_10</item>
+    </style>
+
+    <style name="tools_sub_item_left">
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="tools_sub_item_left_10" parent="@style/tools_sub_item_left">
+        <item name="android:layout_marginLeft">@dimen/dimen_10</item>
+    </style>
+
+    <style name="tools_sub_item_check_box">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">@dimen/dimen_10</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:button">@drawable/selector_goods_delivery_checkbox</item>
+    </style>
+
+    <style name="tools_sub_item_radio_box">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:button">@drawable/selector_goods_delivery_child_checkbox</item>
+        <item name="android:paddingStart">@dimen/dimen_5</item>
+        <item name="android:textColor">@color/color_333333</item>
+        <item name="android:textSize">@dimen/dimen_13</item>
+    </style>
+
+    <style name="tools_sub_item_star">
+        <item name="android:layout_width">10dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textColor">@color/red</item>
+    </style>
+
+    <style name="tools_sub_item_add">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawableLeft">@mipmap/goods_spec_plus</item>
+        <item name="android:drawablePadding">@dimen/dimen_10</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:paddingRight">@dimen/dimen_10</item>
+        <item name="android:paddingBottom">@dimen/dimen_10</item>
+    </style>
+
+    <style name="tools_sub_area_text_1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dimen_15</item>
+        <item name="android:paddingBottom">@dimen/dimen_5</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+
+    </style>
+    <style name="tools_sub_area_text_2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">@dimen/dimen_5</item>
+        <item name="android:paddingBottom">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+
+    </style>
+
+    <style name="tools_sub_area_edit_1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingTop">@dimen/dimen_15</item>
+        <item name="android:paddingBottom">@dimen/dimen_5</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textColorHint">@color/color_666666</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="tools_sub_area_edit_2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:paddingTop">@dimen/dimen_5</item>
+        <item name="android:paddingBottom">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textColorHint">@color/color_666666</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="tools_sub_area_delete">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/dimen_5</item>
+        <item name="android:paddingRight">@dimen/dimen_5</item>
+        <item name="android:paddingTop">@dimen/dimen_5</item>
+        <item name="android:paddingBottom">@dimen/dimen_15</item>
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="tools_sub_area_edit">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">@dimen/dimen_5</item>
+        <item name="android:paddingRight">@dimen/dimen_5</item>
+        <item name="android:paddingTop">@dimen/dimen_15</item>
+        <item name="android:paddingBottom">@dimen/dimen_5</item>
+        <item name="android:textColor">@color/color_3870EA</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="tools_sub_area_hint">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:layout_marginTop">@dimen/dimen_15</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">right</item>
+        <item name="android:maxLines">9</item>
+        <item name="android:paddingLeft">80dp</item>
+    </style>
+
+    <!--首页工具 end -->
+
+    <!--团购 start -->
+    <style name="common_weight1_center">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="tuan_goods_item_title" parent="@style/common_weight1_center">
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">@dimen/dimen_5</item>
+        <item name="android:paddingBottom">@dimen/dimen_5</item>
+    </style>
+    <style name="tuan_goods_item_1" parent="@style/common_weight1_center">
+        <item name="android:textSize">@dimen/sp_12</item>
+        <item name="android:textColor">@color/color_999999</item>
+        <item name="android:paddingTop">@dimen/dimen_5</item>
+        <item name="android:paddingBottom">@dimen/dimen_5</item>
+    </style>
+
+    <style name="tuan_order_delivery_group_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+    <!--团购 end -->
+
+    <!--common start -->
+    <style name="button_hollow_major_theme">
+        <item name="android:textColor">#ff3870ea</item>
+        <item name="ivBgColor">#fff</item>
+        <item name="ivBorderColor">#ff3870ea</item>
+        <item name="ivBorderWidth">1px</item>
+        <item name="ivRadius">15dp</item>
+    </style>
+
+    <style name="button_major_theme">
+        <item name="android:textColor">#fff</item>
+        <item name="ivBgColor">#ff3870ea</item>
+        <item name="ivBorderColor">#ff3870ea</item>
+        <item name="ivBorderWidth">1px</item>
+        <item name="ivRadius">15dp</item>
+    </style>
+
+    <style name="ibutton_white">
+        <item name="ivBgColor">@color/white</item>
+        <item name="ivRadius">5dp</item>
+    </style>
+
+    <style name="ibutton_white_m_v_15" parent="@style/ibutton_white">
+        <item name="android:layout_marginLeft">@dimen/dimen_15</item>
+        <item name="android:layout_marginRight">@dimen/dimen_15</item>
+    </style>
+
+    <style name="ibutton_white_m_v_15_p_v_15" parent="@style/ibutton_white_m_v_15">
+        <item name="android:paddingLeft">@dimen/dimen_15</item>
+        <item name="android:paddingRight">@dimen/dimen_15</item>
+    </style>
+
+    <style name="text_wrap_center">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="text_wrap_center_color_000_size_12" parent="@style/text_wrap_center">
+        <item name="android:textColor">#ff000000</item>
+        <item name="android:textSize">@dimen/sp_12</item>
+    </style>
+
+    <style name="layout_wrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="edit_wrap_center" parent="@style/layout_wrap">
+        <item name="android:layout_centerVertical">true</item>
+    </style>
+
+    <style name="edit_wrap_center_right" parent="@style/edit_wrap_center">
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="edit_wrap_center_right_color999_size13" parent="@style/edit_wrap_center_right">
+        <item name="android:textColor">#ff999999</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="style_goods_search_menu">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/dimen_4</item>
+        <item name="android:paddingTop">@dimen/dimen_10</item>
+        <item name="android:paddingBottom">@dimen/dimen_10</item>
+        <item name="android:paddingLeft">@dimen/dimen_10</item>
+        <item name="android:paddingRight">@dimen/dimen_10</item>
+        <item name="android:textColor">@color/color_666666</item>
+        <item name="android:textSize">@dimen/dimen_12</item>
+    </style>
+    <!--common end -->
+
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/tools_sub_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/tools_sub_item_star"
+            android:text="*" />
+
+        <TextView
+            style="@style/tools_sub_item_left"
+            android:text="配送范围" />
+
+        <TextView
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="超出"/>
+
+        <EditText
+            android:id="@+id/et_model_out_range_km"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@null"
+            android:drawablePadding="@dimen/dimen_10"
+            android:gravity="center"
+            android:inputType="numberDecimal"
+            android:hint="输入"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:singleLine="true"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_CACACA"
+            android:textSize="@dimen/dimen_13" />
+
+        <TextView
+            android:paddingLeft="@dimen/dimen_10"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="km不配送"/>
+    </LinearLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_model_range_hint"
+                style="@style/tools_sub_item_left_10"
+                android:paddingRight="@dimen/dimen_10"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="加收费用" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_model_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>

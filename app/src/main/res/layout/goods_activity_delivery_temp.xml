@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.lingmiao.shop.widget.ToolBarView
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_toolbar_height"
+        android:background="@color/color_ffffff" />
+
+    <include
+        layout="@layout/fragment_base_load_more"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomLl"
+        android:layout_below="@+id/toolbarView" />
+
+    <LinearLayout
+        android:id="@+id/bottomLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ffffff"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="@drawable/shape_goods_divider" />
+
+        <TextView
+            android:id="@+id/submitTv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_38"
+            android:layout_margin="@dimen/dimen_10"
+            android:background="@drawable/shape_goods_pop_btn"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dimen_14" />
+    </LinearLayout>
+
+</RelativeLayout>

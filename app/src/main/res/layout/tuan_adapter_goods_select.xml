@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:paddingStart="@dimen/dimen_14"
+    android:paddingTop="@dimen/dimen_14">
+
+    <ImageView
+        android:id="@+id/tuanGoodsIv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@color/color_F1F1F1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="tuanGoodsIv" />
+
+    <TextView
+        android:id="@+id/tuanGoodsNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:layout_marginEnd="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="我是商品描述信息" />
+
+    <TextView
+        android:id="@+id/tuanGoodsQuantityTv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        app:layout_constraintBottom_toTopOf="@+id/tuanGoodsPriceTv"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/tuanGoodsNameTv"
+        tools:text="库存：20000" />
+
+
+    <TextView
+        android:id="@+id/tuanGoodsSalesTv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        app:layout_constraintBottom_toTopOf="@+id/tuanGoodsPriceTv"
+        app:layout_constraintLeft_toRightOf="@id/tuanGoodsQuantityTv"
+        app:layout_constraintTop_toBottomOf="@+id/tuanGoodsNameTv"
+        tools:text="销量：3005" />
+
+    <TextView
+        android:id="@+id/tuanGoodsPriceTv"
+        android:layout_width="@dimen/dimen_100"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_FD8424"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/tuanGoodsQuantityTv"
+        tools:text="￥200.00" />
+
+    <ImageView
+        android:id="@+id/tuanGoodsStatusIv"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_17"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:src="@mipmap/goods_status_3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@id/tuanGoodsPriceTv"
+        app:layout_constraintTop_toBottomOf="@+id/tuanGoodsQuantityTv" />
+
+    <CheckBox
+        android:id="@+id/tuanMenuIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_goods_spce_checkbox"
+        android:padding="@dimen/dimen_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_half"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:background="@color/color_E6E6E6"
+        app:layout_constraintLeft_toLeftOf="@+id/tuanGoodsNameTv"
+        app:layout_constraintTop_toBottomOf="@+id/tuanGoodsIv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

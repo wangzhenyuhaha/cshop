@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lingmiao.shop.widget.ToolBarView
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_toolbar_height"
+        android:background="@color/color_ffffff" />
+
+    <FrameLayout
+        android:id="@+id/webviewFl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomLl"
+        android:layout_below="@+id/toolbarView" />
+
+    <LinearLayout
+        android:id="@+id/bottomLl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_F1F1F1"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/phoneIv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/dimen_14"
+            android:src="@mipmap/goods_desc_photo" />
+    </LinearLayout>
+</RelativeLayout>

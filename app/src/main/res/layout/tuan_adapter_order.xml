@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_7"
+    android:layout_marginTop="@dimen/dimen_7"
+    android:layout_marginRight="@dimen/dimen_7"
+    android:background="#EDEDED"
+    android:orientation="vertical"
+    app:ivBgColor="#fff"
+    app:ivRadius="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginRight="@dimen/dimen_15">
+
+        <TextView
+            android:id="@+id/tv_order_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_10"
+            android:textColor="@color/color_666666"
+            android:textSize="16sp"
+            tools:text="供货单号：xxx" />
+
+        <TextView
+            android:id="@+id/tv_goods_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_10"
+            android:textColor="@color/color_3870EA"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <!--订单商品-->
+    <com.lingmiao.shop.business.tuan.view.OrderGoodsLayout
+        android:id="@+id/orderGoodsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/dimen_14">
+
+        <TextView
+            android:id="@+id/tv_order_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="3件商品/共3种，总价¥99999"
+            android:textSize="@dimen/sp_11" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/tv_order_hint"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <com.james.common.view.ITextView
+                android:id="@+id/orderRefuseTv"
+                style="@style/button_hollow_major_theme"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_7"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="拒绝"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/orderPrintTv"
+                style="@style/button_hollow_major_theme"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_7"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="打印"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/orderConfirmTv"
+                style="@style/button_major_theme"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="确认"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/orderDeliveryTv"
+                style="@style/button_major_theme"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="发货"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/orderExpressTv"
+                style="@style/button_hollow_major_theme"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_7"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="查看物流"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/orderDeleteTv"
+                style="@style/button_hollow_major_theme"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_7"
+                android:paddingTop="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_7"
+                android:paddingBottom="@dimen/dimen_5"
+                android:text="删除"
+                android:textSize="12sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</com.james.common.view.ILinearLayout>

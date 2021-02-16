@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    style="@style/tools_sub_container">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/tools_sub_item_star"
+            android:text="*"/>
+
+        <TextView
+            style="@style/tools_sub_item_left"
+            android:layout_weight="1"
+            android:text="配送区域" />
+
+        <TextView
+            android:id="@+id/tv_model_area_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:drawableLeft="@mipmap/goods_plus_blue"
+            android:drawablePadding="@dimen/dimen_5"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:singleLine="true"
+            android:text="添加配送区域和运费"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_CACACA"
+            android:textSize="@dimen/dimen_13" />
+
+    </LinearLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_model_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

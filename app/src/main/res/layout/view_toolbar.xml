@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_toolbar_height">
+
+    <ImageView
+        android:id="@+id/leftIv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/dimen_14"
+        android:src="@mipmap/comon_back_black" />
+
+    <TextView
+        android:id="@+id/titleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:maxWidth="@dimen/dimen_200"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/dimen_17"
+        tools:text="标题标题标题标题标题标题标题标题标题" />
+
+    <TextView
+        android:id="@+id/rightTv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/dimen_14"
+        android:textColor="@color/color_3870EA"
+        android:textSize="@dimen/dimen_13"
+        android:visibility="gone"
+        android:drawablePadding="@dimen/dimen_5"
+        tools:text="确定"
+        tools:visibility="visible" />
+
+    <View
+        android:id="@+id/divider"
+        style="@style/common_divider"
+        android:layout_alignParentBottom="true" />
+
+</merge>

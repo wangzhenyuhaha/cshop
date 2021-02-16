@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_goods_pop_quantity"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dimen_10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_14">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="批量设置"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_15" />
+
+        <ImageView
+            android:id="@+id/closeIv"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_7"
+            android:padding="@dimen/dimen_7"
+            android:src="@mipmap/goods_pop_close" />
+    </LinearLayout>
+
+
+    <LinearLayout style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="价格" />
+
+        <EditText
+            android:id="@+id/priceEdt"
+            style="@style/goods_spec_setting_right"
+            android:hint="请输入价格"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <View
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+    <LinearLayout style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="库存" />
+
+        <EditText
+            android:id="@+id/quantityEdt"
+            style="@style/goods_spec_setting_right"
+            android:hint="请输入库存"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/batchWeightLine"
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+    <LinearLayout
+        android:id="@+id/batchWeightLayout"
+        style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="重量(kg)" />
+
+        <EditText
+            android:id="@+id/weightEdt"
+            style="@style/goods_spec_setting_right"
+            android:hint="请输入重量"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <View
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+    <LinearLayout style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="市场价" />
+
+        <EditText
+            android:id="@+id/marketPriceEdt"
+            style="@style/goods_spec_setting_right"
+            android:hint="请输入市场价"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <View
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+    <LinearLayout style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="成本价" />
+
+        <EditText
+            android:id="@+id/costPriceEdt"
+            style="@style/goods_spec_setting_right"
+            android:hint="请输入成本价"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/batchNoLine"
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+    <LinearLayout
+        android:id="@+id/batchNoLayout"
+        style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="货物/型号" />
+
+        <EditText
+            android:id="@+id/goodsNoEdt"
+            style="@style/goods_spec_setting_right"
+            android:maxLines="1"
+            android:hint="请输入货物/型号" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/batchSkuLine"
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+    <LinearLayout
+        android:id="@+id/batchSkuLayout"
+        style="@style/goods_spec_setting_container">
+
+        <TextView
+            style="@style/goods_spec_setting_left"
+            android:text="sku编码" />
+
+        <EditText
+            android:id="@+id/goodsSKUEdt"
+            style="@style/goods_spec_setting_right"
+            android:maxLines="1"
+            android:hint="请输入外部sku编码" />
+    </LinearLayout>
+
+    <View
+        style="@style/common_divider"
+        android:layout_marginHorizontal="@dimen/dimen_14" />
+
+
+    <TextView
+        android:id="@+id/confirmTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_38"
+        android:layout_marginHorizontal="@dimen/dimen_14"
+        android:layout_marginVertical="@dimen/dimen_14"
+        android:background="@drawable/shape_goods_pop_btn"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dimen_13" />
+</LinearLayout>

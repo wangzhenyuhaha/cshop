@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="#EDEDED"
+    android:orientation="vertical"
+    app:ivBgColor="#fff"
+    app:ivRadius="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <TextView
+            android:id="@+id/tv_goods_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_10"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="222" />
+
+        <TextView
+            android:id="@+id/tv_goods_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableRight="@mipmap/goods_group_manager_delete"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_10"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <com.lingmiao.shop.business.tuan.view.GoodsSpecContainerLayout
+        android:id="@+id/gs_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</com.james.common.view.ILinearLayout>

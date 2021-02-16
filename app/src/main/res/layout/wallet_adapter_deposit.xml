@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_15"
+    android:layout_marginRight="@dimen/dimen_15"
+    android:layout_marginTop="@dimen/dimen_10"
+    android:padding="@dimen/dimen_10"
+    android:orientation="vertical"
+    app:ivBgColor="@color/white"
+    app:ivRadius="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_wallet_deposit_item_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_333333"
+            android:text="支付保证现金" />
+
+        <TextView
+            android:id="@+id/tv_wallet_deposit_item_date"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_wallet_deposit_item_type"
+            android:maxLines="1"
+            android:textSize="10sp"
+            android:textColor="@color/color_999999"
+            android:text="2019-09-09 22:00" />
+
+        <TextView
+            android:id="@+id/tv_wallet_deposit_item_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:maxLines="1"
+            android:textSize="10sp"
+            android:text="$2222" />
+
+
+    </RelativeLayout>
+</com.james.common.view.ILinearLayout>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="提现金额"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_wallet_account_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="right"
+                    android:hint="请输入提现金额"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:gravity="center_vertical"
+            android:text="提现方式"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/ll_ali_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="提现到支付宝"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivApliPay"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/goods_spec_checked" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/DivideLineHorizontal"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+            <LinearLayout
+                android:id="@+id/ll_card_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="提现到银行卡"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivCardPay"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/iv_single_default" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+        <TextView
+            android:id="@+id/tv_withdraw_account_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:gravity="center_vertical"
+            android:text="支付宝账户"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+        <com.james.common.view.ILinearLayout
+            android:id="@+id/ll_wallet_bank_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_15"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/ll_wallet_bank_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:id="@+id/tv_wallet_bank_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="请选择"
+                    android:textColor="#333"
+                    android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                    android:drawablePadding="10dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+        </com.james.common.view.ILinearLayout>
+
+        <com.james.common.view.ILinearLayout
+            android:id="@+id/ll_wallet_ali_pay_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_15"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_wallet_account_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/wallet_account_hint_type"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_wallet_account_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                    android:drawablePadding="10dp"
+                    android:hint="请选择"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View
+                android:visibility="gone"
+                style="@style/DivideLineHorizontal"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/ll_wallet_account_bank_deposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/wallet_account_hint_bank_deposit"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_wallet_account_bank_deposit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="10dp"
+                    android:hint="请选择"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View
+                android:visibility="gone"
+                android:id="@+id/v_wallet_account_bank_deposit"
+                style="@style/DivideLineHorizontal"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+            <LinearLayout
+                android:id="@+id/ll_wallet_account_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:id="@+id/tv_withdraw_account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="真实姓名"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_wallet_account_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="right"
+                    android:hint="请输入，必填"
+                    android:singleLine="true"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/DivideLineHorizontal"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+            <LinearLayout
+                android:id="@+id/ll_wallet_account_bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:id="@+id/tv_withdraw_account_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="支付宝账号"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_wallet_account_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="right"
+                    android:hint="请输入，必填"
+                    android:singleLine="true"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+    </LinearLayout>
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="确定提现"
+        android:textColor="@color/white"
+        app:ivBgColor="@color/color_3870EA"
+        app:ivRadius="19dp" />
+
+</RelativeLayout>

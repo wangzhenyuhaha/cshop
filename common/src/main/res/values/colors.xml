@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--用于背景色-->
+    <color name="common_bg">#EDEDED</color>
+    <color name="common_ffffff">#ffffff</color>
+    <color name="divide_big">#F6F6F6</color>
+    <color name="gray_bg_click">#F6F6F6</color>
+    <color name="colorPrimary">#3b81C9</color>
+    <color name="colorPrimaryDark">#3b81C9</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <color name="divide_line">#d7d7d7</color>
+    <color name="white">#fff</color>
+    <color name="color_3870ea_c">#3870EA</color>
+
+    <!-- 带透明的  -->
+    <color name="color_CC000000">#CC000000</color>
+
+</resources>

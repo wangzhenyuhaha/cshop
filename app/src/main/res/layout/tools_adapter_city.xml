@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_city"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginLeft="30dp">
+
+    <ImageView
+        android:padding="@dimen/dimen_15"
+        android:id="@+id/iv_city_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|center"
+        android:src="@mipmap/tools_expand" />
+
+    <TextView
+        android:id="@+id/tv_city_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/dimen_15"
+        android:paddingTop="@dimen/dimen_15"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/color_666666" />
+
+    <RadioButton
+        android:id="@+id/iv_city_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:gravity="center|right"
+        android:padding="@dimen/dimen_15"
+        android:button="@drawable/selector_goods_delivery_child_checkbox" />
+
+</LinearLayout>

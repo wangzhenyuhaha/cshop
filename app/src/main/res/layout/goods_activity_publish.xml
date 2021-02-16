@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.lingmiao.shop.widget.ToolBarView
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_toolbar_height"
+        android:background="@color/color_ffffff" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomFl"
+        android:layout_below="@+id/toolbarView"
+        android:background="@color/color_EEEEEE">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- 类型、类目 -->
+            <include layout="@layout/goods_include_publish_section1" />
+
+            <!-- 名称、图片 -->
+            <include layout="@layout/goods_include_publish_section2" />
+
+            <!-- 配送方式 -->
+            <include layout="@layout/goods_include_publish_section3" />
+
+            <!-- 商品规格,虚拟商品的套餐 -->
+            <include layout="@layout/goods_include_publish_section4" />
+
+            <!--有效期-->
+            <LinearLayout
+                android:id="@+id/sectionVirtualExpireTime"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <!--有效日期、使用日期-->
+                <include layout="@layout/goods_include_publish_section_v_time"/>
+
+                <!--限购数量-->
+                <include layout="@layout/goods_include_publish_section_v_limit"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/section5678Ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <!-- 商品分组 -->
+                <include layout="@layout/goods_include_publish_section5" />
+
+                <!-- 商品视频 -->
+                <include layout="@layout/goods_include_publish_section6" />
+
+                <!-- 商品详情 -->
+                <include layout="@layout/goods_include_publish_section7" />
+
+                <!-- 商品卖点 -->
+                <include layout="@layout/goods_include_publish_section8" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/moreTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:layout_marginBottom="@dimen/dimen_20"
+                android:drawableEnd="@mipmap/goods_blue_arrow_down"
+                android:drawablePadding="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20"
+                android:text="展开更多信息"
+                android:textColor="@color/color_3870EA"
+                android:textSize="@dimen/dimen_13" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/bottomFl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_EEEEEE">
+
+        <TextView
+            android:id="@+id/confirmTv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_38"
+            android:layout_marginStart="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_15"
+            android:layout_marginBottom="@dimen/dimen_19"
+            android:background="@drawable/shape_goods_pop_btn"
+            android:gravity="center"
+            android:text="保存上架"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dimen_13" />
+    </FrameLayout>
+
+</RelativeLayout>

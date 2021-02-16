@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/goods_publish_container"
+    app:ivBgColor="@color/color_ffffff"
+    android:layout_height="@dimen/dimen_50"
+    android:orientation="horizontal"
+    android:id="@+id/section3RowDeliveryLL"
+    app:ivRadius="@dimen/dimen_5">
+
+
+        <TextView
+            style="@style/goods_publish_left_mark"
+            android:text="配送方式" />
+
+        <TextView
+            android:id="@+id/goodsDeliveryTv"
+            style="@style/goods_publish_right_arrow"
+            android:hint="请选择" />
+
+
+</com.james.common.view.ILinearLayout>

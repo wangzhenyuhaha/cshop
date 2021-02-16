@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <com.james.common.view.ILinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        app:ivBgColor="@color/white"
+        app:ivRadius="5dp"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content">
+
+<!--        <include-->
+<!--            layout="@layout/order_header_logistics_info"-->
+<!--            />-->
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvLogisticsInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.james.common.view.ILinearLayout>
+
+</LinearLayout>

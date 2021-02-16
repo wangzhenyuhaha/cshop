@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.james.common.view.IRelativeLayout
+        android:id="@+id/rlShopUpload"
+        android:layout_width="match_parent"
+        app:ivBgColor="@color/white"
+        app:ivRadius="12dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ivShopUploadAction"
+            android:layout_width="96dp"
+            android:layout_height="84dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/main_shop_image_upload"/>
+
+        <ImageView
+            android:id="@+id/ivShopUpload"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true" />
+    </com.james.common.view.IRelativeLayout>
+</RelativeLayout>

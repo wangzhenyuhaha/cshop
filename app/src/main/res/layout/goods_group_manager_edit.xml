@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_EDEDED"
+    android:orientation="vertical">
+
+    <com.lingmiao.shop.widget.ToolBarView
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_toolbar_height"
+        android:background="@color/color_ffffff" />
+
+    <!--  模块一  -->
+    <com.james.common.view.ILinearLayout
+        style="@style/goods_group_edit_container"
+        android:layout_marginHorizontal="@dimen/dimen_14"
+        android:paddingHorizontal="@dimen/dimen_10"
+        app:ivBgColor="@color/color_ffffff"
+        app:ivRadius="@dimen/dimen_5">
+
+        <!--   分组名称     -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_7"
+                android:src="@mipmap/common_must_input" />
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="分组名称" />
+
+            <EditText
+                android:id="@+id/groupNameEdt"
+                style="@style/goods_group_edit_right"
+                android:hint="分组名称，建议4个字以内" />
+        </LinearLayout>
+
+        <View style="@style/common_divider" />
+
+        <!--   分组描述     -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="分组描述" />
+
+            <EditText
+                android:id="@+id/groupDescEdt"
+                style="@style/goods_group_edit_right"
+                android:hint="分组名称，建议4个字以内" />
+        </LinearLayout>
+    </com.james.common.view.ILinearLayout>
+
+    <!--  模块二  -->
+    <com.james.common.view.ILinearLayout
+        style="@style/goods_group_edit_container"
+        android:layout_marginHorizontal="@dimen/dimen_14"
+        android:paddingHorizontal="@dimen/dimen_10"
+        app:ivBgColor="@color/color_ffffff"
+        app:ivRadius="@dimen/dimen_5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="分组排序" />
+
+            <EditText
+                android:id="@+id/groupOrderEdt"
+                style="@style/goods_group_edit_right"
+                android:text="0" />
+        </LinearLayout>
+
+        <View style="@style/common_divider" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="显示状态" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/showRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:button="@drawable/selector_goods_group_checkbox"
+                    android:checked="true"
+                    android:paddingStart="@dimen/dimen_5"
+                    android:text="显示" />
+
+                <RadioButton
+                    android:id="@+id/hideRadio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:button="@drawable/selector_goods_group_checkbox"
+                    android:paddingStart="@dimen/dimen_5"
+                    android:text="不显示" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <View style="@style/common_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingBottom="@dimen/dimen_10">
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="分组图标" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/addIconIv"
+                android:layout_width="@dimen/dimen_58"
+                android:layout_height="@dimen/dimen_58"
+                android:layout_gravity="end"
+                android:src="@mipmap/goods_selected_img" />
+
+        </LinearLayout>
+
+    </com.james.common.view.ILinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/submitTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_38"
+        android:layout_margin="@dimen/dimen_14"
+        android:background="@drawable/shape_goods_pop_btn"
+        android:gravity="center"
+        android:text="保存分组"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dimen_14" />
+
+</LinearLayout>

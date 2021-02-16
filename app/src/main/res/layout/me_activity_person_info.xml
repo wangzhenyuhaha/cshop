@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+    <com.james.common.view.ILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="14dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        app:ivBgColor="@color/white"
+        app:ivRadius="5dp">
+
+        <View style="@style/DivideLineHorizontal"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="68dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="头像"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/ivPersonInfoHead"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:scaleType="centerCrop"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_default_head" />
+        </RelativeLayout>
+        <View
+            style="@style/DivideLineHorizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rlPersonInfoNickname"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="昵称"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvPersonInfoNickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="张三丰"
+                android:textColor="#ff999999"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:textSize="12sp"
+                />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+        <View
+            style="@style/DivideLineHorizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rlPersonInfoPhone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="手机号码"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvPersonInfoPhone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="15901899799"
+                android:textColor="#ff999999"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:textSize="12sp"
+                />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+    </com.james.common.view.ILinearLayout>
+</LinearLayout>

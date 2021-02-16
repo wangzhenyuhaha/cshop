@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="15dp"
+    android:layout_marginRight="15dp"
+    android:background="#EDEDED"
+    android:orientation="vertical"
+    android:paddingTop="15dp"
+    app:ivBgColor="#fff"
+    app:ivRadius="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingBottom="@dimen/dimen_10">
+
+        <TextView
+            android:id="@+id/tv_activity_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="#ff000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="222" />
+
+        <TextView
+            android:id="@+id/tv_activity_status_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_999999"
+            android:textSize="12sp"
+            tools:text="222" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15">
+
+        <TextView
+            android:id="@+id/tv_activity_start_time_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="团购开始："
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_activity_start_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sssss"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_activity_start_time_hint"
+            app:layout_constraintLeft_toRightOf="@id/tv_activity_start_time_hint"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_activity_end_time_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_15"
+            android:text="团购结束："
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_activity_start_time_hint" />
+
+        <TextView
+            android:id="@+id/tv_activity_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="aaa"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_activity_end_time_hint"
+            app:layout_constraintLeft_toRightOf="@id/tv_activity_end_time_hint"
+            app:layout_constraintTop_toTopOf="@+id/tv_activity_start_time_hint" />
+
+
+        <TextView
+            android:id="@+id/tv_activity_register_time_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:paddingTop="@dimen/dimen_15"
+            android:text="报名截止："
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_activity_end_time" />
+
+        <TextView
+            android:id="@+id/tv_activity_register_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nnn"
+            android:textColor="@color/red"
+            android:textSize="@dimen/sp_12"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_activity_register_time_hint"
+            app:layout_constraintLeft_toRightOf="@id/tv_activity_register_time_hint"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_end_time" />
+
+        <TextView
+            android:id="@+id/tv_activity_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看活动介绍"
+            app:layout_constraintBottom_toTopOf="@+id/tv_activity_status"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tv_activity_status"
+            android:layout_width="72dp"
+            android:layout_height="25dp"
+            android:gravity="center"
+            android:text="提报商品"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            app:ivBgColor="#ff3870ea"
+            app:ivBorderColor="#ff3870ea"
+            app:ivBorderWidth="1px"
+            app:ivRadius="25dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_activity_check" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.james.common.view.ILinearLayout>

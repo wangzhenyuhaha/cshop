@@ -1,0 +1,75 @@
+package com.lingmiao.shop.base
+
+object IConstant {
+    const val PAGE_SIZE = 20
+    const val SERVICE_PHONE = "15901899796"
+
+    //1申请开店审核成功;  2买家订单支付成功;  3:其它  ,4店铺审核不通过
+    const val MESSAGE_APPLY_SHOP_SUCCESS = "1"
+    const val MESSAGE_ORDER_PAY_SUCCESS = "2"
+    const val MESSAGE_OTHER = "3"
+    const val MESSAGE_APPLY_SHOP_REFUSE = "4"
+
+    const val TAB_WAIT_SEND_GOODS = 1
+    const val TAB_WAIT_REFUND = 2
+
+    const val JPUSH_TYPE = "jpush_type"
+
+//    配送方式
+    const val  SHIP_TYPE_GLOBAL = "GLOBAL"  //快递公司
+    const val  SHIP_TYPE_LOCAL = "LOCAL"    //同城
+    const val  SHIP_TYPE_SELF = "SELF"      //自提
+
+    var official = true
+
+//    // 生产环境
+//      pro: {
+//            base: 'https://api.base.fisheagle.cn',
+//            buyer: 'https://api.buyer.fisheagle.cn',
+//            seller: 'https://api.seller.fisheagle.cn',
+//            admin: 'https://api.admin.fisheagle.cn'
+//          }
+
+//    private const val baseUrl = "http://t-api.seller.fisheagle.cn:7003"
+
+    fun getUploadFileUrl(): String {
+        if (official) return "http://api.base.fisheagle.cn:7000/uploaders"
+        return "http://t-api.base.fisheagle.cn:7000/uploaders"
+    }
+
+    fun getServiceH5(): String {
+        return "https://docs.qq.com/doc/DZnBOQVBxS0NaR05s"
+    }
+
+    fun getSellerUrl(): String {
+        var baseUrl = "http://t-api.seller.fisheagle.cn:7003"
+        if (official) baseUrl = "http://api.seller.fisheagle.cn:7003"
+        return baseUrl
+    }
+
+    fun getCommonUrl() : String {
+        var baseUrl = "http://t-api.seller.fisheagle.cn:7000"
+        if (official) baseUrl = "http://api.seller.fisheagle.cn:7000"
+        return baseUrl
+    }
+
+    fun getGoodsDetailH5(): String {
+        var baseUrl = "http://t-mms.fisheagle.cn"
+        if (official) baseUrl = "http://sellershop.fisheagle.cn"
+        return "$baseUrl/static/editer/editer.html"
+    }
+
+    /**
+     * 传递的不同类型
+     */
+    const val BUNDLE_KEY_OF_VIEW_TYPE = "KEY_VIEW_TYPE";
+
+    /**
+     * 传递的内容项
+     */
+    const val BUNDLE_KEY_OF_ITEM = "KEY_ITEM";
+    /**
+     * 传递的内容项唯一码
+     */
+    const val BUNDLE_KEY_OF_ITEM_ID = "KEY_ITEM_ID";
+}

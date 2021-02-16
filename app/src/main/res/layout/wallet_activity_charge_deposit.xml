@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="充值金额"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/et_wallet_account_amount"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="right"
+                    android:hint="请输入要充值的押金金额"
+                    android:inputType="numberDecimal"
+                    android:singleLine="true"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_marginBottom="@dimen/dimen_10"
+            android:gravity="center_vertical"
+            android:text="充值方式"
+            android:textColor="#333"
+            android:textSize="15sp" />
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/ll_ali_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="支付宝"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivApliPay"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/goods_spec_checked" />
+
+            </LinearLayout>
+
+            <View
+                style="@style/DivideLineHorizontal"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginRight="@dimen/dimen_10" />
+
+            <LinearLayout
+                android:id="@+id/ll_account_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:paddingVertical="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="余额账户"
+                    android:textColor="#333"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/ivBalancePay"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/iv_single_default" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+    </LinearLayout>
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvChargeSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="确定充值"
+        android:textColor="@color/white"
+        app:ivBgColor="@color/color_3870EA"
+        app:ivRadius="19dp" />
+
+</RelativeLayout>

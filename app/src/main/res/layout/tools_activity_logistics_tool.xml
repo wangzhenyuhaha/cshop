@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.lingmiao.shop.widget.ToolBarView
+            android:id="@+id/toolbarView"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_toolbar_height"
+            android:background="@color/color_ffffff" />
+
+        <com.ogaclejapan.smarttablayout.SmartTabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            app:stl_customTabTextLayoutId="@layout/goods_item_goods_tab"
+            app:stl_defaultTabTextColor="@color/color_333333"
+            app:stl_defaultTabTextSize="@dimen/sp_13"
+            app:stl_distributeEvenly="true"
+            app:stl_dividerColor="@color/color_ffffff"
+            app:stl_indicatorAlwaysInCenter="false"
+            app:stl_indicatorColor="@color/color_3870EA"
+            app:stl_indicatorCornerRadius="1dp"
+            app:stl_indicatorInterpolation="linear"
+            app:stl_indicatorThickness="2dp"
+            app:stl_indicatorWidth="50dp"
+            app:stl_underlineThickness="0dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_half"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:background="@color/color_E6E6E6" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

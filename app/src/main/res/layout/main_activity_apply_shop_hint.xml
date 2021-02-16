@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="请准备好如下资料"
+        android:textColor="#ff000000"
+        android:textSize="19sp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="19dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="79dp"
+            android:src="@mipmap/main_shop_hint_1"/>
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="79dp"
+            android:layout_marginLeft="19dp"
+            android:src="@mipmap/main_shop_hint_2"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="19dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="79dp"
+            android:src="@mipmap/main_shop_hint_3"/>
+        <ImageView
+            android:layout_width="125dp"
+            android:layout_height="79dp"
+            android:layout_marginLeft="19dp"
+            android:src="@mipmap/main_shop_hint_4"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivApplyShopHintNext"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/selector_login_service" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:text="我已阅读并同意"
+            android:textColor="#ff666666"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvApplyShopHintService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="《商城入驻协议》"
+            android:textColor="#3870EA"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvApplyShopHintNext"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="准备好了，申请开店"
+        android:textColor="#fff"
+        android:textSize="13sp"
+        app:ivBgColor="#3870EA"
+        app:ivRadius="19dp" />
+</LinearLayout>

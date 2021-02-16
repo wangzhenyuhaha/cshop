@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_model_area_index"
+        style="@style/tools_sub_item_left_10"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:text="配送区域"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_model_count_value"
+        style="@style/tools_sub_area_hint"
+        android:text="南京、苏州、3333、2222、北京、湖南、湖北、广东、福建、浙江"
+        app:layout_constraintRight_toRightOf="@id/tv_model_area_index"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--首重 start-->
+    <TextView
+        android:id="@+id/tv_count_first"
+        android:text="首件(个)："
+        style="@style/tools_sub_area_text_1"
+        app:layout_constraintLeft_toLeftOf="@+id/tv_model_area_index"
+        app:layout_constraintLeft_toRightOf="@+id/et_count_first"
+        app:layout_constraintTop_toBottomOf="@id/tv_model_count_value" />
+
+    <EditText
+        android:id="@+id/et_count_first"
+        android:hint="请输入"
+        style="@style/tools_sub_area_edit_1"
+        android:inputType="number"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_count_first"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/tv_count_first"
+        app:layout_constraintRight_toLeftOf="@+id/tv_count_first_fee"
+        app:layout_constraintTop_toBottomOf="@id/tv_model_count_value" />
+
+    <TextView
+        android:id="@+id/tv_count_first_fee"
+        android:text="运费(元)："
+        style="@style/tools_sub_area_text_1"
+        app:layout_constraintLeft_toRightOf="@id/et_count_first"
+        app:layout_constraintRight_toLeftOf="@+id/et_count_first_fee"
+        app:layout_constraintTop_toBottomOf="@id/tv_model_count_value" />
+
+    <EditText
+        android:id="@+id/et_count_first_fee"
+        android:hint="请输入"
+        style="@style/tools_sub_area_edit_1"
+        android:inputType="numberDecimal"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_count_first_fee"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/tv_count_first_fee"
+        app:layout_constraintRight_toLeftOf="@+id/tv_model_area_count_edit"
+        app:layout_constraintTop_toBottomOf="@id/tv_model_count_value" />
+
+    <TextView
+        android:id="@+id/tv_model_area_count_edit"
+        style="@style/tools_sub_area_edit"
+        android:text="编辑"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_model_count_value" />
+    <!--首重 end-->
+
+    <!--续重 start-->
+    <TextView
+        style="@style/tools_sub_area_text_2"
+        android:id="@+id/tv_more_count_first"
+        android:text="续件(个)："
+        app:layout_constraintLeft_toLeftOf="@+id/tv_model_area_index"
+        app:layout_constraintLeft_toRightOf="@+id/et_more_count_first"
+        app:layout_constraintTop_toBottomOf="@id/tv_count_first" />
+
+    <EditText
+        android:id="@+id/et_more_count_first"
+        android:hint="请输入"
+        style="@style/tools_sub_area_edit_2"
+        android:inputType="number"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_more_count_first"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@+id/tv_more_count_first"
+        app:layout_constraintRight_toLeftOf="@+id/tv_more_count_first_fee"
+        app:layout_constraintTop_toBottomOf="@id/tv_count_first" />
+
+    <TextView
+        android:text="续费(元)："
+        style="@style/tools_sub_area_text_2"
+        android:id="@+id/tv_more_count_first_fee"
+        app:layout_constraintLeft_toRightOf="@id/et_more_count_first"
+        app:layout_constraintRight_toLeftOf="@+id/et_more_count_first_fee"
+        app:layout_constraintTop_toBottomOf="@id/tv_count_first" />
+
+    <EditText
+        android:id="@+id/et_more_count_first_fee"
+        android:hint="请输入"
+        style="@style/tools_sub_area_edit_2"
+        android:inputType="numberDecimal"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/tv_more_count_first_fee"
+        app:layout_constraintRight_toLeftOf="@+id/tv_model_area_count_delete"
+        app:layout_constraintTop_toBottomOf="@id/tv_count_first" />
+
+    <TextView
+        style="@style/tools_sub_area_delete"
+        android:id="@+id/tv_model_area_count_delete"
+        android:text="删除"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_count_first" />
+    <!--续重 end-->
+
+    <View style="@style/DivideLineHorizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

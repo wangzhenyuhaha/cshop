@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_EEEEEE"
+    android:windowSoftInputMode="adjustPan">
+
+    <com.lingmiao.shop.widget.ToolBarView
+        android:id="@+id/toolbarView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_toolbar_height"
+        android:background="@color/color_ffffff"
+        android:focusable="true"
+        android:focusableInTouchMode="true" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomRl"
+        android:layout_below="@+id/toolbarView"
+        android:paddingHorizontal="@dimen/dimen_14">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbarView"
+            android:background="#00000000"
+            app:elevation="0dp">
+
+            <com.lingmiao.shop.business.goods.view.SpecContainerLayout
+                android:id="@+id/specContainerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
+
+            <com.james.common.view.ILinearLayout
+                android:id="@+id/addSpecLl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_14"
+                android:orientation="vertical"
+                app:ivBgColor="@color/color_ffffff"
+                app:ivRadius="@dimen/dimen_5"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_50"
+                    android:drawableStart="@mipmap/goods_spec_blue_plus"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:text="添加规格"
+                    android:textColor="@color/color_3870EA"
+                    android:textSize="@dimen/dimen_13" />
+            </com.james.common.view.ILinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/bottomRl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ffffff"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/dimen_15">
+
+        <CheckBox
+            android:id="@+id/allCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:button="@drawable/selector_goods_spce_checkbox"
+            android:paddingStart="@dimen/dimen_5"
+            android:text="全选"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_13" />
+
+        <TextView
+            android:id="@+id/settingTv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/dimen_14"
+            android:layout_toEndOf="@+id/allCheckbox"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="批量设置"
+            android:textColor="@color/color_3870EA"
+            android:textSize="@dimen/dimen_13" />
+
+        <TextView
+            android:id="@+id/confirmTv"
+            android:layout_width="160dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginVertical="@dimen/dimen_5"
+            android:background="@drawable/shape_goods_pop_btn"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dimen_13" />
+    </RelativeLayout>
+</RelativeLayout>

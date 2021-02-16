@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:background="@color/color_FD8424">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@mipmap/goods_selected_img" />
+
+    <ImageView
+        android:id="@+id/deleteIv"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_gravity="end"
+        android:paddingStart="@dimen/dimen_10"
+        android:paddingBottom="@dimen/dimen_10"
+        android:src="@mipmap/goods_spec_delete" />
+</FrameLayout>

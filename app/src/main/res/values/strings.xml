@@ -1,0 +1,100 @@
+<resources>
+    <string name="app_name">门口淘商家</string>
+    <string name="main">首页</string>
+    <string name="product">商品</string>
+    <string name="order">订单</string>
+    <string name="my">我的</string>
+    <string name="login_by_phone">门口淘商户登录</string>
+    <string name="register_by_phone">门口淘商户注册</string>
+    <string name="no_account_register">没有账号？立即注册</string>
+    <string name="has_account_login">已有账号？立即登录</string>
+    <string name="input_sms_code">请您输入验证码</string>
+    <string name="get_code">获取验证码</string>
+    <string name="yes">确定</string>
+    <string name="save">保存</string>
+
+
+    <!--  =================== 商品 START ===================  -->
+    <string name="goods_home_title">管理商品</string>
+    <string name="goods_home_quantity">库存：%s</string>
+    <string name="goods_home_enable_quantity">可用库存：%s</string>
+    <string name="goods_home_sales">销量：%s</string>
+    <string name="goods_search_start">搜索</string>
+    <string name="goods_search_edt_hint">输入关键词搜索</string>
+
+    <!--  =================== 商品  END  ===================  -->
+
+    <!--  =================== 订单 START ===================  -->
+    <string name="order_product_count">等%d款商品</string>
+    <string name="order_money">共%d件商品，实付款￥%s</string>
+    <string name="order_hint_bar_code">请扫描条码/二维码核销订单</string>
+    <!--  =================== 订单  END  ===================  -->
+
+
+    <!--  =================== 钱包  START ===================  -->
+    <string name="wallet_hint_account_info">余额与保证金</string>
+    <string name="wallet_hint_account_bind">账户绑写</string>
+    <string name="wallet_hint_balance">余额</string>
+    <string name="wallet_hint_deposit">保证金</string>
+    <string name="wallet_value">￥%s</string>
+    <string name="wallet_hint_card">银行卡</string>
+    <string name="wallet_hint_zfb">支付宝</string>
+    <string name="wallet_title_deposit">@string/wallet_hint_deposit</string>
+    <string name="wallet_title_balance">@string/wallet_hint_balance</string>
+    <string name="wallet_deposit_opt_fill">保证金充值</string>
+    <string name="wallet_deposit_opt_detail">保证金明细</string>
+    <string name="wallet_deposit_balance">余额（元）</string>
+    <string name="wallet_deposit_hint">保证金（元）</string>
+    <string name="wallet_account_hint_type">账户类型</string>
+    <string name="wallet_account_hint_bank_deposit">开户银行</string>
+    <string name="wallet_account_hint_name">账户名称</string>
+    <string name="wallet_account_hint_bank_no">银行卡号</string>
+    <string name="wallet_balance_opt_detail">钱包明细</string>
+    <string name="wallet_balance_opt_fill">提现</string>
+    <string name="wallet_title_withdraw">账户提现</string>
+    <string name="wallet_bank_card_title">银行卡列表</string>
+    <string name="yuan_amount">%s元</string>
+    <string name="withdraw_bank_account">银行账户</string>
+    <string name="withdraw_bank_name">账户名称</string>
+    <string name="withdraw_bank_no">银行账号</string>
+    <string name="withdraw_ali_pay_account">支付宝账户</string>
+    <string name="withdraw_real_name">真实姓名</string>
+    <string name="withdraw_ali_pay_account_no">支付宝账号</string>
+    <array name="bank_card_list">
+        <item>中国工商银行</item>
+        <item>中国农业银行</item>
+        <item>中国银行</item>
+        <item>中国建设银行</item>
+        <item>中国交通银行</item>
+        <item>招商银行</item>
+        <item>浦发银行</item>
+        <item>民生银行</item>
+        <item>兴业银行</item>
+        <item>深圳发展银行</item>
+        <item>华夏银行</item>
+        <item>光大银行</item>
+        <item>广发银行</item>
+        <item>中信银行</item>
+        <item>北京银行</item>
+        <item>上海银行</item>
+        <item>南京银行</item>
+        <item>邮政储蓄银行</item>
+    </array>
+    <!--  =================== 钱包  END  ===================  -->
+
+
+    <!--  =================== 首页工具  START ===================  -->
+    <string name="tools_logistics_tool_title">物流工具</string>
+    <string name="tools_logistics_model_add">添加模板</string>
+    <string name="tools_logistics_model_edit">修改模板</string>
+    <string name="tools_area_title">选择区域</string>
+    <!--  =================== 首页工具  END  ===================  -->
+
+
+    <!--  =================== 首页工具  START ===================  -->
+    <string name="tuan_title_activity_index">团购报名</string>
+    <string name="tuan_title_order_index">团购供货</string>
+    <string name="tuan_title_goods_submit">提报商品</string>
+    <string name="tuan_hint_goods_select">选择商品</string>
+    <!--  =================== 首页工具  END  ===================  -->
+</resources>

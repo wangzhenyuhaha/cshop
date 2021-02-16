@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+
+    <TextView
+        android:id="@+id/tvCancelReason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="店铺倒闭了"
+        android:textColor="#ff000000"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvCancelReasonInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="(客户要求)"
+        android:layout_toRightOf="@id/tvCancelReason"
+        android:visibility="gone"
+        android:layout_marginLeft="2dp"
+        android:textColor="#f00"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/ivCancelStatus"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/iv_single_default" />
+
+    <View
+        android:id="@+id/viCancelDivide"
+        style="@style/DivideLineHorizontal"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

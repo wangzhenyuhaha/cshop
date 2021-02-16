@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    def android = rootProject.ext.android
+    compileSdkVersion android.compileSdkVersion
+    buildToolsVersion android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion android.minSdkVersion
+        targetSdkVersion android.targetSdkVersion
+        versionCode 1
+        versionName "1.0.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation depKotlin["kotlinStdLib"]
+    implementation depKotlin["coroutinesCore"]
+    implementation depKotlin["coroutinesAndroid"]
+
+    api androidX["constraintlayout"]
+    api androidX["multidex"]
+    api androidX["appcompat"]
+    api androidX["design"]
+
+    api dep3["utilcode"]
+    api dep3["okhttp3"]
+    api dep3["okio"]
+    api dep3["okhttp3-logging-interceptor"]
+    api dep3["retrofit"]
+    api dep3["retrofit-converter-gson"]
+    api dep3["gson"]
+
+    api dep3["circleimageview"]
+    api dep3["BaseRecyclerViewAdapterHelper"]
+    api dep3["smartRefreshLayout"]
+    api dep3["smartRefreshHeader"]
+
+    api dep3["glide"]
+    api dep3["eventbus"]
+    api dep3["AndPermissions"]
+    api dep3["Android-PickerView"]
+
+//    implementation 'com.github.mamumu:mmDialog:1.2.0'
+}

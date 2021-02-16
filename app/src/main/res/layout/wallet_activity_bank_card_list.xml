@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/f_wallet_bank_card_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tv_bankcard_add"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/dimen_7"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="添加新卡"
+        android:textColor="@color/white"
+        app:ivBgColor="@color/color_3870EA"
+        app:ivRadius="19dp" />
+
+</LinearLayout>

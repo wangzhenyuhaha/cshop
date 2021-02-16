@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp">
+
+        <ImageView
+            android:id="@+id/ivProduct1"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            tools:src="@color/common_bg" />
+
+        <ImageView
+            android:id="@+id/ivProduct2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_toRightOf="@id/ivProduct1"
+            tools:src="@color/common_bg" />
+
+        <TextView
+            android:id="@+id/tvProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="40dp"
+            android:layout_toRightOf="@id/ivProduct2"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="0.8"
+            android:maxLines="2"
+            android:textColor="#ff000000"
+            android:textSize="13sp"
+            tools:text="衣品天成男装衣品天成男装衣品天成衣品天成衣品天..." />
+
+        <TextView
+            android:id="@+id/tvProductAttribute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/ivProduct2"
+            android:textColor="#ffa5a5a5"
+            android:textSize="12sp"
+            tools:text="颜色：黑色，尺码：175/L" />
+
+        <TextView
+            android:id="@+id/tvProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="#ff000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="￥79" />
+
+        <TextView
+            android:id="@+id/tvProductCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:textColor="#ffa5a5a5"
+            android:textSize="12sp"
+            tools:text="×2" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/viRefundDivideLine"
+        style="@style/DivideLineHorizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+</LinearLayout>

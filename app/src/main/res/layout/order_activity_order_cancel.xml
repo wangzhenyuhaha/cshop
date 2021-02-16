@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="取消原因"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ff000000"
+            android:textSize="12sp"
+            />
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvOrderCancelReason"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.james.common.view.ILinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="具体说明"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ff000000"
+            android:textSize="12sp"
+            />
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:padding="12dp"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/etOrderCancelDesc"
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:hint="请输入详细内容，100字以内"
+                android:textColorHint="#ffc6c6c6"
+                android:background="@null"
+                android:gravity="top"
+                android:textColor="#333"
+                android:textSize="12sp"
+                android:maxLength="100"
+                />
+        </com.james.common.view.ILinearLayout>
+    </LinearLayout>
+    <com.james.common.view.ITextView
+        android:id="@+id/tvCancelOrder"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        app:ivRadius="19dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:text="提  交"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        app:ivBgColor="@color/color_3870EA"/>
+</RelativeLayout>

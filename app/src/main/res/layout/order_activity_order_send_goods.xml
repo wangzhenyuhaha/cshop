@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:text="发货方式"
+            android:textColor="#ff000000"
+            android:textSize="12sp" />
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_height="wrap_content">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvOrderSendGoods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.james.common.view.ILinearLayout>
+
+        <TextView
+            android:id="@+id/tvOrderLogisticsCompanyKey"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="物流信息"
+            android:layout_marginTop="5dp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ff000000"
+            android:textSize="12sp"
+            />
+
+        <com.james.common.view.ILinearLayout
+            android:id="@+id/llOrderLogisticsCompany"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/rlOrderLogisticsCompany"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="快递公司"
+                    android:textColor="#ff000000"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvOrderLogisticsCompany"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="请选择"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="16dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="#ff999999"
+                    android:textSize="13sp"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivCancelStatus"
+                    android:layout_width="6dp"
+                    android:layout_height="11dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/order_send_goods_arrow" />
+
+                <View
+                    android:id="@+id/viCancelDivide"
+                    style="@style/DivideLineHorizontal"
+                    android:layout_alignParentBottom="true" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tvCancelReason"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="快递单号"
+                    android:textColor="#ff000000"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etOrderLogisticsNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="请输入"
+                    android:background="@null"
+                    android:layout_marginLeft="150dp"
+                    android:inputType="text"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#ff999999"
+                    android:textSize="13sp"
+                    />
+            </RelativeLayout>
+        </com.james.common.view.ILinearLayout>
+
+
+
+    </LinearLayout>
+    <com.james.common.view.ITextView
+        android:id="@+id/tvOrderSendGoods"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        app:ivRadius="19dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:text="提  交"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:layout_alignParentBottom="true"
+        app:ivBgColor="@color/color_3870EA"/>
+</RelativeLayout>

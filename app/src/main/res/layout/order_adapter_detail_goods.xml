@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginLeft="3dp"
+    android:layout_marginTop="14dp"
+    android:layout_marginRight="3dp">
+
+    <ImageView
+        android:id="@+id/ivProduct1"
+        tools:src="@color/common_bg"
+        android:layout_width="48dp"
+        android:visibility="gone"
+        android:layout_height="48dp"
+        android:scaleType="centerCrop"
+        android:layout_marginRight="10dp" />
+
+    <ImageView
+        android:id="@+id/ivProduct2"
+        tools:src="@color/common_bg"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_toRightOf="@id/ivProduct1" />
+
+    <TextView
+        android:id="@+id/tvProductName"
+        tools:text="衣品天成男装衣品天成男装衣品天成衣品天成衣品天..."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_toRightOf="@id/ivProduct2"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="0.8"
+        android:maxLines="2"
+        android:textColor="#ff000000"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tvProductAttribute"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="40dp"
+        android:layout_toRightOf="@id/ivProduct2"
+        tools:text="颜色：黑色，尺码：175/L 颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="#ffa5a5a5"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvProductPrice"
+        tools:text="￥79"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="#ff000000"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tvProductCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProductPrice"
+        android:layout_alignParentRight="true"
+        android:textColor="#ffa5a5a5"
+        android:textSize="12sp"
+        tools:text="×2" />
+
+    <TextView
+        android:id="@+id/tvProductRefund"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:text="退款中"
+        android:visibility="gone"
+        android:textColor="#ffa5a5a5"
+        android:textSize="12sp" />
+</RelativeLayout>

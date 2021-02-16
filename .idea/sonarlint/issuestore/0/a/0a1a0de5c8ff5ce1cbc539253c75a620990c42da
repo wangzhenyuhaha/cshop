@@ -1,0 +1,18 @@
+
+M
+java:S1128"8Remove this unused import 'android.app.ActivityManager'.(•è‡`
+P
+java:S1128":Remove this unused import 'android.content.ComponentName'.(½‹æŠ
+S
+java:S1128
+">Remove this unused import 'com.blankj.utilcode.util.AppUtils'.(óƒÆ>
+O
+java:S1128"4Remove this unused import 'com.fisheagle.mkt.MyApp'.(²ÍÁºüÿÿÿÿ
+F
+java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+U
+java:S1118":Add a private constructor to hide the implicit public one.(æœ½ùÿÿÿÿ
+Q	java:S125E"<This block of commented-out lines of code should be removed.(ùì‹¸
+Q	java:S125I"<This block of commented-out lines of code should be removed.(€ßÔÀ
+V	java:S125L"<This block of commented-out lines of code should be removed.(³¯»¹øÿÿÿÿ
+Q	java:S125P"<This block of commented-out lines of code should be removed.(€ßÔÀ

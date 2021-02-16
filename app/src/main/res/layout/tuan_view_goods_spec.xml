@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/tuan_goods_item_title"
+            android:text="SKU规格" />
+
+        <TextView
+            style="@style/tuan_goods_item_title"
+            android:text="店铺售价" />
+
+        <TextView
+            style="@style/tuan_goods_item_title"
+            android:text="结算价" />
+
+        <TextView
+            style="@style/tuan_goods_item_title"
+            android:text="总库存" />
+
+        <TextView
+            style="@style/tuan_goods_item_title"
+            android:text="参团数" />
+
+        <TextView
+            style="@style/tuan_goods_item_title"
+            android:text="操作" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tuan_goods_spec_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

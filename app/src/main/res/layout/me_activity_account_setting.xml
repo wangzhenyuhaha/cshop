@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/me_account_logo"/>
+
+    <com.james.common.view.ILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="14dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        app:ivBgColor="@color/white"
+        app:ivRadius="5dp">
+
+        <View style="@style/DivideLineHorizontal"/>
+
+        <RelativeLayout
+            android:id="@+id/rlAccountUpdatePassword"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="修改密码"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+
+        <View
+            style="@style/DivideLineHorizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rlAccountUpdatePhone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="更换手机"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+        <View
+            style="@style/DivideLineHorizontal"
+            />
+        <RelativeLayout
+            android:id="@+id/rlAccountVersion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="检查更新"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvAccountVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/ivUpdateVersionArrow"
+                tools:text="V2.0.0"
+                android:textColor="#ff999999"
+                android:layout_marginRight="5dp"
+                android:layout_centerVertical="true"
+                android:textSize="12sp"
+                />
+
+            <ImageView
+                android:id="@+id/ivUpdateVersionArrow"
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+    </com.james.common.view.ILinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvAccountLoginOut"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="12dp"
+        android:gravity="center"
+        android:text="退出登录"
+        android:textColor="#FF340B"
+        app:ivBgColor="@color/white"
+        app:ivBorderColor="#FF340B"
+        app:ivBorderWidth="1px"
+        app:ivRadius="19dp" />
+</LinearLayout>

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="订单管理"
+            android:textColor="#ff333333"
+            android:textSize="17sp" />
+
+        <ImageView
+            android:id="@+id/tv_order_scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dimen_15"
+            android:src="@mipmap/scan_code" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <com.lingmiao.shop.widget.IOrderTabView
+            android:id="@+id/tvTab1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="true"
+            app:tvTitle="全部" />
+
+        <com.lingmiao.shop.widget.IOrderTabView
+            android:id="@+id/tvTab2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="false"
+            app:tvTitle="待付款" />
+
+        <com.lingmiao.shop.widget.IOrderTabView
+            android:id="@+id/tvTab3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="false"
+            app:tvTitle="待发货" />
+
+        <com.lingmiao.shop.widget.IOrderTabView
+            android:id="@+id/tvTab4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="false"
+            app:tvTitle="已发货" />
+
+        <com.lingmiao.shop.widget.IOrderTabView
+            android:id="@+id/tvTab5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="false"
+            app:tvTitle="售后/退款" />
+
+    </LinearLayout>
+
+    <View style="@style/divide_line" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vpContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

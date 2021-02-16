@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/goods_publish_container"
+    app:ivBgColor="@color/color_ffffff"
+    app:ivRadius="@dimen/dimen_5">
+
+    <LinearLayout style="@style/goods_publish_sub_container">
+
+        <TextView
+            style="@style/goods_publish_left"
+            android:text="商品类型" />
+
+        <TextView
+            android:id="@+id/goodsTypeTv"
+            style="@style/goods_publish_right_arrow"
+            android:text="实物商品" />
+    </LinearLayout>
+
+    <View style="@style/common_divider" />
+
+    <LinearLayout style="@style/goods_publish_sub_container">
+
+        <TextView
+            style="@style/goods_publish_left_mark"
+            android:text="商品类目" />
+
+        <TextView
+            android:id="@+id/goodsCategoryTv"
+            style="@style/goods_publish_right_arrow"
+            android:hint="请选择商品类目" />
+    </LinearLayout>
+</com.james.common.view.ILinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/goods_publish_container"
+    app:ivBgColor="@color/color_ffffff"
+    app:ivRadius="@dimen/dimen_5"
+    android:visibility="gone">
+
+    <LinearLayout style="@style/goods_publish_sub_container">
+
+        <TextView
+            style="@style/goods_spce_item_left"
+            android:text="限购数量" />
+
+        <EditText
+            android:id="@+id/goodsVirtualNumLimitEdt"
+            style="@style/goods_publish_right_arrow"
+            android:hint="请输入限购数量"
+            android:inputType="number"
+            android:paddingEnd="@dimen/dimen_10" />
+    </LinearLayout>
+
+</com.james.common.view.ILinearLayout>
