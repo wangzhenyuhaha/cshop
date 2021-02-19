@@ -165,11 +165,12 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         tvLoginType.text = getString(R.string.login_by_phone)
         tvLoginHint.text = getString(R.string.no_account_register)
         tvLogin.text = "登录"
-        etPassword.hint = "登录密码"
+        etPassword.hint = "请输入密码"
         etPassword.setText("")
         etCode.setText("")
         etPhone.setText("")
         etAccount.setText("")
+        hintLoginTv.setText("使用已注册得手机号登录")
 
         if (loginType == LOGIN_BY_CODE) {
             llPhone.visibility = View.VISIBLE
@@ -192,6 +193,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
             tvLoginHint.text = getString(R.string.has_account_login)
             tvLogin.text = "注册"
             etPassword.hint = "请设置密码"
+            hintLoginTv.setText("注册后可免费体验C店全部解决方案")
         }
     }
 

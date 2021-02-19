@@ -12,6 +12,7 @@
     <string name="get_code">获取验证码</string>
     <string name="yes">确定</string>
     <string name="save">保存</string>
+    <string name="copy_right">@Copyright 2020-2030 All Rights reserved</string>
 
 
     <!--  =================== 商品 START ===================  -->
@@ -96,5 +97,6 @@
     <string name="tuan_title_order_index">团购供货</string>
     <string name="tuan_title_goods_submit">提报商品</string>
     <string name="tuan_hint_goods_select">选择商品</string>
+    <string name="company_name">上海邻妙信息科技有限公司 版权所有</string>
     <!--  =================== 首页工具  END  ===================  -->
 </resources>

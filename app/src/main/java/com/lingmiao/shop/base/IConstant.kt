@@ -20,7 +20,7 @@ object IConstant {
     const val  SHIP_TYPE_LOCAL = "LOCAL"    //同城
     const val  SHIP_TYPE_SELF = "SELF"      //自提
 
-    var official = true
+    var official = false
 
 //    // 生产环境
 //      pro: {

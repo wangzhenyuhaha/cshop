@@ -15,40 +15,28 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="27dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="70dp">
 
             <TextView
                 android:id="@+id/tvLoginType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:text="@string/login_by_phone"
                 android:textColor="#ff333333"
-                android:textSize="17sp" />
+                android:textSize="24sp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/hintLoginTv"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:textColor="#C1C1C1"
+                android:textSize="@dimen/sp_12"
+                android:text="使用已注册得手机号登录"
+                android:layout_below="@id/tvLoginType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-                <TextView
-                    android:id="@+id/tvLoginHint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/no_account_register"
-                    android:textColor="#ff3870ea"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:layout_width="7dp"
-                    android:layout_height="13dp"
-                    android:layout_marginLeft="2dp"
-                    android:src="@mipmap/login_right_arrow" />
-            </LinearLayout>
         </RelativeLayout>
 
 
@@ -61,6 +49,7 @@
             tools:visibility="visible">
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="12dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center_vertical"
@@ -71,14 +60,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="账号/手机号"
+                android:hint="请输入您的手机号"
                 android:inputType="text"
                 android:maxLength="30"
                 android:textColor="#333"
-                android:textColorHint="#CACACA"
-                android:textSize="13sp" />
+                android:textColorHint="#666"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -88,6 +76,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="12dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -98,17 +87,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="请输入手机号"
+                android:hint="请输入您的手机号"
                 android:inputType="phone"
                 android:maxLength="11"
                 android:textColor="#333"
-                android:textColorHint="#CACACA"
-                android:textSize="13sp" />
+                android:textColorHint="#666"
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <View style="@style/DivideLineHorizontal" />
+        <View style="@style/DivideLineHorizontalOfC1" />
 
         <LinearLayout
             android:id="@+id/llCode"
@@ -117,6 +105,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="12dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center_vertical"
@@ -127,15 +116,14 @@
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="输入验证码"
+                android:hint="请输入验证码"
                 android:inputType="number"
                 android:maxLength="6"
                 android:textColor="#333"
-                android:textColorHint="#CACACA"
-                android:textSize="13sp" />
+                android:textColorHint="#666"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/tvGetCode"
@@ -143,13 +131,13 @@
                 android:layout_height="match_parent"
                 android:gravity="right|center_vertical"
                 android:text="获取验证码"
-                android:textColor="#ff3870ea"
-                android:textSize="15sp" />
+                android:textColor="#207AE1"
+                android:textSize="14sp" />
         </LinearLayout>
 
         <View
             android:id="@+id/viRegisterDivide"
-            style="@style/DivideLineHorizontal"
+            style="@style/DivideLineHorizontalOfC1"
             android:visibility="gone" />
 
         <LinearLayout
@@ -161,6 +149,7 @@
             tools:visibility="visible">
 
             <ImageView
+                android:visibility="gone"
                 android:layout_width="12dp"
                 android:layout_height="18dp"
                 android:layout_gravity="center_vertical"
@@ -171,22 +160,45 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
                 android:background="@null"
-                android:hint="登录密码"
+                android:hint="请输入密码"
                 android:inputType="textPassword"
                 android:maxLength="30"
                 android:textColor="#333"
-                android:textColorHint="#CACACA"
-                android:textSize="13sp" />
+                android:textColorHint="#666"
+                android:textSize="14sp" />
         </LinearLayout>
 
-        <View style="@style/DivideLineHorizontal" />
+        <View style="@style/DivideLineHorizontalOfC1" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/tvBottomRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码登录"
+                android:textColor="#207AE1"
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:id="@+id/tvForgetPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="忘记密码？"
+                android:textColor="#C1C1C1"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="40dp"
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
@@ -195,7 +207,7 @@
                 android:layout_width="12dp"
                 android:layout_height="12dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/selector_login_service" />
+                android:src="@drawable/selector_goods_delivery_checkbox" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -204,7 +216,7 @@
                 android:layout_marginLeft="10dp"
                 android:text="已阅读并同意"
                 android:textColor="#ff666666"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tvService"
@@ -213,43 +225,66 @@
                 android:layout_gravity="center_vertical"
                 android:text="《C店商家服务条款》"
                 android:textColor="#3870EA"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="与"
+                android:textColor="#ff666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvPrivacy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="《隐私权政策》"
+                android:textColor="#3870EA"
+                android:textSize="12sp" />
+
         </LinearLayout>
 
         <com.james.common.view.ITextView
             android:id="@+id/tvLogin"
             android:layout_width="match_parent"
             android:layout_height="38dp"
-            android:layout_marginTop="33dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="登录"
             android:textColor="#fff"
             android:textSize="13sp"
-            app:ivBgColor="#3870EA"
-            app:ivRadius="19dp" />
+            app:ivBgColor="#207AE1"
+            app:ivRadius="18dp" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_18"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/tvForgetPassword"
+                android:id="@+id/tvLoginHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="忘记密码？"
-                android:textColor="#ff3870ea"
-                android:textSize="12sp" />
+                android:text="@string/no_account_register"
+                android:textColor="#C1C1C1"
+                android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/tvBottomRight"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="密码登录"
-                android:textColor="#ff3870ea"
-                android:textSize="12sp" />
-        </RelativeLayout>
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="7dp"
+                android:layout_height="13dp"
+                android:layout_marginLeft="2dp"
+                android:src="@mipmap/login_right_arrow" />
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <RelativeLayout
@@ -303,4 +338,27 @@
         </com.james.common.view.ILinearLayout>
 
     </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/companyNameTv"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:text="@string/company_name"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_width="match_parent"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_above="@id/companyNameTv"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        android:gravity="center"
+        android:text="@string/copy_right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>
