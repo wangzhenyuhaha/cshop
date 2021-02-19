@@ -23,7 +23,7 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
     }
 
     override fun initView() {
-        mToolBarDelegate.setMidTitle("门口淘商家服务条款")
+        mToolBarDelegate.setMidTitle("C店商家服务条款")
 
         val agentWeb = AgentWeb.with(this)
             .setAgentWebParent(

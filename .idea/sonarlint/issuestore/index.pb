@@ -211,3 +211,5 @@ Flibrary/src/main/java/com/allenliu/versionchecklib/core/MyService.java,2/f/2f9
 Llibrary/src/main/java/com/allenliu/versionchecklib/v2/ui/VersionService.java,8/9/891b05fd72a64bab7c118370856c4c6054f8839d
 e
 5app/src/main/java/com/lingmiao/shop/base/IConstant.kt,2/4/2482bdce758c591e057b04e7e4e260819cb709fc
+F
+app/proguard-rules.pro,9/e/9e08934d811afe28fbc77aaa3c0d747b94348db9

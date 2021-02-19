@@ -10,6 +10,7 @@ import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatDialog
+import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
 import com.blankj.utilcode.util.*
@@ -25,6 +26,7 @@ import com.lingmiao.shop.business.me.ForgetPasswordActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.util.OtherUtils
 import com.google.gson.reflect.TypeToken
+import com.jaeger.library.StatusBarUtil
 import com.james.common.base.BaseActivity
 import com.james.common.net.BaseResponse
 import com.james.common.net.RetrofitUtil
@@ -57,6 +59,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         private const val REQUEST_CODE_SERVICE = 8
     }
 
+    override fun useBaseLayout(): Boolean {
+        return false;
+    }
 
     override fun getLayoutId(): Int {
         return R.layout.activity_login
@@ -67,6 +72,9 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
     }
 
     override fun initView() {
+
+        StatusBarUtil.setColor(context, ContextCompat.getColor(context, R.color.colorPrimary));
+
         ToastUtils.setGravity(Gravity.BOTTOM, 0, 100)
         tvGetCode.setOnClickListener {
             if (TextUtils.isEmpty(etPhone.text.toString())) {

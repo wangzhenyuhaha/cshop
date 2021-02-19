@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">门口淘商家</string>
+    <string name="app_name">C店</string>
     <string name="main">首页</string>
     <string name="product">商品</string>
     <string name="order">订单</string>
     <string name="my">我的</string>
-    <string name="login_by_phone">门口淘商户登录</string>
-    <string name="register_by_phone">门口淘商户注册</string>
+    <string name="login_by_phone">C店商户登录</string>
+    <string name="register_by_phone">C店商户注册</string>
     <string name="no_account_register">没有账号？立即注册</string>
     <string name="has_account_login">已有账号？立即登录</string>
     <string name="input_sms_code">请您输入验证码</string>

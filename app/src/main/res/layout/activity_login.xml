@@ -211,7 +211,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="《门口淘商家服务条款》"
+                android:text="《C店商家服务条款》"
                 android:textColor="#3870EA"
                 android:textSize="11sp" />
         </LinearLayout>

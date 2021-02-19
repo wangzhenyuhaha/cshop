@@ -18,7 +18,7 @@ android {
         minSdkVersion android.minSdkVersion
         targetSdkVersion android.targetSdkVersion
         versionCode 1
-        versionName "0.0.1"
+        versionName "2.0.1"
         setProperty("archivesBaseName", "mkt_$versionName"+"_"+"$formattedDate")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,7 +29,7 @@ android {
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME : applicationId,
-                JPUSH_APPKEY : "6b5941e6be9ffe3f7f7fd26179e24ebf", //JPush 上注册的包名对应的 Appkey.
+                JPUSH_APPKEY : "7a307a21c01f74a1efd577c0", //JPush 上注册的包名对应的 Appkey.
                 JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
     }
@@ -117,4 +117,7 @@ dependencies {
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation 'com.journeyapps:zxing-android-embedded:4.1.0'
+
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+
 }

@@ -1,2 +1,2 @@
 include ':app', ':common', ':ucrop', ':picture_library',":library"
-rootProject.name = "mvp"
+rootProject.name = "cshop"
