@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EDEDED"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/primary"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civMainShopHead"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/main_shop_logo_default" />
+
+        <TextView
+            android:id="@+id/tvMainShopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="40dp"
+            tools:text="月亮不睡的店"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivMainMessage"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/main_message" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/primary"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="店铺状态"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/switchStatusBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:layout_marginLeft="@dimen/dimen_20"
+            app:kswTintColor="@color/white" />
+
+    </RelativeLayout>
+
+    <View style="@style/DivideLineHorizontal"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smartRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srlEnableLastTime="false" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+
+                <androidx.core.widget.NestedScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/llMainShopOpen"
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        tools:visibility="visible"
+                        android:layout_height="wrap_content">
+
+                        <!--今日营业情况start-->
+                        <LinearLayout
+                            tools:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/shape_primary_bg">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:paddingTop="15dp"
+                                    style="@style/main_parts_hint"
+                                    android:text="今日订单"
+                                    android:textColor="@color/white"
+                                    android:layout_weight="1"/>
+
+                                <ImageView
+                                    android:padding="@dimen/dimen_15"
+                                    android:src="@mipmap/ic_refresh"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                            <!--总信息start-->
+                            <LinearLayout style="@style/main_data_layout">
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayUnTakeOrderCount"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="未接订单" />
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayTakenOrderCount"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="已接订单" />
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayDistributeOrderCount"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="待配送" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <!--总信息end-->
+
+                            <View
+                                style="@style/dash_line"
+                                android:layout_marginLeft="@dimen/dimen_30"
+                                android:layout_marginRight="@dimen/dimen_30"/>
+
+                            <!--退款、完成、失效-->
+                            <LinearLayout
+                                style="@style/main_data_layout">
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayRefund"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="待退款" />
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayFinish"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="已完成" />
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayInvalid"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="失效订单" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+                            <!--团长end-->
+
+
+                        </LinearLayout>
+                        <!--今日营业情况end-->
+
+
+                        <LinearLayout
+                            tools:visibility="gone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical"
+                            android:background="@drawable/shape_primary_bg">
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:paddingTop="15dp"
+                                    style="@style/main_parts_hint"
+                                    android:text="今日数据"
+                                    android:textColor="@color/white"
+                                    android:layout_weight="1"/>
+
+                                <ImageView
+                                    android:padding="@dimen/dimen_15"
+                                    android:src="@mipmap/ic_refresh"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"/>
+                            </LinearLayout>
+
+                            <!--总信息start-->
+                            <LinearLayout style="@style/main_data_layout">
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodaySales"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="销售额" />
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayNewUser"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="新用户数" />
+
+                                </LinearLayout>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <LinearLayout style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayStoreWarn"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="库存预警" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+                            <!--总信息end-->
+
+                        </LinearLayout>
+
+                        <!--常用工具-->
+                        <com.james.common.view.ILinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="@dimen/dimen_15"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:paddingTop="15dp"
+                            app:ivBgColor="#fff"
+                            app:ivRadius="4dp">
+
+                            <TextView
+                                style="@style/main_parts_hint"
+                                android:text="常用工具" />
+
+                            <!--第一行start-->
+                            <LinearLayout
+                                style="@style/main_tool_layout"
+                                android:layout_marginTop="0dp">
+
+                                <TextView
+                                    android:id="@+id/tvManagerSetting"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_shop_manager"
+                                    android:text="管理设置" />
+
+                                <TextView
+                                    android:id="@+id/tvGoodsManager"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_goods_group"
+                                    android:text="商品管理" />
+
+                                <TextView
+                                    android:id="@+id/tvMenuManager"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_logistic_manager"
+                                    android:text="菜单管理" />
+
+                            </LinearLayout>
+                            <!--第一行end-->
+
+                            <!--第二行start-->
+                            <LinearLayout
+                                style="@style/main_tool_layout"
+                                android:layout_marginTop="0dp">
+
+                                <TextView
+                                    android:id="@+id/tvSaleSetting"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_tuan_register"
+                                    android:text="营销设置" />
+
+                                <TextView
+                                    android:id="@+id/tvWalletAccount"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_wallet_account"
+                                    android:text="钱包账户" />
+
+                                <TextView
+                                    android:id="@+id/tvUserManager"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_tuan_manager"
+                                    android:text="用户管理" />
+
+                            </LinearLayout>
+                            <!--第二行end-->
+
+                            <!--第3行start-->
+                            <LinearLayout
+                                style="@style/main_tool_layout"
+                                android:layout_marginTop="0dp">
+
+
+                                <TextView
+                                    android:id="@+id/tvDataAnalysis"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_comming_soon"
+                                    android:text="数据统计" />
+
+                                <TextView
+                                    android:id="@+id/tvComeSoon"
+                                    android:drawableBottom="@mipmap/ic_more"
+                                    style="@style/main_tools"
+                                    android:layout_gravity="bottom"
+                                    android:text="更多功能\n敬请期待" />
+
+                                <TextView
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_comming_soon"
+                                    android:visibility="invisible" />
+
+                            </LinearLayout>
+                            <!--第3行end-->
+                        </com.james.common.view.ILinearLayout>
+                        <!--常用工具end-->
+
+                    </LinearLayout>
+
+                </androidx.core.widget.NestedScrollView>
+
+                <LinearLayout
+                    android:id="@+id/llMainShopOther"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="178dp"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvMainShopHint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginRight="40dp"
+                            android:text="你还有没有开通店铺"
+                            android:textColor="#ff909090"
+                            android:textSize="13sp"
+                            />
+                        <TextView
+                            android:id="@+id/tvMainShopReason"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginRight="40dp"
+                            android:visibility="gone"
+                            tools:text="xxxxx"
+                            android:textColor="@color/color_fc0000"
+                            android:textSize="13sp"
+                            />
+                    </LinearLayout>
+
+                    <com.james.common.view.ITextView
+                        android:id="@+id/tvMainShopNext"
+                        android:layout_width="120dp"
+                        android:layout_height="38dp"
+                        android:layout_gravity="center_horizontal"
+                        android:text="申请开店 >>"
+                        android:layout_marginTop="18dp"
+                        app:ivBgColor="@color/white"
+                        app:ivRadius="19dp"
+                        app:ivBorderColor="#ff3870ea"
+                        app:ivBorderWidth="1px"
+                        android:gravity="center"
+                        android:textColor="#ff3870ea"
+                        android:textSize="13sp"
+                        />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <com.james.common.view.ITextView
+                        android:id="@+id/tvMainLoginOut"
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:text="退出登录"
+                        android:visibility="visible"
+                        android:textColor="#FF340B"
+                        app:ivBgColor="@color/white"
+                        app:ivBorderColor="#FF340B"
+                        app:ivBorderWidth="1px"
+                        app:ivRadius="19dp" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

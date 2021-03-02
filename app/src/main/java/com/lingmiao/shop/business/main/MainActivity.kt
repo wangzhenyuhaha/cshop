@@ -25,6 +25,8 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
+import com.lingmiao.shop.business.main.fragment.NewMainFragment
+import com.lingmiao.shop.business.me.fragment.NewMyFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -60,25 +62,26 @@ class MainActivity : AppCompatActivity() {
         BarUtils.transparentStatusBar(this)
         val statusBarHeight = BarUtils.getStatusBarHeight()
         viStatusBar.layoutParams.height = statusBarHeight
-        viStatusBar.setBackgroundColor(ContextCompat.getColor(this,R.color.colorPrimary))
-        BarUtils.setStatusBarLightMode(this, true)
-        val mainFragment = MainFragment.newInstance(true)
+        viStatusBar.setBackgroundColor(ContextCompat.getColor(this,R.color.primary))
+//        BarUtils.setStatusBarLightMode(this, false)
+        val mainFragment = NewMainFragment.newInstance(true)
         mainFragment.setFromMain(true)
         fragmentList.clear()
         fragmentList.add(mainFragment)
-        fragmentList.add(GoodsFragment.newInstance())
         fragmentList.add(OrderTabFragment.newInstance())
-        fragmentList.add(MyFragment.newInstance())
+        fragmentList.add(GoodsFragment.newInstance())
+        fragmentList.add(NewMyFragment.newInstance())
 
         val titleList = ArrayList<String>()
-        titleList.add("首页")
-        titleList.add("商品")
+        titleList.add("工作台")
+//        titleList.add("商品")
         titleList.add("订单")
+        titleList.add("RM")
         titleList.add("我的")
         val tabIconList = ArrayList<Int>()
         tabIconList.add(R.drawable.selector_tab_1)
-        tabIconList.add(R.drawable.selector_tab_2)
         tabIconList.add(R.drawable.selector_tab_3)
+        tabIconList.add(R.drawable.selector_tab_2)
         tabIconList.add(R.drawable.selector_tab_4)
 
 
@@ -105,11 +108,11 @@ class MainActivity : AppCompatActivity() {
         tbMain.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if(tab.position==3){
-                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
-                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_3870EA))
+//                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
+                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_secondary))
                 }else{
-                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.colorPrimary))
-                    BarUtils.setStatusBarLightMode(this@MainActivity, true)
+                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.primary))
+//                    BarUtils.setStatusBarLightMode(this@MainActivity, true)
                 }
             }
 

@@ -6,9 +6,11 @@
 
     <color name="divide_line">#d7d7d7</color>
     <color name="bt_login_half_bg">#739BF0</color>
-    <color name="bt_login_bg">#3870EA</color>
+    <color name="bt_login_bg">@color/primary</color>
 
 
+    <color name="primary">#207AE1</color>
+    <color name="color_secondary">#0F3F64</color>
     <color name="color_000000">#000000</color>
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
@@ -20,7 +22,7 @@
     <color name="color_EDEDED">#EDEDED</color>
     <color name="color_ffffff">#ffffff</color>
     <color name="color_F1F1F1">#F1F1F1</color>
-    <color name="color_3870EA">#3870EA</color>
+    <color name="color_3870EA">@color/primary</color>
     <color name="color_FD8424">#FD8424</color>
     <color name="color_F2F2F2">#F2F2F2</color>
     <color name="color_FF0202">#FF0202</color>

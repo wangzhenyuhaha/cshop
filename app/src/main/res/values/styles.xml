@@ -25,6 +25,20 @@
         <item name="android:background">@color/color_E6E6E6</item>
     </style>
 
+    <style name="dash_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@drawable/line_h</item>
+        <item name="android:layerType">software</item>
+    </style>
+
+    <style name="dash_v_line">
+        <item name="android:layout_width">3dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/line_v</item>
+        <item name="android:layerType">software</item>
+    </style>
+
     <style name="style_goods_menu">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -243,7 +257,14 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:paddingTop">25dp</item>
+        <item name="android:paddingBottom">25dp</item>
+    </style>
+
+    <style name="main_tool_layout">
+        <item name="android:orientation">horizontal</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="main_data_layout_item">
         <item name="android:layout_weight">1</item>
@@ -270,17 +291,19 @@
     <style name="today_data_value">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#ffcddcff</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:layout_gravity">center</item>
     </style>
     <style name="today_data_hint">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">#ffcddcff</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dimen_5</item>
+        <item name="android:drawableBottom">@mipmap/ic_triangle_down_white</item>
     </style>
     <style name="main_tools">
         <item name="android:layout_width">0dp</item>
@@ -289,8 +312,8 @@
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:gravity">center</item>
-        <item name="android:padding">10dp</item>
-        <item name="android:drawablePadding">5dp</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:drawablePadding">10dp</item>
     </style>
     <style name="main_parts_hint">
         <item name="android:paddingLeft">15dp</item>
