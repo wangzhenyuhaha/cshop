@@ -54,8 +54,8 @@ public class IGoodsTabView extends RelativeLayout {
     }
 
     public void setTabNumber(int number) {
-        tvTabNumber.setVisibility(View.VISIBLE);
-//        tvTabNumber.setVisibility(number > 0 ? View.VISIBLE : View.GONE);
+//        tvTabNumber.setVisibility(View.VISIBLE);
+        tvTabNumber.setVisibility(number > 0 ? View.VISIBLE : View.GONE);
         String numberString = number > 999 ? "999+" : (number + "");
         tvTabNumber.setText(String.format("(%s)", numberString));
     }

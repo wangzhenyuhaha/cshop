@@ -25,6 +25,7 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
+import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -69,18 +70,18 @@ class MainActivity : AppCompatActivity() {
         fragmentList.clear()
         fragmentList.add(mainFragment)
         fragmentList.add(OrderTabFragment.newInstance())
-        fragmentList.add(GoodsFragment.newInstance())
+//        fragmentList.add(GoodsNewFragment.newInstance())
         fragmentList.add(NewMyFragment.newInstance())
 
         val titleList = ArrayList<String>()
         titleList.add("工作台")
 //        titleList.add("商品")
-        titleList.add("订单")
+//        titleList.add("订单")
         titleList.add("RM")
         titleList.add("我的")
         val tabIconList = ArrayList<Int>()
         tabIconList.add(R.drawable.selector_tab_1)
-        tabIconList.add(R.drawable.selector_tab_3)
+//        tabIconList.add(R.drawable.selector_tab_3)
         tabIconList.add(R.drawable.selector_tab_2)
         tabIconList.add(R.drawable.selector_tab_4)
 
@@ -138,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun changeTabPosition(event:TabChangeEvent){
+    fun changeTabPosition(event : TabChangeEvent){
        tbMain.selectTab(tbMain.getTabAt(2))
        MainScope().launch {
            delay(100)

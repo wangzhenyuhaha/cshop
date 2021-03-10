@@ -160,4 +160,5 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
         }
         return super.dispatchTouchEvent(ev)
     }
+
 }

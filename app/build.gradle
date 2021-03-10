@@ -19,7 +19,7 @@ android {
         targetSdkVersion android.targetSdkVersion
         versionCode 1
         versionName "2.0.1"
-        setProperty("archivesBaseName", "mkt_$versionName"+"_"+"$formattedDate")
+        setProperty("archivesBaseName", "cshop_$versionName"+"_"+"$formattedDate")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

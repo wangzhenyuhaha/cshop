@@ -125,6 +125,16 @@ class GoodsVOWrapper : Serializable {
     var videoUrl: String? = null
 
 
+    // 配送时效
+    var goodsDeliveryType : String ?= ""
+    // 配送方式
+    var goodsDeliveryModel : String ?= ""
+
+
+    // 配送时效
+    var goodsWeight : String ?= ""
+    // 配送方式
+    var goodsUnit : String ?= ""
 
     // ------------虚拟商品---------------------
     // VIRTUAL

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="336dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/shape_goods_pop_quantity"
+    android:maxHeight="436dp"
+    android:minHeight="336dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/dimen_15">
+
+        <TextView
+            android:id="@+id/doubleListTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            tools:text="请选择商品类型"
+            android:textColor="#ff333333"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/doubleListCloseTv"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/order_logistics_company_close" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/firstListRv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="20dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/secondListRv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingTop="20dp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/doubleListConfirmTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_38"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_15"
+        android:layout_marginBottom="@dimen/dimen_19"
+        android:background="@drawable/shape_goods_pop_btn"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dimen_13"
+        android:visibility="gone" />
+</LinearLayout>

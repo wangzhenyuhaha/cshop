@@ -66,20 +66,30 @@
         android:gravity="center_vertical">
 
         <com.lingmiao.shop.widget.IGoodsTabView
+            android:id="@+id/tvTabAll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="true"
+            app:tvTitle="全部"
+            />
+
+        <com.lingmiao.shop.widget.IGoodsTabView
             android:id="@+id/tvTabSelling"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="true"
-            app:tvTitle="出售中"
+            app:tvTitle="已上架"
             />
+
         <com.lingmiao.shop.widget.IGoodsTabView
             android:id="@+id/tvTabWaiting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="待审核"
+            app:tvTitle="待上架"
             />
 
         <com.lingmiao.shop.widget.IGoodsTabView
@@ -91,6 +101,14 @@
             app:tvTitle="已下架"
             />
 
+        <com.lingmiao.shop.widget.IGoodsTabView
+            android:id="@+id/tvTabSoldOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="false"
+            app:tvTitle="已售罄"
+            />
     </LinearLayout>
 
     <View

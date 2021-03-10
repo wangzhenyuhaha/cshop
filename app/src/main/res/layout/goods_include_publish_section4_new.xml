@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/goods_publish_container"
+    android:orientation="vertical"
+    app:ivBgColor="@color/color_ffffff"
+    app:ivRadius="@dimen/dimen_5">
+
+    <LinearLayout
+        android:id="@+id/section4RowVirtualSpecLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <!--  虚拟商品的套餐  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/goods_spce_item_left_mark"
+                android:text="设置套餐" />
+
+            <TextView
+                android:id="@+id/goodsVirtualSpecTv"
+                style="@style/goods_spec_item_right_edt"
+                android:drawableRight="@mipmap/common_arrow_right"
+                android:drawablePadding="@dimen/dimen_5"
+                android:gravity="end|center_vertical"
+                android:hint="请设置" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/section4Row1Ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <!--  设置规格  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/goods_spce_item_left_mark"
+                android:text="设置规格" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/goodsSpecTv"
+                style="@style/goods_spec_item_right_edt"
+                android:drawableRight="@mipmap/common_arrow_right"
+                android:drawablePadding="@dimen/dimen_5"
+                android:gravity="end|center_vertical"
+                android:hint="请设置规格" />
+        </LinearLayout>
+
+        <View style="@style/common_divider" />
+
+        <!--  货号/型号、重量  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <LinearLayout style="@style/goods_spec_sub_container">
+
+                <TextView
+                    style="@style/goods_spce_item_left"
+                    android:text="重量/单位" />
+
+                <com.james.common.view.ITextView
+                    android:id="@+id/goodsWeightEdt"
+                    style="@style/goods_spce_item_left"
+                    android:hint="请输入重量"
+                    android:layout_weight="1"
+                    android:layout_marginRight="@dimen/dimen_5"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:ivBgColor="#fff"
+                    android:padding="@dimen/dimen_5"
+                    app:ivBorderWidth="1dp"
+                    app:ivBorderColor="@color/divide_line"
+                    app:ivRadius="4dp" />
+
+
+                <com.james.common.view.ITextView
+                    android:id="@+id/goodsWeightTv"
+                    style="@style/goods_spce_item_left"
+                    android:layout_width="60dp"
+                    android:drawableRight="@mipmap/goods_blue_arrow_up"
+                    android:text="KG"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:ivBgColor="#fff"
+                    android:padding="@dimen/dimen_5"
+                    app:ivBorderWidth="1dp"
+                    app:ivBorderColor="@color/divide_line"
+                    app:ivRadius="4dp" />
+
+                <TextView
+                    style="@style/goods_spce_item_left"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingLeft="@dimen/dimen_5"
+                    android:text="/" />
+
+                <com.james.common.view.ITextView
+                    android:id="@+id/goodsUnitTv"
+                    style="@style/goods_spce_item_left"
+                    android:layout_width="60dp"
+                    android:drawableRight="@mipmap/goods_blue_arrow_up"
+                    android:text="个"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_666666"
+                    android:textSize="13sp"
+                    app:ivBgColor="#fff"
+                    android:padding="@dimen/dimen_5"
+                    app:ivBorderWidth="1dp"
+                    app:ivBorderColor="@color/divide_line"
+                    app:ivRadius="4dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/section4Row45Ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        </LinearLayout>
+
+<!--        <View style="@style/common_divider" />-->
+
+
+        <!--  SKU编码  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/goods_spce_item_left"
+                    android:text="sku编码" />
+
+                <EditText
+                    android:id="@+id/goodsSKUEdt"
+                    style="@style/goods_spec_item_right_edt"
+                    android:gravity="end|center_vertical"
+                    android:hint="外部sku_id，请输入"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <View style="@style/common_divider" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/common_divider" />
+
+    <LinearLayout
+        android:id="@+id/section4Row6Ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:visibility="gone"
+            style="@style/goods_spec_sub_container">
+
+            <TextView
+                style="@style/goods_spce_item_left"
+                android:text="外部编码" />
+
+            <EditText
+                android:id="@+id/goodsIDEdt"
+                style="@style/goods_spec_item_right_edt"
+                android:hint="输入外部商品id"
+                android:inputType="text"
+                android:paddingEnd="@dimen/dimen_10" />
+        </LinearLayout>
+
+        <LinearLayout style="@style/goods_spec_sub_container">
+
+            <TextView
+                style="@style/goods_spce_item_left"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="多规格" />
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/switchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginLeft="@dimen/dimen_20"
+                app:kswTintColor="@color/color_3870EA" />
+        </LinearLayout>
+    </LinearLayout>
+
+</com.james.common.view.ILinearLayout>

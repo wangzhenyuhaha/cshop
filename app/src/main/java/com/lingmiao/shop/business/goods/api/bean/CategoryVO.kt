@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.api.bean
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.business.commonpop.bean.ItemData
 
 
 /**
@@ -23,4 +24,17 @@ data class CategoryVO(
     var name: String?,
     @SerializedName("parent_id")
     var parentId: String?
-)
+) : ItemData {
+    override fun getIValue(): String? {
+        return categoryId;
+    }
+
+    override fun getIName(): String? {
+        return name;
+    }
+
+    override fun getIHint(): String? {
+        return name;
+    }
+
+}

@@ -117,7 +117,16 @@
             android:name=".business.goods.SpecKeyActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".business.goods.GoodsPublishTypeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".business.goods.GoodsPublishActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsPublishNewActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".business.goods.SpecSettingActivity"
@@ -134,6 +143,16 @@
         <activity
             android:name=".business.goods.GoodsVideoActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".business.goods.MenuManagerActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".business.goods.MenuEditActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- ======================= 商品模块  END ========================= -->
 
@@ -196,6 +215,15 @@
         <activity
             android:name=".business.me.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".business.me.ManagerSettingActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".business.me.DeliveryManagerActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".business.me.LinkInSettingActivity"
+            android:screenOrientation="portrait"/>
         <!-- ======================= 个人中心  END ========================= -->
 
 

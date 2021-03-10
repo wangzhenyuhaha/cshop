@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="52dp"
+            android:orientation="vertical">
+
+
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
+
+                <LinearLayout
+                    android:id="@+id/rlShopOperate"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="营业时间"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center|right"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:textColor="@color/color_333333"
+                            android:textSize="12sp"
+                            android:paddingRight="@dimen/dimen_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="每天" />
+
+                        <TextView
+                            android:id="@+id/tvShopOperateTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp"
+                            android:paddingLeft="@dimen/dimen_5"
+                            tools:text="08:00-23:00"
+                            android:hint="请选择-请选择"
+                            android:drawablePadding="@dimen/dimen_10"
+                            android:drawableRight="@mipmap/me_arrow_right"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/rlShopManageNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="未接订单自动取消时间"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:background="@null"
+                        android:gravity="center|right"
+                        android:id="@+id/tvShopManageNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        android:inputType="number"
+                        android:hint="请输入时间，15分钟以内"
+                        tools:text="8018101011" />
+
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+                <RelativeLayout
+                    android:id="@+id/rlShopManageLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="联系设置"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvShopManageLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:hint="设置联系方式" />
+
+                </RelativeLayout>
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/rlShopManageDelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="配送设置"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvShopManageDelivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:hint="请选择" />
+
+                </RelativeLayout>
+
+            </com.james.common.view.ILinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvShopOperateSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dimen_15"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="13sp"
+        app:ivBgColor="#207AE1"
+        app:ivRadius="18dp" />
+
+</RelativeLayout>

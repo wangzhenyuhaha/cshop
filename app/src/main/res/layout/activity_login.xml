@@ -202,12 +202,12 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <ImageView
+            <CheckBox
                 android:id="@+id/ivService"
-                android:layout_width="12dp"
-                android:layout_height="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/selector_goods_delivery_checkbox" />
+                android:button="@drawable/selector_goods_delivery_checkbox" />
 
             <TextView
                 android:layout_width="wrap_content"

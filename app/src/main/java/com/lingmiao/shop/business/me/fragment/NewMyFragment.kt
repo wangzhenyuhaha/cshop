@@ -51,14 +51,16 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     }
 
     override fun initViewsAndData(rootView: View) {
-//        rlMyPersonInfo.setOnClickListener(this)
+        rlMyPersonInfo.setOnClickListener(this)
         tvMyWallet.setOnClickListener(this)
         tvDeposit.setOnClickListener(this)
         tvUseTime.setOnClickListener(this)
         tvBalance.setOnClickListener(this)
+        ivSetting.setOnClickListener(this)
+        tvManagerSetting.setOnClickListener(this)
 //        rlMyShopManage.setOnClickListener(this)
-//        rlMyFeedback.setOnClickListener(this)
-//        rlMyContactService.setOnClickListener(this)
+        rlMyFeedback.setOnClickListener(this)
+        rlMyContactService.setOnClickListener(this)
 //        rlMySetting.setOnClickListener(this)
         mPresenter?.onCreate()
         mPresenter?.getMyData()
@@ -85,6 +87,8 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             R.id.rlMyContactService -> {//联系客服
                 OtherUtils.goToDialApp(activity,IConstant.SERVICE_PHONE)
             }
+            R.id.tvManagerSetting,
+            R.id.ivSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)
             }

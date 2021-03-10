@@ -15,7 +15,6 @@ import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.presenter.GoodsTabNumberPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsTabNumberPreImpl
 import com.lingmiao.shop.widget.IGoodsTabView
-import com.lingmiao.shop.widget.IOrderTabView
 import com.james.common.base.BaseFragment
 import kotlinx.android.synthetic.main.goods_fragment_goods_home.*
 import org.greenrobot.eventbus.EventBus

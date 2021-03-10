@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/goodsDetailContentNSV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/goodsDetailBottomLL">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/tools_sub_container"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/tools_sub_item_left_10"
+                        android:layout_weight="1"
+                        android:text="商品信息" />
+
+                    <TextView
+                        android:id="@+id/goodsInfoAddTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:drawableRight="@mipmap/goods_plus_blue"
+                        android:drawablePadding="@dimen/dimen_5"
+                        android:gravity="right"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/dimen_15"
+                        android:singleLine="true"
+                        android:textColor="@color/color_333333"
+                        android:textColorHint="@color/color_CACACA"
+                        android:textSize="@dimen/dimen_13" />
+
+                </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/goodsInfoRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:nestedScrollingEnabled="false" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                style="@style/tools_sub_container"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/tools_sub_item_left_10"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    android:text="介绍方案" />
+
+                <com.james.common.view.IRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_15"
+                    android:padding="14dp"
+                    app:ivBorderColor="@color/divide_line"
+                    app:ivBorderWidth="1dp"
+                    app:ivRadius="5dp">
+
+                    <EditText
+                        android:id="@+id/etFeedbackContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@null"
+                        android:gravity="top"
+                        android:hint="请输入商品介绍"
+                        android:maxLength="500"
+                        android:textColor="#333"
+                        android:textColorHint="#999999"
+                        android:textSize="12sp" />
+
+                </com.james.common.view.IRelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/tools_sub_container"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/tools_sub_item_left_10"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    android:text="商品详情图" />
+
+                <com.lingmiao.shop.business.goods.view.GalleryRecyclerView
+                    android:id="@+id/goodsDetailImageRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:nestedScrollingEnabled="false" />
+
+
+                <TextView
+                    android:padding="@dimen/dimen_10"
+                    android:textColor="@color/color_999999"
+                    android:text="只支持.jpg格式"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/goodsDetailBottomLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <com.james.common.view.ITextView
+            android:id="@+id/goodsDetailSubmitTv"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dimen_15"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#fff"
+            android:textSize="13sp"
+            app:ivBgColor="#207AE1"
+            app:ivRadius="18dp" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.james.common.view.IRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        app:ivBgColor="@color/color_ffffff"
+        app:ivRadius="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_10">
+
+        <TextView
+            android:background="@drawable/shape_goods_pop_quantity"
+            android:id="@+id/menuAddTv"
+            android:paddingVertical="@dimen/dimen_10"
+            android:paddingHorizontal="@dimen/dimen_15"
+            android:gravity="center_vertical"
+            android:drawableRight="@mipmap/goods_spec_blue_plus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="添加菜单"/>
+    </com.james.common.view.IRelativeLayout>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/fragment_base_load_more"/>
+
+    <LinearLayout
+        android:id="@+id/menuBottom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:visibility="gone">
+
+        <CheckBox
+            android:id="@+id/menuAllCheckCb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:button="@drawable/selector_goods_spce_checkbox"
+            android:paddingStart="@dimen/dimen_5"
+            android:text="全选"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_13"
+            android:paddingRight="@dimen/dimen_15"/>
+
+        <TextView
+            android:id="@+id/menuCancelTv"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dimen_38"
+            android:background="@drawable/shape_goods_search_edt"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dimen_14" />
+
+        <TextView
+            android:id="@+id/menuDeleteTv"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/dimen_38"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:background="@drawable/shape_goods_pop_btn"
+            android:gravity="center"
+            android:text="确定删除"
+            android:textColor="@color/color_ffffff"
+            android:textSize="@dimen/dimen_14" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

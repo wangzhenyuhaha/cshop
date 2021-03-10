@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="@dimen/dimen_15"
+    android:paddingVertical="@dimen/dimen_6"
+    android:layout_marginHorizontal="@dimen/dimen_15"
+    app:ivBgColor="#ffffff"
+    app:ivRadius="4dp"
+    app:ivBorderColor="#e2e2e2"
+    app:ivBorderWidth="0.5dp">
+
+<!--    <TextView-->
+<!--        android:id="@+id/goodsSearchOwnerTv"-->
+<!--        style="@style/style_goods_search_menu"-->
+<!--        android:text="供应商" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/goodsSearchNameTv"-->
+<!--        style="@style/style_goods_search_menu"-->
+<!--        android:text="商品名称"-->
+<!--        android:visibility="visible"-->
+<!--        tools:visibility="visible" />-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/level1Rv"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:overScrollMode="never" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/level2Rv"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:overScrollMode="never" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/level3Rv"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_weight="1"
+        android:overScrollMode="never"/>
+
+</com.james.common.view.ILinearLayout>

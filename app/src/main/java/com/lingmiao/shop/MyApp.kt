@@ -37,7 +37,7 @@ class MyApp : BaseApplication() {
 
         if(ProcessUtils.isMainProcess()){
             // bugly
-            CrashReport.initCrashReport(applicationContext, "a031007134", BuildConfig.DEBUG)
+            CrashReport.initCrashReport(applicationContext, "3e394c9cea", BuildConfig.DEBUG)
 
             JPushInterface.setDebugMode(BuildConfig.DEBUG)
             JPushInterface.init(this)

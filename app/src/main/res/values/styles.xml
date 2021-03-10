@@ -98,8 +98,8 @@
     <style name="goods_publish_container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginLeft">@dimen/dimen_14</item>
-        <item name="android:layout_marginRight">@dimen/dimen_14</item>
+<!--        <item name="android:layout_marginLeft">@dimen/dimen_14</item>-->
+<!--        <item name="android:layout_marginRight">@dimen/dimen_14</item>-->
         <item name="android:paddingLeft">@dimen/dimen_10</item>
         <item name="android:paddingRight">@dimen/dimen_10</item>
         <item name="android:layout_marginTop">@dimen/dimen_14</item>
@@ -257,8 +257,8 @@
         <item name="android:orientation">horizontal</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">25dp</item>
-        <item name="android:paddingBottom">25dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
     </style>
 
     <style name="main_tool_layout">
@@ -296,7 +296,7 @@
         <item name="android:layout_gravity">center</item>
     </style>
     <style name="today_data_hint">
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>

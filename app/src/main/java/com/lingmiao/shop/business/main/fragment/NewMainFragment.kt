@@ -27,6 +27,12 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.show
+import com.lingmiao.shop.business.goods.GoodsListActivity
+import com.lingmiao.shop.business.goods.GoodsPublishActivity
+import com.lingmiao.shop.business.goods.GoodsPublishTypeActivity
+import com.lingmiao.shop.business.goods.MenuManagerActivity
+import com.lingmiao.shop.business.me.ManagerSettingActivity
+import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
 import org.greenrobot.eventbus.EventBus
@@ -262,21 +268,39 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         tvTodayStoreWarn.text = String.format("%s", 0);
 
         // 管理设置
-        // tvManagerSetting
+        tvManagerSetting.setOnClickListener {
+            ActivityUtils.startActivity(ManagerSettingActivity::class.java)
+        }
         // 商品管理
-        // tvGoodsManager
+         tvGoodsManager.setOnClickListener {
+             GoodsListActivity.openActivity(context!!);
+         }
         // 菜单管理
-        // tvMenuManager
+         tvMenuManager.setOnClickListener {
+             ActivityUtils.startActivity(MenuManagerActivity::class.java)
+//             ActivityUtils.startActivity(GoodsPublishActivity::class.java)
+//             GoodsPublishActivity.openActivity(context!!, "");
+         }
         // 营销设置
-        // tvSaleSetting
+         tvSaleSetting.setOnClickListener {
+
+         }
         // 钱包账户
-        // tvWalletAccount
+         tvWalletAccount.setOnClickListener {
+             ActivityUtils.startActivity(MyWalletActivity::class.java);
+         }
         // 用户管理
-        // tvUserManager
+         tvUserManager.setOnClickListener {
+
+         }
         // 数据统计
-        // tvDataAnalysis
+         tvDataAnalysis.setOnClickListener {
+
+         }
         // 敬请期待
-        //tvComeSoon
+        tvComeSoon.setOnClickListener {
+
+        }
     }
 
     override fun onMainInfoError(code: Int) {

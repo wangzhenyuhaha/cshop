@@ -151,6 +151,19 @@ object GoodsRepository {
     }
 
     /**
+     * 通过商品名称进行匹配
+     * @param goodsName：商品名称
+     */
+    suspend fun loadGoodsListByCId(pageNo: Int, cId : String): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("page_no", pageNo)
+        map.put("page_size", 20)
+        map.put("category_id", cId)
+        return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+    //
+
+    /**
      * 获取规格名列表
      */
     suspend fun loadSpecKey(categoryId: String): HiResponse<List<SpecKeyVO>> {

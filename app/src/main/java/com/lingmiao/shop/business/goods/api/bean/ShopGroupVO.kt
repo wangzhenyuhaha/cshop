@@ -31,7 +31,10 @@ class ShopGroupVO : Serializable {
     var shopId: String? = null
     @SerializedName("sort")
     var sort: Int = 0
-
+    /**
+     * 是否选中
+     */
+    var isChecked : Boolean ? = false
     companion object {
         const val LEVEL_1 = 1
         const val LEVEL_2 = 2
@@ -69,5 +72,6 @@ class ShopGroupVO : Serializable {
     fun setDisable(enable: Boolean) {
         disable = if (enable) TYPE_SHOW else TYPE_HIDE
     }
+
 
 }

@@ -102,7 +102,10 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         tvBottomRight.setOnClickListener { changeLoginType() }
         tvLoginHint.setOnClickListener { changeLoginRegister() }
         ivService.isSelected = true
-        ivService.setOnClickListener { ivService.isSelected = !ivService.isSelected }
+//        ivService.setOnCheckedChangeListener { buttonView, isChecked ->
+//            ivService.isSelected = !ivService.isSelected
+//        }
+//        ivService.setOnClickListener { ivService.isSelected = !ivService.isSelected }
         tvService.setOnClickListener {
             val intent = Intent(this,UserServiceH5Activity::class.java)
             startActivityForResult(intent, REQUEST_CODE_SERVICE)

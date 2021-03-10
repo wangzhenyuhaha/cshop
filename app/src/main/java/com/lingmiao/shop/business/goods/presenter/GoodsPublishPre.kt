@@ -35,4 +35,6 @@ interface GoodsPublishPre : BasePresenter {
         fun onUpdateExpire(item : GoodsUseExpireVo?)
         fun onUpdateUseTime(list : List<MultiPickerItemBean>?)
     }
+
 }
+
