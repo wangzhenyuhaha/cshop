@@ -178,6 +178,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopManageCategory.text = bean.categoryNames?.replace(" ","/")
         tvShopManageContactName.text = bean.linkName
         tvShopManageServicePhone.text = bean.linkPhone
+        tvShopManageAddress.text = bean.shopAdd
         licenceImg = bean.licenceImg
     }
 

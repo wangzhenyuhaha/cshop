@@ -14,8 +14,7 @@
         <com.lingmiao.shop.widget.ToolBarView
             android:id="@+id/toolbarView"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_toolbar_height"
-            android:background="@color/color_ffffff" />
+            android:layout_height="@dimen/dimen_toolbar_height" />
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
             android:id="@+id/tabLayout"

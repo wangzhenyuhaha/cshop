@@ -6,4 +6,11 @@ Auther      : Fox
 Desc        :
  **/
 class UserVo {
+
+
+    /**
+     * 是否选中
+     */
+    var isChecked : Boolean ? = false
+
 }

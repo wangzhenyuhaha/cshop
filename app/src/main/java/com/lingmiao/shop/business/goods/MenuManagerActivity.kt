@@ -21,15 +21,11 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
     private var mTabTitles = arrayOf("置顶菜单", "常用菜单")
 
     override fun getLayoutId(): Int {
-        return R.layout.tools_activity_logistics_tool;
+        return R.layout.sales_activity_stats;
     }
 
     override fun useLightMode(): Boolean {
         return false
-    }
-
-    override fun useBaseLayout(): Boolean {
-        return false;
     }
 
     override fun createPresenter(): BasePresenter {
@@ -44,9 +40,7 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
     }
 
     private fun initTitle() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.manager_setting_title))
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.manager_setting_title))
     }
 
     private fun initTabLayout() {

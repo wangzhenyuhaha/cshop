@@ -15,8 +15,8 @@ data class ShopManage(
 //    var openTimeType: Int?,
 //    @SerializedName("ship_type")
 //    var shipType: String?,
-//    @SerializedName("shop_add")
-//    var shopAdd: String?,
+    @SerializedName("shop_add")
+    var shopAdd: String?,
 //    @SerializedName("shop_banner")
 //    var shopBanner: String?,
     @SerializedName("shop_desc")

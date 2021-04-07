@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods
 
 import android.content.Context
 import android.content.Intent
+import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GroupManagerEditPre
@@ -12,6 +13,7 @@ import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.isNotBlank
 import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.business.tuan.GoodsSelectActivity
 import kotlinx.android.synthetic.main.goods_activity_menu_edit.*
 
 /**
@@ -60,8 +62,8 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         groupVO = ShopGroupVO.convert(group)
     }
 
-    override fun useBaseLayout(): Boolean {
-        return false
+    override fun useLightMode(): Boolean {
+        return false;
     }
 
     override fun getLayoutId(): Int {
@@ -75,11 +77,11 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
     override fun initView() {
         window.setBackgroundDrawable(null)
         if(isEditMode){
-            toolbarView.setTitleContent("编辑置顶菜单")
+            mToolBarDelegate.setMidTitle("编辑置顶菜单")
         }else{
-            toolbarView.setTitleContent("添加置顶菜单")
+            mToolBarDelegate.setMidTitle("添加置顶菜单")
         }
-        toolbarView.showDivider(false)
+//        toolbarView.showDivider(false)
         restoreUI()
 
         // 商品分组图标
@@ -93,7 +95,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         }
         // 选择商品
         goodsListTv.setOnClickListener {
-
+            ActivityUtils.startActivity(GoodsSelectActivity::class.java)
         }
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {

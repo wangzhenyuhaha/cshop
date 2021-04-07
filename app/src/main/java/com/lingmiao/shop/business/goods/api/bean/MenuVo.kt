@@ -29,4 +29,7 @@ class MenuVo : AbstractExpandableItem<MenuVo>(),MultiItemEntity{
         return (showLevel ?: 1) - 1;
     }
 
+
+    var thumbnail : String? = ""
+
 }

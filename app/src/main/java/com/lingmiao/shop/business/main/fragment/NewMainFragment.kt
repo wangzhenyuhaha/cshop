@@ -32,6 +32,9 @@ import com.lingmiao.shop.business.goods.GoodsPublishActivity
 import com.lingmiao.shop.business.goods.GoodsPublishTypeActivity
 import com.lingmiao.shop.business.goods.MenuManagerActivity
 import com.lingmiao.shop.business.me.ManagerSettingActivity
+import com.lingmiao.shop.business.sales.SalesSettingActivity
+import com.lingmiao.shop.business.sales.StatsActivity
+import com.lingmiao.shop.business.sales.UserManagerActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
@@ -283,7 +286,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
          }
         // 营销设置
          tvSaleSetting.setOnClickListener {
-
+            ActivityUtils.startActivity(SalesSettingActivity::class.java)
          }
         // 钱包账户
          tvWalletAccount.setOnClickListener {
@@ -291,11 +294,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
          }
         // 用户管理
          tvUserManager.setOnClickListener {
-
+             ActivityUtils.startActivity(UserManagerActivity::class.java)
          }
         // 数据统计
          tvDataAnalysis.setOnClickListener {
-
+             ActivityUtils.startActivity(StatsActivity::class.java)
          }
         // 敬请期待
         tvComeSoon.setOnClickListener {

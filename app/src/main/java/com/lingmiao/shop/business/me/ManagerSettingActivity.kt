@@ -20,15 +20,11 @@ class ManagerSettingActivity : BaseActivity<ManagerSettingPresenter>(), ManagerS
     private var mTabTitles = arrayOf("基础", "运营")
 
     override fun getLayoutId(): Int {
-        return R.layout.tools_activity_logistics_tool;
+        return R.layout.sales_activity_stats;
     }
 
     override fun useLightMode(): Boolean {
         return false
-    }
-
-    override fun useBaseLayout(): Boolean {
-        return false;
     }
 
     override fun createPresenter(): ManagerSettingPresenter {
@@ -43,9 +39,7 @@ class ManagerSettingActivity : BaseActivity<ManagerSettingPresenter>(), ManagerS
     }
 
     private fun initTitle() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.manager_setting_title))
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.manager_setting_title))
     }
 
     private fun initTabLayout() {

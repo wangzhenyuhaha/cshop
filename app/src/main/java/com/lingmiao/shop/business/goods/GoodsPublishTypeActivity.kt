@@ -25,7 +25,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         return GoodsPublishTypePreImpl(this, this);
     }
 
-    override fun useBaseLayout(): Boolean {
+    override fun useLightMode(): Boolean {
         return false;
     }
 
@@ -34,9 +34,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
     }
 
     override fun initView() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.goods_publish_type_title))
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.goods_publish_type_title))
         initData();
         initAdapter();
         initRecycleView();
@@ -118,7 +116,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
                     val bItem = adapter.data[position] as GoodsPublishTypeVo
 
                     if(bItem?.parentLevel == 0) {
-                        GoodsManagerActivity.type(context, bItem?.showLevel);
+                        GoodsManagerActivity.type(context, "0");
                     } else {
                         GoodsPublishNewActivity.newPublish(context, 0);
                     }

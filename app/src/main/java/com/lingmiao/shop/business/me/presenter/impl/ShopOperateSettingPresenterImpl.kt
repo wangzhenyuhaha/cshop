@@ -19,7 +19,7 @@ class ShopOperateSettingPresenterImpl (val context: Context,var view : ShopOpera
     private val mItemPreImpl: ItemPopPreImpl by lazy { ItemPopPreImpl(view) }
 
     override fun showWorkTimePop(target: android.view.View) {
-        mItemPreImpl?.showWorkTimePop(target, context,"请选择营业时间", "") { item1 : WorkTimeVo?, item2 : WorkTimeVo? ->
+        mItemPreImpl?.showWorkTimePop(context, "") { item1 : WorkTimeVo?, item2 : WorkTimeVo? ->
             view?.onUpdateWorkTime(item1, item2);
         }
     }

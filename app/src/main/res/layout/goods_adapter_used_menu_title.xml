@@ -58,6 +58,13 @@
             tools:visibility="visible"
             android:paddingRight="@dimen/dimen_15"/>
 
+        <ImageView
+            android:padding="@dimen/dimen_15"
+            android:gravity="center"
+            android:src="@mipmap/goods_spec_blue_plus"
+            android:id="@+id/menuAddGoodsIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <View style="@style/DivideLineHorizontal" />

@@ -1,11 +1,16 @@
 package com.lingmiao.shop.business.goods.adapter
 
 import android.widget.CompoundButton
+import android.widget.ImageView
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.MenuVo
+import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.business.tools.adapter.setOnCheckedChangeListener
+import com.lingmiao.shop.util.GlideUtils
+import com.lingmiao.shop.util.formatDouble
 
 class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo, BaseViewHolder>(mList) {
 
@@ -44,8 +49,10 @@ class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo,
                 // menuCountTv
                 // 总行
                 helper.addOnClickListener(R.id.titleLL);
+                helper.addOnClickListener(R.id.menuAddGoodsIv);
                 // 删除选中
                 helper.setGone(R.id.menuCheckCb, isBatchEditModel);
+                helper.setGone(R.id.menuAddGoodsIv, !isBatchEditModel);
 
                 helper.setChecked(R.id.menuCheckCb, isChecked?:false);
 
@@ -58,11 +65,31 @@ class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo,
             } else if(item.itemType == TYPE_LEVEL_1) {
                 val cItem : MenuVo = item;
                 cItem.pPosition = pPosition;
-                helper.setText(R.id.itemTv, cItem?.name);
-                helper.setImageResource(R.id.checkIv, if(cItem.isExpanded) checkedDrawableRes else uncheckDrawable);
+//                helper.setText(R.id.itemTv, cItem?.name);
+//                helper.setImageResource(R.id.checkIv, if(cItem.isExpanded) checkedDrawableRes else uncheckDrawable);
 
-                helper.addOnClickListener(R.id.itemLL);
-                helper.addOnClickListener(R.id.checkIv);
+//                helper.addOnClickListener(R.id.itemLL);
+//                helper.addOnClickListener(R.id.checkIv);
+
+                GlideUtils.setImageUrl1(helper.getView<ImageView>(R.id.goodsIv), thumbnail)
+
+//                helper.getView<TextView>(R.id.goodsNameTv).setCompoundDrawablesWithIntrinsicBounds(if(item?.goodsType == GoodsConfig.GOODS_TYPE_VIRTUAL) R.mipmap.ic_virtual else 0, 0, 0, 0)
+                helper.setText(R.id.goodsNameTv, name)
+
+                helper.setText(
+                    R.id.goodsQuantityTv,
+                    mContext.getString(R.string.goods_home_spec, "50ml")
+                )
+
+                helper.setText(R.id.goodsPriceTv, formatDouble(11.22))
+
+                helper.setGone(R.id.menuIv, isBatchEditModel);
+//            setOnCheckedChangeListener(helper.getView(R.id.menuIv), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
+//                item?.isChecked = isChecked;
+//            }
+
+                helper.setChecked(R.id.menuIv, item?.isChecked?:false);
+                helper.addOnClickListener(R.id.menuIv);
 
             }
 

@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lingmiao.shop.widget.ToolBarView
-        android:id="@+id/toolbarView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_toolbar_height"
-        android:background="@color/color_ffffff" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

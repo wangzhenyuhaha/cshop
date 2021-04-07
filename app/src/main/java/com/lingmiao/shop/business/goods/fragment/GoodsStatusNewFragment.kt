@@ -2,6 +2,8 @@ package com.lingmiao.shop.business.goods.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.Gravity
+import android.view.MenuItem
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lingmiao.shop.R
@@ -17,6 +19,8 @@ import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.widget.EmptyView
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.exts.singleClick
+import com.lingmiao.shop.business.goods.adapter.GoodsAdapter
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -89,7 +93,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
                     goodsVO.isChecked = false;
                 }
             }
-            (mAdapter as GoodsStatusAdapter)?.setBatchEditModel(false);
+            (mAdapter as GoodsAdapter)?.setBatchEditModel(false);
         }
 
         when (goodsStatus) {
@@ -108,8 +112,8 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
-    override fun initAdapter(): GoodsStatusAdapter {
-        return GoodsStatusAdapter(goodsStatus!!).apply {
+    override fun initAdapter(): GoodsAdapter {
+        return GoodsAdapter(goodsStatus!!).apply {
             setOnItemChildClickListener { adapter, view, position ->
                 var item = mAdapter.getItem(position) as GoodsVO;
                 if (view.id == R.id.menuIv) {

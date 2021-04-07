@@ -21,11 +21,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     private var mTabTitles = arrayOf("即时配送", "预约配送")
 
     override fun getLayoutId(): Int {
-        return R.layout.tools_activity_logistics_tool;
-    }
-
-    override fun useBaseLayout(): Boolean {
-        return false
+        return R.layout.sales_activity_stats;
     }
 
     override fun useLightMode(): Boolean {
@@ -44,9 +40,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     }
 
     private fun initTitle() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.delivery_manager_title))
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.delivery_manager_title))
     }
 
     private fun initTabLayout() {

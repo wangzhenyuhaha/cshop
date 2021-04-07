@@ -25,6 +25,10 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
         return R.layout.wallet_activity_my_wallet;
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun initView() {
         mToolBarDelegate.setMidTitle("我的钱包");
 

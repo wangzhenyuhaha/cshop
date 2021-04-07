@@ -8,7 +8,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dimen_10">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,8 +162,6 @@
 
                 </LinearLayout>
 
-                <View style="@style/DivideLineHorizontal" />
-
                 <RelativeLayout
                     android:id="@+id/rlShopManageDesc"
                     android:layout_width="match_parent"
@@ -287,6 +286,31 @@
 
                 </LinearLayout>
 
+                <View style="@style/DivideLineHorizontal" />
+
+                <LinearLayout
+                    android:id="@+id/rlShopManageAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺地址"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvShopManageAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:gravity="center|right"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
             </com.james.common.view.ILinearLayout>
 

@@ -111,8 +111,8 @@
         android:orientation="vertical"
         app:ivBgColor="@color/white"
         app:ivRadius="5dp">
-
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_wallet_third_part"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,11 +141,47 @@
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             style="@style/DivideLineHorizontal"
             android:layout_marginLeft="@dimen/dimen_10"
             android:layout_marginRight="@dimen/dimen_10" />
 
         <LinearLayout
+            android:id="@+id/ll_wallet_wechat_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_20">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/wallet_hint_wechat"
+                android:textColor="#333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_wallet_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                android:drawablePadding="10dp"
+                android:text="点击设置"
+                android:textColor="#999"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <View
+            android:visibility="gone"
+            style="@style/DivideLineHorizontal"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginRight="@dimen/dimen_10" />
+
+        <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_wallet_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

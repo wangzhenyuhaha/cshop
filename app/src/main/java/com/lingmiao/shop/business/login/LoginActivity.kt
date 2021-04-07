@@ -101,7 +101,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         }
         tvBottomRight.setOnClickListener { changeLoginType() }
         tvLoginHint.setOnClickListener { changeLoginRegister() }
-        ivService.isSelected = true
+//        ivService.isSelected = true
 //        ivService.setOnCheckedChangeListener { buttonView, isChecked ->
 //            ivService.isSelected = !ivService.isSelected
 //        }
@@ -131,7 +131,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         }
         wvCaptcha.settings.javaScriptEnabled = true
         wvCaptcha.addJavascriptInterface(this, "android")
-        wvCaptcha.loadUrl(RetrofitUtil.getBaseUrl() + "/captcha.html")
+        wvCaptcha.loadUrl("http://47.117.112.134:9527/captcha.html")
 //        wvCaptcha.loadUrl("http://t-api.seller.fisheagle.cn:7003/captcha.html")
         LogUtils.d(wvCaptcha.url)
     }

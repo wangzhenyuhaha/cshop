@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main
 
-import android.Manifest
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,16 +11,16 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ReflectUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.james.common.base.BaseActivity
+import com.james.common.netcore.coroutine.CoroutineSupport
+import com.james.common.utils.exts.doIntercept
+import com.james.common.utils.permission.interceptor.LocationInterceptor
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.main.bean.ApplyShopAddress
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
 import com.lingmiao.shop.business.main.presenter.ApplyShopAddressPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopAddressPresenterImpl
 import com.lingmiao.shop.util.OtherUtils
-import com.james.common.base.BaseActivity
-import com.james.common.netcore.coroutine.CoroutineSupport
-import com.james.common.utils.exts.doIntercept
-import com.james.common.utils.permission.interceptor.LocationInterceptor
 import com.tencent.lbssearch.TencentSearch
 import com.tencent.lbssearch.`object`.param.Geo2AddressParam
 import com.tencent.lbssearch.`object`.param.SearchParam
@@ -38,7 +37,6 @@ import com.tencent.tencentmap.mapsdk.maps.LocationSource.OnLocationChangedListen
 import com.tencent.tencentmap.mapsdk.maps.TencentMap
 import com.tencent.tencentmap.mapsdk.maps.model.*
 import kotlinx.android.synthetic.main.main_activity_apply_shop_address.*
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
 
@@ -146,9 +144,84 @@ class ApplyShopAddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     }
 
+    private fun getAddress(tencentLocation: LatLng?) {
 
+        currentLatLng = LatLng(
+            tencentLocation?.latitude!!,
+            tencentLocation?.longitude!!
+        )
+//        if(tencentLocation.address.contains("市")){
+//            var tempCity = tencentLocation.address.substring(0,tencentLocation.address.indexOf("市")+1)
+//            try {
+//                if(tempCity.contains("省")){
+//                    tempCity = tempCity.substring(tempCity.indexOf("省")+1)
+//                    city = tempCity
+//                    LogUtils.d("城市:"+tempCity)
+//                }
+//            }catch (e:Exception){
+//                e.printStackTrace()
+//            }
+//
+//        }
+
+
+        //https://lbs.qq.com/mobile/androidMapSDK/developerGuide/drawPoints
+        //创建Marker对象之前，设置属性
+        val position = LatLng(tencentLocation.latitude, tencentLocation.longitude)
+        addMyMarker(position)
+
+        reGeocoder(position,false)
+        //                        mCoroutine.launch {
+        //                            delay(5000)
+        //                            reGeocoder(position)
+        //                        }
+
+    }
+
+
+    var zoom = 17.0f;
     private fun initMap() {
         mapView = mvShopAddress.map
+//        mapView?.setOnMarkerDragListener(object : TencentMap.OnMarkerDragListener{
+//            override fun onMarkerDragEnd(marker: Marker?) {
+//                val latLng = marker?.getPosition()
+//                val latitude: Double = latLng?.latitude?:0.0
+//                val longitude: Double = latLng?.longitude?:0.0
+//                getAddress(latLng);
+//            }
+//
+//            override fun onMarkerDragStart(p0: Marker?) {
+//
+//            }
+//
+//            override fun onMarkerDrag(marker: Marker?) {
+//
+//            }
+//
+//        });
+        mapView?.setOnCameraChangeListener(object : TencentMap.OnCameraChangeListener{
+            override fun onCameraChangeFinished(position: CameraPosition?) {
+                val latLng = position?.target
+                val latitude: Double = latLng?.latitude?:0.0
+                val longitude: Double = latLng?.longitude?:0.0
+                getAddress(latLng);
+//                val position = LatLng(latitude, longitude)
+//                addMyMarker(position);
+                position.apply {
+                    zoom = zoom;
+
+                }
+            }
+
+            override fun onCameraChange(position: CameraPosition?) {
+//                val latLng = position?.target;
+//                if(latLng != null) {
+//                    val position = LatLng(latLng?.latitude, latLng?.longitude)
+//                    addMyMarker(position)
+//                }
+            }
+
+        });
         doIntercept(LocationInterceptor(context),failed = {}){
             //地图上设置定位数据源
             mapView?.setLocationSource(this);
@@ -232,31 +305,35 @@ class ApplyShopAddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     private fun addMyMarker(position: LatLng) {
 
-        val cameraSigma = CameraUpdateFactory.newCameraPosition(
-            CameraPosition(
-                position,  //中心点坐标，地图目标经纬度
-                17f,  //目标缩放级别
-                0f,  //目标倾斜角[0.0 ~ 45.0] (垂直地图时为0)
-                0f
-            )
-        ) //目标旋转角 0~360° (正北方为0)
+//        val cameraSigma = CameraUpdateFactory.newCameraPosition(
+//            CameraPosition(
+//                position,  //中心点坐标，地图目标经纬度
+//                zoom,  //目标缩放级别
+//                0f,  //目标倾斜角[0.0 ~ 45.0] (垂直地图时为0)
+//                0f
+//            )
+//        ) //目标旋转角 0~360° (正北方为0)
 
+        val cameraSigma = CameraUpdateFactory.newCameraPosition(CameraPosition.builder().target(position).zoom(zoom).build());
         mapView?.moveCamera(cameraSigma) //移动地图
 
         val custom =
             BitmapDescriptorFactory.fromResource(R.mipmap.main_shop_location)
-        customMarker?.remove()
-        customMarker = mapView?.addMarker(
-            MarkerOptions(position)
-                .icon(custom)
-                .alpha(0.7f)
-                .flat(true)
-                .clockwise(false)
-                .rotation(0f)
-        )
+//        customMarker?.remove()
 
-
-
+        if(customMarker != null) {
+            customMarker?.startAnimation()
+            customMarker?.position = position;
+        } else {
+            customMarker = mapView?.addMarker(
+                MarkerOptions(position)
+                    .icon(custom)
+                    .alpha(0.7f)
+                    .flat(true)
+                    .clockwise(false)
+                    .rotation(0f)
+            )
+        }
     }
 
     private fun initAdapter() {

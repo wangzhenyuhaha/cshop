@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +20,7 @@ import com.james.common.utils.exts.visiable
  * Date   : 2020/7/12
  * Desc   : ToolBar 操作行为的委托类
  */
-class ToolBarDelegate(var context: Context, val toolbar: Toolbar?,var lightMode:Boolean) {
+class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode: Boolean) {
 
     private var tvMidTitle: TextView? = null
     private var tvRightText: TextView? = null
@@ -36,17 +37,25 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?,var lightMode:
             supportActionBar?.apply {
                 setTitle("") //设置标题
                 setDisplayHomeAsUpEnabled(true) //显示箭头图标
-                if(lightMode){
-                    toolbar?.setBackgroundColor(ContextCompat.getColor(context,R.color.white))
+                if (lightMode) {
+                    toolbar?.setBackgroundColor(ContextCompat.getColor(context, R.color.white))
                     setHomeAsUpIndicator(R.mipmap.ic_back_new) //更改返回图标
-                }else{
-                    toolbar?.setBackgroundColor(ContextCompat.getColor(context,R.color.color_3870ea_c))
-                    BarUtils.setStatusBarColor(context as Activity,ContextCompat.getColor(context,R.color.color_3870ea_c))
+                } else {
+                    toolbar?.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.color_3870ea_c
+                        )
+                    )
+                    BarUtils.setStatusBarColor(
+                        context as Activity,
+                        ContextCompat.getColor(context, R.color.color_3870ea_c)
+                    )
                     setHomeAsUpIndicator(R.mipmap.ic_back_new_white) //更改返回图标
-                    tvMidTitle?.setTextColor(ContextCompat.getColor(context,R.color.white))
-                    tvRightText?.setTextColor(ContextCompat.getColor(context,R.color.white))
+                    tvMidTitle?.setTextColor(ContextCompat.getColor(context, R.color.white))
+                    tvRightText?.setTextColor(ContextCompat.getColor(context, R.color.white))
                 }
-                BarUtils.setStatusBarLightMode(context as Activity,lightMode)
+                BarUtils.setStatusBarLightMode(context as Activity, lightMode)
             }
         }
 
@@ -61,7 +70,7 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?,var lightMode:
         toolbar
     }
 
-    fun hideToolBar(){
+    fun hideToolBar() {
         toolbar?.visibility = View.GONE
     }
 
@@ -83,9 +92,18 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?,var lightMode:
 
     fun setRightText(string: String, listener: View.OnClickListener?) {
         tvRightText?.apply {
+            visiable()
             text = string;
             setOnClickListener(listener)
         }
     }
 
+    fun setRightText(string: String, color: Int, listener: View.OnClickListener?) {
+        tvRightText?.apply {
+            visiable()
+            setTextColor(color)
+            text = string;
+            setOnClickListener(listener)
+        }
+    }
 }

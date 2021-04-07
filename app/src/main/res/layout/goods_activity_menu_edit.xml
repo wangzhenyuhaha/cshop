@@ -6,12 +6,6 @@
     android:background="@color/color_EDEDED"
     android:orientation="vertical">
 
-    <com.lingmiao.shop.widget.ToolBarView
-        android:id="@+id/toolbarView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_toolbar_height"
-        android:background="@color/color_ffffff" />
-
     <!--  模块一  -->
     <com.james.common.view.ILinearLayout
         style="@style/goods_group_edit_container"

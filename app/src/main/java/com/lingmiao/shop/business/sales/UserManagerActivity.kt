@@ -7,6 +7,7 @@ import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.sales.fragment.UserStatusFragment
 import com.lingmiao.shop.business.sales.presenter.IUserManagerPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.UserManagerPreImpl
+import kotlinx.android.synthetic.main.goods_fragment_goods_top_menu.*
 import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
 
 /**
@@ -16,18 +17,14 @@ Desc        :
  **/
 class UserManagerActivity : BaseActivity<IUserManagerPresenter>(), IUserManagerPresenter.PubView {
 
-    private var mTabTitles = arrayOf("置顶菜单", "常用菜单")
+    private var mTabTitles = arrayOf("全部用户", "新增用户")
 
     override fun getLayoutId(): Int {
-        return R.layout.tools_activity_logistics_tool;
+        return R.layout.sales_activity_stats;
     }
 
     override fun useLightMode(): Boolean {
         return false
-    }
-
-    override fun useBaseLayout(): Boolean {
-        return false;
     }
 
     override fun createPresenter(): IUserManagerPresenter {
@@ -42,9 +39,7 @@ class UserManagerActivity : BaseActivity<IUserManagerPresenter>(), IUserManagerP
     }
 
     private fun initTitle() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.user_manager_title))
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.user_manager_title));
     }
 
     private fun initTabLayout() {

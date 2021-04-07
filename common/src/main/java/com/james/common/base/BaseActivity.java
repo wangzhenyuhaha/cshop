@@ -198,6 +198,12 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
     }
 
+    /**
+     * note :
+     * true : 底部白菜
+     * false: 主题色
+     * @return
+     */
     public boolean useLightMode() {
         return true;
     }

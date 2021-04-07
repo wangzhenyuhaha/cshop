@@ -9,25 +9,31 @@
     <com.james.common.view.IRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_14"
         android:layout_marginTop="@dimen/dimen_14"
         android:paddingHorizontal="@dimen/dimen_10"
         android:paddingTop="@dimen/dimen_11"
-        android:paddingBottom="@dimen/dimen_18"
-        app:ivBgColor="@color/color_ffffff"
-        app:ivRadius="@dimen/dimen_5">
+        app:ivBgColor="@color/white"
+        android:paddingBottom="@dimen/dimen_18">
 
-        <ImageView
-            android:id="@+id/groupIconIv"
-            android:layout_width="@dimen/dimen_29"
-            android:layout_height="@dimen/dimen_29" />
+
+        <CheckBox
+            android:id="@+id/userCheckCb"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_29"
+            android:button="@drawable/selector_goods_spce_checkbox"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_13"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <TextView
-            android:id="@+id/groupNameTv"
+            android:id="@+id/userNameTv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
             android:layout_marginStart="@dimen/dimen_10"
-            android:layout_toEndOf="@+id/groupIconIv"
+            android:layout_toEndOf="@+id/userCheckCb"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxWidth="150dp"
@@ -37,11 +43,11 @@
             tools:text="测试1测试1测试1测试1测试1测试1测试1" />
 
         <TextView
-            android:id="@+id/groupDescTv"
-            android:layout_width="wrap_content"
+            android:id="@+id/userPhoneTv"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_29"
             android:layout_marginStart="@dimen/dimen_10"
-            android:layout_toEndOf="@+id/groupNameTv"
+            android:layout_toEndOf="@+id/userNameTv"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxWidth="70dp"
@@ -54,23 +60,142 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_half"
-            android:layout_below="@+id/groupIconIv"
+            android:layout_below="@+id/userNameTv"
             android:layout_marginTop="@dimen/dimen_10"
-            android:layout_marginBottom="@dimen/dimen_18"
+            android:layout_marginBottom="@dimen/dimen_10"
             android:background="@color/color_E6E6E6" />
 
-        <TextView
-            android:id="@+id/groupEditTv"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:layout_marginRight="@dimen/dimen_38"
             android:layout_toLeftOf="@+id/groupDeleteTv"
-            android:drawableStart="@mipmap/goods_group_manager_edit"
-            android:drawablePadding="@dimen/dimen_5"
-            android:text="编辑"
-            android:textColor="@color/color_3870EA"
-            android:textSize="@dimen/dimen_13" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userAddressHintTv"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:text="常用地址"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/userAddressTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toRightOf="@id/userAddressHintTv"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="上海市" />
+
+            <TextView
+                android:id="@+id/userInTypeHintTv"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:text="加入方式"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userAddressHintTv" />
+
+            <TextView
+                android:id="@+id/userInTypeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toRightOf="@id/userInTypeHintTv"
+                app:layout_constraintTop_toBottomOf="@id/userAddressHintTv"
+                tools:text="扫码" />
+
+            <TextView
+                android:id="@+id/userInTimeHintTv"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:text="加入方式"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintRight_toLeftOf="@id/userInTimeTv"
+                app:layout_constraintTop_toBottomOf="@id/userAddressHintTv" />
+
+            <TextView
+                android:id="@+id/userInTimeTv"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:text="2020-01-02"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userAddressHintTv" />
+
+            <TextView
+                android:id="@+id/userOrderHintTv"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:text="订单"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userInTypeHintTv" />
+
+
+            <TextView
+                android:id="@+id/userOrderTv"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toRightOf="@id/userOrderHintTv"
+                app:layout_constraintTop_toBottomOf="@id/userInTypeHintTv"
+                tools:text="0" />
+
+            <TextView
+                android:id="@+id/userOrderDetailTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toRightOf="@id/userOrderTv"
+                app:layout_constraintTop_toBottomOf="@id/userInTypeHintTv"
+                android:text="查看" />
+
+            <TextView
+                android:id="@+id/userPortraitHintTv"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:text="用户画像"
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/userOrderHintTv" />
+
+
+            <TextView
+                android:id="@+id/userPortraitTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_12"
+                app:layout_constraintLeft_toRightOf="@id/userPortraitHintTv"
+                app:layout_constraintTop_toBottomOf="@id/userOrderHintTv"
+                android:text="编辑" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.james.common.view.IRelativeLayout>
 

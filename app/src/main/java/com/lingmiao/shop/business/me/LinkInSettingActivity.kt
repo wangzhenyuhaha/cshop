@@ -18,6 +18,10 @@ class LinkInSettingActivity : BaseActivity<LinkInSettingPresenter>(), LinkInSett
         return LinkInSettingPresenterImpl(this);
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun initView() {
         mToolBarDelegate.setMidTitle(getString(R.string.link_in_title))
         shopOperateSubmitTv.setOnClickListener {

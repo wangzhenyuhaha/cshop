@@ -3,10 +3,14 @@ package com.lingmiao.shop.business.goods
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.Gravity
+import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
@@ -18,9 +22,7 @@ import com.lingmiao.shop.business.goods.fragment.GoodsStatusNewFragment
 import com.lingmiao.shop.business.goods.presenter.GoodsTabNumberPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsTabNumberPreImpl
 import com.lingmiao.shop.widget.IGoodsTabView
-import kotlinx.android.synthetic.main.goods_fragment_goods_home.*
-import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
-import kotlinx.android.synthetic.main.tools_activity_logistics_tool.viewPager
+import kotlinx.android.synthetic.main.goods_activity_goods_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -72,9 +74,9 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         return false
     }
 
-    override fun useBaseLayout(): Boolean {
-        return false;
-    }
+//    override fun useBaseLayout(): Boolean {
+//        return false;
+//    }
 
     override fun useEventBus(): Boolean {
         return true;
@@ -87,16 +89,10 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     }
 
     private fun initTitle() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.goods_manager_title))
-            setRightListener(
-                null,
-                "新增",
-                R.color.color_3870EA
-            ) {
-                ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
-            }
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.goods_manager_title))
+        mToolBarDelegate.setRightText("新增", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
+            ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
+        });
     }
 
     private fun initTabLayout() {
@@ -137,6 +133,10 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         viewPager.setAdapter(fragmentAdapter)
         viewPager.addOnPageChangeListener(this);
         viewPager.offscreenPageLimit = 1;
+
+        goodsFilterTv.singleClick {
+            drawerC.openDrawer(Gravity.RIGHT)
+        }
     }
 
 

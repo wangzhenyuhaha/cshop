@@ -325,8 +325,6 @@
                         <com.james.common.view.ILinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:layout_marginBottom="20dp"
                             android:layout_marginTop="@dimen/dimen_15"
                             android:gravity="center"

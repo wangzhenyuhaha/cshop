@@ -41,10 +41,11 @@
     <string name="wallet_hint_account_info">余额与保证金</string>
     <string name="wallet_hint_account_bind">账户绑写</string>
     <string name="wallet_hint_balance">余额</string>
-    <string name="wallet_hint_deposit">保证金</string>
+    <string name="wallet_hint_deposit">押金</string>
     <string name="wallet_value">￥%s</string>
     <string name="wallet_hint_card">银行卡</string>
     <string name="wallet_hint_zfb">支付宝</string>
+    <string name="wallet_hint_wechat">微信</string>
     <string name="wallet_title_deposit">@string/wallet_hint_deposit</string>
     <string name="wallet_title_balance">@string/wallet_hint_balance</string>
     <string name="wallet_deposit_opt_fill">保证金充值</string>
@@ -117,4 +118,8 @@
 
     <!--sales-->
     <string name="user_manager_title">用户管理</string>
+    <string name="user_order_title">用户订单</string>
+    <string name="sales_setting_title">营销设置</string>
+    <string name="sales_activity_edit_title">活动设置</string>
+    <string name="stats_analysis_title">数据统计</string>
 </resources>

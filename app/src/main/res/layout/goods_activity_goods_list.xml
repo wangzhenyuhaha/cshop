@@ -1,126 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:orientation="vertical">
 
-    <LinearLayout
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerC"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         android:orientation="vertical">
 
-        <com.lingmiao.shop.widget.ToolBarView
-            android:id="@+id/toolbarView"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_toolbar_height"
-            android:background="@color/color_ffffff" />
-
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="49dp"
-                android:background="@color/white"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp">
-
-                <com.lingmiao.shop.widget.IGoodsTabView
-                    android:id="@+id/tvTabAll"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:tvSelected="true"
-                    app:tvTitle="全部" />
-
-                <com.lingmiao.shop.widget.IGoodsTabView
-                    android:id="@+id/tvTabSelling"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:tvSelected="false"
-                    app:tvTitle="已上架" />
-
-                <com.lingmiao.shop.widget.IGoodsTabView
-                    android:id="@+id/tvTabWaiting"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:tvSelected="false"
-                    app:tvTitle="待上架" />
-
-                <com.lingmiao.shop.widget.IGoodsTabView
-                    android:id="@+id/tvTabOffLine"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:tvSelected="false"
-                    app:tvTitle="已下架" />
-
-                <com.lingmiao.shop.widget.IGoodsTabView
-                    android:id="@+id/tvTabSoldOut"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:tvSelected="false"
-                    app:tvTitle="已售罄" />
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_half"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:background="@color/color_E6E6E6" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:layout_marginBottom="@dimen/dimen_5"
-                android:background="@drawable/shape_goods_search_edt">
+                android:background="@color/white"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/inputEdt"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/dimen_30"
-                    android:layout_weight="1"
-                    android:background="@null"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="49dp"
+                    android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:drawableStart="@mipmap/goods_search_edit"
-                    android:drawablePadding="@dimen/dimen_5"
-                    android:ellipsize="end"
-                    android:hint="@string/goods_list_search_hint"
-                    android:paddingHorizontal="@dimen/dimen_10"
-                    android:singleLine="true"
-                    android:textColor="@color/color_666666"
-                    android:textColorHint="@color/color_999999"
-                    android:textSize="@dimen/sp_12"
-                    tools:ignore="NestedWeights" />
+                    android:orientation="horizontal"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp">
 
-                <ImageView
-                    android:id="@+id/deleteIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="@dimen/dimen_10"
-                    android:src="@mipmap/goods_search_delete" />
+                    <com.lingmiao.shop.widget.IGoodsTabView
+                        android:id="@+id/tvTabAll"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:tvSelected="true"
+                        app:tvTitle="全部" />
+
+                    <com.lingmiao.shop.widget.IGoodsTabView
+                        android:id="@+id/tvTabSelling"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:tvSelected="false"
+                        app:tvTitle="已上架" />
+
+                    <com.lingmiao.shop.widget.IGoodsTabView
+                        android:id="@+id/tvTabWaiting"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:tvSelected="false"
+                        app:tvTitle="待上架" />
+
+                    <com.lingmiao.shop.widget.IGoodsTabView
+                        android:id="@+id/tvTabOffLine"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:tvSelected="false"
+                        app:tvTitle="已下架" />
+
+                    <com.lingmiao.shop.widget.IGoodsTabView
+                        android:id="@+id/tvTabSoldOut"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:tvSelected="false"
+                        app:tvTitle="已售罄" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_half"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:background="@color/color_E6E6E6" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@drawable/shape_goods_search_edt">
+
+                    <TextView
+                        android:id="@+id/inputEdt"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_30"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:drawableStart="@mipmap/goods_search_edit"
+                        android:drawablePadding="@dimen/dimen_5"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:hint="@string/goods_list_search_hint"
+                        android:paddingHorizontal="@dimen/dimen_10"
+                        android:singleLine="true"
+                        android:textColor="@color/color_666666"
+                        android:textColorHint="@color/color_999999"
+                        android:textSize="@dimen/sp_12"
+                        tools:ignore="NestedWeights" />
+
+                    <ImageView
+                        android:id="@+id/deleteIv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="@dimen/dimen_10"
+                        android:src="@mipmap/goods_search_delete" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_5">
+
+                <TextView
+                    android:id="@+id/goodsSalesCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_sort_up"
+                    android:padding="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:text="销量"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/goodsStoreCountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:text="库存"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/goodsPriceTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:text="价格"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_12" />
+
+                <TextView
+                    android:id="@+id/goodsTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_10"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:text="时间"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_12" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="10dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/goodsFilterTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_filter"
+                    android:padding="@dimen/dimen_10" />
+            </LinearLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigateView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/goods_view_menu_header" />
+</androidx.drawerlayout.widget.DrawerLayout>

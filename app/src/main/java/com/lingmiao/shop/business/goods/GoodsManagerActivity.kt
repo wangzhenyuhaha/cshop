@@ -15,13 +15,13 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsCheckedAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
+import com.lingmiao.shop.business.goods.event.MenuEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import com.lingmiao.shop.business.goods.presenter.GoodsManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsManagerPreImpl
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_activity_goods_manager.*
-import kotlinx.android.synthetic.main.goods_activity_goods_manager.toolbarView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -35,17 +35,43 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
 
     companion object {
 
-        const val KEY_GOODS_TYPE = "KEY_GOODS_TYPE"
-
-        fun type(context: Context, type: Int?) {
+        const val KEY_ID = "KEY_ID"
+        const val KEY_SOURCE = "KEY_SOURCE"
+        const val SOURCE_TYPE = 1;
+        const val SOURCE_MENU = 2;
+        const val SOURCE_SALES = 3;
+        fun type(context: Context, keyId: String?) {
             val intent = Intent(context, GoodsManagerActivity::class.java)
-            intent.putExtra(KEY_GOODS_TYPE, type)
+            intent.putExtra(KEY_SOURCE, SOURCE_TYPE)
+            intent.putExtra(KEY_ID, keyId)
+            context.startActivity(intent)
+        }
+
+        fun menu(context: Context, keyId: String?) {
+            val intent = Intent(context, GoodsManagerActivity::class.java)
+            intent.putExtra(KEY_SOURCE, SOURCE_MENU)
+            intent.putExtra(KEY_ID, keyId)
+            context.startActivity(intent)
+        }
+
+
+        fun sales(context: Context, keyId: String?) {
+            val intent = Intent(context, GoodsManagerActivity::class.java)
+            intent.putExtra(KEY_SOURCE, SOURCE_SALES)
+            intent.putExtra(KEY_ID, keyId)
             context.startActivity(intent)
         }
     }
 
 
     private var cId : String =""
+    private var mSourceId : Int? = 0;
+
+
+    override fun initBundles() {
+        cId = intent.getStringExtra(KEY_ID)
+        mSourceId = intent.getIntExtra(KEY_SOURCE, SOURCE_TYPE);
+    }
 
     override fun autoRefresh(): Boolean {
         return false
@@ -55,8 +81,8 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
         return true
     }
 
-    override fun useBaseLayout(): Boolean {
-        return false
+    override fun useLightMode(): Boolean {
+        return false;
     }
 
     override fun getLayoutId(): Int {
@@ -68,9 +94,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
     }
 
     override fun initOthers() {
-        toolbarView?.apply {
-            setTitleContent(getString(R.string.goods_manager_title))
-        }
+        mToolBarDelegate.setMidTitle(getString(R.string.goods_manager_title))
 
         firstTypeTv.setOnClickListener {
             mPresenter?.showCategoryPop(it);
@@ -85,8 +109,13 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
         goodsCheckSubmit.setOnClickListener {
             if(getCheckedCount() > 0) {
 //                EventBus.getDefault().post(TabChangeEvent(2))
-                EventBus.getDefault().post(GoodsHomeTabEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
-                ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+                if(mSourceId == SOURCE_TYPE) {
+                    EventBus.getDefault().post(GoodsHomeTabEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
+                    ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+                } else {
+                    EventBus.getDefault().post(MenuEvent(1,1));
+                    finish();
+                }
             }
         }
 

@@ -32,25 +32,21 @@ object IConstant {
 
 //    private const val baseUrl = "http://t-api.seller.fisheagle.cn:7003"
 
-    fun getUploadFileUrl(): String {
-        if (official) return "http://api.base.fisheagle.cn:7000/uploaders"
-        return "http://t-api.base.fisheagle.cn:7000/uploaders"
-    }
+    const val TEST_URL = "http://47.117.112.134";
+    const val PRO_URL = "http://47.117.112.134";
 
     fun getServiceH5(): String {
         return "https://docs.qq.com/doc/DZnBOQVBxS0NaR05s"
     }
 
     fun getSellerUrl(): String {
-        var baseUrl = "http://t-api.seller.fisheagle.cn:7003"
-        if (official) baseUrl = "http://api.seller.fisheagle.cn:7003"
-        return baseUrl
+        if(official) return String.format("%s:7003", PRO_URL);
+        return "http://47.116.78.248:7003";
     }
 
     fun getCommonUrl() : String {
-        var baseUrl = "http://t-api.seller.fisheagle.cn:7000"
-        if (official) baseUrl = "http://api.seller.fisheagle.cn:7000"
-        return baseUrl
+        if(official) return String.format("%s:7000", PRO_URL);
+        return "http://47.117.112.134:7000";
     }
 
     fun getGoodsDetailH5(): String {
@@ -59,6 +55,9 @@ object IConstant {
         return "$baseUrl/static/editer/editer.html"
     }
 
+    fun getUploadFileUrl(): String {
+        return  String.format("%s/uploaders", getCommonUrl());
+    }
     /**
      * 传递的不同类型
      */

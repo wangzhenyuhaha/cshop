@@ -49,10 +49,11 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
                     R.id.menuEditTv -> {
-                        GroupManagerEditActivity.openActivity(
-                            activity!!,
-                            ShopGroupVO.LEVEL_1, null, mAdapter.getItem(position)
-                        )
+                        MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, null, mAdapter.getItem(0));
+//                        GroupManagerEditActivity.openActivity(
+//                            activity!!,
+//                            ShopGroupVO.LEVEL_1, null, mAdapter.getItem(position)
+//                        )
                     }
 //                    R.id.groupDeleteTv -> {
 //                        mPresenter?.deleteGoodsGroup(mAdapter.getItem(position), position)

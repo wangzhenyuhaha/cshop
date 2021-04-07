@@ -8,17 +8,27 @@ import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.goods.GoodsManagerActivity
 import com.lingmiao.shop.business.goods.GroupManagerEditActivity
 import com.lingmiao.shop.business.goods.MenuEditActivity
 import com.lingmiao.shop.business.goods.adapter.UsedMenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.MenuVo
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
+import com.lingmiao.shop.business.goods.event.MenuEvent
 import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
 import com.lingmiao.shop.business.goods.presenter.UsedMenuPre
 import com.lingmiao.shop.business.goods.presenter.impl.GroupManagerPreImpl
 import com.lingmiao.shop.business.goods.presenter.impl.UsedMenuPreImpl
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
+import kotlinx.android.synthetic.main.goods_fragment_goods_top_menu.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.*
+import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.menuAddTv
+import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.menuAllCheckCb
+import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.menuBottom
+import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.menuCancelTv
+import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.menuDeleteTv
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
 Create Date : 2021/3/101:00 AM
@@ -26,6 +36,8 @@ Auther      : Fox
 Desc        :
  **/
 class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPre.PubView {
+
+    private var list : MutableList<MenuVo>? = mutableListOf();
 
     companion object {
 
@@ -47,8 +59,9 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
     }
 
     override fun initAdapter(): BaseQuickAdapter<MenuVo, BaseViewHolder> {
-        return UsedMenuAdapter(mutableListOf()).apply {
+        return UsedMenuAdapter(list).apply {
             setOnItemClickListener { adapter, view, position ->
+
 //                GroupManagerLv2Activity.openActivity(
 //                    this@GroupManagerLv1Activity,
 //                    mAdapter.getItem(position)?.shopCatId
@@ -56,6 +69,11 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
             }
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
+                    R.id.menuAddGoodsIv -> {
+
+                        GoodsManagerActivity.menu(context!!, "1");
+
+                    }
                     R.id.groupEditTv -> {
 //                        GroupManagerEditActivity.openActivity(
 //                            activity!!,
@@ -67,6 +85,13 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
                     }
                 }
             }
+            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
+                if(menuBottom.visibility != View.VISIBLE) {
+                    menuBottom.visibility = View.VISIBLE;
+                }
+                setBatchEditModel(true);
+                return@OnItemLongClickListener true;
+            }
         }
     }
 
@@ -75,6 +100,11 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
             DialogUtils.showInputDialog(activity!!, "菜单名称", "", "请输入","取消", "保存",null) {
 //                tvShopManageSlogan.text = it;
 
+                var item = MenuVo();
+                item.showLevel = 0;
+                item.name = it;
+                list?.add(item);
+                mAdapter?.replaceData(list!!);
             }
         }
         menuCancelTv.setOnClickListener {
@@ -98,12 +128,31 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
             mLoadMoreDelegate?.refresh()
         }
 
+        mSmartRefreshLayout?.setEnableLoadMore(false);
     }
     override fun onDeleteGroupSuccess(position: Int) {
 
     }
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshShopStatus(event: MenuEvent) {
+        var newItem = MenuVo();
+        newItem.name = "可乐"
+        newItem.showLevel = 1;
+
+        list?.add(newItem);
+        mAdapter?.replaceData(list!!);
+    }
+
+
     override fun executePageRequest(page: IPage) {
         mPresenter?.loadLv1GoodsGroup()
     }
+
+    override fun useEventBus(): Boolean {
+        return true;
+    }
+
+
 }
