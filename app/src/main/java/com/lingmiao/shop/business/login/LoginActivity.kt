@@ -225,7 +225,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
                 return
             }
         }
-        if (!ivService.isSelected) {
+        if (!ivService.isChecked) {
             showToast("请同意服务条款")
             return
         }

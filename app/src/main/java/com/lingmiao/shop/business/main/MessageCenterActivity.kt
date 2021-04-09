@@ -22,6 +22,9 @@ class MessageCenterActivity : BaseLoadMoreActivity<MessageCenter, MessageCenterP
         mToolBarDelegate.setMidTitle("消息中心")
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
 
     override fun createPresenter(): MessageCenterPresenter {
         return MessageCenterPresenterImpl(this, this)

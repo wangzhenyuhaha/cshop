@@ -52,8 +52,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         mToolBarDelegate.setMidTitle("申请开店")
 
 
-//        rlShopInfoSelf.setOnClickListener(this)
-//        rlShopInfoCompany.setOnClickListener(this)
+        rlShopInfoSelf.setOnClickListener(this)
+        rlShopInfoCompany.setOnClickListener(this)
         rlShopInfoCategory.setOnClickListener(this)
         rlShopInfoAddress.setOnClickListener(this)
         rlShopInfoLicense.setOnClickListener(this)

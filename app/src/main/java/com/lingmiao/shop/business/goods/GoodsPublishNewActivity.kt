@@ -65,8 +65,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
-    override fun useBaseLayout(): Boolean {
-        return false
+    override fun useLightMode(): Boolean {
+        return false;
     }
 
     override fun getLayoutId(): Int {
@@ -82,8 +82,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     }
 
     override fun initView() {
-        window.decorView.background = null
-        toolbarView.setTitleContent(if (goodsId.isNotBlank()) "编辑商品" else "发布商品")
+//        window.decorView.background = null
+        mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank()) "编辑商品" else "发布商品")
         initSection1View()
         initSection2View()
         initSection3View()

@@ -45,7 +45,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="个人店铺"
+                        android:text="单店"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 
@@ -78,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="企业店铺"
+                        android:text="连锁店"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 

@@ -64,7 +64,7 @@ class StatsDateActivityFragment  : BaseFragment<IStateActivityDataPresenter>(), 
         return AAChartModel()
             .chartType(AAChartType.Pie)
             .backgroundColor("#ffffff")
-            .title("活动商品/总商品")
+//            .title("活动商品/总商品")
 //            .subtitle("virtual data")
             .dataLabelsEnabled(true)//是否直接显示扇形图数据
             .yAxisTitle("℃")

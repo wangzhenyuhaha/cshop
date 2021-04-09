@@ -79,8 +79,8 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     // 批量设置的弹窗
     private var batchSettingPop: BatchSettingPop? = null
 
-    override fun useBaseLayout(): Boolean {
-        return false
+    override fun useLightMode(): Boolean {
+        return false;
     }
 
     override fun getLayoutId(): Int {
@@ -100,7 +100,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     }
 
     override fun initView() {
-        toolbarView.setTitleContent("规格设置")
+        mToolBarDelegate.setMidTitle("规格设置")
         initSpecContainerLayout()
         initAdapter()
         initBottomView()

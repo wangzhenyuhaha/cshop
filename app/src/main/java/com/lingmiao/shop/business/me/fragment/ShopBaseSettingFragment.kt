@@ -10,6 +10,7 @@ import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.me.ShopQualificationActivity
 import com.lingmiao.shop.business.me.bean.ShopManage
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
@@ -61,38 +62,82 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     override fun initViewsAndData(rootView: View) {
         ivShopManageLogo.setOnClickListener{
             //店铺logo
-            PictureSelector.create(this)
-                .openGallery(PictureMimeType.ofImage())
-                .maxSelectNum(1)
-                .loadImageEngine(GlideEngine.createGlideEngine())
-                .forResult(object : OnResultCallbackListener<LocalMedia?> {
-                    override fun onResult(result: List<LocalMedia?>) {
-                        // 结果回调
-                        val localMedia = result[0]
-                        GlideUtils.setImageUrl(ivShopManageLogo, OtherUtils.getImageFile(localMedia))
-                        mCoroutine.launch {
-                            showDialogLoading()
-                            val uploadFile =
-                                CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
-                            if (uploadFile.isSuccess) {
-                                LogUtils.d(uploadFile.data.url)
-                                val request = ShopManageRequest()
-                                val loginInfo = UserManager.getLoginInfo()
-                                loginInfo?.let {
-                                    request.shopId = it.shopId
-                                }
-                                request.shopLogo = uploadFile.data.url
-                                mPresenter?.updateShopManage(request)
-                            }else{
-                                hideDialogLoading()
-                            }
+            val pop =
+                MediaMenuPop(context!!, MediaMenuPop.TYPE_SELECT_PHOTO or MediaMenuPop.TYPE_PLAY_PHOTO)
+            pop.setOnClickListener { flags ->
+                run {
+                    when (flags) {
+                        MediaMenuPop.TYPE_SELECT_PHOTO -> {
+                            PictureSelector.create(this)
+                                .openGallery(PictureMimeType.ofImage())
+                                .maxSelectNum(1)
+                                .loadImageEngine(GlideEngine.createGlideEngine())
+                                .forResult(object : OnResultCallbackListener<LocalMedia?> {
+                                    override fun onResult(result: List<LocalMedia?>) {
+                                        // 结果回调
+                                        val localMedia = result[0]
+                                        showAndUploadImage(localMedia)
+                                    }
+
+                                    override fun onCancel() {
+                                        // 取消
+                                    }
+                                })
+                        }
+
+                        MediaMenuPop.TYPE_PLAY_PHOTO -> {
+                            PictureSelector.create(this)
+                                .openCamera(PictureMimeType.ofImage())
+                                .maxSelectNum(1)
+                                .loadImageEngine(GlideEngine.createGlideEngine())
+                                .forResult(object : OnResultCallbackListener<LocalMedia?> {
+                                    override fun onResult(result: List<LocalMedia?>) {
+                                        // 结果回调
+                                        val localMedia = result[0]
+                                        showAndUploadImage(localMedia)
+                                    }
+
+                                    override fun onCancel() {
+                                        // 取消
+                                    }
+                                })
                         }
                     }
-
-                    override fun onCancel() {
-                        // 取消
-                    }
-                })
+                }
+            }
+            pop.showPopupWindow()
+//            PictureSelector.create(this)
+//                .openGallery(PictureMimeType.ofImage())
+//                .maxSelectNum(1)
+//                .loadImageEngine(GlideEngine.createGlideEngine())
+//                .forResult(object : OnResultCallbackListener<LocalMedia?> {
+//                    override fun onResult(result: List<LocalMedia?>) {
+//                        // 结果回调
+//                        val localMedia = result[0]
+//                        GlideUtils.setImageUrl(ivShopManageLogo, OtherUtils.getImageFile(localMedia))
+//                        mCoroutine.launch {
+//                            showDialogLoading()
+//                            val uploadFile =
+//                                CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
+//                            if (uploadFile.isSuccess) {
+//                                LogUtils.d(uploadFile.data.url)
+//                                val request = ShopManageRequest()
+//                                val loginInfo = UserManager.getLoginInfo()
+//                                loginInfo?.let {
+//                                    request.shopId = it.shopId
+//                                }
+//                                request.shopLogo = uploadFile.data.url
+//                                mPresenter?.updateShopManage(request)
+//                            }else{
+//                                hideDialogLoading()
+//                            }
+//                        }
+//                    }
+//
+//                    override fun onCancel() {
+//                        // 取消
+//                    }
+//                })
         }
 
         rlShopManageName.setOnClickListener{
@@ -167,6 +212,27 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         showPageLoading()
         mPresenter?.requestShopManageData()
 
+    }
+
+    private fun showAndUploadImage(localMedia: LocalMedia?) {
+        GlideUtils.setImageUrl(ivShopManageLogo, OtherUtils.getImageFile(localMedia))
+        mCoroutine.launch {
+            showDialogLoading()
+            val uploadFile =
+                CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
+            if (uploadFile.isSuccess) {
+                LogUtils.d(uploadFile.data.url)
+                val request = ShopManageRequest()
+                val loginInfo = UserManager.getLoginInfo()
+                loginInfo?.let {
+                    request.shopId = it.shopId
+                }
+                request.shopLogo = uploadFile.data.url
+                mPresenter?.updateShopManage(request)
+            }else{
+                hideDialogLoading()
+            }
+        }
     }
 
     override fun onShopManageSuccess(bean: ShopManage) {

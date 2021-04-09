@@ -8,12 +8,11 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/dimen_10">
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <com.james.common.view.ILinearLayout
@@ -360,7 +359,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="客服电话"
+                        android:text="紧急联系人电话"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 
@@ -379,20 +378,22 @@
                 </LinearLayout>
 
             </com.james.common.view.ILinearLayout>
+
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvShopSettingSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dimen_15"
+                android:gravity="center"
+                android:text="保存"
+                android:textColor="#fff"
+                android:textSize="13sp"
+                app:ivBgColor="#207AE1"
+                app:ivRadius="18dp" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
-    <com.james.common.view.ITextView
-        android:id="@+id/tvShopSettingSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_15"
-        android:gravity="center"
-        android:text="保存"
-        android:textColor="#fff"
-        android:textSize="13sp"
-        app:ivBgColor="#207AE1"
-        app:ivRadius="18dp" />
 
 </RelativeLayout>

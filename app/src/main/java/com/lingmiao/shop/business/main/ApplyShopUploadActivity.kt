@@ -45,9 +45,17 @@ class ApplyShopUploadActivity : BaseActivity<ApplyShopUploadPresenter>(),
 
         type = intent.getIntExtra("type", 1)
         mToolBarDelegate.setMidTitle(intent.getStringExtra("title"))
-        val imageUrl :String?= intent.getStringExtra("imageUrl")
+
+        imageUrl = intent.getStringExtra("imageUrl")
         imageUrl?.let {
             GlideUtils.setImageUrl(ivShopUpload, imageUrl,12f)
+        }
+
+        tvUploadSubmit.setOnClickListener {
+            if(imageUrl?.isNotEmpty() == true) {
+                EventBus.getDefault().post(ApplyShopImageEvent("",imageUrl, type))
+                finish();
+            }
         }
 
         rlShopUpload.setOnClickListener {
@@ -98,14 +106,16 @@ class ApplyShopUploadActivity : BaseActivity<ApplyShopUploadPresenter>(),
         }
     }
 
+    private var imageUrl : String ?= "";
     private fun showAndUploadImage(localMedia: LocalMedia?) {
         GlideUtils.setImageUrl(ivShopUpload, OtherUtils.getImageFile(localMedia),12f)
         mCoroutine.launch {
             val uploadFile = CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
             if (uploadFile.isSuccess) {
+                imageUrl = uploadFile.data.url;
                 LogUtils.d(uploadFile.data.url)
 //                showToast("上传成功")
-                EventBus.getDefault().post(ApplyShopImageEvent("",uploadFile.data.url, type))
+                // EventBus.getDefault().post(ApplyShopImageEvent("",uploadFile.data.url, type))
             }
         }
     }
