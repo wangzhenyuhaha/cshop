@@ -36,7 +36,7 @@ abstract class RecycleViewLayout<T, Adapter : BaseQuickAdapter<T, BaseViewHolder
 
     abstract fun getAdapter() : Adapter;
 
-    private fun createItem(goodsSpecList: MutableList<T>) {
+    private fun createItem(goodsSpecList: List<T>) {
         val view = inflater.inflate(R.layout.tuan_view_order_goods, this, false);
         recyclerView = view.findViewById(R.id.tuanOrderGoodsRv)
         mAdapter = getAdapter();
@@ -55,7 +55,7 @@ abstract class RecycleViewLayout<T, Adapter : BaseQuickAdapter<T, BaseViewHolder
         mAdapter?.remove(position)
     }
 
-    fun addItems(goodsList: MutableList<T>?) {
+    fun addItems(goodsList: List<T>?) {
         removeAllViews();
         if (goodsList?.isNullOrEmpty() == true) {
             return;

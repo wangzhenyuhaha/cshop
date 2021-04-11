@@ -43,6 +43,10 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
         return R.layout.main_activity_apply_shop_category
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun initView() {
         mToolBarDelegate.setMidTitle("选择经营类目")
 

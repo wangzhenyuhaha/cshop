@@ -14,6 +14,8 @@ import com.lingmiao.shop.util.OtherUtils
  * 店铺等待审核
  */
 class ShopWaitApplyActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity_shop_wait_apply)

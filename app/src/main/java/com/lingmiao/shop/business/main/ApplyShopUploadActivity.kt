@@ -41,6 +41,10 @@ class ApplyShopUploadActivity : BaseActivity<ApplyShopUploadPresenter>(),
         return R.layout.main_activity_apply_shop_upload
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun initView() {
 
         type = intent.getIntExtra("type", 1)

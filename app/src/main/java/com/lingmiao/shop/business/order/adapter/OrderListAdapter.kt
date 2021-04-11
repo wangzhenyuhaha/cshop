@@ -4,20 +4,25 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.marginBottom
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.order.bean.OrderList
+import com.lingmiao.shop.business.order.view.GoodsItemRvLayout
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
+import com.lingmiao.shop.util.stampToDate
+import java.text.SimpleDateFormat
+import java.util.*
 
 class OrderListAdapter :
     BaseQuickAdapter<OrderList, BaseViewHolder>(R.layout.order_adapter_order_list) {
     override fun convert(helper: BaseViewHolder, item: OrderList) {
-        helper.setText(R.id.tvOrderSn, "订单号："+item.sn)
+        helper.setText(R.id.tvOrderSn, "订单编号："+item.sn)
             .setText(R.id.tvOrderStatus, item.orderStatusText)
+
+        helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
 
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)
         val ivOrderNumberCopy = helper.getView<ImageView>(R.id.ivOrderNumberCopy)
@@ -69,10 +74,11 @@ class OrderListAdapter :
             }
         }
 
+        helper.getView<GoodsItemRvLayout>(R.id.goodsItemC).addItems(item.skuList);
         helper.setText(
             R.id.tvTotalMoney,
             MyApp.getInstance()
-                .getString(R.string.order_money, item.totalNum, item.orderAmount.toString())
+                .getString(R.string.order_money_new, item.orderAmount.toString())
         )
 
 //        GlideUtils.setCornerImageUrl(helper.getView(R.id.ivBuyerHead),item.)
@@ -153,4 +159,5 @@ class OrderListAdapter :
             viOrderDivide.visibility = View.GONE
         }
     }
+
 }

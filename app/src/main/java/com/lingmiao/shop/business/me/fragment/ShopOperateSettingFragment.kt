@@ -51,9 +51,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 
         }
         // 联系设置
-        tvShopManageLink.setOnClickListener {
-            ActivityUtils.startActivity(LinkInSettingActivity::class.java)
-        }
+        linkTelEt
+//        tvShopManageLink.setOnClickListener {
+//            ActivityUtils.startActivity(LinkInSettingActivity::class.java)
+//        }
+
         // 配送设置
         tvShopManageDelivery.setOnClickListener {
             ActivityUtils.startActivity(DeliveryManagerActivity::class.java)

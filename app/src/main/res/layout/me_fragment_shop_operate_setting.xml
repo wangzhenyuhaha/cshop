@@ -108,7 +108,45 @@
                 </RelativeLayout>
 
                 <View style="@style/DivideLineHorizontal" />
+
                 <RelativeLayout
+                    android:id="@+id/rlShopManageNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="65dp">
+
+                    <TextView
+                        android:id="@+id/linkPhontHintTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/dimen_15"
+                        android:text="联系电话"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:paddingTop="@dimen/dimen_5"
+                        android:paddingBottom="@dimen/dimen_5"
+                        android:text="体现在顾客端 供用户联系"
+                        android:layout_below="@id/linkPhontHintTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:background="@null"
+                        android:gravity="center|right"
+                        android:id="@+id/linkTelEt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        android:inputType="number"
+                        android:hint="请输入联系电话"
+                        tools:text="8018101011" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/rlShopManageLink"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">

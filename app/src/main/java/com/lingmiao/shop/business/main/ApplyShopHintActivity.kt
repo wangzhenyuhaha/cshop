@@ -27,6 +27,10 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(),ApplyShopHi
         private const val REQUEST_CODE_SERVICE = 8
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun initView() {
         mToolBarDelegate.setMidTitle("申请开店")
 

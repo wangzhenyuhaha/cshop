@@ -7,10 +7,6 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.me.AccountSettingActivity
-import com.lingmiao.shop.business.me.FeedbackActivity
-import com.lingmiao.shop.business.me.PersonInfoActivity
-import com.lingmiao.shop.business.me.ShopManageActivity
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.presenter.MyPresenter
@@ -21,6 +17,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
+import com.lingmiao.shop.business.me.*
 import kotlinx.android.synthetic.main.fragment_my_new.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -52,6 +49,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
 
     override fun initViewsAndData(rootView: View) {
         rlMyPersonInfo.setOnClickListener(this)
+        tvVip.setOnClickListener(this)
         tvMyWallet.setOnClickListener(this)
         tvDeposit.setOnClickListener(this)
         tvUseTime.setOnClickListener(this)
@@ -74,6 +72,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
                     intent.putExtra("bean", my!!)
                 }
                 startActivity(intent)
+            }
+            R.id.tvVip -> {
+                ActivityUtils.startActivity(ApplyVipActivity::class.java);
             }
             R.id.tvMyWallet -> {//我的钱包
                 ActivityUtils.startActivity(MyWalletActivity::class.java);

@@ -24,6 +24,8 @@ import com.lingmiao.shop.business.order.bean.OrderTabNumberEvent
 import com.lingmiao.shop.widget.IOrderTabView
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.james.common.utils.exts.singleClick
+import com.lingmiao.shop.business.order.OrderSearchActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_order.*
 import kotlinx.coroutines.launch
@@ -35,7 +37,6 @@ import java.util.ArrayList
 class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
 
     private val tvTabList: ArrayList<IOrderTabView> = ArrayList()
-    private val titleList: ArrayList<String> = ArrayList()
     private lateinit var adapter: OrderFragmentAdapter
     private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
 
@@ -70,6 +71,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTabList.add(tvTab3)
         tvTabList.add(tvTab4)
         tvTabList.add(tvTab5)
+        tvTabList.add(tvTab6)
 
         fragmentList.clear()
         //    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUN
@@ -83,6 +85,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         fragmentList.add(SingleOrderListFragment.newInstance("WAIT_SHIP"))
         fragmentList.add(SingleOrderListFragment.newInstance("WAIT_ROG"))
         fragmentList.add(SingleOrderListFragment.newInstance("WAIT_REFUND"))
+        fragmentList.add(SingleOrderListFragment.newInstance("CANCEL"))
         vpContent.adapter = adapter
         vpContent.offscreenPageLimit = 4
         vpContent.addOnPageChangeListener(this)
@@ -92,10 +95,15 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTab3.setOnClickListener { vpContent.currentItem = 2 }
         tvTab4.setOnClickListener { vpContent.currentItem = 3 }
         tvTab5.setOnClickListener { vpContent.currentItem = 4 }
+        tvTab6.setOnClickListener { vpContent.currentItem = 5 }
 
         LogUtils.d("initView:")
         tv_order_scan.setOnClickListener {
             val intent = Intent(context, ScanOrderActivity::class.java);
+            startActivity(intent);
+        }
+        tv_order_search.singleClick {
+            val intent = Intent(context, OrderSearchActivity::class.java);
             startActivity(intent);
         }
     }
@@ -128,6 +136,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTab3.setTabSelected(false)
         tvTab4.setTabSelected(false)
         tvTab5.setTabSelected(false)
+        tvTab6.setTabSelected(false)
         tvTabList[tabIndex].setTabSelected(true)
     }
 

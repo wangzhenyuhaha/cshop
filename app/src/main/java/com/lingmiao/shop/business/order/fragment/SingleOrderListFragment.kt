@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.order.*
 import com.lingmiao.shop.business.order.adapter.OrderListAdapter
@@ -118,10 +119,11 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             setOnItemClickListener { adapter, view, position ->
                 val orderBean = adapter.data[position] as OrderList
-                val intent = Intent(activity, OrderDetailActivity::class.java)
-                intent.putExtra("orderId", orderBean.sn)
-//                intent.putExtra("order",orderBean)
-                startActivity(intent)
+//                val intent = Intent(activity, OrderDetailActivity::class.java)
+//                intent.putExtra("orderId", orderBean.sn)
+////                intent.putExtra("order",orderBean)
+//                startActivity(intent)
+                OrderShowActivity.open(activity!!, orderBean, 11);
             }
         }
     }

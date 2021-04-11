@@ -48,6 +48,10 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         return true
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun initView() {
         mToolBarDelegate.setMidTitle("申请开店")
 

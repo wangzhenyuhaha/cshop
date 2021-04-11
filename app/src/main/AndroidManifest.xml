@@ -162,6 +162,12 @@
             android:name=".business.order.OrderDetailActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".business.order.OrderShowActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.order.OrderSearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".business.order.OrderSendGoodsActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
@@ -248,6 +254,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".business.wallet.AliPayAccountActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.ApplyVipActivity"
             android:screenOrientation="portrait" />
 
         <!-- ======================= 我的钱包 END ======================== -->

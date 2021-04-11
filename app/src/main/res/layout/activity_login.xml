@@ -329,6 +329,7 @@
                    android:layout_alignParentRight="true"
                    android:src="@mipmap/login_captcha_close"/>
            </RelativeLayout>
+
             <WebView
                 android:id="@+id/wvCaptcha"
                 android:layout_width="match_parent"

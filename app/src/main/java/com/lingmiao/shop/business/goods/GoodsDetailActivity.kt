@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsInfoAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsInfoVo
@@ -76,6 +78,9 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
             mInfoAdapter.replaceData(mInfoList);
         }
 
+        goodsInfoHintTv.singleClick {
+            DialogUtils.showDialog(context!!, R.mipmap.ic_goods_info);
+        }
         goodsDetailImageRv.setCountLimit(1, 20)
 
     }

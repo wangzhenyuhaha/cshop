@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.james.common.view.IRelativeLayout
+            android:id="@+id/rlMyPersonInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingTop="14dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="14dp"
+            app:ivBgColor="@color/color_secondary">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivMyHead"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:src="@mipmap/me_head" />
+
+
+            <TextView
+                android:id="@+id/tvMyShopName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@id/ivMyHead"
+                android:text="店铺名称"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/ivMyShopStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tvMyShopName"
+                android:layout_gravity="center_vertical"
+                android:layout_toRightOf="@id/tvMyShopName"
+                android:paddingLeft="@dimen/dimen_15"
+                android:text="(用户昵称)"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_12"
+                tools:visibility="visible" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvMyShopName"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/ivMyHead"
+                android:text="2021-06-09到期，购买后有效期将顺延"
+                android:textColor="@color/color_EEEEEE"
+                android:textSize="@dimen/sp_12" />
+
+        </com.james.common.view.IRelativeLayout>
+
+        <com.lingmiao.shop.business.me.view.GalleryRecyclerView
+            android:id="@+id/galleryRv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:nestedScrollingEnabled="false" />
+
+        <CheckBox
+            android:id="@+id/ivService"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:button="@drawable/selector_goods_delivery_checkbox"
+            android:padding="@dimen/dimen_15"
+            android:text="到期自动续期一个月，可随时取消"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_13" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvApply"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_marginBottom="@dimen/dimen_15"
+            android:gravity="center"
+            android:text="立即开通"
+            android:textColor="#fff"
+            android:textSize="13sp"
+            app:ivBgColor="@color/color_secondary"
+            app:ivRadius="18dp" />
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_15"
+            android:text="自动续费服务声明"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:text="付款：用户确认购买并付款后记入iTunes帐户"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingRight="@dimen/dimen_15"
+            android:text="取消续订：如需取消续订，请在当前订阅到期前24小时以前，手动在iTunes/Apple ID设置管理中关闭自动续费功能，到期前24小时内取消，将会收取订阅费用；"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingRight="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:text="续费：苹果iTunes账户会在到期前24小时内扣费，扣费成功后订阅周期顺延一个订阅周期。"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_12" />
+
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_15"
+            android:text="用户协议及隐私条款"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/vipUserServiceTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_15"
+            android:text="《用户协议》"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <TextView
+            android:id="@+id/vipUserPrivacyTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_15"
+            android:text="《隐私条款》"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

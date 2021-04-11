@@ -65,7 +65,7 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
         // 禁用下拉刷新
         mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
-        showNoData()
+//        showNoData()
 
         backIv.setOnClickListener {
             finish()

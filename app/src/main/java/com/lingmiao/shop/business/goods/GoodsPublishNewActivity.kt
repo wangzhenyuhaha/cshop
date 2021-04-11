@@ -300,11 +300,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     private fun initSection4View() {
         goodsSpecTv.singleClick {
-            if (goodsVO.categoryId.isNotBlank()) {
-                SpecSettingActivity.openActivity(this, REQUEST_CODE_SKU, isVirtualGoods, goodsVO)
-            } else {
-                showToast("请先选择商品分类")
-            }
+            SpecSettingActivity.openActivity(this, REQUEST_CODE_SKU, isVirtualGoods, goodsVO)
+//            if (goodsVO.categoryId.isNotBlank()) {
+//                SpecSettingActivity.openActivity(this, REQUEST_CODE_SKU, isVirtualGoods, goodsVO)
+//            } else {
+//                showToast("请先选择商品分类")
+//            }
         }
         switchBtn.setOnCheckedChangeListener { buttonView, isChecked ->
 

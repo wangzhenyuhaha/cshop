@@ -82,10 +82,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     @NonNull
     protected abstract P createPresenter();
 
-    protected abstract void initView();
-
     @LayoutRes
     protected abstract int getLayoutId();
+
+    protected abstract void initView();
 
     /**
      * 是否使用基类里面的布局，

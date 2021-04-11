@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.tuan.fragment
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
@@ -19,6 +20,7 @@ import com.lingmiao.shop.widget.EmptyView
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.business.order.OrderShowActivity
 
 class OrderListFragment : BaseLoadMoreFragment<OrderVo, OrderListPresenter>(),
     OrderListPresenter.View {

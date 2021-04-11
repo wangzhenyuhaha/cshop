@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.order.bean
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class OrderList(
     @SerializedName("cancel_left_time")
@@ -19,6 +20,7 @@ data class OrderList(
 //    var couponList: Any?,
     @SerializedName("create_time")
     var createTime: Long?,
+
     @SerializedName("discount_price")
     var discountPrice: Double?,
 //    @SerializedName("gift_list")
@@ -118,7 +120,7 @@ data class OrderList(
     @SerializedName("order_operate_allowable_vo")
     var orderOperateAllowable:OrderOperateAllowable?
 
-) {
+) : Serializable {
     fun isVirtualOrderTag() : Boolean {
         return isVirtualOrder == 1;
     }
@@ -174,12 +176,12 @@ data class Sku(
     var specList: List<SpecBean>?,
     @SerializedName("subtotal")
     var subtotal: Double?
-)
+) : Serializable
 
 data class GoodsOperateAllowableVo(
     @SerializedName("allow_apply_service")
     var allowApplyService: Boolean?
-)
+) : Serializable
 
 data class SpecBean(
 //    @SerializedName("big")
@@ -206,7 +208,7 @@ data class SpecBean(
 //    var thumbnail: Any?,
 //    @SerializedName("tiny")
 //    var tiny: Any?
-)
+) : Serializable
 
 data class OrderOperateAllowable(
     @SerializedName("allow_apply_service")
@@ -237,4 +239,4 @@ data class OrderOperateAllowable(
     var allowServiceCancel: Boolean = false,//是否允许取消(售后)
     @SerializedName("allow_ship")
     var allowShip: Boolean = false//是否允许被发货
-)
+)  : Serializable

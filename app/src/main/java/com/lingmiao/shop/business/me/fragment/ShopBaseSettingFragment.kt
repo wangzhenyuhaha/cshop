@@ -7,6 +7,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.BaseFragment
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
@@ -160,11 +161,19 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             }
         }
 
+        tvShopManageSloganHint.singleClick {
+            DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_slogan);
+        }
+
         tvShopManageRemark.setOnClickListener {
             //店铺公告
             DialogUtils.showInputDialog(activity!!, "店铺公告", "", "请输入","取消", "保存",null) {
                 tvShopManageRemark.text = it;
             }
+        }
+
+        tvShopManageRemarkHint.singleClick {
+            DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_remark);
         }
 
         rlShopManageDesc.setOnClickListener{

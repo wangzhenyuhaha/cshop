@@ -29,30 +29,46 @@ class WorkTimeVo : ItemData {
 
     companion object {
 
-        fun getWorkTimeList(): List<WorkTimeVo> {
+        fun getList(value : Int): List<WorkTimeVo> {
             val data = mutableListOf<WorkTimeVo>()
             var item: WorkTimeVo? = null;
-            for (index in 0..23) {
+            var position : Int = 0;
+            for (index in 0..24) {
+                position ++;
                 item = WorkTimeVo();
-                item.itemName = String.format("%s:00", if (index > 9) index else "0" + index);
-                item.itemValue = String.format("%s", index + 1);
+                item.itemName = String.format("第二天%s:00", if (index > 9) index else "0" + index);
+                item.itemValue = String.format("%s", value * 100 + position);
                 data.add(item);
 
-                item = WorkTimeVo();
-                item.itemName = String.format("%s:30", if (index > 9) index else "0" + index);
-                item.itemValue = String.format("%s", (index + 1) * 100);
-                data.add(item);
+
+                if(index < 24) {
+                    position ++;
+                    item = WorkTimeVo();
+                    item.itemName = String.format("第二天%s:30", if (index > 9) index else "0" + index);
+                    item.itemValue = String.format("%s", value * 100 + position);
+                    data.add(item);
+                }
             }
             return data;
         }
 
+        fun getTomorrowWorkTimeList(): List<WorkTimeVo> {
+            return getList(1);
+        }
+
+        fun getWorkTimeList(): List<WorkTimeVo> {
+            return getList(0);
+        }
+
         fun getWorkTimeList(value: String?, list: List<WorkTimeVo>?): List<WorkTimeVo> {
+            var newList : MutableList<WorkTimeVo> = mutableListOf();
             list?.forEachIndexed { index, item ->
                 if (item?.getIValue() == value && index < list?.size) {
-                    return list?.subList(index + 1, list?.size);
+                    newList.addAll(list?.subList(index + 1, list?.size));
                 }
             }
-            return mutableListOf();
+            newList.addAll(getTomorrowWorkTimeList())
+            return newList;
         }
     }
 }

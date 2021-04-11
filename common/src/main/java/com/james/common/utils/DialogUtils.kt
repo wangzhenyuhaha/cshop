@@ -4,6 +4,7 @@ import android.app.Activity
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
 import com.blankj.utilcode.util.ToastUtils
@@ -29,6 +30,7 @@ class DialogUtils {
         ) {
             showDialog(context, title, content, "取消", "确定", leftClick, rightClick)
         }
+
 
         fun showDialog(
             context: Activity,
@@ -221,9 +223,21 @@ class DialogUtils {
             dialog.show()
             return dialog
         }
+
+
+        fun showDialog(
+            context: Activity,
+            imageInt : Int
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_image, null)
+            dialog.setContentView(defaultView)
+            val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
+            image?.setImageResource(imageInt);
+            dialog.show()
+        }
+
     }
-
-
-
 
 }

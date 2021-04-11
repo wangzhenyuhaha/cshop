@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/dimen_15">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="@dimen/dimen_15">
+
+            <ImageView
+                android:id="@+id/ivBuyerHead"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:visibility="gone"
+                tools:src="@color/common_bg" />
+
+            <TextView
+                android:id="@+id/tvOrderSn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="订单编号：232432134143215"
+                android:textColor="#ff000000"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tvOrderStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="待付款"
+                android:textColor="@color/primary"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <com.lingmiao.shop.business.order.view.GoodsItemRvLayout
+            android:id="@+id/goodsItemC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/divider"
+            android:paddingBottom="@dimen/dp_10" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_ship_fee_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderShipFeeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="￥200"
+                android:textColor="@color/color_333333"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_discount_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderDiscountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="￥200"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_pay_money_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderPayMoneyTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="￥200"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_pay_type_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderPayTypeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="在线支付"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_time_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderTimeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="2020-09-09 12:22"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_remark_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderRemarkTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="sss"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_ship_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_delivery_time_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderDeliveryTimeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="尽快送达"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_address_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderAddressTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:text="上海市浦东新区浦三路"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderOwnerTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/orderAddressTv"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/ic_tel"
+                android:drawablePadding="@dimen/dimen_10"
+                android:gravity="center_vertical"
+                android:paddingTop="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="张稳重 18621774835"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_ship_type_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderShipTypeTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="跑腿配送"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_ship_rider_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderShipRiderTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawableRight="@mipmap/ic_tel"
+                android:drawablePadding="@dimen/dimen_10"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="张三"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

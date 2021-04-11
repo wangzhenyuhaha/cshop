@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <RelativeLayout
-        android:background="@color/white"
+        android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -16,10 +16,20 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="订单管理"
-            android:textColor="#ff333333"
+            android:textColor="@color/white"
             android:textSize="17sp" />
 
         <ImageView
+            android:id="@+id/tv_order_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/dimen_15"
+            android:src="@mipmap/ic_search" />
+
+        <ImageView
+            android:visibility="gone"
             android:id="@+id/tv_order_scan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,9 +47,7 @@
         android:layout_height="49dp"
         android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:orientation="horizontal">
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab1"
@@ -63,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="待发货" />
+            app:tvTitle="进行中" />
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab4"
@@ -71,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="已发货" />
+            app:tvTitle="退款" />
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab5"
@@ -79,7 +87,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="售后/退款" />
+            app:tvTitle="已完成" />
+
+        <com.lingmiao.shop.widget.IOrderTabView
+            android:id="@+id/tvTab6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tvSelected="false"
+            app:tvTitle="已取消" />
 
     </LinearLayout>
 

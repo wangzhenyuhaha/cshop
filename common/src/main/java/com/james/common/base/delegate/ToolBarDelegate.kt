@@ -58,12 +58,24 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
                 BarUtils.setStatusBarLightMode(context as Activity, lightMode)
             }
         }
-
-
     }
 
     fun setToolbarBackground(context: Context, @ColorRes colorRes: Int) {
         toolbar?.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+    }
+
+    fun setToolbarBackgroundOfOtherTheme(context: Context, @ColorRes colorRes: Int, @ColorRes textColorRes: Int) {
+        toolbar?.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+        tvMidTitle?.setTextColor(ContextCompat.getColor(context, textColorRes))
+        (context as? AppCompatActivity)?.apply {
+            supportActionBar?.apply {
+                setHomeAsUpIndicator(R.mipmap.ic_back_new_white) //更改返回图标
+            }
+        }
+        BarUtils.setStatusBarColor(
+            context as Activity,
+            ContextCompat.getColor(context, colorRes)
+        )
     }
 
     fun setBackIcon() {

@@ -33,7 +33,10 @@
     <!--  =================== 订单 START ===================  -->
     <string name="order_product_count">等%d款商品</string>
     <string name="order_money">共%d件商品，实付款￥%s</string>
+    <string name="order_money_new">已付款：￥%s</string>
     <string name="order_hint_bar_code">请扫描条码/二维码核销订单</string>
+    <string name="order_discount_hint">优惠满减金额</string>
+    <string name="order_ship_fee_hint">配送费</string>
     <!--  =================== 订单  END  ===================  -->
 
 
@@ -122,4 +125,13 @@
     <string name="sales_setting_title">营销设置</string>
     <string name="sales_activity_edit_title">活动设置</string>
     <string name="stats_analysis_title">数据统计</string>
+    <string name="order_pay_money_hint">实付金额</string>
+    <string name="order_pay_type_hint">支付方式</string>
+    <string name="order_time_hint">下单时间</string>
+    <string name="order_remark_hint">订单备注</string>
+    <string name="order_delivery_time_hint">送达时间</string>
+    <string name="order_address_hint">收货地址</string>
+    <string name="order_ship_type_hint">配送方式</string>
+    <string name="order_ship_rider_hint">配送骑士</string>
+    <string name="order_ship_hint">配送信息</string>
 </resources>

@@ -195,7 +195,7 @@
 
 
         <com.james.common.view.ITextView
-            android:id="@+id/tvLogin"
+            android:id="@+id/tvVip"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
             android:layout_marginRight="@dimen/dimen_15"
