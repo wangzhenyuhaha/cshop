@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.goods
 
 import android.content.Context
 import android.content.Intent
-import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GroupManagerEditPre
@@ -12,8 +11,6 @@ import com.lingmiao.shop.util.GlideUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.isNotBlank
-import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.tuan.GoodsSelectActivity
 import kotlinx.android.synthetic.main.goods_activity_menu_edit.*
 
 /**
@@ -95,7 +92,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         }
         // 选择商品
         goodsListTv.setOnClickListener {
-            ActivityUtils.startActivity(GoodsSelectActivity::class.java)
+            GoodsMenuSelectActivity.menu(this, parentGroupId);
         }
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {

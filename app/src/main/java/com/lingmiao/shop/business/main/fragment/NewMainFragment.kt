@@ -122,6 +122,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
         tvMainShopReason.visibility = View.GONE
+        llHeader.visibility = View.GONE
         ivMainMessage.visibility = View.GONE
 //        tvMainLoginOut.visibility = View.VISIBLE
         if (loginInfo != null) {
@@ -171,6 +172,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         ActivityUtils.startActivity(MainActivity::class.java)
                         return
                     }
+                    llHeader.visibility = View.VISIBLE
+                    llHeader.setBackgroundColor(ContextCompat.getColor(context!!, R.color.primary));
                     llMainShopOpen.visibility = View.VISIBLE
                     llMainShopOther.visibility = View.GONE
                     ivMainMessage.visibility = View.VISIBLE

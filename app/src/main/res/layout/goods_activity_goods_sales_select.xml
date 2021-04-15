@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/salesDrawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <com.james.common.view.EmptyLayout
+                android:id="@+id/el_empty"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <include layout="@layout/fragment_base_load_more" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/goodsSalesBottomContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/goodsSalesCb"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:layout_weight="1"
+                    android:button="@drawable/selector_goods_spce_checkbox"
+                    android:padding="@dimen/dimen_14"
+                    android:text="所有商品"
+                    android:textColor="@color/color_999999"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+                <com.james.common.view.ITextView
+                    android:id="@+id/goodsSalesSubmit"
+                    android:layout_width="100dp"
+                    android:layout_height="38dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="@dimen/dimen_7"
+                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginBottom="@dimen/dimen_7"
+                    android:gravity="center"
+                    android:text="确定选择"
+                    android:textColor="@color/white"
+                    app:ivBgColor="@color/color_3870EA"
+                    app:ivRadius="19dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigateView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        app:headerLayout="@layout/goods_view_sales_header" />
+
+</androidx.drawerlayout.widget.DrawerLayout>

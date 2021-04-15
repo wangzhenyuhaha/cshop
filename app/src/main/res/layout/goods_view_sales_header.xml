@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/dimen_30"
+        android:paddingTop="@dimen/dimen_30"
+        android:paddingBottom="@dimen/dimen_15"
+        android:text="菜单管理"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold" />
+
+    <com.james.common.view.IRelativeLayout
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:paddingHorizontal="@dimen/dimen_10"
+        android:paddingVertical="@dimen/dimen_4"
+        app:ivBgColor="@color/color_E6E6E6"
+        app:ivBorderColor="@color/color_999999"
+        app:ivBorderWidth="@dimen/dimen_1"
+        app:ivRadius="@dimen/dimen_5"
+        app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
+        app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+
+        <TextView
+            android:drawableRight="@mipmap/common_arrow_right"
+            android:layout_width="65dp"
+            android:layout_height="@dimen/dimen_17"
+            android:text="置顶菜单"
+            android:drawablePadding="@dimen/dimen_5"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_11" />
+    </com.james.common.view.IRelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_30"
+        android:paddingTop="@dimen/dimen_15">
+
+        <com.james.common.view.IRelativeLayout
+            android:id="@+id/usedMenuC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_4"
+            app:ivBgColor="@color/color_E6E6E6"
+            app:ivBorderColor="@color/color_999999"
+            app:ivBorderWidth="@dimen/dimen_1"
+            app:ivRadius="@dimen/dimen_5"
+            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
+            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+
+            <TextView
+                android:id="@+id/usedMenuTv"
+                android:drawableRight="@mipmap/common_arrow_right"
+                android:layout_width="65dp"
+                android:layout_height="@dimen/dimen_17"
+                android:text="常用菜单"
+                android:drawablePadding="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_11" />
+
+        </com.james.common.view.IRelativeLayout>
+
+
+        <com.james.common.view.IRelativeLayout
+            android:id="@+id/firstMenuC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_4"
+            app:ivBgColor="@color/white"
+            app:ivBorderColor="@color/color_999999"
+            app:ivBorderWidth="@dimen/dimen_1"
+            app:ivRadius="@dimen/dimen_5"
+            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
+            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+
+            <TextView
+                android:id="@+id/firstMenuTv"
+                android:drawableRight="@mipmap/goods_blue_arrow_down"
+                android:layout_width="65dp"
+                android:layout_height="@dimen/dimen_17"
+                android:text="一级分类"
+                android:drawablePadding="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_11" />
+
+        </com.james.common.view.IRelativeLayout>
+
+
+        <com.james.common.view.IRelativeLayout
+            android:id="@+id/secondMenuC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_4"
+            app:ivBgColor="@color/white"
+            app:ivBorderColor="@color/color_999999"
+            app:ivBorderWidth="@dimen/dimen_1"
+            app:ivRadius="@dimen/dimen_5"
+            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
+            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+
+            <TextView
+                android:id="@+id/secondMenuTv"
+                android:drawableRight="@mipmap/goods_blue_arrow_down"
+                android:layout_width="65dp"
+                android:layout_height="@dimen/dimen_17"
+                android:text="二级分类"
+                android:drawablePadding="@dimen/dimen_5"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/sp_11" />
+
+        </com.james.common.view.IRelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

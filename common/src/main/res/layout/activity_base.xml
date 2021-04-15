@@ -16,7 +16,6 @@
         android:theme="@style/MyToolBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-
         <TextView
             android:id="@+id/tv_mid_title"
             android:layout_width="wrap_content"
@@ -35,21 +34,39 @@
             android:paddingRight="@dimen/dimen_15"
             android:paddingLeft="15dp"
             android:textSize="13sp"
+            tools:visibility="visible"
             android:gravity="center"
             android:visibility="gone"
             tools:text="发布" />
 
         <ImageView
+            android:visibility="gone"
+            tools:visibility="visible"
             android:id="@+id/iv_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:paddingLeft="15dp"
+            android:paddingLeft="@dimen/dp_10"
             android:paddingRight="15dp"
             android:paddingTop="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"
             tools:src="@mipmap/ic_menu_back"
             />
+
+        <ImageView
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:id="@+id/iv_right2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:paddingTop="@dimen/dp_10"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:paddingRight="@dimen/dp_10"
+            tools:src="@mipmap/ic_menu_back"
+            />
+
     </androidx.appcompat.widget.Toolbar>
 
     <View

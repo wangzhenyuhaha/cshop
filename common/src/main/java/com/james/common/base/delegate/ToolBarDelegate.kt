@@ -25,6 +25,8 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
     private var tvMidTitle: TextView? = null
     private var tvRightText: TextView? = null
     private var ivRight: ImageView? = null
+    private var ivRight2: ImageView? = null
+
 
     init {
         (context as? AppCompatActivity)?.apply {
@@ -33,6 +35,7 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
                 tvMidTitle = findViewById(R.id.tv_mid_title)
                 tvRightText = findViewById(R.id.tv_right_text)
                 ivRight = findViewById(R.id.iv_right)
+                ivRight2 = findViewById(R.id.iv_right2)
             }
             supportActionBar?.apply {
                 setTitle("") //设置标题
@@ -102,6 +105,16 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
         }
     }
 
+
+    fun setRightIcon2(@DrawableRes resId: Int, listener: View.OnClickListener?) {
+        ivRight2?.apply {
+            visiable()
+            setImageResource(resId)
+            setOnClickListener(listener)
+        }
+    }
+
+
     fun setRightText(string: String, listener: View.OnClickListener?) {
         tvRightText?.apply {
             visiable()
@@ -118,4 +131,10 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
             setOnClickListener(listener)
         }
     }
+
+    fun setRightTwoIcon(@DrawableRes resId: Int, listener: View.OnClickListener?, @DrawableRes resId2: Int, listener2: View.OnClickListener?) {
+        setRightIcon2(resId, listener);
+        setRightIcon(resId2, listener2);
+    }
+
 }

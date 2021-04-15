@@ -149,6 +149,12 @@
         <activity
             android:name=".business.goods.GoodsListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsMenuSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsSalesSelectActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".business.goods.MenuManagerActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".business.goods.MenuEditActivity"

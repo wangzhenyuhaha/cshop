@@ -85,6 +85,9 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     override fun initView() {
         initTitle();
         initTabLayout();
+        goodsSearchLayout.singleClick {
+            GoodsSearchActivity.openActivity(context!!)
+        }
         mPresenter?.loadNumbers();
     }
 

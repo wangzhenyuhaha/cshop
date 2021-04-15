@@ -36,7 +36,7 @@ class WorkTimeVo : ItemData {
             for (index in 0..24) {
                 position ++;
                 item = WorkTimeVo();
-                item.itemName = String.format("第二天%s:00", if (index > 9) index else "0" + index);
+                item.itemName = String.format("%s%s:00", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
                 item.itemValue = String.format("%s", value * 100 + position);
                 data.add(item);
 
@@ -44,7 +44,7 @@ class WorkTimeVo : ItemData {
                 if(index < 24) {
                     position ++;
                     item = WorkTimeVo();
-                    item.itemName = String.format("第二天%s:30", if (index > 9) index else "0" + index);
+                    item.itemName = String.format("%s%s:30",if(value == 1) "第二天" else "",  if (index > 9) index else "0" + index);
                     item.itemValue = String.format("%s", value * 100 + position);
                     data.add(item);
                 }

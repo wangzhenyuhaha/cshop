@@ -22,7 +22,7 @@
     <string name="goods_home_enable_quantity">可用库存：%s</string>
     <string name="goods_home_sales">销量：%s</string>
     <string name="goods_search_start">搜索</string>
-    <string name="goods_search_edt_hint">输入关键词搜索</string>
+    <string name="goods_search_edt_hint">搜索商品名称</string>
     <string name="goods_publish_type_title">商品发布</string>
     <string name="goods_detail_title">商品详情</string>
     <string name="goods_manager_title">商品管理</string>

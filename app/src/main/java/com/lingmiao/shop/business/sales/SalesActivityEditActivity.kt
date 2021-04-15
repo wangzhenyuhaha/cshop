@@ -7,6 +7,7 @@ import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.GoodsManagerActivity
+import com.lingmiao.shop.business.goods.GoodsSalesSelectActivity
 import com.lingmiao.shop.business.sales.adapter.ActivitySalesAdapter
 import com.lingmiao.shop.business.sales.bean.SalesActivityItemVo
 import com.lingmiao.shop.business.sales.presenter.ISalesEditPresenter
@@ -35,7 +36,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         mToolBarDelegate.setMidTitle(getString(R.string.sales_activity_edit_title))
 
         activityGoodsPickTv.singleClick {
-            GoodsManagerActivity.sales(context, "3");
+            GoodsSalesSelectActivity.sales(context, "3");
         }
         initPricePart();
     }

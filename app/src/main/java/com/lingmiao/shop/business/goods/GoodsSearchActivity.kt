@@ -40,10 +40,6 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
         }
     }
 
-    override fun useBaseLayout(): Boolean {
-        return false
-    }
-
     override fun getLayoutId(): Int {
         return R.layout.goods_activity_search
     }
@@ -52,33 +48,39 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
         return GoodsSearchPreImpl(this, this)
     }
 
-    override fun autoRefresh(): Boolean {
-        return false
-    }
-
     override fun useEventBus(): Boolean {
         return true
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
+    override fun autoRefresh(): Boolean {
+        return false;
+    }
+
     override fun initOthers() {
-        BarUtils.setStatusBarLightMode(this, true)
+        mToolBarDelegate.setMidTitle("商品搜索")
+
+        // BarUtils.setStatusBarLightMode(this, true)
         // 禁用下拉刷新
         mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
 //        showNoData()
 
-        backIv.setOnClickListener {
-            finish()
-        }
-        deleteIv.setOnClickListener {
-            inputEdt.setText("")
-        }
-        searchTv.setOnClickListener {
-            mLoadMoreDelegate?.refresh()
-        }
-        searchStatusTv.setOnClickListener {
-            mPresenter?.clickSearchMenuView(it)
-        }
+//        backIv.setOnClickListener {
+//            finish()
+//        }
+//        deleteIv.setOnClickListener {
+//            inputEdt.setText("")
+//        }
+//        searchTv.setOnClickListener {
+//            mLoadMoreDelegate?.refresh()
+//        }
+//        searchStatusTv.setOnClickListener {
+//            mPresenter?.clickSearchMenuView(it)
+//        }
         setSearchStatus()
     }
 

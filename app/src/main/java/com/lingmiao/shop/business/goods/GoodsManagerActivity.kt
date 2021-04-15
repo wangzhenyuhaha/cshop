@@ -121,8 +121,10 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
 
         // 禁用下拉刷新
         mSmartRefreshLayout.setEnableRefresh(false)
+        mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
-        showNoData()
+        mLoadMoreDelegate?.refresh()
+        // showNoData()
     }
 
     fun getCheckedCount() : Int {

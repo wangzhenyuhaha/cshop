@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_ffffff"
+    android:paddingStart="@dimen/dimen_14"
+    android:paddingTop="@dimen/dimen_14">
+
+    <ImageView
+        android:id="@+id/goodsIv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@color/color_F1F1F1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="end"
+        app:constraint_referenced_ids="goodsIv" />
+
+    <TextView
+        android:id="@+id/goodsNameTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:layout_marginEnd="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_333333"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="我是商品描述信息" />
+
+    <TextView
+        android:id="@+id/goodsQuantityTv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        app:layout_constraintBottom_toTopOf="@+id/goodsPriceTv"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
+        tools:text="库存：20000" />
+
+    <TextView
+        android:id="@+id/goodsPriceTv"
+        android:layout_width="@dimen/dimen_100"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/color_FD8424"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/barrier"
+        app:layout_constraintTop_toBottomOf="@+id/goodsQuantityTv"
+        tools:text="￥200.00" />
+
+    <CheckBox
+        android:id="@+id/menuIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@drawable/selector_goods_spce_checkbox"
+        android:padding="@dimen/dimen_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_half"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:background="@color/color_E6E6E6"
+        app:layout_constraintLeft_toLeftOf="@+id/goodsNameTv"
+        app:layout_constraintTop_toBottomOf="@+id/goodsIv" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
