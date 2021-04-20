@@ -48,7 +48,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
     /**
      * 分组的父分组ID
      */
-    private var parentGroupId: String? = null
+    private var parentGroupId: String? = ""
     private lateinit var groupVO: ShopGroupVO
 
     override fun initBundles() {
@@ -92,7 +92,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         }
         // 选择商品
         goodsListTv.setOnClickListener {
-            GoodsMenuSelectActivity.menu(this, parentGroupId);
+            GoodsMenuSelectActivity.menu(this, parentGroupId ?: "222");
         }
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {

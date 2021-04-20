@@ -258,7 +258,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
             showToast("请输入密码")
             return
         }
-        if (!ivService.isSelected) {
+        if (!ivService.isChecked) {
             showToast("请同意服务条款")
             return
         }
@@ -364,7 +364,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SERVICE && resultCode == Activity.RESULT_OK) {
-            ivService.isSelected = true
+            ivService.isChecked = true
         }
     }
 

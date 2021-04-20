@@ -7,9 +7,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
+import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.lingmiao.shop.business.sales.UserOrderDetailActivity
 import com.lingmiao.shop.business.sales.adapter.UserAdapter
 import com.lingmiao.shop.business.sales.bean.UserVo
@@ -72,6 +74,15 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
                     }
                     R.id.userPortraitTv -> {
                         // 用户画像
+                        DialogUtils.showMultInputDialog(activity!!, "用户画像", "", "请输入用户画像","取消", "确定",null) {
+//                            tvShopManageDesc.text = it
+//                            showDialogLoading()
+//                            val request = ShopManageRequest()
+//                            val loginInfo = UserManager.getLoginInfo()
+//                            loginInfo?.let { info-> request.shopId = info.shopId }
+//                            request.shopDesc = it
+//                            mPresenter.updateShopManage(request)
+                        }
                     }
                     R.id.userCheckCb -> {
                         item?.isChecked = !(item?.isChecked!!);

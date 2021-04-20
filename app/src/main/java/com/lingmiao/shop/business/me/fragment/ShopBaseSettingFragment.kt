@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.me.fragment
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.BaseFragment
 import com.james.common.netcore.coroutine.CoroutineSupport
@@ -12,6 +13,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
+import com.lingmiao.shop.business.main.ApplyShopAddressActivity
 import com.lingmiao.shop.business.me.ShopQualificationActivity
 import com.lingmiao.shop.business.me.bean.ShopManage
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
@@ -187,6 +189,9 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 request.shopDesc = it
                 mPresenter?.updateShopManage(request)
             }
+        }
+        rlShopManageAddress.singleClick {
+            ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
         }
         rlShopManageQualification.setOnClickListener{
             //店铺资质

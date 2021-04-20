@@ -273,7 +273,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/no_account_register"
-                android:textColor="#C1C1C1"
+                android:textColor="@color/red"
                 android:textSize="13sp" />
 
             <ImageView

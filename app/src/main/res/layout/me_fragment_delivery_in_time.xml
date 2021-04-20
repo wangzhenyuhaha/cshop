@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -45,7 +52,50 @@
 
     </LinearLayout>
 
+
     <LinearLayout
+        android:id="@+id/ll_model_name"
+        style="@style/tools_sub_container"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_model_type">
+
+        <TextView
+            style="@style/tools_sub_item_left_10"
+            android:text="计费方式" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_15"
+            android:paddingBottom="@dimen/dimen_15"
+            android:id="@+id/rg_model_pay_km"
+            >
+            <RadioButton
+                android:id="@+id/cb_model_pay_km_section"
+                style="@style/tools_sub_item_radio_box"
+                android:checked="true"
+                android:paddingRight="@dimen/dimen_10"
+                android:text="按公里段计费"/>
+
+            <RadioButton
+                android:id="@+id/cb_model_pay_km_num"
+                style="@style/tools_sub_item_radio_box"
+                android:text="按公里数计费"
+                />
+        </RadioGroup>
+
+    </LinearLayout>
+
+
+    <!--起送价-->
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/dimen_15"
         android:paddingLeft="@dimen/dimen_15"
         android:id="@+id/ll_model_price"
         android:layout_width="match_parent"
@@ -55,7 +105,33 @@
 
     </LinearLayout>
 
+
+    <!--配送范围-->
     <LinearLayout
+        android:id="@+id/ll_model_range"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ll_model_price">
+
+        <include layout="@layout/tools_include_model_range" />
+
+    </LinearLayout>
+
+
+    <!--配送时效-->
+    <LinearLayout
+        android:id="@+id/ll_model_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/ll_model_range">
+
+        <include layout="@layout/tools_include_model_time" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:visibility="gone"
         android:paddingLeft="@dimen/dimen_15"
         style="@style/tools_sub_container"
         android:layout_width="match_parent"
@@ -111,6 +187,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:paddingLeft="@dimen/dimen_15"
         style="@style/tools_sub_container"
         android:layout_width="match_parent"
@@ -197,3 +274,4 @@
         app:ivRadius="18dp" />
 
 </LinearLayout>
+</androidx.core.widget.NestedScrollView>
