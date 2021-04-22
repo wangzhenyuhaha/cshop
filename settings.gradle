@@ -1,2 +1,4 @@
-include ':app', ':common', ':ucrop', ':picture_library',":library"
+include ':map'
+include ':common', ':ucrop', ':picture_library',":library"
+include ':app'
 rootProject.name = "cshop"

@@ -3,6 +3,8 @@ package com.lingmiao.shop.business.me.fragment
 import android.content.Intent
 import android.text.TextUtils
 import android.view.View
+import com.amap.api.mapcore.util.it
+import com.amap.api.maps.model.LatLng
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.BaseFragment
@@ -13,7 +15,9 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
-import com.lingmiao.shop.business.main.ApplyShopAddressActivity
+import com.lingmiao.shop.business.main.AddressActivity
+import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
+import com.lingmiao.shop.business.main.event.MyAddressEvent
 import com.lingmiao.shop.business.me.ShopQualificationActivity
 import com.lingmiao.shop.business.me.bean.ShopManage
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
@@ -191,7 +195,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             }
         }
         rlShopManageAddress.singleClick {
-            ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
+            AddressActivity.openActivity(context!!, addressLatLng);
         }
         rlShopManageQualification.setOnClickListener{
             //店铺资质
@@ -222,6 +226,10 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 request.linkPhone = it
                 mPresenter?.updateShopManage(request)
             }
+        }
+        // 保存
+        tvShopSettingSubmit.singleClick {
+            // mPresenter?.updateShopManage(request);
         }
         showPageLoading()
         mPresenter?.requestShopManageData()
@@ -282,6 +290,23 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         loginInfo?.let { info-> request.shopId = info.shopId }
         request.licenceImg = event.remoteUrl
         licenceImg = event.remoteUrl
+        mPresenter?.updateShopManage(request)
+    }
+
+    var addressLatLng : LatLng?= null;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun setAddress(event : ApplyShopPoiEvent) {
+        tvShopManageAddress.text = event?.adInfo?.address;
+        addressLatLng = event?.adInfo?.latLng;
+
+
+        showDialogLoading()
+        val request = ShopManageRequest()
+        val loginInfo = UserManager.getLoginInfo()
+        loginInfo?.let { info-> request.shopId = info.shopId }
+        request.shopLat = addressLatLng?.latitude
+        request.shopLng = addressLatLng?.longitude
         mPresenter?.updateShopManage(request)
     }
 

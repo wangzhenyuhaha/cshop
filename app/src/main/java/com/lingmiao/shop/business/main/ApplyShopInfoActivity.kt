@@ -31,7 +31,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     private var applyShopInfo = ApplyShopInfo()
     private var poi: Poi? = null
-    private var adInfo: AdInfo? = null
+    private var adInfo: AddressData? = null
 
     companion object {
         private const val LICENSE = 1
@@ -147,10 +147,11 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateShopAddress(event: ApplyShopPoiEvent) {
-        poi = event.poi
-        applyShopInfo.shopLat = poi?.latLng?.latitude
-        applyShopInfo.shopLng = poi?.latLng?.longitude
-        applyShopInfo.shopAdd = poi?.address
+        //poi = event.poi
+
+        applyShopInfo.shopLat = event?.adInfo?.latLng?.latitude
+        applyShopInfo.shopLng = event?.adInfo?.latLng?.longitude
+        applyShopInfo.shopAdd = event?.adInfo?.address
         tvShopInfoAddress.text = applyShopInfo.shopAdd
         if (event.adInfo != null) {
             adInfo = event.adInfo
@@ -169,14 +170,14 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateShopAdInfo(event: AdInfo) {
-        adInfo = event
-        applyShopInfo.shopProvince = event.province
-        applyShopInfo.shopCity = event.city
-        applyShopInfo.shopCounty = event.district
-
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun updateShopAdInfo(event: AdInfo) {
+//        adInfo = event
+//        applyShopInfo.shopProvince = event.province
+//        applyShopInfo.shopCity = event.city
+//        applyShopInfo.shopCounty = event.district
+//
+//    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -219,7 +220,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 startActivity(intent)
             }
             R.id.rlShopInfoAddress -> {
-                ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
+                AddressActivity.openActivity(this, adInfo?.latLng);
+                // ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
             }
             R.id.rlShopInfoLicense -> {
                 goUploadImageActivity(LICENSE, "上传营业执照", applyShopInfo.licenceImg)

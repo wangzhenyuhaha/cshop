@@ -13,10 +13,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.goods.fragment.GoodsFragment
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
-import com.lingmiao.shop.business.main.fragment.MainFragment
-import com.lingmiao.shop.business.me.fragment.MyFragment
 import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
 import com.lingmiao.shop.business.order.fragment.OrderTabFragment
 import com.lingmiao.shop.util.OtherUtils
@@ -25,7 +22,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
-import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
 import kotlinx.android.synthetic.main.activity_main.*

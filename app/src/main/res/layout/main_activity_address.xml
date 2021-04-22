@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <View style="@style/DivideLineHorizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:ivBgColor="#EEEEED"
+            app:ivRadius="19dp">
+
+            <EditText
+                android:id="@+id/etShopAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="19dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableLeft="@mipmap/main_address_search"
+                android:drawablePadding="5dp"
+                android:hint="搜索地点"
+                android:imeOptions="actionDone"
+                android:singleLine="true"
+                android:textColor="#ff6f6f6f"
+                android:textSize="14sp" />
+
+        </com.james.common.view.ILinearLayout>
+
+        <TextView
+            android:padding="15dp"
+            android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary"
+            android:text="搜索" />
+
+    </LinearLayout>
+
+    <com.amap.api.maps.MapView
+        android:id="@+id/mvShopAddress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

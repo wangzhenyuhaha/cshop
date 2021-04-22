@@ -39,10 +39,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected PageLoadingDelegate mPageLoadingDelegate;
 
     protected P mPresenter;
-
+    protected Bundle savedInstanceState;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         initBundles();
         if (useBaseLayout()) {
             setContentView(R.layout.activity_base);

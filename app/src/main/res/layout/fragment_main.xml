@@ -29,7 +29,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="40dp"
             tools:text="月亮不睡的店"
-            android:textColor="#ff333333"
+            android:textColor="@color/white"
             android:textSize="15sp" />
 
         <ImageView

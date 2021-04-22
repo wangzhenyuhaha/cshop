@@ -74,9 +74,6 @@ object Fetch {
                     }
                 }
                 val request = builder.build()
-//                if (UserManager.isLogin() && loginInfo != null) {
-//
-//                }
                 val requestBody = request.body()
                 val hasRequestBody = requestBody != null
 
@@ -115,12 +112,11 @@ object Fetch {
                     val result = buffer.clone().readString(charset)
                     try {
                         val gson = Gson()
-                        val baseResponse =
-                            gson.fromJson(result, BaseResponse::class.java)
+                        val baseResponse = gson.fromJson(result, BaseResponse::class.java)
                         if (baseResponse != null) {
-                            if (!TextUtils.isEmpty(baseResponse.message)) ToastUtils.showShort(
-                                baseResponse.message
-                            )
+                            if (!TextUtils.isEmpty(baseResponse.message)) {
+                                ToastUtils.showShort(baseResponse.message)
+                            }
                             if ("403" == baseResponse.code) {
                                 val loginInfo = UserManager.getLoginInfo()
 //                                var tempToken = "eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOjEwOSwic3ViIjoiQlVZRVIiLCJyb2xlcyI6WyJCVVlFUiJdLCJleHAiOjE1OTU5NTIzNDUsInV1aWQiOm51bGwsInVzZXJuYW1lIjoiYTEzMzkyNDI5NDU5In0.VWJSW6cuhxxK22WifEyTkQxB1FNUMICCT4JG-FK3Wr-V87CqBQCGgAXXX9rZVLKCAMhLk_EmHbeIsl2pfDFyNg"
@@ -128,8 +124,7 @@ object Fetch {
                                     goToLoginActivity()
                                 } else {
                                     val response =
-                                        LoginRepository.apiService.refreshToken(loginInfo.refreshToken!!)
-                                            .execute()
+                                        LoginRepository.apiService.refreshToken(loginInfo.refreshToken!!).execute()
                                     if (response.isSuccessful) {
                                         loginInfo.accessToken = response.body()?.accessToken
                                         loginInfo.refreshToken = response.body()?.refreshToken
@@ -143,6 +138,7 @@ object Fetch {
                             }
                         }
                     } catch (e: RuntimeException) {
+                        e.printStackTrace();
                     }
                 }
 

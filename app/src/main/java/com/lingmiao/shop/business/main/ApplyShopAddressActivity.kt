@@ -131,8 +131,8 @@ class ApplyShopAddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
             }
             try {
               val poi =  adapter.data[selectedIndex]
-                EventBus.getDefault().post(ApplyShopPoiEvent(poi,adInfo))
-                finish()
+                //EventBus.getDefault().post(ApplyShopPoiEvent(poi,adInfo))
+                // finish()
             }catch (e:Exception){
                 e.printStackTrace()
             }

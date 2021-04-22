@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
@@ -47,12 +46,12 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
                     toolbar?.setBackgroundColor(
                         ContextCompat.getColor(
                             context,
-                            R.color.color_3870ea_c
+                            R.color.color_207AE1
                         )
                     )
                     BarUtils.setStatusBarColor(
                         context as Activity,
-                        ContextCompat.getColor(context, R.color.color_3870ea_c)
+                        ContextCompat.getColor(context, R.color.color_207AE1)
                     )
                     setHomeAsUpIndicator(R.mipmap.ic_back_new_white) //更改返回图标
                     tvMidTitle?.setTextColor(ContextCompat.getColor(context, R.color.white))
@@ -65,6 +64,13 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
 
     fun setToolbarBackground(context: Context, @ColorRes colorRes: Int) {
         toolbar?.setBackgroundColor(ContextCompat.getColor(context, colorRes))
+    }
+
+    fun setStatusBarColor(context: Context, @ColorRes colorRes: Int) {
+        BarUtils.setStatusBarColor(
+            context as Activity,
+            ContextCompat.getColor(context, colorRes)
+        )
     }
 
     fun setToolbarBackgroundOfOtherTheme(context: Context, @ColorRes colorRes: Int, @ColorRes textColorRes: Int) {
@@ -81,8 +87,8 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
         )
     }
 
-    fun setBackIcon() {
-        toolbar
+    fun setBackIcon(@DrawableRes resId: Int) {
+        (context as? AppCompatActivity)?.getSupportActionBar()?.setHomeAsUpIndicator(resId)
     }
 
     fun hideToolBar() {
@@ -97,7 +103,7 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
         (context as? AppCompatActivity)?.getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
     }
 
-    fun setRightIcon(@DrawableRes resId: Int, listener: View.OnClickListener?) {
+    fun setRightIcon(@DrawableRes resId: Int, listener:View.OnClickListener?) {
         ivRight?.apply {
             visiable()
             setImageResource(resId)
