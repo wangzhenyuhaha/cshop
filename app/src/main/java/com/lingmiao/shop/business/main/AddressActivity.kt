@@ -333,6 +333,10 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     fun startJumpAnimation() {
 
+        if(marker == null) {
+            addMarkersToMap();
+        }
+
         if(marker != null) {
 
             //根据屏幕距离计算需要移动的目标点

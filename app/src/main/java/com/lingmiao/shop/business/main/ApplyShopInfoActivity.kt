@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.main
 
 import android.content.Intent
 import android.view.View
+import com.amap.api.maps.model.Poi
 import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
@@ -11,8 +12,6 @@ import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.exts.checkNotBlack
-import com.tencent.lbssearch.httpresponse.AdInfo
-import com.tencent.lbssearch.httpresponse.Poi
 import kotlinx.android.synthetic.main.main_activity_apply_shop_info.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -30,7 +29,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     private var selectedCategoryList: List<ApplyShopCategory>? = null
 
     private var applyShopInfo = ApplyShopInfo()
-    private var poi: Poi? = null
     private var adInfo: AddressData? = null
 
     companion object {

@@ -17,7 +17,6 @@ import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.AddressActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
-import com.lingmiao.shop.business.main.event.MyAddressEvent
 import com.lingmiao.shop.business.me.ShopQualificationActivity
 import com.lingmiao.shop.business.me.bean.ShopManage
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
