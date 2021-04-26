@@ -51,10 +51,8 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         rlMyPersonInfo.setOnClickListener(this)
         tvVip.setOnClickListener(this)
         tvMyWallet.setOnClickListener(this)
-        tvDeposit.setOnClickListener(this)
-        tvUseTime.setOnClickListener(this)
         tvBalance.setOnClickListener(this)
-        ivSetting.setOnClickListener(this)
+        tvSetting.setOnClickListener(this)
         tvManagerSetting.setOnClickListener(this)
 //        rlMyShopManage.setOnClickListener(this)
         rlMyFeedback.setOnClickListener(this)
@@ -90,14 +88,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             }
             R.id.tvManagerSetting,
             R.id.ivSetting,
+            R.id.tvSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)
-            }
-            R.id.tvUseTime -> {
-                // 使用时间
-            }
-            R.id.tvDeposit -> {
-                // 押金
             }
             R.id.tvBalance -> {
                 // 余额
@@ -131,8 +124,8 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         }
 
         tvBalance.text = String.format("￥%s", 0);
-        tvDeposit.text = String.format("￥%s", 0);
-        tvUseTime.text = String.format("%s天", 0);
+//        tvDeposit.text = String.format("￥%s", 0);
+//        tvUseTime.text = String.format("%s天", 0);
 
     }
 

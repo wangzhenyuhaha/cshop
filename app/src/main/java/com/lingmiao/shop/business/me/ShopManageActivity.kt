@@ -51,7 +51,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("店铺管理")
-        mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
+        // mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
         ivShopManageLogo.setOnClickListener(this)
         rlShopManageName.setOnClickListener(this)
         rlShopManageDesc.setOnClickListener(this)

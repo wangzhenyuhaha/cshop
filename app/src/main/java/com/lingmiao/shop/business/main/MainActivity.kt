@@ -104,13 +104,13 @@ class MainActivity : AppCompatActivity() {
         vpMain.offscreenPageLimit = 1
         tbMain.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if(tab.position==2){
-//                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
-                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_secondary))
-                }else{
-                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.primary))
-//                    BarUtils.setStatusBarLightMode(this@MainActivity, true)
-                }
+//                if(tab.position==2){
+////                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
+//                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_secondary))
+//                }else{
+//                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.primary))
+////                    BarUtils.setStatusBarLightMode(this@MainActivity, true)
+//                }
             }
 
             override fun onTabReselected(tab: TabLayout.Tab?) {

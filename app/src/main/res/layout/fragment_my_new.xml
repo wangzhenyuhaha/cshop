@@ -9,8 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:background="@color/color_secondary">
+        android:layout_height="32dp"
+        android:background="@color/primary">
 
         <TextView
             android:layout_width="wrap_content"
@@ -18,16 +18,18 @@
             android:layout_centerInParent="true"
             android:text="我的"
             android:textColor="#ffffffff"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/ivSetting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:paddingRight="@dimen/dimen_10"
             android:src="@mipmap/my_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -35,12 +37,11 @@
         android:id="@+id/rlMyPersonInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:paddingLeft="10dp"
         android:paddingTop="14dp"
         android:paddingRight="10dp"
         android:paddingBottom="14dp"
-        app:ivBgColor="@color/color_secondary">
+        app:ivBgColor="@color/primary">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivMyHead"
@@ -138,11 +139,13 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/tvSetting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_15"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/arrow_right_white" />
+            android:src="@mipmap/my_setting" />
 
     </com.james.common.view.IRelativeLayout>
 
@@ -150,14 +153,14 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@color/color_secondary"></View>
+        android:background="@color/primary"></View>
 
     <!--试用-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginTop="-65dp"
         android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="-65dp"
         android:layout_marginRight="@dimen/dimen_10"
         android:background="@drawable/shape_round_bg">
 
@@ -198,16 +201,16 @@
             android:id="@+id/tvVip"
             android:layout_width="wrap_content"
             android:layout_height="28dp"
+            android:layout_marginTop="@dimen/dimen_2"
             android:layout_marginRight="@dimen/dimen_15"
             android:gravity="center"
             android:paddingLeft="@dimen/dimen_15"
             android:paddingRight="@dimen/dimen_15"
             android:text="立即开通"
-            android:textColor="@color/color_secondary"
+            android:textColor="@color/white"
             android:textSize="12sp"
-            app:ivBgColor="@color/white"
+            app:ivBgColor="#EB5D40"
             app:ivRadius="18dp"
-            android:layout_marginTop="@dimen/dimen_2"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvOwnerSystem" />
 
@@ -217,96 +220,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-2dp"
-        android:background="@drawable/shape_mine_round">
+        android:layout_marginTop="-2dp">
+
+<!--        android:background="@drawable/shape_mine_round"-->
 
         <View
             android:id="@+id/vBottom"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_marginTop="-50dp"
+            android:layout_height="15dp"
             android:background="@mipmap/ic_try_bg"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"></View>
 
-        <TextView
-            android:id="@+id/tvMyWallet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/arrow_right_white"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingTop="@dimen/dimen_10"
-            android:paddingBottom="@dimen/dimen_10"
-            android:text="我的钱包"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vBottom" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_12"
-            android:src="@mipmap/ic_refresh"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/vBottom" />
-
-        <LinearLayout
-            style="@style/main_data_layout"
-            android:paddingTop="0dp"
-            android:paddingBottom="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvMyWallet">
-
-            <LinearLayout style="@style/main_data_layout_item">
-
-                <TextView
-                    android:id="@+id/tvBalance"
-                    style="@style/today_data_value"
-                    tools:text="2123" />
-
-                <TextView
-                    style="@style/today_data_hint"
-                    android:drawableBottom="@null"
-                    android:text="余额" />
-
-            </LinearLayout>
-
-            <View style="@style/dash_v_line" />
-
-            <LinearLayout style="@style/main_data_layout_item">
-
-                <TextView
-                    android:id="@+id/tvDeposit"
-                    style="@style/today_data_value"
-                    tools:text="2123" />
-
-                <TextView
-                    style="@style/today_data_hint"
-                    android:drawableBottom="@null"
-                    android:text="押金" />
-
-            </LinearLayout>
-
-            <View style="@style/dash_v_line" />
-
-            <LinearLayout style="@style/main_data_layout_item">
-
-                <TextView
-                    android:id="@+id/tvUseTime"
-                    style="@style/today_data_value"
-                    tools:text="2123" />
-
-                <TextView
-                    style="@style/today_data_hint"
-                    android:drawableBottom="@null"
-                    android:text="使用时间" />
-
-            </LinearLayout>
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -385,6 +311,52 @@
 
     </LinearLayout>
 
+
+    <!--常用工具-->
+    <com.james.common.view.ILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:ivBgColor="#fff"
+        app:ivRadius="4dp">
+
+
+        <TextView
+            android:id="@+id/tvMyWallet"
+            style="@style/my_part_item"
+            android:drawableRight="@mipmap/common_arrow_right"
+            android:text="我的钱包" />
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/my_part_item"
+                android:layout_weight="1"
+                android:text="余额" />
+
+            <TextView
+                android:id="@+id/tvBalance"
+                style="@style/my_part_item"
+                android:layout_width="wrap_content"
+                android:textColor="@color/color_secondary"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold"
+                tools:text="2123" />
+
+        </LinearLayout>
+
+    </com.james.common.view.ILinearLayout>
+
+
     <!--常用工具-->
     <com.james.common.view.ILinearLayout
         android:layout_width="match_parent"
@@ -398,56 +370,52 @@
         app:ivBgColor="#fff"
         app:ivRadius="4dp">
 
-        <!--第一行start-->
-        <LinearLayout
-            style="@style/main_tool_layout"
-            android:layout_marginTop="0dp">
+        <TextView
+            android:id="@+id/tvManagerSetting"
+            style="@style/my_part_item"
+            android:drawableLeft="@mipmap/my_message_manager"
+            android:text="消息设置" />
 
-            <TextView
-                android:id="@+id/tvManagerSetting"
-                style="@style/main_tools"
-                android:drawableTop="@mipmap/my_message_manager"
-                android:text="消息设置" />
+        <View style="@style/DivideLineHorizontal" />
 
-            <TextView
-                android:id="@+id/tvGoodsManager"
-                style="@style/main_tools"
-                android:drawableTop="@mipmap/my_code"
-                android:text="我的二维码" />
+        <TextView
+            android:id="@+id/tvGoodsManager"
+            style="@style/my_part_item"
+            android:drawableLeft="@mipmap/my_code"
+            android:text="我的二维码" />
 
-            <TextView
-                android:id="@+id/tvMenuManager"
-                style="@style/main_tools"
-                android:drawableTop="@mipmap/my_share"
-                android:text="分享店铺" />
+        <View style="@style/DivideLineHorizontal" />
 
-        </LinearLayout>
-        <!--第一行end-->
+        <TextView
+            android:id="@+id/tvMenuManager"
+            style="@style/my_part_item"
+            android:drawableLeft="@mipmap/my_share"
+            android:text="分享店铺" />
 
-        <!--第2行start-->
-        <LinearLayout
-            style="@style/main_tool_layout"
-            android:layout_marginTop="0dp">
 
-            <TextView
-                android:id="@+id/rlMyFeedback"
-                style="@style/main_tools"
-                android:drawableTop="@mipmap/my_feedback"
-                android:text="建议反馈" />
+        <View style="@style/DivideLineHorizontal" />
 
-            <TextView
-                android:id="@+id/rlMyContactService"
-                style="@style/main_tools"
-                android:drawableTop="@mipmap/my_custom_service"
-                android:text="联系客服" />
+        <TextView
+            android:id="@+id/rlMyFeedback"
+            style="@style/my_part_item"
+            android:drawableLeft="@mipmap/my_feedback"
+            android:text="建议反馈" />
 
-            <TextView
-                style="@style/main_tools"
-                android:drawableTop="@mipmap/main_ic_comming_soon"
-                android:visibility="invisible" />
+        <View style="@style/DivideLineHorizontal" />
 
-        </LinearLayout>
-        <!--第2行end-->
+        <TextView
+            android:id="@+id/rlMyContactService"
+            style="@style/my_part_item"
+            android:drawableLeft="@mipmap/my_custom_service"
+            android:text="联系客服" />
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <TextView
+            style="@style/my_part_item"
+            android:drawableLeft="@mipmap/main_ic_comming_soon"
+            android:visibility="gone" />
+
     </com.james.common.view.ILinearLayout>
     <!--常用工具end-->
 

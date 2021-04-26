@@ -45,7 +45,7 @@ class AccountSettingActivity : BaseActivity<AccountSettingPresenter>(),
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("账号设置")
-        mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
+        // mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
 //        showPageLoading()
 //
 //        mPresenter.requestAccountSettingData()

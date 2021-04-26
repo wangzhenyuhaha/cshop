@@ -47,7 +47,7 @@ class PersonInfoActivity : BaseActivity<PersonInfoPresenter>(), PersonInfoPresen
 //        id = intent.getStringExtra("id")
 //        nickname = intent.getStringExtra("nickname")
         mToolBarDelegate.setMidTitle("个人资料")
-        mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
+        // mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
         val my:My? = intent.getParcelableExtra<My>("bean")
         if(!TextUtils.isEmpty(my?.face)) GlideUtils.setImageUrl(ivPersonInfoHead, my?.face)
         id = my?.clerkId.toString()

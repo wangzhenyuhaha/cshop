@@ -327,6 +327,17 @@
 
     <!--首页 end-->
 
+    <!--我的-->
+    <style name="my_part_item">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <!--首页工具 start-->
     <style name="tools_sub_container">
         <item name="android:layout_width">match_parent</item>

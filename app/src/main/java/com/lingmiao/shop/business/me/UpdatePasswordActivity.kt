@@ -33,7 +33,7 @@ class UpdatePasswordActivity : BaseActivity<UpdatePasswordPresenter>(),
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("修改密码")
-        mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
+        // mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
 
         tvUpdatePasswordSubmit.setOnClickListener {
             try {

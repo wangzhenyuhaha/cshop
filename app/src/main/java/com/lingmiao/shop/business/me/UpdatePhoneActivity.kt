@@ -38,7 +38,7 @@ class UpdatePhoneActivity : BaseActivity<UpdatePhonePresenter>(), UpdatePhonePre
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("修改手机")
-        mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
+        // mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
 
         newPhone = intent.getBooleanExtra("newPhone", false)
 
