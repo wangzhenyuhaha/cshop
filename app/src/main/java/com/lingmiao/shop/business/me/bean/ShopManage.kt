@@ -41,6 +41,6 @@ data class ShopManage(
 ) : Serializable {
 
     fun getShipTypeStr() : String {
-        return if(StringUtils.equals("1", shipType)) "单店" else "连锁店";
+        return if(StringUtils.equals("2", shipType)) "单店" else "连锁店";
     }
 }

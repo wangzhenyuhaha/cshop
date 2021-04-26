@@ -161,7 +161,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
         tvShopManageSlogan.setOnClickListener{
             //店铺口号
-            DialogUtils.showInputDialog(activity!!, "店铺口号", "", "请输入","取消", "保存",null) {
+            DialogUtils.showInputDialog( activity!!, "店铺口号", "", "请输入","","取消", "保存",null) {
                 tvShopManageSlogan.text = it;
             }
         }

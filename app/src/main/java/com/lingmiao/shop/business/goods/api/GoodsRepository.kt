@@ -205,6 +205,10 @@ object GoodsRepository {
         return apiService.loadCategory(categoryId).awaitHiResponse()
     }
 
+    suspend fun addCategory(bean : CategoryVO) : HiResponse<CategoryVO> {
+        return apiService.addCategory(bean).awaitHiResponse();
+    }
+
     /**
      * 获取店铺商品第一级分组(一级分组内包含了二级分组)
      */

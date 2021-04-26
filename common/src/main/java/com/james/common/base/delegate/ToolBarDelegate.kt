@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.BarUtils
 import com.james.common.R
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
 
 /**
@@ -25,7 +26,7 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
     private var tvRightText: TextView? = null
     private var ivRight: ImageView? = null
     private var ivRight2: ImageView? = null
-
+    private var vLine : View? = null
 
     init {
         (context as? AppCompatActivity)?.apply {
@@ -35,6 +36,7 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
                 tvRightText = findViewById(R.id.tv_right_text)
                 ivRight = findViewById(R.id.iv_right)
                 ivRight2 = findViewById(R.id.iv_right2)
+                vLine = findViewById(R.id.vi_top_line);
             }
             supportActionBar?.apply {
                 setTitle("") //设置标题
@@ -143,4 +145,11 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
         setRightIcon(resId2, listener2);
     }
 
+    fun setLineGone() {
+        vLine?.gone();
+    }
+
+    fun showLine() {
+        vLine?.visiable();
+    }
 }

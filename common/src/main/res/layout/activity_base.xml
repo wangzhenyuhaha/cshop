@@ -72,18 +72,19 @@
     <View
         android:id="@+id/vi_top_line"
         android:layout_below="@+id/tl_bar"
-        style="@style/DivideLineHorizontal"/>
+        style="@style/DivideLineHorizontal"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/vi_top_line" />
+        android:layout_below="@id/vi_top_line" />
 
     <com.james.common.view.EmptyLayout
         android:id="@+id/el_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/vi_top_line"
+        android:layout_below="@id/vi_top_line"
         android:visibility="gone"/>
 </RelativeLayout>

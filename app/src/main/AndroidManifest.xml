@@ -158,6 +158,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".business.goods.MenuEditActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".business.goods.GoodsCategoryActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- ======================= 商品模块  END ========================= -->
 

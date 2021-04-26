@@ -116,6 +116,13 @@ interface GoodsApiService {
     fun loadCategory(@Path("category_id") categoryId: String): Call<List<CategoryVO>>
 
     /**
+     * 商品分类
+     */
+    @WithHiResponse
+    @POST("seller/goods/category/add")
+    fun addCategory(@Body bean: CategoryVO): Call<CategoryVO>
+
+    /**
      * 获取规格名列表
      */
     @WithHiResponse

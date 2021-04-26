@@ -14,10 +14,9 @@
             android:id="@+id/rlMyPersonInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:orientation="horizontal"
             android:paddingLeft="10dp"
-            android:paddingTop="14dp"
+            android:paddingTop="@dimen/dimen_15"
             android:paddingRight="10dp"
             android:paddingBottom="14dp"
             app:ivBgColor="@color/primary">

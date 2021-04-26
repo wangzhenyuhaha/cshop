@@ -28,7 +28,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
     }
 
     override fun initView() {
-        mToolBarDelegate.setMidTitle("开通会员")
+        mToolBarDelegate?.setMidTitle("开通会员")
         //mToolBarDelegate.setToolbarBackgroundOfOtherTheme(context!!, R.color.color_secondary, R.color.white);
 
         val list : MutableList<VipType> = mutableListOf();

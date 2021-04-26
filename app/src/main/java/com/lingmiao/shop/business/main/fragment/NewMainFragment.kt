@@ -27,10 +27,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.show
-import com.lingmiao.shop.business.goods.GoodsListActivity
-import com.lingmiao.shop.business.goods.GoodsPublishActivity
-import com.lingmiao.shop.business.goods.GoodsPublishTypeActivity
-import com.lingmiao.shop.business.goods.MenuManagerActivity
+import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.me.ManagerSettingActivity
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
@@ -284,6 +281,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
          tvGoodsManager.setOnClickListener {
              GoodsListActivity.openActivity(context!!);
          }
+        // 商品分类
+        tvCategoryManager.setOnClickListener {
+            GoodsCategoryActivity.openActivity(context!!);
+        }
         // 菜单管理
          tvMenuManager.setOnClickListener {
              ActivityUtils.startActivity(MenuManagerActivity::class.java)
