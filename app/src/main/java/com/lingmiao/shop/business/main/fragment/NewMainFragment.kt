@@ -108,6 +108,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 activity?.finish()
             })
         }
+        switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            shopStatusTv.text = if(isChecked) "开店中" else "休息中";
+        }
 
         showPageLoading()
         mPresenter?.requestMainInfoData()

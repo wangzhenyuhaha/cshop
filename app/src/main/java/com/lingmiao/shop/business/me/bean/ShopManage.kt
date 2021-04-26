@@ -1,5 +1,7 @@
 package com.lingmiao.shop.business.me.bean
+import com.blankj.utilcode.util.StringUtils
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class ShopManage(
@@ -13,8 +15,9 @@ data class ShopManage(
 //    var openStartTime: String?,
 //    @SerializedName("open_time_type")
 //    var openTimeType: Int?,
-//    @SerializedName("ship_type")
-//    var shipType: String?,
+    // 店铺类型
+    @SerializedName("ship_type")
+    var shipType: String?,
     @SerializedName("shop_add")
     var shopAdd: String?,
 //    @SerializedName("shop_banner")
@@ -35,4 +38,9 @@ data class ShopManage(
     var categoryNames: String?,
     @SerializedName("licence_img")
     var licenceImg: String?//店铺资质
-)
+) : Serializable {
+
+    fun getShipTypeStr() : String {
+        return if(StringUtils.equals("1", shipType)) "单店" else "连锁店";
+    }
+}

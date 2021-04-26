@@ -1,0 +1,11 @@
+
+_
+java:S2095x"DUse try-with-resources or close this "Buffer" in a "finally" clause.(³øË²ÿÿÿÿÿ
+`
+java:S1124P"EReorder the modifiers to comply with the Java Language Specification.(¢’ªÿýÿÿÿÿ
+n
+java:S2293a"YReplace the type specification in this constructor call with the diamond operator ("<>").(Â²‰b
+[
+java:S1124j"EReorder the modifiers to comply with the Java Language Specification.(åÆå÷
+U
+java:S4719l":Replace Charset.forName() call with StandardCharsets.UTF_8(Éý‹úúÿÿÿÿ

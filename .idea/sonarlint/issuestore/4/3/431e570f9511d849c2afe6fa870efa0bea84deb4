@@ -1,0 +1,26 @@
+
+V	java:S110F"<This class has 8 parents which is greater than 5 authorized.(©¦×îøÿÿÿÿ
+v
+java:S1450–"ZRemove the "isDragFrame" field and declare it as a local variable in the relevant methods.(Ó¢øæşÿÿÿÿ
+M
+java:S1659ˆ"1Declare "mWrapperStateRotate" on a separate line.(Ş‹‰Ÿüÿÿÿÿ
+L
+java:S1659ˆ"0Declare "mWrapperStateScale" on a separate line.(Ş‹‰Ÿüÿÿÿÿ
+B
+java:S1659‰"+Declare "mLayoutRotate" on a separate line.(Úù†’
+A
+java:S1659‰"*Declare "mLayoutScale" on a separate line.(Úù†’
+O
+java:S1659Œ"3Declare "mTextViewScalePercent" on a separate line.(Ãç–ûÿÿÿÿ
+D
+java:S1659›"-Declare "isRotateEnabled" on a separate line.(ş¾äŒ
+M
+java:S1874Î"6Remove this use of "setColorFilter"; it is deprecated.(Ù”÷î
+L
+java:S1874Ú"6Remove this use of "setColorFilter"; it is deprecated.(åøÛ9
+M
+java:S1874Ğ"6Remove this use of "setColorFilter"; it is deprecated.(Ü›„¢
+[
+java:S3398¬"?Move this method into the anonymous class declared at line 487.(¸ıõÈøÿÿÿÿ
+V
+java:S3398¦"?Move this method into the anonymous class declared at line 487.(æŞúØ

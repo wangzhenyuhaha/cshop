@@ -306,6 +306,7 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:drawableRight="@mipmap/me_arrow_right"
                         android:id="@+id/tvShopManageAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"

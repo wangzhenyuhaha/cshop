@@ -87,12 +87,14 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     // 地图宽
     private var mMapWidth = 0
 
+    private var address : String? = null
     companion object {
 
-        fun openActivity(context: Context, latLng: LatLng?) {
+        fun openActivity(context: Context, latLng: LatLng?, address: String?) {
             if (context is Activity) {
                 val intent = Intent(context, AddressActivity::class.java)
                 intent.putExtra(IConstant.BUNDLE_KEY_OF_ITEM, latLng)
+                intent.putExtra("address", address);
                 context.startActivity(intent)
             }
         }
@@ -100,6 +102,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     override fun initBundles() {
         latlng = intent.getParcelableExtra<LatLng>(IConstant.BUNDLE_KEY_OF_ITEM);
+        address = intent.getStringExtra("address");
     }
 
     override fun getLayoutId(): Int {
@@ -168,6 +171,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                 locate();
             }
         } else {
+            etShopAddress.setText(address);
 
             geo();
 
@@ -273,7 +277,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                     val streetNum: String = amapLocation.getStreetNum()
                     //详细地址
                     //详细地址
-                    val mAddress = street + streetNum
+                    val mAddress = amapLocation.aoiName
 
                     if (!mFirstFix) {
                         //城市信息
@@ -290,6 +294,9 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         addressData?.district = mArea;
                         addressData?.address = mAddress;
                         addressData?.latLng = latlng;
+
+                        etShopAddress.setText(mAddress);
+
                         mFirstFix = true
 
                         mapMove();
@@ -454,6 +461,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                 addressData?.address = poiItem.title;
                 addressData?.latLng = latlng;
 
+                etShopAddress.setText(addressData?.address?:"");
                 Log.e("定位", "new latlng :$latlng")
 
                 mapMove();
@@ -483,7 +491,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                     addressData?.latLng = latlng;
 
                     city = result.regeocodeAddress.city;
-
+                    etShopAddress.setText(addressData?.address?:"");
                 } else {
                     ToastUtil.showerror(this@AddressActivity, rCode)
                 }

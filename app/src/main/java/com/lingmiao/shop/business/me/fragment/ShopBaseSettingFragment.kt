@@ -194,7 +194,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             }
         }
         rlShopManageAddress.singleClick {
-            AddressActivity.openActivity(context!!, addressLatLng);
+            AddressActivity.openActivity(context!!, LatLng(shopManage?.shopLat?: 0.0, shopManage?.shopLng?:0.0), shopManage?.shopAdd);
         }
         rlShopManageQualification.setOnClickListener{
             //店铺资质
@@ -266,6 +266,8 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopManageContactName.text = bean.linkName
         tvShopManageServicePhone.text = bean.linkPhone
         tvShopManageAddress.text = bean.shopAdd
+        tvShopManageNumber.text = String.format("%s", bean.shopId);
+        tvShopManageType.text = bean.getShipTypeStr();
         licenceImg = bean.licenceImg
     }
 
@@ -298,6 +300,10 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     fun setAddress(event : ApplyShopPoiEvent) {
         tvShopManageAddress.text = event?.adInfo?.address;
         addressLatLng = event?.adInfo?.latLng;
+        shopManage?.shopLng = addressLatLng?.longitude;
+        shopManage?.shopLat = addressLatLng?.latitude;
+
+        shopManage?.shopAdd = event?.adInfo?.address;
 
 
         showDialogLoading()
@@ -306,6 +312,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         loginInfo?.let { info-> request.shopId = info.shopId }
         request.shopLat = addressLatLng?.latitude
         request.shopLng = addressLatLng?.longitude
+        request.shopAdd = event?.adInfo?.address;
         mPresenter?.updateShopManage(request)
     }
 

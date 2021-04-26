@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.main
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.IntDef
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
 import com.james.common.base.BasePreImpl
