@@ -56,11 +56,13 @@
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             style="@style/DivideLineHorizontal"
             android:layout_marginLeft="@dimen/dimen_10"
             android:layout_marginRight="@dimen/dimen_10" />
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/ll_wallet_deposit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -111,6 +113,7 @@
         android:orientation="vertical"
         app:ivBgColor="@color/white"
         app:ivRadius="5dp">
+
         <LinearLayout
             android:visibility="gone"
             android:id="@+id/ll_wallet_third_part"

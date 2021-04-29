@@ -1,7 +1,7 @@
 package com.lingmiao.shop.business.me.presenter
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
-import com.lingmiao.shop.business.me.bean.ShopManage
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 
 interface ShopManagePresenter: BasePresenter{
@@ -10,7 +10,7 @@ interface ShopManagePresenter: BasePresenter{
 	fun updateShopManage(bean:ShopManageRequest)
 
 	interface View : BaseView {
-        fun onShopManageSuccess(bean: ShopManage)
+        fun onShopManageSuccess(bean: ApplyShopInfo)
         fun onShopManageError(code: Int)
 
         fun onUpdateShopSuccess()

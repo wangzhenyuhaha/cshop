@@ -1,5 +1,8 @@
 package com.lingmiao.shop.business.wallet
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import com.blankj.utilcode.util.ToastUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.wallet.api.WalletConstants
@@ -7,16 +10,21 @@ import com.lingmiao.shop.business.wallet.bean.AlipayAccountVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountBean
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.business.wallet.pop.ItemListPop
-import com.lingmiao.shop.business.wallet.presenter.AliPayAccountPresenter
+import com.lingmiao.shop.business.wallet.presenter.ThirdAccountPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.AliPayAccountPresenterImpl
 import com.james.common.base.BaseActivity
+import com.lingmiao.shop.business.wallet.presenter.impl.WechatAccountPresenterImpl
 import kotlinx.android.synthetic.main.wallet_activity_set_third_account.*
 
 /**
  * 设置三方账户
  */
-class AliPayAccountActivity : BaseActivity<AliPayAccountPresenter>(),
-    AliPayAccountPresenter.View {
+class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
+    ThirdAccountPresenter.View {
+
+    var type : Int? = WithdrawAccountBean.TYPE_WECHAT;
+
+    var name : String? = "微信";
 
     private var aLiAccount : AlipayAccountVo? = null;
 
@@ -24,8 +32,40 @@ class AliPayAccountActivity : BaseActivity<AliPayAccountPresenter>(),
 
     private var mAccountType : Int ? = WalletConstants.PUBLIC_PRIVATE;
 
-    override fun createPresenter(): AliPayAccountPresenter {
-        return AliPayAccountPresenterImpl(this);
+    companion object {
+        fun wechat(context: Context) {
+            if (context is Activity) {
+                val intent = Intent(context, AliPayAccountActivity::class.java)
+                intent.putExtra("type", WithdrawAccountBean.TYPE_WECHAT)
+                context.startActivity(intent)
+            }
+        }
+
+        fun ali(context: Context) {
+            if (context is Activity) {
+                val intent = Intent(context, AliPayAccountActivity::class.java)
+                intent.putExtra("type", WithdrawAccountBean.TYPE_ALI_PAY)
+                context.startActivity(intent)
+            }
+        }
+    }
+
+    override fun initBundles() {
+        type = intent.getIntExtra("type", WithdrawAccountBean.TYPE_WECHAT);
+        if(type == WithdrawAccountBean.TYPE_ALI_PAY) {
+            name = "支付宝"
+        }
+    }
+
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
+    override fun createPresenter(): ThirdAccountPresenter {
+        return when(type) {
+            WithdrawAccountBean.TYPE_ALI_PAY -> AliPayAccountPresenterImpl(this);
+            else -> WechatAccountPresenterImpl(this);
+        }
     }
 
     override fun getLayoutId(): Int {
@@ -34,7 +74,9 @@ class AliPayAccountActivity : BaseActivity<AliPayAccountPresenter>(),
 
     override fun initView() {
         mPresenter.onCreate();
-        mToolBarDelegate.setMidTitle("支付宝");
+        mToolBarDelegate.setMidTitle(name);
+
+        tv_wallet_third_account_detail_name.setText(String.format("%s账号", name));
 
         tv_account_submit.setOnClickListener {
             if (et_wallet_third_account_name.text.length === 0) {
@@ -42,19 +84,19 @@ class AliPayAccountActivity : BaseActivity<AliPayAccountPresenter>(),
                 return@setOnClickListener
             }
             if (et_wallet_third_account_detail_name.text.length === 0) {
-                ToastUtils.showShort("请输入支付宝名称")
+                ToastUtils.showShort(String.format("请输入%s名称", name))
                 return@setOnClickListener
             }
             if(aLiAccount === null || aLiAccount?.id === null) {
                 var data = WithdrawAccountBean();
-                data.type = WithdrawAccountBean.TYPE_ALI_PAY;
+                data.type = type;
                 data.ofPublic = mAccountType;
                 data.accountNo = et_wallet_third_account_detail_name.text.toString();
                 data.accountName = et_wallet_third_account_name.text.toString();
                 mPresenter.submitAccountInfo(data);
             } else {
                 var data = WithdrawAccountBean();
-                data.type = WithdrawAccountBean.TYPE_ALI_PAY;
+                data.type = type;
                 data.ofPublic = mAccountType;
                 data.accountNo = et_wallet_third_account_detail_name.text.toString();
                 data.accountName = et_wallet_third_account_name.text.toString();

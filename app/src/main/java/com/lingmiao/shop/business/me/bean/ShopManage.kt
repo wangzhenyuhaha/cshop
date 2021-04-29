@@ -40,7 +40,7 @@ data class ShopManage(
     var licenceImg: String?//店铺资质
 ) : Serializable {
 
-    fun getShipTypeStr() : String {
+    fun getShopTypeStr() : String {
         return if(StringUtils.equals("2", shipType)) "单店" else "连锁店";
     }
 }

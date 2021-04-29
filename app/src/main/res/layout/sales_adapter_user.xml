@@ -121,7 +121,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/dimen_5"
-                android:text="加入方式"
+                android:text="加入时间"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_12"
                 app:layout_constraintRight_toLeftOf="@id/userInTimeTv"

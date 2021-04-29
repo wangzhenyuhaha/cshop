@@ -16,9 +16,9 @@ import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.AddressActivity
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
 import com.lingmiao.shop.business.me.ShopQualificationActivity
-import com.lingmiao.shop.business.me.bean.ShopManage
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.lingmiao.shop.business.me.presenter.ShopBaseSettingPresenter
@@ -54,7 +54,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
     private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
 
-    private var shopManage: ShopManage?=null
+    private var shopManage: ApplyShopInfo?=null
     private var licenceImg:String?=null
 
     override fun getLayoutId(): Int? {
@@ -148,7 +148,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
         rlShopManageName.setOnClickListener{
             //店铺名称
-            DialogUtils.showInputDialog(activity!!, "店铺名称", "", "请输入","取消", "保存",null) {
+            DialogUtils.showInputDialog(activity!!, "店铺名称", "", "请输入", shopManage?.shopName,"取消", "保存",null) {
                 tvShopManageName.text = it
                 showDialogLoading()
                 val request = ShopManageRequest()
@@ -161,19 +161,32 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
         tvShopManageSlogan.setOnClickListener{
             //店铺口号
-            DialogUtils.showInputDialog( activity!!, "店铺口号", "", "请输入","","取消", "保存",null) {
+            DialogUtils.showInputDialog( activity!!, "店铺口号", "", "请输入",shopManage?.shopSlogan,"取消", "保存",null) {
                 tvShopManageSlogan.text = it;
+
+                showDialogLoading()
+                val request = ShopManageRequest()
+                val loginInfo = UserManager.getLoginInfo()
+                loginInfo?.let { info-> request.shopId = info.shopId }
+                request.shopSlogan = it
+                mPresenter?.updateShopNotice(request);
             }
         }
 
         tvShopManageSloganHint.singleClick {
             DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_slogan);
         }
-
         tvShopManageRemark.setOnClickListener {
             //店铺公告
-            DialogUtils.showInputDialog(activity!!, "店铺公告", "", "请输入","取消", "保存",null) {
+            DialogUtils.showInputDialog(activity!!, "店铺公告", "", "请输入", shopManage?.shopNotice,"取消", "保存",null) {
                 tvShopManageRemark.text = it;
+
+                showDialogLoading()
+                val request = ShopManageRequest()
+                val loginInfo = UserManager.getLoginInfo()
+                loginInfo?.let { info-> request.shopId = info.shopId }
+                request.shopNotice = it
+                mPresenter?.updateShopNotice(request);
             }
         }
 
@@ -204,7 +217,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         }
         rlShopManageContactName.setOnClickListener{
             //紧急联系人
-            DialogUtils.showInputDialog(activity!!, "紧急联系人", "", "请输入","取消", "保存",null) {
+            DialogUtils.showInputDialog(activity!!, "紧急联系人", "", "请输入",shopManage?.linkName,"取消", "保存",null) {
                 tvShopManageContactName.text = it
                 showDialogLoading()
                 val request = ShopManageRequest()
@@ -216,7 +229,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         }
         rlShopManageServicePhone.setOnClickListener{
             //客服电话
-            DialogUtils.showInputDialog(activity!!, "客服电话", "", "请输入","取消", "保存",null) {
+            DialogUtils.showInputDialog(activity!!, "客服电话", "", "请输入", shopManage?.linkPhone,"取消", "保存",null) {
                 tvShopManageServicePhone.text = it
                 showDialogLoading()
                 val request = ShopManageRequest()
@@ -256,7 +269,15 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         }
     }
 
-    override fun onShopManageSuccess(bean: ShopManage) {
+    override fun onUpdateSloganSuccess(string: String?) {
+        tvShopManageSlogan?.setText(string);
+    }
+
+    override fun onUpdateNoticeSuccess(string: String?) {
+        tvShopManageRemark?.setText(string);
+    }
+
+    override fun onShopManageSuccess(bean: ApplyShopInfo) {
         hidePageLoading()
         shopManage = bean
         if(!TextUtils.isEmpty(bean.shopLogo)) GlideUtils.setImageUrl(ivShopManageLogo,bean.shopLogo)
@@ -267,7 +288,12 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopManageServicePhone.text = bean.linkPhone
         tvShopManageAddress.text = bean.shopAdd
         tvShopManageNumber.text = String.format("%s", bean.shopId);
-        tvShopManageType.text = bean.getShipTypeStr();
+        tvShopManageType.text = bean.getShopTypeStr();
+
+
+        tvShopManageSlogan.text = bean.shopSlogan;
+        tvShopManageRemark.text = bean.shopNotice;
+
         licenceImg = bean.licenceImg
     }
 
@@ -302,9 +328,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         addressLatLng = event?.adInfo?.latLng;
         shopManage?.shopLng = addressLatLng?.longitude;
         shopManage?.shopLat = addressLatLng?.latitude;
-
         shopManage?.shopAdd = event?.adInfo?.address;
-
 
         showDialogLoading()
         val request = ShopManageRequest()

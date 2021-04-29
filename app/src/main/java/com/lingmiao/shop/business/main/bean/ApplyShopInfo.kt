@@ -1,5 +1,7 @@
 package com.lingmiao.shop.business.main.bean
+import com.blankj.utilcode.util.StringUtils
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 data class ApplyShopInfo(
@@ -31,14 +33,27 @@ data class ApplyShopInfo(
     var shopLng: Double?=null,//店铺经度
     @SerializedName("shop_logo")
     var shopLogo: String?=null,//店铺logo
+    @SerializedName("shop_slogan")
+    var shopSlogan: String? = null,
+    @SerializedName("shop_notice")
+    var shopNotice: String? = null,
     @SerializedName("shop_name")
     var shopName: String?=null,//店铺名称
     @SerializedName("shop_province")
     var shopProvince: String?=null,//店铺所在省
+    @SerializedName("shop_desc")
+    var shopDesc: String? = null,
+    @SerializedName("shop_id")
+    var shopId: Int? = null,
 //    @SerializedName("shop_tag")
 //    var shopTag: String?=null,//店铺类型
     @SerializedName("shop_town")
     var shopTown: String?=null,//店铺所在镇
     @SerializedName("shop_type")
     var shopType: String?=null//店铺类型
-)
+) : Serializable {
+
+    fun getShopTypeStr() : String {
+        return if(StringUtils.equals("2", shopType)) "单店" else "连锁店";
+    }
+}

@@ -8,10 +8,10 @@ import com.lingmiao.shop.business.wallet.presenter.WithdrawAccountPresenter
 import com.james.common.base.BasePreImpl
 import kotlinx.coroutines.launch
 
-class AliPayAccountPresenterImpl(var view : ThirdAccountPresenter.View) : BasePreImpl(view), ThirdAccountPresenter,
+class WechatAccountPresenterImpl(var view : ThirdAccountPresenter.View) : BasePreImpl(view), ThirdAccountPresenter,
     WithdrawAccountPresenter {
-    val type = WithdrawAccountBean.TYPE_ALI_PAY;
 
+    val type = WithdrawAccountBean.TYPE_WECHAT;
 
     private val withdrawAccount: WithdrawAccountPresenter by lazy { WithdrawAccountPresenterImpl(view) }
 
@@ -39,14 +39,10 @@ class AliPayAccountPresenterImpl(var view : ThirdAccountPresenter.View) : BasePr
 
             val resp = WalletRepository.updateWithdrawAccount(data);
 
-            if(resp.isSuccess && resp?.data?.success ?: false) {
+            handleResponse(resp) {
                 ToastUtils.showShort(resp?.data?.message ?: "设置成功")
                 view.setAccountSuccess();
             }
-//            handleResponse(resp) {
-//                ToastUtils.showShort(resp?.data?.message ?: "设置成功")
-//                view.setAccountSuccess();
-//            }
             view.hideDialogLoading()
         }
     }

@@ -42,7 +42,7 @@
 
 
     <!--  =================== 钱包  START ===================  -->
-    <string name="wallet_hint_account_info">余额与保证金</string>
+    <string name="wallet_hint_account_info">余额</string>
     <string name="wallet_hint_account_bind">账户绑写</string>
     <string name="wallet_hint_balance">余额</string>
     <string name="wallet_hint_deposit">押金</string>

@@ -8,8 +8,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.main.bean.ApplyShopImageEvent
-import com.lingmiao.shop.business.me.bean.ShopManage
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.lingmiao.shop.business.me.presenter.ShopManagePresenter
@@ -20,6 +18,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
@@ -38,7 +37,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
 
 
     private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
-    private var shopManage:ShopManage?=null
+    private var shopManage:ApplyShopInfo?=null
     private var licenceImg:String?=null
 
     override fun getLayoutId(): Int {
@@ -71,7 +70,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
         return ShopManagePresenterImpl(this, this)
     }
 
-    override fun onShopManageSuccess(bean: ShopManage) {
+    override fun onShopManageSuccess(bean: ApplyShopInfo) {
         hidePageLoading()
         shopManage = bean
         if(!TextUtils.isEmpty(bean.shopLogo)) GlideUtils.setImageUrl(ivShopManageLogo,bean.shopLogo)

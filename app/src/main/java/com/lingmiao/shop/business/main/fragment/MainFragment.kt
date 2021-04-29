@@ -389,6 +389,10 @@ class MainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     }
 
+    override fun onShopStatusEdited() {
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: ApplyShopInfoEvent) {
         mPresenter?.requestMainInfoData()

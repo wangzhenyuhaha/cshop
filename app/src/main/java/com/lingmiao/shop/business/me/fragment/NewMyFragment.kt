@@ -15,10 +15,16 @@ import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
-import com.james.common.base.BasePreImpl
-import com.james.common.base.BasePresenter
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.business.me.*
+import com.lingmiao.shop.business.me.bean.IdentityVo
+import com.lingmiao.shop.business.wallet.bean.WalletVo
+import com.lingmiao.shop.util.formatDouble
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_my_new.*
+import kotlinx.android.synthetic.main.fragment_my_new.smartRefreshLayout
+import kotlinx.android.synthetic.main.fragment_my_new.tvManagerSetting
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -27,6 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
  */
 class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter.View {
 
+    private var identity : IdentityVo? = null
     private var my:My? = null
 
     companion object {
@@ -48,6 +55,12 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     }
 
     override fun initViewsAndData(rootView: View) {
+        smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
+        smartRefreshLayout.setOnRefreshListener {
+            mPresenter?.getMyData()
+            mPresenter?.getIdentity();
+        }
+
         rlMyPersonInfo.setOnClickListener(this)
         tvVip.setOnClickListener(this)
         tvMyWallet.setOnClickListener(this)
@@ -60,6 +73,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
 //        rlMySetting.setOnClickListener(this)
         mPresenter?.onCreate()
         mPresenter?.getMyData()
+        mPresenter?.getIdentity();
     }
 
     override fun onClick(v: View?) {
@@ -72,7 +86,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
                 startActivity(intent)
             }
             R.id.tvVip -> {
-                ActivityUtils.startActivity(ApplyVipActivity::class.java);
+                ApplyVipActivity.openActivity(activity!!, my, identity);
             }
             R.id.tvMyWallet -> {//我的钱包
                 ActivityUtils.startActivity(MyWalletActivity::class.java);
@@ -87,7 +101,6 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
                 OtherUtils.goToDialApp(activity,IConstant.SERVICE_PHONE)
             }
             R.id.tvManagerSetting,
-            R.id.ivSetting,
             R.id.tvSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)
@@ -98,7 +111,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         }
     }
 
+
     override fun onMyDataSuccess(bean: My) {
+        smartRefreshLayout.finishRefresh()
         val loginInfo = UserManager.getLoginInfo()
         if(loginInfo!=null){
             tvMyShopName.text = loginInfo.shopName
@@ -114,8 +129,6 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             tvMyPhone.text = "${bean.mobile!!.substring(0, 3)}****${bean.mobile!!.substring(7)}"
         }
 
-        ivMyShopStatus.visibility = if(loginInfo?.shopStatus=="OPEN") View.VISIBLE else View.GONE
-
         loginInfo?.clerkId = my?.clerkId
         loginInfo?.mobile = my?.mobile
         loginInfo?.shopId = my?.shopId
@@ -130,7 +143,40 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     }
 
     override fun ontMyDataError() {
+        smartRefreshLayout.finishRefresh()
 
+    }
+
+    /**
+     * 加载成功
+     */
+    override fun onLoadWalletDataSuccess(data: WalletVo?) {
+        tvBalance.text = getString(R.string.wallet_value, formatDouble(data?.balanceAccount?.balanceAmount?:0.0))
+    }
+
+    /**
+     * 加载失败
+     */
+    override fun onLoadWalletDataError(code: Int) {
+
+    }
+
+    override fun onSetVipInfo(item: IdentityVo?) {
+        this.identity = item;
+        tvTryHint.setText(item?.shopTitle)
+        if(item?.isVip() == true) {
+            ivTryLogo.setImageResource(R.mipmap.ic_try_logo)
+            tvTryHint.setText(String.format("%s%s", item.shopTitle, item.get_VipHint()));
+            tvVip.setText("续费")
+            ivMyShopVipStatus.setImageResource(R.mipmap.ic_try_logo)
+            ivMyShopStatus.visiable();
+        } else {
+            ivTryLogo.setImageResource(R.mipmap.ic_vip_period)
+            tvTryHint.setText(String.format("%s%s", item?.shopTitle, item?.get_CommonHint()));
+            tvVip.setText("立即开通")
+            ivMyShopVipStatus.setImageResource(R.mipmap.ic_vip_period)
+            ivMyShopStatus.gone();
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

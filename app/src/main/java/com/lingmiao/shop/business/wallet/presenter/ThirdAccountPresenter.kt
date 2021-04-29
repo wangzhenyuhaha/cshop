@@ -7,7 +7,7 @@ import com.james.common.base.BaseView
 /**
  * 设置支付宝账户
  */
-interface AliPayAccountPresenter : BasePresenter, WithdrawAccountPresenter {
+interface ThirdAccountPresenter : BasePresenter, WithdrawAccountPresenter {
     /**
      * 提交账户信息
      */

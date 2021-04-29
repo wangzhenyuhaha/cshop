@@ -1,7 +1,4 @@
 package com.lingmiao.shop.business.me.presenter.impl
-import com.james.common.base.BasePresenter
-import com.james.common.base.BaseView
-import com.lingmiao.shop.business.me.bean.ShopManage
 
 import android.content.Context
 import  com.lingmiao.shop.business.me.presenter.ShopManagePresenter
@@ -33,7 +30,6 @@ class ShopManagePresenterImpl(context: Context, private var view: ShopManagePres
 			} else {
 				view.onUpdateShopError(resp.code)
 			}
-
 		}
 	}
 }

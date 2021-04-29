@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsPublishTypeAdapter
+import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsPublishTypeVo
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishTypePre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishTypePreImpl
@@ -38,6 +39,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         initData();
         initAdapter();
         initRecycleView();
+        mPresenter?.loadList();
     }
 
     fun getC(pLevel : Int) : MutableList<GoodsPublishTypeVo> {
@@ -73,31 +75,6 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         return tempList1;
     }
 
-    private fun initData() {
-        var tempList1 = getC(0);
-        var tempList2 = getC(1);
-
-        mList  = mutableListOf();
-        var item = GoodsPublishTypeVo();
-        item.id = "1";
-        item.name = "商品中心库";
-        item.showLevel = 0;
-        for(it in tempList1) {
-            item.addSubItem(it)
-        }
-        item.children = tempList1;
-        mList?.add(item)
-
-        item = GoodsPublishTypeVo();
-        item.id = "2";
-        item.name = "自有商品";
-        item.showLevel = 0;
-        for(it in tempList2) {
-            item.addSubItem(it)
-        }
-        item.children = tempList2;
-        mList?.add(item)
-    }
 
     fun initAdapter() {
         mTypeAdapter = GoodsPublishTypeAdapter(mList).apply {
@@ -137,5 +114,41 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
 
     private fun initLayoutManager(): RecyclerView.LayoutManager {
         return LinearLayoutManager(this)
+    }
+
+    private fun initData() {
+        var tempList1 = getC(0);
+        var tempList2 = getC(1);
+
+        mList  = mutableListOf();
+        var item = GoodsPublishTypeVo();
+        item.id = "1";
+        item.name = "商品中心库";
+        item.showLevel = 0;
+        for(it in tempList1) {
+            item.addSubItem(it)
+        }
+        item.children = tempList1;
+        mList?.add(item)
+
+        item = GoodsPublishTypeVo();
+        item.id = "2";
+        item.name = "自有商品";
+        item.showLevel = 0;
+        for(it in tempList2) {
+            item.addSubItem(it)
+        }
+        item.children = tempList2;
+        mList?.add(item)
+    }
+
+    override fun onListSuccess(list: List<CategoryVO>) {
+
+//        mList?.get(0)?.children = list;
+//        mList?.get(1)?.children = list;
+//        for(vo : CategoryVO in list) {
+//            mList?.get(0)?.addSubItem(vo);
+//            mList?.get(1)?.addSubItem(vo);
+//        }
     }
 }

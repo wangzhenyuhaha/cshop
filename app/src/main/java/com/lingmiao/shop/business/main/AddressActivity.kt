@@ -120,6 +120,11 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     override fun initView() {
         mToolBarDelegate.setMidTitle("店铺地址")
         mToolBarDelegate.setRightText("保存", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
+            if(etShopAddress.text.length == 0) {
+                showToast("请输入店铺地址");
+                return@OnClickListener;
+            }
+            addressData?.address = etShopAddress.text.toString();
             if(latlng != null) {
                 EventBus.getDefault().post(ApplyShopPoiEvent(addressData))
                 finish();
@@ -295,7 +300,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         addressData?.address = mAddress;
                         addressData?.latLng = latlng;
 
-                        etShopAddress.setText(mAddress);
+                       // etShopAddress.setText(mAddress);
 
                         mFirstFix = true
 
@@ -461,7 +466,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                 addressData?.address = poiItem.title;
                 addressData?.latLng = latlng;
 
-                etShopAddress.setText(addressData?.address?:"");
+                //etShopAddress.setText(addressData?.address?:"");
                 Log.e("定位", "new latlng :$latlng")
 
                 mapMove();
@@ -491,7 +496,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                     addressData?.latLng = latlng;
 
                     city = result.regeocodeAddress.city;
-                    etShopAddress.setText(addressData?.address?:"");
+                   // etShopAddress.setText(addressData?.address?:"");
                 } else {
                     ToastUtil.showerror(this@AddressActivity, rCode)
                 }

@@ -38,4 +38,7 @@
 
     <color name="color_909090">#ff909090</color>
     <color name="color_fc0000">#ffFC0000</color>
+    <color name="green">#009688</color>
+
+    <color name="color_fffef6f4">#fffef6f4</color>
 </resources>

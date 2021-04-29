@@ -48,8 +48,11 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
         };
 
         ll_wallet_third_part.setOnClickListener {
-            ActivityUtils.startActivity(AliPayAccountActivity::class.java);
+            AliPayAccountActivity.ali(this);
         };
+        ll_wallet_wechat_part.setOnClickListener {
+            AliPayAccountActivity.wechat(this);
+        }
         ll_wallet_card.setOnClickListener {
             ActivityUtils.startActivity(BankCardListActivity::class.java);
         };

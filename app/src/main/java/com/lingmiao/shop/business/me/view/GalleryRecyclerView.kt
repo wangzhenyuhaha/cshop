@@ -43,6 +43,11 @@ class GalleryRecyclerView @JvmOverloads constructor(
         mAdapter?.mMaxCout = max
     }
 
+    fun setDataList(list: List<VipType>?) {
+        mSelectPhotos?.clear();
+        addDataList(list);
+    }
+
     fun addDataList(list: List<VipType>?) {
         if (list.isNullOrEmpty()) {
             return

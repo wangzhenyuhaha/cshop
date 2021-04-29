@@ -2,13 +2,10 @@ package com.lingmiao.shop.business.me.adapter
 
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.LinearLayout
 import com.blankj.utilcode.util.ConvertUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.me.bean.VipType
 import com.luck.picture.lib.tools.ScreenUtils
 
@@ -37,23 +34,17 @@ class GalleryAdapter(list: List<VipType?>) :
 
     override fun convert(helper: BaseViewHolder, item: VipType?) {
         item?.apply {
-            helper.setChecked(R.id.vipItemLl, helper.adapterPosition == checkedPosition);
-            helper.setGone(R.id.deleteIv, helper.adapterPosition == checkedPosition);
+            helper.setGone(R.id.vipIv, helper.adapterPosition == checkedPosition);
+            helper.setText(R.id.vipItemNameTv, item?.productName);
+            helper.setText(R.id.vipItemValueTv, String.format("￥%s", item?.price));
         }
+        helper.setChecked(R.id.vipItemLl, helper.adapterPosition == checkedPosition);
         helper.addOnClickListener(R.id.vipItemLl)
     }
 
     private fun getItemPositionType(position: Int): Int {
         return if (data.size == position) TYPE_Add else TYPE_PICTURE
     }
-
-//    override fun getItemCount(): Int {
-//        if (data.size < mMaxCout) {
-//            return super.getItemCount() + 1
-//        } else {
-//            return super.getItemCount()
-//        }
-//    }
 
     override fun getItemViewType(position: Int): Int {
         return getDefItemViewType(position)

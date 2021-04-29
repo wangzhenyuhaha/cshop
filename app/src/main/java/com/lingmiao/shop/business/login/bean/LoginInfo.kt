@@ -18,6 +18,8 @@ class LoginInfo {
     var refreshToken: String? = null //刷新token
     @SerializedName("role_id")
     var roleId: Int? = null
+
+
     @SerializedName("shop_status")
     var shopStatus: String? = null  //店铺状态  CLOSED("店铺关闭")  REFUSED("审核拒绝")  APPLY("申请开店")
     @SerializedName("uid")
@@ -32,6 +34,9 @@ class LoginInfo {
     var mobile: String? = null //手机号码
     @SerializedName(value = "shop_id", alternate = ["sellerId","seller_id"])
     var shopId: Int? = null
+
+    @SerializedName("open_status")
+    var openStatus: Boolean? = false
 
     @SerializedName("status_reason")
     var statusReason: String? = null //状态原因（拒绝/未通过）

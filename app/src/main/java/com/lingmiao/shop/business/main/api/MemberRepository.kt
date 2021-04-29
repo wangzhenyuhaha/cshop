@@ -2,10 +2,10 @@ package com.lingmiao.shop.business.main.api
 
 import com.lingmiao.shop.net.Fetch
 
-object MainRepository {
-     val apiService by lazy {
-        Fetch.createService(MainApi::class.java)
-    }
+object MemberRepository {
 
+     val apiService by lazy {
+        Fetch.createService(MemberApi::class.java)
+    }
 
 }

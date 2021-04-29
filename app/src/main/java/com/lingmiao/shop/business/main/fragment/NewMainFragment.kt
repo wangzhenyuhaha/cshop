@@ -1,10 +1,13 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.graphics.Color.green
+import android.icu.text.CompactDecimalFormat
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
@@ -106,7 +109,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             })
         }
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            shopStatusTv.text = if(isChecked) "开店中" else "休息中";
+            mPresenter?.editShopStatus(isChecked);
         }
 
         showPageLoading()
@@ -119,6 +122,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
+        switchStatusBtn.isChecked =loginInfo?.openStatus?:false
+        onShopStatusEdited();
+
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
         tvMainShopReason.visibility = View.GONE
@@ -347,6 +353,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onAccountSettingError(code: Int) {
 
+    }
+
+    override fun onShopStatusEdited() {
+        shopStatusTv.setTextColor(ContextCompat.getColor(context!!, if(switchStatusBtn.isChecked) R.color.color_0EA60 else R.color.white));
+        shopStatusTv.text = if(switchStatusBtn.isChecked) "开店中" else "休息中";
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

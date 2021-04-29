@@ -398,7 +398,8 @@
                 android:textColor="#fff"
                 android:textSize="13sp"
                 app:ivBgColor="#207AE1"
-                app:ivRadius="18dp" />
+                app:ivRadius="18dp"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

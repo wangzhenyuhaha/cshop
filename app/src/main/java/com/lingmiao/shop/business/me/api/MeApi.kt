@@ -4,6 +4,7 @@ import com.lingmiao.shop.business.login.bean.CaptchaAli
 import com.lingmiao.shop.business.me.bean.*
 import com.james.common.net.BaseResponse
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,7 +45,7 @@ interface MeApi {
 //    获取店铺
     @GET("seller/shops")
     @WithHiResponse
-    fun getShop():Call<ShopManage>
+    fun getShop():Call<ApplyShopInfo>
 
 //    修改店铺
     @POST("seller/shops/editShop")

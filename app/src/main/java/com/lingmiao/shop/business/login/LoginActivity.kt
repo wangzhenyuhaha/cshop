@@ -1,10 +1,13 @@
 package com.lingmiao.shop.business.login
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.app.Activity
 import android.content.Intent
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import android.view.animation.TranslateAnimation
 import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -14,6 +17,12 @@ import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
 import com.blankj.utilcode.util.*
+import com.google.gson.reflect.TypeToken
+import com.jaeger.library.StatusBarUtil
+import com.james.common.base.BaseActivity
+import com.james.common.net.BaseResponse
+import com.james.common.netcore.coroutine.CoroutineSupport
+import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.login.bean.CaptchaAli
@@ -25,13 +34,8 @@ import com.lingmiao.shop.business.main.UserServiceH5Activity
 import com.lingmiao.shop.business.me.ForgetPasswordActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.util.OtherUtils
-import com.google.gson.reflect.TypeToken
-import com.jaeger.library.StatusBarUtil
-import com.james.common.base.BaseActivity
-import com.james.common.net.BaseResponse
-import com.james.common.net.RetrofitUtil
-import com.james.common.netcore.coroutine.CoroutineSupport
-import com.james.common.utils.DialogUtils
+import com.mikhaellopez.rxanimation.RxAnimation
+import com.mikhaellopez.rxanimation.translationX
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -156,6 +160,28 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         initLoginTypeView()
     }
 
+    fun startAnimation(view : View) {
+        val translationX: PropertyValuesHolder =
+            PropertyValuesHolder.ofFloat("translationX", ScreenUtils.getScreenWidth().toFloat(), 0f)//
+
+        val btnAnimator: ObjectAnimator =
+            ObjectAnimator.ofPropertyValuesHolder(view, translationX)
+
+        btnAnimator.duration = 1000
+        btnAnimator.start();
+    }
+
+    fun outAnimation(view : View) {
+        val translationX: PropertyValuesHolder =
+            PropertyValuesHolder.ofFloat("translationX", 0f, ScreenUtils.getScreenWidth().toFloat())
+
+        val btnAnimator: ObjectAnimator =
+            ObjectAnimator.ofPropertyValuesHolder(view, translationX)
+
+        btnAnimator.duration = 800
+        btnAnimator.start();
+    }
+
     private fun initLoginTypeView() {
         viRegisterDivide.visibility = View.GONE
         llPhone.visibility = View.GONE
@@ -178,12 +204,23 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         if (loginType == LOGIN_BY_CODE) {
             llPhone.visibility = View.VISIBLE
             llCode.visibility = View.VISIBLE
+//            outAnimation(llAccount)
+//            outAnimation(llPassword)
+//            startAnimation(llPhone)
+//            startAnimation(llCode)
+
             tvForgetPassword.visibility = View.VISIBLE
             tvBottomRight.visibility = View.VISIBLE
             tvBottomRight.text = "密码登录"
         } else if (loginType == LOGIN_BY_PASSWORD) {
             llAccount.visibility = View.VISIBLE
             llPassword.visibility = View.VISIBLE
+
+//            outAnimation(llPhone)
+//            outAnimation(llCode)
+//            startAnimation(llAccount)
+//            startAnimation(llPassword)
+
             tvForgetPassword.visibility = View.VISIBLE
             tvBottomRight.visibility = View.VISIBLE
             tvBottomRight.text = "短信登录"
@@ -192,6 +229,12 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
             llPhone.visibility = View.VISIBLE
             llCode.visibility = View.VISIBLE
             llPassword.visibility = View.VISIBLE
+
+//            outAnimation(llAccount)
+//            outAnimation(llCode)
+//            startAnimation(llPhone)
+//            startAnimation(llPassword)
+
             tvLoginType.text = getString(R.string.register_by_phone)
             tvLoginHint.text = getString(R.string.has_account_login)
             tvLogin.text = "注册"

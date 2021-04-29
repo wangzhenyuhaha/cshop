@@ -6,5 +6,7 @@ data class ShopStatus(
     @SerializedName("shop_staus")
     var shopStatus: String?,
     @SerializedName("status_reason")
-    var statusReason: String?
+    var statusReason: String?,
+    @SerializedName("open_status")
+    var openStatus: Boolean?
 )

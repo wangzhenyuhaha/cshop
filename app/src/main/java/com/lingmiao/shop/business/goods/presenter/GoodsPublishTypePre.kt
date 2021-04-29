@@ -2,8 +2,7 @@ package com.lingmiao.shop.business.goods.presenter
 
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
-import com.lingmiao.shop.business.me.bean.ShopManage
-import com.lingmiao.shop.business.me.bean.ShopManageRequest
+import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 
 /**
 Create Date : 2021/3/24:07 PM
@@ -12,7 +11,8 @@ Desc        :
  **/
 interface GoodsPublishTypePre : BasePresenter {
 
+    fun loadList();
     interface View : BaseView {
-
+        fun onListSuccess(list : List<CategoryVO>);
     }
 }

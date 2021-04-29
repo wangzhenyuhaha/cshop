@@ -21,6 +21,8 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
+import com.lingmiao.shop.business.me.bean.IdentityVo
+import com.lingmiao.shop.business.wallet.bean.WalletVo
 import kotlinx.android.synthetic.main.fragment_my.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -28,6 +30,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * 我的
  */
+@Deprecated("暂时不用")
 class MyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter.View {
 
     private var my:My? = null
@@ -88,6 +91,10 @@ class MyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter
         }
     }
 
+    override fun onSetVipInfo(item: IdentityVo?) {
+
+    }
+
     override fun onMyDataSuccess(bean: My) {
         val loginInfo = UserManager.getLoginInfo()
 //        if(loginInfo!=null){
@@ -117,6 +124,18 @@ class MyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter
 
     override fun ontMyDataError() {
 
+    }
+
+    /**
+     * 加载成功
+     */
+    override fun onLoadWalletDataSuccess(data: WalletVo?) {
+    }
+
+    /**
+     * 加载失败
+     */
+    override fun onLoadWalletDataError(code: Int) {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

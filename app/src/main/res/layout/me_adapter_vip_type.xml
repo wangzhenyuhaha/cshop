@@ -4,14 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/goods_selected_img"
-        android:visibility="gone" />
-
-    <LinearLayout
+    <com.lingmiao.shop.widget.CheckableLinearLayout
         android:id="@+id/vipItemLl"
         android:layout_width="90dp"
         android:layout_height="90dp"
@@ -19,26 +12,34 @@
         android:background="@drawable/vip_fee_selector"
         android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:clickable="true"
+        android:duplicateParentState="true">
 
         <TextView
+            android:id="@+id/vipItemNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="年卡门店"
-            android:textSize="14sp" />
+            tools:text="年卡门店"
+            android:textSize="14sp"
+            android:clickable="false"
+            android:focusable="false"/>
 
         <TextView
+            android:id="@+id/vipItemValueTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="￥299"
+            tools:text="￥299"
             android:textColor="#E2654B"
-            android:textSize="26sp" />
+            android:textSize="26sp"
+            android:clickable="false"
+            android:focusable="false" />
 
-    </LinearLayout>
+    </com.lingmiao.shop.widget.CheckableLinearLayout>
 
 
     <ImageView
-        android:id="@+id/deleteIv"
+        android:id="@+id/vipIv"
         android:layout_width="@dimen/dimen_30"
         android:layout_height="@dimen/dimen_30"
         android:layout_gravity="start"

@@ -32,10 +32,15 @@ data class ShopManageRequest(
     var shopLogo: String? = null,
     @SerializedName("shop_name")
     var shopName: String? = null,
+    @SerializedName("shop_slogan")
+    var shopSlogan: String? = null,
+    @SerializedName("shop_notice")
+    var shopNotice: String? = null,
     @SerializedName("licence_img")
     var licenceImg: String? = null,//店铺资质
     @SerializedName("shop_qq")
     var shopQq: String? = null//店铺客服qq
+
 
 
 )

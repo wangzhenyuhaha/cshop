@@ -9,6 +9,8 @@ interface MainPresenter: BasePresenter{
  
 	fun requestMainInfoData()
     fun requestAccountSettingData()
+
+    fun editShopStatus(flag : Boolean);
 	
 	interface View : BaseView {
         fun onMainInfoSuccess(bean: MainInfo?)
@@ -16,5 +18,7 @@ interface MainPresenter: BasePresenter{
 
         fun onAccountSettingSuccess(bean: AccountSetting)
         fun onAccountSettingError(code: Int)
+
+        fun onShopStatusEdited();
     }
 }

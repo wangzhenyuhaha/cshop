@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.sales.adapter
 
 import android.widget.CompoundButton
 import android.widget.TextView
+import com.blankj.utilcode.util.TimeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
@@ -29,15 +30,17 @@ class UserAdapter() : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_ad
 
             helper.setGone(R.id.userCheckCb, isBatchEditModel);
 
-            helper.setText(R.id.userNameTv, "张三");
-            helper.setText(R.id.userPhoneTv, "18621774835");
+            helper.setText(R.id.userNameTv, item?.nickname);
+            helper.setText(R.id.userPhoneTv, item?.mobile);
+
+            helper.setText(R.id.userInTypeTv, item?.sourceName);
+
+            helper.setText(R.id.userOrderTv, String.format("%s", item?.orderNum));
 
             helper.setText(R.id.userAddressTv, "上海市");
-            helper.setText(R.id.userInTypeTv, "扫码");
 
-            helper.setText(R.id.userInTimeTv, "2020-10-01");
+            helper.setText(R.id.userInTimeTv, TimeUtils.millis2String(item?.createTime?:0, "yyyy-MM-dd"));
 
-            helper.setText(R.id.userOrderTv, "0");
             helper.addOnClickListener(R.id.userOrderDetailTv)
             helper.addOnClickListener(R.id.userPortraitTv)
 //            setOnCheckedChangeListener(helper.getView(R.id.userCheckCb), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->

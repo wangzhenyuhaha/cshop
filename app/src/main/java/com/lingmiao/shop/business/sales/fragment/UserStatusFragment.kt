@@ -10,13 +10,12 @@ import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
-import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.lingmiao.shop.business.sales.UserOrderDetailActivity
 import com.lingmiao.shop.business.sales.adapter.UserAdapter
 import com.lingmiao.shop.business.sales.bean.UserVo
 import com.lingmiao.shop.business.sales.presenter.IUserStatusListPresenter
-import com.lingmiao.shop.business.sales.presenter.impl.UserStatusListPreImpl
+import com.lingmiao.shop.business.sales.presenter.impl.UserListOfAllPreImpl
+import com.lingmiao.shop.business.sales.presenter.impl.UserListOfNewPreImpl
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.sales_fragment_user_list.*
 
@@ -147,9 +146,12 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
         userCountTv.text = String.format("已选择%s人", count);
     }
 
-
     override fun createPresenter(): IUserStatusListPresenter? {
-        return UserStatusListPreImpl(context!!, this);
+        return  when (status) {
+            TYPE_ALL -> UserListOfAllPreImpl(context!!, this)
+            TYPE_NEW -> UserListOfNewPreImpl(context!!, this)
+            else -> null;
+        }
     }
 
     override fun executePageRequest(page: IPage) {

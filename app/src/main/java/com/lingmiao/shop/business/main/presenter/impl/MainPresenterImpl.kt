@@ -8,6 +8,7 @@ import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.main.bean.OpenShopStatusVo
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View):
 						if(loginInfo!=null){
 							loginInfo.shopStatus = shopStatusResp.data.shopStatus
 							loginInfo.statusReason = shopStatusResp.data.statusReason
+							loginInfo.openStatus = shopStatusResp.data.openStatus
 							UserManager.setLoginInfo(loginInfo)
 						}
 						if(shopStatusResp.data.shopStatus=="OPEN"){
@@ -52,6 +54,24 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View):
 				view.onAccountSettingError(resp.code)
 			}
 
+		}
+	}
+
+	override fun editShopStatus(flag: Boolean) {
+		val loginInfo = UserManager.getLoginInfo();
+		val id = loginInfo?.shopId;
+		if(id != null) {
+			mCoroutine.launch {
+				val body = OpenShopStatusVo();
+				body.openStatus = flag;
+
+				val resp = MainRepository.apiService.editShopStatus(id, body).awaitHiResponse()
+				handleResponse(resp) {
+					loginInfo.openStatus = flag;
+					UserManager.setLoginInfo(loginInfo)
+					view.onShopStatusEdited()
+				}
+			}
 		}
 	}
 }
