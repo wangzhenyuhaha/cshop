@@ -20,6 +20,8 @@ interface CategoryEditPre : BasePresenter {
 
     fun add(vo : CategoryVO);
 
+    fun add(pId : Int, name : String);
+
     interface PubView: BaseView, BaseLoadMoreView<CategoryVO> {
         fun onDeleteGroupSuccess(position: Int)
         fun addSuccess(vo : CategoryVO);

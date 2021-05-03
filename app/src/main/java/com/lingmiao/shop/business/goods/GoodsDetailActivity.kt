@@ -39,6 +39,10 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
         }
     }
 
+    override fun getLayoutId(): Int {
+        return R.layout.goods_activity_goods_detail;
+    }
+
     override fun createPresenter(): GoodsDetailPre {
         return GoodsDetailPreImpl(this, this);
     }
@@ -78,8 +82,15 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
             mInfoAdapter.replaceData(mInfoList);
         }
 
+        goodsContentHintTv.singleClick {
+            DialogUtils.showDialog(context!!, R.mipmap.ic_goods_detail);
+        }
         goodsInfoHintTv.singleClick {
             DialogUtils.showDialog(context!!, R.mipmap.ic_goods_info);
+        }
+
+        goodsImageHintTv.singleClick {
+            DialogUtils.showDialog(context!!, R.mipmap.ic_goods_image);
         }
         goodsDetailImageRv.setCountLimit(1, 20)
 
@@ -87,10 +98,6 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
 
     private fun initLayoutManager(): RecyclerView.LayoutManager {
         return LinearLayoutManager(this)
-    }
-
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_detail;
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

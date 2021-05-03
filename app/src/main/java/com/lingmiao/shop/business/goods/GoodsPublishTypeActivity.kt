@@ -19,7 +19,7 @@ Desc        : 商品发布之类型选择
  **/
 class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPublishTypePre.View {
 
-    private var mList : MutableList<GoodsPublishTypeVo>? =null;
+    private var mList : MutableList<CategoryVO>? =null;
     private var mTypeAdapter : GoodsPublishTypeAdapter?=null;
 
     override fun createPresenter(): GoodsPublishTypePre {
@@ -42,46 +42,12 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         mPresenter?.loadList();
     }
 
-    fun getC(pLevel : Int) : MutableList<GoodsPublishTypeVo> {
-        var temp = GoodsPublishTypeVo();
-        temp.id = "10";
-        temp.name = "商超";
-        temp.showLevel = 1;
-        temp.parentLevel = pLevel;
-        var tempList1 = mutableListOf<GoodsPublishTypeVo>();
-        tempList1.add(temp);
-
-
-        temp = GoodsPublishTypeVo();
-        temp.id = "11";
-        temp.name = "餐饮外卖";
-        temp.showLevel = 1;
-        temp.parentLevel = pLevel;
-        tempList1.add(temp);
-
-        temp = GoodsPublishTypeVo();
-        temp.id = "12";
-        temp.name = "水果店";
-        temp.showLevel = 1;
-        temp.parentLevel = pLevel;
-        tempList1.add(temp);
-
-        temp = GoodsPublishTypeVo();
-        temp.id = "13";
-        temp.name = "糕点面包";
-        temp.showLevel = 1;
-        temp.parentLevel = pLevel;
-        tempList1.add(temp);
-        return tempList1;
-    }
-
-
     fun initAdapter() {
         mTypeAdapter = GoodsPublishTypeAdapter(mList).apply {
             setOnItemChildClickListener { adapter, view, position ->
                 val viewType = adapter.getItemViewType(position);
                 if(viewType == AreasAdapter.TYPE_LEVEL_0) {
-                    val bItem = adapter.data[position] as GoodsPublishTypeVo;
+                    val bItem = adapter.data[position] as CategoryVO;
                     if(view.id == R.id.expandIv || view.id == R.id.titleLL) {
                         if(bItem.isExpanded) {
                             mTypeAdapter?.collapse(position, false);
@@ -90,7 +56,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
                         }
                     }
                 } else if(viewType == AreasAdapter.TYPE_LEVEL_1) {
-                    val bItem = adapter.data[position] as GoodsPublishTypeVo
+                    val bItem = adapter.data[position] as CategoryVO
 
                     if(bItem?.parentLevel == 0) {
                         GoodsManagerActivity.type(context, "0");
@@ -117,38 +83,36 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
     }
 
     private fun initData() {
-        var tempList1 = getC(0);
-        var tempList2 = getC(1);
-
         mList  = mutableListOf();
-        var item = GoodsPublishTypeVo();
-        item.id = "1";
-        item.name = "商品中心库";
-        item.showLevel = 0;
-        for(it in tempList1) {
-            item.addSubItem(it)
-        }
-        item.children = tempList1;
-        mList?.add(item)
-
-        item = GoodsPublishTypeVo();
-        item.id = "2";
-        item.name = "自有商品";
-        item.showLevel = 0;
-        for(it in tempList2) {
-            item.addSubItem(it)
-        }
-        item.children = tempList2;
-        mList?.add(item)
     }
 
     override fun onListSuccess(list: List<CategoryVO>) {
+        var item = CategoryVO();
+        item.categoryId = "1";
+        item.name = "商品中心库";
+        item.showLevel = 0;
 
-//        mList?.get(0)?.children = list;
-//        mList?.get(1)?.children = list;
-//        for(vo : CategoryVO in list) {
-//            mList?.get(0)?.addSubItem(vo);
-//            mList?.get(1)?.addSubItem(vo);
-//        }
+        for(it in list) {
+            it.showLevel = 1;
+            it.parentLevel = 0;
+            item.addSubItem(it);
+        }
+
+        mList?.add(item)
+        mTypeAdapter?.notifyDataSetChanged();
+    }
+
+    override fun onSelfListSuccess(list: List<CategoryVO>) {
+        val item2 = CategoryVO();
+        item2.categoryId = "2";
+        item2.name = "自有商品";
+        item2.showLevel = 0;
+        for(it in list) {
+            it.parentLevel = 1;
+            it.showLevel = 1;
+            item2.addSubItem(it);
+        }
+        mList?.add(item2)
+        mTypeAdapter?.notifyDataSetChanged();
     }
 }

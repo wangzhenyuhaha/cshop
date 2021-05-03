@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.api.bean
 import com.chad.library.adapter.base.entity.AbstractExpandableItem
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.lingmiao.shop.business.commonpop.bean.ItemData
 
@@ -11,7 +12,6 @@ import com.lingmiao.shop.business.commonpop.bean.ItemData
  * @Desc 商品分类
  */
 data class CategoryVO(
-
     @SerializedName("category_id")
     var categoryId: String? = null,
     @SerializedName("category_order")
@@ -25,8 +25,10 @@ data class CategoryVO(
     @SerializedName("name")
     var name: String?= null,
     @SerializedName("parent_id")
-    var parentId: String?= null
-) : AbstractExpandableItem<MenuVo>(), MultiItemEntity, ItemData {
+    var parentId: Int?= null,
+    @Expose
+    var parentLevel: Int = 0
+) : AbstractExpandableItem<CategoryVO>(), MultiItemEntity, ItemData {
     override fun getIValue(): String? {
         return categoryId;
     }

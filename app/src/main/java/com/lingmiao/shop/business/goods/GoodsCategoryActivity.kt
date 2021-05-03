@@ -58,9 +58,8 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
                     R.id.menuAddGoodsIv -> {
-
-                        GoodsManagerActivity.menu(context!!, "1");
-
+                        val item = getItem(position) as CategoryVO;
+                        showAddDialog(item.categoryId!!.toInt());
                     }
                     R.id.groupEditTv -> {
 //                        GroupManagerEditActivity.openActivity(
@@ -100,6 +99,13 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         mAdapter?.replaceData(list!!);
     }
 
+    fun showAddDialog(pId : Int) {
+        DialogUtils.showInputDialog(context!!, "分类名称", "", "请输入","取消", "保存",null) {
+
+            mPresenter?.add(pId, it);
+
+        }
+    }
     override fun initOthers() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_category_manager_title))
         // 禁用上拉加载、下拉刷新
@@ -109,16 +115,7 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
 
 
         categoryAddTv.setOnClickListener {
-            DialogUtils.showInputDialog(context!!, "菜单名称", "", "请输入","取消", "保存",null) {
-//                tvShopManageSlogan.text = it;
-
-                var item = CategoryVO();
-                item.showLevel = 0;
-                item.name = it;
-                item.parentId = "1";
-                list?.add(item);
-                mAdapter?.replaceData(list!!);
-            }
+            showAddDialog(0);
         }
         categoryCancelTv.setOnClickListener {
             categoryBottom.visibility = View.GONE;

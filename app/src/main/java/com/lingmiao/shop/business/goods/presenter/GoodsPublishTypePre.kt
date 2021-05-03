@@ -14,5 +14,6 @@ interface GoodsPublishTypePre : BasePresenter {
     fun loadList();
     interface View : BaseView {
         fun onListSuccess(list : List<CategoryVO>);
+        fun onSelfListSuccess(list : List<CategoryVO>);
     }
 }

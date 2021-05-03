@@ -119,6 +119,13 @@ interface GoodsApiService {
      * 商品分类
      */
     @WithHiResponse
+    @GET("seller/goods/category/app/{category_id}/children")
+    fun loadUserCategory(@Path("category_id") categoryId: String, @Query(value = "seller_id") id: Int?=null): Call<List<CategoryVO>>
+
+    /**
+     * 商品分类
+     */
+    @WithHiResponse
     @POST("seller/goods/category/add")
     fun addCategory(@Body bean: CategoryVO): Call<CategoryVO>
 

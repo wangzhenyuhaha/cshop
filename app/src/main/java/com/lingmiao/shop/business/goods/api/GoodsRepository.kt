@@ -205,6 +205,14 @@ object GoodsRepository {
         return apiService.loadCategory(categoryId).awaitHiResponse()
     }
 
+
+    /**
+     * 获取商品分类(一类、二类、三类)
+     */
+    suspend fun loadUserCategory(categoryId: String, id : Int?=null): HiResponse<List<CategoryVO>> {
+        return apiService.loadUserCategory(categoryId, id).awaitHiResponse()
+    }
+
     suspend fun addCategory(bean : CategoryVO) : HiResponse<CategoryVO> {
         return apiService.addCategory(bean).awaitHiResponse();
     }

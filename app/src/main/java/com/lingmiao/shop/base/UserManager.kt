@@ -42,7 +42,6 @@ class UserManager {
             SPUtils.getInstance().put("isLogin", true)
         }
 
-
         fun loginOut() {
             hasLogin = false
             loginInfo = null
