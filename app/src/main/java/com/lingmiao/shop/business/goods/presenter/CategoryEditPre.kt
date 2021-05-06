@@ -18,12 +18,14 @@ interface CategoryEditPre : BasePresenter {
 
     fun deleteGoodsGroup(shopCatId: CategoryVO?, position: Int)
 
-    fun add(vo : CategoryVO);
-
     fun add(pId : Int, name : String);
 
     interface PubView: BaseView, BaseLoadMoreView<CategoryVO> {
         fun onDeleteGroupSuccess(position: Int)
-        fun addSuccess(vo : CategoryVO);
+        fun addSuccess(pId : Int, vo : CategoryVO);
+        fun onLoadedLv2(
+            key: String,
+            list: List<CategoryVO>?
+        );
     }
 }

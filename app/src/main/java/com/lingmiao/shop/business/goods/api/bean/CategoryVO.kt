@@ -26,6 +26,7 @@ data class CategoryVO(
     var name: String?= null,
     @SerializedName("parent_id")
     var parentId: Int?= null,
+    var myC : List<CategoryVO>? = null,
     @Expose
     var parentLevel: Int = 0
 ) : AbstractExpandableItem<CategoryVO>(), MultiItemEntity, ItemData {

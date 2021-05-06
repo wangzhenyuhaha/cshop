@@ -69,8 +69,9 @@
 
     <View style="@style/DivideLineHorizontal" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMenuList"
+    <com.lingmiao.shop.business.goods.view.CatItemRvLayout
+        android:id="@+id/rvCatList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
 </LinearLayout>

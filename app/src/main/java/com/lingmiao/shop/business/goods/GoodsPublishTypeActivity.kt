@@ -6,7 +6,6 @@ import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsPublishTypeAdapter
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
-import com.lingmiao.shop.business.goods.api.bean.GoodsPublishTypeVo
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishTypePre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishTypePreImpl
 import com.lingmiao.shop.business.tools.adapter.AreasAdapter
@@ -108,8 +107,8 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         item2.name = "自有商品";
         item2.showLevel = 0;
         for(it in list) {
-            it.parentLevel = 1;
             it.showLevel = 1;
+            it.parentLevel = 1;
             item2.addSubItem(it);
         }
         mList?.add(item2)

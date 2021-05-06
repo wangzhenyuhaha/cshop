@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.core.content.ContextCompat
-import com.amap.api.mapcore.util.it
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
@@ -26,7 +25,7 @@ Desc        :
  **/
 class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(), CategoryEditPre.PubView {
 
-    private var list : MutableList<CategoryVO>? = mutableListOf();
+    private var mList : MutableList<CategoryVO>? = mutableListOf();
 
     companion object {
 
@@ -38,8 +37,13 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
             }
         }
     }
+
     override fun useLightMode(): Boolean {
         return false;
+    }
+
+    override fun createPresenter(): CategoryEditPre {
+        return CategoryEditPreImpl(this, this);
     }
 
     override fun getLayoutId(): Int {
@@ -47,7 +51,7 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
     }
 
     override fun initAdapter(): BaseQuickAdapter<CategoryVO, BaseViewHolder> {
-        return CategoryAdapter(list).apply {
+        return CategoryAdapter(mList).apply {
             setOnItemClickListener { adapter, view, position ->
 
 //                GroupManagerLv2Activity.openActivity(
@@ -57,6 +61,10 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
             }
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
+                    R.id.menuExpandIv -> {
+                        val item = getItem(position) as CategoryVO;
+                        mPresenter?.loadLv2GoodsGroup(item.categoryId);
+                    }
                     R.id.menuAddGoodsIv -> {
                         val item = getItem(position) as CategoryVO;
                         showAddDialog(item.categoryId!!.toInt());
@@ -83,29 +91,32 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         }
     }
 
-    override fun createPresenter(): CategoryEditPre {
-        return CategoryEditPreImpl(this, this);
-    }
-
     override fun onDeleteGroupSuccess(position: Int) {
 
     }
 
-    override fun addSuccess(vo: CategoryVO) {
-        var item = CategoryVO();
-        item.showLevel = 0;
-//        item.name = it;
-        list?.add(item);
-        mAdapter?.replaceData(list!!);
-    }
-
-    fun showAddDialog(pId : Int) {
-        DialogUtils.showInputDialog(context!!, "分类名称", "", "请输入","取消", "保存",null) {
-
-            mPresenter?.add(pId, it);
-
+    override fun addSuccess(pId : Int, vo: CategoryVO) {
+        if(pId == 0) {
+            mList?.add(vo);
+            mAdapter?.notifyDataSetChanged();
+        } else {
+            val id = String.format("%s", pId);
+            mPresenter?.loadLv2GoodsGroup(id);
         }
     }
+
+    override fun onLoadedLv2(
+        list1: String,
+        newList: List<CategoryVO>?
+    ) {
+        mList?.forEachIndexed { index, item ->
+            if(item?.categoryId == list1) {
+                item.myC = newList;
+            }
+        }
+        mAdapter?.notifyDataSetChanged();
+    }
+
     override fun initOthers() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_category_manager_title))
         // 禁用上拉加载、下拉刷新
@@ -139,6 +150,12 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         }
 
         mSmartRefreshLayout?.setEnableLoadMore(false);
+    }
+
+    fun showAddDialog(pId : Int) {
+        DialogUtils.showInputDialog(context!!, "分类名称", "", "请输入","取消", "保存",null) {
+            mPresenter?.add(pId, it);
+        }
     }
 
     override fun executePageRequest(page: IPage) {
