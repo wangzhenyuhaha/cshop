@@ -603,3 +603,16 @@ Oapp/src/main/java/com/lingmiao/shop/business/wallet/bean/WithdrawAccountBean.kt
 Lapp/src/main/java/com/lingmiao/shop/business/wallet/AliPayAccountActivity.kt,e/c/ec924391c3928f370c3a69336c4c43b8342828f3
 @
 local.properties,0/7/0712df971a99ac4d2fccb8e0fb19f377f3374cca
+t
+Dapp/src/main/java/com/lingmiao/shop/business/tools/bean/FreightVo.kt,d/f/dfe635c55b1d3f166c3837fca33664755088cbce
+z
+Japp/src/main/java/com/lingmiao/shop/business/goods/pop/GoodsCategoryPop.kt,7/f/7fe0bb5cafef895cd22d1f2434ab1a5804d044ab
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+‚
+Rapp/src/main/java/com/lingmiao/shop/business/goods/adapter/GoodsCategoryAdapter.kt,2/2/2215210ae3d35c863d9db06a32ad748539d307c9
+€
+Papp/src/main/java/com/lingmiao/shop/business/commonpop/view/RecycleViewLayout.kt,b/5/b542904e245b93946b715e84a1ac1464ddb21768
+z
+Japp/src/main/java/com/lingmiao/shop/business/goods/view/CatItemRvLayout.kt,7/3/73e354d34af7df644dd6dd8c04d5e83ea99b2cec

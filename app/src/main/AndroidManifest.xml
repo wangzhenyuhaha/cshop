@@ -360,6 +360,27 @@
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data android:name="com.amap.api.v2.apikey" android:value="6b5941e6be9ffe3f7f7fd26179e24ebf"> </meta-data>
 
+
+        <!--用于微信支付-->
+        <receiver
+            android:name=".receiver.AppRegister"
+            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+            </intent-filter>
+        </receiver>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:exported="true"
+            android:taskAffinity="net.sourceforge.simcpux"
+            android:launchMode="singleTask">
+        </activity>
     </application>
 
+    <queries>
+        <!--用于微信支付,指定微信包名-->
+        <package android:name="com.tencent.mm" />
+    </queries>
 </manifest>

@@ -10,9 +10,10 @@ buildscript {
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:3.6.3"
+        classpath "com.android.tools.build:gradle:3.6.4"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -29,6 +30,7 @@ allprojects {
         maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local/' }
         google()
         jcenter()
+        mavenCentral()
     }
 }
 

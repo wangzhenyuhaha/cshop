@@ -15,6 +15,12 @@
     <string name="copy_right">@Copyright 2020-2030 All Rights reserved</string>
 
 
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unsupported">不支持错误</string>
+    <string name="errcode_unknown">发送返回</string>
+
     <!--  =================== 商品 START ===================  -->
     <string name="goods_home_title">管理商品</string>
     <string name="goods_home_quantity">库存：%s</string>
