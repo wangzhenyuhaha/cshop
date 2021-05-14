@@ -94,6 +94,10 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
         }
         goodsDetailImageRv.setCountLimit(1, 20)
 
+        goodsDetailSubmitTv.singleClick {
+            setResult(Activity.RESULT_OK);
+            finish();
+        }
     }
 
     private fun initLayoutManager(): RecyclerView.LayoutManager {

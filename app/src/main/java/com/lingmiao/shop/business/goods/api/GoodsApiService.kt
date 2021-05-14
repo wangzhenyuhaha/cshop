@@ -116,14 +116,14 @@ interface GoodsApiService {
     fun loadCategory(@Path("category_id") categoryId: String): Call<List<CategoryVO>>
 
     /**
-     * 商品分类
+     * 新分类
      */
     @WithHiResponse
     @GET("seller/goods/category/app/{category_id}/children")
     fun loadUserCategory(@Path("category_id") categoryId: String, @Query(value = "seller_id") id: Int?=null): Call<List<CategoryVO>>
 
     /**
-     * 商品分类
+     * 新增商品分类
      */
     @WithHiResponse
     @POST("seller/goods/category/add")
@@ -200,5 +200,17 @@ interface GoodsApiService {
     @WithHiResponse
     @GET("seller/shops/ship-templates")
     fun loadDeliveryTempList(@Query(value = "template_type") tempType: String): Call<List<DeliveryTempVO>>
+
+
+    /**
+     * 中心库商品
+     */
+    @GET("seller/center/goods/")
+    @WithHiResponse
+    fun getCenterGoods(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
+
+    @WithHiResponse
+    @POST("seller/goods/addCenterGoodsToShop")
+    fun addGoodsOfCenter(@Query("center_goods_ids") id: String?): Call<Unit>
 
 }

@@ -73,6 +73,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -113,6 +114,7 @@
             android:overScrollMode="never" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/level3Rv"
             android:layout_width="0dp"
             android:layout_height="match_parent"

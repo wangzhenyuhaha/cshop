@@ -7,9 +7,8 @@
     android:orientation="vertical"
     android:layout_marginLeft="@dimen/dimen_1"
     android:layout_marginRight="@dimen/dimen_1"
-    android:maxHeight="436dp"
+    android:maxHeight="400dp"
     android:minHeight="336dp">
-
 
     <RelativeLayout
         android:id="@+id/popTitleRl"
@@ -47,21 +46,21 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/level1Rv"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:layout_weight="1"
             android:overScrollMode="never" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/level2Rv"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:layout_weight="1"
             android:overScrollMode="never" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/level3Rv"
             android:layout_width="0dp"
-            android:layout_height="200dp"
+            android:layout_height="400dp"
             android:layout_weight="1"
             android:overScrollMode="never"/>
 

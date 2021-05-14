@@ -32,6 +32,17 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
         }
     }
 
+    override fun apply(id: String) {
+        mCoroutine.launch {
+            view?.showDialogLoading()
+            val identity = MainRepository.apiService.getPayInfo(id).awaitHiResponse()
+            handleResponse(identity) {
+                //view.onSetVipInfo(identity?.data?.data);
+            }
+            view?.hideDialogLoading()
+        }
+    }
+
     /**
      * 加载钱包数据
      */

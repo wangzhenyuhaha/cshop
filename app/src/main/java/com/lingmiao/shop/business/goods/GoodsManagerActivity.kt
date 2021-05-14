@@ -6,13 +6,13 @@ import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.james.common.base.BaseActivity
 import com.james.common.base.delegate.DefaultPageLoadingDelegate
 import com.james.common.base.delegate.PageLoadingDelegate
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsCheckedAdapter
+import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
 import com.lingmiao.shop.business.goods.event.MenuEvent
@@ -32,6 +32,11 @@ Auther      : Fox
 Desc        :
  **/
 class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), GoodsManagerPre.View {
+
+
+    private var mCateVo : CategoryVO? = null
+    private var cId : String =""
+    private var mSourceId : Int? = 0;
 
     companion object {
 
@@ -62,10 +67,6 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
             context.startActivity(intent)
         }
     }
-
-
-    private var cId : String =""
-    private var mSourceId : Int? = 0;
 
 
     override fun initBundles() {
@@ -108,10 +109,17 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
         }
         goodsCheckSubmit.setOnClickListener {
             if(getCheckedCount() > 0) {
-//                EventBus.getDefault().post(TabChangeEvent(2))
                 if(mSourceId == SOURCE_TYPE) {
-                    EventBus.getDefault().post(GoodsHomeTabEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
-                    ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+
+                    val list =  mAdapter?.data?.filter { it?.isChecked==true };
+
+
+                    if(list.size > 0) {
+
+                        var ids = list?.map { it?.goodsId }?.joinToString(separator = ",");
+
+                        mPresenter?.add(ids);
+                    }
                 } else {
                     EventBus.getDefault().post(MenuEvent(1,1));
                     finish();
@@ -123,21 +131,18 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
         mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
-        mLoadMoreDelegate?.refresh()
-        // showNoData()
     }
 
-    fun getCheckedCount() : Int {
-        return mAdapter?.data?.filter { it?.isChecked == true }?.size;
+    override fun onAddSuccess() {
+//                EventBus.getDefault().post(TabChangeEvent(2))
+        EventBus.getDefault().post(GoodsHomeTabEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
+        ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
     }
 
-    fun setCheckedCount(count : Int) {
-        goodsCheckedCountTv.text = String.format("已选择%s件商品", count);
-    }
-
-    override fun onUpdateCategory(categoryId: String?, categoryName: String?) {
-        firstTypeTv.setText(categoryName);
-        cId = categoryId!!;
+    override fun onUpdateCategory(it : CategoryVO?) {
+        firstTypeTv.setText(it?.name);
+        mCateVo = it;
+        cId = it?.categoryPath!!;
         mLoadMoreDelegate?.refresh();
     }
 
@@ -146,7 +151,8 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
             setOnItemChildClickListener { adapter, view, position ->
                 val bItem = adapter.data[position] as GoodsVO;
                 if (view.id == R.id.menuIv) {
-                    bItem?.isChecked = !(bItem?.isChecked!!);
+                    //bItem?.isChecked = !(bItem?.isChecked?:false);
+                    shiftChecked(position);
                 }
                 setCheckedCount(getCheckedCount());
             }
@@ -157,6 +163,14 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
                 setBackgroundResource(R.color.common_bg)
             }
         }
+    }
+
+    fun getCheckedCount() : Int {
+        return mAdapter?.data?.filter { it?.isChecked == true }?.size;
+    }
+
+    fun setCheckedCount(count : Int) {
+        goodsCheckedCountTv.text = String.format("已选择%s件商品", count);
     }
 
     override fun getPageLoadingDelegate(): PageLoadingDelegate {

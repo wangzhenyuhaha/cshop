@@ -6,10 +6,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.GroupManagerEditActivity
 import com.lingmiao.shop.business.goods.MenuEditActivity
-import com.lingmiao.shop.business.goods.adapter.GoodsStatusAdapter
-import com.lingmiao.shop.business.goods.adapter.GroupManagerAdapter
 import com.lingmiao.shop.business.goods.adapter.MenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
@@ -49,7 +46,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
                     R.id.menuEditTv -> {
-                        MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, "111", mAdapter.getItem(0));
+                        MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, "111", mAdapter.getItem(position));
 //                        GroupManagerEditActivity.openActivity(
 //                            activity!!,
 //                            ShopGroupVO.LEVEL_1, null, mAdapter.getItem(position)
@@ -102,6 +99,11 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
 
     override fun onDeleteGroupSuccess(position: Int) {
 
+    }
+
+    override fun onLoadMoreSuccess(list: List<ShopGroupVO>?, hasMore: Boolean) {
+        super.onLoadMoreSuccess(list, hasMore)
+        mLoadMoreDelegate?.loadFinish(false, !list.isNullOrEmpty())
     }
 
     override fun executePageRequest(page: IPage) {

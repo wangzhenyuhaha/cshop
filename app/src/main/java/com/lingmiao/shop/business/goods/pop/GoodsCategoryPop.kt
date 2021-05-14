@@ -85,6 +85,7 @@ class GoodsCategoryPop(context: Context): BasePopupWindow(context) {
                 lv2Adapter.setSelectedItem(this.categoryId)
                 lv2Adapter.notifyDataSetChanged()
 
+                dismiss();
             }
         }
         lv3Adapter.setOnItemClickListener { adapter, view, position ->

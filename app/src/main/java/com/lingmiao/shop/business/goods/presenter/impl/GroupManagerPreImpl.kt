@@ -19,7 +19,7 @@ class GroupManagerPreImpl(var view: GroupManagerPre.GroupManagerView) : BasePreI
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv1ShopGroup()
             if (resp.isSuccess) {
-                view.onLoadMoreSuccess(resp.data, resp.data.isNotEmpty())
+                view.onLoadMoreSuccess(resp.data, false)
             }
         }
     }
@@ -29,7 +29,7 @@ class GroupManagerPreImpl(var view: GroupManagerPre.GroupManagerView) : BasePreI
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv2ShopGroup(lv1GroupId)
             if (resp.isSuccess) {
-                view.onLoadMoreSuccess(resp.data, resp.data.isNotEmpty())
+                view.onLoadMoreSuccess(resp.data, false)
             }
         }
     }

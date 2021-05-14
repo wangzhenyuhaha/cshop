@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
-import android.view.View
-import com.lingmiao.shop.R
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
@@ -18,14 +18,10 @@ import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
-import kotlinx.android.synthetic.main.fragment_my_new.*
+import com.tencent.mm.opensdk.modelpay.PayReq
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.me_activity_apply_vip.*
-import kotlinx.android.synthetic.main.me_activity_apply_vip.ivMyHead
-import kotlinx.android.synthetic.main.me_activity_apply_vip.ivMyShopVipStatus
-import kotlinx.android.synthetic.main.me_activity_apply_vip.tvBalance
-import kotlinx.android.synthetic.main.me_activity_apply_vip.tvMyName
-import kotlinx.android.synthetic.main.me_activity_apply_vip.tvMyShopName
-import kotlinx.android.synthetic.main.me_activity_apply_vip.ivMyShopStatus
+
 
 /**
 *   开通会员
@@ -74,6 +70,13 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         } else {
             onSetVipInfo(mIdentity);
         }
+        tvApply.singleClick {
+            val list = galleryRv.getSelectItems();
+            if(list?.size > 0) {
+                val item = list.get(0);
+                mPresenter?.apply(item.id!!);
+            }
+        }
         setUserInfo();
     }
 
@@ -104,6 +107,24 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
             tvApply.setText("立即开通")
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_vip_period)
             ivMyShopStatus.gone();
+        }
+    }
+
+    override fun onApplySuccess() {
+        val api = WXAPIFactory.createWXAPI(this, "你在微信开放平台创建的app的APPID");
+        if(api.isWXAppInstalled()) {
+            val payReq = PayReq()
+//            payReq.appId = weiXinPay.getAppid()
+//            payReq.partnerId = weiXinPay.getPartnerid()
+//            payReq.prepayId = weiXinPay.getPrepayid()
+//            payReq.packageValue = weiXinPay.getPackage_exten()
+//            payReq.nonceStr = weiXinPay.getNoncestr()
+//            payReq.timeStamp = weiXinPay.getTimestamp()
+//            payReq.sign = weiXinPay.getSign();
+//            api.sendReq(payReq);
+
+        } else {
+            showToast("请安装微信支付");
         }
     }
 

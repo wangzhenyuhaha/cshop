@@ -57,9 +57,9 @@ interface MainApi {
     fun getVipList() : Call<PageVO<VipType>>
 
     // 发起支付
-    @GET("seller/shops/identity/{shop_id}")
+    @GET("seller/shops/identity/{id}")
     @WithHiResponse
-    fun getPayInfo() : Call<String>;
+    fun getPayInfo(@Path("id") id : String) : Call<String>;
 
     //    检测升级
     @GET("seller/app/upgrade")

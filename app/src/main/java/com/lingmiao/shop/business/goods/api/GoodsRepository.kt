@@ -161,7 +161,6 @@ object GoodsRepository {
         map.put("category_id", cId)
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
-    //
 
     /**
      * 获取规格名列表
@@ -278,6 +277,25 @@ object GoodsRepository {
      */
     suspend fun loadDeliveryTempList(tempType: String): HiResponse<List<DeliveryTempVO>> {
         return apiService.loadDeliveryTempList(tempType).awaitHiResponse()
+    }
+
+    /**
+     * 通过商品名称进行匹配
+     * @param goodsName：商品名称
+     */
+    suspend fun getCenterGoods(pageNo: Int, cId : String): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("category_path", cId)
+        map.put("page_no", pageNo)
+        map.put("page_size", 20)
+        return apiService.getCenterGoods(map).awaitHiResponse()
+    }
+
+    /**
+     * 从中心库添加商品
+     */
+    suspend fun addGoodsOfCenter(ids : String) : HiResponse<Unit> {
+        return apiService.addGoodsOfCenter(ids).awaitHiResponse();
     }
 
 }

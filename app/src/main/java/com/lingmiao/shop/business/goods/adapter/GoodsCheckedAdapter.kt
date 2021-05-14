@@ -22,8 +22,9 @@ class GoodsCheckedAdapter : BaseQuickAdapter<GoodsVO, BaseViewHolder>(R.layout.g
 
             helper.setText(
                 R.id.goodsQuantityTv,
-                mContext.getString(R.string.goods_home_spec, quantity)
+                ""
             )
+            // mContext.getString(R.string.goods_home_spec, quantity)
 
             helper.setText(R.id.goodsPriceTv, formatDouble(price))
 
@@ -49,6 +50,9 @@ class GoodsCheckedAdapter : BaseQuickAdapter<GoodsVO, BaseViewHolder>(R.layout.g
 
 
     fun shiftChecked(position: Int) {
+        data.forEachIndexed { index, goodsVO ->
+            goodsVO.isChecked = false;
+        }
         data[position]?.isChecked = !(data[position]?.isChecked ?: false);
         notifyItemChanged(position)
     }

@@ -13,6 +13,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.exception.BizException
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.utils.exts.*
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -36,6 +37,15 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     private val mGoodsTypePreImpl: GoodsTypePopPreImpl by lazy { GoodsTypePopPreImpl(view) }
     private val mGoodsDeliveryPreImpl: GoodsDeliveryPopPreImpl by lazy { GoodsDeliveryPopPreImpl(view) }
     private val mGoodsUnitPreImpl : GoodsUnitPopPreImpl by lazy { GoodsUnitPopPreImpl(view) }
+
+    var shopId : Int? = null;
+
+    fun getSellerId() : Int? {
+        if(shopId == null) {
+            shopId = UserManager.getLoginInfo()?.shopId;
+        }
+        return shopId;
+    }
 
     override fun showDeliveryTypePop(str: String?) {
         mGoodsDeliveryPreImpl?.showTypePop(context, str) { name, it ->
@@ -165,7 +175,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     }
 
     override fun showCategoryPop() {
-        mCategoryPreImpl.showCategoryPop(context) { categoryId, categoryName ->
+        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { categoryId, categoryName ->
             view.onUpdateCategory(categoryId, categoryName)
         }
     }

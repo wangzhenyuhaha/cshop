@@ -11,9 +11,11 @@ interface ApplyVipPresenter : BasePresenter, MyWalletPresenter {
 
     fun getVipPriceList();
     fun getIdentity();
+    fun apply(id : String);
 
     interface View : BaseView, MyWalletPresenter.View {
         fun onSetVipPriceList(list : List<VipType>?);
         fun onSetVipInfo(item : IdentityVo?);
+        fun onApplySuccess();
     }
 }
