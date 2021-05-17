@@ -2,7 +2,7 @@ package com.lingmiao.shop.base
 
 object IConstant {
     const val PAGE_SIZE = 20
-    const val SERVICE_PHONE = "15901899796"
+    const val SERVICE_PHONE = "17717085667"
 
     //1申请开店审核成功;  2买家订单支付成功;  3:其它  ,4店铺审核不通过
     const val MESSAGE_APPLY_SHOP_SUCCESS = "1"

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/ivAppLogo"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="38dp"
+        android:layout_marginBottom="20dp"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAppCompanyName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_15"
+        android:text="@string/company_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivAppLogo" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableTop="@mipmap/ic_download"
+        android:paddingTop="@dimen/dimen_15"
+        android:gravity="center"
+        android:textSize="@dimen/sp_14"
+        android:textStyle="bold"
+        android:drawablePadding="@dimen/dimen_15"
+        android:text="扫描二维码，您的朋友也可下载C店客户端"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvAppCompanyName" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dimen_50"
+        android:text="@string/copy_right"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/companyNameTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dimen_20"
+        android:text="@string/company_name"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

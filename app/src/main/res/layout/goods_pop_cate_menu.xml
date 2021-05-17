@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:ivBgColor="#a3000000"
+    app:ivRadius="4dp">
+
+<!--    android:paddingHorizontal="@dimen/dimen_3"-->
+<!--    android:paddingVertical="@dimen/dimen_6"-->
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/goodsInfoTv"
+        style="@style/style_goods_menu"
+        android:text="商品信息" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/specTv"
+        style="@style/style_goods_menu"
+        android:text="规格" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/cateEditTv"
+        style="@style/style_goods_menu"
+        android:text="编辑" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/addChildrenTv"
+        style="@style/style_goods_menu"
+        android:text="新增二级"
+        android:visibility="gone"
+        tools:visibility="visible"  />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/deleteTv"
+        style="@style/style_goods_menu"
+        android:text="删除"  />
+
+</com.james.common.view.ILinearLayout>

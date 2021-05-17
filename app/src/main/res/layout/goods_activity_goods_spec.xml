@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/smartRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:srlEnableLastTime="false" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.james.common.view.IRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:paddingHorizontal="@dimen/dimen_10"
+            app:ivBgColor="@color/color_ffffff"
+            app:ivRadius="@dimen/dimen_5">
+
+            <TextView
+                android:id="@+id/specNameTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="@dimen/dimen_19"
+                android:text="规格信息"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_13" />
+
+            <TextView
+                android:id="@+id/addSpecTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/dimen_6"
+                android:drawableRight="@mipmap/goods_spec_blue_plus"
+                android:padding="@dimen/dimen_19"
+                android:text=""
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/dimen_13" />
+
+            <View
+                android:id="@+id/divider"
+                style="@style/common_divider"
+                android:layout_below="@+id/specNameTv" />
+
+            <com.lingmiao.shop.business.goods.view.NewSpecFlowLayout
+                android:id="@+id/specFlowLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/divider"
+                android:layout_marginTop="@dimen/dimen_14"
+                android:layout_marginBottom="@dimen/dimen_17"
+                app:itemSpacing="@dimen/dimen_10"
+                app:lineSpacing="@dimen/dimen_10" />
+
+        </com.james.common.view.IRelativeLayout>
+
+    </LinearLayout>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>

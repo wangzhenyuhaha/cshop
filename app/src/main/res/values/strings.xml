@@ -12,7 +12,8 @@
     <string name="get_code">获取验证码</string>
     <string name="yes">确定</string>
     <string name="save">保存</string>
-    <string name="copy_right">@Copyright 2020-2030 All Rights reserved</string>
+    <string name="copy_right">@Copyright 2019-2029 All Rights reserved</string>
+    <string name="company_info">上海邻妙信息科技有限公司是创新型科技企业；利用自主研发的数字化软硬件产品服务于广大的实体商户；核心产品“C 店”是一款实体商户使用的数字化全链路工具；集网上下单、支付、配送、集成管理于一体；它具有操作简便、实用、美观、独立等特性；“C店”由用户下单微信小程序“C店+”和商户管理端“C店”APP组成；它使实体商户更好的服务于用户、形成自己的私域流量，增加自身的生存能力；</string>
 
 
     <string name="errcode_success">发送成功</string>
@@ -141,4 +142,5 @@
     <string name="order_ship_type_hint">配送方式</string>
     <string name="order_ship_rider_hint">配送骑士</string>
     <string name="order_ship_hint">配送信息</string>
+
 </resources>

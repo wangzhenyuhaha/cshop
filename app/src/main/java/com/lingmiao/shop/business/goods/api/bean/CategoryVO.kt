@@ -4,6 +4,8 @@ import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import com.lingmiao.shop.business.commonpop.bean.ItemData
+import com.lingmiao.shop.business.goods.pop.CateMenuPop
+import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 
 
 /**
@@ -13,22 +15,26 @@ import com.lingmiao.shop.business.commonpop.bean.ItemData
  */
 data class CategoryVO(
     @SerializedName("category_id")
-    var categoryId: String? = null,
+    var categoryId: String = "",
     @SerializedName("category_order")
-    var categoryOrder: Int?= null,
+    var categoryOrder: Int= 0,
     @SerializedName("category_path")
-    var categoryPath: String?= null,
+    var categoryPath: String= "",
     @SerializedName("goods_count")
-    var goodsCount: Int?= null,
+    var goodsCount: Int= 0,
     @SerializedName("image")
-    var image: String?= null,
+    var image: String= "",
     @SerializedName("name")
-    var name: String?= null,
+    var name: String= "",
     @SerializedName("parent_id")
-    var parentId: Int?= null,
-    var myC : List<CategoryVO>? = null,
+    var parentId: Int= 0,
+    @SerializedName("children")
+    var children : MutableList<CategoryVO>? = mutableListOf(),
     @Expose
-    var parentLevel: Int = 0
+    var parentLevel: Int = 0,
+    @Expose
+    var _loaded : Boolean = false
+
 ) : AbstractExpandableItem<CategoryVO>(), MultiItemEntity, ItemData {
     override fun getIValue(): String? {
         return categoryId;
@@ -58,4 +64,10 @@ data class CategoryVO(
 
     var showLevel: Int = 0;
 
+    fun getMenuType(): Int {
+        return when (showLevel) {
+            0 -> (CateMenuPop.TYPE_GOODS_INFO or CateMenuPop.TYPE_SPEC or CateMenuPop.TYPE_EDIT or CateMenuPop.TYPE_CHILDREN)
+            else -> (CateMenuPop.TYPE_GOODS_INFO or CateMenuPop.TYPE_SPEC or CateMenuPop.TYPE_EDIT)
+        }
+    }
 }

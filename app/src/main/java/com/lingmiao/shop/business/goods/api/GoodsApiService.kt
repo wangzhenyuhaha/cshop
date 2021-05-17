@@ -108,6 +108,7 @@ interface GoodsApiService {
     @WithHiResponse
     fun deleteGoods(@Path(value = "goods_ids") goodsId: String): Call<Unit>
 
+    /***************************分类****************************************************/
     /**
      * 商品分类
      */
@@ -122,6 +123,7 @@ interface GoodsApiService {
     @GET("seller/goods/category/app/{category_id}/children")
     fun loadUserCategory(@Path("category_id") categoryId: String, @Query(value = "seller_id") id: Int?=null): Call<List<CategoryVO>>
 
+
     /**
      * 新增商品分类
      */
@@ -129,6 +131,18 @@ interface GoodsApiService {
     @POST("seller/goods/category/add")
     fun addCategory(@Body bean: CategoryVO): Call<CategoryVO>
 
+    @WithHiResponse
+    @PUT("seller/goods/category/update/{id}")
+    fun updateCategory(@Path(value = "id") id: String, @QueryMap data : MutableMap<String, Any>): Call<CategoryVO>
+
+    /**
+     * 删除商品
+     */
+    @DELETE("seller/goods/category/{id}")
+    @WithHiResponse
+    fun deleteCate(@Path(value = "id") id: String): Call<Unit>
+
+    /***************************规格****************************************************/
     /**
      * 获取规格名列表
      */
@@ -192,7 +206,7 @@ interface GoodsApiService {
 
     @WithHiResponse
     @DELETE("seller/shops/cats/{id}")
-    fun deleteShopGroupPop(@Path("id") shopCatId: String?): Call<Unit>
+    fun deleteShopGroupPop(@Path("id") id: String?): Call<Unit>
 
     /**
      * 获取配送模板
@@ -202,6 +216,7 @@ interface GoodsApiService {
     fun loadDeliveryTempList(@Query(value = "template_type") tempType: String): Call<List<DeliveryTempVO>>
 
 
+    /***************************中心库****************************************************/
     /**
      * 中心库商品
      */
@@ -212,5 +227,49 @@ interface GoodsApiService {
     @WithHiResponse
     @POST("seller/goods/addCenterGoodsToShop")
     fun addGoodsOfCenter(@Query("center_goods_ids") id: String?): Call<Unit>
+
+    /***************************商品信息****************************************************/
+    /**
+     * 商品信息查询
+     */
+    @WithHiResponse
+    @GET("seller/goods/parameters/getByCategoryAndSeller")
+    fun getInfoList(@Query(value = "categoryId") id: String): Call<List<GoodsParamVo>>
+
+    /**
+     * 商品信息添加
+     */
+    @WithHiResponse
+    @POST("seller/goods/parameters")
+    fun addInfo(@Body body: GoodsParamVo): Call<GoodsParamVo>
+
+    /**
+     * 获取商品信息列表
+     */
+    @WithHiResponse
+    @GET("seller/goods/parameters/getByCategoryAndSeller")
+    fun getInfoListOfCategory(@Query("category_ids") categoryIds: String, @Query(value = "seller_id") id: Int?=null): Call<List<GoodsParamVo>>
+
+    /**
+     * 商品信息删除
+     */
+    @DELETE("seller/goods/parameters/{id}")
+    @WithHiResponse
+    fun deleteInfo(@Path(value = "id") id: String): Call<Unit>
+
+    /***************************规格****************************************************/
+    /**
+     * 规格查询
+     */
+    @WithHiResponse
+    @GET("seller/goods/categories/{cid}/specs")
+    fun getSpecList(@Path(value = "cid") id: String): Call<List<GoodsSpecVo>>
+
+    /**
+     * 规格添加
+     */
+    @WithHiResponse
+    @POST("seller/goods/categories/{c_id}/specs")
+    fun addSpec(@Path(value = "c_id") cid: String, @Query("spec_name") name: String): Call<GoodsSpecVo>
 
 }

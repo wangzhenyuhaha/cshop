@@ -1,17 +1,15 @@
 package com.lingmiao.shop.business.goods.api
 
+import com.blankj.utilcode.util.JsonUtils
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
-import com.lingmiao.shop.business.wallet.bean.PageListVo
 import com.lingmiao.shop.net.Fetch
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
-import retrofit2.Call
-import retrofit2.http.Query
 
 /**
  * Author : Elson
@@ -217,6 +215,28 @@ object GoodsRepository {
     }
 
     /**
+     * 更新店铺分组
+     */
+    suspend fun updateCategory(cate: CategoryVO): HiResponse<CategoryVO> {
+        val map = mutableMapOf<String, Any>()
+        map.put("name", cate.name)
+        map.put("parent_id", cate.parentId)
+        map.put("category_id", cate.categoryId)
+        map.put("categoryPath", cate.categoryPath)
+        map.put("image", cate.image?:"")
+        map.put("goodsCount", cate.goodsCount)
+        map.put("categoryOrder", cate.categoryOrder)
+        return apiService.updateCategory(cate.categoryId, map).awaitHiResponse()
+    }
+
+    /**
+     * 删除
+     */
+    suspend fun deleteCate(id: String): HiResponse<Unit> {
+        return apiService.deleteCate(id).awaitHiResponse();
+    }
+
+    /**
      * 获取店铺商品第一级分组(一级分组内包含了二级分组)
      */
     suspend fun loadLv1ShopGroup(): HiResponse<List<ShopGroupVO>> {
@@ -279,6 +299,7 @@ object GoodsRepository {
         return apiService.loadDeliveryTempList(tempType).awaitHiResponse()
     }
 
+    /***************************从中心库****************************************************/
     /**
      * 通过商品名称进行匹配
      * @param goodsName：商品名称
@@ -298,4 +319,41 @@ object GoodsRepository {
         return apiService.addGoodsOfCenter(ids).awaitHiResponse();
     }
 
+    /***************************商品信息****************************************************/
+    /**
+     * 获取商品信息列表
+     */
+    suspend fun getInfoList(id : String) : HiResponse<List<GoodsParamVo>> {
+        return apiService.getInfoList(id).awaitHiResponse();
+    }
+
+    /**
+     * 商品信息添加
+     */
+    suspend fun addInfo(vo: GoodsParamVo) : HiResponse<GoodsParamVo> {
+        return apiService.addInfo(vo).awaitHiResponse();
+    }
+
+    /**
+     * 商品信息删除
+     */
+    suspend fun deleteInfo(id : String) : HiResponse<Unit> {
+        return apiService.deleteInfo(id).awaitHiResponse();
+    }
+
+    /**
+     * 跟据分类id获取商品信息列表
+     */
+    suspend fun getInfoListOfCategory(categoryIds: String, id : Int?=null): HiResponse<List<GoodsParamVo>> {
+        return apiService.getInfoListOfCategory(categoryIds, id).awaitHiResponse()
+    }
+
+    /***************************商品信息****************************************************/
+    suspend fun getSpecList(cid: String): HiResponse<List<GoodsSpecVo>> {
+        return apiService.getSpecList(cid).awaitHiResponse();
+    }
+
+    suspend fun addSpec(cid: String, name: String): HiResponse<GoodsSpecVo> {
+        return apiService.addSpec(cid, name).awaitHiResponse();
+    }
 }

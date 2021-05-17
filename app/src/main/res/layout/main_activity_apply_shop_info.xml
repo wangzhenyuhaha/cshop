@@ -70,6 +70,7 @@
                 <View style="@style/DivideLineHorizontal" />
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/rlShopInfoCompany"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">

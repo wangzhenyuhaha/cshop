@@ -160,7 +160,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".business.goods.GoodsCategoryActivity"
             android:screenOrientation="portrait"/>
-
+        <activity android:name=".business.goods.GoodsInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".business.goods.GoodsSpecActivity"
+            android:screenOrientation="portrait"/>
         <!-- ======================= 商品模块  END ========================= -->
 
 
@@ -236,6 +239,8 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".business.me.LinkInSettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".business.me.AboutUsActivity"
             android:screenOrientation="portrait"/>
         <!-- ======================= 个人中心  END ========================= -->
 

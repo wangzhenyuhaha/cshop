@@ -31,24 +31,24 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
                 view.showPageLoading()
             }
 
-//            val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),IConstant.PAGE_SIZE.toString(),
-//                status).awaitHiResponse()
-//            view.hidePageLoading()
-//            if (resp.isSuccess) {
-//                val orderList = resp.data.data
-//                LogUtils.d("orderList:"+orderList?.size)
-//                if(page.isRefreshing()){
-//                    LogUtils.d("page.isRefreshing()")
-//                    EventBus.getDefault().post(OrderTabNumberEvent(status,resp.data.dataTotal))
-//                }
-//                view.onLoadMoreSuccess(orderList, orderList.isNotEmpty())
-//                if(page.isRefreshing()&&orderList.isNullOrEmpty()){
-////                    view.showNoData()
-//                    LogUtils.d("showNoData")
-//                }
-//            } else {
-//                view.onLoadMoreFailed()
-//            }
+            val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),IConstant.PAGE_SIZE.toString(),
+                status).awaitHiResponse()
+            //view.hidePageLoading()
+            if (resp.isSuccess) {
+                val orderList = resp.data.data
+                LogUtils.d("orderList:"+orderList?.size)
+                if(page.isRefreshing()){
+                    LogUtils.d("page.isRefreshing()")
+                    EventBus.getDefault().post(OrderTabNumberEvent(status,resp.data.dataTotal))
+                }
+                view.onLoadMoreSuccess(orderList, orderList.isNotEmpty())
+                if(page.isRefreshing()&&orderList.isNullOrEmpty()){
+//                    view.showNoData()
+                    LogUtils.d("showNoData")
+                }
+            } else {
+                view.onLoadMoreFailed()
+            }
 
             val goodsList = getTempList(status);
             view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())

@@ -110,6 +110,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             mPresenter?.editShopStatus(isChecked);
+            if(isChecked) {
+                switchStatusBtn.setBackColorRes(R.color.color_secondary)
+            } else {
+                switchStatusBtn.setBackColorRes(R.color.white)
+            }
         }
 
         showPageLoading()
@@ -356,7 +361,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     override fun onShopStatusEdited() {
-        shopStatusTv.setTextColor(ContextCompat.getColor(context!!, if(switchStatusBtn.isChecked) R.color.color_0EA60 else R.color.white));
+//        shopStatusTv.setTextColor(ContextCompat.getColor(context!!, if(switchStatusBtn.isChecked) R.color.color_0EA60 else R.color.white));
         shopStatusTv.text = if(switchStatusBtn.isChecked) "开店中" else "休息中";
     }
 

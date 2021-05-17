@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
-import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.CategoryAdapter
 import com.lingmiao.shop.business.goods.adapter.UsedMenuAdapter
@@ -32,7 +31,6 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         fun openActivity(context: Context) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsCategoryActivity::class.java)
-//                intent.putExtra(KEY_DESC, content)
                 context.startActivity(intent)
             }
         }
@@ -53,80 +51,49 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
     override fun initAdapter(): BaseQuickAdapter<CategoryVO, BaseViewHolder> {
         return CategoryAdapter(mList).apply {
             setOnItemClickListener { adapter, view, position ->
-
-//                GroupManagerLv2Activity.openActivity(
-//                    this@GroupManagerLv1Activity,
-//                    mAdapter.getItem(position)?.shopCatId
-//                )
+                val bItem = adapter.data[position] as CategoryVO;
             }
             setOnItemChildClickListener { adapter, view, position ->
                 when (view.id) {
-                    R.id.menuExpandIv -> {
+                    // 加载或者是扩张
+                    R.id.cateTitleTv,
+                    R.id.cateExpandIv -> {
                         val item = getItem(position) as CategoryVO;
-                        mPresenter?.loadLv2GoodsGroup(item.categoryId);
+                        if(item.isExpanded) {
+                            adapter?.collapse(position, false);
+                        } else {
+                            adapter?.expand(position, false)
+                        }
                     }
-                    R.id.menuAddGoodsIv -> {
-                        val item = getItem(position) as CategoryVO;
-                        showAddDialog(item.categoryId!!.toInt());
-                    }
-                    R.id.groupEditTv -> {
-//                        GroupManagerEditActivity.openActivity(
-//                            activity!!,
-//                            ShopGroupVO.LEVEL_1, null, mAdapter.getItem(position)
-//                        )
-                    }
-                    R.id.groupDeleteTv -> {
-                        mPresenter?.deleteGoodsGroup(mAdapter.getItem(position), position)
+                    // 更多
+                    R.id.cateMoreIv -> {
+                        mPresenter?.clickMenuView(mAdapter.getItem(position), position, view)
+//                        val item = getItem(position) as CategoryVO;
+//                        showAddDialog(item.categoryId!!.toInt());
                     }
                 }
             }
-//            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
-
+            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
 //                if(menuBottom.visibility != View.VISIBLE) {
 //                    menuBottom.visibility = View.VISIBLE;
 //                }
 //                setBatchEditModel(true);
-//                return@OnItemLongClickListener true;
-//            }
-        }
-    }
 
-    override fun onDeleteGroupSuccess(position: Int) {
-
-    }
-
-    override fun addSuccess(pId : Int, vo: CategoryVO) {
-        if(pId == 0) {
-            mList?.add(vo);
-            mAdapter?.notifyDataSetChanged();
-        } else {
-            val id = String.format("%s", pId);
-            mPresenter?.loadLv2GoodsGroup(id);
-        }
-    }
-
-    override fun onLoadedLv2(
-        list1: String,
-        newList: List<CategoryVO>?
-    ) {
-        mList?.forEachIndexed { index, item ->
-            if(item?.categoryId == list1) {
-                item.myC = newList;
+                return@OnItemLongClickListener true;
             }
         }
-        mAdapter?.notifyDataSetChanged();
     }
 
     override fun initOthers() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_category_manager_title))
         // 禁用上拉加载、下拉刷新
-        mSmartRefreshLayout.setEnableRefresh(false)
+//        mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
 
 
         categoryAddTv.setOnClickListener {
-            showAddDialog(0);
+            mPresenter?.showAddDialog(0);
         }
         categoryCancelTv.setOnClickListener {
             categoryBottom.visibility = View.GONE;
@@ -152,13 +119,112 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         mSmartRefreshLayout?.setEnableLoadMore(false);
     }
 
-    fun showAddDialog(pId : Int) {
-        DialogUtils.showInputDialog(context!!, "分类名称", "", "请输入","取消", "保存",null) {
-            mPresenter?.add(pId, it);
-        }
-    }
-
     override fun executePageRequest(page: IPage) {
         mPresenter.loadLv1GoodsGroup();
     }
+
+    override fun onLoadedLv2(
+        list1: String,
+        newList: List<CategoryVO>?
+    ) {
+        var i = -1;
+        mList?.forEachIndexed { index, item ->
+            if(item?.categoryId == list1) {
+                // 清除
+                item?.subItems?.clear();
+                newList?.forEachIndexed { index, categoryVO ->
+                    // 新增
+                    item.addSubItem(categoryVO);
+                }
+                i = index;
+            }
+        }
+        if(i > -1) {
+            // 刷新
+            mAdapter?.collapse(i)
+            mAdapter?.expand(i);
+            mAdapter?.notifyDataSetChanged();
+        }
+    }
+
+    override fun onDeleted(id: String) {
+        var i = -1;
+        var __i = -1;
+        mList?.forEachIndexed { index, item ->
+            if (item?.categoryId == id) {
+                i = index;
+                if(i > -1) {
+                    mList?.removeAt(i);
+                    mAdapter?.notifyDataSetChanged();
+                }
+            }
+            item?.children?.forEachIndexed { _i, it ->
+                if(it.categoryId == id) {
+                    i = index;
+                    __i = _i;
+                    item?.children?.removeAt(_i)
+                    item?.subItems?.clear();
+                    item?.children?.forEachIndexed { index, _it ->
+                        item?.addSubItem(_it)
+                    }
+                    mAdapter?.notifyDataSetChanged();
+                }
+            }
+        };
+
+    }
+
+    override fun onAdded(pId : Int, vo: CategoryVO) {
+        if(pId == 0) {
+            mList?.add(vo);
+            mAdapter?.notifyDataSetChanged();
+        } else {
+            var i = -1;
+            mList?.forEachIndexed { index, item ->
+                if(item?.categoryId == pId.toString()) {
+                    // 清除老的
+                    item?.subItems?.clear();
+                    // 子类新增
+                    val children = item.children;
+                    children?.add(vo);
+                    children?.forEachIndexed { index, categoryVO ->
+                        categoryVO?.showLevel = 1;
+                        // 添加新的
+                        item?.addSubItem(categoryVO);
+                    }
+                    i = index;
+                }
+            }
+            if(i > -1) {
+                // 刷新
+                mAdapter?.collapse(i)
+                mAdapter?.expand(i);
+                mAdapter?.notifyDataSetChanged();
+            }
+            // val id = String.format("%s", pId);
+            // mPresenter?.loadLv2GoodsGroup(id);
+        }
+    }
+
+    override fun onUpdated(vo: CategoryVO) {
+        if(vo.parentId == 0) {
+            mList?.forEachIndexed { index, item ->
+                if(item?.categoryId == vo.categoryId) {
+                    item?.name = vo.name;
+                }
+            }
+        } else {
+            mList?.forEachIndexed { index, item ->
+                item.children?.forEachIndexed { i, it ->
+                    if(it?.categoryId == vo.categoryId) {
+                        it.name = vo.name;
+                    }
+                }
+            }
+        }
+
+        mAdapter?.notifyDataSetChanged();
+//        mPresenter.loadLv1GoodsGroup();
+    }
+
 }
