@@ -110,11 +110,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             mPresenter?.editShopStatus(isChecked);
-            if(isChecked) {
-                switchStatusBtn.setBackColorRes(R.color.color_secondary)
-            } else {
-                switchStatusBtn.setBackColorRes(R.color.white)
-            }
         }
 
         showPageLoading()

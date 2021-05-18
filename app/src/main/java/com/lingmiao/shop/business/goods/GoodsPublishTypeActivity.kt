@@ -38,7 +38,8 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         initData();
         initAdapter();
         initRecycleView();
-        mPresenter?.loadList();
+//        mPresenter?.loadList();
+        addFirstLevel();
     }
 
     fun initAdapter() {
@@ -46,13 +47,18 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
             setOnItemChildClickListener { adapter, view, position ->
                 val viewType = adapter.getItemViewType(position);
                 if(viewType == AreasAdapter.TYPE_LEVEL_0) {
-                    val bItem = adapter.data[position] as CategoryVO;
-                    if(view.id == R.id.expandIv || view.id == R.id.titleLL) {
-                        if(bItem.isExpanded) {
-                            mTypeAdapter?.collapse(position, false);
-                        } else {
-                            mTypeAdapter?.expand(position, false)
-                        }
+//                    val bItem = adapter.data[position] as CategoryVO;
+//                    if(view.id == R.id.expandIv || view.id == R.id.titleLL) {
+//                        if(bItem.isExpanded) {
+//                            mTypeAdapter?.collapse(position, false);
+//                        } else {
+//                            mTypeAdapter?.expand(position, false)
+//                        }
+//                    }
+                    if(position == 0) {
+                        GoodsManagerActivity.type(context, "0");
+                    } else {
+                        GoodsPublishNewActivity.newPublish(context, 0);
                     }
                 } else if(viewType == AreasAdapter.TYPE_LEVEL_1) {
                     val bItem = adapter.data[position] as CategoryVO
@@ -83,6 +89,22 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
 
     private fun initData() {
         mList  = mutableListOf();
+    }
+
+    fun addFirstLevel() {
+        var item = CategoryVO();
+        item.categoryId = "1";
+        item.name = "商品中心库";
+        item.showLevel = 0;
+        mList?.add(item)
+
+        val item2 = CategoryVO();
+        item2.categoryId = "2";
+        item2.name = "自有商品";
+        item2.showLevel = 0;
+        mList?.add(item2)
+
+        mTypeAdapter?.notifyDataSetChanged();
     }
 
     override fun onListSuccess(list: List<CategoryVO>) {

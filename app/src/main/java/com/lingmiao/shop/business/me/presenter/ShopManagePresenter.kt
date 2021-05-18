@@ -7,7 +7,7 @@ import com.lingmiao.shop.business.me.bean.ShopManageRequest
 interface ShopManagePresenter: BasePresenter{
  
 	fun requestShopManageData()
-	fun updateShopManage(bean:ShopManageRequest)
+	fun updateShopManage(bean:ApplyShopInfo)
 
 	interface View : BaseView {
         fun onShopManageSuccess(bean: ApplyShopInfo)

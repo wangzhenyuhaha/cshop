@@ -6,94 +6,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     app:ivBgColor="@color/color_ffffff"
-    app:ivRadius="@dimen/dimen_5">
+    app:ivRadius="@dimen/dimen_5"
+    android:visibility="gone">
 
-    <!--  商品售价  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
 
-        <TextView
-            style="@style/goods_spce_item_left_mark"
-            android:layout_width="100dp"
-            android:text="商品售价" />
-
-        <EditText
-            android:id="@+id/goodsPriceEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:gravity="center|right"
-            android:hint="请输入商品售价"
-            android:paddingEnd="@dimen/dimen_10" />
-    </LinearLayout>
-
-    <View style="@style/common_divider" />
-
-    <!--  活动价  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/goods_spce_item_left"
-            android:layout_width="100dp"
-            android:text="活动价" />
-
-        <EditText
-            android:id="@+id/goodsCostEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:gravity="center|right"
-            android:hint="请输入商品活动价" />
-    </LinearLayout>
-
-    <View style="@style/common_divider" />
-
-    <!--  市场价格  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/goods_spce_item_left"
-            android:layout_width="100dp"
-            android:text="市场价格" />
-
-        <EditText
-            android:id="@+id/marketPriceEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:gravity="center|right"
-            android:hint="划线价，不填不显示" />
-    </LinearLayout>
-
-    <View style="@style/common_divider" />
-    <!--  库存  -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/goods_spce_item_left_mark"
-            android:layout_width="100dp"
-            android:text="商品库存" />
-
-        <EditText
-            android:id="@+id/goodsQuantityEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:gravity="center|right"
-            android:hint="请输入商品库存"
-            android:paddingEnd="@dimen/dimen_10" />
-
-    </LinearLayout>
-
-    <View style="@style/common_divider" />
+    <View style="@style/common_divider"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/goods_publish_left_mark"
@@ -106,12 +30,14 @@
 
     </LinearLayout>
 
-    <View style="@style/common_divider" />
+    <View style="@style/common_divider"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/goods_publish_left_mark"

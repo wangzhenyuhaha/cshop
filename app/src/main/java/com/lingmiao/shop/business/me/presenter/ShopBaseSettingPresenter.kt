@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.me.presenter
 
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 
 /**
@@ -9,9 +10,9 @@ Desc        :
  **/
 interface ShopBaseSettingPresenter : ShopManagePresenter {
 
-    fun updateShopSlogan(bean: ShopManageRequest);
+    fun updateShopSlogan(bean: ApplyShopInfo);
 
-    fun updateShopNotice(bean:ShopManageRequest);
+    fun updateShopNotice(bean:ApplyShopInfo);
 
     interface View : ShopManagePresenter.View {
 

@@ -14,7 +14,8 @@
         <EditText
             android:id="@+id/goodsNameEdt"
             style="@style/goods_publish_right"
-            android:hint="请输入商品名称" />
+            android:hint="请输入商品名称"
+            android:paddingEnd="@dimen/dimen_10" />
     </LinearLayout>
 
     <View style="@style/common_divider" />

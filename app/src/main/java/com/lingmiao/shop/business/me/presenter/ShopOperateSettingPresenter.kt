@@ -3,6 +3,8 @@ package com.lingmiao.shop.business.me.presenter
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
+import com.lingmiao.shop.business.me.bean.ShopManageRequest
 
 /**
 Create Date : 2021/3/24:07 PM
@@ -13,7 +15,16 @@ interface ShopOperateSettingPresenter : BasePresenter {
 
     fun showWorkTimePop(target: android.view.View);
 
+    fun setSetting(data : ApplyShopInfo);
+
+    fun loadShopSetting();
+
     interface View : BaseView {
+
         fun onUpdateWorkTime(workTimeVo1: WorkTimeVo?, workTimeVo2: WorkTimeVo?);
+
+        fun onSetSetting();
+
+        fun onLoadedShopSetting(vo : ApplyShopInfo);
     }
 }

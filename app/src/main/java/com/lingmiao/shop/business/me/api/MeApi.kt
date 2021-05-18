@@ -50,5 +50,5 @@ interface MeApi {
 //    修改店铺
     @POST("seller/shops/editShop")
     @WithHiResponse
-    fun updateShop(@Body bean: ShopManageRequest):Call<Any>
+    fun updateShop(@Body bean: ApplyShopInfo):Call<Unit>
 }

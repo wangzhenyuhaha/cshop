@@ -113,7 +113,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
                                     CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
                                 if (uploadFile.isSuccess) {
                                     LogUtils.d(uploadFile.data.url)
-                                    val request = ShopManageRequest()
+                                    val request = ApplyShopInfo()
                                     val loginInfo = UserManager.getLoginInfo()
                                     loginInfo?.let {
                                         request.shopId = it.shopId
@@ -135,7 +135,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
                 DialogUtils.showInputDialog(this, "店铺名称", "", "请输入","取消", "保存",null) {
                     tvShopManageName.text = it
                     showDialogLoading()
-                    val request = ShopManageRequest()
+                    val request = ApplyShopInfo()
                     val loginInfo = UserManager.getLoginInfo()
                     loginInfo?.let { info-> request.shopId = info.shopId }
                     request.shopName = it
@@ -146,7 +146,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
                 DialogUtils.showMultInputDialog(this, "店铺简介", "", "请简单介绍你的店铺~","取消", "保存",null) {
                     tvShopManageDesc.text = it
                     showDialogLoading()
-                    val request = ShopManageRequest()
+                    val request = ApplyShopInfo()
                     val loginInfo = UserManager.getLoginInfo()
                     loginInfo?.let { info-> request.shopId = info.shopId }
                     request.shopDesc = it
@@ -162,7 +162,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
                 DialogUtils.showInputDialog(this, "紧急联系人", "", "请输入","取消", "保存",null) {
                     tvShopManageContactName.text = it
                     showDialogLoading()
-                    val request = ShopManageRequest()
+                    val request = ApplyShopInfo()
                     val loginInfo = UserManager.getLoginInfo()
                     loginInfo?.let { info-> request.shopId = info.shopId }
                     request.linkName = it
@@ -173,7 +173,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
                 DialogUtils.showInputDialog(this, "客服电话", "", "请输入","取消", "保存",null) {
                     tvShopManageServicePhone.text = it
                     showDialogLoading()
-                    val request = ShopManageRequest()
+                    val request = ApplyShopInfo()
                     val loginInfo = UserManager.getLoginInfo()
                     loginInfo?.let { info-> request.shopId = info.shopId }
                     request.linkPhone = it
@@ -188,7 +188,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun getUploadImageUrl(event: ShopManageImageEvent) {
-        val request = ShopManageRequest()
+        val request = ApplyShopInfo()
         val loginInfo = UserManager.getLoginInfo()
         loginInfo?.let { info-> request.shopId = info.shopId }
         request.licenceImg = event.remoteUrl

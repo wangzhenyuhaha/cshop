@@ -9,7 +9,9 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.VipType
@@ -78,6 +80,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
             }
         }
         setUserInfo();
+        mPresenter?.loadWalletData();
     }
 
     fun setUserInfo() {
@@ -110,19 +113,13 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         }
     }
 
-    override fun onApplySuccess() {
-        val api = WXAPIFactory.createWXAPI(this, "你在微信开放平台创建的app的APPID");
-        if(api.isWXAppInstalled()) {
-            val payReq = PayReq()
-//            payReq.appId = weiXinPay.getAppid()
-//            payReq.partnerId = weiXinPay.getPartnerid()
-//            payReq.prepayId = weiXinPay.getPrepayid()
-//            payReq.packageValue = weiXinPay.getPackage_exten()
-//            payReq.nonceStr = weiXinPay.getNoncestr()
-//            payReq.timeStamp = weiXinPay.getTimestamp()
-//            payReq.sign = weiXinPay.getSign();
-//            api.sendReq(payReq);
-
+    override fun onApplySuccess(item : WxPayReqVo) {
+        val api = WXAPIFactory.createWXAPI(this, IWXConstant.APP_ID);
+        if(api?.isWXAppInstalled ==true) {
+            val payReq = item?.getPayData();
+            if(payReq != null) {
+                api.sendReq(payReq);
+            }
         } else {
             showToast("请安装微信支付");
         }

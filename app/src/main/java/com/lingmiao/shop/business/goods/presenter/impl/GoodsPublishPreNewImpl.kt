@@ -47,24 +47,36 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         return shopId;
     }
 
+    /**
+     * 配送方式
+     */
     override fun showDeliveryTypePop(str: String?) {
         mGoodsDeliveryPreImpl?.showTypePop(context, str) { name, it ->
             view?.onUpdateSpeed(it?.value, name);
         }
     }
 
+    /**
+     * 配送模工
+     */
     override fun showDeliveryModelPop(str: String?) {
         mGoodsDeliveryPreImpl?.showModelPop(context, str) { name, it ->
             view?.onUpdateModel(it?.value, name);
         }
     }
 
+    /**
+     * 重量
+     */
     override fun showGoodsWeightPop(id: String?) {
         mGoodsUnitPreImpl?.showWeightPop(context, id) { name, it ->
             view?.onUpdateGoodsWeight(it?.value, name);
         }
     }
 
+    /**
+     * 单位
+     */
     override fun showGoodsUnitPop(id: String?) {
         mGoodsUnitPreImpl?.showUnitPop(context, id) { name, it ->
             view?.onUpdateGoodsUnit(it?.value, name);
@@ -89,6 +101,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
+    /**
+     * 发布
+     */
     override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean) {
         loadSpecKeyList(goodsVO) {
             try {
@@ -99,7 +114,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                     checkNotBlack(goodsVO.availableDate) { "请设置使用时间" }
                     checkNotBlack(goodsVO.availableDate) { "请设置有效期" }
                 } else {
-                    checkBoolean(goodsVO.isSelectDeliveryWay()) { "请选择配送方式" }
+//                    checkBoolean(goodsVO.isSelectDeliveryWay()) { "请选择配送方式" }
                     if (isMutilSpec) {
                         checkBoolean(goodsVO.skuList.isNotEmpty()) { "请添加商品规格" }
                     } else {

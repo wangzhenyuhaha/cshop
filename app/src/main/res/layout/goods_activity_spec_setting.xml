@@ -21,13 +21,6 @@
             android:background="#00000000"
             app:elevation="0dp">
 
-            <com.lingmiao.shop.business.goods.view.SpecContainerLayout
-                android:id="@+id/specContainerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
-
             <com.james.common.view.ILinearLayout
                 android:id="@+id/addSpecLl"
                 android:layout_width="match_parent"
@@ -49,6 +42,14 @@
                     android:textColor="@color/color_3870EA"
                     android:textSize="@dimen/dimen_13" />
             </com.james.common.view.ILinearLayout>
+
+            <com.lingmiao.shop.business.goods.view.SpecContainerLayout
+                android:id="@+id/specContainerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
+
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView

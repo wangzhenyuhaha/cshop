@@ -13,6 +13,8 @@ import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsInfoAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsInfoVo
+import com.lingmiao.shop.business.goods.api.bean.GoodsParamVo
+import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
 import com.lingmiao.shop.business.goods.presenter.GoodsDetailPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsDetailPreImpl
 import kotlinx.android.synthetic.main.goods_activity_goods_detail.*
@@ -25,18 +27,27 @@ Desc        :
 class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View {
 
     private lateinit var mInfoAdapter : GoodsInfoAdapter;
-    private lateinit var mInfoList : MutableList<GoodsInfoVo>;
+    private lateinit var mInfoList : MutableList<GoodsParamVo>;
+
+    private var categoryId: String? = null
 
     companion object {
         const val KEY_DESC = "KEY_DESC"
+        const val KEY_CATEGORY_ID = "KEY_CATEGORY_ID"
 
-        fun openActivity(context: Context, requestCode: Int, content: String?) {
+        fun openActivity(context: Context, requestCode: Int, content: String?, goodsVO: GoodsVOWrapper) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsDetailActivity::class.java)
                 intent.putExtra(KEY_DESC, content)
+                intent.putExtra(KEY_CATEGORY_ID, goodsVO.categoryId);
                 context.startActivityForResult(intent, requestCode)
             }
         }
+    }
+
+    override fun initBundles() {
+        categoryId = intent.getStringExtra(SpecSettingActivity.KEY_CATEGORY_ID)
+
     }
 
     override fun getLayoutId(): Int {
@@ -56,30 +67,30 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
 
 
         mInfoList = arrayListOf();
-        mInfoList.add(GoodsInfoVo());
+//        mInfoList.add(GoodsParamVo());
 
-        mInfoAdapter = GoodsInfoAdapter().apply {
+        mInfoAdapter = GoodsInfoAdapter(mInfoList).apply {
             setOnItemChildClickListener { adapter, view, position ->
-                val item = adapter.data[position] as GoodsInfoVo;
+                val item = adapter.data[position] as GoodsParamVo;
                 if(view?.id == R.id.infoDeleteTv && position != 0) {
                     mInfoList.remove(item);
                     mInfoAdapter.replaceData(mInfoList);
                 }
             }
             setOnItemClickListener { adapter, view, position ->
-                val item = adapter.data[position] as GoodsInfoVo;
+                val item = adapter.data[position] as GoodsParamVo;
             }
         }
         goodsInfoRv.apply {
             layoutManager = initLayoutManager()
             adapter = mInfoAdapter;
         }
-        mInfoAdapter.replaceData(mInfoList);
+       // mInfoAdapter.replaceData(mInfoList);
 
 
         goodsInfoAddTv.setOnClickListener {
-            mInfoList.add(GoodsInfoVo());
-            mInfoAdapter.replaceData(mInfoList);
+//            mInfoList.add(GoodsParamVo());
+//            mInfoAdapter.replaceData(mInfoList);
         }
 
         goodsContentHintTv.singleClick {
@@ -98,6 +109,7 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
             setResult(Activity.RESULT_OK);
             finish();
         }
+        mPresenter?.loadInfoByCId(categoryId!!)
     }
 
     private fun initLayoutManager(): RecyclerView.LayoutManager {
@@ -113,6 +125,12 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
             }
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onLoadedInfoList(list: List<GoodsParamVo>) {
+        mInfoList.clear();
+        mInfoList.addAll(list);
+        mInfoAdapter.replaceData(mInfoList);
     }
 
 }

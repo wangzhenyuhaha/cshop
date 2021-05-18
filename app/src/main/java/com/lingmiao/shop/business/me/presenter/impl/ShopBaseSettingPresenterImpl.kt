@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.me.presenter.impl
 import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.lingmiao.shop.business.me.api.MeRepository
@@ -24,7 +25,7 @@ class ShopBaseSettingPresenterImpl (context: Context,val view : ShopBaseSettingP
         ShopManagePresenterImpl(context, view);
     }
 
-    override fun updateShopSlogan(bean:ShopManageRequest) {
+    override fun updateShopSlogan(bean:ApplyShopInfo) {
         mCoroutine.launch {
             val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
             if (resp.isSuccess) {
@@ -35,7 +36,7 @@ class ShopBaseSettingPresenterImpl (context: Context,val view : ShopBaseSettingP
         }
     }
 
-    override fun updateShopNotice(bean:ShopManageRequest) {
+    override fun updateShopNotice(bean: ApplyShopInfo) {
         mCoroutine.launch {
             val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
             if (resp.isSuccess) {
@@ -50,7 +51,7 @@ class ShopBaseSettingPresenterImpl (context: Context,val view : ShopBaseSettingP
         shopPresenter?.requestShopManageData();
     }
 
-    override fun updateShopManage(bean: ShopManageRequest) {
+    override fun updateShopManage(bean: ApplyShopInfo) {
         shopPresenter?.updateShopManage(bean);
     }
 

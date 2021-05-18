@@ -27,7 +27,17 @@ class WorkTimeVo : ItemData {
         return itemHint;
     }
 
+    fun getFullDayType() : Int {
+        return if(isFullDay(itemValue?.toInt()?:0)) 1 else 0;
+    }
+
     companion object {
+
+        val DEFAULT_SECOND_DAY_BASE_VALUE = 100;
+
+        fun isFullDay(value : Int) : Boolean {
+            return value > DEFAULT_SECOND_DAY_BASE_VALUE;
+        }
 
         fun getList(value : Int): List<WorkTimeVo> {
             val data = mutableListOf<WorkTimeVo>()
@@ -37,7 +47,7 @@ class WorkTimeVo : ItemData {
                 position ++;
                 item = WorkTimeVo();
                 item.itemName = String.format("%s%s:00", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
-                item.itemValue = String.format("%s", value * 100 + position);
+                item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
                 data.add(item);
 
 
@@ -45,7 +55,7 @@ class WorkTimeVo : ItemData {
                     position ++;
                     item = WorkTimeVo();
                     item.itemName = String.format("%s%s:30",if(value == 1) "第二天" else "",  if (index > 9) index else "0" + index);
-                    item.itemValue = String.format("%s", value * 100 + position);
+                    item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
                     data.add(item);
                 }
             }

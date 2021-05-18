@@ -90,7 +90,7 @@ class GoodsMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
         }
         // 分销
         goodsRebateTv = contentView.findViewById<TextView>(R.id.goodsRebateTv).apply {
-            show(flags and TYPE_REBATE != 0);
+            //show(flags and TYPE_REBATE != 0);
             setOnClickListener {
                 listener?.invoke(TYPE_REBATE)
                 dismiss()

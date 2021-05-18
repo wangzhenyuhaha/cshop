@@ -15,15 +15,13 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
 //            view.showPageLoading();
             val resp = WalletRepository.getWalletIndexInfo();
 
-            handleResponse(resp) {
-                if(resp.isSuccess()) {
-                    view.onLoadWalletDataSuccess(resp?.data?.data);
-                } else {
-                    view.onLoadWalletDataError(resp.code);
-                }
-//                view.hidePageLoading();
-                view.hideDialogLoading()
+            if(resp.isSuccess()) {
+                view.onLoadWalletDataSuccess(resp?.data?.data);
+            } else {
+                view.onLoadWalletDataError(resp.code);
             }
+//                view.hidePageLoading();
+            view.hideDialogLoading()
         }
     }
 }

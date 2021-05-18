@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.me.presenter
 
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
+import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.VipType
 import com.lingmiao.shop.business.wallet.presenter.MyWalletPresenter
@@ -16,6 +17,6 @@ interface ApplyVipPresenter : BasePresenter, MyWalletPresenter {
     interface View : BaseView, MyWalletPresenter.View {
         fun onSetVipPriceList(list : List<VipType>?);
         fun onSetVipInfo(item : IdentityVo?);
-        fun onApplySuccess();
+        fun onApplySuccess(value : WxPayReqVo);
     }
 }

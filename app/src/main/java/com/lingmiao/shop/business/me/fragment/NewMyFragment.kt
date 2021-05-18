@@ -59,6 +59,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         smartRefreshLayout.setOnRefreshListener {
             mPresenter?.getMyData()
             mPresenter?.getIdentity();
+            mPresenter?.loadWalletData();
         }
 
         rlMyPersonInfo.setOnClickListener(this)
@@ -75,6 +76,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         mPresenter?.onCreate()
         mPresenter?.getMyData()
         mPresenter?.getIdentity();
+        mPresenter?.loadWalletData();
     }
 
     override fun onClick(v: View?) {

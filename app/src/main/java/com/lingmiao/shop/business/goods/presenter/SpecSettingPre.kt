@@ -22,11 +22,15 @@ interface SpecSettingPre: BasePresenter {
      */
     fun loadSpecKeyList(goodsId: String?)
 
+    fun loadSpecListByCid(cid : String?);
+
     interface SpceSettingView : BaseView {
         fun onAddSpecValueSuccess(specKeyID: String, spceValueList: List<SpecValueVO>)
 
         fun onLoadSkuListSuccess(list: List<GoodsSkuVOWrapper>)
 
         fun onLoadCacheSkuListSuccess(skuCache: GoodsSkuCacheVO)
+
+        fun onLoadedSpecListByCid(list : List<SpecKeyVO>);
     }
 }

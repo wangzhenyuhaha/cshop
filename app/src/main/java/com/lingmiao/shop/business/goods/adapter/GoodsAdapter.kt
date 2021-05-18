@@ -64,8 +64,8 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
                 helper.setText(R.id.goodsSourceIv, "库")
             }
 
-            helper.setGone(R.id.goodsSoldOutTv, helper.adapterPosition == 0);
-            helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
+            //helper.setGone(R.id.goodsSoldOutTv, helper.adapterPosition == 0);
+            //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
 //            helper.setText(R.id.goodsOwnerTv, String.format("[来源：%s]", supplierName));
 //            helper.setGone(R.id.goodsOwnerTv, supplierName?.length?:0 > 0);
         }

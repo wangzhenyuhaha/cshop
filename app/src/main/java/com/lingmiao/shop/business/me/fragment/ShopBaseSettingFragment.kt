@@ -1,11 +1,10 @@
 package com.lingmiao.shop.business.me.fragment
 
 import android.content.Intent
+import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
-import com.amap.api.mapcore.util.it
 import com.amap.api.maps.model.LatLng
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.BaseFragment
 import com.james.common.netcore.coroutine.CoroutineSupport
@@ -20,7 +19,6 @@ import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
 import com.lingmiao.shop.business.me.ShopQualificationActivity
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
-import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.lingmiao.shop.business.me.presenter.ShopBaseSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ShopBaseSettingPresenterImpl
 import com.lingmiao.shop.business.photo.GlideEngine
@@ -42,20 +40,29 @@ Desc        :
  **/
 class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBaseSettingPresenter.View {
 
+    private var shopManage: ApplyShopInfo?=null
+
+    private var licenceImg:String?=null
+
+    private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
+
     companion object {
-        fun newInstance(): ShopBaseSettingFragment {
-            return ShopBaseSettingFragment()
+        fun newInstance(item : ApplyShopInfo?): ShopBaseSettingFragment {
+            return ShopBaseSettingFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("item", item)
+                }
+            }
         }
+    }
+
+    override fun initBundles() {
+        shopManage = arguments?.getSerializable("item") as ApplyShopInfo;
     }
 
     override fun useEventBus(): Boolean {
         return true
     }
-
-    private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
-
-    private var shopManage: ApplyShopInfo?=null
-    private var licenceImg:String?=null
 
     override fun getLayoutId(): Int? {
         return R.layout.me_fragment_shop_base_setting;
@@ -151,7 +158,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             DialogUtils.showInputDialog(activity!!, "店铺名称", "", "请输入", shopManage?.shopName,"取消", "保存",null) {
                 tvShopManageName.text = it
                 showDialogLoading()
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopName = it
@@ -165,7 +172,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 tvShopManageSlogan.text = it;
 
                 showDialogLoading()
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopSlogan = it
@@ -182,7 +189,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 tvShopManageRemark.text = it;
 
                 showDialogLoading()
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopNotice = it
@@ -199,7 +206,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             DialogUtils.showMultInputDialog(activity!!, "店铺简介", "", "请简单介绍你的店铺~","取消", "保存",null) {
                 tvShopManageDesc.text = it
                 showDialogLoading()
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopDesc = it
@@ -220,7 +227,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             DialogUtils.showInputDialog(activity!!, "紧急联系人", "", "请输入",shopManage?.linkName,"取消", "保存",null) {
                 tvShopManageContactName.text = it
                 showDialogLoading()
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.linkName = it
@@ -229,10 +236,10 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         }
         rlShopManageServicePhone.setOnClickListener{
             //客服电话
-            DialogUtils.showInputDialog(activity!!, "客服电话", "", "请输入", shopManage?.linkPhone,"取消", "保存",null) {
+            DialogUtils.showInputDialog(activity!!, "紧急联系人电话", "", "请输入", shopManage?.linkPhone,"取消", "保存",null) {
                 tvShopManageServicePhone.text = it
                 showDialogLoading()
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.linkPhone = it
@@ -243,9 +250,12 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopSettingSubmit.singleClick {
             // mPresenter?.updateShopManage(request);
         }
-        showPageLoading()
-        mPresenter?.requestShopManageData()
-
+        if(shopManage != null) {
+            onShopManageSuccess(shopManage!!);
+        } else {
+            showPageLoading()
+            mPresenter?.requestShopManageData()
+        }
     }
 
     private fun showAndUploadImage(localMedia: LocalMedia?) {
@@ -256,7 +266,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
             if (uploadFile.isSuccess) {
                 LogUtils.d(uploadFile.data.url)
-                val request = ShopManageRequest()
+                val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let {
                     request.shopId = it.shopId
@@ -312,7 +322,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun getUploadImageUrl(event: ShopManageImageEvent) {
-        val request = ShopManageRequest()
+        val request = ApplyShopInfo()
         val loginInfo = UserManager.getLoginInfo()
         loginInfo?.let { info-> request.shopId = info.shopId }
         request.licenceImg = event.remoteUrl
@@ -331,7 +341,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         shopManage?.shopAdd = event?.adInfo?.address;
 
         showDialogLoading()
-        val request = ShopManageRequest()
+        val request = ApplyShopInfo()
         val loginInfo = UserManager.getLoginInfo()
         loginInfo?.let { info-> request.shopId = info.shopId }
         request.shopLat = addressLatLng?.latitude

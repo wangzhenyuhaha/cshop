@@ -21,3 +21,6 @@ fun String?.parseString(): Int {
     }
 }
 
+fun toInt(str: String) : Int {
+    return str.toInt();
+}

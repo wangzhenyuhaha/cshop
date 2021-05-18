@@ -12,6 +12,7 @@ import com.lingmiao.shop.business.goods.presenter.GoodsBatchPre
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
+import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
@@ -60,7 +61,7 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
     }
 
     override fun clickItemView(item: GoodsVO?, position: Int) {
-        GoodsPublishActivity.openActivity(context, item?.goodsId)
+        GoodsPublishNewActivity.openActivity(context, item?.goodsId)
     }
 
 }

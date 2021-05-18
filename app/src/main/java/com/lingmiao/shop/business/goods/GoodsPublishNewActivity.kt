@@ -16,10 +16,6 @@ import kotlinx.android.synthetic.main.goods_activity_publish_new.*
 import kotlinx.android.synthetic.main.goods_include_publish_section1.*
 import kotlinx.android.synthetic.main.goods_include_publish_section2.*
 import kotlinx.android.synthetic.main.goods_include_publish_section3_new.*
-import kotlinx.android.synthetic.main.goods_include_publish_section3_new.goodsCostEdt
-import kotlinx.android.synthetic.main.goods_include_publish_section3_new.goodsPriceEdt
-import kotlinx.android.synthetic.main.goods_include_publish_section3_new.goodsQuantityEdt
-import kotlinx.android.synthetic.main.goods_include_publish_section3_new.marketPriceEdt
 import kotlinx.android.synthetic.main.goods_include_publish_section4_new.*
 import kotlinx.android.synthetic.main.goods_include_publish_section5.*
 import kotlinx.android.synthetic.main.goods_include_publish_section6.*
@@ -90,7 +86,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         initSection4View()
         initSection5678View()
         initBottomView()
-        initGoodsUnitView();
         mPresenter.loadGoodsInfo(goodsId)
     }
 
@@ -314,15 +309,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
     }
 
-    private fun initGoodsUnitView() {
-        goodsWeightTv.singleClick {
-            mPresenter?.showGoodsWeightPop(goodsVO.goodsWeight)
-        }
-        goodsUnitTv.singleClick {
-            mPresenter?.showGoodsUnitPop(goodsVO.goodsUnit)
-        }
-    }
-
     private fun initSection5678View() {
         goodsGroupTv.singleClick {
             mPresenter.showGroupPop()
@@ -332,7 +318,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
         goodsDetailTv.singleClick {
 //            GoodsDescH5Activity.openActivity(this, REQUEST_CODE_DESC, goodsVO.intro)
-            GoodsDetailActivity.openActivity(this, REQUEST_CODE_DESC, "");
+            GoodsDetailActivity.openActivity(this, REQUEST_CODE_DESC, "", goodsVO);
         }
     }
 
@@ -416,12 +402,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     override fun onUpdateGoodsWeight(id: String?, name: String?) {
         goodsVO.goodsWeight = id;
-        goodsWeightTv.text = name;
+//        goodsWeightTv.text = name;
     }
 
     override fun onUpdateGoodsUnit(id: String?, name: String?) {
         goodsVO.goodsUnit = id;
-        goodsUnitTv.text = name;
+//        goodsUnitTv.text = name;
     }
 
 }

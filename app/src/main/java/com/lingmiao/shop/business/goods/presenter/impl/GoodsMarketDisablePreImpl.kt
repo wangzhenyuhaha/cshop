@@ -11,6 +11,7 @@ import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
+import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
@@ -74,7 +75,7 @@ class GoodsMarketDisablePreImpl(override var context: Context,override var view:
     }
 
     override fun clickItemView(item: GoodsVO?, position: Int) {
-        GoodsPublishActivity.openActivity(context, item?.goodsId)
+        GoodsPublishNewActivity.openActivity(context, item?.goodsId)
     }
 
 }

@@ -6,6 +6,7 @@ import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import kotlinx.coroutines.launch
 
 class ShopManagePresenterImpl(context: Context, private var view: ShopManagePresenter.View) :
@@ -22,7 +23,7 @@ class ShopManagePresenterImpl(context: Context, private var view: ShopManagePres
 				}
 	}
 
-	override fun updateShopManage(bean: ShopManageRequest) {
+	override fun updateShopManage(bean: ApplyShopInfo) {
 		mCoroutine.launch {
 			val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
 			if (resp.isSuccess) {

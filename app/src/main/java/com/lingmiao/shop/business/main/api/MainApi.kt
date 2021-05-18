@@ -4,6 +4,7 @@ import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.VipType
 import com.lingmiao.shop.business.wallet.bean.DataVO
@@ -59,7 +60,7 @@ interface MainApi {
     // 发起支付
     @GET("seller/shops/identity/{id}")
     @WithHiResponse
-    fun getPayInfo(@Path("id") id : String) : Call<String>;
+    fun getPayInfo(@Path("id") id : String) : Call<WxPayReqVo>;
 
     //    检测升级
     @GET("seller/app/upgrade")

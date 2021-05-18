@@ -29,6 +29,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/goodsPriceTv"/>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/goodsSoldOutTv"
         android:textSize="@dimen/sp_11"
         android:textColor="@color/white"
@@ -181,6 +182,7 @@
     <com.james.common.view.IRelativeLayout
         android:layout_width="wrap_content"
         android:id="@+id/goodsDiscountC"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginEnd="@dimen/dimen_14"
@@ -204,6 +206,7 @@
     </com.james.common.view.IRelativeLayout>
 
     <com.james.common.view.IRelativeLayout
+        android:visibility="gone"
         android:id="@+id/goodsSourceC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

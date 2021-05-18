@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.fragment.DeliveryInTimeFragment
 import com.lingmiao.shop.business.me.presenter.ManagerSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ManagerSettingPresenterImpl
@@ -18,7 +19,7 @@ Desc        :
  **/
 class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), ManagerSettingPresenter.View  {
 
-    private var mTabTitles = arrayOf("即时配送", "预约配送")
+    private var mTabTitles = arrayOf("即时配送")//, "预约配送"
 
     override fun getLayoutId(): Int {
         return R.layout.sales_activity_stats;
@@ -46,7 +47,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance())
-        fragments.add(DeliveryInTimeFragment.newInstance())
+//        fragments.add(DeliveryInTimeFragment.newInstance())
 
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)
@@ -62,6 +63,10 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
             }
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+    override fun onLoadedShopInfo(bean: ApplyShopInfo) {
+
     }
 
 }

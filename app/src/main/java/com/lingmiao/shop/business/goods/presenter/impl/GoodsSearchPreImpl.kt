@@ -11,6 +11,7 @@ import com.lingmiao.shop.business.goods.presenter.GoodsSearchPre
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
+import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import kotlinx.coroutines.launch
 
 /**
@@ -82,7 +83,7 @@ class GoodsSearchPreImpl(var context: Context, var view: GoodsSearchPre.StatusVi
     }
 
     override fun clickItemView(item: GoodsVO?, position: Int) {
-        GoodsPublishActivity.openActivity(context, item?.goodsId)
+        GoodsPublishNewActivity.openActivity(context, item?.goodsId)
     }
 
     override fun clickSearchMenuView(target: View) {

@@ -15,6 +15,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.check
+import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import kotlinx.coroutines.launch
 
 /**
@@ -36,7 +37,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
 
     fun clickEditGoods(context: Context, goodsVO: GoodsVO?) {
         // 进入商品编辑页面
-        GoodsPublishActivity.openActivity(context, goodsVO?.goodsId)
+        GoodsPublishNewActivity.openActivity(context, goodsVO?.goodsId)
     }
 
     // ---------------------------- 商品下架 ------------------------------

@@ -73,6 +73,25 @@ class SpecSettingPreImpl(val view: SpecSettingPre.SpceSettingView) : BasePreImpl
         }
     }
 
+    override fun loadSpecListByCid(cid: String?) {
+        if (cid.isNullOrBlank()) {
+            return
+        }
+        mCoroutine.launch {
+            val resp = GoodsRepository.loadSpecKey(cid)
+            if (resp.isSuccess) {
+                view.onLoadedSpecListByCid(resp.data);
+//                val list = mutableListOf<MultiItemEntity>()
+//                restoreSelectStatus(resp.data, specList)
+//                list.addAll(resp.data)
+//                list.add(GoodsSpecKeyAddVO())
+//                view.onLoadSuccess(list)
+            } else {
+                //ToastUtils.showShort("网络异常，请重试")
+            }
+        }
+    }
+
     /**
      * 笛卡尔乘积算法
      */

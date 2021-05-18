@@ -65,98 +65,133 @@
 
         <View style="@style/common_divider" />
 
-        <!--  货号/型号、重量  -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_50"
-            android:orientation="horizontal">
 
-            <LinearLayout style="@style/goods_spec_sub_container">
-
-                <TextView
-                    style="@style/goods_spce_item_left"
-                    android:text="重量/单位" />
-
-                <com.james.common.view.ITextView
-                    android:id="@+id/goodsWeightEdt"
-                    style="@style/goods_spce_item_left"
-                    android:hint="请输入重量"
-                    android:layout_weight="1"
-                    android:layout_marginRight="@dimen/dimen_5"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    app:ivBgColor="#fff"
-                    android:padding="@dimen/dimen_5"
-                    app:ivBorderWidth="1dp"
-                    app:ivBorderColor="@color/divide_line"
-                    app:ivRadius="4dp" />
-
-
-                <com.james.common.view.ITextView
-                    android:id="@+id/goodsWeightTv"
-                    style="@style/goods_spce_item_left"
-                    android:layout_width="60dp"
-                    android:drawableRight="@mipmap/goods_blue_arrow_up"
-                    android:text="KG"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    app:ivBgColor="#fff"
-                    android:padding="@dimen/dimen_5"
-                    app:ivBorderWidth="1dp"
-                    app:ivBorderColor="@color/divide_line"
-                    app:ivRadius="4dp" />
-
-                <TextView
-                    style="@style/goods_spce_item_left"
-                    android:paddingRight="@dimen/dimen_5"
-                    android:paddingLeft="@dimen/dimen_5"
-                    android:text="/" />
-
-                <com.james.common.view.ITextView
-                    android:id="@+id/goodsUnitTv"
-                    style="@style/goods_spce_item_left"
-                    android:layout_width="60dp"
-                    android:drawableRight="@mipmap/goods_blue_arrow_up"
-                    android:text="个"
-                    android:gravity="center"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/color_666666"
-                    android:textSize="13sp"
-                    app:ivBgColor="#fff"
-                    android:padding="@dimen/dimen_5"
-                    app:ivBorderWidth="1dp"
-                    app:ivBorderColor="@color/divide_line"
-                    app:ivRadius="4dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/section4Row45Ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        </LinearLayout>
-
-<!--        <View style="@style/common_divider" />-->
-
-
-        <!--  SKU编码  -->
-        <LinearLayout
+        <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="gone">
+            app:ivBgColor="@color/color_ffffff"
+            app:ivRadius="@dimen/dimen_5">
 
+            <!--  商品价格、市场价格  -->
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left_mark"
+                        android:text="商品价格" />
+
+                    <EditText
+                        android:id="@+id/goodsPriceEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:hint="售价，请输入"
+                        android:paddingEnd="@dimen/dimen_5" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:text="市场价格" />
+
+                    <EditText
+                        android:id="@+id/marketPriceEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:hint="划线价，请输入" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/common_divider" />
+
+            <!--  库存、成本  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left_mark"
+                        android:text="库存商品" />
+
+                    <EditText
+                        android:id="@+id/goodsQuantityEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:hint="请输入库存数"
+                        android:paddingEnd="@dimen/dimen_5" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:text="成本价格" />
+
+                    <EditText
+                        android:id="@+id/goodsCostEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:hint="进货价，请输入" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vSpecNo"
+                style="@style/common_divider" />
+
+            <!--  货号/型号、重量  -->
+            <LinearLayout
+                android:id="@+id/llSpecNo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:text="货号/型号" />
+
+                    <EditText
+                        android:id="@+id/goodsNoEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:hint="请输入货号/型号"
+                        android:inputType="text"
+                        android:paddingEnd="@dimen/dimen_5" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:text="商品重量" />
+
+                    <EditText
+                        android:id="@+id/goodsWeightEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:hint="单件重量" />
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:paddingLeft="@dimen/dimen_10"
+                        android:text="KG" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vSpecSku"
+                style="@style/common_divider" />
+
+            <!--  SKU编码  -->
+            <LinearLayout
+                android:id="@+id/llSpecSku"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
                 android:orientation="horizontal">
@@ -173,11 +208,12 @@
                     android:inputType="text" />
             </LinearLayout>
 
-            <View style="@style/common_divider" />
-        </LinearLayout>
+        </com.james.common.view.ILinearLayout>
+
     </LinearLayout>
 
     <View style="@style/common_divider" />
+
 
     <LinearLayout
         android:id="@+id/section4Row6Ll"

@@ -8,12 +8,25 @@ data class ShopManageRequest(
     var linkPhone: String? = null,
     @SerializedName("link_name")
     var linkName: String? = null,
-//    @SerializedName("open_end_time")
-//    var openEndTime: String?,
-//    @SerializedName("open_start_time")
-//    var openStartTime: String?,
-//    @SerializedName("open_time_type")
-//    var openTimeType: Int?,
+    // 未支付自动取消订单分钟数
+    @SerializedName("unpaid_cancel_orders_time")
+    var unpaidCancelOrderTime : Int? = null,
+    // 已接单自动取消订单分钟数
+    @SerializedName("cancel_order_time")
+    var cancelOrderTime : Int? = null,
+    // 自动接单
+    @SerializedName("auto_accept")
+    var autoAccept : Boolean? = null,
+    // 客服电话
+    @SerializedName("company_phone")
+    var companyPhone: String? = null,
+    // 营业时间
+    @SerializedName("open_end_time")
+    var openEndTime: String? = null,
+    @SerializedName("open_start_time")
+    var openStartTime: String?= null,
+    @SerializedName("open_time_type")
+    var openTimeType: Int? = null,
 //    @SerializedName("ship_type")
 //    var shipType: String?,
     @SerializedName("shop_add")

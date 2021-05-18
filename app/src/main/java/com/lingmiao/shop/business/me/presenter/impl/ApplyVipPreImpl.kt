@@ -37,7 +37,7 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
             view?.showDialogLoading()
             val identity = MainRepository.apiService.getPayInfo(id).awaitHiResponse()
             handleResponse(identity) {
-                //view.onSetVipInfo(identity?.data?.data);
+                view?.onApplySuccess(identity?.data)
             }
             view?.hideDialogLoading()
         }

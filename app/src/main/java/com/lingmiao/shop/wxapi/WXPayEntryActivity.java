@@ -22,7 +22,7 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
  * Auther      : Fox
  * Desc        :
  **/
-class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
+public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     private IWXAPI api;
 

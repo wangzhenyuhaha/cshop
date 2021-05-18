@@ -28,7 +28,8 @@
             <!-- 商品规格,虚拟商品的套餐 -->
             <include layout="@layout/goods_include_publish_section4_new" />
 
-            <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            <com.james.common.view.ILinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 style="@style/goods_publish_container"
                 android:layout_height="wrap_content"
@@ -108,56 +109,57 @@
                 android:textColor="@color/color_3870EA"
                 android:textSize="@dimen/dimen_13" />
 
+
+            <LinearLayout
+                android:id="@+id/bottomFl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/color_EEEEEE"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15">
+
+                <TextView
+                    android:id="@+id/previewTv"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_38"
+                    android:layout_marginStart="@dimen/dimen_15"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_goods_pop_btn"
+                    android:gravity="center"
+                    android:text="预览"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dimen_13" />
+
+                <TextView
+                    android:id="@+id/saveTv"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_38"
+                    android:layout_marginStart="@dimen/dimen_15"
+                    android:layout_marginEnd="@dimen/dimen_15"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_goods_pop_btn"
+                    android:gravity="center"
+                    android:text="仅保存"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dimen_13" />
+
+                <TextView
+                    android:id="@+id/confirmTv"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_38"
+                    android:layout_marginEnd="@dimen/dimen_15"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_goods_pop_btn"
+                    android:gravity="center"
+                    android:text="上架"
+                    android:textColor="@color/color_ffffff"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:id="@+id/bottomFl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_EEEEEE"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_15"
-        android:paddingBottom="@dimen/dimen_15">
-
-        <TextView
-            android:id="@+id/previewTv"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_38"
-            android:layout_marginStart="@dimen/dimen_15"
-            android:layout_weight="1"
-            android:background="@drawable/shape_goods_pop_btn"
-            android:gravity="center"
-            android:text="预览"
-            android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dimen_13" />
-
-        <TextView
-            android:id="@+id/saveTv"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_38"
-            android:layout_marginStart="@dimen/dimen_15"
-            android:layout_marginEnd="@dimen/dimen_15"
-            android:layout_weight="1"
-            android:background="@drawable/shape_goods_pop_btn"
-            android:gravity="center"
-            android:text="仅保存"
-            android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dimen_13" />
-
-        <TextView
-            android:id="@+id/confirmTv"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_38"
-            android:layout_marginEnd="@dimen/dimen_15"
-            android:layout_weight="1"
-            android:background="@drawable/shape_goods_pop_btn"
-            android:gravity="center"
-            android:text="上架"
-            android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dimen_13" />
-
-    </LinearLayout>
 
 </RelativeLayout>

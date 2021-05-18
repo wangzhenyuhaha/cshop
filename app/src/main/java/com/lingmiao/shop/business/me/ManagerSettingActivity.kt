@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.fragment.ShopBaseSettingFragment
 import com.lingmiao.shop.business.me.fragment.ShopOperateSettingFragment
 import com.lingmiao.shop.business.me.presenter.ManagerSettingPresenter
@@ -35,17 +36,17 @@ class ManagerSettingActivity : BaseActivity<ManagerSettingPresenter>(), ManagerS
 
         initTitle();
 
-        initTabLayout();
     }
 
     private fun initTitle() {
         mToolBarDelegate.setMidTitle(getString(R.string.manager_setting_title))
+        mPresenter?.loadShopInfo();
     }
 
-    private fun initTabLayout() {
+    override fun onLoadedShopInfo(bean: ApplyShopInfo) {
         val fragments = mutableListOf<Fragment>()
-        fragments.add(ShopBaseSettingFragment.newInstance())
-        fragments.add(ShopOperateSettingFragment.newInstance())
+        fragments.add(ShopBaseSettingFragment.newInstance(bean))
+        fragments.add(ShopOperateSettingFragment.newInstance(bean))
 
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)
