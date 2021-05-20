@@ -2,17 +2,16 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
-import com.lingmiao.shop.business.goods.GoodsPublishActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
-import com.lingmiao.shop.business.goods.fragment.GoodsFragment
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.presenter.GoodsBatchPre
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
+import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
@@ -36,7 +35,7 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
             val resp = GoodsRepository.loadAuthGoodsList(page.getPageIndex(), GoodsVO.AUTH_STATUS_WAITING)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
-                EventBus.getDefault().post(GoodsNumberEvent(GoodsFragment.GOODS_STATUS_IS_AUTH,resp.data.dataTotal));
+                EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_WAITING,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {
                 view.onLoadMoreFailed()
@@ -56,6 +55,8 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
                 clickOnRebate(goodsVO?.goodsId) {
 
                 }
+            } else if(menuType == GoodsMenuPop.TYPE_SHARE) {
+                menuPopPre.clickShareGoods(context, goodsVO)
             }
         }
     }

@@ -13,6 +13,7 @@
     android:orientation="vertical">
 
     <LinearLayout
+        android:visibility="gone"
         android:paddingLeft="@dimen/dimen_15"
         android:id="@+id/ll_model_type"
         style="@style/tools_sub_container"
@@ -54,6 +55,7 @@
 
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_model_name"
         style="@style/tools_sub_container"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -96,7 +98,6 @@
     <LinearLayout
         android:background="@color/white"
         android:layout_marginTop="@dimen/dimen_15"
-        android:paddingLeft="@dimen/dimen_15"
         android:id="@+id/ll_model_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

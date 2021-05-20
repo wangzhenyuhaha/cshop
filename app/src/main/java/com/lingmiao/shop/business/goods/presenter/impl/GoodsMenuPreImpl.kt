@@ -3,7 +3,14 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.app.Activity
 import android.content.Context
 import android.view.View
-import com.lingmiao.shop.business.goods.GoodsPublishActivity
+import com.fox7.wx.WxShare
+import com.james.common.base.BasePreImpl
+import com.james.common.base.BaseView
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.check
+import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IWXConstant
+import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuVOWrapper
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
@@ -11,12 +18,9 @@ import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.pop.GoodsMultiQuantityPop
 import com.lingmiao.shop.business.goods.pop.GoodsQuantityPop
-import com.james.common.base.BasePreImpl
-import com.james.common.base.BaseView
-import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.check
-import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.coroutines.launch
+
 
 /**
  * Author : Elson
@@ -31,6 +35,26 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
         mGoodsMenuPop = GoodsMenuPop(context, menuTypes)
         mGoodsMenuPop!!.setOnClickListener(listener)
         mGoodsMenuPop?.showPopupWindow(view)
+    }
+
+    // ---------------------------- share------------------------------
+    fun clickShareGoods(context: Context, goodsVO: GoodsVO?) {
+        //调用api接口，发送数据到微信
+        val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
+
+        var share = WxShare(context, api);
+        share.mTitle = "这是一条测试分享";
+        share.mDescription = "这里发现一个很好的网站";
+        share.shareToFriend();
+
+        share.shareWeb("http://www.c-dian.cn/", R.mipmap.ic_launcher, 50);
+        // share.miniTypeToTest();
+        // share.shareMini("wxc622abeb5c68dffa", "pages/index/index")
+
+        // share.shareImageResource(R.mipmap.ic_launcher);
+        //share.shareWeb("www.baidu.com", R.mipmap.ic_launcher);
+
+       // share.shareText("分享一个商品：" + goodsVO?.goodsName)
     }
 
     // ---------------------------- 商品编辑------------------------------

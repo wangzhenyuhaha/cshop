@@ -7,7 +7,6 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottomFl"
         android:layout_below="@+id/toolbarView"
         android:background="@color/color_EEEEEE">
 
@@ -78,20 +77,21 @@
                 android:id="@+id/section5678Ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <!-- 商品分组 -->
                 <include layout="@layout/goods_include_publish_section5" />
 
                 <!-- 商品视频 -->
-                <include layout="@layout/goods_include_publish_section6" />
+                <include layout="@layout/goods_include_publish_section6"
+                    android:visibility="gone" />
 
                 <!-- 商品详情 -->
 <!--                <include layout="@layout/goods_include_publish_section7" />-->
 
                 <!-- 商品卖点 -->
-                <include layout="@layout/goods_include_publish_section8" />
+                <include layout="@layout/goods_include_publish_section8"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView
@@ -129,6 +129,7 @@
                     android:background="@drawable/shape_goods_pop_btn"
                     android:gravity="center"
                     android:text="预览"
+                    android:visibility="gone"
                     android:textColor="@color/color_ffffff"
                     android:textSize="@dimen/dimen_13" />
 
@@ -141,11 +142,12 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_goods_pop_btn"
                     android:gravity="center"
-                    android:text="仅保存"
+                    android:text="保存并上架"
                     android:textColor="@color/color_ffffff"
                     android:textSize="@dimen/dimen_13" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/confirmTv"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_38"

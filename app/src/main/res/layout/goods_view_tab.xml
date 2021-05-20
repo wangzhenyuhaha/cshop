@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/tvTabTitle"
             android:textColor="#ff000000"
-            android:textSize="14sp" />
+            android:textSize="9sp" />
     </RelativeLayout>
 
     <View

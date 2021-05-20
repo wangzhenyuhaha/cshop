@@ -98,6 +98,8 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 ll_model_price_section.visibility = View.VISIBLE;
             }
         }
+        rv_model_price.visibility = View.GONE;
+        ll_model_price_section.visibility = View.VISIBLE;
     }
 
     private fun initRangePart() {

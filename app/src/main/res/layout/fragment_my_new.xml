@@ -353,8 +353,8 @@
             <TextView
                 android:id="@+id/tvManagerSetting"
                 style="@style/my_part_item"
-                android:drawableLeft="@mipmap/my_message_manager"
-                android:text="消息设置" />
+                android:drawableLeft="@mipmap/my_setting"
+                android:text="设置" />
 
             <View style="@style/DivideLineHorizontal" />
 
@@ -388,14 +388,6 @@
                 style="@style/my_part_item"
                 android:drawableLeft="@mipmap/my_custom_service"
                 android:text="联系客服" />
-
-            <View style="@style/DivideLineHorizontal" />
-
-            <TextView
-                android:id="@+id/rlAboutUs"
-                style="@style/my_part_item"
-                android:drawableLeft="@mipmap/my_about_us"
-                android:text="关于我们" />
 
             <View style="@style/DivideLineHorizontal" />
 

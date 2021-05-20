@@ -2,8 +2,6 @@ package com.lingmiao.shop.business.goods.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.Gravity
-import android.view.MenuItem
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lingmiao.shop.R
@@ -12,15 +10,13 @@ import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.BatchStatusEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
-import com.lingmiao.shop.business.goods.presenter.impl.GoodsAuthWaitingPreImpl
-import com.lingmiao.shop.business.goods.presenter.impl.GoodsMarketDisablePreImpl
-import com.lingmiao.shop.business.goods.presenter.impl.GoodsMarketEnablePreImpl
 import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.widget.EmptyView
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
-import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.business.goods.adapter.GoodsAdapter
+import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
+import com.lingmiao.shop.business.goods.presenter.impl.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -145,9 +141,11 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun createPresenter(): GoodsStatusPre? {
         return when (goodsStatus) {
-            GoodsFragment.GOODS_STATUS_ENABLE -> GoodsMarketEnablePreImpl(mContext, this)
-            GoodsFragment.GOODS_STATUS_IS_AUTH -> GoodsAuthWaitingPreImpl(mContext, this)
-            GoodsFragment.GOODS_STATUS_DISABLE -> GoodsMarketDisablePreImpl(mContext, this)
+            GoodsNewFragment.GOODS_STATUS_ALL -> GoodsAllPreImpl(mContext, this)
+            GoodsNewFragment.GOODS_STATUS_ENABLE -> GoodsMarketEnablePreImpl(mContext, this)
+            GoodsNewFragment.GOODS_STATUS_WAITING -> GoodsAuthWaitingPreImpl(mContext, this)
+            GoodsNewFragment.GOODS_STATUS_DISABLE -> GoodsMarketDisablePreImpl(mContext, this)
+            GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> GoodsSellOutPreImpl(mContext, this)
             else -> null
         }
     }
@@ -165,10 +163,12 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {
         mAdapter.remove(position)
+        EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
     }
 
     override fun onGoodsDisable(goodsId: String?, position: Int) {
         mAdapter.remove(position)
+        EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
     }
 
     override fun onGoodsQuantity(quantity: String?, position: Int) {
@@ -177,6 +177,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onGoodsDelete(goodsId: String?, position: Int) {
         mAdapter.remove(position)
+        EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
     }
 
     override fun onLineSuccess() {

@@ -15,11 +15,15 @@ class AboutUsActivity : BaseActivity<BasePresenter>() {
         return BasePreImpl(this)
     }
 
+    override fun useLightMode(): Boolean {
+        return false;
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.me_activity_about_us;
     }
 
     override fun initView() {
-
+        mToolBarDelegate.setMidTitle("关于我们")
     }
 }

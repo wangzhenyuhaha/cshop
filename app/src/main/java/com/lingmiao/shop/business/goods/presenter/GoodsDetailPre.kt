@@ -13,10 +13,13 @@ interface GoodsDetailPre : BasePresenter {
 
     fun loadInfoByCId(cid : String);
 
+    fun addInfo(cId : String, str : String);
+
     interface View : BaseView {
 
         fun onLoadedInfoList(list : List<GoodsParamVo>);
 
+        fun onInfoAdded(vo : GoodsParamVo);
     }
 
 }

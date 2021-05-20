@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.ImageView
@@ -43,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         initView()
         initData()
     }
-
 
 
     private fun initData() {
@@ -143,5 +143,9 @@ class MainActivity : AppCompatActivity() {
        }
     }
 
+    override fun onNewIntent(intent : Intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
 
 }

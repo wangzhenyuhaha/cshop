@@ -18,7 +18,7 @@ android {
         minSdkVersion android.minSdkVersion
         targetSdkVersion android.targetSdkVersion
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
         setProperty("archivesBaseName", "cshop_$versionName"+"_"+"$formattedDate")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -121,7 +121,7 @@ dependencies {
 
     api project(':map')
 
+    api project(':wechat')
     implementation 'com.mikhaellopez:rxanimation:1.0.0'
-    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
 
 }

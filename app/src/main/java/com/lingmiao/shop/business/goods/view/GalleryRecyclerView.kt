@@ -42,6 +42,14 @@ class GalleryRecyclerView @JvmOverloads constructor(
         mAdapter?.mMaxCout = max
     }
 
+    fun addData(it : GoodsGalleryVO?) {
+        if(it == null) {
+            return;
+        }
+        mSelectPhotos.add(it);
+        mAdapter?.notifyDataSetChanged()
+    }
+
     fun addDataList(list: List<GoodsGalleryVO>?) {
         if (list.isNullOrEmpty()) {
             return

@@ -3,11 +3,8 @@ package com.lingmiao.shop.business.me
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
-import com.allenliu.versionchecklib.v2.builder.DownloadBuilder
 import com.allenliu.versionchecklib.v2.builder.UIData
-import com.allenliu.versionchecklib.v2.callback.RequestVersionListener
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.PathUtils
 import com.blankj.utilcode.util.Utils
 import com.lingmiao.shop.BuildConfig
 import com.lingmiao.shop.R
@@ -55,6 +52,7 @@ class AccountSettingActivity : BaseActivity<AccountSettingPresenter>(),
         rlAccountUpdatePhone.setOnClickListener(this)
         rlAccountVersion.setOnClickListener(this)
         tvAccountLoginOut.setOnClickListener(this)
+        rlAboutUs.setOnClickListener(this)
     }
 
 
@@ -114,6 +112,9 @@ class AccountSettingActivity : BaseActivity<AccountSettingPresenter>(),
                     finish()
                 })
 
+            }
+            R.id.rlAboutUs -> {
+                ActivityUtils.startActivity(AboutUsActivity::class.java)
             }
         }
     }

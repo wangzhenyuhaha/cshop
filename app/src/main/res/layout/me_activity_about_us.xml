@@ -6,6 +6,7 @@
     android:background="@color/white">
 
     <ImageView
+        android:visibility="gone"
         android:id="@+id/ivAppLogo"
         android:layout_width="72dp"
         android:layout_height="72dp"
@@ -18,16 +19,33 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/tvCompanyHint"
+        android:paddingTop="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="— 公司简介 —"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_333333"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
         android:id="@+id/tvAppCompanyName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_12"
+        android:textColor="@color/color_666666"
         android:padding="@dimen/dimen_15"
         android:text="@string/company_info"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivAppLogo" />
+        app:layout_constraintTop_toBottomOf="@id/tvCompanyHint" />
 
     <TextView
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableTop="@mipmap/ic_download"

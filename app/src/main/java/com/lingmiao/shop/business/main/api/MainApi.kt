@@ -2,11 +2,9 @@ package com.lingmiao.shop.business.main.api
 
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.main.bean.*
-import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
-import com.lingmiao.shop.business.me.bean.IdentityVo
-import com.lingmiao.shop.business.me.bean.VipType
+import com.lingmiao.shop.business.me.bean.*
 import com.lingmiao.shop.business.wallet.bean.DataVO
 import retrofit2.Call
 import retrofit2.http.*
@@ -35,7 +33,7 @@ interface MainApi {
     //开店 经营类目列表
     @GET("seller/goods/category/0/children")
     @WithHiResponse
-    fun getApplyShopCategory():  Call<List<ApplyShopCategory>>
+    fun getApplyShopCategory(@Query(value = "seller_id") id: Int?=0, @Query(value = "parent_id") pId: Int?=0):  Call<List<ApplyShopCategory>>
 
     // 会员申请店铺
     @POST("seller/shops/apply")
@@ -52,15 +50,25 @@ interface MainApi {
     @WithHiResponse
     fun getShopIdentity() : Call<DataVO<IdentityVo>>;
 
+    // 保障金
+    @GET("seller/shops/identity/querySaleProductList")
+    @WithHiResponse
+    fun getShopDeposit() : Call<DataVO<IdentityVo>>;
+
     // vip充值列表
     @GET("seller/shops/identity/querySaleProductList")
     @WithHiResponse
-    fun getVipList() : Call<PageVO<VipType>>
+    fun getVipList() : Call<DataVO<ShopProductVo>>
 
     // 发起支付
     @GET("seller/shops/identity/{id}")
     @WithHiResponse
     fun getPayInfo(@Path("id") id : String) : Call<WxPayReqVo>;
+
+    // 发起充值
+    @POST("account/applyRecharge")
+    @WithHiResponse
+    fun recharge(@Body data : RechargeReqVo) : Call<DataVO<WxPayReqVo>>;
 
     //    检测升级
     @GET("seller/app/upgrade")

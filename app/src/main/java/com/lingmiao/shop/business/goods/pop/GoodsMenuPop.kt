@@ -29,6 +29,7 @@ class GoodsMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
         const val TYPE_REBATE = 0x007   //佣金
         const val TYPE_ENABLE = 0x008   //上架
         const val TYPE_DELETE = 0x010   //删除
+        const val TYPE_SHARE = 0x013    //分享
     }
 
     init {
@@ -42,6 +43,7 @@ class GoodsMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
     private var goodsEnableTv: TextView? = null
     private var goodsDeleteTv: TextView? = null
     private var goodsRebateTv: TextView? = null
+    private var goodsShareTv: TextView? = null
 
     private var listener: ((Int) -> Unit)? = null
 
@@ -101,6 +103,14 @@ class GoodsMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
             show(flags and TYPE_DELETE != 0)
             setOnClickListener {
                 listener?.invoke(TYPE_DELETE)
+                dismiss()
+            }
+        }
+        // 分享
+        goodsShareTv = contentView.findViewById<TextView>(R.id.goodsShareTv).apply {
+            show(flags and TYPE_SHARE != 0)
+            setOnClickListener {
+                listener?.invoke(TYPE_SHARE)
                 dismiss()
             }
         }

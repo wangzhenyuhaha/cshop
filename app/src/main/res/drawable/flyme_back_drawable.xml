@@ -11,11 +11,11 @@
 	</item>
 	<item android:state_checked="true">
 		<shape>
-			<solid android:color="@color/color_secondary"/>
+			<solid android:color="#00E266"/>
 			<corners android:radius="99dp"/>
 			<stroke
 				android:width="1dp"
-				android:color="@color/color_secondary"/>
+				android:color="#00E266"/>
 		</shape>
 	</item>
 </selector>

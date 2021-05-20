@@ -8,6 +8,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.fragment.DeliveryInTimeFragment
+import com.lingmiao.shop.business.me.fragment.DeliveryOfRiderFragment
 import com.lingmiao.shop.business.me.presenter.ManagerSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ManagerSettingPresenterImpl
 import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
@@ -19,7 +20,7 @@ Desc        :
  **/
 class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), ManagerSettingPresenter.View  {
 
-    private var mTabTitles = arrayOf("即时配送")//, "预约配送"
+    private var mTabTitles = arrayOf("商家配送", "骑手配送")
 
     override fun getLayoutId(): Int {
         return R.layout.sales_activity_stats;
@@ -47,7 +48,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance())
-//        fragments.add(DeliveryInTimeFragment.newInstance())
+        fragments.add(DeliveryOfRiderFragment.newInstance())
 
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)

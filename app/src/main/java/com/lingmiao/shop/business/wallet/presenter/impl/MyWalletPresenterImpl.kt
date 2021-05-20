@@ -11,7 +11,7 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
     override fun loadWalletData() {
         mCoroutine.launch {
 
-            view.showDialogLoading()
+            //view.showDialogLoading()
 //            view.showPageLoading();
             val resp = WalletRepository.getWalletIndexInfo();
 
@@ -21,7 +21,7 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
                 view.onLoadWalletDataError(resp.code);
             }
 //                view.hidePageLoading();
-            view.hideDialogLoading()
+            //view.hideDialogLoading()
         }
     }
 }

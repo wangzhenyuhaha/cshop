@@ -16,6 +16,7 @@ import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
+import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import com.lingmiao.shop.business.tools.bean.RegionVo
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -39,7 +40,7 @@ class GoodsMarketEnablePreImpl(override var context: Context,override var view: 
                 GoodsRepository.loadMarketEnableGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
-                EventBus.getDefault().post(GoodsNumberEvent(GoodsFragment.GOODS_STATUS_ENABLE,resp.data.dataTotal));
+                EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_ENABLE,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {
                 view.onLoadMoreFailed()
@@ -80,6 +81,9 @@ class GoodsMarketEnablePreImpl(override var context: Context,override var view: 
                     clickOnRebate(goodsVO?.goodsId) {
 
                     }
+                }
+                GoodsMenuPop.TYPE_SHARE -> {
+                    menuPopPre.clickShareGoods(context, goodsVO)
                 }
             }
         }

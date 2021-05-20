@@ -1,3 +1,4 @@
+include ':wechat'
 include ':map'
 include ':common', ':ucrop', ':picture_library',":library"
 include ':app'

@@ -1,47 +1,47 @@
 
+]
+java:S2184È"FCast one of the operands of this multiplication operation to a "long".(Ÿ—ƒÂ
+d
+java:S4201O"IRemove this unnecessary null check; "instanceof" returns false for nulls.(Øó–ûÿÿÿÿ
 =	java:S131Ø""Add a default case to this switch.(°¾¥ìúÿÿÿÿ
-_
-java:S4201^"IRemove this unnecessary null check; "instanceof" returns false for nulls.(«ˆã­
-S
-java:S1117é"<Rename "sequence" which hides the field declared at line 25.(ì ‡œ
-<	java:S131M""Add a default case to this switch.(ıŞ³‹ùÿÿÿÿ
 b
 java:S1192ú"KDefine a constant instead of duplicating this literal "Failed to " 3 times.(€¬¿ú
+<	java:S131M""Add a default case to this switch.(ıŞ³‹ùÿÿÿÿ
 S
 java:S1117¸"<Rename "sequence" which hides the field declared at line 25.(ì ‡œ
-W	java:S125İ"<This block of commented-out lines of code should be removed.(áíüÈùÿÿÿÿ
-f
-java:S1301M"KReplace this "switch" statement by "if" statements to increase readability.(ıŞ³‹ùÿÿÿÿ
-S
-java:S1117Ÿ"<Rename "sequence" which hides the field declared at line 25.(ì ‡œ
+J
+java:S1874è"3Remove this use of "NetworkInfo"; it is deprecated.(ì¾€Ë
+c	java:S100½"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚËl
+_
+java:S4201^"IRemove this unnecessary null check; "instanceof" returns false for nulls.(«ˆã­
+t
+java:S2293?"YReplace the type specification in this constructor call with the diamond operator ("<>").(‚àÃ“şÿÿÿÿ
 J
 java:S1874é"3Remove this use of "isConnected"; it is deprecated.(Î’·¨
 p
 java:S1192ğ"YDefine a constant instead of duplicating this literal "è·å–ç¼“å­˜è®°å½•å¤±è´¥" 3 times.(Á‘¿“
+W	java:S125İ"<This block of commented-out lines of code should be removed.(áíüÈùÿÿÿÿ
+]
+java:S2184µ"FCast one of the operands of this multiplication operation to a "long".(Ÿ—ƒÂ
 S
 java:S1117‡"<Rename "sequence" which hides the field declared at line 25.(ì ‡œ
-t
-java:S2293?"YReplace the type specification in this constructor call with the diamond operator ("<>").(‚àÃ“şÿÿÿÿ
-J
-java:S1874è"3Remove this use of "NetworkInfo"; it is deprecated.(ì¾€Ë
+j
+java:S1104"TMake sequence a static final constant or non-public and provide accessors if needed.(×ÚÁ†
+R	java:S125Ú"<This block of commented-out lines of code should be removed.(ÌÒÿà
+D
+java:S1444".Make this "public static sequence" field final(×ÚÁ†
 E
 java:S1172×".Remove this unused method parameter "context".(Ÿ«¬à
 L
 java:S2696Q"6Make the enclosing method "static" or remove this set.(Ë¥çü
-d
-java:S4201O"IRemove this unnecessary null check; "instanceof" returns false for nulls.(Øó–ûÿÿÿÿ
-]
-java:S2184µ"FCast one of the operands of this multiplication operation to a "long".(Ÿ—ƒÂ
-]
-java:S2184È"FCast one of the operands of this multiplication operation to a "long".(Ÿ—ƒÂ
-c	java:S100½"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÚËl
-D
-java:S1444".Make this "public static sequence" field final(×ÚÁ†
-S
-java:S1874è"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(ì¾€Ë
-R	java:S125Ú"<This block of commented-out lines of code should be removed.(ÌÒÿà
-j
-java:S1104"TMake sequence a static final constant or non-public and provide accessors if needed.(×ÚÁ†
 L
 java:S2696`"6Make the enclosing method "static" or remove this set.(Ë¥çü
 c	java:S100©"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(±Èƒ
+S
+java:S1117é"<Rename "sequence" which hides the field declared at line 25.(ì ‡œ
+S
+java:S1117Ÿ"<Rename "sequence" which hides the field declared at line 25.(ì ‡œ
+S
+java:S1874è"<Remove this use of "getActiveNetworkInfo"; it is deprecated.(ì¾€Ë
+f
+java:S1301M"KReplace this "switch" statement by "if" statements to increase readability.(ıŞ³‹ùÿÿÿÿ

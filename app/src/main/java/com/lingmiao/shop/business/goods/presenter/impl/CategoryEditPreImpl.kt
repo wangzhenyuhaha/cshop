@@ -88,6 +88,7 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
         item.showLevel = if(pId == 0 ) 0 else 1;
         item.name = name;
         item.parentId = pId;
+        item.sellerId = getSellerId().toString();
 
         mCoroutine.launch {
             val resp = GoodsRepository.addCategory(item);

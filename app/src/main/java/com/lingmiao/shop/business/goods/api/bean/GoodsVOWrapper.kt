@@ -79,9 +79,6 @@ class GoodsVOWrapper : Serializable {
     @SerializedName("have_spec")
     var hasSpec: Int? = 0  //是否有规格：0=没有；1=有
 
-    @SerializedName("intro")
-    var intro: String? = null
-
     @SerializedName("is_global")
     var isGlobal: Int = 0
 
@@ -159,6 +156,23 @@ class GoodsVOWrapper : Serializable {
     // 是否设置过规格
     var isAddSpec: Boolean = false
     var specKeyList: List<SpecKeyVO>? = null
+
+
+    @SerializedName("goods_params_list")
+    var goodsParamsList: List<GoodsParamVo>? = null
+
+    /**
+     * 详情
+     * 弃用
+     */
+    // @SerializedName("meta_description")
+    // var metaDescription : String ?= null
+
+    /**
+     * 图片
+     */
+    @SerializedName("intro")
+    var intro: String? = null
 
     fun convert(deliveryVO: DeliveryRequest?) {
         deliveryVO?.let {

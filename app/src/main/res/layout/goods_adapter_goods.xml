@@ -133,7 +133,8 @@
         app:layout_constraintLeft_toRightOf="@id/goodsSalesTv"
         app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
         android:textSize="@dimen/sp_11"
-        tools:text="规格：3005" />
+        tools:text="规格：3005"
+        android:visibility="gone"/>
 
 
     <TextView

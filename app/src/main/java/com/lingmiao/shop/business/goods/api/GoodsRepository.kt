@@ -28,15 +28,14 @@ object GoodsRepository {
     suspend fun getDashboardData() : HiResponse<DashboardDataVo> {
         return apiService.getDashboardData().awaitHiResponse();
     }
+
     /**
-     * 商品出售中(上架)，已下架
+     * 所有
      */
-    suspend fun loadMarketEnableGoodsList(pageNo: Int, marketEnable: Int): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadAllGoodsList(pageNo: Int): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
-        map.put("market_enable", marketEnable)
-        map.put("is_auth", GoodsVO.AUTH_STATUS_PASS)
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -49,6 +48,18 @@ object GoodsRepository {
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("is_auth", isAuth)
+        return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+
+    /**
+     * 商品出售中(上架)，已下架
+     */
+    suspend fun loadMarketEnableGoodsList(pageNo: Int, marketEnable: Int): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("page_no", pageNo)
+        map.put("page_size", 10)
+        map.put("market_enable", marketEnable)
+        map.put("is_auth", GoodsVO.AUTH_STATUS_PASS)
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 

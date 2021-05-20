@@ -296,7 +296,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopManageCategory.text = bean.categoryNames?.replace(" ","/")
         tvShopManageContactName.text = bean.linkName
         tvShopManageServicePhone.text = bean.linkPhone
-        tvShopManageAddress.text = bean.shopAdd
+        tvShopManageAddress.text = bean.getFullAddress()
         tvShopManageNumber.text = String.format("%s", bean.shopId);
         tvShopManageType.text = bean.getShopTypeStr();
 
@@ -334,11 +334,14 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun setAddress(event : ApplyShopPoiEvent) {
-        tvShopManageAddress.text = event?.adInfo?.address;
         addressLatLng = event?.adInfo?.latLng;
         shopManage?.shopLng = addressLatLng?.longitude;
         shopManage?.shopLat = addressLatLng?.latitude;
         shopManage?.shopAdd = event?.adInfo?.address;
+        shopManage?.shopProvince = event?.adInfo?.province;
+        shopManage?.shopCity = event?.adInfo?.city;
+        shopManage?.shopCounty = event?.adInfo?.district;
+        tvShopManageAddress.text = shopManage?.getFullAddress();
 
         showDialogLoading()
         val request = ApplyShopInfo()

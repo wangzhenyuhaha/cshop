@@ -83,7 +83,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
                 showToast("不能大于15分钟");
                 return@setOnClickListener;
             }
-            shopReq.autoAccept = autoOrderSb.isChecked;
+            shopReq.autoAccept = if(autoOrderSb.isChecked) 1 else 0;
             shopReq.cancelOrderTime = cancelOrderTime;
             shopReq.companyPhone = linkTelEt.text.toString();
 
@@ -111,8 +111,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
     }
 
     override fun onLoadedShopSetting(vo : ApplyShopInfo) {
-        autoOrderSb.isChecked = vo?.autoAccept ?: false;
-        tvShopManageNumber.setText(vo?.cancelOrderTime?.toString())
+        vo?.orderSetting?.apply {
+            autoOrderSb.isChecked = autoAccept == 1;
+
+            tvShopManageNumber.setText(cancelOrderDay?.toString())
+        }
         tvShopOperateTime.setText(String.format("%s-%s", vo?.openStartTime, vo?.openEndTime));
         linkTelEt.setText(vo.companyPhone);
     }

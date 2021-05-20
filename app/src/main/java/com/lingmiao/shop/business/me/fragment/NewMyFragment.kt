@@ -57,9 +57,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     override fun initViewsAndData(rootView: View) {
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
-            mPresenter?.getMyData()
-            mPresenter?.getIdentity();
-            mPresenter?.loadWalletData();
+            refreshData()
         }
 
         rlMyPersonInfo.setOnClickListener(this)
@@ -71,12 +69,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
 //        rlMyShopManage.setOnClickListener(this)
         rlMyFeedback.setOnClickListener(this)
         rlMyContactService.setOnClickListener(this)
-        rlAboutUs.setOnClickListener(this)
 //        rlMySetting.setOnClickListener(this)
         mPresenter?.onCreate()
-        mPresenter?.getMyData()
-        mPresenter?.getIdentity();
-        mPresenter?.loadWalletData();
+
+        refreshData()
     }
 
     override fun onClick(v: View?) {
@@ -107,9 +103,6 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             R.id.tvSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)
-            }
-            R.id.rlAboutUs -> {
-                ActivityUtils.startActivity(AboutUsActivity::class.java)
             }
             R.id.tvBalance -> {
                 // 余额
@@ -142,7 +135,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             UserManager.setLoginInfo(loginInfo)
         }
 
-        tvBalance.text = String.format("￥%s", 0);
+        //tvBalance.text = String.format("￥%s", 0);
 //        tvDeposit.text = String.format("￥%s", 0);
 //        tvUseTime.text = String.format("%s天", 0);
 
@@ -187,6 +180,12 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updatePersonInfo(event:PersonInfoRequest){
+        refreshData()
+    }
+
+    fun refreshData() {
         mPresenter?.getMyData()
+        mPresenter?.getIdentity();
+        mPresenter?.loadWalletData();
     }
 }

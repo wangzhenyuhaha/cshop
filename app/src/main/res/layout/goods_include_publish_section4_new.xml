@@ -191,6 +191,7 @@
 
             <!--  SKU编码  -->
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/llSpecSku"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
@@ -212,7 +213,8 @@
 
     </LinearLayout>
 
-    <View style="@style/common_divider" />
+    <View style="@style/common_divider"
+        android:visibility="gone"/>
 
 
     <LinearLayout

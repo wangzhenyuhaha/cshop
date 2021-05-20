@@ -176,13 +176,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingHorizontal="@dimen/dimen_15"
+            android:paddingLeft="@dimen/dimen_15"
             android:paddingVertical="@dimen/dimen_10">
 
             <TextView
+                android:id="@+id/tvDepositStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="加入保障体系"
+                android:text="@string/vip_deposit_apply"
                 android:layout_weight="1"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
@@ -198,6 +199,35 @@
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 app:ivBgColor="@color/color_secondary"
+                app:ivRadius="18dp"/>
+
+            <com.james.common.view.ITextView
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/tvRefund"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_5"
+                android:text="退款"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp"
+                app:ivRadius="18dp"/>
+
+
+            <com.james.common.view.ITextView
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/tvRecharge"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_5"
+                android:paddingRight="@dimen/dimen_15"
+                android:text="充值"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp"
                 app:ivRadius="18dp"/>
 
         </LinearLayout>
@@ -228,6 +258,7 @@
             android:nestedScrollingEnabled="false" />
 
         <CheckBox
+            android:visibility="gone"
             android:id="@+id/ivService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

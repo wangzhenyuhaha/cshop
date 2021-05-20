@@ -2,13 +2,14 @@ package com.lingmiao.shop.business.goods.api.bean
 
 import com.google.gson.annotations.SerializedName
 import com.lingmiao.shop.business.goods.view.FlowViewVo
+import java.io.Serializable
 
 /**
 Create Date : 2021/5/147:54 PM
 Auther      : Fox
 Desc        :
  **/
-class GoodsParamVo : FlowViewVo {
+class GoodsParamVo : FlowViewVo, Serializable {
 
     @SerializedName("category_id")
     var categoryId: String? = ""
@@ -17,7 +18,6 @@ class GoodsParamVo : FlowViewVo {
      */
     @SerializedName("group_id")
     var groupId: Int? = 0
-
 
     /**
      * 是否可索引，0 不显示 1 显示
@@ -38,6 +38,12 @@ class GoodsParamVo : FlowViewVo {
      */
     @SerializedName("param_name")
     var paramName: String? = null
+
+    /**
+     * 参数值
+     */
+    @SerializedName("param_value")
+    var paramValue: String? = null
 
     /**
      * 参数类型1 输入项 2 选择项

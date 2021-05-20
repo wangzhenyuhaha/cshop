@@ -14,15 +14,22 @@ import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
+import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.bean.VipType
+import com.lingmiao.shop.business.me.event.PaySuccessEvent
 import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
+import com.lingmiao.shop.business.wallet.WalletInfoActivity
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
 import com.tencent.mm.opensdk.modelpay.PayReq
+import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.me_activity_apply_vip.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 
 /**
@@ -35,6 +42,10 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
     var mIdentity : IdentityVo? = null;
 
     var mWallet : WalletVo? = null;
+
+    var api : IWXAPI? = null;
+
+    var isPayed : Boolean = false;
 
     companion object {
         fun openActivity(context: Context, my : My?, identity : IdentityVo?) {
@@ -65,12 +76,21 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
     }
 
     override fun initView() {
+        api = WXAPIFactory.createWXAPI(this, IWXConstant.APP_ID);
         mToolBarDelegate?.setMidTitle("开通会员")
         mPresenter?.getVipPriceList();
-        if(mIdentity == null) {
-            mPresenter?.getIdentity();
-        } else {
-            onSetVipInfo(mIdentity);
+
+        // 保障金支付
+        tvVip.singleClick {
+            mPresenter?.depositApply(mWallet);
+        }
+        // 保障金[退款]
+        tvRecharge.singleClick {
+
+        }
+        // 保障金[充值]
+        tvRefund.singleClick {
+            WalletInfoActivity.openDepositActivity(this);
         }
         tvApply.singleClick {
             val list = galleryRv.getSelectItems();
@@ -81,6 +101,11 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         }
         setUserInfo();
         mPresenter?.loadWalletData();
+        if(mIdentity == null) {
+            mPresenter?.getIdentity();
+        } else {
+            onSetVipInfo(mIdentity);
+        }
     }
 
     fun setUserInfo() {
@@ -96,6 +121,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
     override fun onSetVipPriceList(list: List<VipType>?) {
         galleryRv.setDataList(list);
     }
+
 
     override fun onSetVipInfo(item : IdentityVo?) {
         dueDateTv.setText(String.format("试用时间%s到期,购买后有效期将顺延", item?.get_DueDateStr()));
@@ -113,12 +139,22 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         }
     }
 
-    override fun onApplySuccess(item : WxPayReqVo) {
-        val api = WXAPIFactory.createWXAPI(this, IWXConstant.APP_ID);
+    override fun onApplySuccess(item : WxPayReqVo?) {
         if(api?.isWXAppInstalled ==true) {
             val payReq = item?.getPayData();
             if(payReq != null) {
-                api.sendReq(payReq);
+                api?.sendReq(payReq);
+            }
+        } else {
+            showToast("请安装微信支付");
+        }
+    }
+
+    override fun onDepositApplied(item: WxPayReqVo?) {
+        if(api?.isWXAppInstalled ==true) {
+            val payReq = item?.getPayData();
+            if(payReq != null) {
+                api?.sendReq(payReq);
             }
         } else {
             showToast("请安装微信支付");
@@ -131,6 +167,17 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
         mWallet = data;
         tvBalance.setText(getString(R.string.wallet_value, formatDouble(data?.balanceAccount?.balanceAmount?:0.0)));
+        if(data?.depositAccount?.balanceAmount?:0.0 > 0.0) {
+            tvVip.gone();
+            tvRefund.visiable()
+            tvRecharge.visiable()
+            tvDepositStatus.setText(getString(R.string.vip_deposit_applied))
+        } else {
+            tvVip.visiable();
+            tvRefund.gone()
+            tvRecharge.gone()
+            tvDepositStatus.setText(getString(R.string.vip_deposit_apply))
+        }
     }
 
     /**
@@ -138,6 +185,33 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
      */
     override fun onLoadWalletDataError(code: Int) {
 
+    }
+
+    override fun useEventBus(): Boolean {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onPayed(event: PaySuccessEvent) {
+        isPayed = true;
+        mPresenter?.loadWalletData();
+        mPresenter?.getIdentity();
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        refreshUseVipStatus();
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        refreshUseVipStatus();
+    }
+
+    fun refreshUseVipStatus() {
+        if(isPayed) {
+            EventBus.getDefault().post(PersonInfoRequest())
+        }
     }
 
 }

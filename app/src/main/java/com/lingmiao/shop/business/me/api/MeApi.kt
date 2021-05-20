@@ -51,4 +51,6 @@ interface MeApi {
     @POST("seller/shops/editShop")
     @WithHiResponse
     fun updateShop(@Body bean: ApplyShopInfo):Call<Unit>
+
+
 }

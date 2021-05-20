@@ -14,6 +14,8 @@ import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
  * @Desc 商品分类
  */
 data class CategoryVO(
+    @SerializedName("seller_id")
+    var sellerId: String = "",
     @SerializedName("category_id")
     var categoryId: String = "",
     @SerializedName("category_order")

@@ -15,7 +15,7 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
+        <TextView
             android:background="@null"
             android:id="@+id/goodsInfoNameTv"
             android:layout_width="100dp"
@@ -48,6 +48,7 @@
     </LinearLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/infoDeleteTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -87,7 +87,7 @@ data class GoodsVO(
     fun getMenuType(): Int {
         return when (goodsStatusMix) {
             STATUS_MIX_0 -> (GoodsMenuPop.TYPE_EDIT)
-            STATUS_MIX_1 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_DISABLE or GoodsMenuPop.TYPE_QUANTITY)
+            STATUS_MIX_1 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_DISABLE or GoodsMenuPop.TYPE_QUANTITY or GoodsMenuPop.TYPE_SHARE)
             STATUS_MIX_2 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_ENABLE or GoodsMenuPop.TYPE_DELETE)
             STATUS_MIX_3 -> (GoodsMenuPop.TYPE_EDIT)
             else -> (GoodsMenuPop.TYPE_EDIT)

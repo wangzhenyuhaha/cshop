@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import com.amap.api.mapcore.util.it
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
@@ -129,10 +130,15 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                     view.showToast("图片上传失败，请重试")
                     view.hideDialogLoading()
                 }) {
-                    if (goodsVO.goodsId.isNullOrBlank()) {
-                        submitGoods(goodsVO) // 添加商品
-                    } else {
-                        modifyGoods(goodsVO) // 编辑商品
+                    uploadDesImages(goodsVO, fail = {
+                        view.showToast("图片上传失败，请重试")
+                        view.hideDialogLoading()
+                    }){
+                        if (goodsVO.goodsId.isNullOrBlank()) {
+                            submitGoods(goodsVO) // 添加商品
+                        } else {
+                            modifyGoods(goodsVO) // 编辑商品
+                        }
                     }
                 }
             } catch (e: BizException) {
@@ -219,6 +225,39 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
+    private fun uploadDesImages(goodsVO: GoodsVOWrapper, fail: () -> Unit, success: () -> Unit) {
+        mCoroutine.launch {
+            val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
+            goodsVO.intro!!.split(",")?.forEachIndexed { index, it ->
+                val request = async {
+                    if (it.isNetUrl()) {
+                        HiResponse(0, "", FileResponse("", "", it))
+                    } else {
+                        CommonRepository.uploadFile(
+                            File(it),
+                            true,
+                            CommonRepository.SCENE_GOODS
+                        )
+                    }
+                }
+                requestList.add(request)
+            }
+            // 多个接口相互等待
+            val respList = requestList.awaitAll()
+
+            var isAllSuccess: Boolean = respList?.filter { !it.isSuccess }?.size == 0
+
+            if (isAllSuccess) {
+                val urls = respList.map{it -> it.data.url}.joinToString(separator = ",");
+
+                goodsVO.intro = urls;
+                success.invoke()
+            } else {
+                fail.invoke()
+            }
+        }
+    }
+
     private fun uploadImages(goodsVO: GoodsVOWrapper, fail: () -> Unit, success: () -> Unit) {
         mCoroutine.launch {
             val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
@@ -237,6 +276,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 }
                 requestList.add(request)
             }
+
             // 多个接口相互等待
             val respList = requestList.awaitAll()
             var isAllSuccess: Boolean = true

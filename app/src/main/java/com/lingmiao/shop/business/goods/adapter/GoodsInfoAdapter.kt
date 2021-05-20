@@ -5,6 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.GoodsInfoVo
 import com.lingmiao.shop.business.goods.api.bean.GoodsParamVo
+import com.lingmiao.shop.business.tools.adapter.addTextChangeListener
 import com.lingmiao.shop.business.tools.bean.TimeSection
 
 /**
@@ -23,6 +24,10 @@ class GoodsInfoAdapter(list: List<GoodsParamVo>?) : BaseQuickAdapter<GoodsParamV
 
         helper.addOnClickListener(R.id.infoDeleteTv);
         helper.setText(R.id.goodsInfoNameTv, item?.paramName);
+
+        addTextChangeListener(helper.getView(R.id.goodsInfoContentTv), item?.paramValue) {
+            item?.paramValue = it
+        }
        // helper.setVisible(R.id.infoDeleteTv, helper.adapterPosition != 0);
     }
 }

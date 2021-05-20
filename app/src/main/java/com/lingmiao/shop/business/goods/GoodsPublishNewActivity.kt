@@ -37,6 +37,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         const val REQUEST_CODE_DELIVERY = 1001
         const val REQUEST_CODE_SKU = 1002
         const val REQUEST_CODE_DESC = 1003
+        const val REQUEST_CODE_INFO = 1004
 
         fun openActivity(context: Context, goodsId: String?) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
@@ -123,6 +124,17 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     goodsSpecTv.text = if (skuList.isNullOrEmpty()) "请设置规格" else "已设置"
                 }
             }
+            REQUEST_CODE_INFO -> {
+                val infoList = data.getSerializableExtra(GoodsDetailActivity.KEY_ITEM) as? List<GoodsParamVo>
+                val des = data.getStringExtra(GoodsDetailActivity.KEY_DESC)
+                val images = data.getStringExtra(GoodsDetailActivity.KEY_IMAGES);
+                goodsVO.apply {
+                    this.goodsParamsList = infoList;
+                    this.selling = des
+                    this.intro = images
+                }
+                goodsDetailTv.text = if (infoList?.size?:0 > 0) "已添加" else "未添加";
+            }
             // 商品详情
             REQUEST_CODE_DESC -> {
                 data.getStringExtra(GoodsDescH5Activity.KEY_DESC)?.apply {
@@ -173,7 +185,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     marketPriceEdt.setText(mktprice)
                     goodsQuantityEdt.setText(quantity)
                     goodsCostEdt.setText(cost)
-//                    goodsNoEdt.setText(sn)
+                    goodsNoEdt.setText(sn)
                     goodsWeightEdt.setText(weight)
                     goodsSKUEdt.setText(upSkuId)
                     goodsIDEdt.setText(sn)
@@ -190,7 +202,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 goodsVideoTv.text = "已选择"
             }
             // 商品详情
-            if (intro.isNotBlank()) {
+//            if (intro.isNotBlank()) {
+//                goodsDetailTv.text = "已添加"
+//            }
+            if (goodsParamsList?.size?:0 > 0) {
                 goodsDetailTv.text = "已添加"
             }
             // 商品卖点
@@ -317,8 +332,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             GoodsVideoActivity.openActivity(this, REQUEST_CODE_VIDEO, goodsVO.videoUrl)
         }
         goodsDetailTv.singleClick {
+            if (goodsVO.categoryId.isNotBlank()) {
 //            GoodsDescH5Activity.openActivity(this, REQUEST_CODE_DESC, goodsVO.intro)
-            GoodsDetailActivity.openActivity(this, REQUEST_CODE_DESC, "", goodsVO);
+                GoodsDetailActivity.openActivity(this, REQUEST_CODE_INFO, goodsVO);
+            } else {
+                showToast("请先选择商品分类")
+            }
         }
     }
 
@@ -368,14 +387,18 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     mktprice = marketPriceEdt.getViewText()
                     quantity = goodsQuantityEdt.getViewText()
                     cost = goodsCostEdt.getViewText()
-//                    sn = goodsNoEdt.getViewText()
+                    sn = goodsNoEdt.getViewText()
                     weight = goodsWeightEdt.getViewText()
                     upSkuId = goodsSKUEdt.getViewText()
                     upGoodsId = goodsIDEdt.getViewText()
                     skuList = null
                 }
             }
-
+            // 默认
+            if(this.shopCatId == null) {
+                this.shopCatId = categoryId
+                this.shopCatName = categoryName
+            }
         }
         mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked)
     }

@@ -7,9 +7,7 @@ import com.blankj.utilcode.util.EncryptUtils
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.lingmiao.shop.R
-import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.me.bean.ForgetPassword
-import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.presenter.ForgetPasswordPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ForgetPasswordPresenterImpl
 import com.james.common.base.BaseActivity
