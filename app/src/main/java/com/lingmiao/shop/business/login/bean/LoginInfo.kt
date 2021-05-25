@@ -36,7 +36,7 @@ class LoginInfo {
     var shopId: Int? = null
 
     @SerializedName("open_status")
-    var openStatus: Boolean? = false
+    var openStatus: Boolean? = null
 
     @SerializedName("status_reason")
     var statusReason: String? = null //状态原因（拒绝/未通过）

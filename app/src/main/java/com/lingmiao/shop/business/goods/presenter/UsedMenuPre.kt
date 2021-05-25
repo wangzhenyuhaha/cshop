@@ -15,10 +15,15 @@ interface UsedMenuPre: BasePresenter {
 
     fun loadLv2GoodsGroup(lv1GroupId: String?)
 
-    fun deleteGoodsGroup(shopCatId: MenuVo?, position: Int)
+    fun deleteGoodsGroup(shopCatId: ShopGroupVO?, position: Int)
 
-    interface PubView: BaseView, BaseLoadMoreView<MenuVo> {
+    fun addGroup(str : String, level: Int)
+
+    interface PubView: BaseView, BaseLoadMoreView<ShopGroupVO> {
+
         fun onDeleteGroupSuccess(position: Int)
+
+        fun onGroupAdded(item : ShopGroupVO);
     }
 
 }

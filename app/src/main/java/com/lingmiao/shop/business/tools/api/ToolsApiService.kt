@@ -36,7 +36,7 @@ interface ToolsApiService {
      */
     @WithHiResponse
     @GET("seller/shops/ship-templates")
-    fun shipTemplates() : Call<List<FreightVoItem>>;
+    fun shipTemplates(@Query("template_type")type : String?) : Call<List<FreightVoItem>>;
 
     /**
      * 添加快递模板

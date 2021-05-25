@@ -134,6 +134,7 @@
                     android:textSize="@dimen/dimen_13" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/saveTv"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_38"
@@ -147,15 +148,15 @@
                     android:textSize="@dimen/dimen_13" />
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/confirmTv"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_38"
+                    android:layout_marginStart="@dimen/dimen_15"
                     android:layout_marginEnd="@dimen/dimen_15"
                     android:layout_weight="1"
                     android:background="@drawable/shape_goods_pop_btn"
                     android:gravity="center"
-                    android:text="上架"
+                    android:text="保存并上架"
                     android:textColor="@color/color_ffffff"
                     android:textSize="@dimen/dimen_13" />
 

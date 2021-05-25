@@ -74,18 +74,12 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTabList.add(tvTab6)
 
         fragmentList.clear()
-        //    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUN
-//        全部ALL
-//        待付款WAIT_PAY
-//        待发货WAIT_SHIP
-//        待收货WAIT_ROG
-//        售后/退款 WAIT_REFUND
         fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
         fragmentList.add(SingleOrderListFragment.newInstance("WAIT_PAY"))
-        fragmentList.add(SingleOrderListFragment.newInstance("WAIT_SHIP"))
-        fragmentList.add(SingleOrderListFragment.newInstance("WAIT_ROG"))
-        fragmentList.add(SingleOrderListFragment.newInstance("WAIT_REFUND"))
-        fragmentList.add(SingleOrderListFragment.newInstance("CANCEL"))
+        fragmentList.add(SingleOrderListFragment.newInstance("PROCESSING"))
+        fragmentList.add(SingleOrderListFragment.newInstance("REFUND"))
+        fragmentList.add(SingleOrderListFragment.newInstance("COMPLETE"))
+        fragmentList.add(SingleOrderListFragment.newInstance("CANCELLED"))
         vpContent.adapter = adapter
         vpContent.offscreenPageLimit = 4
         vpContent.addOnPageChangeListener(this)

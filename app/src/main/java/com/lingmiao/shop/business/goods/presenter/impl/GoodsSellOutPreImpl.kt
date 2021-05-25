@@ -37,7 +37,7 @@ class GoodsSellOutPreImpl(override var context: Context, override var view: Good
                 view.showPageLoading()
             }
             val resp =
-                GoodsRepository.loadAllGoodsList(page.getPageIndex())
+                GoodsRepository.loadSellOutGoodsList(page.getPageIndex())
             if (resp.isSuccess) {
                 val goodsList = mutableListOf<GoodsVO>()//resp.data.data
                 EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT,0));//resp.data.dataTotal

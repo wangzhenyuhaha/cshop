@@ -72,12 +72,12 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
 //        backIv.setOnClickListener {
 //            finish()
 //        }
-//        deleteIv.setOnClickListener {
-//            inputEdt.setText("")
-//        }
-//        searchTv.setOnClickListener {
-//            mLoadMoreDelegate?.refresh()
-//        }
+        deleteIv.setOnClickListener {
+            inputEdt.setText("")
+        }
+        searchTv.setOnClickListener {
+            mLoadMoreDelegate?.refresh()
+        }
 //        searchStatusTv.setOnClickListener {
 //            mPresenter?.clickSearchMenuView(it)
 //        }

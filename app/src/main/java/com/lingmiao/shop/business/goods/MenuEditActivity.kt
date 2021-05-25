@@ -97,11 +97,12 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {
             groupVO.apply {
-                switchBtn//
+                disable = if(switchBtn.isChecked) 1 else 0
                 shopCatPid = parentGroupId
                 shopCatName = menuNameEdt.getViewText()
                 shopCatDesc = ""//groupDescEdt.getViewText()
                 sort = 0;//groupOrderEdt.getViewText().parseString()
+                isTop = 1
                 setDisable(showRadio.isChecked)
             }
             if (isEditMode) {

@@ -35,9 +35,9 @@ Create Date : 2021/3/101:00 AM
 Auther      : Fox
 Desc        :
  **/
-class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPre.PubView {
+class UsedMenuFragment : BaseLoadMoreFragment<ShopGroupVO, UsedMenuPre>(), UsedMenuPre.PubView {
 
-    private var list : MutableList<MenuVo>? = mutableListOf();
+    private var list : MutableList<ShopGroupVO>? = mutableListOf();
 
     companion object {
 
@@ -58,7 +58,7 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
         return UsedMenuPreImpl(this);
     }
 
-    override fun initAdapter(): BaseQuickAdapter<MenuVo, BaseViewHolder> {
+    override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
         return UsedMenuAdapter(list).apply {
             setOnItemClickListener { adapter, view, position ->
 
@@ -100,11 +100,13 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
             DialogUtils.showInputDialog(activity!!, "菜单名称", "", "请输入","取消", "保存",null) {
 //                tvShopManageSlogan.text = it;
 
-                var item = MenuVo();
-                item.showLevel = 0;
-                item.name = it;
-                list?.add(item);
-                mAdapter?.replaceData(list!!);
+
+//                var item = ShopGroupVO();
+//                item.showLevel = 0;
+//                item.shopCatName = it;
+
+                mPresenter?.addGroup(it, 0);
+
             }
         }
         menuCancelTv.setOnClickListener {
@@ -134,11 +136,16 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
 
     }
 
+    override fun onGroupAdded(item: ShopGroupVO) {
+
+        list?.add(item);
+        mAdapter?.replaceData(list!!);
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: MenuEvent) {
-        var newItem = MenuVo();
-        newItem.name = "可乐"
+        var newItem = ShopGroupVO();
+        newItem.shopCatName = "可乐"
         newItem.showLevel = 1;
 
         list?.add(newItem);
@@ -154,5 +161,9 @@ class UsedMenuFragment : BaseLoadMoreFragment<MenuVo, UsedMenuPre>(), UsedMenuPr
         return true;
     }
 
+    override fun onLoadMoreSuccess(list: List<ShopGroupVO>?, hasMore: Boolean) {
+        super.onLoadMoreSuccess(list, hasMore)
+        mLoadMoreDelegate?.loadFinish(false, !list.isNullOrEmpty())
+    }
 
 }

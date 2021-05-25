@@ -109,7 +109,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             })
         }
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPresenter?.editShopStatus(isChecked);
+            mPresenter?.editShopStatus(if(isChecked) 1 else 0);
         }
 
         showPageLoading()

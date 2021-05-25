@@ -128,6 +128,13 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
+    override fun autoRefresh(): Boolean {
+        if(isVisible) {
+            return true;
+        }
+        return false;
+    }
+
     override fun createPresenter(): OrderListPresenter {
         return OrderListPresenterImpl(
             this

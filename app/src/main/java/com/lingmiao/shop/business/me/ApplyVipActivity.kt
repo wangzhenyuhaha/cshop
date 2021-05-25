@@ -60,7 +60,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
 
     override fun initBundles() {
         mUserInfo = intent?.getParcelableExtra<My>("clerk");
-        mIdentity = intent?.getSerializableExtra("identity") as IdentityVo;
+        mIdentity = intent?.getSerializableExtra("identity") as? IdentityVo;
     }
 
     override fun getLayoutId(): Int {

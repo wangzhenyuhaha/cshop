@@ -17,7 +17,7 @@ class GroupManagerPreImpl(var view: GroupManagerPre.GroupManagerView) : BasePreI
 
     override fun loadLv1GoodsGroup() {
         mCoroutine.launch {
-            val resp = GoodsRepository.loadLv1ShopGroup()
+            val resp = GoodsRepository.loadLv1ShopGroup(1)
             if (resp.isSuccess) {
                 view.onLoadMoreSuccess(resp.data, false)
             }

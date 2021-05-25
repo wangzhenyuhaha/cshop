@@ -9,9 +9,12 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.MenuEditActivity
 import com.lingmiao.shop.business.goods.adapter.MenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
+import com.lingmiao.shop.business.goods.event.GroupRefreshEvent
 import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.GroupManagerPreImpl
 import kotlinx.android.synthetic.main.goods_fragment_goods_top_menu.*
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 /**
 Create Date : 2021/3/101:00 AM
@@ -69,7 +72,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
 
     override fun initOthers(rootView: View) {
         menuAddTv.setOnClickListener {
-            MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, null, mAdapter.getItem(0));
+            MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, null, null);
         }
         menuCancelTv.setOnClickListener {
             menuBottom.visibility = View.GONE;
@@ -99,6 +102,15 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
 
     override fun onDeleteGroupSuccess(position: Int) {
 
+    }
+
+    override fun useEventBus(): Boolean {
+        return true;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun handleRefreshEvent(event: GroupRefreshEvent) {
+        mLoadMoreDelegate?.refresh()
     }
 
     override fun onLoadMoreSuccess(list: List<ShopGroupVO>?, hasMore: Boolean) {

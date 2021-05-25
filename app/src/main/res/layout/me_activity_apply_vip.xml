@@ -198,12 +198,13 @@
                 android:text="支付"
                 android:textColor="@color/white"
                 android:textSize="12sp"
+                android:layout_marginRight="@dimen/dimen_15"
                 app:ivBgColor="@color/color_secondary"
                 app:ivRadius="18dp"/>
 
             <com.james.common.view.ITextView
-                tools:visibility="visible"
                 android:visibility="gone"
+                tools:visibility="visible"
                 android:id="@+id/tvRefund"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"

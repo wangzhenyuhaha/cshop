@@ -1,5 +1,7 @@
 package com.lingmiao.shop.business.goods.api.bean
 
+import com.chad.library.adapter.base.entity.AbstractExpandableItem
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -9,7 +11,7 @@ import java.io.Serializable
  * @date 2020/7/18
  * @Desc 店铺分组
  */
-class ShopGroupVO : Serializable {
+class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Serializable {
 
     @SerializedName("cat_path")
     var catPath: String? = null
@@ -29,6 +31,8 @@ class ShopGroupVO : Serializable {
     var shopCatPid: String? = null
     @SerializedName("shop_id")
     var shopId: String? = null
+    @SerializedName("is_top")
+    var isTop: Int = 1
     @SerializedName("sort")
     var sort: Int = 0
     /**
@@ -56,6 +60,7 @@ class ShopGroupVO : Serializable {
                     this.shopCatPic = groupVO.shopCatPic
                     this.shopCatPid = groupVO.shopCatPid
                     this.shopId = groupVO.shopId
+                    this.isTop = 1;
                     this.sort = groupVO.sort
                 }
             }
@@ -72,6 +77,25 @@ class ShopGroupVO : Serializable {
     fun setDisable(enable: Boolean) {
         disable = if (enable) TYPE_SHOW else TYPE_HIDE
     }
+
+
+
+    var pPosition : Int = 0;
+
+    var showLevel: Int = 0;
+
+    var name : String? = "";
+
+    override fun getItemType(): Int {
+        return showLevel;
+    }
+
+    override fun getLevel(): Int {
+        return (showLevel ?: 1) - 1;
+    }
+
+
+    var thumbnail : String? = ""
 
 
 }

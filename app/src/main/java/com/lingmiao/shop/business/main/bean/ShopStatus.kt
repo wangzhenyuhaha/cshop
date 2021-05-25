@@ -8,5 +8,5 @@ data class ShopStatus(
     @SerializedName("status_reason")
     var statusReason: String?,
     @SerializedName("open_status")
-    var openStatus: Boolean?
+    var openStatus: Int?
 )

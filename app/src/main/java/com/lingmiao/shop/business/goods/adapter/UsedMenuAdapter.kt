@@ -7,12 +7,13 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.MenuVo
+import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.business.tools.adapter.setOnCheckedChangeListener
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
 
-class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo, BaseViewHolder>(mList) {
+class UsedMenuAdapter(mList : List<ShopGroupVO>?) : BaseMultiItemQuickAdapter<ShopGroupVO, BaseViewHolder>(mList) {
 
 
     private var checkedDrawableRes: Int;
@@ -34,14 +35,14 @@ class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo,
         uncheckDrawable = R.mipmap.login_right_arrow;
     }
 
-    override fun convert(helper: BaseViewHolder, item: MenuVo?) {
+    override fun convert(helper: BaseViewHolder, item: ShopGroupVO?) {
 
         item?.apply {
             if(item.itemType == TYPE_LEVEL_0) {
                 pPosition = helper.adapterPosition;
-                val cItem : MenuVo = item;
+                val cItem : ShopGroupVO = item;
                 // 菜单名
-                helper.setText(R.id.menuTitleTv, cItem?.name);
+                helper.setText(R.id.menuTitleTv, cItem?.shopCatName);
                 // 折叠
                 helper.setImageResource(R.id.menuExpandIv, if(cItem.isExpanded) checkedDrawableRes else uncheckDrawable);
                 helper.addOnClickListener(R.id.menuExpandIv);
@@ -63,7 +64,7 @@ class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo,
 //                }
                 }
             } else if(item.itemType == TYPE_LEVEL_1) {
-                val cItem : MenuVo = item;
+                val cItem : ShopGroupVO = item;
                 cItem.pPosition = pPosition;
 //                helper.setText(R.id.itemTv, cItem?.name);
 //                helper.setImageResource(R.id.checkIv, if(cItem.isExpanded) checkedDrawableRes else uncheckDrawable);
@@ -74,7 +75,7 @@ class UsedMenuAdapter(mList : List<MenuVo>?) : BaseMultiItemQuickAdapter<MenuVo,
                 GlideUtils.setImageUrl1(helper.getView<ImageView>(R.id.goodsIv), thumbnail)
 
 //                helper.getView<TextView>(R.id.goodsNameTv).setCompoundDrawablesWithIntrinsicBounds(if(item?.goodsType == GoodsConfig.GOODS_TYPE_VIRTUAL) R.mipmap.ic_virtual else 0, 0, 0, 0)
-                helper.setText(R.id.goodsNameTv, name)
+                helper.setText(R.id.goodsNameTv, shopCatName)
 
                 helper.setText(
                     R.id.goodsQuantityTv,

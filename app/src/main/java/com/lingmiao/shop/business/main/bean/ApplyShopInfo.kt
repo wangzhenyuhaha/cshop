@@ -149,4 +149,4 @@ data class OrderSetting(
      */
     @SerializedName("unpaid_cancel_orders_min")
     var unpaidCancelOrdersMin: Int? = 0
-)
+) : Serializable

@@ -21,7 +21,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View):
 						if(loginInfo!=null){
 							loginInfo.shopStatus = shopStatusResp.data.shopStatus
 							loginInfo.statusReason = shopStatusResp.data.statusReason
-							loginInfo.openStatus = shopStatusResp.data.openStatus
+							loginInfo.openStatus = shopStatusResp.data.openStatus == 1
 							UserManager.setLoginInfo(loginInfo)
 						}
 						if(shopStatusResp.data.shopStatus=="OPEN"){
@@ -57,17 +57,17 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View):
 		}
 	}
 
-	override fun editShopStatus(flag: Boolean) {
+	override fun editShopStatus(flag: Int) {
 		val loginInfo = UserManager.getLoginInfo();
 		val id = loginInfo?.shopId;
 		if(id != null) {
 			mCoroutine.launch {
 				val body = OpenShopStatusVo();
-				body.openStatus = flag;
+//				body.openStatus = flag;
 
-				val resp = MainRepository.apiService.editShopStatus(id, body).awaitHiResponse()
+				val resp = MainRepository.apiService.editShopStatus(flag, body).awaitHiResponse()
 				handleResponse(resp) {
-					loginInfo.openStatus = flag;
+					loginInfo.openStatus = flag == 1;
 					UserManager.setLoginInfo(loginInfo)
 					view.onShopStatusEdited()
 				}

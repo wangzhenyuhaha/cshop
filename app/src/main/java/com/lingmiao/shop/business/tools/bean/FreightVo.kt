@@ -110,6 +110,7 @@ data class FreightVoItem(
     companion object {
         val TYPE_KUAIDI = "KUAIDI";
         val TYPE_LOCAL = "TONGCHENG";
+//        val TYPE_LOCAL = "LOCAL";
         val TYPE_WEIGHT = 1;
         val TYPE_COUNT = 2;
         val TYPE_KM_COUNT = 3;
@@ -470,7 +471,14 @@ data class TimeSettingVo(
     @SerializedName("unitDistance")
     var unitDistance: String? = "",
     @SerializedName("unitTime")
-    var unitTime: String? = ""
+    var unitTime: String? = "",
+//    @SerializedName("ready_time")
+    var readyTime : Int? = 0,
+
+    var transTempLimitTime : Int? = 0,
+
+    var isAllowTransTemp : Int? = 0
+
 ) : Serializable {
     companion object {
         // 公里数
@@ -572,7 +580,9 @@ data class TimeSettingReqVo(
     @SerializedName("unit_distance")
     var unitDistance: String? = "",
     @SerializedName("unit_time")
-    var unitTime: String? = ""
+    var unitTime: String? = "",
+//    @SerializedName("ready_time")
+    var readyTime : Int? = 0
 ) {
     constructor(item : TimeSettingVo) : this() {
         baseDistance = item?.baseDistance;
@@ -581,6 +591,7 @@ data class TimeSettingReqVo(
         timeType = item?.timeType;
         unitDistance = item?.unitDistance;
         unitTime = item?.unitTime;
+        readyTime = item?.readyTime
     }
 
     fun parseSections(sections : List<TimeSection>?) : MutableList<TimeSectionReq> {

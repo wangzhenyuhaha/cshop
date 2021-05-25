@@ -186,9 +186,20 @@ interface GoodsApiService {
     @GET("seller/shops/cats")
     fun loadLv1ShopGroup(): Call<List<ShopGroupVO>>
 
+    /**
+     * 商品分组
+     */
+    @WithHiResponse
+    @GET("seller/shops/cats")
+    fun loadLv1ShopGroup(@Query("is_top") isTop: Int): Call<List<ShopGroupVO>>
+
     @WithHiResponse
     @GET("seller/shops/cats/{cat_pid}/children")
     fun loadLv2ShopGroup(@Path(value = "cat_pid") groupId: String): Call<List<ShopGroupVO>>
+
+    @WithHiResponse
+    @GET("seller/shops/cats/{cat_pid}/children")
+    fun load2LvShopGroup(@Path(value = "cat_pid") groupId: String, @Query("is_top") isTop: Int): Call<List<ShopGroupVO>>
 
     /**
      * 添加店铺分组

@@ -40,26 +40,22 @@ object GoodsRepository {
     }
 
     /**
-     * 是否审核通过的商品
-     * @param isAuth：0 待审核，1 审核通过 2 未通过
+     * 所有
      */
-    suspend fun loadAuthGoodsList(pageNo: Int, isAuth: Int): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadSellOutGoodsList(pageNo: Int): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
-        map.put("is_auth", isAuth)
+        map.put("enable_quantity", 0);
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
-    /**
-     * 商品出售中(上架)，已下架
-     */
-    suspend fun loadMarketEnableGoodsList(pageNo: Int, marketEnable: Int): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadGoodsList(pageNo: Int, marketEnable: String, isAuth: String): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("market_enable", marketEnable)
-        map.put("is_auth", GoodsVO.AUTH_STATUS_PASS)
+        map.put("is_auth_string", isAuth)
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -156,7 +152,7 @@ object GoodsRepository {
         if(supplier_name?.isNotBlank() == true) {
             map.put("supplier_name", supplier_name)
         }
-        return apiService.loadGoodsList(map).awaitHiResponse()
+        return apiService.loadGoodsList (map).awaitHiResponse()
     }
 
     /**
@@ -255,10 +251,24 @@ object GoodsRepository {
     }
 
     /**
+     * 获取店铺商品第一级分组(一级分组内包含了二级分组)
+     */
+    suspend fun loadLv1ShopGroup(isTop: Int): HiResponse<List<ShopGroupVO>> {
+        return apiService.loadLv1ShopGroup(isTop).awaitHiResponse()
+    }
+
+    /**
      * 获取店铺(第二级)分组
      */
     suspend fun loadLv2ShopGroup(lv1GroupId: String): HiResponse<List<ShopGroupVO>> {
         return apiService.loadLv2ShopGroup(lv1GroupId).awaitHiResponse()
+    }
+
+    /**
+     * 获取店铺(第二级)分组
+     */
+    suspend fun load2LvShopGroup(lv1GroupId: String, isTop: Int): HiResponse<List<ShopGroupVO>> {
+        return apiService.load2LvShopGroup(lv1GroupId, isTop).awaitHiResponse()
     }
 
     /**
@@ -276,6 +286,7 @@ object GoodsRepository {
         map["shop_cat_desc"] = group.shopCatDesc.check()
         map["shop_cat_pic"] = group.shopCatPic.check()
         map["sort"] = group.sort
+        map["is_top"] = group.isTop
         return apiService.submitShopGroup(map).awaitHiResponse()
     }
 
@@ -291,6 +302,7 @@ object GoodsRepository {
         map["shop_cat_desc"] = group.shopCatDesc.check()
         map["shop_cat_pic"] = group.shopCatPic.check()
         map["sort"] = group.sort
+        map["is_top"] = group.isTop
         return apiService.updateShopGroup(groupId, map).awaitHiResponse()
     }
 

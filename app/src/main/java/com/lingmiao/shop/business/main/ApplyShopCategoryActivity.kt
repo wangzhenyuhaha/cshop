@@ -11,6 +11,7 @@ import com.lingmiao.shop.business.main.presenter.ApplyShopCategoryPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopCategoryPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
+import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import kotlinx.android.synthetic.main.main_activity_apply_shop_category.*
 import org.greenrobot.eventbus.EventBus
 
@@ -22,13 +23,13 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
 
 
     private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
-    private val tempList = mutableListOf<ApplyShopCategory>()
-    private val initSelectedList = mutableListOf<Int>()
+    private val tempList = mutableListOf<CategoryVO>()
+    private val initSelectedList = mutableListOf<String>()
 
     private var mSelectedPosition = -1;
     private val adapter = object :
-        BaseQuickAdapter<ApplyShopCategory, BaseViewHolder>(R.layout.main_adapter_shop_category) {
-        override fun convert(helper: BaseViewHolder, item: ApplyShopCategory) {
+        BaseQuickAdapter<CategoryVO, BaseViewHolder>(R.layout.main_adapter_shop_category) {
+        override fun convert(helper: BaseViewHolder, item: CategoryVO) {
             helper.setText(R.id.tvShopCategoryName, item.name)
             val ivShopCategorySelect= helper.getView<ImageView>(R.id.ivShopCategorySelect)
             val viShopCategoryDivide= helper.getView<View>(R.id.viShopCategoryDivide)
@@ -54,9 +55,8 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
         goodsManagementCategory?.let {
             val idStringList = it.split(",")
             for (idString in idStringList) {
-                val id = idString.toIntOrNull()
-                id?.let {
-                    initSelectedList.add(id)
+                idString?.apply {
+                    initSelectedList.add(idString)
                 }
             }
         }
@@ -94,7 +94,7 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
         return ApplyShopCategoryPresenterImpl(this, this)
     }
 
-    override fun onApplyShopCategorySuccess(list:List<ApplyShopCategory>) {
+    override fun onApplyShopCategorySuccess(list:List<CategoryVO>) {
         hidePageLoading()
         tempList.clear()
         tempList.addAll(list)

@@ -86,7 +86,7 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
         }
         tvTabOffLine.setOnClickListener {
             viewPager.currentItem = 3;
-            EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_ENABLE))
+            EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_DISABLE))
         }
         tvTabSoldOut.setOnClickListener {
             viewPager.currentItem = 4;

@@ -32,8 +32,8 @@ object ToolsRepository {
     /**
      * 物流模板
      */
-    suspend fun shipTemplates(): HiResponse<List<FreightVoItem>> {
-        return apiService.shipTemplates().awaitHiResponse();
+    suspend fun shipTemplates(type : String?): HiResponse<List<FreightVoItem>> {
+        return apiService.shipTemplates(type).awaitHiResponse();
     }
 
     /**

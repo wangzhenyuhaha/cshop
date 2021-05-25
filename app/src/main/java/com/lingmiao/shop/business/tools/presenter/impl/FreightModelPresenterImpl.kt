@@ -17,7 +17,7 @@ class FreightModelPresenterImpl(var view : FreightModelPresenter.View) : BasePre
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
-            val resp = ToolsRepository.shipTemplates();
+            val resp = ToolsRepository.shipTemplates("");
             if (resp?.isSuccess) {
                 val list = resp?.data ?: arrayListOf();
                 view.onLoadMoreSuccess(list, false)

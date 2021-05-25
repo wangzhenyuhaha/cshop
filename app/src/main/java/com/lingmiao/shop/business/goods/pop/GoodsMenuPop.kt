@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
-import android.view.animation.DecelerateInterpolator
-import android.view.animation.TranslateAnimation
 import android.widget.TextView
 import com.lingmiao.shop.R
 import com.lingmiao.shop.util.hideXTranslateAnim
@@ -26,10 +24,10 @@ class GoodsMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
         const val TYPE_EDIT = 0x001     //编辑
         const val TYPE_DISABLE = 0x002  //下架
         const val TYPE_QUANTITY = 0x004 //库存
-        const val TYPE_REBATE = 0x007   //佣金
-        const val TYPE_ENABLE = 0x008   //上架
-        const val TYPE_DELETE = 0x010   //删除
-        const val TYPE_SHARE = 0x013    //分享
+        const val TYPE_REBATE = 0x008   //佣金
+        const val TYPE_ENABLE = 0x010   //上架
+        const val TYPE_DELETE = 0x020   //删除
+        const val TYPE_SHARE = 0x040    //分享
     }
 
     init {
@@ -108,7 +106,7 @@ class GoodsMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
         }
         // 分享
         goodsShareTv = contentView.findViewById<TextView>(R.id.goodsShareTv).apply {
-            show(flags and TYPE_SHARE != 0)
+            show((flags and TYPE_SHARE) != 0)
             setOnClickListener {
                 listener?.invoke(TYPE_SHARE)
                 dismiss()

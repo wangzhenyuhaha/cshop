@@ -1,146 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <LinearLayout
-        android:visibility="gone"
-        android:paddingLeft="@dimen/dimen_15"
-        android:id="@+id/ll_model_type"
-        style="@style/tools_sub_container"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <RadioGroup
-            android:id="@+id/rg_model_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingBottom="@dimen/dimen_15">
-
-            <RadioButton
-                android:id="@+id/companyDeliveryRb"
-                style="@style/tools_sub_item_radio_box"
-                android:layout_weight="1"
-                android:checked="true"
-                android:paddingRight="@dimen/dimen_10"
-                android:text="商家配送" />
-
-            <RadioButton
-                android:id="@+id/riderDeliveryRb"
-                style="@style/tools_sub_item_radio_box"
-                android:layout_weight="1"
-                android:text="骑手配送" />
-
-            <RadioButton
-                android:id="@+id/rider2CompanyDeliveryRb"
-                style="@style/tools_sub_item_radio_box"
-                android:layout_weight="1"
-                android:text="骑手配送转商家配送" />
-        </RadioGroup>
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:visibility="gone"
-        android:id="@+id/ll_model_name"
-        style="@style/tools_sub_container"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ll_model_type">
-
-        <TextView
-            style="@style/tools_sub_item_left_10"
-            android:text="计费方式" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingBottom="@dimen/dimen_15"
-            android:id="@+id/rg_model_pay_km"
-            >
-            <RadioButton
-                android:id="@+id/cb_model_pay_km_section"
-                style="@style/tools_sub_item_radio_box"
-                android:checked="true"
-                android:paddingRight="@dimen/dimen_10"
-                android:text="按公里段计费"/>
-
-            <RadioButton
-                android:id="@+id/cb_model_pay_km_num"
-                style="@style/tools_sub_item_radio_box"
-                android:text="按公里数计费"
-                />
-        </RadioGroup>
-
-    </LinearLayout>
-
-
-    <!--起送价-->
-    <LinearLayout
-        android:background="@color/white"
-        android:layout_marginTop="@dimen/dimen_15"
-        android:id="@+id/ll_model_price"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <include layout="@layout/tools_include_model_price" />
-
-    </LinearLayout>
-
-
-    <!--配送范围-->
-    <LinearLayout
-        android:id="@+id/ll_model_range"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ll_model_price">
-
-        <include layout="@layout/tools_include_model_range" />
-
-    </LinearLayout>
-
-
-    <!--配送时效-->
-    <LinearLayout
-        android:id="@+id/ll_model_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/ll_model_range">
-
-        <include layout="@layout/tools_include_model_time" />
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:visibility="gone"
-        android:paddingLeft="@dimen/dimen_15"
-        style="@style/tools_sub_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/ll_model_type"
+            style="@style/tools_sub_container"
+            android:paddingLeft="@dimen/dimen_15"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioGroup
+                android:id="@+id/rg_model_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15">
+
+                <RadioButton
+                    android:id="@+id/companyDeliveryRb"
+                    style="@style/tools_sub_item_radio_box"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:text="商家配送" />
+
+                <RadioButton
+                    android:id="@+id/riderDeliveryRb"
+                    style="@style/tools_sub_item_radio_box"
+                    android:layout_weight="1"
+                    android:text="骑手配送" />
+
+                <RadioButton
+                    android:id="@+id/rider2CompanyDeliveryRb"
+                    style="@style/tools_sub_item_radio_box"
+                    android:layout_weight="1"
+                    android:text="骑手配送转商家配送" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_model_name"
+            style="@style/tools_sub_container"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_model_type">
+
+            <TextView
+                style="@style/tools_sub_item_left_10"
+                android:text="计费方式" />
+
+            <RadioGroup
+                android:id="@+id/rg_model_pay_km"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15">
+
+                <RadioButton
+                    android:id="@+id/cb_model_pay_km_section"
+                    style="@style/tools_sub_item_radio_box"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:text="按公里段计费" />
+
+                <RadioButton
+                    android:id="@+id/cb_model_pay_km_num"
+                    style="@style/tools_sub_item_radio_box"
+                    android:checked="true"
+                    android:text="按公里数计费" />
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+        <!--起送价-->
+        <LinearLayout
+            android:id="@+id/ll_model_price"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_15"
+            android:background="@color/white">
+
+            <include layout="@layout/tools_include_model_price" />
+
+        </LinearLayout>
+
+
+        <!--配送范围-->
+        <LinearLayout
+            android:id="@+id/ll_model_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ll_model_price">
+
+            <include layout="@layout/tools_include_model_range" />
+
+        </LinearLayout>
+
+
+        <!--配送时效-->
+        <LinearLayout
+            android:id="@+id/ll_model_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ll_model_range">
+
+            <include layout="@layout/tools_include_model_time" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            style="@style/tools_sub_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/dimen_15"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/tools_sub_item_star"
+                    android:text="*" />
+
+                <TextView
+                    style="@style/tools_sub_item_left"
+                    android:text="配送范围" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="@dimen/dimen_10"
+                    android:text="超出" />
+
+                <EditText
+                    android:id="@+id/et_model_out_range_km"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center"
+                    android:hint="输入"
+                    android:inputType="numberDecimal"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    android:singleLine="true"
+                    android:textColor="@color/color_333333"
+                    android:textColorHint="@color/color_CACACA"
+                    android:textSize="@dimen/dimen_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:text="km不配送" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/tools_sub_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_15"
+            android:visibility="gone">
 
             <TextView
                 style="@style/tools_sub_item_star"
@@ -148,26 +199,18 @@
 
             <TextView
                 style="@style/tools_sub_item_left"
-                android:text="配送范围" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:paddingRight="@dimen/dimen_10"
-                android:text="超出" />
+                android:text="配送时间" />
 
             <EditText
-                android:id="@+id/et_model_out_range_km"
-                android:layout_width="80dp"
+                android:id="@+id/deliveryTimeEt"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_weight="1"
                 android:background="@null"
                 android:drawablePadding="@dimen/dimen_10"
-                android:gravity="center"
-                android:hint="输入"
+                android:gravity="right"
+                android:hint="请输入配送时间"
                 android:inputType="numberDecimal"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dimen_15"
@@ -177,102 +220,67 @@
                 android:textColorHint="@color/color_CACACA"
                 android:textSize="@dimen/dimen_13" />
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            style="@style/tools_sub_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_15">
+
+            <TextView
+                style="@style/tools_sub_item_star"
+                android:text="*" />
+
+            <TextView
+                style="@style/tools_sub_item_left"
+                android:text="配货时间" />
+
+            <EditText
+                android:id="@+id/deliveryThingEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawablePadding="@dimen/dimen_10"
+                android:gravity="right"
+                android:hint="请输入配货时间"
+                android:inputType="numberDecimal"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_5"
+                android:paddingBottom="@dimen/dimen_15"
+                android:singleLine="true"
+                android:textColor="@color/color_333333"
+                android:textColorHint="@color/color_CACACA"
+                android:textSize="@dimen/dimen_13" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="@dimen/dimen_10"
-                android:text="km不配送" />
+                android:gravity="right"
+                android:paddingTop="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_15"
+                android:text="分钟"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/dimen_13" />
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:visibility="gone"
-        android:paddingLeft="@dimen/dimen_15"
-        style="@style/tools_sub_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/tools_sub_item_star"
-            android:text="*" />
-
-        <TextView
-            style="@style/tools_sub_item_left"
-            android:text="配送时间" />
-
-        <EditText
-            android:id="@+id/deliveryTimeEt"
+        <com.james.common.view.ITextView
+            android:id="@+id/tvShopSettingSubmit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawablePadding="@dimen/dimen_10"
-            android:gravity="right"
-            android:hint="请输入配送时间"
-            android:inputType="numberDecimal"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingBottom="@dimen/dimen_15"
-            android:singleLine="true"
-            android:textColor="@color/color_333333"
-            android:textColorHint="@color/color_CACACA"
-            android:textSize="@dimen/dimen_13" />
-
+            android:layout_height="38dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dimen_15"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#fff"
+            android:textSize="13sp"
+            app:ivBgColor="#207AE1"
+            app:ivRadius="18dp" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:paddingLeft="@dimen/dimen_15"
-        style="@style/tools_sub_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/tools_sub_item_star"
-            android:text="*" />
-
-        <TextView
-            style="@style/tools_sub_item_left"
-            android:text="配货时间" />
-
-        <EditText
-            android:id="@+id/deliveryThingEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_weight="1"
-            android:background="@null"
-            android:drawablePadding="@dimen/dimen_10"
-            android:gravity="right"
-            android:hint="请输入配货时间"
-            android:inputType="numberDecimal"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingBottom="@dimen/dimen_15"
-            android:singleLine="true"
-            android:textColor="@color/color_333333"
-            android:textColorHint="@color/color_CACACA"
-            android:textSize="@dimen/dimen_13" />
-
-    </LinearLayout>
-
-    <com.james.common.view.ITextView
-        android:id="@+id/tvShopSettingSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="38dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_15"
-        android:gravity="center"
-        android:text="保存"
-        android:textColor="#fff"
-        android:textSize="13sp"
-        app:ivBgColor="#207AE1"
-        app:ivRadius="18dp" />
-
-</LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -98,14 +98,16 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginLeft="@dimen/dimen_20"
+                        app:kswTintColor="@color/white"
                         app:kswBackDrawable="@drawable/flyme_back_drawable"/>
 
                 </RelativeLayout>
                 <View style="@style/DivideLineHorizontal" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -117,7 +119,8 @@
 
                     <EditText
                         android:id="@+id/tvShopManageNumber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:background="@null"
@@ -126,9 +129,20 @@
                         android:inputType="number"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
+                        android:paddingRight="@dimen/dimen_5"
                         tools:text="8018101011" />
 
-                </RelativeLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:paddingTop="@dimen/dimen_15"
+                        android:paddingBottom="@dimen/dimen_15"
+                        android:text="分钟"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/dimen_13" />
+
+                </LinearLayout>
 
                 <View style="@style/DivideLineHorizontal" />
 

@@ -63,11 +63,13 @@ data class GoodsVO(
 
     companion object {
         /**
-         * 审核状态：0 待审核，1 审核通过 2 未通过
+         * 审核状态：0 待审核，1 不需要审核 2 需要审核且审核通过 3 需要审核且审核不通过 4 待编辑(中心库复制的)
          */
         const val AUTH_STATUS_WAITING = 0
-        const val AUTH_STATUS_PASS = 1
-        const val AUTH_STATUS_REJECT = 2
+        const val AUTH_STATUS_NO_CHECK = 1
+        const val AUTH_STATUS_CHECK_AND_PASS = 2
+        const val AUTH_STATUS_CHECK_AND_REJECT = 3
+        const val AUTH_STATUS_EDITING = 4
 
         /**
          * 上架状态 1上架 0下架
@@ -77,11 +79,14 @@ data class GoodsVO(
 
         /**
          * 0 待审核 1 售卖中 2 已下架 3 审核拒绝
+         * |
+         * 0 待上架 1 已上架 2 已下架 3 已售馨
          */
         const val STATUS_MIX_0 = 0
         const val STATUS_MIX_1 = 1
         const val STATUS_MIX_2 = 2
         const val STATUS_MIX_3 = 3
+
     }
 
     fun getMenuType(): Int {

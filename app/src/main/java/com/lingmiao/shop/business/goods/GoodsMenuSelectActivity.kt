@@ -12,7 +12,9 @@ import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.goods.adapter.GoodsCheckedAdapter
 import com.lingmiao.shop.business.goods.adapter.GoodsMenuAdapter
+import com.lingmiao.shop.business.goods.adapter.GoodsSelectAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.presenter.GoodsMenuSelectPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsMenuSelectPreImpl
@@ -101,6 +103,9 @@ class GoodsMenuSelectActivity : BaseLoadMoreActivity<GoodsVO, GoodsMenuSelectPre
             GoodsSearchActivity.openActivity(context!!)
         }
         goodsCheckSave.setOnClickListener {
+            if(getCheckedCount() > 0) {
+
+            }
 //            if (getCheckedCount() > 0) {
 ////                EventBus.getDefault().post(TabChangeEvent(2))
 //                if (mSourceId == SOURCE_TYPE) {
@@ -132,11 +137,12 @@ class GoodsMenuSelectActivity : BaseLoadMoreActivity<GoodsVO, GoodsMenuSelectPre
     }
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
-        return GoodsMenuAdapter().apply {
+        return GoodsSelectAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
                 val bItem = adapter.data[position] as GoodsVO;
                 if (view.id == R.id.menuIv) {
-                    bItem?.isChecked = !(bItem?.isChecked!!);
+                    bItem?.isChecked = !(bItem?.isChecked?:false);
+//                    shiftChecked(position);
                 }
                 setCheckedCount(getCheckedCount());
             }

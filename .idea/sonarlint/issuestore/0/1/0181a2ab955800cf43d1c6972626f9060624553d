@@ -1,14 +1,14 @@
 
 T
 java:S3400-"9Remove this method and declare a constant for this value.(ëÔ¬ıÿÿÿÿ
-K
-java:S1874!"0Remove this use of "fromHtml"; it is deprecated.(è®¹Ïøÿÿÿÿ
-o
-java:S2293j"YReplace the type specification in this constructor call with the diamond operator ("<>").(¡ï¸
-U
-java:S1118":Add a private constructor to hide the implicit public one.(õËµøÿÿÿÿ
 ‹
 java:S1319i"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".(¥˜¯¾ùÿÿÿÿ
 z
 java:S1149%"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(Àëá¼ÿÿÿÿÿ
+o
+java:S2293j"YReplace the type specification in this constructor call with the diamond operator ("<>").(¡ï¸
 h	java:S100T"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(²ã„‡ûÿÿÿÿ
+K
+java:S1874!"0Remove this use of "fromHtml"; it is deprecated.(è®¹Ïøÿÿÿÿ
+U
+java:S1118":Add a private constructor to hide the implicit public one.(õËµøÿÿÿÿ

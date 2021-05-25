@@ -4,21 +4,19 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.james.common.base.BaseFragment
+import com.james.common.utils.exts.getViewText
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.me.presenter.DeliveryInTimePresenter
-import com.lingmiao.shop.business.me.presenter.impl.DeliveryInTimePresenterImpl
+import com.lingmiao.shop.business.me.presenter.DeliveryOfRiderPresenter
+import com.lingmiao.shop.business.me.presenter.impl.DeliveryInOfRiderPresenterImpl
 import com.lingmiao.shop.business.tools.adapter.PriceAdapter
 import com.lingmiao.shop.business.tools.adapter.RangeAdapter
 import com.lingmiao.shop.business.tools.adapter.TimeAdapter
-import com.lingmiao.shop.business.tools.bean.DistanceSection
-import com.lingmiao.shop.business.tools.bean.PeekTime
-import com.lingmiao.shop.business.tools.bean.TimeSection
-import com.lingmiao.shop.business.tools.bean.TimeValue
+import com.lingmiao.shop.business.tools.api.JsonUtil
+import com.lingmiao.shop.business.tools.bean.*
 import com.lingmiao.shop.business.tools.pop.DayPop
 import com.lingmiao.shop.business.tools.pop.TimeListPop
-import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.*
-import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.rg_model_pay_km
-import kotlinx.android.synthetic.main.tools_activity_freight_model_add.*
+import kotlinx.android.synthetic.main.me_fragment_delivery_of_rider.*
 import kotlinx.android.synthetic.main.tools_adapter_time.*
 import kotlinx.android.synthetic.main.tools_include_model_price.*
 import kotlinx.android.synthetic.main.tools_include_model_range.*
@@ -29,7 +27,7 @@ Create Date : 2021/3/53:40 PM
 Auther      : Fox
 Desc        :
  **/
-class DeliveryOfRiderFragment : BaseFragment<DeliveryInTimePresenter>(), DeliveryInTimePresenter.View {
+class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), DeliveryOfRiderPresenter.View {
 
     private lateinit var mPriceAdapter : PriceAdapter;
     private lateinit var mRangeAdapter : RangeAdapter;
@@ -41,6 +39,14 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryInTimePresenter>(), Deliver
     private lateinit var mTimeValueList : MutableList<TimeValue>;
     private lateinit var mDayTypeList : MutableList<String>;
 
+    private lateinit var mItem: FreightVoItem;
+
+    private lateinit var mShopItem: FreightVoItem;
+
+    var mFeeSetting : FeeSettingVo = FeeSettingVo();
+
+    var mTimeSetting : TimeSettingVo = TimeSettingVo();
+
     companion object {
         fun newInstance(): DeliveryOfRiderFragment {
             return DeliveryOfRiderFragment()
@@ -51,21 +57,46 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryInTimePresenter>(), Deliver
         return R.layout.me_fragment_delivery_of_rider;
     }
 
-    override fun createPresenter(): DeliveryInTimePresenter? {
-        return DeliveryInTimePresenterImpl(this);
+    override fun createPresenter(): DeliveryOfRiderPresenter? {
+        return DeliveryInOfRiderPresenterImpl(this);
     }
 
-
     override fun initViewsAndData(rootView: View) {
-        initPricePart();
+         initPricePart();
 
-        initRangePart();
+         initRangePart();
 
-        initTimePart();
+         initTimePart();
 
-        updateTimeCheckBox();
+         updateTimeCheckBox();
 
-        updateCityExpressPayTypeCheckBox();
+         updateCityExpressPayTypeCheckBox();
+
+        tvShopSettingSubmit.singleClick {
+            if(mShopItem == null || mShopItem.id == null || mShopItem?.id?.length == 0) {
+                return@singleClick;
+            }
+
+            var setting = mTimeSetting;
+            setting?.readyTime = deliveryThingEt.getViewText().toInt();
+            if(shiftDeliveryCb.isChecked) {
+                setting.isAllowTransTemp = 1;
+                setting.transTempLimitTime = deliveryShiftTimeEt.getViewText().toInt();
+            } else {
+                setting.isAllowTransTemp = 0;
+                setting.transTempLimitTime = 0
+            }
+            mShopItem.feeSetting = JsonUtil.instance.toJson(setting);
+            mPresenter?.updateModel(mShopItem);
+        }
+
+        shiftDeliveryCb.setOnCheckedChangeListener { buttonView, isChecked ->
+            if(isChecked) {
+                mPresenter?.getShopDeliveryStatus();
+            }
+        }
+
+        // mPresenter?.getTemplate("GLOBAL");
     }
 
     /**
@@ -258,6 +289,71 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryInTimePresenter>(), Deliver
 
     private fun initLayoutManager(): RecyclerView.LayoutManager {
         return LinearLayoutManager(activity)
+    }
+
+    override fun updateModelSuccess(b: Boolean) {
+
+    }
+
+    override fun setModel(item: FreightVoItem?) {
+        mItem = item ?: FreightVoItem();
+
+        // 模板名称
+        //cb_model_type_express_city.isChecked = true;
+        // 起送价
+        et_model_km_price.setText(String.format("%s", item?.baseShipPrice));
+        // 配送范围
+        et_model_out_range_km.setText(String.format("%s", item?.shipRange));
+
+
+
+        mFeeSetting = mPresenter?.getFeeSetting(item) ?: FeeSettingVo();
+        mTimeSetting = mPresenter?.getTimeSetting(item) ?: TimeSettingVo();
+
+        mFeeSetting?.apply {
+            // 配送范围加收费用
+            mRangeList = mFeeSetting?.peekTimes ?: arrayListOf();
+            mRangeAdapter.replaceData(mRangeList);
+
+            if(isDistanceType()) {
+                // 按公里数计费
+                cb_model_pay_km_num.isChecked = true;
+                et_model_price_km.setText(String.format("%s", mFeeSetting?.baseDistance));
+                et_model_price_price.setText(String.format("%s", mFeeSetting?.basePrice));
+                et_model_price_km_out.setText(String.format("%s", mFeeSetting?.unitDistance));
+                et_model_price_minute_more.setText(String.format("%s", mFeeSetting?.unitPrice));
+            } else {
+                // 按公里段计费
+                cb_model_pay_km_section.isChecked = true;
+                mPriceList = mFeeSetting?.distanceSections ?: arrayListOf();
+                mPriceAdapter.replaceData(mPriceList);
+            }
+
+        }
+
+        mTimeSetting?.apply {
+            if(isBaseTimeType()) {
+                cb_model_time_km.isChecked = true;
+                et_model_time_km.setText(String.format("%s", mTimeSetting?.baseDistance));
+                et_model_time_minute.setText(String.format("%s", mTimeSetting?.baseTime));
+                et_model_time_km_out.setText(String.format("%s", mTimeSetting?.unitDistance));
+                et_model_time_minute_more.setText(String.format("%s", mTimeSetting?.unitTime));
+                deliveryThingEt.setText(String.format("%s", mTimeSetting?.readyTime));
+            } else {
+                cb_model_time_section.isChecked = true;
+                mTimeList = mTimeSetting?.timeSections ?: arrayListOf();
+                mTimeAdapter.replaceData(mTimeList);
+            }
+        }
+    }
+
+    override fun onSetShopDeliveryStatus(size : Int, item: FreightVoItem?) {
+        shiftDeliveryCb.isChecked = size > 0 ;
+        if(size <= 0) {
+            showToast("请先设置商家配置送模板")
+        }
+        mShopItem = item ?: FreightVoItem();
+        mTimeSetting = mPresenter?.getTimeSetting(item) ?: TimeSettingVo();
     }
 
 }

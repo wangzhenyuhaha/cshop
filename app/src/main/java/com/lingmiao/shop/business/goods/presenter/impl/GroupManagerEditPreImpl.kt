@@ -23,8 +23,8 @@ class GroupManagerEditPreImpl(var view: GroupManagerEditPre.GroupEditView) : Bas
 
     override fun submit(groupVO: ShopGroupVO, groupLevel: Int?) {
         try {
-            checkNotBlack(groupVO.shopCatName) { "请输入分组名称" }
-            checkNotBlack("${groupVO.sort}") { "请输入分组排序" }
+            checkNotBlack(groupVO.shopCatName) { "请输入菜单名称" }
+            //checkNotBlack("${groupVO.sort}") { "请输入菜单排序" }
 
             view.showDialogLoading("正在提交...")
             mCoroutine.launch {

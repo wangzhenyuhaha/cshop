@@ -35,8 +35,9 @@ data class CategoryVO(
     @Expose
     var parentLevel: Int = 0,
     @Expose
-    var _loaded : Boolean = false
+    var _loaded : Boolean = false,
 
+    var selected: Boolean = false
 ) : AbstractExpandableItem<CategoryVO>(), MultiItemEntity, ItemData {
     override fun getIValue(): String? {
         return categoryId;

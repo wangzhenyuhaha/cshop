@@ -10,7 +10,7 @@ interface MainPresenter: BasePresenter{
 	fun requestMainInfoData()
     fun requestAccountSettingData()
 
-    fun editShopStatus(flag : Boolean);
+    fun editShopStatus(flag: Int);
 	
 	interface View : BaseView {
         fun onMainInfoSuccess(bean: MainInfo?)

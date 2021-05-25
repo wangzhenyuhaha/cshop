@@ -17,7 +17,7 @@
 
 
     <string name="pay_success">支付成功</string>
-    <string name="pay_cancel">用户取消支付</string>
+    <string name="pay_cancel">取消支付</string>
     <string name="pay_unknown">支付异常</string>
 
     <string name="errcode_success">操作成功</string>
@@ -56,7 +56,7 @@
     <string name="wallet_hint_account_info">余额</string>
     <string name="wallet_hint_account_bind">账户绑写</string>
     <string name="wallet_hint_balance">余额</string>
-    <string name="wallet_hint_deposit">押金</string>
+    <string name="wallet_hint_deposit">保障金</string>
     <string name="wallet_value">￥%s</string>
     <string name="wallet_hint_card">银行卡</string>
     <string name="wallet_hint_zfb">支付宝</string>

@@ -130,12 +130,16 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
             context as Activity,
             "分类名称",
             "",
-            "请输入",
+            "请输入(长度不大于5)",
             item?.name,
             "取消",
             "保存",
             null
         ) {
+            if(item.name.length > 5) {
+                view?.showToast("分类名称最长为5")
+                return@showInputDialog;
+            }
             item.name = it;
             update(item);
         }
@@ -143,6 +147,10 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
 
     override fun showAddDialog(pId : Int) {
         DialogUtils.showInputDialog(context as Activity, "分类名称", "", "请输入","取消", "保存",null) {
+            if(it.length > 5) {
+                view?.showToast("分类名称最长为5")
+                return@showInputDialog;
+            }
             add(pId, it);
         }
     }

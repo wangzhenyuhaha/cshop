@@ -1,9 +1,9 @@
 
-L
-java:S2696"6Make the enclosing method "static" or remove this set.(°ϊ
-X
-java:S1479;"BReduce the number of non-empty switch cases from 49 to at most 30.(©το§
-k
-java:S3008Ύ"ORename this field "LINE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•Ζ¤χώÿÿÿÿ
 P
 java:S1118":Add a private constructor to hide the implicit public one.(§ΩΤ
+k
+java:S3008Ύ"ORename this field "LINE" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•Ζ¤χώÿÿÿÿ
+X
+java:S1479;"BReduce the number of non-empty switch cases from 49 to at most 30.(©το§
+L
+java:S2696"6Make the enclosing method "static" or remove this set.(°ϊ

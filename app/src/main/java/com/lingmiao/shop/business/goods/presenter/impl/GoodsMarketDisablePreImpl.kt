@@ -26,15 +26,26 @@ class GoodsMarketDisablePreImpl(override var context: Context,override var view:
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
+    private fun getAuth() : String {
+        return String.format("%s,%s,%s,%s,%s",
+            GoodsVO.AUTH_STATUS_WAITING,
+            GoodsVO.AUTH_STATUS_NO_CHECK,
+            GoodsVO.AUTH_STATUS_CHECK_AND_PASS,
+            GoodsVO.AUTH_STATUS_CHECK_AND_REJECT,
+            GoodsVO.AUTH_STATUS_EDITING
+        );
+    }
+
     override fun loadListData(page: IPage, datas: List<*>) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
 
-            val resp = GoodsRepository.loadMarketEnableGoodsList(
+            val resp = GoodsRepository.loadGoodsList(
                 page.getPageIndex(),
-                GoodsVO.MARKET_STATUS_DISABLE
+                GoodsVO.MARKET_STATUS_DISABLE.toString(),
+                ""
             )
             if (resp.isSuccess) {
                 val goodsList = resp.data.data

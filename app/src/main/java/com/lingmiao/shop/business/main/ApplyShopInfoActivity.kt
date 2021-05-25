@@ -133,10 +133,10 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         selectedCategoryList?.forEachIndexed { index, applyShopCategory ->
             categoryIdSB.append(applyShopCategory.categoryId)
             categoryNameSB.append(applyShopCategory.name)
-            if (index < (selectedCategoryList?.size ?: 0) - 1) {
-                categoryIdSB.append(",")
-                categoryNameSB.append("/")
-            }
+//            if (index < (selectedCategoryList?.size ?: 0) - 1) {
+//                categoryIdSB.append(",")
+//                categoryNameSB.append("/")
+//            }
         }
 
         applyShopInfo.goodsManagementCategory = categoryIdSB.toString()

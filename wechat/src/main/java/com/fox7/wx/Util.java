@@ -20,7 +20,7 @@ import org.junit.Assert;
 
 public class Util {
 	
-	private static final String TAG = "SDK_Sample.Util";
+	private static final String TAG = "WECHAT_Sample.Util";
 	
 	public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -110,7 +110,8 @@ public class Util {
 		byte[] b = null;
 		try {
 			RandomAccessFile in = new RandomAccessFile(fileName, "r");
-			b = new byte[len]; // 创建合适文件大小的数组
+			// 创建合适文件大小的数组
+			b = new byte[len];
 			in.seek(offset);
 			in.readFully(b);
 			in.close();
