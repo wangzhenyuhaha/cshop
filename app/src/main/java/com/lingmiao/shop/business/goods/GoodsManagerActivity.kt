@@ -113,7 +113,6 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
 
                     val list =  mAdapter?.data?.filter { it?.isChecked==true };
 
-
                     if(list.size > 0) {
 
                         var ids = list?.map { it?.goodsId }?.joinToString(separator = ",");
@@ -151,8 +150,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
             setOnItemChildClickListener { adapter, view, position ->
                 val bItem = adapter.data[position] as GoodsVO;
                 if (view.id == R.id.menuIv) {
-                    //bItem?.isChecked = !(bItem?.isChecked?:false);
-                    shiftChecked(position);
+                    bItem?.isChecked = !(bItem?.isChecked?:false);
                 }
                 setCheckedCount(getCheckedCount());
             }

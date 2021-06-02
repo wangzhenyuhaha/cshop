@@ -25,17 +25,13 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    private fun getAuth() : String {
-        return String.format("%s,%s", GoodsVO.AUTH_STATUS_WAITING, GoodsVO.AUTH_STATUS_EDITING);
-    }
-
     override fun loadListData(page: IPage, datas: List<*>) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
 
-            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), getAuth())
+            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), GoodsVO.getWaitAuth())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_WAITING,resp.data.dataTotal));

@@ -16,7 +16,7 @@ class ApplyShopCategoryPresenterImpl(context: Context, private var view: ApplySh
     BasePreImpl(view), ApplyShopCategoryPresenter{
 	override fun requestApplyShopCategoryData(){
 				mCoroutine.launch {
-					val resp = GoodsRepository.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID,0);//MainRepository.apiService.getApplyShopCategory().awaitHiResponse()
+					val resp = GoodsRepository.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID,"0");//MainRepository.apiService.getApplyShopCategory().awaitHiResponse()
 					if (resp.isSuccess) {
 						view.onApplyShopCategorySuccess(resp.data)
 					}else{

@@ -15,9 +15,12 @@ interface GoodsBatchPre : BasePresenter {
 
     fun clickOnRebate(string: String?, callback: () -> Unit);
 
+    fun clickDelete(list: List<GoodsVO>?, callback: (ids: String) -> Unit);
+
     interface View : BaseView {
         fun onLineSuccess();
         fun offLineSuccess();
         fun onBatchRebateSuccess();
+        fun onBatchDeleted(ids : String);
     }
 }

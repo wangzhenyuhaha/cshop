@@ -472,11 +472,11 @@ data class TimeSettingVo(
     var unitDistance: String? = "",
     @SerializedName("unitTime")
     var unitTime: String? = "",
-//    @SerializedName("ready_time")
+    @SerializedName("readyTime")
     var readyTime : Int? = 0,
-
+    @SerializedName("transTempLimitTime")
     var transTempLimitTime : Int? = 0,
-
+    @SerializedName("isAllowTransTemp")
     var isAllowTransTemp : Int? = 0
 
 ) : Serializable {
@@ -490,6 +490,19 @@ data class TimeSettingVo(
     fun isBaseTimeType() : Boolean {
         return timeType == TIME_TYPE_BASE;
     }
+
+    fun convertReqVo() : TimeSettingReqVo {
+        return TimeSettingReqVo(baseDistance, baseTime, convertTimeSection(), timeType,unitDistance,unitTime, readyTime,transTempLimitTime,isAllowTransTemp);
+    }
+
+    fun convertTimeSection() : MutableList<TimeSectionReq> {
+        val items: MutableList<TimeSectionReq> = arrayListOf();
+        timeSections?.forEachIndexed { index, timeSection ->
+            items?.add(timeSection.toReqVo());
+        }
+        return items;
+    }
+
 }
 
 data class TimeSection(
@@ -517,6 +530,10 @@ data class TimeSection(
 
     fun getTimeType() : String {
         return if(isToday()) "当日" else "次日";
+    }
+
+    fun toReqVo() : TimeSectionReq {
+        return TimeSectionReq(arriveTime, shipTime, shipTimeType)
     }
 }
 
@@ -581,8 +598,15 @@ data class TimeSettingReqVo(
     var unitDistance: String? = "",
     @SerializedName("unit_time")
     var unitTime: String? = "",
-//    @SerializedName("ready_time")
-    var readyTime : Int? = 0
+    @SerializedName("ready_time")
+    var readyTime : Int? = 0,
+
+    @SerializedName("trans_temp_limit_time")
+    var transTempLimitTime : Int? = 0,
+
+    @SerializedName("is_allow_trans_temp")
+    var isAllowTransTemp : Int? = 0
+    
 ) {
     constructor(item : TimeSettingVo) : this() {
         baseDistance = item?.baseDistance;

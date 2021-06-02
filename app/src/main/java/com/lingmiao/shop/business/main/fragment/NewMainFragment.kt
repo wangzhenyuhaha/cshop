@@ -35,6 +35,7 @@ import com.lingmiao.shop.business.me.ManagerSettingActivity
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
 import com.lingmiao.shop.business.sales.UserManagerActivity
+import com.lingmiao.shop.business.tuan.ActivityIndexActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
@@ -108,9 +109,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 activity?.finish()
             })
         }
-        switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPresenter?.editShopStatus(if(isChecked) 1 else 0);
-        }
 
         showPageLoading()
         mPresenter?.requestMainInfoData()
@@ -123,6 +121,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
         switchStatusBtn.isChecked =loginInfo?.openStatus?:false
+
+        switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            mPresenter?.editShopStatus(if(isChecked) 1 else 0);
+        }
         onShopStatusEdited();
 
         llMainShopOpen.visibility = View.GONE
@@ -315,7 +317,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
          }
         // 敬请期待
         tvComeSoon.setOnClickListener {
-
         }
     }
 

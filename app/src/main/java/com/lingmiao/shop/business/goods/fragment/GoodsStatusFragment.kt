@@ -190,6 +190,10 @@ class GoodsStatusFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
     }
 
+    override fun onBatchDeleted(ids: String) {
+
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRefreshEvent(event: RefreshGoodsStatusEvent) {
         if (event.isRefresh(goodsStatus)) {

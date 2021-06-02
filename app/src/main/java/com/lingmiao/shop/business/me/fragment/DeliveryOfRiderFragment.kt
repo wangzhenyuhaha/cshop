@@ -76,9 +76,8 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             if(mShopItem == null || mShopItem.id == null || mShopItem?.id?.length == 0) {
                 return@singleClick;
             }
-
-            var setting = mTimeSetting;
-            setting?.readyTime = deliveryThingEt.getViewText().toInt();
+            var setting = TimeSettingVo();
+            // setting?.readyTime = deliveryThingEt.getViewText().toInt();
             if(shiftDeliveryCb.isChecked) {
                 setting.isAllowTransTemp = 1;
                 setting.transTempLimitTime = deliveryShiftTimeEt.getViewText().toInt();
@@ -86,24 +85,31 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                 setting.isAllowTransTemp = 0;
                 setting.transTempLimitTime = 0
             }
-            mShopItem.feeSetting = JsonUtil.instance.toJson(setting);
-            mPresenter?.updateModel(mShopItem);
+
+            mPresenter?.updateModel(mShopItem.id!!, setting.isAllowTransTemp!!, setting.transTempLimitTime!!);
         }
 
-        shiftDeliveryCb.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked) {
-                mPresenter?.getShopDeliveryStatus();
-            }
-        }
+//        shiftDeliveryCb.setOnCheckedChangeListener { buttonView, isChecked ->
+//            if(isChecked) {
+//                mPresenter?.getShopDeliveryStatus();
+//            }
+//        }
 
-        // mPresenter?.getTemplate("GLOBAL");
+        mPresenter?.getTemplate();
+        mPresenter?.getShopTemplate();
+    }
+
+    override fun onSetShopTemplate(item: FreightVoItem?) {
+        mShopItem = item ?: FreightVoItem();
+        val mTimeSetting = mPresenter?.getTimeSetting(item) ?: TimeSettingVo();
+        deliveryShiftTimeEt.setText(mTimeSetting?.transTempLimitTime?.toString())
+        shiftDeliveryCb.isChecked = mTimeSetting.isAllowTransTemp == 1
     }
 
     /**
      * 配送时效
      */
     private fun updateTimeCheckBox() {
-
         rg_model_time.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId == R.id.cb_model_time_km) {
                 ll_model_km.visibility = View.VISIBLE;
@@ -292,20 +298,17 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
     }
 
     override fun updateModelSuccess(b: Boolean) {
-
+        showToast("提交成功");
     }
 
     override fun setModel(item: FreightVoItem?) {
-        mItem = item ?: FreightVoItem();
-
+         mItem = item ?: FreightVoItem();
         // 模板名称
         //cb_model_type_express_city.isChecked = true;
         // 起送价
         et_model_km_price.setText(String.format("%s", item?.baseShipPrice));
         // 配送范围
         et_model_out_range_km.setText(String.format("%s", item?.shipRange));
-
-
 
         mFeeSetting = mPresenter?.getFeeSetting(item) ?: FeeSettingVo();
         mTimeSetting = mPresenter?.getTimeSetting(item) ?: TimeSettingVo();

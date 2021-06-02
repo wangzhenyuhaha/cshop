@@ -31,8 +31,9 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
     private lateinit var lv1Adapter: GroupAdapter
     private lateinit var lv2Adapter: GroupAdapter
 
+    private var mSelectList: MutableList<ShopGroupVO> = arrayListOf();
     private var groupName: String? = null
-    var lv1Callback: ((ShopGroupVO, String?) -> Unit)? = null
+    var lv1Callback: ((List<ShopGroupVO>, String?) -> Unit)? = null
 
     override fun onCreateContentView(): View {
         return createPopupById(R.layout.goods_pop_group)
@@ -62,7 +63,7 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
                     lv1Adapter.setGroupId(this.shopCatId)
                     lv1Adapter.notifyDataSetChanged()
                     lv2Adapter.clearData()
-                    lv1Callback?.invoke(this, this.shopCatName)
+                    lv1Callback?.invoke(arrayListOf(this), this.shopCatName)
                     dismiss()
                     return@apply
                 }
@@ -73,11 +74,15 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
                 lv1Adapter.notifyDataSetChanged()
                 lv2Adapter.replaceData(this.children!!)
                 groupName = this.shopCatName
+
+                mSelectList.clear();
+                mSelectList.add(this);
             }
         }
         lv2Adapter.setOnItemClickListener { adapter, view, position ->
             lv2Adapter.getItem(position)?.apply {
-                lv1Callback?.invoke(this, "${groupName}/${this.shopCatName}")
+                mSelectList.add(this);
+                lv1Callback?.invoke(mSelectList, "${groupName}/${this.shopCatName}")
                 resetIndicator()
                 lv2IndicatorIv?.visiable()
                 dismiss()

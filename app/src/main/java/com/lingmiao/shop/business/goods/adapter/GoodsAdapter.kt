@@ -51,9 +51,9 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
 
             setOnCheckedChangeListener(helper.getView(R.id.cb_goods_check), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
                 goodsVO?.isChecked = isChecked;
-                if(!isChecked) {
-                    EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
-                }
+//                if(!isChecked) {
+//                    EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
+//                }
             }
             helper.setGone(R.id.cb_goods_check, isBatchEditModel);
             helper.setGone(R.id.menuIv, !isBatchEditModel);

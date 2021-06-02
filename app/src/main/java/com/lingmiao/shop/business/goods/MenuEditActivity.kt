@@ -78,7 +78,6 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         }else{
             mToolBarDelegate.setMidTitle("添加置顶菜单")
         }
-//        toolbarView.showDivider(false)
         restoreUI()
 
         // 商品分组图标
@@ -92,7 +91,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         }
         // 选择商品
         goodsListTv.setOnClickListener {
-            GoodsMenuSelectActivity.menu(this, parentGroupId ?: "222");
+            GoodsMenuSelectActivity.menu(this, parentGroupId);
         }
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {

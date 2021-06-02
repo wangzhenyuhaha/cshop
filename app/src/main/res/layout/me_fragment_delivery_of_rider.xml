@@ -223,7 +223,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="0dp">
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp"
+            android:paddingRight="0dp">
 
             <TextView
                 style="@style/tools_sub_item_star"
@@ -234,7 +236,6 @@
                 style="@style/tools_sub_item_left"
                 android:layout_weight="1"
                 android:text="骑手转商家配送" />
-
 
             <CheckBox
                 android:id="@+id/shiftDeliveryCb"
@@ -267,7 +268,8 @@
 
             <EditText
                 android:id="@+id/deliveryShiftTimeEt"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@null"

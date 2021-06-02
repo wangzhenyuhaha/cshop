@@ -7,6 +7,7 @@ import com.lingmiao.shop.business.wallet.bean.DataVO
 import com.lingmiao.shop.net.Fetch
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.goods.api.request.RiderSettingVo
 
 object ToolsRepository {
 
@@ -68,6 +69,16 @@ object ToolsRepository {
      */
     suspend fun updateShipTemplates(id: String, vo : FreightVoItem ) : HiResponse<Boolean> {
         return apiService.updateShipTemplates(id, vo).awaitHiResponse();
+    }
+
+    /**
+     * 单独修改骑手转商家的配置
+     */
+    suspend fun updateRiderSetting(id: String, vo : RiderSettingVo) : HiResponse<Unit> {
+//        var map : HashMap<String, Any> = hashMapOf();
+//        map.put("is_rider_to_seller", isToSeller);
+//        map.put("rider_to_seller_time", toRiderTime);
+        return apiService.updateRiderSetting(id, vo).awaitHiResponse();
     }
     /**
      * 查询物流模板

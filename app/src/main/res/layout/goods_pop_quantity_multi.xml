@@ -17,7 +17,7 @@
             android:layout_height="@dimen/dimen_30"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="库存设置"
+            android:text="价格/库存设置"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/dimen_15" />
 

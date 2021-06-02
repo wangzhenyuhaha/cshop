@@ -16,7 +16,7 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     @SerializedName("cat_path")
     var catPath: String? = null
     @SerializedName("children")
-    var children: List<ShopGroupVO>? = null
+    var children: MutableList<ShopGroupVO>? = mutableListOf()
     @SerializedName("disable")
     var disable: Int = 1 //1显示 0不显示
     @SerializedName("shop_cat_desc")
@@ -32,7 +32,7 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     @SerializedName("shop_id")
     var shopId: String? = null
     @SerializedName("is_top")
-    var isTop: Int = 1
+    var isTop: Int = 0
     @SerializedName("sort")
     var sort: Int = 0
     /**

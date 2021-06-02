@@ -13,8 +13,9 @@ Desc        :
  **/
 interface DeliveryOfRiderPresenter : BasePresenter {
     fun addModel(mItem: FreightVoItem)
-    fun updateModel(mItem: FreightVoItem)
-    fun getTemplate(str : String);
+    fun updateModel(id : String, isToSeller : Int, toRiderTime : Int)
+    fun getShopTemplate();
+    fun getTemplate();
     fun getShopDeliveryStatus();
 
     fun getFeeSetting(item: FreightVoItem?): FeeSettingVo;
@@ -23,6 +24,7 @@ interface DeliveryOfRiderPresenter : BasePresenter {
 
     interface View : BaseView {
         fun updateModelSuccess(b: Boolean)
+        fun onSetShopTemplate(item : FreightVoItem?)
         fun setModel(item : FreightVoItem?)
         fun onSetShopDeliveryStatus(size : Int, item: FreightVoItem?);
     }

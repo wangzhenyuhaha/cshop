@@ -4,19 +4,19 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.adapter.GoodsStatusAdapter
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
-import com.lingmiao.shop.business.goods.event.BatchStatusEvent
-import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
-import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
-import com.lingmiao.shop.business.photo.PhotoHelper
-import com.lingmiao.shop.widget.EmptyView
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.exts.singleClick
+import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsAdapter
+import com.lingmiao.shop.business.goods.api.bean.GoodsVO
+import com.lingmiao.shop.business.goods.event.BatchStatusEvent
 import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
+import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
+import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.lingmiao.shop.business.goods.presenter.impl.*
+import com.lingmiao.shop.business.photo.PhotoHelper
+import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -80,6 +80,21 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
                 onBatchRebateSuccess();
             }
         }
+        tv_goods_delete.singleClick {
+            mPresenter?.clickDelete(mAdapter?.data, {
+                var item : GoodsVO? = null;
+                val it_b: MutableIterator<GoodsVO> = mAdapter?.data?.iterator()
+                while(it_b.hasNext()) {
+                    item = it_b.next();
+                    if(item != null && item.goodsId != null) {
+                        if(it?.indexOf(item.goodsId!!) > -1) {
+                            it_b.remove();
+                        }
+                    }
+                }
+                mAdapter?.notifyDataSetChanged()
+            });
+        }
         tv_goods_cancel_batch.setOnClickListener{
             rl_goods_check.visibility = View.GONE;
             cb_goods_list_check_all.isChecked = false;
@@ -93,17 +108,14 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
 
         when (goodsStatus) {
-            GoodsFragment.GOODS_STATUS_ENABLE -> {
+            GoodsNewFragment.GOODS_STATUS_ENABLE -> {
                 tv_goods_off.visibility = View.VISIBLE;
             }
-            GoodsFragment.GOODS_STATUS_IS_AUTH -> {
-                tv_goods_off.visibility = View.VISIBLE;
-            }
-            GoodsFragment.GOODS_STATUS_DISABLE -> {
+            GoodsNewFragment.GOODS_STATUS_DISABLE -> {
                 tv_goods_on.visibility = View.VISIBLE;
             }
             else -> {
-
+                tv_goods_delete.visibility = View.VISIBLE;
             }
         }
     }
@@ -172,7 +184,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun onGoodsQuantity(quantity: String?, position: Int) {
-        (mAdapter as GoodsStatusAdapter).updateQuantity(quantity, position)
+        (mAdapter as GoodsAdapter).updateQuantity(quantity, position)
     }
 
     override fun onGoodsDelete(goodsId: String?, position: Int) {
@@ -193,6 +205,10 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     override fun onBatchRebateSuccess() {
         EventBus.getDefault().post(BatchStatusEvent(goodsStatus!!))
         EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
+    }
+
+    override fun onBatchDeleted(ids: String) {
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

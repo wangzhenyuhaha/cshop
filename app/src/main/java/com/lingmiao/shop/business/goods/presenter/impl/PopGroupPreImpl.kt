@@ -35,7 +35,10 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
     ) {
         goodsGroupPop = GoodsGroupPop(context).apply {
             lv1Callback = { groupVO, groupName ->
-                callback.invoke(groupVO.shopCatId, groupName)
+                if(groupVO != null && groupVO?.size > 0) {
+                    val it  = groupVO?.get(groupVO?.size -1)
+                    callback.invoke(it?.shopCatId, groupName)
+                }
             }
         }
         goodsGroupPop?.setLv1Data(list)

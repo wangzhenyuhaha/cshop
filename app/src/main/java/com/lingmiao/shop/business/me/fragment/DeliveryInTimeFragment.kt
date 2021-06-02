@@ -340,7 +340,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
     }
 
     override fun updateModelSuccess(b: Boolean) {
-
+        showToast("提交成功");
     }
 
     override fun setModel(item: FreightVoItem?) {

@@ -29,6 +29,15 @@ class SpecSettingAdapter(val type : Int) :
             }
         })
 
+        addTextChangeListener(helper.getView(R.id.eventPriceEdt), specVO.eventPrice) {
+            specVO.eventPrice = it
+        }
+        addTextChangeListener(helper.getView(R.id.eventQuantityEdt), specVO.eventQuantity) {
+            specVO.eventQuantity = it
+        }
+        addTextChangeListener(helper.getView(R.id.goodsPriceEdt), specVO.price) {
+            specVO.price = it
+        }
         addTextChangeListener(helper.getView(R.id.goodsPriceEdt), specVO.price) {
             specVO.price = it
         }

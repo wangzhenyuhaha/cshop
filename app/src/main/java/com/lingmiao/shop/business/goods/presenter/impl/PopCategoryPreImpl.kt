@@ -41,7 +41,7 @@ class PopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
     fun showCategoryPop(context: Context, id : Int, callback: (String?, String?) -> Unit) {
         mCoroutine.launch {
             // 一级类目 categoryId=0
-            val resp = GoodsRepository.loadUserCategory(LV1_CATEGORY_ID,id)
+            val resp = GoodsRepository.loadUserCategory(LV1_CATEGORY_ID, String.format("%s", id))
             if (resp.isSuccess) {
                 showPopWindow(context, resp.data, callback)
             }

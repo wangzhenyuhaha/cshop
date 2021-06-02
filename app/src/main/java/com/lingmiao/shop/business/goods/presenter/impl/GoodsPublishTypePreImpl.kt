@@ -16,11 +16,11 @@ class GoodsPublishTypePreImpl(var context: Context, var view: GoodsPublishTypePr
     override fun loadList() {
         mCoroutine.launch {
             // 一级类目 categoryId=0
-            val resp = GoodsRepository.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID,0)
+            val resp = GoodsRepository.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID,"0")
             if (resp.isSuccess) {
                 view?.onListSuccess(resp.data)
             }
-            val resp1 = GoodsRepository.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID, UserManager.getLoginInfo()?.shopId)
+            val resp1 = GoodsRepository.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID, String.format("%s", UserManager.getLoginInfo()?.shopId))
             handleResponse(resp1) {
                 view?.onSelfListSuccess(resp1.data);
             }

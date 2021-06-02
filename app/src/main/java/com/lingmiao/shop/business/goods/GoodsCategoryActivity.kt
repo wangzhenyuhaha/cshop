@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.core.content.ContextCompat
+import com.amap.api.mapcore.util.it
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
@@ -13,6 +14,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.CategoryAdapter
 import com.lingmiao.shop.business.goods.adapter.UsedMenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
+import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.presenter.CategoryEditPre
 import com.lingmiao.shop.business.goods.presenter.impl.CategoryEditPreImpl
 import kotlinx.android.synthetic.main.goods_activity_goods_catetory.*
@@ -150,27 +152,54 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
     override fun onDeleted(id: String) {
         var i = -1;
         var __i = -1;
-        mList?.forEachIndexed { index, item ->
-            if (item?.categoryId == id) {
-                i = index;
-                if(i > -1) {
-                    mList?.removeAt(i);
-                    mAdapter?.notifyDataSetChanged();
+
+        var item : CategoryVO? = null;
+        val it_b: MutableIterator<CategoryVO>? = mList?.iterator();
+        while(it_b?.hasNext() == true) {
+            item = it_b?.next();
+            if(item?.categoryId == id) {
+                it_b.remove();
+            } else {
+                var _i = -1;
+                item?.children?.forEachIndexed { index, it ->
+                    if(it.categoryId == id) {
+                        _i = index;
+                    }
                 }
-            }
-            item?.children?.forEachIndexed { _i, it ->
-                if(it.categoryId == id) {
-                    i = index;
-                    __i = _i;
-                    item?.children?.removeAt(_i)
+                if(_i > -1) {
+                    item?.children?.removeAt(_i);
                     item?.subItems?.clear();
                     item?.children?.forEachIndexed { index, _it ->
                         item?.addSubItem(_it)
                     }
-                    mAdapter?.notifyDataSetChanged();
                 }
             }
-        };
+        }
+        mAdapter?.notifyDataSetChanged();
+
+
+
+//        mList?.forEachIndexed { index, item ->
+//            if (item?.categoryId == id) {
+//                i = index;
+//                if(i > -1) {
+//                    mList?.removeAt(i);
+//                    mAdapter?.notifyDataSetChanged();
+//                }
+//            }
+//            item?.children?.forEachIndexed { _i, it ->
+//                if(it.categoryId == id) {
+//                    i = index;
+//                    __i = _i;
+//                    item?.children?.removeAt(_i)
+//                    item?.subItems?.clear();
+//                    item?.children?.forEachIndexed { index, _it ->
+//                        item?.addSubItem(_it)
+//                    }
+//                    mAdapter?.notifyDataSetChanged();
+//                }
+//            }
+//        };
 
     }
 

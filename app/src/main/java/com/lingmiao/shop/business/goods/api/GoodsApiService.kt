@@ -7,6 +7,7 @@ import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
 import com.lingmiao.shop.business.wallet.bean.PageListVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.goods.api.request.BindGoodsReq
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -121,7 +122,7 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @GET("seller/goods/category/app/{category_id}/children")
-    fun loadUserCategory(@Path("category_id") categoryId: String, @Query(value = "seller_id") id: Int?=null): Call<List<CategoryVO>>
+    fun loadUserCategory(@Path("category_id") categoryId: String?, @Query(value = "seller_id") id: String?=null): Call<List<CategoryVO>>
 
 
     /**
@@ -208,6 +209,11 @@ interface GoodsApiService {
     @POST("seller/shops/cats")
     fun submitShopGroup(@QueryMap map: MutableMap<String, Any>): Call<ShopGroupVO>
 
+
+    @WithHiResponse
+    @GET("seller/shops/cats/{id}")
+    fun getShopGroup(@Path(value = "id") groupId: String): Call<ShopGroupVO>
+
     /**
      * 添加店铺分组
      */
@@ -226,7 +232,12 @@ interface GoodsApiService {
     @GET("seller/shops/ship-templates")
     fun loadDeliveryTempList(@Query(value = "template_type") tempType: String): Call<List<DeliveryTempVO>>
 
-
+    /**
+     * 绑商品
+     */
+    @WithHiResponse
+    @POST("seller/shops/cats/bindGoods")
+    fun bindGoods(@Query("goods_ids") ids: List<Int?>? ,@Query("shop_cat_id") id : String?) : Call<Unit>
     /***************************中心库****************************************************/
     /**
      * 中心库商品

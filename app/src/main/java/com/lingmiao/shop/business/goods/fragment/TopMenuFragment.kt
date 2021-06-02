@@ -1,17 +1,24 @@
 package com.lingmiao.shop.business.goods.fragment
 
+import android.app.Activity
+import android.os.Bundle
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.GoodsOfMenuActivity
+import com.lingmiao.shop.business.goods.GoodsMenuSelectActivity
 import com.lingmiao.shop.business.goods.MenuEditActivity
 import com.lingmiao.shop.business.goods.adapter.MenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.event.GroupRefreshEvent
-import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
-import com.lingmiao.shop.business.goods.presenter.impl.GroupManagerPreImpl
+import com.lingmiao.shop.business.goods.presenter.CateManagerPre
+import com.lingmiao.shop.business.goods.presenter.impl.CateManagerPreImpl
+import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_top_menu.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -21,17 +28,22 @@ Create Date : 2021/3/101:00 AM
 Auther      : Fox
 Desc        :
  **/
-class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), GroupManagerPre.GroupManagerView {
+class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), CateManagerPre.GroupManagerView {
 
     companion object {
-
-        fun newInstance(): TopMenuFragment {
+        fun newInstance(isTop : Int): TopMenuFragment {
             return TopMenuFragment().apply {
-//                arguments = Bundle().apply {
-//                    putInt(id, goodsStatus)
-//                }
+                arguments = Bundle().apply {
+                    putInt("isTop", isTop)
+                }
             }
         }
+    }
+
+    private var isTop: Int? = null
+
+    override fun initBundles() {
+        isTop = arguments?.getInt("isTop", 0);
     }
 
     override fun getLayoutId(): Int? {
@@ -47,25 +59,43 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
 //                )
             }
             setOnItemChildClickListener { adapter, view, position ->
+                var item = adapter.getItem(position) as ShopGroupVO;
                 when (view.id) {
                     R.id.menuEditTv -> {
-                        MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, "111", mAdapter.getItem(position));
-//                        GroupManagerEditActivity.openActivity(
-//                            activity!!,
-//                            ShopGroupVO.LEVEL_1, null, mAdapter.getItem(position)
-//                        )
+                        MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
+                    }
+                    R.id.menuEditGoodsTv -> {
+                        GoodsOfMenuActivity.openActivity(activity!!, item);
+                        // GoodsMenuSelectActivity.menu(activity!!, item.shopCatId);
+                    }
+                    R.id.menuVisibleCb -> {
+                        item.disable = if(item.disable == 1) 0 else 1;
+
+                        mPresenter?.updateGroup(item, position);
+                    }
+                    R.id.menuDeleteTv -> {
+                        DialogUtils.showDialog(context as Activity,
+                            "删除提示", "删除后不可恢复，确定要删除该菜单吗？",
+                            "取消", "确定删除",
+                            null, View.OnClickListener {
+                                mPresenter?.deleteGoodsGroup(mAdapter.getItem(position), position)
+                            })
+
                     }
 //                    R.id.groupDeleteTv -> {
 //                        mPresenter?.deleteGoodsGroup(mAdapter.getItem(position), position)
 //                    }
                 }
             }
-            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
-                if(menuBottom.visibility != View.VISIBLE) {
-                    menuBottom.visibility = View.VISIBLE;
-                }
-                setBatchEditModel(true);
-                return@OnItemLongClickListener true;
+//            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
+//                if(menuBottom.visibility != View.VISIBLE) {
+//                    menuBottom.visibility = View.VISIBLE;
+//                }
+//                setBatchEditModel(true);
+//                return@OnItemLongClickListener true;
+//            }
+            emptyView = EmptyView(mContext).apply {
+                setBackgroundResource(R.color.common_bg)
             }
         }
     }
@@ -92,16 +122,30 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
             mAdapter?.notifyDataSetChanged();
         }
         menuDeleteTv.setOnClickListener {
-            mLoadMoreDelegate?.refresh()
+            mAdapter.data.forEachIndexed { index, shopGroupVO ->
+
+            }
+            //mLoadMoreDelegate?.refresh()
+        }
+        menuDeleteTv.singleClick {
+//            val list = mAdapter?.data?.filter { it-> it.isChecked };
+//            mPresenter?.deleteGoodsGroup()
         }
     }
 
-    override fun createPresenter(): GroupManagerPre? {
-        return GroupManagerPreImpl(this);
+    override fun createPresenter(): CateManagerPre? {
+        return CateManagerPreImpl(this);
     }
 
     override fun onDeleteGroupSuccess(position: Int) {
+        if(position < mAdapter.data.size) {
+            mAdapter.data.removeAt(position);
+            mAdapter.notifyDataSetChanged();
+        }
+    }
 
+    override fun onGroupUpdated(position: Int) {
+        mAdapter?.notifyItemChanged(position);
     }
 
     override fun useEventBus(): Boolean {
@@ -119,6 +163,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, GroupManagerPre>(), Gr
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadLv1GoodsGroup()
+        mPresenter?.loadLv1GoodsGroup(isTop!!)
     }
+
 }

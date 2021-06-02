@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import com.amap.api.mapcore.util.it
 import com.fox7.wx.WxShare
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
@@ -14,10 +15,12 @@ import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuVOWrapper
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
+import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.pop.GoodsMultiQuantityPop
 import com.lingmiao.shop.business.goods.pop.GoodsQuantityPop
+import com.lingmiao.shop.business.goods.pop.GoodsQuantityPricePop
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.coroutines.launch
 
@@ -240,4 +243,37 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
         }
     }
 
+
+    /**
+     * 修改多规格库存
+     */
+    private fun showQuantityPricePop(goodsId: String, skuList: List<GoodsSkuVOWrapper>, callback: (String) -> Unit) {
+        val multiQuantityPop = GoodsQuantityPricePop(context)
+        multiQuantityPop.setConfirmListener {
+            if (it.isNullOrEmpty()) {
+                view.showToast("请输入活动价格及库存数量")
+                return@setConfirmListener
+            }
+            exeQuantityPriceRequest(goodsId, it) {
+                multiQuantityPop.dismiss()
+                callback.invoke(it)
+            }
+        }
+        multiQuantityPop.apply {
+            setSkuList(skuList)
+            showPopupWindow()
+        }
+    }
+
+    /**
+     * 更新活动库存
+     */
+    private fun exeQuantityPriceRequest(goodsId: String, skuList: List<QuantityPriceRequest>, callback: (String) -> Unit) {
+        mCoroutine.launch {
+//            val resp = GoodsRepository.updateGoodsQuantity(goodsId, skuList)
+//            handleResponse(resp) {
+//                callback.invoke(it.quantity.check("0"))
+//            }
+        }
+    }
 }

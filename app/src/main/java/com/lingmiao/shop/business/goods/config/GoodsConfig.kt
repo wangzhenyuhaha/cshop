@@ -1,5 +1,7 @@
 package com.lingmiao.shop.business.goods.config
 
+import com.lingmiao.shop.business.goods.api.bean.GoodsVO
+
 /**
  * Author : Elson
  * Date   : 2020/8/15
@@ -16,5 +18,6 @@ class GoodsConfig {
 
         const val GOODS_TYPE_VIRTUAL = "VIRTUAL"
         const val GOODS_TYPE_NORMAL = "NORMAL"
+
     }
 }

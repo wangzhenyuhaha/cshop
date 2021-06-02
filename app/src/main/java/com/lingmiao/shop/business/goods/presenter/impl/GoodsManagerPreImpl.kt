@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
+import com.amap.api.mapcore.util.it
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.isNotEmpty
@@ -19,8 +20,11 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
     private val mCategoryPreImpl: NewPopCategoryPreImpl by lazy { NewPopCategoryPreImpl(view) }
 
     override fun showCategoryPop(target: View) {
-        mCategoryPreImpl?.showTypePop(context, target) { it ->
-            view.onUpdateCategory(it)
+        mCategoryPreImpl?.showTypePop(context, target) { its,name ->
+            if(its?.size?:0 > 0) {
+                val item = its?.get(its?.size!! - 1)
+                view.onUpdateCategory(item)
+            }
         }
     }
 

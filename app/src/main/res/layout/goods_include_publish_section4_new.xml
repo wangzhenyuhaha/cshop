@@ -123,7 +123,8 @@
                     <EditText
                         android:id="@+id/goodsQuantityEdt"
                         style="@style/goods_spec_item_right_edt"
-                        android:hint="请输入库存数"
+                        android:hint="库存数,请输入"
+                        android:inputType="number"
                         android:paddingEnd="@dimen/dimen_5" />
                 </LinearLayout>
 
@@ -137,6 +138,42 @@
                         android:id="@+id/goodsCostEdt"
                         style="@style/goods_spec_item_right_edt"
                         android:hint="进货价，请输入" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/common_divider" />
+
+            <!--  活动价格、活动库存  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:orientation="horizontal">
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:layout_marginRight="11dp"
+                        android:text="活动价格" />
+
+                    <EditText
+                        android:id="@+id/eventPriceEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:hint="活动价格，请输入"
+                        android:paddingEnd="@dimen/dimen_5" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/goods_spec_sub_container">
+
+                    <TextView
+                        style="@style/goods_spce_item_left"
+                        android:text="活动库存" />
+
+                    <EditText
+                        android:id="@+id/eventQuantityEdt"
+                        style="@style/goods_spec_item_right_edt"
+                        android:inputType="number"
+                        android:hint="活动库存，请输入" />
                 </LinearLayout>
             </LinearLayout>
 

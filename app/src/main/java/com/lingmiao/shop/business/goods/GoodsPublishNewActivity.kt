@@ -181,6 +181,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     switchBtn.isChecked = true
                     showSection45WithStatus(switchBtn.isChecked, true)
                 } else {
+                    eventPriceEdt.setText(eventPrice);
+                    eventQuantityEdt.setText(eventQuantity);
                     goodsPriceEdt.setText(price)
                     marketPriceEdt.setText(mktprice)
                     goodsQuantityEdt.setText(quantity)
@@ -362,6 +364,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 // 虚拟
                 price = null
                 mktprice = null
+                eventPrice = null
+                eventQuantity = null
                 quantity = null
                 cost = null
                 sn = null
@@ -374,6 +378,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 availableDate = ""
 
                 if (switchBtn.isChecked) {
+                    eventPrice = null
+                    eventQuantity = null
                     price = null
                     mktprice = null
                     quantity = null
@@ -383,6 +389,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     upSkuId = null
                     upGoodsId = null
                 } else {
+                    eventPrice = eventPriceEdt.getViewText()
+                    eventQuantity = eventQuantityEdt.getViewText()
                     price = goodsPriceEdt.getViewText()
                     mktprice = marketPriceEdt.getViewText()
                     quantity = goodsQuantityEdt.getViewText()

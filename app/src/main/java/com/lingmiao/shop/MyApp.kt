@@ -2,6 +2,7 @@ package com.lingmiao.shop
 
 
 import android.os.Build
+import android.os.StrictMode
 import android.webkit.WebView
 import androidx.core.content.ContextCompat
 import cn.jpush.android.api.JPushInterface
@@ -49,6 +50,36 @@ class MyApp : BaseApplication() {
         }
 
 
+//        if(BuildConfig.DEBUG) {
+//            StrictMode.setThreadPolicy(StrictMode.ThreadPolicy.Builder()
+//                 // 自定义的耗时调用
+//                .detectCustomSlowCalls()
+//                .permitCustomSlowCalls()
+//                .detectNetwork()
+//                // 读
+//                .detectDiskReads()
+//                // 写
+//                .detectDiskWrites()
+//                // 违归打印日志
+//                .penaltyLog()
+//                // 违归崩溃
+//                .penaltyDeath()
+//                .build()
+//            );
+//            StrictMode.setVmPolicy(StrictMode.VmPolicy.Builder()
+//                // sql对象泄露
+//                .detectLeakedSqlLiteObjects()
+//                // 未关闭对象泄露
+//                .detectLeakedClosableObjects()
+//                // 违归打印日志
+//                .penaltyLog()
+//                // 违归崩溃
+//                .penaltyDeath()
+//                // 检测实例数量
+//                //.setClassInstanceLimit(class, 10)
+//                .build()
+//            );
+//        }
 
     }
 

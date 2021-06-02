@@ -23,6 +23,12 @@ open class GoodsSkuVO : Serializable {
     @SerializedName("quantity")
     var quantity: String? = null //库存
 
+    @SerializedName("event_price")
+    var eventPrice: String? = null //活动价格
+
+    @SerializedName("event_quantity")
+    var eventQuantity: String? = null //活动库存
+
     @SerializedName("sn")
     var sn: String? = null  //货号
 

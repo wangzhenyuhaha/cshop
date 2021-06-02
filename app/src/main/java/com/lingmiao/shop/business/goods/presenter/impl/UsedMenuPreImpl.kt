@@ -19,7 +19,7 @@ class UsedMenuPreImpl(var view: UsedMenuPre.PubView) : BasePreImpl(view), UsedMe
 
     override fun loadLv1GoodsGroup() {
         mCoroutine.launch {
-            val resp = GoodsRepository.load2LvShopGroup(getShopId().toString(), 0)
+            val resp = GoodsRepository.load2LvShopGroup("0", 0)
             if (resp.isSuccess) {
                 resp.data.forEachIndexed { index, item ->
                     item.children?.forEachIndexed { _index, _item ->
@@ -63,6 +63,9 @@ class UsedMenuPreImpl(var view: UsedMenuPre.PubView) : BasePreImpl(view), UsedMe
             groupVO.shopCatName = str;
             groupVO.showLevel = level;
             groupVO.shopCatPid = "0"
+            groupVO.isTop = 0;
+            //groupVO.shopCatId = getShopId().toString();
+
             val resp = GoodsRepository.submitShopGroup(groupVO)
             handleResponse(resp) {
                 view.onGroupAdded(groupVO)

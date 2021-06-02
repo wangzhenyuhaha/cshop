@@ -25,17 +25,18 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
 
     private val menuPopPre: CateMenuPreImpl by lazy { CateMenuPreImpl(context, view) }
 
-    fun getSellerId() : Int? {
+    fun getSellerId() : String? {
         if(shopId == null) {
             shopId = UserManager.getLoginInfo()?.shopId;
         }
-        return shopId;
+        return String.format("%s", shopId);
     }
 
     override fun loadLv1GoodsGroup() {
         mCoroutine.launch {
             val resp = GoodsRepository.loadUserCategory("0", getSellerId());
             if (resp.isSuccess) {
+                view?.showDialogLoading();
                 val list: List<CategoryVO> = resp?.data;
                 list?.forEachIndexed { index, it ->
                     it.showLevel = 0;
@@ -44,6 +45,7 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
                         it.addSubItem(categoryVO);
                     }
                 }
+                view?.hideDialogLoading()
                 view.onLoadMoreSuccess(list, list.isNotEmpty())
             }
         }
@@ -75,11 +77,13 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
 
     override fun delete(id: String) {
         mCoroutine.launch {
+            view?.showDialogLoading()
             val resp = GoodsRepository.deleteCate(id);
             handleResponse(resp) {
                 view.onDeleted(id);
-                view.showToast("删除成功")
+                //view.showToast("删除成功")
             }
+            view?.hideDialogLoading()
         }
     }
 

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import com.amap.api.mapcore.util.it
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.api.bean.RebateResponseVo
@@ -100,6 +101,39 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
         }
     }
 
+    override fun clickDelete(oldList: List<GoodsVO>?, callback: (ids:String) -> Unit) {
+        var list = oldList?.filter { it?.isChecked == true };
+        if(list?.size == 0) {
+            view?.showToast("请选择需要删除的商品!");
+            return;
+        }
+
+        val ids = list?.map { it?.goodsId }?.joinToString(separator = ",");
+        DialogUtils.showDialog(context as Activity,
+            "删除提示", "删除后不可恢复，确定要删除该商品吗？",
+            "取消", "确定删除",
+            null, View.OnClickListener {
+                exeBatchDeleteRequest(ids!!, {
+                    callback.invoke(ids);
+                });
+            });
+    }
+
+    /**
+     * 批量删除
+     */
+    private fun exeBatchDeleteRequest(goodsId: String, callback: () -> Unit) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.deleteGoods(goodsId)
+            if(resp?.isSuccess) {
+                view?.showToast("删除成功")
+                callback.invoke();
+            } else {
+                view?.showToast("操作失败")
+            }
+        }
+    }
+
     /**
      * 批量修改佣金
      */
@@ -161,6 +195,7 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
             }
         }
     }
+
     /**
      * 批量更新佣金
      */

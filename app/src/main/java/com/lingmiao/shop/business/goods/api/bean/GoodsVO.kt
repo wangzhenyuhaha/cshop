@@ -87,6 +87,19 @@ data class GoodsVO(
         const val STATUS_MIX_2 = 2
         const val STATUS_MIX_3 = 3
 
+
+
+        fun getEnableAuth() : String {
+            return String.format("%s,%s",
+                GoodsVO.AUTH_STATUS_NO_CHECK,
+                GoodsVO.AUTH_STATUS_CHECK_AND_PASS
+            );
+        }
+
+        fun getWaitAuth() : String {
+            return String.format("%s,%s", GoodsVO.AUTH_STATUS_WAITING, GoodsVO.AUTH_STATUS_EDITING);
+        }
+
     }
 
     fun getMenuType(): Int {

@@ -8,11 +8,13 @@ import com.lingmiao.shop.business.goods.pop.GoodsCategoryPop
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.commonpop.adapter.CenterItemAdapter
 import com.lingmiao.shop.business.commonpop.adapter.DefaultItemAdapter
 import com.lingmiao.shop.business.commonpop.pop.AbsThreeItemPop
 import com.lingmiao.shop.business.commonpop.pop.AbsTwoItemPop
 import com.lingmiao.shop.business.goods.adapter.GoodsCategoryAdapter
+import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import kotlinx.coroutines.launch
 
 /**
@@ -35,10 +37,11 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
     private var lv2CacheMap: HashMap<String, List<CategoryVO>> = HashMap()
     private var lv3CacheMap: HashMap<String, List<CategoryVO>> = HashMap()
 
-    fun showTypePop(context: Context, targetView : View, callback: (CategoryVO?) -> Unit) {
+    private var mSelectList: MutableList<CategoryVO> = arrayListOf();
+    fun showTypePop(context: Context, targetView : View, callback: (List<CategoryVO>?, String?) -> Unit) {
         mCoroutine.launch {
             // 一级类目 categoryId=0
-            val resp = GoodsRepository.loadUserCategory(LV1_CATEGORY_ID,0)
+            val resp = GoodsRepository.loadUserCategory(UserManager?.getLoginInfo()?.goodsCateId?:"0","0")
             if (resp.isSuccess) {
                 showTypePop(context, targetView, resp.data, callback)
             }
@@ -49,7 +52,7 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
         context: Context,
         targetView : View,
         list: List<CategoryVO>,
-        callback: (CategoryVO?) -> Unit
+        callback: (List<CategoryVO>?, String?) -> Unit
     ) {
         typePop = object : AbsTwoItemPop<CategoryVO>(context, ""){
 
@@ -71,40 +74,20 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
 
         }.apply {
             lv1Callback = {
+                mSelectList.clear();
+                mSelectList.add(it);
                 categoryName = it.name
                 loadLv2Category2(it);
             }
             lv2Callback = {
+                mSelectList.add(it);
                 categoryName = "${categoryName}/${it.name}"
-                callback.invoke(it)
+                callback.invoke(mSelectList, categoryName)
                 dismiss();
             }
         }
         typePop?.setLv1Data(list)
         typePop?.showPopupWindow(targetView)
-    }
-
-    private fun showPopWindow(
-        context: Context,
-        list: List<CategoryVO>,
-        callback: (String?, String?) -> Unit
-    ) {
-        categoryPop = GoodsCategoryPop(context).apply {
-            lv1Callback = {
-                categoryName = it.name
-                loadLv2Category(it)
-            }
-            lv2Callback = {
-                categoryName = "${categoryName}/${it.name}"
-                loadLv3Category(it)
-            }
-            lv3Callback = {
-                categoryName = "${categoryName}/${it.name}"
-                callback.invoke(it.categoryId, categoryName)
-            }
-        }
-        categoryPop?.setLv1Data(list)
-        categoryPop?.showPopupWindow()
     }
 
     private fun loadLv2Category2(categoryVO: CategoryVO) {
@@ -139,6 +122,29 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
                 categoryPop?.setLv2Data(resp.data)
             }
         }
+    }
+
+    private fun showPopWindow(
+        context: Context,
+        list: List<CategoryVO>,
+        callback: (String?, String?) -> Unit
+    ) {
+        categoryPop = GoodsCategoryPop(context).apply {
+            lv1Callback = {
+                categoryName = it.name
+                loadLv2Category(it)
+            }
+            lv2Callback = {
+                categoryName = "${categoryName}/${it.name}"
+                loadLv3Category(it)
+            }
+            lv3Callback = {
+                categoryName = "${categoryName}/${it.name}"
+                callback.invoke(it.categoryId, categoryName)
+            }
+        }
+        categoryPop?.setLv1Data(list)
+        categoryPop?.showPopupWindow()
     }
 
     private fun loadLv3Category(categoryVO: CategoryVO) {

@@ -10,6 +10,9 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.api.request.BindGoodsReq
+import retrofit2.Call
+import retrofit2.http.Body
 
 /**
  * Author : Elson
@@ -40,7 +43,7 @@ object GoodsRepository {
     }
 
     /**
-     * 所有
+     * 售馨商品列表
      */
     suspend fun loadSellOutGoodsList(pageNo: Int): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
@@ -50,6 +53,9 @@ object GoodsRepository {
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
+    /**
+     * 已上架、待上架、已下架
+     */
     suspend fun loadGoodsList(pageNo: Int, marketEnable: String, isAuth: String): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
@@ -58,6 +64,32 @@ object GoodsRepository {
         map.put("is_auth_string", isAuth)
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
+
+
+    suspend fun loadGoodsListOfCatePath(pageNo: Int, marketEnable: String, isAuth: String, path : String?): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("page_no", pageNo)
+        map.put("page_size", 10)
+        map.put("market_enable", marketEnable)
+        map.put("is_auth_string", isAuth)
+        if(path != null) {
+            map.put("category_path", path!!)
+        }
+        return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+
+    suspend fun loadMenuGoodsList(pageNo: Int, marketEnable: String, isAuth: String, catPath : String?): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("page_no", pageNo)
+        map.put("page_size", 10)
+        // map.put("market_enable", marketEnable)
+        // map.put("is_auth_string", isAuth)
+        if(catPath != null) {
+            map.put("shop_cat_path", catPath!!)
+        }
+        return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+
 
     /**
      * 新增商品
@@ -213,8 +245,8 @@ object GoodsRepository {
     /**
      * 获取商品分类(一类、二类、三类)
      */
-    suspend fun loadUserCategory(categoryId: String, id : Int?=null): HiResponse<List<CategoryVO>> {
-        return apiService.loadUserCategory(categoryId, id).awaitHiResponse()
+    suspend fun loadUserCategory(categoryId: String?, sellerId : String?=null): HiResponse<List<CategoryVO>> {
+        return apiService.loadUserCategory(categoryId, sellerId).awaitHiResponse()
     }
 
     suspend fun addCategory(bean : CategoryVO) : HiResponse<CategoryVO> {
@@ -290,6 +322,10 @@ object GoodsRepository {
         return apiService.submitShopGroup(map).awaitHiResponse()
     }
 
+    suspend fun getShopGroup(groupId: String) : HiResponse<ShopGroupVO> {
+        return apiService.getShopGroup(groupId).awaitHiResponse()
+    }
+
     /**
      * 更新店铺分组
      */
@@ -313,6 +349,9 @@ object GoodsRepository {
         return apiService.deleteShopGroupPop(shopCatId).awaitHiResponse()
     }
 
+    suspend fun bindGoods(ids: List<Int?>?, id : String?) : HiResponse<Unit> {
+        return apiService.bindGoods(ids, id).awaitHiResponse();
+    }
     /**
      * 获取配送模板
      * template_type = TONGCHENG

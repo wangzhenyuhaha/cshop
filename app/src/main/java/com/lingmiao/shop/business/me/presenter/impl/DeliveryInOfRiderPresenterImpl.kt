@@ -4,6 +4,7 @@ import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.james.common.base.BasePreImpl
+import com.lingmiao.shop.business.goods.api.request.RiderSettingVo
 import com.lingmiao.shop.business.me.presenter.DeliveryInTimePresenter
 import com.lingmiao.shop.business.me.presenter.DeliveryOfRiderPresenter
 import com.lingmiao.shop.business.me.presenter.LinkInSettingPresenter
@@ -39,19 +40,15 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
         }
     }
 
-    override fun updateModel(item: FreightVoItem) {
+    override fun updateModel(id : String, isToSeller : Int, toRiderTime : Int) {
         mCoroutine.launch {
             view.showPageLoading();
-            if(item?.isLocalTemplateType()) {
-                val resp = ToolsRepository.updateShipTemplates(item?.id!!, item);
-                handleResponse(resp) {
-                    view.updateModelSuccess(resp.data);
-                }
-            } else {
-                val resp = ToolsRepository.updateShipTemplates(item);
-                handleResponse(resp) {
-                    view.updateModelSuccess(true);
-                }
+            val req = RiderSettingVo();
+            req.toSeller = isToSeller;
+            req.toSellerTime = toRiderTime;
+            val resp = ToolsRepository.updateRiderSetting(id, req);
+            handleResponse(resp) {
+                view.updateModelSuccess(true);
             }
             view.hidePageLoading();
         }
@@ -65,17 +62,28 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
         return json?.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting);
     }
 
-    override fun getTemplate(str : String) {
+    override fun getTemplate() {
         //shops/ship-templates
         mCoroutine.launch {
             //view.showDialogLoading();
-            val resp = ToolsRepository.shipTemplates(str);
+            val resp = ToolsRepository.shipTemplates("QISHOU");
             handleResponse(resp) {
                 if(resp.data.size > 0) {
                     view.setModel(resp?.data?.get(0));
                 }
             }
             //view.hideDialogLoading();
+        }
+    }
+
+    override fun getShopTemplate() {
+        mCoroutine.launch {
+            val resp = ToolsRepository.shipTemplates("TONGCHENG");
+            handleResponse(resp) {
+                if(resp.data.size > 0) {
+                    view.onSetShopTemplate(resp?.data?.get(0));
+                }
+            }
         }
     }
 

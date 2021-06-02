@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/color_EDEDED"
+    android:orientation="vertical">
+
+    <!--  模块一  -->
+    <com.james.common.view.ILinearLayout
+        style="@style/goods_group_edit_container"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_15"
+        app:ivBgColor="@color/color_ffffff">
+
+        <!--   菜单名称     -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_7"
+                android:src="@mipmap/common_must_input" />
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="菜单名称" />
+
+            <EditText
+                android:id="@+id/menuNameEdt"
+                style="@style/goods_group_edit_right"
+                android:paddingRight="@dimen/dimen_20"
+                android:hint="菜单名称，建议4个字以内" />
+        </LinearLayout>
+
+        <View style="@style/common_divider" />
+
+        <!--   二级分组     -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal"
+            android:id="@+id/menuChildrenLayout"
+            android:paddingRight="@dimen/dimen_5"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="添加二级菜单" />
+
+            <TextView
+                android:id="@+id/addChildrenTv"
+                style="@style/goods_group_edit_right"
+                android:drawableRight="@mipmap/goods_spec_blue_plus"
+                android:hint="" />
+
+        </LinearLayout>
+
+    </com.james.common.view.ILinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/menuChildren"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/submitTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_38"
+        android:layout_margin="@dimen/dimen_14"
+        android:background="@drawable/shape_goods_pop_btn"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dimen_14" />
+
+</LinearLayout>

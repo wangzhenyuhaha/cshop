@@ -67,6 +67,11 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
                 GoodsMenuPop.TYPE_EDIT -> {
                     menuPopPre.clickEditGoods(context, goodsVO)
                 }
+                GoodsMenuPop.TYPE_ENABLE -> {
+                    menuPopPre.clickEnableGoods(goodsVO.goodsId) {
+                        view.onGoodsDisable(goodsVO.goodsId, position)
+                    }
+                }
                 GoodsMenuPop.TYPE_DISABLE -> {
                     menuPopPre.clickDisableGoods(goodsVO.goodsId) {
                         view.onGoodsDisable(goodsVO.goodsId, position)

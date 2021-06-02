@@ -2,8 +2,6 @@ package com.lingmiao.shop.business.main
 
 import android.content.Intent
 import android.view.View
-import com.amap.api.maps.model.Poi
-import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.*
@@ -12,6 +10,7 @@ import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.exts.checkNotBlack
+import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import kotlinx.android.synthetic.main.main_activity_apply_shop_info.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -124,7 +123,18 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         hideDialogLoading()
     }
 
+    // 单选
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun updateShopCategory(applyShopCategory: CategoryVO) {
+        val categoryIdSB = StringBuilder()
+        val categoryNameSB = StringBuilder()
+        categoryIdSB.append(applyShopCategory.categoryId)
+        categoryNameSB.append(applyShopCategory.name)
+        applyShopInfo.goodsManagementCategory = categoryIdSB.toString()
+        tvShopInfoCategory.text = categoryNameSB.toString()
+    }
 
+    // 多选
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateShopCategory(event: List<ApplyShopCategory>) {
         selectedCategoryList = event

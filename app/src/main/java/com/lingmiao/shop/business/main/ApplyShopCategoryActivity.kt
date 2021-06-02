@@ -6,11 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.main.bean.ApplyShopCategory
 import com.lingmiao.shop.business.main.presenter.ApplyShopCategoryPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopCategoryPresenterImpl
 import com.james.common.base.BaseActivity
-import com.james.common.netcore.coroutine.CoroutineSupport
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import kotlinx.android.synthetic.main.main_activity_apply_shop_category.*
 import org.greenrobot.eventbus.EventBus
@@ -21,8 +19,6 @@ import org.greenrobot.eventbus.EventBus
 class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
     ApplyShopCategoryPresenter.View {
 
-
-    private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
     private val tempList = mutableListOf<CategoryVO>()
     private val initSelectedList = mutableListOf<String>()
 
@@ -34,7 +30,9 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
             val ivShopCategorySelect= helper.getView<ImageView>(R.id.ivShopCategorySelect)
             val viShopCategoryDivide= helper.getView<View>(R.id.viShopCategoryDivide)
 
-            ivShopCategorySelect.isSelected = mSelectedPosition == helper?.adapterPosition;//item.selected
+            // 多选用：item.selected
+            // 单选
+            ivShopCategorySelect.isSelected = mSelectedPosition == helper?.adapterPosition;
             viShopCategoryDivide.visibility = if(helper.layoutPosition==tempList.size-1) View.GONE else View.VISIBLE
         }
 
@@ -73,18 +71,18 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
         }
 
         tvShopCategoryNext.setOnClickListener {
-            val tempList = adapter.data as List<ApplyShopCategory>
+            val tempList = adapter.data as List<CategoryVO>
             if(tempList.isEmpty()){
                 showToast("获取类目数据失败")
                 return@setOnClickListener
             }
-            // 单选
-            val selectedList = tempList.filterIndexed { index, applyShopCategory -> index == mSelectedPosition }
-            if(selectedList.isEmpty()){
+            if(mSelectedPosition < 0 || mSelectedPosition > adapter.data.size) {
                 showToast("请至少选择1个类目")
                 return@setOnClickListener
             }
-            EventBus.getDefault().post(selectedList)
+            // 单选
+            val item = tempList[mSelectedPosition];
+            EventBus.getDefault().post(item)
             finish()
         }
     }
@@ -99,9 +97,10 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
         tempList.clear()
         tempList.addAll(list)
         if(initSelectedList.size>0){
-            for (item in tempList) {
+            tempList.forEachIndexed { index, item ->
                 if(initSelectedList.contains(item.categoryId)){
                     item.selected = true
+                    mSelectedPosition = index;
                 }
             }
         }

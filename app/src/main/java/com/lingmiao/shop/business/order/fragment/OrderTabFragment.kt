@@ -81,7 +81,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         fragmentList.add(SingleOrderListFragment.newInstance("COMPLETE"))
         fragmentList.add(SingleOrderListFragment.newInstance("CANCELLED"))
         vpContent.adapter = adapter
-        vpContent.offscreenPageLimit = 4
+        vpContent.offscreenPageLimit = 0
         vpContent.addOnPageChangeListener(this)
 
         tvTab1.setOnClickListener { vpContent.currentItem = 0 }

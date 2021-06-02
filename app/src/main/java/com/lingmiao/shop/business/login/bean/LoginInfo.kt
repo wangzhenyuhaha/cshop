@@ -18,8 +18,8 @@ class LoginInfo {
     var refreshToken: String? = null //刷新token
     @SerializedName("role_id")
     var roleId: Int? = null
-
-
+    @SerializedName("goods_management_category")
+    var goodsCateId : String? = null
     @SerializedName("shop_status")
     var shopStatus: String? = null  //店铺状态  CLOSED("店铺关闭")  REFUSED("审核拒绝")  APPLY("申请开店")
     @SerializedName("uid")

@@ -9,6 +9,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.goods.fragment.TopMenuFragment
 import com.lingmiao.shop.business.goods.fragment.UsedMenuFragment
+import com.lingmiao.shop.business.goods.fragment.UserMenuFragment
 import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
 
 /**
@@ -40,13 +41,14 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
     }
 
     private fun initTitle() {
-        mToolBarDelegate.setMidTitle(getString(R.string.manager_setting_title))
+        mToolBarDelegate.setMidTitle(getString(R.string.goods_menu_title))
     }
 
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
-        fragments.add(TopMenuFragment.newInstance())
-        fragments.add(UsedMenuFragment.newInstance())
+        fragments.add(TopMenuFragment.newInstance(1))
+        fragments.add(UserMenuFragment.newInstance(0))
+//        fragments.add(UsedMenuFragment.newInstance())
 
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)

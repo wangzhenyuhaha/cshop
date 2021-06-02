@@ -2,11 +2,9 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
-import com.lingmiao.shop.business.goods.GoodsPublishActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
-import com.lingmiao.shop.business.goods.fragment.GoodsFragment
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.james.common.utils.exts.isNotEmpty
@@ -25,16 +23,6 @@ class GoodsMarketDisablePreImpl(override var context: Context,override var view:
     GoodsBatchPreImpl(context, view), GoodsStatusPre {
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
-
-    private fun getAuth() : String {
-        return String.format("%s,%s,%s,%s,%s",
-            GoodsVO.AUTH_STATUS_WAITING,
-            GoodsVO.AUTH_STATUS_NO_CHECK,
-            GoodsVO.AUTH_STATUS_CHECK_AND_PASS,
-            GoodsVO.AUTH_STATUS_CHECK_AND_REJECT,
-            GoodsVO.AUTH_STATUS_EDITING
-        );
-    }
 
     override fun loadListData(page: IPage, datas: List<*>) {
         mCoroutine.launch {
@@ -74,7 +62,6 @@ class GoodsMarketDisablePreImpl(override var context: Context,override var view:
                 }
                 GoodsMenuPop.TYPE_DELETE -> {
                     menuPopPre.clickDeleteGoods(goodsVO.goodsId) {
-
                         view.onGoodsDelete(goodsVO.goodsId, position)
                     }
                 }

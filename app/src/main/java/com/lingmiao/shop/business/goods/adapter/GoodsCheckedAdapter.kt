@@ -28,10 +28,6 @@ class GoodsCheckedAdapter : BaseQuickAdapter<GoodsVO, BaseViewHolder>(R.layout.g
 
             helper.setText(R.id.goodsPriceTv, formatDouble(price))
 
-//            setOnCheckedChangeListener(helper.getView(R.id.menuIv), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
-//                item?.isChecked = isChecked;
-//            }
-
             helper.setChecked(R.id.menuIv, item?.isChecked?:false);
             helper.addOnClickListener(R.id.menuIv);
         }
@@ -47,7 +43,6 @@ class GoodsCheckedAdapter : BaseQuickAdapter<GoodsVO, BaseViewHolder>(R.layout.g
         }
         return drawableRes;
     }
-
 
     fun shiftChecked(position: Int) {
         data.forEachIndexed { index, goodsVO ->

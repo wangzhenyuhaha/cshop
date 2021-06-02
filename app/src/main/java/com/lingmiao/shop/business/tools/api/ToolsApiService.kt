@@ -5,6 +5,7 @@ import com.lingmiao.shop.business.tools.bean.FreightVo
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
 import com.lingmiao.shop.business.wallet.bean.DataVO
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.goods.api.request.RiderSettingVo
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -71,6 +72,14 @@ interface ToolsApiService {
     @WithHiResponse
     @POST("seller/shops/ship-templates/updateLocalTemp/{id}")
     fun updateShipTemplates(@Path(value = "id") id: String, @Body vo : FreightVoItem ) : Call<Boolean>;
+
+    /**
+     * 单独修改骑手转商家的配置
+     */
+    @WithHiResponse
+    @PUT("seller/shops/ship-templates/updateRiderSetting/{id}")
+    fun updateRiderSetting(@Path(value = "id") id: String, @Body vo : RiderSettingVo) : Call<Unit>
+
     /**
      * 查询物流模板
      */
