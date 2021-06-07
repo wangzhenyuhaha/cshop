@@ -18,16 +18,21 @@ class PopUserCatePreImpl(val view: BaseView) : BasePreImpl(view) {
 
     private var goodsGroupPop: UserGoodsPop? = null
 
-    private var lv1Cache: MutableList<CategoryVO> = mutableListOf()
+    private var lv1Cache: List<CategoryVO>? = null
 
     fun showGoodsGroupPop(context: Context,cateId : String?, callback: (List<CategoryVO>?, String?) -> Unit) {
-        mCoroutine.launch {
-            view?.showDialogLoading();
-            val resp = GoodsRepository.loadUserCategory(cateId,String.format("%s", UserManager?.getLoginInfo()?.goodsCateId?:"0"))
-            if (resp.isSuccess) {
-                showPopWindow(context, resp.data, callback)
+        if(lv1Cache != null) {
+            showPopWindow(context, lv1Cache!!, callback)
+        } else {
+            mCoroutine.launch {
+                view?.showDialogLoading();
+                val resp = GoodsRepository.loadUserCategory(cateId,String.format("%s", UserManager?.getLoginInfo()?.goodsCateId?:"0"));
+                lv1Cache = resp.data;
+                if (resp.isSuccess) {
+                    showPopWindow(context, resp.data, callback)
+                }
+                view?.hideDialogLoading()
             }
-            view?.hideDialogLoading()
         }
     }
 
@@ -46,7 +51,7 @@ class PopUserCatePreImpl(val view: BaseView) : BasePreImpl(view) {
     }
 
     override fun onDestroy() {
-        lv1Cache.clear()
+        lv1Cache = null;
         super.onDestroy()
     }
 }

@@ -106,6 +106,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
                     mPresenter?.getShareInfo(this)
                 }
             }
+            R.id.tvManagerSetting,
             R.id.tvSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)

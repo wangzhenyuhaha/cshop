@@ -48,11 +48,11 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo,ISalesSettingPresenter
                             "结束提示", "结束后不可恢复，确定要结束该活动吗？",
                             "取消", "确定结束",
                             null, View.OnClickListener {
-
+                                mPresenter?.endDiscount(item?.id, position);
                             })
                     }
                     R.id.tvSalesView -> {
-                        SalesActivityEditActivity.edit(context as Activity, item, REQUEST_EDIT)
+                        SalesActivityEditActivity.view(context as Activity, item)
                     }
                     R.id.salesGoodsTv -> {
                         SalesGoodsActivity.edit(context as Activity, item, REQUEST_GOODS)
@@ -74,7 +74,6 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo,ISalesSettingPresenter
             if(requestCode == REQUEST_EDIT) {
                 mLoadMoreDelegate?.refresh()
             } else if(requestCode == REQUEST_GOODS) {
-
 
             }
         }
@@ -102,6 +101,13 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo,ISalesSettingPresenter
     override fun onDelete(position: Int) {
         if(position < mAdapter.data.size) {
             mAdapter.remove(position);
+        }
+    }
+
+    override fun onEndDiscount(position: Int) {
+        if(position < mAdapter.data.size) {
+            mAdapter.data.get(position).status = "END";
+            mAdapter.notifyItemChanged(position)
         }
     }
 

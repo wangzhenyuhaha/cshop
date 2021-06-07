@@ -52,8 +52,7 @@ class MyPreImpl(val context: Context, private var view: MyPresenter.View) : Base
 
 		//share.shareImage(item.imageUrl, 50);
 
-//		share.miniTypeToTest();
-		share.miniTypeToRelease();
+		share.miniTypeToPreview();
 		share.shareMini("gh_dbbbe37a6ac7", item.path);
 
 		// share.shareImageResource(R.mipmap.ic_launcher);

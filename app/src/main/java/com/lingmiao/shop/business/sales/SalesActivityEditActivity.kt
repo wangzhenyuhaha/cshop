@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.sales
 
 import android.app.Activity
 import android.content.Intent
+import android.view.View
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
@@ -9,6 +10,7 @@ import com.james.common.exception.BizException
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.GoodsSalesSelectActivity
+import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.sales.adapter.ActivitySalesAdapter
 import com.lingmiao.shop.business.sales.bean.SalesActivityItemVo
 import com.lingmiao.shop.business.sales.bean.SalesVo
@@ -29,6 +31,8 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
     companion object {
 
         const val KEY_ITEM = "KEY_ITEM"
+        const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
+        val REQUEST_GOODS = 299;
 
         fun open(context: Activity, result : Int) {
             edit(context, null, result);
@@ -40,11 +44,19 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
             context.startActivityForResult(intent, result)
         }
 
+        fun view(context: Activity, item: SalesVo?) {
+            val intent = Intent(context, SalesActivityEditActivity::class.java)
+            intent.putExtra(KEY_ITEM, item)
+            intent.putExtra(KEY_VIEW_TYPE, 2)
+            context.startActivity(intent)
+        }
+
     }
 
 
     override fun initBundles() {
         mItem = intent?.getSerializableExtra(KEY_ITEM) as SalesVo?;
+        mViewType = intent?.getIntExtra(KEY_VIEW_TYPE, 0);
     }
 
     override fun createPresenter(): ISalesEditPresenter {
@@ -63,17 +75,20 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
     var pvCustomTime2 : TimePickerView? = null;
 
     var mItem : SalesVo? = null;
+    var mViewType : Int? = 0
 
     override fun initView() {
         mToolBarDelegate.setMidTitle(getString(R.string.sales_activity_edit_title))
 
+
         activityGoodsPickTv.singleClick {
-            GoodsSalesSelectActivity.sales(context, "3");
+            SalesGoodsActivity.open(context, REQUEST_GOODS);
         }
         initPricePart();
 
         initDate()
 
+        submitTv.visibility = if(mViewType == 2) View.GONE else View.VISIBLE;
         submitTv.singleClick {
             try {
                 checkNotBlack(menuNameEdt.getViewText()) { "请输入活动名称" };
@@ -91,9 +106,11 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
                 showToast("请输入满减金额")
                 return@singleClick;
             }
-            if(mItem == null) {
-                mItem = SalesVo();
+            if(mItem?.rangeType == null) {
+                showToast("请选择参与活动的商品")
+                return@singleClick;
             }
+
             mItem?.title = menuNameEdt.getViewText()
             mItem?.startTime = dateTime2Date(firstMenuTv.getViewText())?.time;
             mItem?.endTime = dateTime2Date(secondMenuTv.getViewText())?.time;
@@ -111,6 +128,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         if(mItem != null) {
             resetUi();
         } else {
+            mItem = SalesVo();
             mDiscountList.add(SalesActivityItemVo());
             mDiscountAdapter.replaceData(mDiscountList);
         }
@@ -193,6 +211,23 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
     override fun onSubmitDiscount() {
         setResult(Activity.RESULT_OK)
         finish();
+    }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if(requestCode == REQUEST_GOODS) {
+                if(mItem == null) {
+                    mItem = SalesVo();
+                }
+
+                mItem?.rangeType = data?.getIntExtra("type", 1);
+                mItem?.goodsList = data?.getSerializableExtra("goodsList") as ArrayList<GoodsVO>?;
+                activityGoodsPickTv.text = "已选择";
+            }
+        }
     }
 
 

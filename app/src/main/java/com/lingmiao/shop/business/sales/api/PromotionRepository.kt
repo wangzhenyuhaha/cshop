@@ -28,8 +28,20 @@ object PromotionRepository {
         return apiService.getDiscounts(map).awaitHiResponse();
     }
 
+    suspend fun getDiscountById(id : String) : HiResponse<SalesVo> {
+        return apiService.getDiscountById(id).awaitHiResponse();
+    }
+
+    suspend fun update(item : SalesVo) : HiResponse<SalesVo> {
+        return apiService.update(item?.id!!, item).awaitHiResponse();
+    }
+
     suspend fun deleteById(id : String) : HiResponse<Unit> {
         return apiService.deleteDiscountById(id).awaitHiResponse();
+    }
+
+    suspend fun endDiscount(id : String) : HiResponse<Unit> {
+        return apiService.endDiscount(id).awaitHiResponse();
     }
 
 }

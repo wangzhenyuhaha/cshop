@@ -1,7 +1,6 @@
 package com.lingmiao.shop.util
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import com.bigkoo.pickerview.builder.TimePickerBuilder
@@ -24,13 +23,17 @@ const val DATE_FORMAT_OTHER = "yyyy/MM/dd"
 
 const val DATE_TIME_FORMAT_OTHER = "yyyy/MM/dd HH:mm:ss"
 
-fun stampToDate(s: Long?): String {
+fun stampToDate(s: Long?, formatType: String=DATE_TIME_FORMAT): String {
     if(s == null) {
         return "";
     }
-    val simpleDateFormat = SimpleDateFormat(DATE_TIME_FORMAT)
+    val simpleDateFormat = SimpleDateFormat(formatType)
     val date = Date(s * 1000)
     return simpleDateFormat.format(date)
+}
+
+fun stampToDate(s: Long?): String {
+    return stampToDate(s, DATE_TIME_FORMAT);
 }
 
 fun longToDate(s: Long? ): String {

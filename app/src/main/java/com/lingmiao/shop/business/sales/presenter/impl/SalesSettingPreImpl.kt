@@ -15,6 +15,7 @@ Auther      : Fox
 Desc        :
  **/
 class SalesSettingPreImpl(var context: Context, var view: ISalesSettingPresenter.PubView) : BasePreImpl(view),ISalesSettingPresenter {
+
     override fun loadListData(page: IPage, list: List<*>) {
         mCoroutine.launch {
             if (list.isEmpty()) {
@@ -48,6 +49,20 @@ class SalesSettingPreImpl(var context: Context, var view: ISalesSettingPresenter
             val resp = PromotionRepository.deleteById(id!!);
             handleResponse(resp) {
                 view.onDelete(position);
+            }
+            view?.hideDialogLoading();
+        }
+    }
+
+    override fun endDiscount(id: String?, position: Int) {
+        if(id == null || id.isEmpty()) {
+            return;
+        }
+        mCoroutine.launch {
+            view?.showDialogLoading()
+            val resp = PromotionRepository.endDiscount(id!!);
+            handleResponse(resp) {
+                view.onEndDiscount(position);
             }
             view?.hideDialogLoading();
         }

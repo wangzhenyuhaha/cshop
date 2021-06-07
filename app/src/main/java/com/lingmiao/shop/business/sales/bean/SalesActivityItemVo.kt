@@ -19,8 +19,8 @@ class SalesActivityItemVo {
             var it = SalesActivityItemVo();
             it.peach = item.fullMoney
             it.least = item.minusValue
-            it.startTime = longToDate(item?.startTime?:0 * 1000, DATE_TIME_FORMAT_OTHER);
-            it.endTime = longToDate(item?.endTime?:0 * 1000, DATE_TIME_FORMAT_OTHER);
+            it.startTime = longToDate(item?.startTime?:0, DATE_TIME_FORMAT_OTHER);
+            it.endTime = longToDate(item?.endTime?:0, DATE_TIME_FORMAT_OTHER);
             return it;
         }
     }

@@ -147,6 +147,7 @@
     <string name="order_ship_type_hint">配送方式</string>
     <string name="order_ship_rider_hint">配送骑士</string>
     <string name="order_ship_hint">配送信息</string>
+    <string name="sales_goods_title">选择商品</string>
 
     <!--vip-->
     <string name="vip_deposit_applied">已加入保障体系</string>

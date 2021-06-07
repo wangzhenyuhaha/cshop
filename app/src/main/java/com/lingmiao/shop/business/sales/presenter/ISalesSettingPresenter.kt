@@ -17,7 +17,10 @@ interface ISalesSettingPresenter : BasePresenter {
 
     fun delete(id : String?, position: Int);
 
+    fun endDiscount(id : String?, position: Int);
+
     interface PubView : BaseView, BaseLoadMoreView<SalesVo> {
         fun onDelete(position: Int);
+        fun onEndDiscount(position: Int);
     }
 }

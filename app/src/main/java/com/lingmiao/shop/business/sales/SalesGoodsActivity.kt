@@ -2,6 +2,8 @@ package com.lingmiao.shop.business.sales
 
 import android.app.Activity
 import android.content.Intent
+import android.view.View
+import com.amap.api.mapcore.util.it
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
@@ -60,25 +62,46 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
         return R.layout.sales_activity_goods;
     }
 
-    override fun initView() {
+    override fun initOthers() {
+        mToolBarDelegate.setMidTitle(getString(R.string.sales_goods_title))
         menuCateL1Tv.singleClick {
             mPresenter?.showCategoryPop("0",it);
         }
         goodsRg.setOnCheckedChangeListener { group, checkedId ->
             if(checkedId == R.id.allGoodsRb) {
-                partGoodsLayout.gone()
-
+                partGoodsLayout.visibility = View.INVISIBLE
             } else if(checkedId == R.id.partGoodsRb){
                 partGoodsLayout.visiable()
             }
         }
         submitTv.singleClick {
+            val list = mAdapter?.data.filter { it?.isChecked == true };
+            if(mItem != null) {
+                mItem?.goodsList = list
+                mItem?.rangeType = if(allGoodsRb.isChecked) 1 else 2;
+                mPresenter?.updateSalesGoods(mItem!!);
+            } else {
+                val intent = Intent();
+                intent.putExtra("type", if(allGoodsRb.isChecked) 1 else 2);
+                if(allGoodsRb.isChecked) {
+                    intent.putExtra("goodsList", list as ArrayList<GoodsVO>);
+                }
+                setResult(Activity.RESULT_OK, intent)
+                finish();
+            }
 
         }
         mItem?.apply {
-            allGoodsRb.isChecked = rangeType == 1
-            partGoodsRb.isChecked = rangeType == 0;
+            //onSetSalesGoods(mItem!!);
+            if(mItem?.id?.isNotEmpty()?:false) {
+                mPresenter?.getSalesGoods(mItem?.id!!);
+            }
+//            allGoodsRb.isChecked = rangeType == 1
+//            partGoodsRb.isChecked = rangeType == 0;
         }
+//        if(mItem != null && mItem?.id?.isNotEmpty()?:false) {
+//            mPresenter?.getSalesGoods(mItem?.id!!);
+//        }
     }
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
@@ -115,10 +138,38 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
         }
     }
 
+    override fun onSetSalesGoods(item: SalesVo) {
+        mItem = item;
+        item?.apply {
+            if(item.rangeType ==1) {
+                if(!allGoodsRb.isChecked) {
+                    allGoodsRb.isChecked = true;
+                }
+            } else if(item.rangeType ==2){
+                if(!partGoodsRb.isChecked) {
+                    partGoodsRb.isChecked = true;
+                }
+            }
+            item?.goodsList?.forEach {
+                it.isChecked = true;
+            }
+            mAdapter?.replaceData(item?.goodsList?: mutableListOf());
+        }
+    }
+
+    override fun onUpdatedGoods(item : SalesVo) {
+        mItem = item;
+        showToast("设置成功")
+        finish();
+    }
+
     override fun executePageRequest(page: IPage) {
         mPresenter?.loadListData(catPath, page, mAdapter.data)
     }
 
+    override fun autoRefresh(): Boolean {
+        return false;
+    }
 
 //    fun setCheckedCount(count: Int) {
 //        goodsCheckedCountTv.text = String.format("已选择%s件商品", count);

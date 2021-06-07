@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.goods.adapter
 
-import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -8,7 +7,6 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.config.GoodsConfig
-import com.lingmiao.shop.business.tools.adapter.setOnCheckedChangeListener
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
 
