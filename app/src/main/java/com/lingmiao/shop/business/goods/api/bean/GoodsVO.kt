@@ -17,6 +17,8 @@ data class GoodsVO(
     var buyCount: String?,
     @SerializedName("create_time")
     var createTime: Long?,
+    @SerializedName("quantity")
+    var quantity: String? = null,
     @SerializedName("enable_quantity")
     var enableQuantity: Int = 0,
     @SerializedName("goods_id")
@@ -32,16 +34,25 @@ data class GoodsVO(
      */
     @SerializedName("goods_status_mix")
     var goodsStatusMix: Int = 0,
+    /**
+     * 0 未售馨
+     * 1 已售馨
+     */
+    @SerializedName("goods_quantity_status_mix")
+    var goodsQuantityStatusMix : Int = 0,
+    /**
+     *  3未审核通过 ；0，4审核中；1，2审核通过
+     */
     @SerializedName("is_auth")
     var isAuth: Int = 0,
+    @SerializedName("auth_message")
+    var authMessage : String = "",
     @SerializedName("market_enable")
     var marketEnable: Int = 0, //上架状态 1上架 0下架
     @SerializedName("price")
     var price: Double = 0.0,
     @SerializedName("priority")
     var priority: Int = 0,
-    @SerializedName("quantity")
-    var quantity: String? = null,
     @SerializedName("seller_name")
     var sellerName: String?,
     @SerializedName("sn")
@@ -91,15 +102,19 @@ data class GoodsVO(
 
         fun getEnableAuth() : String {
             return String.format("%s,%s",
-                GoodsVO.AUTH_STATUS_NO_CHECK,
-                GoodsVO.AUTH_STATUS_CHECK_AND_PASS
+                AUTH_STATUS_NO_CHECK,
+                AUTH_STATUS_CHECK_AND_PASS
             );
         }
 
         fun getWaitAuth() : String {
-            return String.format("%s,%s", GoodsVO.AUTH_STATUS_WAITING, GoodsVO.AUTH_STATUS_EDITING);
+            return String.format("%s,%s,%s", AUTH_STATUS_WAITING, AUTH_STATUS_CHECK_AND_REJECT, AUTH_STATUS_EDITING);
         }
 
+    }
+
+    fun isSellOut() : Boolean {
+        return goodsQuantityStatusMix == 1;
     }
 
     fun getMenuType(): Int {
@@ -107,7 +122,6 @@ data class GoodsVO(
             STATUS_MIX_0 -> (GoodsMenuPop.TYPE_EDIT)
             STATUS_MIX_1 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_DISABLE or GoodsMenuPop.TYPE_QUANTITY or GoodsMenuPop.TYPE_SHARE)
             STATUS_MIX_2 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_ENABLE or GoodsMenuPop.TYPE_DELETE)
-            STATUS_MIX_3 -> (GoodsMenuPop.TYPE_EDIT)
             else -> (GoodsMenuPop.TYPE_EDIT)
         }
     }

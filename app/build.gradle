@@ -122,6 +122,5 @@ dependencies {
     api project(':map')
 
     api project(':wechat')
-    implementation 'com.mikhaellopez:rxanimation:1.0.0'
 
 }

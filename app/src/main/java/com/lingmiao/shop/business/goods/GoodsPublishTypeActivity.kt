@@ -1,7 +1,5 @@
 package com.lingmiao.shop.business.goods
 
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsPublishTypeAdapter
@@ -9,6 +7,7 @@ import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishTypePre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishTypePreImpl
 import com.lingmiao.shop.business.tools.adapter.AreasAdapter
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.goods_activity_goods_publish_type.*
 
 /**
@@ -77,14 +76,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
     }
 
     private fun initRecycleView() {
-        typeRv.apply {
-            layoutManager = initLayoutManager();
-            adapter = mTypeAdapter!!;
-        }
-    }
-
-    private fun initLayoutManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(this)
+        typeRv.initAdapter(mTypeAdapter!!)
     }
 
     private fun initData() {

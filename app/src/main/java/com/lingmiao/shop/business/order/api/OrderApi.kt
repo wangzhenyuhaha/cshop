@@ -53,6 +53,26 @@ interface OrderApi {
         @Path("order_sn") orderSn: String
     ): Response<ResponseBody>
 
+    // 接单/拒单
+    @GET("/seller/trade/orders/{order_sn}/{is_accept}/accept")
+    @WithHiResponse
+    suspend fun takeOrder(@Path("order_sn") orderSn: String, @Path("is_accept") is_accept: Int): Response<ResponseBody>
+
+    // 商家审核售后订单
+    @POST("/seller/after-sales/audits/{sn}")
+    @WithHiResponse
+    suspend fun service(@Path("sn") orderSn: String, @Body service : OrderServiceVo): Response<ResponseBody>
+
+    // 订单发货
+    @GET("/seller/trade/orders/sellerApp/delivery/{sn}")
+    @WithHiResponse
+    suspend fun ship(@Path("sn") orderSn: String): Response<ResponseBody>
+
+    //  商家订单已送达
+    @GET("/seller/trade/orders/sellerApp/confirmRog/{sn}")
+    @WithHiResponse
+    suspend fun sign(@Path("sn") orderSn: String): Response<ResponseBody>
+
     //    发货接口
     @POST("seller/trade/orders/{order_sn}/delivery")
     suspend fun requestOrderSendGoodsData(

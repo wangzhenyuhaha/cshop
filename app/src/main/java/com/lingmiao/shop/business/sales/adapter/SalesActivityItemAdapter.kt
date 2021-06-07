@@ -13,7 +13,7 @@ Desc        :
 class SalesActivityItemAdapter : BaseQuickAdapter<SalesActivityItemVo, BaseViewHolder>(R.layout.sales_adapter_sales_activity) {
 
     override fun convert(helper: BaseViewHolder, item: SalesActivityItemVo?) {
-        helper.setText(R.id.activityNameTv, "满35减5")
-        helper.setText(R.id.activityHintTv, "2021/1/1-2021/5/1")
+        helper.setText(R.id.activityNameTv, String.format("满%s减%s", item?.peach, item?.least))
+        helper.setText(R.id.activityHintTv, String.format("%s-%s", item?.startTime, item?.endTime))
     }
 }

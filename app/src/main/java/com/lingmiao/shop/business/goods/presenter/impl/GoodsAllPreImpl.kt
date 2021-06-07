@@ -46,16 +46,8 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
                 view.onLoadMoreFailed()
             }
 
-//            val goodsList = getTempList();
-//            view.onLoadMoreSuccess(goodsList, getTempList().isNotEmpty())
             view.hidePageLoading()
         }
-    }
-
-    fun getTempList() : List<GoodsVO>? {
-        val regionsType = object : TypeToken<PageVO<GoodsVO>>(){}.type;
-        var json = Gson().fromJson<PageVO<GoodsVO>>(ResourceUtils.readAssets2String("goods.json"), regionsType);
-        return json?.data;
     }
 
     override fun clickMenuView(goodsVO: GoodsVO?, position: Int, target: View) {

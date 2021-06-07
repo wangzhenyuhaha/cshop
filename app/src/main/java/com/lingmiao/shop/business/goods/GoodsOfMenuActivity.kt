@@ -59,7 +59,7 @@ class GoodsOfMenuActivity : BaseActivity<GoodsOfMenuPre>(), GoodsOfMenuPre.View 
     }
 
     override fun initView() {
-        mToolBarDelegate.setMidTitle("菜单商品管理")
+        mToolBarDelegate.setMidTitle(item?.shopCatName + "商品管理")
 //        mToolBarDelegate.setRightText("添加", View.OnClickListener{
 //
 //        })

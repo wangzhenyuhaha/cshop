@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.LogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
@@ -21,6 +19,7 @@ import com.lingmiao.shop.business.tools.presenter.EditFreightModelPresenter
 import com.lingmiao.shop.business.tools.presenter.impl.EditFreightModelPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.getViewText
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.tools_activity_freight_model_add.*
 import kotlinx.android.synthetic.main.tools_adapter_time.*
 import kotlinx.android.synthetic.main.tools_include_model_area.*
@@ -321,10 +320,7 @@ class EditFreightModelActivity : BaseActivity<EditFreightModelPresenter>(), Edit
     }
 
     private fun initAreaWeightPart() {
-        rv_model_area.apply {
-            layoutManager = initLayoutManager()
-            adapter = mAreaWeightAdapter;
-        }
+        rv_model_area.initAdapter(mAreaWeightAdapter)
         mAreaWeightAdapter.replaceData(mAreaWeightList);
         shiftExpressPayType(false);
     }
@@ -379,10 +375,7 @@ class EditFreightModelActivity : BaseActivity<EditFreightModelPresenter>(), Edit
             addFooterView(footer)
         };
 
-        rv_model_range.apply {
-            layoutManager = initLayoutManager()
-            adapter = mRangeAdapter;
-        }
+        rv_model_range.initAdapter(mRangeAdapter)
 
         mRangeAdapter.replaceData(mRangeList);
     }
@@ -407,10 +400,7 @@ class EditFreightModelActivity : BaseActivity<EditFreightModelPresenter>(), Edit
             addFooterView(footer)
         };
 
-        rv_model_price.apply {
-            layoutManager = initLayoutManager()
-            adapter = mPriceAdapter;
-        }
+        rv_model_price.initAdapter(mPriceAdapter)
 
         mPriceAdapter.replaceData(mPriceList);
     }
@@ -477,16 +467,9 @@ class EditFreightModelActivity : BaseActivity<EditFreightModelPresenter>(), Edit
             addFooterView(footer)
         };
 
-        rv_model_time.apply {
-            layoutManager = initLayoutManager()
-            adapter = mTimeAdapter;
-        }
+        rv_model_time.initAdapter(mTimeAdapter)
 
         mTimeAdapter.replaceData(mTimeList);
-    }
-
-    private fun initLayoutManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(this)
     }
 
     override fun loadItemSuccess(item: FreightVoItem) {

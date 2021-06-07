@@ -63,6 +63,11 @@ abstract class RecycleViewLayout<T, Adapter : BaseQuickAdapter<T, BaseViewHolder
         createItem(goodsList);
     }
 
+    fun addOneItem(t : T) {
+        removeAllViews();
+        createItem(mutableListOf(t));
+    }
+
     fun getList(): List<T> {
         return mAdapter?.data ?: arrayListOf();
     }

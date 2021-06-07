@@ -166,7 +166,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
      */
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
         mWallet = data;
-        tvBalance.setText(getString(R.string.wallet_value, formatDouble(data?.balanceAccount?.balanceAmount?:0.0)));
+        tvBalance.setText(getString(R.string.wallet_value, formatDouble(data?.depositAccount?.balanceAmount?:0.0)));
         if(data?.depositAccount?.balanceAmount?:0.0 > 0.0) {
             tvVip.gone();
             tvRefund.visiable()

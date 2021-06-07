@@ -28,7 +28,7 @@ class UserOrderDetailActivity : BaseLoadMoreActivity<UserOrderVo, IUserOrderPres
         return UserOrderAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
                 when(view.id) {
-                    R.id.salesEditTv -> {
+                    R.id.tvSalesDelete -> {
                         ActivityUtils.startActivity(SalesActivityEditActivity::class.java);
                     }
                 }

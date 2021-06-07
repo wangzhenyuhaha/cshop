@@ -106,7 +106,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      * 发布
      */
     override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean) {
-        loadSpecKeyList(goodsVO) {
+        loadSpecKeyList(goodsVO, isMutilSpec) {
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
                 checkBoolean(goodsVO.goodsGalleryList.isNotEmpty()) { "请添加商品主图" }
@@ -150,8 +150,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     /**
      * 编辑商品时，获取商品关联的规格值
      */
-    private fun loadSpecKeyList(goodsVO: GoodsVOWrapper, callback: () -> Unit) {
-        if (goodsVO.goodsId.isNullOrBlank() || goodsVO.isAddSpec) {
+    private fun loadSpecKeyList(goodsVO: GoodsVOWrapper, isMutilSpec : Boolean , callback: () -> Unit) {
+        if (goodsVO.goodsId.isNullOrBlank() || goodsVO.isAddSpec || !isMutilSpec) {
             callback.invoke()
             return
         }
@@ -228,7 +228,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     private fun uploadDesImages(goodsVO: GoodsVOWrapper, fail: () -> Unit, success: () -> Unit) {
         mCoroutine.launch {
             val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
-            goodsVO.intro!!.split(",")?.forEachIndexed { index, it ->
+            goodsVO.intro?.split(",")?.forEachIndexed { index, it ->
                 val request = async {
                     if (it.isNetUrl()) {
                         HiResponse(0, "", FileResponse("", "", it))
@@ -241,6 +241,10 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                     }
                 }
                 requestList.add(request)
+            }
+            if(requestList.size == 0) {
+                success.invoke();
+                return@launch;
             }
             // 多个接口相互等待
             val respList = requestList.awaitAll()

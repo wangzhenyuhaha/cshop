@@ -15,7 +15,9 @@ interface ISalesSettingPresenter : BasePresenter {
 
     fun loadListData(page: IPage, list: List<*>)
 
-    interface PubView : BaseView, BaseLoadMoreView<SalesVo> {
+    fun delete(id : String?, position: Int);
 
+    interface PubView : BaseView, BaseLoadMoreView<SalesVo> {
+        fun onDelete(position: Int);
     }
 }

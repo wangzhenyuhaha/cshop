@@ -34,6 +34,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.show
+import com.lingmiao.shop.business.main.bean.MainInfoVo
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.greenrobot.eventbus.EventBus
@@ -356,6 +357,10 @@ class MainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     override fun onMainInfoError(code: Int) {
         smartRefreshLayout.finishRefresh()
         hidePageLoading()
+    }
+
+    override fun onMainDataSuccess(bean: MainInfoVo?) {
+
     }
 
     override fun onAccountSettingSuccess(bean: AccountSetting) {

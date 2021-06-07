@@ -7,8 +7,6 @@ import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.bean.SalesActivityItemVo
 import com.lingmiao.shop.business.tools.adapter.addTextChangeListener
-import com.lingmiao.shop.business.tools.bean.DistanceSection
-import com.lingmiao.shop.util.formatDouble
 
 class ActivitySalesAdapter : BaseQuickAdapter<SalesActivityItemVo, BaseViewHolder>(R.layout.sales_adapter_activity_discount) {
 
@@ -21,10 +19,10 @@ class ActivitySalesAdapter : BaseQuickAdapter<SalesActivityItemVo, BaseViewHolde
         helper.setText(R.id.discountLeastTv, String.format("%s", item?.least));
 
         addTextChangeListener(helper.getView(R.id.discountPeachTv), String.format("%s", item?.peach?:0)) {
-            item?.peach = it?.toDouble();
+            item?.peach = it
         }
         addTextChangeListener(helper.getView(R.id.discountLeastTv), String.format("%s",item?.least?:0)) {
-            item?.least = it?.toDouble();
+            item?.least = it
         }
     }
 

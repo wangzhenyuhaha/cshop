@@ -71,15 +71,15 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTabList.add(tvTab3)
         tvTabList.add(tvTab4)
         tvTabList.add(tvTab5)
-        tvTabList.add(tvTab6)
+//        tvTabList.add(tvTab6)
 
         fragmentList.clear()
-        fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
-        fragmentList.add(SingleOrderListFragment.newInstance("WAIT_PAY"))
+        fragmentList.add(SingleOrderListFragment.newInstance("WAIT_ACCEPT"))
         fragmentList.add(SingleOrderListFragment.newInstance("PROCESSING"))
         fragmentList.add(SingleOrderListFragment.newInstance("REFUND"))
         fragmentList.add(SingleOrderListFragment.newInstance("COMPLETE"))
-        fragmentList.add(SingleOrderListFragment.newInstance("CANCELLED"))
+        fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
+//        fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
         vpContent.adapter = adapter
         vpContent.offscreenPageLimit = 0
         vpContent.addOnPageChangeListener(this)
@@ -89,7 +89,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTab3.setOnClickListener { vpContent.currentItem = 2 }
         tvTab4.setOnClickListener { vpContent.currentItem = 3 }
         tvTab5.setOnClickListener { vpContent.currentItem = 4 }
-        tvTab6.setOnClickListener { vpContent.currentItem = 5 }
+//        tvTab6.setOnClickListener { vpContent.currentItem = 5 }
 
         LogUtils.d("initView:")
         tv_order_scan.setOnClickListener {
@@ -130,7 +130,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTab3.setTabSelected(false)
         tvTab4.setTabSelected(false)
         tvTab5.setTabSelected(false)
-        tvTab6.setTabSelected(false)
+        //tvTab6.setTabSelected(false)
         tvTabList[tabIndex].setTabSelected(true)
     }
 

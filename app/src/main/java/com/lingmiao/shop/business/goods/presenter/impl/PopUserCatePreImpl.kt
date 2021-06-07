@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
  * @date 2020/7/16
  * @Desc 商品分组
  */
-class PopUserCatePreImpl(view: BaseView) : BasePreImpl(view) {
+class PopUserCatePreImpl(val view: BaseView) : BasePreImpl(view) {
 
     private var goodsGroupPop: UserGoodsPop? = null
 
@@ -22,10 +22,12 @@ class PopUserCatePreImpl(view: BaseView) : BasePreImpl(view) {
 
     fun showGoodsGroupPop(context: Context,cateId : String?, callback: (List<CategoryVO>?, String?) -> Unit) {
         mCoroutine.launch {
+            view?.showDialogLoading();
             val resp = GoodsRepository.loadUserCategory(cateId,String.format("%s", UserManager?.getLoginInfo()?.goodsCateId?:"0"))
             if (resp.isSuccess) {
                 showPopWindow(context, resp.data, callback)
             }
+            view?.hideDialogLoading()
         }
     }
 

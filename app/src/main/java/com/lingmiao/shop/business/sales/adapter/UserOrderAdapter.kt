@@ -26,7 +26,7 @@ class UserOrderAdapter() : BaseQuickAdapter<UserOrderVo, BaseViewHolder>(R.layou
             helper.setText(R.id.userOrderStatusTv, "进行中");
             helper.setText(R.id.userOrderPriceTv, "¥：88.00");
             helper.getView<OrderItemRvLayout>(R.id.userOrderItemC).addItems(getItem());
-            helper.addOnClickListener(R.id.salesEditTv);
+            helper.addOnClickListener(R.id.tvSalesDelete);
         }
     }
 

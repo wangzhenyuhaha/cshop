@@ -1,15 +1,10 @@
 package com.lingmiao.shop.business.sales.adapter
 
-import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
-import com.lingmiao.shop.util.GlideUtils
-import com.james.common.utils.exts.isNotBlank
 import com.lingmiao.shop.business.sales.bean.SalesActivityItemVo
 import com.lingmiao.shop.business.sales.bean.SalesVo
-import com.lingmiao.shop.business.sales.bean.UserVo
 import com.lingmiao.shop.business.sales.view.SalesActivityRvLayout
 
 /**
@@ -22,19 +17,37 @@ class SalesAdapter() : BaseQuickAdapter<SalesVo, BaseViewHolder>(R.layout.sales_
     override fun convert(helper: BaseViewHolder, item: SalesVo?) {
         item?.apply {
 
-            helper.setText(R.id.salesNameTv, "满减");
-            helper.setText(R.id.salesStatusTv, "进行中");
-            helper.getView<SalesActivityRvLayout>(R.id.salesActivityC).addItems(getItem());
-            helper.addOnClickListener(R.id.salesEditTv);
-        }
-    }
+            helper.setText(R.id.salesNameTv, title);
+            helper.setText(R.id.salesStatusTv, statusText);
+            helper.getView<SalesActivityRvLayout>(R.id.salesActivityC).addOneItem(SalesActivityItemVo.convert(item));
+            helper.addOnClickListener(R.id.tvSalesDelete);
+            helper.addOnClickListener(R.id.tvSalesEnd);
+            helper.addOnClickListener(R.id.tvSalesView);
+            helper.addOnClickListener(R.id.salesGoodsTv);
 
-    fun getItem() : MutableList<SalesActivityItemVo> {
-        val list : MutableList<SalesActivityItemVo> = mutableListOf();
-        list.add(SalesActivityItemVo());
-        list.add(SalesActivityItemVo());
-        list.add(SalesActivityItemVo());
-        return list;
+            when(status) {
+                "WAIT" -> {
+                    helper.setGone(R.id.tvSalesView, true);
+                    helper.setGone(R.id.tvSalesDelete, true);
+                    helper.setGone(R.id.tvSalesEnd, false);
+                }
+                "UNDERWAY" -> {
+                    helper.setGone(R.id.tvSalesEnd, true);
+                    helper.setGone(R.id.tvSalesView, true);
+                    helper.setGone(R.id.tvSalesDelete, true);
+                }
+                "END" -> {
+                    helper.setGone(R.id.tvSalesEnd, true);
+                    helper.setGone(R.id.tvSalesView, true);
+                }
+                else -> {
+                    helper.setGone(R.id.tvSalesView, false);
+                    helper.setGone(R.id.tvSalesDelete, false);
+                    helper.setGone(R.id.tvSalesEnd, false);
+                }
+
+            }
+        }
     }
 
 }

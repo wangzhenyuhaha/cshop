@@ -15,6 +15,31 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!--审核不通过原因-->
+            <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                style="@style/goods_publish_container"
+                app:ivBgColor="@color/color_ffffff"
+                app:ivRadius="@dimen/dimen_5"
+                tools:visibility="visible"
+                android:visibility="gone"
+                android:id="@+id/authFailLayout">
+
+                <LinearLayout style="@style/goods_publish_sub_container">
+
+                    <TextView
+                        style="@style/goods_publish_left"
+                        android:text="审核未通过原因" />
+
+                    <TextView
+                        android:id="@+id/goodsAuthMsgTv"
+                        android:textColor="@color/red"
+                        style="@style/goods_publish_right"
+                        tools:text="实物商品" />
+
+                </LinearLayout>
+            </com.james.common.view.ILinearLayout>
+
             <!-- 类型、类目 -->
             <include layout="@layout/goods_include_publish_section1" />
 

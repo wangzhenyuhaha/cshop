@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
  * @date 2020/7/16
  * @Desc 商品分类
  */
-class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
+class NewPopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
 
     companion object {
         // 一级商品分类id
@@ -40,11 +40,13 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
     private var mSelectList: MutableList<CategoryVO> = arrayListOf();
     fun showTypePop(context: Context, targetView : View, callback: (List<CategoryVO>?, String?) -> Unit) {
         mCoroutine.launch {
+            view?.showDialogLoading();
             // 一级类目 categoryId=0
             val resp = GoodsRepository.loadUserCategory(UserManager?.getLoginInfo()?.goodsCateId?:"0","0")
             if (resp.isSuccess) {
                 showTypePop(context, targetView, resp.data, callback)
             }
+            view?.hideDialogLoading();
         }
     }
 
@@ -99,11 +101,13 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
         }
 
         mCoroutine.launch {
+            view?.showDialogLoading();
             val resp = GoodsRepository.loadCategory(categoryVO.categoryId!!)
             if (resp.isSuccess) {
                 lv2CacheMap[categoryVO.categoryId!!] = resp.data
                 typePop?.setLv2Data(resp.data)
             }
+            view?.hideDialogLoading();
         }
     }
 
@@ -116,11 +120,13 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
         }
 
         mCoroutine.launch {
+            view?.showDialogLoading();
             val resp = GoodsRepository.loadCategory(categoryVO.categoryId!!)
             if (resp.isSuccess) {
                 lv2CacheMap[categoryVO.categoryId!!] = resp.data
                 categoryPop?.setLv2Data(resp.data)
             }
+            view?.hideDialogLoading();
         }
     }
 
@@ -156,11 +162,13 @@ class NewPopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
         }
 
         mCoroutine.launch {
+            view?.showDialogLoading();
             val resp = GoodsRepository.loadCategory(categoryVO.categoryId!!)
             if (resp.isSuccess) {
                 lv3CacheMap[categoryVO.categoryId!!] = resp.data
                 categoryPop?.setLv3Data(resp.data)
             }
+            view?.hideDialogLoading();
         }
     }
 

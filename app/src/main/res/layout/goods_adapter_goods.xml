@@ -69,6 +69,25 @@
         tools:text="我是商品描述信息" />
 
     <TextView
+        android:visibility="gone"
+        android:paddingTop="@dimen/dimen_15"
+        android:drawablePadding="@dimen/dimen_5"
+        android:id="@+id/goodsStatusTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_14"
+        android:layout_marginEnd="@dimen/dimen_14"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="审核中" />
+
+    <TextView
         android:id="@+id/goodsQuantityTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -100,7 +119,6 @@
         app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
         tools:text="销量：3005" />
 
-
 <!--    <TextView-->
 <!--        android:id="@+id/enableGoodsQuantityTv"-->
 <!--        android:layout_width="wrap_content"-->
@@ -115,8 +133,23 @@
 <!--        app:layout_constraintLeft_toRightOf="@id/goodsSalesTv"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"-->
 <!--        android:textSize="@dimen/sp_11"-->
-<!--        tools:text="可用库存：3005"-->
-<!--        android:visibility="gone"/>-->
+<!--        tools:text="可用库存：3005"/>-->
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/goodsAuthStatusTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:paddingRight="@dimen/dimen_15"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        app:layout_constraintRight_toRightOf="parent"
+        android:lines="1"
+        android:textColor="@color/color_999999"
+        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
+        android:textSize="@dimen/sp_11"
+        tools:text="可用库存：3005"/>
 
 
     <TextView

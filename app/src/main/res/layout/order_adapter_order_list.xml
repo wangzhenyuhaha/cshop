@@ -205,11 +205,12 @@
                 app:ivBorderColor="#ff3870ea"
                 />
 
+
             <com.james.common.view.ITextView
-                android:id="@+id/tvShipment"
+                android:id="@+id/tvAccept"
                 android:layout_width="72dp"
                 android:layout_height="30dp"
-                android:text="发货"
+                android:text="接单"
                 android:layout_marginLeft="10dp"
                 android:textColor="#fff"
                 android:textSize="12sp"
@@ -219,6 +220,53 @@
                 app:ivBorderWidth="1px"
                 app:ivBorderColor="#ff3870ea"
                 />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvRefuse"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:text="拒绝接单"
+                android:layout_marginLeft="10dp"
+                android:textColor="#ff3870ea"
+                android:textSize="12sp"
+                app:ivBgColor="#fff"
+                app:ivRadius="15dp"
+                android:gravity="center"
+                app:ivBorderWidth="1px"
+                app:ivBorderColor="#ff3870ea"
+                />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvShipment"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:text="开始配送"
+                android:layout_marginLeft="10dp"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                app:ivBgColor="#ff3870ea"
+                app:ivRadius="15dp"
+                android:gravity="center"
+                app:ivBorderWidth="1px"
+                app:ivBorderColor="#ff3870ea"
+                />
+
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvSign"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center"
+                android:text="确认送达"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:ivBgColor="#ff3870ea"
+                app:ivBorderColor="#ff3870ea"
+                app:ivBorderWidth="1px"
+                app:ivRadius="15dp" />
+
 
             <com.james.common.view.ITextView
                 android:id="@+id/tvVerify"
@@ -298,6 +346,37 @@
                 android:layout_width="72dp"
                 android:layout_height="30dp"
                 android:text="删除"
+                android:layout_marginLeft="10dp"
+                android:textColor="#ff3870ea"
+                android:textSize="12sp"
+                app:ivBgColor="#fff"
+                app:ivRadius="15dp"
+                android:gravity="center"
+                app:ivBorderWidth="1px"
+                app:ivBorderColor="#ff3870ea"
+                />
+
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvAcceptService"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:text="同意退款"
+                android:layout_marginLeft="10dp"
+                android:textColor="#fff"
+                android:textSize="12sp"
+                app:ivBgColor="#ff3870ea"
+                app:ivRadius="15dp"
+                android:gravity="center"
+                app:ivBorderWidth="1px"
+                app:ivBorderColor="#ff3870ea"
+                />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvRefuseService"
+                android:layout_width="72dp"
+                android:layout_height="30dp"
+                android:text="拒绝退款"
                 android:layout_marginLeft="10dp"
                 android:textColor="#ff3870ea"
                 android:textSize="12sp"

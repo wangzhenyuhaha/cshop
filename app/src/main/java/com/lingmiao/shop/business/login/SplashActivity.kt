@@ -39,7 +39,7 @@ class SplashActivity : BaseActivity<BasePresenter>() {
             var againTime = 2
             while (againTime > 0) {
                 againTime -= 1
-                delay(1000)
+                delay(500)
             }
             if(UserManager.isLogin()){
                 OtherUtils.goToMainActivity()

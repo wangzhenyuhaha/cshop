@@ -25,14 +25,14 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View):
 							UserManager.setLoginInfo(loginInfo)
 						}
 						if(shopStatusResp.data.shopStatus=="OPEN"){
-							val resp = MainRepository.apiService.getMainInfo().awaitHiResponse()
+							val resp = MainRepository.apiService.getMainData().awaitHiResponse()
 							if (resp.isSuccess) {
-								view.onMainInfoSuccess(resp.data)
+								view.onMainDataSuccess(resp.data)
 							}else{
 								view.onMainInfoError(resp.code)
 							}
 						}else{
-							view.onMainInfoSuccess(null)
+							view.onMainDataSuccess(null)
 						}
 					}else{
 						view.onMainInfoError(-1)

@@ -6,7 +6,9 @@ import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
@@ -95,8 +97,14 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
                 mAdapter?.notifyDataSetChanged()
             });
         }
+        tv_goods_batch.singleClick {
+            (mAdapter as GoodsAdapter)?.setBatchEditModel(true);
+            rl_goods_option.gone();
+            rl_goods_check.visiable();
+        }
         tv_goods_cancel_batch.setOnClickListener{
-            rl_goods_check.visibility = View.GONE;
+            rl_goods_option.visiable();
+            rl_goods_check.gone();
             cb_goods_list_check_all.isChecked = false;
             var list = mAdapter?.data?.filter { it?.isChecked == true };
             if(list?.size > 0) {
@@ -136,6 +144,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             }
             setOnItemClickListener { adapter, view, position ->
                 shiftChecked(position);
+               // tvGoodsSelectCount.setText(String.format("已选择%s件商品", mPresenter?.getCheckedCount(mAdapter.data)))
 //                mPresenter?.clickItemView(mAdapter.getItem(position), position)
             }
             onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
@@ -164,6 +173,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onLoadMoreSuccess(list: List<GoodsVO>?, hasMore: Boolean) {
         super.onLoadMoreSuccess(list, hasMore)
+        tvGoodsCount.setText(String.format("商品共%s件", mAdapter.data.size))
         list?.forEachIndexed { index, goodsVO ->
             goodsVO?.isChecked = cb_goods_list_check_all.isChecked;
         }

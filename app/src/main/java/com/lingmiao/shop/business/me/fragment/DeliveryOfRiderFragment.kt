@@ -12,10 +12,10 @@ import com.lingmiao.shop.business.me.presenter.impl.DeliveryInOfRiderPresenterIm
 import com.lingmiao.shop.business.tools.adapter.PriceAdapter
 import com.lingmiao.shop.business.tools.adapter.RangeAdapter
 import com.lingmiao.shop.business.tools.adapter.TimeAdapter
-import com.lingmiao.shop.business.tools.api.JsonUtil
 import com.lingmiao.shop.business.tools.bean.*
 import com.lingmiao.shop.business.tools.pop.DayPop
 import com.lingmiao.shop.business.tools.pop.TimeListPop
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_of_rider.*
 import kotlinx.android.synthetic.main.tools_adapter_time.*
 import kotlinx.android.synthetic.main.tools_include_model_price.*
@@ -181,10 +181,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             addFooterView(footer)
         };
 
-        rv_model_range.apply {
-            layoutManager = initLayoutManager()
-            adapter = mRangeAdapter;
-        }
+        rv_model_range.initAdapter(mRangeAdapter)
 
         mRangeAdapter.replaceData(mRangeList);
     }
@@ -257,10 +254,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             addFooterView(footer)
         };
 
-        rv_model_time.apply {
-            layoutManager = initLayoutManager()
-            adapter = mTimeAdapter;
-        }
+        rv_model_time.initAdapter(mTimeAdapter)
 
         mTimeAdapter.replaceData(mTimeList);
     }
@@ -285,16 +279,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             addFooterView(footer)
         };
 
-        rv_model_price.apply {
-            layoutManager = initLayoutManager()
-            adapter = mPriceAdapter;
-        }
+        rv_model_price.initAdapter(mPriceAdapter)
 
         mPriceAdapter.replaceData(mPriceList);
-    }
-
-    private fun initLayoutManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(activity)
     }
 
     override fun updateModelSuccess(b: Boolean) {

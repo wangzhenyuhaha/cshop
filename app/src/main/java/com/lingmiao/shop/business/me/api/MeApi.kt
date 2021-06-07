@@ -53,4 +53,7 @@ interface MeApi {
     fun updateShop(@Body bean: ApplyShopInfo):Call<Unit>
 
 
+    @GET("seller/shops/getQRCode")
+    @WithHiResponse
+    suspend fun getQRCode(): Response<ResponseBody>
 }

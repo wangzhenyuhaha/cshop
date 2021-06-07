@@ -790,7 +790,7 @@
             android:layout_height="30dp"
             android:layout_marginLeft="10dp"
             android:gravity="center"
-            android:text="发货"
+            android:text="开始配送"
             android:textColor="#fff"
             android:textSize="12sp"
             android:visibility="gone"
@@ -798,6 +798,7 @@
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
             app:ivRadius="15dp" />
+
 
         <com.james.common.view.ITextView
             android:id="@+id/tvVerify"

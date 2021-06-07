@@ -17,6 +17,8 @@ interface GoodsBatchPre : BasePresenter {
 
     fun clickDelete(list: List<GoodsVO>?, callback: (ids: String) -> Unit);
 
+    fun getCheckedCount(list: List<GoodsVO>?) : Int
+
     interface View : BaseView {
         fun onLineSuccess();
         fun offLineSuccess();

@@ -128,6 +128,14 @@ class GoodsVOWrapper : Serializable {
     var videoUrl: String? = null
 
 
+    /**
+     *  3未审核通过 ；0，4审核中；1，2审核通过
+     */
+    @SerializedName("is_auth")
+    var isAuth: Int = 0
+
+    @SerializedName("auth_message")
+    var authMessage : String = ""
     // 配送时效
     var goodsDeliveryType : String ?= ""
     // 配送方式
@@ -169,10 +177,9 @@ class GoodsVOWrapper : Serializable {
 
     /**
      * 详情
-     * 弃用
      */
-    // @SerializedName("meta_description")
-    // var metaDescription : String ?= null
+     @SerializedName("meta_description")
+     var metaDescription : String ?= null
 
     /**
      * 图片

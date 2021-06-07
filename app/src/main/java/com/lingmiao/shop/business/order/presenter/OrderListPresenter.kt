@@ -15,10 +15,35 @@ interface OrderListPresenter: BasePresenter {
 
     fun deleteOrder(tradeSn: String)
 
+    fun takeOrder(tradeSn: String)
+
+    fun refuseOrder(tradeSn: String)
+
+    fun shipOrder(sn: String)
+
+    fun signOrder(sn : String)
+
+    fun refuseService(sn : String)
+
+    fun acceptService(sn : String)
+
     fun verifyOrder(verifyCode: String)
 
     interface StatusView: BaseView, BaseLoadMoreView<OrderList>{
+
+        fun onTakeSuccess();
+
+        fun onRefuseSuccess();
+
         fun onDeleteOrderSuccess()
+
+        fun onShipped();
+
+        fun onSigned();
+
+        fun onRefusedService();
+
+        fun onAcceptService();
 
         fun verifySuccess();
 

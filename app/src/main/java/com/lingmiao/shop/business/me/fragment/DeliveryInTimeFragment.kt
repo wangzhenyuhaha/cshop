@@ -1,8 +1,6 @@
 package com.lingmiao.shop.business.me.fragment
 
 import android.view.View
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
@@ -16,6 +14,7 @@ import com.lingmiao.shop.business.tools.api.JsonUtil
 import com.lingmiao.shop.business.tools.bean.*
 import com.lingmiao.shop.business.tools.pop.DayPop
 import com.lingmiao.shop.business.tools.pop.TimeListPop
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.*
 import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.et_model_out_range_km
 import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.rg_model_pay_km
@@ -223,10 +222,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
             addFooterView(footer)
         };
 
-        rv_model_range.apply {
-            layoutManager = initLayoutManager()
-            adapter = mRangeAdapter;
-        }
+        rv_model_range.initAdapter(mRangeAdapter)
 
         mRangeAdapter.replaceData(mRangeList);
     }
@@ -299,10 +295,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
             addFooterView(footer)
         };
 
-        rv_model_time.apply {
-            layoutManager = initLayoutManager()
-            adapter = mTimeAdapter;
-        }
+        rv_model_time.initAdapter(mTimeAdapter)
 
         mTimeAdapter.replaceData(mTimeList);
     }
@@ -327,16 +320,9 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
             addFooterView(footer)
         };
 
-        rv_model_price.apply {
-            layoutManager = initLayoutManager()
-            adapter = mPriceAdapter;
-        }
+        rv_model_price.initAdapter(mPriceAdapter)
 
         mPriceAdapter.replaceData(mPriceList);
-    }
-
-    private fun initLayoutManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(activity)
     }
 
     override fun updateModelSuccess(b: Boolean) {

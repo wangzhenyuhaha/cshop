@@ -4,8 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.MotionEvent
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.DialogUtils
@@ -17,6 +15,7 @@ import com.lingmiao.shop.business.goods.api.bean.GoodsParamVo
 import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
 import com.lingmiao.shop.business.goods.presenter.GoodsDetailPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsDetailPreImpl
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.goods_activity_goods_detail.*
 
 /**
@@ -44,7 +43,7 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
         fun openActivity(context: Context, requestCode: Int, goodsVO: GoodsVOWrapper) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsDetailActivity::class.java)
-                intent.putExtra(KEY_DESC, goodsVO.selling)
+                intent.putExtra(KEY_DESC, goodsVO.metaDescription)
                 intent.putExtra(KEY_CATEGORY_ID, goodsVO.categoryId);
                 intent.putExtra(KEY_IMAGES, goodsVO.intro)
                 intent.putExtra(KEY_ITEM, goodsVO.goodsParamsList as? ArrayList<GoodsParamVo>)
@@ -90,10 +89,7 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
                 val item = adapter.data[position] as GoodsParamVo;
             }
         }
-        goodsInfoRv.apply {
-            layoutManager = initLayoutManager()
-            adapter = mInfoAdapter;
-        }
+        goodsInfoRv.initAdapter(mInfoAdapter);
        // mInfoAdapter.replaceData(mInfoList);
 
         goodsInfoAddTv.setOnClickListener {
@@ -134,10 +130,6 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
             goodsDetailImageRv.addData(GoodsGalleryVO("", s, ""));
         }
 
-    }
-
-    private fun initLayoutManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(this)
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {

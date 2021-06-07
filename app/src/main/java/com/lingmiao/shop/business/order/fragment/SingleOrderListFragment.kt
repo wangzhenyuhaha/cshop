@@ -75,12 +75,26 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 //                        DialogUtils.showDialog(activity!!, "催付提示", "确定要催促用户付款吗？",
 //                            "取消", "确定", View.OnClickListener { }, View.OnClickListener {
 //                            })
+
                     }
-                    R.id.tvShipment -> {//发货
-                        val intent = Intent(activity, OrderSendGoodsActivity::class.java)
-                        intent.putExtra("orderId", orderBean.sn)
-                        intent.putExtra("shippingType", orderBean.shippingType)
-                        startActivityForResult(intent, REQUEST_CODE)
+                    R.id.tvShipment -> {
+                        DialogUtils.showDialog(activity!!, "配送提示", "确认开始配送该订单？",
+                            "取消", "确定配送", View.OnClickListener { }, View.OnClickListener {
+                                showDialogLoading()
+                                mPresenter?.shipOrder(orderBean.sn!!);
+                            })
+                          //发货
+//                        val intent = Intent(activity, OrderSendGoodsActivity::class.java)
+//                        intent.putExtra("orderId", orderBean.sn)
+//                        intent.putExtra("shippingType", orderBean.shippingType)
+//                        startActivityForResult(intent, REQUEST_CODE)
+                    }
+                    R.id.tvSign -> {
+                        DialogUtils.showDialog(activity!!, "送达提示", "确认已经送达该订单？",
+                            "取消", "确定送达", View.OnClickListener { }, View.OnClickListener {
+                                showDialogLoading()
+                                mPresenter?.signOrder(orderBean.sn!!);
+                            })
                     }
                     R.id.tvVerify -> { // 核销
 //                        orderBean.verificationCode?.apply {
@@ -102,6 +116,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         intent.putExtra("logiName", orderBean.logiName)
                         startActivity(intent)
                     }
+                    R.id.tvRefuseService,
+                    R.id.tvAcceptService,
                     R.id.tvAfterSale -> {//售后/退款
                         val intent = Intent(activity, AfterSaleActivity::class.java)
                         intent.putExtra("orderId", orderBean.sn)
@@ -112,6 +128,20 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                             "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.deleteOrder(orderBean.sn!!)
+                            })
+                    }
+                    R.id.tvAccept -> {
+                        DialogUtils.showDialog(activity!!, "接单提示", "确认是否接单?",
+                            "取消", "确定接单", View.OnClickListener { }, View.OnClickListener {
+                                showDialogLoading()
+                                mPresenter?.takeOrder(orderBean.sn!!)
+                            })
+                    }
+                    R.id.tvRefuse -> {
+                        DialogUtils.showDialog(activity!!, "拒绝接单提示", "确认是否拒绝接单?",
+                            "取消", "确定拒绝", View.OnClickListener { }, View.OnClickListener {
+                                showDialogLoading()
+                                mPresenter?.refuseOrder(orderBean.sn!!)
                             })
                     }
                 }
@@ -141,8 +171,40 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         )
     }
 
+    override fun onTakeSuccess() {
+        showToast("接单成功")
+        mLoadMoreDelegate?.refresh()
+        EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onRefuseSuccess() {
+        showToast("操作成功")
+        mLoadMoreDelegate?.refresh()
+        EventBus.getDefault().post(OrderNumberEvent())
+    }
+
     override fun onDeleteOrderSuccess() {
         showToast("删除成功")
+        mLoadMoreDelegate?.refresh()
+        EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onShipped() {
+        mLoadMoreDelegate?.refresh()
+        EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onSigned() {
+        mLoadMoreDelegate?.refresh()
+        EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onRefusedService() {
+        mLoadMoreDelegate?.refresh()
+        EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onAcceptService() {
         mLoadMoreDelegate?.refresh()
         EventBus.getDefault().post(OrderNumberEvent())
     }

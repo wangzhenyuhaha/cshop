@@ -34,8 +34,6 @@ import com.lingmiao.shop.business.main.UserServiceH5Activity
 import com.lingmiao.shop.business.me.ForgetPasswordActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.util.OtherUtils
-import com.mikhaellopez.rxanimation.RxAnimation
-import com.mikhaellopez.rxanimation.translationX
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

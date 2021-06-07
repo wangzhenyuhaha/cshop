@@ -13,6 +13,7 @@ import com.lingmiao.shop.business.tools.event.UpdateItemEvent
 import com.lingmiao.shop.business.tools.presenter.AreasPresenter
 import com.lingmiao.shop.business.tools.presenter.impl.AreasPresenterImpl
 import com.james.common.base.BaseActivity
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.tools_activity_areas.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -229,15 +230,8 @@ class AreasActivity : BaseActivity<AreasPresenter>(), AreasPresenter.View  {
     }
 
     private fun initRecycleView() {
-        loadMoreRv.apply {
-            layoutManager = initLayoutManager();
-            adapter = mAreasAdapter;
-        }
+        loadMoreRv.initAdapter(mAreasAdapter)
 //        mAreasAdapter.expand(0);
-    }
-
-    private fun initLayoutManager(): RecyclerView.LayoutManager {
-        return LinearLayoutManager(this)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

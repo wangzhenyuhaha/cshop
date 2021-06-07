@@ -6,10 +6,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
 import com.james.common.base.BaseActivity
-import com.james.common.utils.exts.getViewText
-import com.james.common.utils.exts.isNotBlank
-import com.james.common.utils.exts.show
-import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.*
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
 import kotlinx.android.synthetic.main.goods_activity_publish_new.*
@@ -130,7 +127,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 val images = data.getStringExtra(GoodsDetailActivity.KEY_IMAGES);
                 goodsVO.apply {
                     this.goodsParamsList = infoList;
-                    this.selling = des
+                    this.metaDescription = des
                     this.intro = images
                 }
                 goodsDetailTv.text = if (infoList?.size?:0 > 0) "已添加" else "未添加";
@@ -157,6 +154,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper) {
         this.goodsVO = goodsVO
         goodsVO.apply {
+            if(isAuth == 3) {
+                authFailLayout.visiable()
+                goodsAuthMsgTv.setText(authMessage)
+            } else {
+                authFailLayout.gone()
+            }
             // 商品分类
 //            goodsCategoryTv.text = Html.fromHtml(categoryName)
             goodsCategoryTv.text = categoryName?.replace("&gt;","/")
@@ -192,9 +195,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     goodsSKUEdt.setText(upSkuId)
                     goodsIDEdt.setText(sn)
                     switchBtn.isChecked = false
-                    if(!goodsId.isNullOrBlank()) {
-                        goodsQuantityEdt.isEnabled = false;
-                    }
+//                    if(!goodsId.isNullOrBlank()) {
+//                        goodsQuantityEdt.isEnabled = false;
+//                    }
                 }
             }
             // 商品分组

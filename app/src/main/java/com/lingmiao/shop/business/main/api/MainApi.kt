@@ -12,9 +12,14 @@ import retrofit2.http.*
 interface MainApi {
 
 //APP首页数据
-    @GET("seller/statistics/dashboard/appIndex")
+@GET("seller/statistics/dashboard/appIndex")
     @WithHiResponse
     fun getMainInfo(): Call<MainInfo>
+
+    //APP首页数据
+    @GET("seller/statistics/dashboard/showIndex")
+    @WithHiResponse
+    fun getMainData(): Call<MainInfoVo>
 
 //    查询店铺站内消息列表
     @GET("seller/shops/shop-notice-logs")

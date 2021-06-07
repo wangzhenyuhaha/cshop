@@ -84,24 +84,37 @@ class OrderListAdapter :
 //        GlideUtils.setCornerImageUrl(helper.getView(R.id.ivBuyerHead),item.)
         GlideUtils.setImageUrl(helper.getView(R.id.ivProduct1), product.goodsImage)
 
+
+        val tvAccept = helper.getView<TextView>(R.id.tvAccept)
+        val tvRefuse = helper.getView<TextView>(R.id.tvRefuse)
         val tvCancelOrder = helper.getView<TextView>(R.id.tvCancelOrder)
         val tvUpdatePrice = helper.getView<TextView>(R.id.tvUpdatePrice)
         val tvQuickPay = helper.getView<TextView>(R.id.tvQuickPay)
         val tvShipment = helper.getView<TextView>(R.id.tvShipment)
+        val tvSign = helper.getView<TextView>(R.id.tvSign)
         val tvVerify = helper.getView<TextView>(R.id.tvVerify);
         val tvLookLogistics = helper.getView<TextView>(R.id.tvLookLogistics)
         val tvAfterSale = helper.getView<TextView>(R.id.tvAfterSale)
         val tvDelete = helper.getView<TextView>(R.id.tvDelete)
+        val tvRefuseService = helper.getView<TextView>(R.id.tvRefuseService)
+        val tvAcceptService = helper.getView<TextView>(R.id.tvAcceptService)
 
+        tvAccept.visibility = View.GONE
+        tvRefuse.visibility = View.GONE
+        tvRefuseService.visibility = View.GONE
+        tvAcceptService.visibility = View.GONE
         tvCancelOrder.visibility = View.GONE
         tvUpdatePrice.visibility = View.GONE
         tvQuickPay.visibility = View.GONE
         tvShipment.visibility = View.GONE
+        tvSign.visibility = View.GONE
         tvVerify.visibility = View.GONE
         tvLookLogistics.visibility = View.GONE
         tvAfterSale.visibility = View.GONE
         tvDelete.visibility = View.GONE
 
+        helper.addOnClickListener(R.id.tvAccept)
+        helper.addOnClickListener(R.id.tvRefuse)
         helper.addOnClickListener(R.id.tvCancelOrder)
         helper.addOnClickListener(R.id.tvUpdatePrice)
         helper.addOnClickListener(R.id.tvQuickPay)
@@ -110,6 +123,9 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvLookLogistics)
         helper.addOnClickListener(R.id.tvAfterSale)
         helper.addOnClickListener(R.id.tvDelete)
+        helper.addOnClickListener(R.id.tvAcceptService)
+        helper.addOnClickListener(R.id.tvRefuseService)
+        helper.addOnClickListener(R.id.tvSign)
 
 //        订单类型是否如下:
 //        全部ALL
@@ -126,25 +142,79 @@ class OrderListAdapter :
         )
         val orderOperateAllowable = item.orderOperateAllowable
         var showBottomArea = false
-        if (orderOperateAllowable != null) {
-            if (orderOperateAllowable.allowAuditAfterSell) tvAfterSale.visibility = View.VISIBLE
-            if (orderOperateAllowable.allowCancel || orderOperateAllowable.allowServiceCancel) tvCancelOrder.visibility = View.VISIBLE
-            if (orderOperateAllowable.allowDelete) tvDelete.visibility = View.VISIBLE
-            if (orderOperateAllowable.allowCheckExpress) tvLookLogistics.visibility = View.VISIBLE
-            if (orderOperateAllowable.allowEditPrice) tvUpdatePrice.visibility = View.VISIBLE
-            if (orderOperateAllowable.allowShip) {
-                if(item?.isVirtualOrderTag()) {
-                    tvVerify.visibility = View.VISIBLE
-                } else {
-                    tvShipment.visibility = View.VISIBLE
-                }
+//        if (orderOperateAllowable != null) {
+//            if (orderOperateAllowable.allowAuditAfterSell) tvAfterSale.visibility = View.VISIBLE
+//            if (orderOperateAllowable.allowCancel || orderOperateAllowable.allowServiceCancel) tvCancelOrder.visibility = View.VISIBLE
+//            if (orderOperateAllowable.allowDelete) tvDelete.visibility = View.VISIBLE
+//            if (orderOperateAllowable.allowCheckExpress) tvLookLogistics.visibility = View.VISIBLE
+//            if (orderOperateAllowable.allowEditPrice) tvUpdatePrice.visibility = View.VISIBLE
+//            if (orderOperateAllowable.allowShip) {
+//                if(item?.isVirtualOrderTag()) {
+//                    tvVerify.visibility = View.VISIBLE
+//                } else {
+//                    tvShipment.visibility = View.VISIBLE
+//                }
+//            }
+//            if (orderOperateAllowable.allowAuditAfterSell||orderOperateAllowable.allowCancel||orderOperateAllowable.allowServiceCancel
+//                ||orderOperateAllowable.allowDelete||orderOperateAllowable.allowCheckExpress
+//                ||orderOperateAllowable.allowEditPrice||orderOperateAllowable.allowShip){
+//                showBottomArea = true
+//            }
+//        }
+        when(item.orderStatus) {
+           "PAID_OFF" -> {
+               showBottomArea = true;
+               // 已付款,待接单
+               tvAccept.visibility = View.VISIBLE
+               tvRefuse.visibility = View.VISIBLE
+           }
+            "ACCEPT" -> {
+                showBottomArea = true;
+                // 已接单,进行中,待送配
+                tvShipment.visibility = View.VISIBLE
             }
-            if (orderOperateAllowable.allowAuditAfterSell||orderOperateAllowable.allowCancel||orderOperateAllowable.allowServiceCancel
-                ||orderOperateAllowable.allowDelete||orderOperateAllowable.allowCheckExpress
-                ||orderOperateAllowable.allowEditPrice||orderOperateAllowable.allowShip){
-                showBottomArea = true
+            "SHIPPED" -> {
+                showBottomArea = true;
+                // 已发货,进行中,送配达
+                tvSign.visibility = View.VISIBLE
+            }
+            "ROG" -> {
+                // 已发货,已送达
+            }
+            "CANCELLED" -> {
+                // 已取消
+            }
+            "COMPLETE" -> {
+                // 已完成
+            }
+            "AFTER_SERVICE" -> {
+                // 售后中
+
             }
         }
+
+        when(item.serviceStatus) {
+            "NOT_APPLY" -> {
+                // 未申请
+            }
+            "APPLY" -> {
+                showBottomArea = true;
+                //已申请
+                tvRefuseService.visibility = View.VISIBLE
+                tvAcceptService.visibility = View.VISIBLE
+            }
+            "PASS" -> {
+                // 通过
+            }
+            "REFUSE" -> {
+                // 未通过
+
+            }
+            "EXPIRED" -> {
+                //已失效不允许申请售后
+            }
+        }
+
 
         val viOrderDivide = helper.getView<View>(R.id.viOrderDivide)
         val llOrderBottom = helper.getView<LinearLayout>(R.id.llOrderBottom)

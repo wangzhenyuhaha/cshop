@@ -12,8 +12,9 @@
     <TextView
         android:id="@+id/salesNameTv"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_29"
-        android:layout_marginStart="@dimen/dimen_10"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:paddingVertical="@dimen/dimen_10"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:maxWidth="150dp"
@@ -24,32 +25,31 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="测试1测试1测试1测试1测试1测试1测试1" />
 
-
     <TextView
-        android:id="@+id/salesStatusTv"
+        android:id="@+id/salesGoodsTv"
         android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_29"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/dimen_10"
-        android:drawablePadding="@dimen/dimen_5"
         android:ellipsize="end"
         android:gravity="center_vertical"
-        android:paddingRight="@dimen/dimen_15"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:paddingVertical="@dimen/dimen_10"
         android:singleLine="true"
         android:textColor="@color/color_000000"
-        android:textSize="@dimen/dimen_13"
+        android:drawablePadding="@dimen/dimen_15"
+        android:textSize="@dimen/dimen_12"
+        android:drawableRight="@mipmap/common_arrow_right"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="进行中" />
+        android:text="活动商品" />
 
     <View
         android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_half"
+        style="@style/common_divider"
         android:layout_below="@+id/salesNameTv"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginBottom="@dimen/dimen_18"
-        android:background="@color/color_E6E6E6"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/salesNameTv" />
 
     <com.lingmiao.shop.business.sales.view.SalesActivityRvLayout
@@ -57,7 +57,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider"
-        android:layout_toLeftOf="@id/salesEditTv"
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -65,22 +64,90 @@
 
     </com.lingmiao.shop.business.sales.view.SalesActivityRvLayout>
 
+    <View
+        android:id="@+id/vCLine"
+        style="@style/common_divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/salesActivityC" />
+
     <TextView
-        android:id="@+id/salesEditTv"
+        android:id="@+id/salesStatusTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:drawableStart="@mipmap/goods_group_manager_edit"
+        android:layout_alignParentEnd="true"
         android:drawablePadding="@dimen/dimen_5"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
         android:paddingRight="@dimen/dimen_15"
-        android:paddingBottom="@dimen/dimen_15"
-        android:text="编辑"
-        android:textColor="@color/color_3870EA"
+        android:singleLine="true"
+        android:textColor="@color/color_000000"
         android:textSize="@dimen/dimen_13"
-        app:layout_constraintBottom_toBottomOf="@id/salesActivityC"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:padding="@dimen/dimen_15"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vCLine"
+        tools:text="进行中" />
+
+    <LinearLayout
+        android:id="@+id/salesOptionL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen_10"
+        android:paddingTop="@dimen/dimen_10"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vCLine">
+
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvSalesView"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:text="查看"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:ivBgColor="@color/color_0EA60"
+            app:ivRadius="18dp" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvSalesEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:text="结束"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:ivBgColor="@color/color_F68812"
+            app:ivRadius="18dp" />
+
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvSalesDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:ivBgColor="@color/color_999999"
+            app:ivRadius="18dp" />
+
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

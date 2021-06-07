@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.goods.adapter
 
 import android.annotation.SuppressLint
-import android.view.View
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,12 +10,10 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.config.GoodsConfig
-import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.tools.adapter.setOnCheckedChangeListener
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
 import com.james.common.utils.exts.check
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Author : Elson
@@ -64,7 +61,27 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
                 helper.setText(R.id.goodsSourceIv, "库")
             }
 
-            //helper.setGone(R.id.goodsSoldOutTv, helper.adapterPosition == 0);
+            helper.setGone(R.id.goodsSoldOutTv, isSellOut());
+            when(isAuth) {
+                3 -> {
+                    // 未通过
+                    helper.setGone(R.id.goodsStatusTv, true)
+                    helper.setText(R.id.goodsStatusTv, "审核未通过")
+                    helper.setText(R.id.goodsAuthStatusTv, authMessage)
+                    helper.setGone(R.id.goodsAuthStatusTv, true)
+                }
+                0, 4 -> {
+                    // 审核中
+                    helper.setGone(R.id.goodsStatusTv, true);
+                    helper.setText(R.id.goodsStatusTv, "审核中")
+                    helper.setGone(R.id.goodsAuthStatusTv, false)
+                }
+                else -> {
+                    helper.setGone(R.id.goodsStatusTv, false);
+                    helper.setGone(R.id.goodsAuthStatusTv, false);
+                }
+            }
+
             //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
 //            helper.setText(R.id.goodsOwnerTv, String.format("[来源：%s]", supplierName));
 //            helper.setGone(R.id.goodsOwnerTv, supplierName?.length?:0 > 0);
@@ -75,6 +92,7 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
     fun updateQuantity(quantity: String?, position: Int) {
         val goods = data[position]
         goods.quantity = quantity
+        goods.goodsQuantityStatusMix = if(quantity?.toInt()?:0 > 0) 1 else 0;
         notifyItemChanged(position)
     }
 

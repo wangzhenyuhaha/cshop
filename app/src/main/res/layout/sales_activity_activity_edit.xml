@@ -37,6 +37,7 @@
         </LinearLayout>
 
         <View style="@style/common_divider" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
@@ -52,79 +53,77 @@
             <TextView
                 style="@style/goods_group_edit_left"
                 android:maxLines="1"
-                android:text="活动/优惠名称" />
+                android:text="活动开始时间" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="right|center"
-                android:paddingTop="@dimen/dimen_15">
-
-                <com.james.common.view.IRelativeLayout
-                    android:id="@+id/firstMenuC"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dimen_10"
-                    android:paddingVertical="@dimen/dimen_4"
-                    app:ivBgColor="@color/white"
-                    app:ivBorderColor="@color/color_999999"
-                    app:ivBorderWidth="@dimen/dimen_1"
-                    app:ivRadius="@dimen/dimen_5"
-                    app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-                    app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
-
-                    <TextView
-                        android:id="@+id/firstMenuTv"
-                        android:drawableRight="@mipmap/ic_date"
-                        android:layout_width="86dp"
-                        android:layout_height="@dimen/dimen_17"
-                        android:text="2020-08-08"
-                        android:maxLines="1"
-                        android:drawablePadding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/sp_11" />
-
-                </com.james.common.view.IRelativeLayout>
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginRight="@dimen/dimen_10"
-                    android:layout_marginLeft="@dimen/dp_10"
-                    android:text="~"
-                    android:gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <com.james.common.view.IRelativeLayout
-                    android:id="@+id/secondMenuC"
-                    android:layout_width="wrap_content"
+                    android:paddingVertical="@dimen/dimen_15"
+                    android:id="@+id/firstMenuTv"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/dimen_10"
-                    android:paddingVertical="@dimen/dimen_4"
-                    app:ivBgColor="@color/white"
-                    app:ivBorderColor="@color/color_999999"
-                    app:ivBorderWidth="@dimen/dimen_1"
-                    app:ivRadius="@dimen/dimen_5"
-                    app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-                    app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
-
-                    <TextView
-                        android:id="@+id/secondMenuTv"
-                        android:drawableRight="@mipmap/ic_date"
-                        android:layout_width="86dp"
-                        android:layout_height="@dimen/dimen_17"
-                        android:text="2020-08-08"
-                        android:maxLines="1"
-                        android:drawablePadding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/sp_11" />
-
-                </com.james.common.view.IRelativeLayout>
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/ic_date"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:text="请选择"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:textColor="@color/color_666666"
+                    android:textColorHint="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
 
             </LinearLayout>
 
         </LinearLayout>
 
+
+        <View style="@style/common_divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_7"
+                android:src="@mipmap/common_must_input" />
+
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:maxLines="1"
+                android:text="活动结束时间" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right|center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/secondMenuTv"
+                    android:paddingVertical="@dimen/dimen_15"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/ic_date"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:text="请选择"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:textColor="@color/color_666666"
+                    android:textColorHint="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <View style="@style/common_divider" />
 
@@ -147,17 +146,17 @@
 
                 <TextView
                     style="@style/goods_group_edit_left"
-                    android:layout_height="40dp"
                     android:layout_width="110dp"
+                    android:layout_height="40dp"
                     android:text="活动详情" />
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/activityRv"
-                android:layout_gravity="right"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:layout_gravity="right" />
 
         </LinearLayout>
 
@@ -167,7 +166,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -181,14 +181,26 @@
                 android:text="商品管理" />
 
             <TextView
-                android:drawablePadding="@dimen/dimen_10"
-                android:drawableRight="@mipmap/common_arrow_right"
                 android:id="@+id/activityGoodsPickTv"
                 style="@style/goods_group_edit_right"
+                android:drawableRight="@mipmap/common_arrow_right"
+                android:drawablePadding="@dimen/dimen_10"
                 android:hint="请选择参与活动的商品" />
 
         </LinearLayout>
+
+
     </com.james.common.view.ILinearLayout>
 
+    <TextView
+        android:id="@+id/submitTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_38"
+        android:layout_margin="@dimen/dimen_14"
+        android:background="@drawable/shape_goods_pop_btn"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dimen_14" />
 
 </LinearLayout>

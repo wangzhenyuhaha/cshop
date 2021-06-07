@@ -119,6 +119,10 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
             });
     }
 
+    override fun getCheckedCount(list: List<GoodsVO>?): Int {
+        return list?.filter { it?.isChecked == true }?.size?:0;
+    }
+
     /**
      * 批量删除
      */

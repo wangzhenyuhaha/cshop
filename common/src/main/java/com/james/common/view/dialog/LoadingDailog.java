@@ -73,6 +73,7 @@ public class LoadingDailog extends Dialog {
             loading.setContentView(view);
             loading.setCancelable(isCancelable);
             loading.setCanceledOnTouchOutside(isCancelOutside);
+            loading.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION);
             //实现loading的透明度
             WindowManager.LayoutParams lp=loading.getWindow().getAttributes();
             lp.alpha = 0.6f;

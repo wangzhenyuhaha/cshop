@@ -33,6 +33,15 @@
                 android:textSize="@dimen/dimen_13" />
 
             <TextView
+                android:id="@+id/tvGoodsSelectCount"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已选择0件商品"
+                android:visibility="gone"
+                android:textColor="@color/color_999999"/>
+
+            <TextView
                 android:id="@+id/tv_goods_on"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -100,6 +109,30 @@
                 android:textColor="@color/red" />
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/rl_goods_option"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_48"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_ffffff"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dimen_15">
+
+            <TextView
+                android:id="@+id/tvGoodsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="共0件商品"
+                android:textColor="@color/color_999999"/>
+
+            <TextView
+                android:textColor="@color/color_666666"
+                android:id="@+id/tv_goods_batch"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:text="批量操作" />
+        </LinearLayout>
         <View style="@style/DivideLineHorizontal" />
 
     </LinearLayout>

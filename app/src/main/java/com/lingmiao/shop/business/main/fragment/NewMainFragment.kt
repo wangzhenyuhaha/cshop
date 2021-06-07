@@ -30,7 +30,10 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.show
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.business.goods.*
+import com.lingmiao.shop.business.main.bean.MainInfoVo
+import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.me.ManagerSettingActivity
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
@@ -39,13 +42,23 @@ import com.lingmiao.shop.business.tuan.ActivityIndexActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
+import kotlinx.android.synthetic.main.fragment_new_main.civMainShopHead
+import kotlinx.android.synthetic.main.fragment_new_main.ivMainMessage
+import kotlinx.android.synthetic.main.fragment_new_main.llMainShopOpen
+import kotlinx.android.synthetic.main.fragment_new_main.llMainShopOther
+import kotlinx.android.synthetic.main.fragment_new_main.smartRefreshLayout
+import kotlinx.android.synthetic.main.fragment_new_main.tvMainLoginOut
+import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopHint
+import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopName
+import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopNext
+import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopReason
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
 class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
-    private var mainInfo: MainInfo? = null
+    private var mainInfo: MainInfoVo? = null
     private var fromMain: Boolean? = null
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
@@ -238,6 +251,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
 
     override fun onMainInfoSuccess(bean: MainInfo?) {
+
+    }
+
+    override fun onMainDataSuccess(bean: MainInfoVo?) {
         hidePageLoading()
         mainInfo = bean
         smartRefreshLayout.finishRefresh()
@@ -261,25 +278,25 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         // 总信息
         // 未接订单
-        tvTodayUnTakeOrderCount.text = String.format("%s", 0);
+        tvTodayUnTakeOrderCount.text = String.format("%s", mainInfo?.waitAcceptNum);
         // 已接订单
-        tvTodayTakenOrderCount.text = String.format("%s", 0);
+        tvTodayTakenOrderCount.text = String.format("%s", mainInfo?.alreadyAcceptNum);
         // 待配送
-        tvTodayDistributeOrderCount.text = String.format("%s", 0);
+        tvTodayDistributeOrderCount.text = String.format("%s", mainInfo?.waitShipNum);
 
         // 待退款
-        tvTodayRefund.text = String.format("%s", 0);
+        tvTodayRefund.text = String.format("%s", mainInfo?.refundNum);
         // 已完成
-        tvTodayFinish.text = String.format("%s", 0);
+        tvTodayFinish.text = String.format("%s", mainInfo?.completeNum);
         // 失效订单
-        tvTodayInvalid.text = String.format("%s", 0);
+        tvTodayInvalid.text = String.format("%s", mainInfo?.cancelNum);
 
         //销售额
-        tvTodaySales.text = String.format("%s", 0);
+        tvTodaySales.text = String.format("%s", mainInfo?.tradeAmount);
         // 新用户数
-        tvTodayNewUser.text = String.format("%s", 0);
+        tvTodayNewUser.text = String.format("%s", mainInfo?.newMemberNum);
         // 库存预警
-        tvTodayStoreWarn.text = String.format("%s", 0);
+        tvTodayOrderCount.text = String.format("%s", mainInfo?.allNum);
 
         // 管理设置
         tvManagerSetting.setOnClickListener {
@@ -317,6 +334,38 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
          }
         // 敬请期待
         tvComeSoon.setOnClickListener {
+
+        }
+
+        // 今日数据 销售额
+        salesDataOfTodayTv.singleClick {
+            ActivityUtils.startActivity(StatsActivity::class.java)
+        }
+        // 用户数据
+        userDataOfTodayTv.singleClick {
+            ActivityUtils.startActivity(UserManagerActivity::class.java)
+        }
+        // 库存预警
+        storeDataOfTodayTv.singleClick {
+
+        }
+
+
+        // 待接单
+        llMainWaitTakeGoods.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+        }
+        // 待送达
+        llMainWaitSendGoods.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+        }
+        // 待退款
+        llMainWaitRefund.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
+        }
+        // 待发货
+        llMainWaitSendGoods.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
         }
     }
 

@@ -297,6 +297,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/tvAddressHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -306,30 +307,30 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:id="@+id/orderAddressTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:gravity="center_vertical"
-                android:paddingTop="@dimen/dimen_15"
-                android:paddingRight="@dimen/dimen_15"
-                android:text="上海市浦东新区浦三路"
-                android:textColor="@color/color_666666"
-                android:textSize="12sp" />
-
-            <TextView
+                android:padding="@dimen/dimen_15"
                 android:id="@+id/orderOwnerTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/orderAddressTv"
                 android:layout_alignParentRight="true"
                 android:drawableRight="@mipmap/ic_tel"
                 android:drawablePadding="@dimen/dimen_10"
                 android:gravity="center_vertical"
-                android:paddingTop="@dimen/dimen_10"
                 android:paddingRight="@dimen/dimen_15"
-                android:paddingBottom="@dimen/dimen_15"
                 android:text="张稳重 18621774835"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:paddingBottom="@dimen/dimen_15"
+                android:layout_below="@id/orderOwnerTv"
+                android:id="@+id/orderAddressTv"
+                android:layout_width="wrap_content"
+                android:paddingLeft="@dimen/dimen_15"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:paddingRight="@dimen/dimen_15"
+                android:text="上海市浦东新区浦三路"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp" />
 

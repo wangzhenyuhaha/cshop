@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeTabPosition(event : TabChangeEvent){
-       tbMain.selectTab(tbMain.getTabAt(2))
+       tbMain.selectTab(tbMain.getTabAt(1))
        MainScope().launch {
            delay(100)
            EventBus.getDefault().post(OrderTabChangeEvent(event.type))

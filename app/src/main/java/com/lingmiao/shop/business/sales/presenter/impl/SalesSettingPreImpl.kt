@@ -4,11 +4,9 @@ import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.isNotEmpty
-import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.presenter.GoodsDetailPre
+import com.lingmiao.shop.business.sales.api.PromotionRepository
 import com.lingmiao.shop.business.sales.bean.SalesVo
 import com.lingmiao.shop.business.sales.presenter.ISalesSettingPresenter
-import com.lingmiao.shop.business.sales.presenter.IStatsPresenter
 import kotlinx.coroutines.launch
 
 /**
@@ -22,23 +20,36 @@ class SalesSettingPreImpl(var context: Context, var view: ISalesSettingPresenter
             if (list.isEmpty()) {
                 view.showPageLoading()
             }
-
-//            val resp = GoodsRepository.loadGoodsListByName(page.getPageIndex(), goodsName ?:"", "");
-//            if (resp.isSuccess) {
-//                val salesList = resp.data.data
-//                if (page.isRefreshing() && salesList.isNullOrEmpty()) {
-//                    view.showNoData()
-//                } else {
-//                    view.hidePageLoading()
-//                }
-//                view.onLoadMoreSuccess(salesList, salesList.isNotEmpty())
-//            } else {
-//                view.onLoadMoreFailed()
-//                view.hidePageLoading()
-//            }
-            val salesList = getItems();
-            view.onLoadMoreSuccess(salesList, salesList.isNotEmpty())
+            val resp = PromotionRepository.getDiscounts(page.getPageIndex());
+            if (resp.isSuccess) {
+                val salesList = resp.data.data
+                if (page.isRefreshing() && salesList.isNullOrEmpty()) {
+                    view.showNoData()
+                } else {
+                    view.hidePageLoading()
+                }
+                view.onLoadMoreSuccess(salesList, salesList.isNotEmpty())
+            } else {
+                view.onLoadMoreFailed()
+            }
             view.hidePageLoading()
+            //val salesList = getItems();
+            //view.onLoadMoreSuccess(salesList, salesList.isNotEmpty())
+            //view.hidePageLoading()
+        }
+    }
+
+    override fun delete(id: String?, position: Int) {
+        if(id == null || id.isEmpty()) {
+            return;
+        }
+        mCoroutine.launch {
+            view?.showDialogLoading()
+            val resp = PromotionRepository.deleteById(id!!);
+            handleResponse(resp) {
+                view.onDelete(position);
+            }
+            view?.hideDialogLoading();
         }
     }
 

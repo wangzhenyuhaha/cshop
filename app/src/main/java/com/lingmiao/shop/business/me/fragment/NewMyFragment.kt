@@ -66,6 +66,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         tvBalance.setOnClickListener(this)
         tvSetting.setOnClickListener(this)
         tvManagerSetting.setOnClickListener(this)
+        tvShopQRCode.setOnClickListener(this);
 //        rlMyShopManage.setOnClickListener(this)
         rlMyFeedback.setOnClickListener(this)
         rlMyContactService.setOnClickListener(this)
@@ -103,6 +104,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             R.id.tvSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)
+            }
+            R.id.tvShopQRCode -> {
+                // 二维码
+                ActivityUtils.startActivity(ShopQRCodeActivity::class.java)
             }
             R.id.tvBalance -> {
                 // 余额

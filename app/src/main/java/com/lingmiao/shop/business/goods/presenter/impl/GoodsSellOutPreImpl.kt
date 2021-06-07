@@ -39,23 +39,14 @@ class GoodsSellOutPreImpl(override var context: Context, override var view: Good
             val resp =
                 GoodsRepository.loadSellOutGoodsList(page.getPageIndex())
             if (resp.isSuccess) {
-                val goodsList = mutableListOf<GoodsVO>()//resp.data.data
-                EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT,0));//resp.data.dataTotal
+                val goodsList = resp.data.data
+                EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {
                 view.onLoadMoreFailed()
             }
-
-//            val goodsList = getTempList();
-//            view.onLoadMoreSuccess(goodsList, getTempList().isNotEmpty())
             view.hidePageLoading()
         }
-    }
-
-    fun getTempList() : List<GoodsVO>? {
-        val regionsType = object : TypeToken<PageVO<GoodsVO>>(){}.type;
-        var json = Gson().fromJson<PageVO<GoodsVO>>(ResourceUtils.readAssets2String("goods.json"), regionsType);
-        return json?.data;
     }
 
     override fun clickMenuView(goodsVO: GoodsVO?, position: Int, target: View) {

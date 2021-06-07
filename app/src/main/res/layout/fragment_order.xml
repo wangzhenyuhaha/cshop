@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="true"
-            app:tvTitle="全部" />
+            app:tvTitle="待接单" />
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab2"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="待付款" />
+            app:tvTitle="进行中" />
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab3"
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="进行中" />
+            app:tvTitle="退款"  />
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab4"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="退款" />
+            app:tvTitle="已完成"/>
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab5"
@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="已完成" />
+            app:tvTitle="全部"/>
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab6"
@@ -95,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="已取消" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 

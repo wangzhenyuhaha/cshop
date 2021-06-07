@@ -14,7 +14,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
+import com.lingmiao.shop.business.order.bean.OrderServiceVo
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 
@@ -79,6 +79,68 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
                 view.hideDialogLoading()
             }
 
+        }
+    }
+
+    override fun takeOrder(tradeSn: String) {
+        mCoroutine.launch {
+            val resp = OrderRepository.apiService.takeOrder(tradeSn, 1);
+            if(resp.isSuccessful) {
+                view.onTakeSuccess()
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+    override fun refuseOrder(tradeSn: String) {
+        mCoroutine.launch {
+            val resp = OrderRepository.apiService.takeOrder(tradeSn, 0);
+            if(resp.isSuccessful) {
+                view.onRefuseSuccess()
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+    override fun shipOrder(sn: String) {
+        mCoroutine.launch {
+            val resp = OrderRepository.apiService.ship(sn);
+            if(resp.isSuccessful) {
+                view.onShipped()
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+    override fun signOrder(sn: String) {
+        mCoroutine.launch {
+            val resp = OrderRepository.apiService.sign(sn);
+            if(resp.isSuccessful) {
+                view.onSigned()
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+    override fun refuseService(sn: String) {
+        mCoroutine.launch {
+            val item = OrderServiceVo();
+            val resp = OrderRepository.apiService.service(sn, item);
+            if(resp.isSuccessful) {
+                view.onRefusedService()
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+    override fun acceptService(sn: String) {
+        mCoroutine.launch {
+            val item = OrderServiceVo();
+            val resp = OrderRepository.apiService.service(sn, item);
+            if(resp.isSuccessful) {
+                view.onAcceptService()
+            }
+            view.hideDialogLoading()
         }
     }
 

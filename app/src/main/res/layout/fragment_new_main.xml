@@ -142,7 +142,7 @@
                             <!--总信息start-->
                             <LinearLayout style="@style/main_data_layout">
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayUnTakeOrderCount"
@@ -153,12 +153,14 @@
                                         style="@style/today_data_hint"
                                         android:text="未接订单" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 <View
                                     style="@style/dash_v_line"/>
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/llMainWaitTakeGoods"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayTakenOrderCount"
@@ -169,12 +171,14 @@
                                         style="@style/today_data_hint"
                                         android:text="已接订单" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 <View
                                     style="@style/dash_v_line"/>
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/llMainWaitSendGoods"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayDistributeOrderCount"
@@ -183,9 +187,9 @@
 
                                     <TextView
                                         style="@style/today_data_hint"
-                                        android:text="待配送" />
+                                        android:text="配送中" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                             </LinearLayout>
                             <!--总信息end-->
@@ -199,7 +203,9 @@
                             <LinearLayout
                                 style="@style/main_data_layout">
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@id/llMainWaitRefund"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayRefund"
@@ -210,12 +216,13 @@
                                         style="@style/today_data_hint"
                                         android:text="待退款" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 <View
                                     style="@style/dash_v_line"/>
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayFinish"
@@ -226,12 +233,12 @@
                                         style="@style/today_data_hint"
                                         android:text="已完成" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 <View
                                     style="@style/dash_v_line"/>
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayInvalid"
@@ -242,7 +249,7 @@
                                         style="@style/today_data_hint"
                                         android:text="失效订单" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
                             </LinearLayout>
                             <!--团长end-->
 
@@ -252,7 +259,6 @@
 
 
                         <LinearLayout
-                            tools:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -281,7 +287,27 @@
                             <!--总信息start-->
                             <LinearLayout style="@style/main_data_layout">
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/storeDataOfTodayTv"
+                                    style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayOrderCount"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="订单数量" />
+
+                                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                                <View
+                                    style="@style/dash_v_line"/>
+
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/salesDataOfTodayTv"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodaySales"
@@ -292,12 +318,14 @@
                                         style="@style/today_data_hint"
                                         android:text="销售额" />
 
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                                 <View
                                     style="@style/dash_v_line"/>
 
-                                <LinearLayout style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/userDataOfTodayTv"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayNewUser"
@@ -308,23 +336,7 @@
                                         style="@style/today_data_hint"
                                         android:text="新用户数" />
 
-                                </LinearLayout>
-
-                                <View
-                                    style="@style/dash_v_line"/>
-
-                                <LinearLayout style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayStoreWarn"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="库存预警" />
-
-                                </LinearLayout>
+                                </androidx.appcompat.widget.LinearLayoutCompat>
 
                             </LinearLayout>
                             <!--总信息end-->
@@ -378,19 +390,19 @@
                                 style="@style/main_tool_layout"
                                 android:layout_marginTop="0dp">
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvMenuManager"
                                     style="@style/main_tools"
                                     android:drawableTop="@mipmap/main_ic_logistic_manager"
                                     android:text="菜单管理" />
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvSaleSetting"
                                     style="@style/main_tools"
                                     android:drawableTop="@mipmap/main_ic_tuan_register"
                                     android:text="营销设置" />
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvWalletAccount"
                                     style="@style/main_tools"
                                     android:drawableTop="@mipmap/main_ic_wallet_account"
@@ -404,20 +416,20 @@
                                 style="@style/main_tool_layout"
                                 android:layout_marginTop="0dp">
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvUserManager"
                                     style="@style/main_tools"
                                     android:drawableTop="@mipmap/main_ic_tuan_manager"
                                     android:text="用户管理" />
 
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvDataAnalysis"
                                     style="@style/main_tools"
                                     android:drawableTop="@mipmap/main_ic_comming_soon"
                                     android:text="数据统计" />
 
-                                <TextView
+                                <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvComeSoon"
                                     android:drawableBottom="@mipmap/ic_more"
                                     style="@style/main_tools"

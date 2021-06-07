@@ -360,7 +360,7 @@
             <View style="@style/DivideLineHorizontal" />
 
             <TextView
-                android:id="@+id/tvGoodsManager"
+                android:id="@+id/tvShopQRCode"
                 style="@style/my_part_item"
                 android:drawableLeft="@mipmap/my_code"
                 android:text="我的二维码" />
