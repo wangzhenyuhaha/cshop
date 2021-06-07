@@ -171,10 +171,11 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeTabPosition(event: OrderTabChangeEvent) {
         LogUtils.d("changeTabPosition:" + event.type)
-        if (event.type == IConstant.TAB_WAIT_SEND_GOODS) {
-            vpContent.currentItem = 2
-        } else {
-            vpContent.currentItem = 4
-        }
+        vpContent.currentItem = event.type;
+//        if (event.type == IConstant.TAB_WAIT_SEND_GOODS) {
+//            vpContent.currentItem = 2
+//        } else {
+//            vpContent.currentItem = 4
+//        }
     }
 }

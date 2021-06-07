@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.api
 
-import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.main.bean.*
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
@@ -54,6 +53,11 @@ interface MainApi {
     @GET("seller/shops/identity/queryShopIdentity")
     @WithHiResponse
     fun getShopIdentity() : Call<DataVO<IdentityVo>>;
+
+    //根据类型查询分享内容
+    @GET("/seller/shops/getShareInfo")
+    @WithHiResponse
+    fun getShareInfo(@Query("channel_type")type : Int, @Query("id")id : Int, @Query("share_type")share_type : Int) : Call<ShareVo>
 
     // 保障金
     @GET("seller/shops/identity/querySaleProductList")

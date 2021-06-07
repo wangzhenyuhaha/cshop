@@ -35,6 +35,7 @@ import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.main.bean.MainInfoVo
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.me.ManagerSettingActivity
+import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
 import com.lingmiao.shop.business.sales.UserManagerActivity
@@ -295,7 +296,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         tvTodaySales.text = String.format("%s", mainInfo?.tradeAmount);
         // 新用户数
         tvTodayNewUser.text = String.format("%s", mainInfo?.newMemberNum);
-        // 库存预警
+        // 订单量
         tvTodayOrderCount.text = String.format("%s", mainInfo?.allNum);
 
         // 管理设置
@@ -337,7 +338,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         }
 
-        // 今日数据 销售额
+        // 今日数据
+        // 订单数量
+        storeDataOfTodayTv.singleClick {
+            ActivityUtils.startActivity(StatsActivity::class.java)
+        }
+        // 销售额
         salesDataOfTodayTv.singleClick {
             ActivityUtils.startActivity(StatsActivity::class.java)
         }
@@ -345,27 +351,32 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         userDataOfTodayTv.singleClick {
             ActivityUtils.startActivity(UserManagerActivity::class.java)
         }
-        // 库存预警
-        storeDataOfTodayTv.singleClick {
 
+
+
+        // 未接订单
+        llTodayUnTakeOrderCount.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(0));
         }
-
-
-        // 待接单
+        // 已接订单
         llMainWaitTakeGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+            EventBus.getDefault().post(TabChangeEvent(1))
         }
-        // 待送达
+        // 配送中
         llMainWaitSendGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+            EventBus.getDefault().post(TabChangeEvent(1))
         }
         // 待退款
         llMainWaitRefund.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
+            EventBus.getDefault().post(TabChangeEvent(2))
         }
-        // 待发货
-        llMainWaitSendGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+        // 已完成
+        layoutTodayFinish.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(3))
+        }
+        // 失效
+        layoutTodayInvalid.setOnClickListener {
+            EventBus.getDefault().post(TabChangeEvent(4))
         }
     }
 

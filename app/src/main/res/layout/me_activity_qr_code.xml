@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dimen_15"
-        android:text="下载二维码进行打印"
+        android:text="点击二维码进行保存"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/sp_14"
         android:textStyle="bold"

@@ -1,8 +1,14 @@
 package com.lingmiao.shop.base
 
+import com.blankj.utilcode.util.PathUtils
+
 object IConstant {
     const val PAGE_SIZE = 10
     const val SERVICE_PHONE = "17717085667"
+
+
+    val FILE_SEP = System.getProperty("file.separator")
+    val CACHE_PATH = PathUtils.getCachePathExternalFirst() + FILE_SEP
 
     //1申请开店审核成功;  2买家订单支付成功;  3:其它  ,4店铺审核不通过
     const val MESSAGE_APPLY_SHOP_SUCCESS = "1"

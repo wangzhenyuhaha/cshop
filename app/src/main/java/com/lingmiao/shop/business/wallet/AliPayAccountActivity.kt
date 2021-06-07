@@ -126,10 +126,10 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
     }
 
     override fun getWithdrawAccountSuccess(account: WithdrawAccountVo) {
-        aLiAccount = account?.alipayWithdrawAccount ?: null;
-        tv_wallet_third_account_type.setText(account?.alipayWithdrawAccount?.getPublicName());
-        et_wallet_third_account_detail_name.setText(account?.alipayWithdrawAccount?.accountNo ?: "");
-        et_wallet_third_account_name.setText(account?.alipayWithdrawAccount?.accountName ?: "");
+        aLiAccount = account?.wechatWithdrawAccount ?: null;
+        tv_wallet_third_account_type.setText(aLiAccount?.getPublicName());
+        et_wallet_third_account_detail_name.setText(aLiAccount?.accountNo ?: "");
+        et_wallet_third_account_name.setText(aLiAccount?.accountName ?: "");
     }
 
 }

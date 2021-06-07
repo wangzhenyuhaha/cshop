@@ -362,13 +362,14 @@
             <TextView
                 android:id="@+id/tvShopQRCode"
                 style="@style/my_part_item"
+                android:layout_height="58dp"
                 android:drawableLeft="@mipmap/my_code"
                 android:text="我的二维码" />
 
             <View style="@style/DivideLineHorizontal" />
 
             <TextView
-                android:id="@+id/tvMenuManager"
+                android:id="@+id/tvShareManager"
                 style="@style/my_part_item"
                 android:drawableLeft="@mipmap/my_share"
                 android:text="分享店铺" />

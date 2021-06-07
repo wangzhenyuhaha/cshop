@@ -4,10 +4,12 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
+import com.fox7.wx.Util.Bitmap2Bytes
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
 import com.tencent.mm.opensdk.modelmsg.*
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import java.io.File
+import java.net.URL
 
 
 /**
@@ -110,6 +112,36 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         api.sendReq(req)
     }
 
+    fun shareImage(mUrl : String, mThumbSize : Int = THUMB_SIZE) {
+        if(!checkApiAndContext()) {
+            return;
+        }
+
+        val msg = WXMediaMessage()
+        msg.title = mTitle;
+        msg.description = mDescription;
+
+
+        //image网络图片
+        var bmp = BitmapFactory.decodeStream(URL(mUrl).openStream());
+
+        var thumbBmp = Bitmap.createScaledBitmap(bmp, mThumbSize, mThumbSize, true);
+        bmp.recycle();
+        msg.thumbData = Bitmap2Bytes(thumbBmp)//Util.bmpToByteArray(thumbBmp, true)
+
+
+        val imgObj = WXImageObject(thumbBmp)
+        msg.mediaObject = imgObj
+
+
+        val req = SendMessageToWX.Req()
+        req.transaction = buildTransaction("img")
+        req.message = msg
+        req.scene = mTargetScene
+        api.sendReq(req)
+
+
+    }
 
     fun shareImageResource(@DrawableRes mIconDrawable : Int = 0, mThumbSize : Int = THUMB_SIZE) {
         if(!checkApiAndContext()) {
@@ -260,6 +292,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         //拉起小程序页面的可带参路径，不填默认拉起小程序首页，对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
         req.path = path
 
+        miniTypeToTest();
         req.miniprogramType = mMiniProgramType
 
         api.sendReq(req)

@@ -47,7 +47,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     }
 
     override fun createPresenter(): MyPresenter? {
-        return MyPreImpl(this)
+        return MyPreImpl(mContext, this)
     }
 
     override fun useEventBus(): Boolean {
@@ -67,6 +67,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         tvSetting.setOnClickListener(this)
         tvManagerSetting.setOnClickListener(this)
         tvShopQRCode.setOnClickListener(this);
+        tvShareManager.setOnClickListener(this);
 //        rlMyShopManage.setOnClickListener(this)
         rlMyFeedback.setOnClickListener(this)
         rlMyContactService.setOnClickListener(this)
@@ -100,7 +101,11 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             R.id.rlMyContactService -> {//联系客服
                 OtherUtils.goToDialApp(activity,IConstant.SERVICE_PHONE)
             }
-            R.id.tvManagerSetting,
+            R.id.tvShareManager -> {
+                my?.shopId?.apply {
+                    mPresenter?.getShareInfo(this)
+                }
+            }
             R.id.tvSetting,
             R.id.rlMySetting -> {//设置
                 ActivityUtils.startActivity(AccountSettingActivity::class.java)
@@ -193,4 +198,5 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         mPresenter?.getIdentity();
         mPresenter?.loadWalletData();
     }
+
 }

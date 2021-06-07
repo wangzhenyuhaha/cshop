@@ -142,7 +142,9 @@
                             <!--总信息start-->
                             <LinearLayout style="@style/main_data_layout">
 
-                                <androidx.appcompat.widget.LinearLayoutCompat style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/llTodayUnTakeOrderCount"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayUnTakeOrderCount"
@@ -222,6 +224,7 @@
                                     style="@style/dash_v_line"/>
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/layoutTodayFinish"
                                     style="@style/main_data_layout_item">
 
                                     <TextView
@@ -238,7 +241,9 @@
                                 <View
                                     style="@style/dash_v_line"/>
 
-                                <androidx.appcompat.widget.LinearLayoutCompat style="@style/main_data_layout_item">
+                                <androidx.appcompat.widget.LinearLayoutCompat
+                                    android:id="@+id/layoutTodayInvalid"
+                                    style="@style/main_data_layout_item">
 
                                     <TextView
                                         android:id="@+id/tvTodayInvalid"

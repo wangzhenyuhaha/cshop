@@ -46,7 +46,7 @@ class MyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter
     }
 
     override fun createPresenter(): MyPresenter? {
-        return MyPreImpl(this)
+        return MyPreImpl(mContext, this)
     }
 
     override fun useEventBus(): Boolean {
