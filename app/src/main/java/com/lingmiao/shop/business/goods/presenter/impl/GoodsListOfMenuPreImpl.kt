@@ -1,19 +1,13 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
-import com.amap.api.mapcore.util.it
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsSkuVOWrapper
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.pop.ChildrenGoodsMenuPop
-import com.lingmiao.shop.business.goods.pop.ChildrenMenuPop
-import com.lingmiao.shop.business.goods.pop.GoodsQuantityPricePop
 import com.lingmiao.shop.business.goods.presenter.GoodsListOfMenuPre
-import com.lingmiao.shop.util.stringToDate
 import kotlinx.coroutines.launch
 
 /**
@@ -25,7 +19,7 @@ class GoodsListOfMenuPreImpl(val context: Context, val view : GoodsListOfMenuPre
 
     private val mGroupPreImpl: PopUserGroupPreImpl by lazy { PopUserGroupPreImpl(view) }
 
-    private val menuPopPre: ChildrenMenuPreImpl by lazy { ChildrenMenuPreImpl(context, view) }
+    private val menuPopPre: ChildrenGoodsMenuPreImpl by lazy { ChildrenGoodsMenuPreImpl(context, view) }
 
     private val quantityPopPre: QuantityPricePreImpl by lazy { QuantityPricePreImpl(context, view) }
 
@@ -42,11 +36,11 @@ class GoodsListOfMenuPreImpl(val context: Context, val view : GoodsListOfMenuPre
         }
         menuPopPre.showMenuPop(ChildrenGoodsMenuPop.TYPE_PRICE, target) { menuType ->
             when (menuType) {
-                ChildrenGoodsMenuPop.TYPE_PRICE ->
+                ChildrenGoodsMenuPop.TYPE_PRICE -> {
                     quantityPopPre.clickQuantityGoods(item?.goodsId) {
 
                     }
-
+                }
             }
         }
     }

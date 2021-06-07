@@ -7,7 +7,6 @@ import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.event.GroupRefreshEvent
-import com.lingmiao.shop.business.goods.presenter.GroupManagerEditPre
 import com.james.common.base.BasePreImpl
 import com.james.common.exception.BizException
 import com.james.common.netcore.networking.http.core.HiResponse
@@ -15,14 +14,9 @@ import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.checkNotBlack
 import com.james.common.utils.exts.isNetUrl
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.api.bean.CategoryVO
-import com.lingmiao.shop.business.goods.api.bean.GoodsSkuVOWrapper
-import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
-import com.lingmiao.shop.business.goods.pop.CateMenuPop
+import com.lingmiao.shop.business.goods.pop.ChildrenGoodsMenuPop
 import com.lingmiao.shop.business.goods.pop.ChildrenMenuPop
-import com.lingmiao.shop.business.goods.pop.GoodsQuantityPricePop
 import com.lingmiao.shop.business.goods.presenter.UserMenuEditPre
-import com.lingmiao.shop.business.wallet.bean.DataVO
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import java.io.File
@@ -36,6 +30,8 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
     UserMenuEditPre {
 
     private val menuPopPre: ChildrenMenuPreImpl by lazy { ChildrenMenuPreImpl(context, view) }
+
+    private val quantityPopPre: QuantityPricePreImpl by lazy { QuantityPricePreImpl(context, view) }
 
     override fun getShopId() : String {
         return UserManager.getLoginInfo()?.shopId?.toString()?:"";
@@ -165,11 +161,16 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
                     }
                 }
                 ChildrenMenuPop.TYPE_DELETE -> {
-                    delete(item.shopCatId!!, {
-                        view?.onDeleteGroupSuccess(position);
-                    },{
+                    DialogUtils.showDialog(context as Activity,
+                        "删除提示", "删除后不可恢复，确定要删除该二级菜单吗？",
+                        "取消", "确定删除",
+                        null, View.OnClickListener {
+                            delete(item.shopCatId!!, {
+                                view?.onDeleteGroupSuccess(position);
+                            },{
 
-                    })
+                            })
+                        })
                 }
             }
         }

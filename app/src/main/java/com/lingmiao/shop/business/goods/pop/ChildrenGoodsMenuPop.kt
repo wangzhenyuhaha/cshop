@@ -13,16 +13,15 @@ import razerdp.basepopup.BaseLazyPopupWindow
 
 
 /**
- * Author : Elson
- * Date   : 2020/7/12
- * Desc   : 分类编辑
+ * Desc   : 常用菜单，二级菜单的更多选项
  */
 class ChildrenGoodsMenuPop(context: Context, var flags: Int = TYPE_PRICE) :
     BaseLazyPopupWindow(context) {
 
     companion object {
-        const val TYPE_PRICE = 0x001             //编辑
-        const val TYPE_DELETE = 0x002;          //删除
+        const val TYPE_PRICE = 0x001            //库存/价格
+        const val TYPE_EDIT = 0x002;            //编辑
+        const val TYPE_DELETE = 0x004;          //删除
     }
 
     init {
@@ -31,6 +30,8 @@ class ChildrenGoodsMenuPop(context: Context, var flags: Int = TYPE_PRICE) :
     }
 
     private var childrenPriceTv: TextView? = null
+    private var childrenDeleteTv : TextView? = null
+    private var childrenEditTv : TextView? = null
 
     private var listener: ((Int) -> Unit)? = null
 
@@ -54,7 +55,21 @@ class ChildrenGoodsMenuPop(context: Context, var flags: Int = TYPE_PRICE) :
                 dismiss()
             }
         }
+        childrenDeleteTv = contentView.findViewById<TextView>(R.id.childrenDeleteTv).apply {
+            show(flags and TYPE_DELETE != 0)
+            setOnClickListener {
+                listener?.invoke(TYPE_DELETE)
+                dismiss()
+            }
+        }
 
+        childrenEditTv = contentView.findViewById<TextView>(R.id.childrenEditTv).apply {
+            show(flags and TYPE_EDIT != 0)
+            setOnClickListener {
+                listener?.invoke(TYPE_EDIT)
+                dismiss()
+            }
+        }
     }
 
     override fun onCreateShowAnimation(): Animation? {

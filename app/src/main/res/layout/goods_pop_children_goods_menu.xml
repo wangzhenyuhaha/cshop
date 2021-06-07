@@ -13,4 +13,13 @@
         style="@style/style_goods_menu"
         android:text="价格/库存" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/childrenEditTv"
+        style="@style/style_goods_menu"
+        android:text="编辑" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/childrenDeleteTv"
+        style="@style/style_goods_menu"
+        android:text="删除" />
 </com.james.common.view.ILinearLayout>

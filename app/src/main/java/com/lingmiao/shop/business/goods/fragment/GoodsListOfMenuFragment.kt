@@ -8,10 +8,7 @@ import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.adapter.GoodsAdapter
 import com.lingmiao.shop.business.goods.adapter.GoodsMenuAdapter
-import com.lingmiao.shop.business.goods.adapter.GoodsOfMenuAdapter
-import com.lingmiao.shop.business.goods.adapter.GoodsSelectAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GoodsListOfMenuPre
@@ -20,9 +17,7 @@ import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.*
 
 /**
-Create Date : 2021/6/19:55 AM
-Auther      : Fox
-Desc        :
+Desc        : 菜单-商品管理-列表
  **/
 class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre>(), GoodsListOfMenuPre.View {
 

@@ -18,6 +18,7 @@ import razerdp.basepopup.BaseLazyPopupWindow
  * Desc   : 分类编辑
  */
 class ChildrenMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
+
     BaseLazyPopupWindow(context) {
 
     companion object {

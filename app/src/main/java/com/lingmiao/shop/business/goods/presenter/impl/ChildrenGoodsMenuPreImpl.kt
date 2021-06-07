@@ -4,13 +4,9 @@ import android.content.Context
 import android.view.View
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
-import com.lingmiao.shop.business.goods.pop.CateMenuPop
 import com.lingmiao.shop.business.goods.pop.ChildrenGoodsMenuPop
-import com.lingmiao.shop.business.goods.pop.ChildrenMenuPop
 
 /**
- * Author : Elson
- * Date   : 2020/7/15
  * Desc   : 商品菜单管理
  */
 class ChildrenGoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(view) {

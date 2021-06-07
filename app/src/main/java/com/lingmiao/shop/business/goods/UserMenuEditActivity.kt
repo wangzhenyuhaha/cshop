@@ -19,9 +19,7 @@ import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.*
 
 /**
- * Author : Elson
- * Date   : 2020/7/18
- * Desc   : 商品 - 添加/编辑分组
+ * Desc   : 菜单 - 编辑常用菜单
  */
 class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.GroupEditView {
 
