@@ -1,9 +1,6 @@
 package com.lingmiao.shop.business.order.presenter.impl
 
 import com.blankj.utilcode.util.LogUtils
-import com.blankj.utilcode.util.ResourceUtils
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.api.OrderRepository
 import com.lingmiao.shop.business.order.bean.OrderList
@@ -13,7 +10,6 @@ import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.netcore.networking.http.core.awaitHiResponse
-import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.order.bean.OrderServiceVo
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
@@ -48,21 +44,10 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
             } else {
                 view.onLoadMoreFailed()
             }
-
-//            val goodsList = getTempList(status);
-//            view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             view.hidePageLoading()
         }
     }
 
-    fun getTempList(status: String) : List<OrderList>? {
-        val regionsType = object : TypeToken<PageVO<OrderList>>(){}.type;
-        var json = Gson().fromJson<PageVO<OrderList>>(ResourceUtils.readAssets2String("order.json"), regionsType);
-//        json?.data?.forEachIndexed { index, orderList ->
-//            orderList?.orderStatus = status;
-//        }
-        return json?.data;
-    }
 
     override fun deleteOrder(tradeSn: String) {
         mCoroutine.launch {

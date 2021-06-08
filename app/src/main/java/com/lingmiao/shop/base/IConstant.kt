@@ -49,6 +49,9 @@ object IConstant {
         return "https://docs.qq.com/doc/DR2FpbEJNcmdCSFNn"
     }
 
+    fun getSecurityH5() : String {
+        return "https://docs.qq.com/doc/DR3dJUEVyZGlLb1VE"
+    }
 
     fun getSellerUrl(): String {
         if(official) return String.format("%s:7003", PRO_URL);

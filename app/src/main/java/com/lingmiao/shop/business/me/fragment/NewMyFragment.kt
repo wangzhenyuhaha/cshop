@@ -20,6 +20,7 @@ import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.business.me.*
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
+import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.util.formatDouble
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_my_new.*
@@ -162,6 +163,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
      */
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
         tvBalance.text = getString(R.string.wallet_value, formatDouble(data?.balanceAccount?.balanceAmount?:0.0))
+    }
+
+    override fun onLoadedAccount(data: WithdrawAccountVo?) {
+
     }
 
     /**

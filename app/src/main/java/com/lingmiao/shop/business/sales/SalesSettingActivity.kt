@@ -64,7 +64,7 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo,ISalesSettingPresenter
             }
             emptyView = EmptyView(context).apply {
                 setBackgroundResource(R.color.color_ffffff)
-            }
+            }.setMessage("暂未设置营销活动")
         }
     }
 

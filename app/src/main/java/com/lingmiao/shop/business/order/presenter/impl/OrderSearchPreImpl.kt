@@ -7,7 +7,9 @@ import com.google.gson.reflect.TypeToken
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.order.api.OrderRepository
 import com.lingmiao.shop.business.order.bean.OrderList
 import com.lingmiao.shop.business.order.presenter.OrderSearchPre
 import kotlinx.coroutines.launch
@@ -30,15 +32,15 @@ class OrderSearchPreImpl(var context: Context, var view: OrderSearchPre.StatusVi
                 view.showPageLoading()
             }
 
-//            val resp = GoodsRepository.loadGoodsListByName(page.getPageIndex(), if(isGoodsName) searchText else null, if(isGoodsName) null else searchText)
-//            if (resp.isSuccess) {
-//                val goodsList = resp.data.data
-//                view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
-//            } else {
-//                view.onLoadMoreFailed()
-//            }
-            val goodsList = getTempList();
-            view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
+            val resp = OrderRepository.apiService.search(page.getPageIndex(), 10, searchText).awaitHiResponse()
+            if (resp.isSuccess) {
+                val goodsList = resp.data.data
+                view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
+            } else {
+                view.onLoadMoreFailed()
+            }
+//            val goodsList = getTempList();
+//            view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
 
             view.hidePageLoading()
         }

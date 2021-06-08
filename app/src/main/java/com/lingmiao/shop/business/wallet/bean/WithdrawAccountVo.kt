@@ -12,8 +12,13 @@ data class WithdrawAccountVo(
     @SerializedName("bankCard")
     var bankCard: BankCardAccountBean? = BankCardAccountBean()
 ) : Serializable {
+
     fun notExistAliPayAccount() : Boolean {
         return alipayWithdrawAccount == null || alipayWithdrawAccount?.accountName?.length === 0 || alipayWithdrawAccount?.accountNo?.length === 0;
+    }
+
+    fun notExistWechatAccount() : Boolean {
+        return wechatWithdrawAccount == null || wechatWithdrawAccount?.accountName?.length === 0 || wechatWithdrawAccount?.accountNo?.length === 0;
     }
 
     fun notExistBankAccount() : Boolean {

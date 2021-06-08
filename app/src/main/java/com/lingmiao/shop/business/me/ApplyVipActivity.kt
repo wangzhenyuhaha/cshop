@@ -12,6 +12,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
+import com.lingmiao.shop.business.main.UserServiceH5Activity
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.PersonInfoRequest
@@ -21,6 +22,7 @@ import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
 import com.lingmiao.shop.business.wallet.WalletInfoActivity
 import com.lingmiao.shop.business.wallet.bean.WalletVo
+import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
 import com.tencent.mm.opensdk.modelpay.PayReq
@@ -98,6 +100,9 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
                 val item = list.get(0);
                 mPresenter?.apply(item.id!!);
             }
+        }
+        securityLayout.singleClick {
+            UserServiceH5Activity.security(this, 3);
         }
         setUserInfo();
         mPresenter?.loadWalletData();
@@ -178,6 +183,10 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
             tvRecharge.gone()
             tvDepositStatus.setText(getString(R.string.vip_deposit_apply))
         }
+    }
+
+    override fun onLoadedAccount(data: WithdrawAccountVo?) {
+
     }
 
     /**

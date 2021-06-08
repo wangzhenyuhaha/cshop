@@ -69,7 +69,7 @@ data class CategoryVO(
 
     fun getMenuType(): Int {
         return when (showLevel) {
-            0 -> (CateMenuPop.TYPE_GOODS_INFO or CateMenuPop.TYPE_SPEC or CateMenuPop.TYPE_EDIT or CateMenuPop.TYPE_CHILDREN)
+            0 -> (CateMenuPop.TYPE_GOODS_INFO or CateMenuPop.TYPE_SPEC or CateMenuPop.TYPE_EDIT )//or CateMenuPop.TYPE_CHILDREN
             else -> (CateMenuPop.TYPE_GOODS_INFO or CateMenuPop.TYPE_SPEC or CateMenuPop.TYPE_EDIT)
         }
     }

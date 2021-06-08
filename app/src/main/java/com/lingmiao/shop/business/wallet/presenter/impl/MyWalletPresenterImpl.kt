@@ -14,14 +14,20 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
             //view.showDialogLoading()
 //            view.showPageLoading();
             val resp = WalletRepository.getWalletIndexInfo();
+            val wechatData = WalletRepository.getWithdrawAccountInfo()
 
             if(resp.isSuccess()) {
                 view.onLoadWalletDataSuccess(resp?.data?.data);
             } else {
                 view.onLoadWalletDataError(resp.code);
             }
+            if(wechatData.isSuccess()) {
+                view?.onLoadedAccount(wechatData?.data);
+            }
 //                view.hidePageLoading();
             //view.hideDialogLoading()
         }
     }
+
+
 }

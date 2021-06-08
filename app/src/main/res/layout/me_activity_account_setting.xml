@@ -137,6 +137,69 @@
 
     </com.james.common.view.ILinearLayout>
 
+
+    <com.james.common.view.ILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginRight="14dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical"
+        app:ivBgColor="@color/white"
+        app:ivRadius="5dp">
+
+
+        <RelativeLayout
+            android:id="@+id/rlPrivacy"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="隐私协议"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+
+        <View
+            style="@style/DivideLineHorizontal"
+            />
+
+        <RelativeLayout
+            android:id="@+id/rlService"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="服务协议"
+                android:textColor="#333333"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="11dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/me_arrow_right" />
+        </RelativeLayout>
+
+    </com.james.common.view.ILinearLayout>
+
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -39,6 +39,7 @@ class CategoryAdapter(mList : List<CategoryVO>?) : BaseMultiItemQuickAdapter<Cat
 
                 helper.addOnClickListener(R.id.cateTitleTv);
                 helper.addOnClickListener(R.id.cateExpandIv);
+                helper.addOnClickListener(R.id.cateAddIv);
                 // 更多
                 helper.addOnClickListener(R.id.cateMoreIv);
             } else if(item.itemType == TYPE_LEVEL_1) {

@@ -147,6 +147,7 @@
 
 
         <LinearLayout
+            android:id="@+id/securityLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -161,6 +162,7 @@
                 android:textSize="@dimen/sp_12" />
 
             <TextView
+                android:id="@+id/securityTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableRight="@mipmap/common_arrow_right"

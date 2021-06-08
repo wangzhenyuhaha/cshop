@@ -56,16 +56,19 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
                 val bItem = adapter.data[position] as CategoryVO;
             }
             setOnItemChildClickListener { adapter, view, position ->
+                val item = getItem(position) as CategoryVO;
                 when (view.id) {
                     // 加载或者是扩张
                     R.id.cateTitleTv,
                     R.id.cateExpandIv -> {
-                        val item = getItem(position) as CategoryVO;
                         if(item.isExpanded) {
                             adapter?.collapse(position, false);
                         } else {
                             adapter?.expand(position, false)
                         }
+                    }
+                    R.id.cateAddIv -> {
+                        mPresenter?.showAddDialog(item.categoryId?.toInt()!!);
                     }
                     // 更多
                     R.id.cateMoreIv -> {

@@ -4,8 +4,14 @@ import java.io.Serializable
 
 class WalletVo(
 
+    /**
+     * 押金
+     */
     var depositAccount: AccountVo? = null,
 
+    /**
+     * 余额
+     */
     var balanceAccount: AccountVo? = null
 ) : Serializable {
 

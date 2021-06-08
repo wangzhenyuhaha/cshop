@@ -16,6 +16,7 @@ import com.lingmiao.shop.business.me.presenter.impl.AccountSettingPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.business.main.UserServiceH5Activity
 import kotlinx.android.synthetic.main.me_activity_account_setting.*
 
 /**
@@ -53,6 +54,8 @@ class AccountSettingActivity : BaseActivity<AccountSettingPresenter>(),
         rlAccountVersion.setOnClickListener(this)
         tvAccountLoginOut.setOnClickListener(this)
         rlAboutUs.setOnClickListener(this)
+        rlPrivacy.setOnClickListener(this)
+        rlService.setOnClickListener(this)
     }
 
 
@@ -115,6 +118,12 @@ class AccountSettingActivity : BaseActivity<AccountSettingPresenter>(),
             }
             R.id.rlAboutUs -> {
                 ActivityUtils.startActivity(AboutUsActivity::class.java)
+            }
+            R.id.rlPrivacy -> {
+                UserServiceH5Activity.privacy(this, 1);
+            }
+            R.id.rlService -> {
+                UserServiceH5Activity.service(this, 2);
             }
         }
     }

@@ -10,6 +10,7 @@ import com.lingmiao.shop.business.wallet.presenter.MyWalletPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.MyWalletPresenterImpl
 import com.lingmiao.shop.util.formatDouble
 import com.james.common.base.BaseActivity
+import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import kotlinx.android.synthetic.main.wallet_activity_my_wallet.*
 
 /**
@@ -51,7 +52,7 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
             AliPayAccountActivity.ali(this);
         };
         ll_wallet_wechat_part.setOnClickListener {
-            AliPayAccountActivity.wechat(this);
+            AliPayAccountActivity.wechat(this, mAccount?.wechatWithdrawAccount);
         }
         ll_wallet_card.setOnClickListener {
             ActivityUtils.startActivity(BankCardListActivity::class.java);
@@ -72,6 +73,16 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
         tv_wallet_balance.setText(getString(R.string.yuan_amount, formatDouble(bAmount)));
         tv_wallet_deposit.setText(getString(R.string.yuan_amount, formatDouble(dAmount)));
 
+
+    }
+
+    var mAccount : WithdrawAccountVo? = null;
+
+    override fun onLoadedAccount(data: WithdrawAccountVo?) {
+        mAccount = data;
+        if(data?.notExistWechatAccount() == false){
+            tv_wallet_wechat.setText("已设置")
+        }
     }
 
     override fun onLoadWalletDataError(code: Int) {

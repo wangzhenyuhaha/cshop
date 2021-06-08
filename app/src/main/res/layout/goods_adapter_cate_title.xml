@@ -25,6 +25,14 @@
         android:textSize="@dimen/sp_12" />
 
     <ImageView
+        android:id="@+id/cateAddIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dimen_15"
+        android:src="@mipmap/goods_spec_blue_plus" />
+
+    <ImageView
         android:id="@+id/cateMoreIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

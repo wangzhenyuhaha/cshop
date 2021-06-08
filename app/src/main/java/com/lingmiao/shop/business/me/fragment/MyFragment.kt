@@ -23,6 +23,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
+import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import kotlinx.android.synthetic.main.fragment_my.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -130,6 +131,10 @@ class MyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter
      * 加载成功
      */
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
+    }
+
+    override fun onLoadedAccount(data: WithdrawAccountVo?) {
+
     }
 
     /**

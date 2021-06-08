@@ -26,6 +26,7 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
         const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
         const val VIEW_PRIVACY = 1;
         const val VIEW_SERVICE = 2;
+        const val VIEW_SECURITY = 2;
 
         fun service(context: Activity, result : Int) {
             val intent = Intent(context, UserServiceH5Activity::class.java)
@@ -36,6 +37,12 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
         fun privacy(context: Activity, result : Int) {
             val intent = Intent(context, UserServiceH5Activity::class.java)
             intent.putExtra(KEY_VIEW_TYPE, VIEW_PRIVACY)
+            context.startActivityForResult(intent, result)
+        }
+
+        fun security(context: Activity, result : Int) {
+            val intent = Intent(context, UserServiceH5Activity::class.java)
+            intent.putExtra(KEY_VIEW_TYPE, VIEW_SECURITY)
             context.startActivityForResult(intent, result)
         }
     }
@@ -66,6 +73,9 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
         when(mType) {
             VIEW_PRIVACY -> {
                 url = IConstant.getPrivacyServiceH5();
+            }
+            VIEW_SECURITY -> {
+                url = IConstant.getSecurityH5();
             }
         }
         val agentWeb = AgentWeb.with(this)

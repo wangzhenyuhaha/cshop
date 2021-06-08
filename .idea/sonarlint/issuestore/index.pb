@@ -1036,3 +1036,9 @@ Napp/src/main/java/com/lingmiao/shop/business/order/bean/OrderTabChangeEvent.kt
 Napp/src/main/java/com/lingmiao/shop/business/order/bean/OrderTabNumberEvent.kt,9/f/9fda303038b46230f7cae11ea297c96da7de5a52
 |
 Lcommon/src/main/java/com/james/common/base/loadmore/RefreshLoadMoreFacade.kt,7/f/7fdb66d02f439f12aeabb7b3a5ae1b8a6e4b0ae7
+‡
+Wapp/src/main/java/com/lingmiao/shop/business/order/presenter/impl/OrderSearchPreImpl.kt,f/e/fee7f7700a22e1ec6d37c285e1db7a173ced853e
+†
+Vapp/src/main/java/com/lingmiao/shop/business/goods/presenter/impl/GoodsVideoPreImpl.kt,b/b/bb91e8ae67ab04f06d59f14b0e0ba2081e81e285
+{
+Kapp/src/main/java/com/lingmiao/shop/business/wallet/bean/AlipayAccountVo.kt,b/a/ba00e7d58aba6101cab7f5b5963ed2c76a2686cf

@@ -33,10 +33,11 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
     private var mAccountType : Int ? = WalletConstants.PUBLIC_PRIVATE;
 
     companion object {
-        fun wechat(context: Context) {
+        fun wechat(context: Context, account: AlipayAccountVo?) {
             if (context is Activity) {
                 val intent = Intent(context, AliPayAccountActivity::class.java)
                 intent.putExtra("type", WithdrawAccountBean.TYPE_WECHAT)
+                intent.putExtra("item", account)
                 context.startActivity(intent)
             }
         }
@@ -52,6 +53,7 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
 
     override fun initBundles() {
         type = intent.getIntExtra("type", WithdrawAccountBean.TYPE_WECHAT);
+        aLiAccount = intent.getSerializableExtra("item") as AlipayAccountVo?;
         if(type == WithdrawAccountBean.TYPE_ALI_PAY) {
             name = "支付宝"
         }
@@ -118,7 +120,11 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
             pop.showPopupWindow()
         }
 
-        mPresenter?.getWithdrawAccount();
+        if(aLiAccount == null) {
+            mPresenter?.getWithdrawAccount();
+        } else {
+            setUiData(aLiAccount);
+        }
     }
 
     override fun setAccountSuccess() {
@@ -127,9 +133,13 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
 
     override fun getWithdrawAccountSuccess(account: WithdrawAccountVo) {
         aLiAccount = account?.wechatWithdrawAccount ?: null;
+        setUiData(aLiAccount);
+    }
+
+    fun setUiData(aLiAccount : AlipayAccountVo?) {
+        tv_account_submit.setText(if(aLiAccount == null) "确定提交" else "确定修改")
         tv_wallet_third_account_type.setText(aLiAccount?.getPublicName());
         et_wallet_third_account_detail_name.setText(aLiAccount?.accountNo ?: "");
         et_wallet_third_account_name.setText(aLiAccount?.accountName ?: "");
     }
-
 }

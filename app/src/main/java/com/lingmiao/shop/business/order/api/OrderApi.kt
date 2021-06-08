@@ -20,6 +20,13 @@ interface OrderApi {
         @Query("order_status") orderStatus: String,@Query("channel") channel: String = "app"
     ): Call<PageVO<OrderList>>
 
+
+    @GET("seller/trade/orders")
+    @WithHiResponse
+    fun search(
+        @Query("page_no") pageNo: Int, @Query("page_size") pageSize: Int,@Query("keywords") keywords: String = ""
+    ): Call<PageVO<OrderList>>
+
     //查询订单状态的数量
     @GET("seller/trade/orders/status-num")
     @WithHiResponse

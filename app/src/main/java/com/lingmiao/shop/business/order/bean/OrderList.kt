@@ -118,8 +118,13 @@ data class OrderList(
     @SerializedName("waiting_group_nums")
     var waitingGroupNums: Int?,
     @SerializedName("order_operate_allowable_vo")
-    var orderOperateAllowable:OrderOperateAllowable?
-
+    var orderOperateAllowable:OrderOperateAllowable?,
+    // 补充费用
+    @SerializedName("replenish_price")
+    var replenishPrice: Double? = 0.0,
+    // 补充说明
+    @SerializedName("replenish_remark")
+    var replenishRemark : String? = ""
 ) : Serializable {
     fun isVirtualOrderTag() : Boolean {
         return isVirtualOrder == 1;
