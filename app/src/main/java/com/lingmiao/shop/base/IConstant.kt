@@ -41,9 +41,14 @@ object IConstant {
     const val TEST_URL = "http://47.117.112.134";
     const val PRO_URL = "http://47.117.112.134";
 
-    fun getServiceH5(): String {
-        return "https://docs.qq.com/doc/DZnBOQVBxS0NaR05s"
+    fun getPrivacyServiceH5(): String {
+        return "https://docs.qq.com/doc/DR2lkRUNpWFJobmxE"
     }
+
+    fun getUserServiceH5(): String {
+        return "https://docs.qq.com/doc/DR2FpbEJNcmdCSFNn"
+    }
+
 
     fun getSellerUrl(): String {
         if(official) return String.format("%s:7003", PRO_URL);

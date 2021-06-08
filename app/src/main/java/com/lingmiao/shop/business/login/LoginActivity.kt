@@ -109,8 +109,12 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
 //        }
 //        ivService.setOnClickListener { ivService.isSelected = !ivService.isSelected }
         tvService.setOnClickListener {
-            val intent = Intent(this,UserServiceH5Activity::class.java)
-            startActivityForResult(intent, REQUEST_CODE_SERVICE)
+//            val intent = Intent(this,UserServiceH5Activity::class.java)
+//            startActivityForResult(intent, REQUEST_CODE_SERVICE)
+            UserServiceH5Activity.service(this, REQUEST_CODE_SERVICE);
+        }
+        tvPrivacy.setOnClickListener {
+            UserServiceH5Activity.privacy(this, REQUEST_CODE_SERVICE);
         }
         tvForgetPassword.setOnClickListener { ActivityUtils.startActivity(ForgetPasswordActivity::class.java) }
         initLoginTypeView()

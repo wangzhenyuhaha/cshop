@@ -1,38 +1,39 @@
 
 N
-java:S1197F"8Move the array designator from the variable to the type.(ä¢€–
-<
-java:S1168X"&Return an empty array instead of null.(¥¹ï
-Z
-java:S21477"DCombine this catch with the one at line 53, which has the same body.(ï­£Ä
-Q
-java:S1854È";Remove this useless assignment to local variable "options".(Àµª#
-`
-java:S3358"DExtract this nested ternary operation into an independent statement.(ñ…§ýüÿÿÿÿ
-d
-java:S2095p"NUse try-with-resources or close this "RandomAccessFile" in a "finally" clause.(Ç’î÷
-r
-java:S1488:"\Immediately return this expression instead of assigning it to the temporary variable "data".(ÿ¸¾Î
-P
-java:S1118":Add a private constructor to hide the implicit public one.(×¼­Æ
-<
-java:S1168M"&Return an empty array instead of null.(¥¹ï
-h
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(™Ìµ
-`
-java:S3358"DExtract this nested ternary operation into an independent statement.(ñ…§ýüÿÿÿÿ
-<
-java:S1168c"&Return an empty array instead of null.(¥¹ï
-<
-java:S1168R"&Return an empty array instead of null.(¥¹ï
-?	java:S108Ò")Either remove or fill this block of code.(”ý¾
-N
 java:S1128"8Remove this unused import 'java.security.MessageDigest'.(Œð²»
 <
-java:S1168g"&Return an empty array instead of null.(¥¹ï
-<
-java:S1168k"&Return an empty array instead of null.(¥¹ï
+java:S1168T"&Return an empty array instead of null.(¥¹ï
 N
-java:S1854‰"7Remove this useless assignment to local variable "tmp".(ú«”è
+java:S1197M"8Move the array designator from the variable to the type.(ä¢€–
+j	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(«›ðï8¹öõ¢ž/
+<
+java:S1168n"&Return an empty array instead of null.(¥¹ï
+?	java:S108Ù")Either remove or fill this block of code.(”ý¾
+<
+java:S1168j"&Return an empty array instead of null.(¥¹ï
+P
+java:S1118":Add a private constructor to hide the implicit public one.(×¼­Æ
+`
+java:S3358—"DExtract this nested ternary operation into an independent statement.(ñ…§ýüÿÿÿÿ
+<
+java:S1168_"&Return an empty array instead of null.(¥¹ï
+Q
+java:S1854Ï";Remove this useless assignment to local variable "options".(Àµª#
+Z
+java:S2147>"DCombine this catch with the one at line 60, which has the same body.(ï­£Ä
+<
+java:S1168Y"&Return an empty array instead of null.(¥¹ï
+d
+java:S2095w"NUse try-with-resources or close this "RandomAccessFile" in a "finally" clause.(Ç’î÷
+r
+java:S1488A"\Immediately return this expression instead of assigning it to the temporary variable "data".(ÿ¸¾Î
+`
+java:S3358—"DExtract this nested ternary operation into an independent statement.(ñ…§ýüÿÿÿÿ
+<
+java:S1168r"&Return an empty array instead of null.(¥¹ï
 g
-java:S2259:"Q"NullPointerException" will be thrown when invoking method "inputStreamToByte()".(ÿ¸¾Î
+java:S2259A"Q"NullPointerException" will be thrown when invoking method "inputStreamToByte()".(ÿ¸¾Î
+N
+java:S1854"7Remove this useless assignment to local variable "tmp".(ú«”è
+i
+java:S3776†"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(™Ìµ
