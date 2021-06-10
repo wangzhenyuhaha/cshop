@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.autonavi.base.amap.mapcore.FileUtil;
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.Utils;
 import com.bumptech.glide.Glide;
@@ -113,7 +114,7 @@ public class GlideUtils {
 
     public static Bitmap getImage(Context context, String url) {
         try {
-            return Glide.with(context).asBitmap()
+            return  Glide.with(context).asBitmap()
                     .load(url)
                     .submit().get();
         } catch (ExecutionException e) {

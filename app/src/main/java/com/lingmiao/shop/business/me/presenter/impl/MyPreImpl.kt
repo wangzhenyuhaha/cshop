@@ -2,16 +2,19 @@ package com.lingmiao.shop.business.me.presenter.impl
 
 import android.content.Context
 import android.graphics.Bitmap
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.ResourceUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.fox7.wx.WxShare
-import com.lingmiao.shop.business.me.api.MeRepository
-import com.lingmiao.shop.business.me.presenter.MyPresenter
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.business.main.api.MainRepository
+import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.bean.ShareVo
+import com.lingmiao.shop.business.me.presenter.MyPresenter
 import com.lingmiao.shop.business.wallet.presenter.MyWalletPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.MyWalletPresenterImpl
 import com.lingmiao.shop.util.BitmapShareUtils
@@ -70,7 +73,7 @@ class MyPreImpl(val context: Context, private var view: MyPresenter.View) : Base
 				if(result != null) {
 					imageByes = ImageUtils.bitmap2Bytes(BitmapShareUtils.drawWXMiniBitmap(result));
 				} else {
-					imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
+					imageByes = ImageUtils.bitmap2Bytes(ConvertUtils.drawable2Bitmap(ResourceUtils.getDrawable(R.mipmap.ic_launcher)));
 				}
 				share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes!!);
 			}

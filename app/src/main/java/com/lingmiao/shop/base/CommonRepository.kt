@@ -1,5 +1,6 @@
 package com.lingmiao.shop.base
 
+import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.Utils
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.bean.GoodsUseExpireVo
@@ -11,6 +12,10 @@ import id.zelory.compressor.Compressor
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.ResponseBody
+import retrofit2.Response
+import retrofit2.await
+import retrofit2.awaitResponse
 import java.io.File
 
 object CommonRepository {
@@ -56,6 +61,10 @@ object CommonRepository {
         ).awaitHiResponse()
     }
 
+
+    suspend fun download(url : String?) : Response<ResponseBody?>? {
+        return Fetch.apiService().download(url)?.execute();
+    }
 
     private val apiService by lazy {
         Fetch.createOtherService(CommonUrlService::class.java)

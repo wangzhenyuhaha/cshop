@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.blankj.utilcode.util.ImageUtils;
 import com.blankj.utilcode.util.LogUtils;
 
 import java.io.ByteArrayInputStream;
@@ -21,6 +22,8 @@ public class BitmapShareUtils {
     static int MAX_WX_IMAGE = 128;
 
     public static Bitmap drawWXMiniBitmap(Bitmap bitmap) {
+        bitmap = ImageUtils.compressBySampleSize(bitmap, 128);
+
         int width;
         int height;
         // 先按5：4生成一张白色背景图片
@@ -58,9 +61,7 @@ public class BitmapShareUtils {
         // 保存绘图为本地图片
         mCanvas.save();
         mCanvas.restore();
-        while (isOverSize(mBitmap, MAX_WX_IMAGE)) {
-            mBitmap = imageZoom(mBitmap);
-        }
+        mBitmap = compressImage(mBitmap);
         return mBitmap;
     }
 
@@ -71,25 +72,25 @@ public class BitmapShareUtils {
         byte[] b = baos.toByteArray();
         // 将字节换成KB
         double mid = b.length / 1024;
-        LogUtils.d("isOverSize : " + mid);
+        LogUtils.d("i : " + (mid > maxSize));
         // 判断bitmap占用空间是否大于允许最大空间 如果大于则压缩 小于则不压缩
         return mid > maxSize;
     }
 
     public static Bitmap imageZoom(Bitmap src_bitmap) {
         // 图片允许最大空间 单位：KB
-        double maxSize = MAX_WX_IMAGE;//32
+        double maxSize = MAX_WX_IMAGE;
         // 将bitmap放至数组中，意在bitmap的大小（与实际读取的原文件要大）
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         src_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         // 将字节换成KB
         double mid = b.length / 1024;
+        LogUtils.d("i : " + mid + ";" + (mid > maxSize));
         // 判断bitmap占用空间是否大于允许最大空间 如果大于则压缩 小于则不压缩
         if (mid > maxSize) {
             // 获取bitmap大小 是允许最大大小的多少倍
             double i = mid / maxSize;
-            LogUtils.d("i : " + i);
             // 开始压缩 此处用到平方根 将宽带和高度压缩掉对应的平方根倍 （1.保持刻度和高度和原bitmap比率一致，压缩后也达到了最大大小占用空间的大小）
             Bitmap bitmap = compressImage(src_bitmap);
             return bitmap;
@@ -104,7 +105,8 @@ public class BitmapShareUtils {
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         int options = 100;
         //循环判断如果压缩后图片是否大于128kb,大于继续压缩
-        while ( baos.toByteArray().length / 1024>128) {
+        LogUtils.d("i : " + baos.toByteArray().length/1024);
+        while (baos.toByteArray().length / 1024 > MAX_WX_IMAGE && options > 9) {
             //重置baos即清空baos
             baos.reset();
             //这里压缩options%，把压缩后的数据存放到baos中
@@ -112,8 +114,10 @@ public class BitmapShareUtils {
             //每次都减少1
             options -= 1;
         }
-        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片
+        //把压缩后的数据baos存放到ByteArrayInputStream中
+        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());
+        //把ByteArrayInputStream数据生成图片
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
         return bitmap;
     }
 }

@@ -51,7 +51,7 @@ class SalesVo : Serializable {
      *  活动是否减现金 0为否1为是 因为现在只用满减，所以这个可以默认是1
      */
     @SerializedName("is_full_minus")
-    var isFullMinus: Int? = 0
+    var isFullMinus: Int? = 1
     /**
      * 满减类型
      */

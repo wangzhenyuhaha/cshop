@@ -112,8 +112,8 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
             }
 
             mItem?.title = menuNameEdt.getViewText()
-            mItem?.startTime = dateTime2Date(firstMenuTv.getViewText())?.time;
-            mItem?.endTime = dateTime2Date(secondMenuTv.getViewText())?.time;
+            mItem?.startTime = dateTime2Date(firstMenuTv.getViewText())?.time?:0/1000;
+            mItem?.endTime = dateTime2Date(secondMenuTv.getViewText())?.time?:0/1000;
 
             mItem?.fullType = "MONEY"
             val it = mDiscountAdapter.data.get(0);

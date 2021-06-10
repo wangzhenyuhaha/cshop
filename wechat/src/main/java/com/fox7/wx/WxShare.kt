@@ -3,18 +3,13 @@ package com.fox7.wx
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.annotation.DrawableRes
 import com.fox7.wx.Util.Bitmap2Bytes
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
 import com.tencent.mm.opensdk.modelmsg.*
 import com.tencent.mm.opensdk.openapi.IWXAPI
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.IOException
-import java.io.InputStream
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
 import java.net.URL
 
 
@@ -309,7 +304,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         mMiniProgramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
     }
 
-    fun openMinii(miniId : String, path : String) {
+    fun openMini(miniId : String, path : String) {
         val req = WXLaunchMiniProgram.Req()
         // 填小程序原始id
         req.userName = miniId;
@@ -325,7 +320,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
     // appId填移动应用(App)的 AppId，非小程序的 AppID
     fun shareMini(miniId : String, path : String, url : ByteArray) {
         val miniProgramObj = WXMiniProgramObject()
-        miniProgramObj.webpageUrl = "http://www.qq.com" // 兼容低版本的网页链接
+        miniProgramObj.webpageUrl = "http://www.c-dian.cn" // 兼容低版本的网页链接
         // 正式版:0，测试版:1，体验版:2
         miniProgramObj.miniprogramType = mMiniProgramType
         // 小程序原始id
@@ -339,7 +334,9 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         // 小程序消息desc
         msg.description = mDescription
 
-        msg.thumbData = url // 小程序消息封面图片，小于128k
+        // 小程序消息封面图片，小于128k
+        msg.thumbData = url
+        Log.d("i :", ".... " + (msg.thumbData == null))
 
         val req = SendMessageToWX.Req()
         req.transaction = buildTransaction("webpage")
