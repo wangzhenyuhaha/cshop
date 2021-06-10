@@ -181,7 +181,12 @@ data class Sku(
     var specList: List<SpecBean>?,
     @SerializedName("subtotal")
     var subtotal: Double?
-) : Serializable
+) : Serializable {
+
+    fun getSpecValues() : String? {
+        return specList?.map { it?.specValue }?.joinToString(separator = "/");
+    }
+}
 
 data class GoodsOperateAllowableVo(
     @SerializedName("allow_apply_service")
@@ -213,7 +218,9 @@ data class SpecBean(
 //    var thumbnail: Any?,
 //    @SerializedName("tiny")
 //    var tiny: Any?
-) : Serializable
+) : Serializable {
+
+}
 
 data class OrderOperateAllowable(
     @SerializedName("allow_apply_service")

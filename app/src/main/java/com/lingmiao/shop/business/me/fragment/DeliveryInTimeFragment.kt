@@ -1,10 +1,12 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.os.Bundle
 import android.view.View
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.presenter.DeliveryInTimePresenter
 import com.lingmiao.shop.business.me.presenter.impl.DeliveryInTimePresenterImpl
 import com.lingmiao.shop.business.tools.adapter.PriceAdapter
@@ -40,16 +42,24 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
     private lateinit var mTimeValueList : MutableList<TimeValue>;
     private lateinit var mDayTypeList : MutableList<String>;
 
-    private lateinit var mItem: FreightVoItem;
+    private var mItem: FreightVoItem? = null;
 
     var mFeeSetting : FeeSettingVo = FeeSettingVo();
 
     var mTimeSetting : TimeSettingVo = TimeSettingVo();
 
     companion object {
-        fun newInstance(): DeliveryInTimeFragment {
-            return DeliveryInTimeFragment()
+        fun newInstance(item : FreightVoItem?): DeliveryInTimeFragment {
+            return DeliveryInTimeFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("item", item);
+                }
+            }
         }
+    }
+
+    override fun initBundles() {
+        mItem = arguments?.getSerializable("item") as FreightVoItem?;
     }
 
     override fun getLayoutId(): Int? {
@@ -61,8 +71,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
     }
 
     override fun initViewsAndData(rootView: View) {
-        mItem = FreightVoItem();
-
         initPricePart();
 
         initRangePart();
@@ -140,10 +148,14 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 return@singleClick;
             }
 
-            mPresenter?.addModel(mItem);
+            mPresenter?.addModel(mItem!!);
         }
 
-        mPresenter?.getTemplate("TONGCHENG");
+        if(mItem == null) {
+            mPresenter?.getTemplate(FreightVoItem.TYPE_LOCAL);
+        } else {
+            setUi();
+        }
     }
 
     /**
@@ -332,17 +344,19 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
     override fun setModel(item: FreightVoItem?) {
         mItem = item ?: FreightVoItem();
 
+        setUi();
+    }
+
+    fun setUi() {
         // 模板名称
         //cb_model_type_express_city.isChecked = true;
         // 起送价
-        et_model_km_price.setText(String.format("%s", item?.baseShipPrice));
+        et_model_km_price.setText(String.format("%s", mItem?.baseShipPrice));
         // 配送范围
-        et_model_out_range_km.setText(String.format("%s", item?.shipRange));
+        et_model_out_range_km.setText(String.format("%s", mItem?.shipRange));
 
-
-
-        mFeeSetting = mPresenter?.getFeeSetting(item) ?: FeeSettingVo();
-        mTimeSetting = mPresenter?.getTimeSetting(item) ?: TimeSettingVo();
+        mFeeSetting = mPresenter?.getFeeSetting(mItem) ?: FeeSettingVo();
+        mTimeSetting = mPresenter?.getTimeSetting(mItem) ?: TimeSettingVo();
 
         mFeeSetting?.apply {
             // 配送范围加收费用

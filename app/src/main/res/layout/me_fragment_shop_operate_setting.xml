@@ -50,28 +50,27 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:textColor="@color/color_333333"
-                            android:textSize="12sp"
-                            android:paddingRight="@dimen/dimen_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="每天" />
+                            android:paddingRight="@dimen/dimen_5"
+                            android:text="每天"
+                            android:textColor="@color/color_333333"
+                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tvShopOperateTime"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:gravity="center"
+                            android:drawableRight="@mipmap/me_arrow_right"
+                            android:drawablePadding="@dimen/dimen_10"
                             android:ellipsize="end"
+                            android:gravity="center"
+                            android:hint="请选择-请选择"
+                            android:paddingLeft="@dimen/dimen_5"
                             android:singleLine="true"
                             android:textColor="#ff999999"
                             android:textSize="12sp"
-                            android:paddingLeft="@dimen/dimen_5"
-                            tools:text="08:00-23:00"
-                            android:hint="请选择-请选择"
-                            android:drawablePadding="@dimen/dimen_10"
-                            android:drawableRight="@mipmap/me_arrow_right"
-                            />
+                            tools:text="08:00-23:00" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -91,17 +90,18 @@
                         android:textSize="13sp" />
 
                     <com.kyleduo.switchbutton.SwitchButton
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:id="@+id/autoOrderSb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginLeft="@dimen/dimen_20"
-                        app:kswTintColor="@color/white"
-                        app:kswBackDrawable="@drawable/flyme_back_drawable"/>
+                        app:kswBackDrawable="@drawable/flyme_back_drawable"
+                        app:kswTintColor="@color/white" />
 
                 </RelativeLayout>
+
                 <View style="@style/DivideLineHorizontal" />
 
                 <LinearLayout
@@ -120,16 +120,16 @@
                     <EditText
                         android:id="@+id/tvShopManageNumber"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center|right"
-                        android:hint="请输入时间，15分钟以内"
+                        android:hint="请输入时间，5分钟以内"
                         android:inputType="number"
+                        android:paddingRight="@dimen/dimen_5"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
-                        android:paddingRight="@dimen/dimen_5"
                         tools:text="8018101011" />
 
                     <TextView
@@ -161,32 +161,33 @@
                         android:textSize="13sp" />
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/linkPhontHintTv"
                         android:paddingTop="@dimen/dimen_5"
                         android:paddingBottom="@dimen/dimen_5"
-                        android:text="体现在顾客端 供用户联系"
-                        android:layout_below="@id/linkPhontHintTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:text="体现在顾客端 供用户联系" />
 
                     <EditText
-                        android:background="@null"
-                        android:gravity="center|right"
                         android:id="@+id/linkTelEt"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:background="@null"
+                        android:gravity="center|right"
+                        android:hint="请输入联系电话"
+                        android:inputType="number"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
-                        android:inputType="number"
-                        android:hint="请输入联系电话"
                         tools:text="8018101011" />
 
                 </RelativeLayout>
+
                 <RelativeLayout
-                    android:visibility="gone"
                     android:id="@+id/rlShopManageLink"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="50dp"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -202,26 +203,28 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:drawablePadding="@dimen/dimen_10"
                         android:ellipsize="end"
+                        android:hint="设置联系方式"
                         android:singleLine="true"
                         android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:hint="设置联系方式" />
+                        android:textSize="12sp" />
 
                 </RelativeLayout>
+
                 <View style="@style/DivideLineHorizontal" />
 
                 <RelativeLayout
                     android:id="@+id/rlShopManageDelivery"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/tvDeliver"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:paddingVertical="@dimen/dimen_15"
                         android:text="配送设置"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
@@ -232,15 +235,74 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:drawablePadding="@dimen/dimen_10"
                         android:ellipsize="end"
+                        android:hint="请选择"
                         android:singleLine="true"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:hint="请选择" />
+                        android:visibility="gone" />
+
+                    <RadioGroup
+                        android:id="@+id/layoutShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvDeliver"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/cb_model_shop"
+                            style="@style/tools_sub_item_radio_box"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dimen_15"
+                            android:text="商家配送" />
+
+                        <RadioButton
+                            android:id="@+id/cb_model_rider"
+                            style="@style/tools_sub_item_radio_box"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dimen_15"
+                            android:text="骑手配送" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/layoutRider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvDeliver"
+                        android:layout_alignParentRight="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvShopStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableRight="@mipmap/me_arrow_right"
+                            android:drawablePadding="@dimen/dimen_15"
+                            android:gravity="right"
+                            android:paddingVertical="@dimen/dimen_15"
+                            android:text="请设置" />
+
+
+                        <TextView
+                            android:id="@+id/tvRiderStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableRight="@mipmap/me_arrow_right"
+                            android:drawablePadding="@dimen/dimen_15"
+                            android:gravity="right"
+                            android:paddingVertical="@dimen/dimen_15"
+                            android:text="请设置" />
+
+                    </LinearLayout>
 
                 </RelativeLayout>
+
 
             </com.james.common.view.ILinearLayout>
 

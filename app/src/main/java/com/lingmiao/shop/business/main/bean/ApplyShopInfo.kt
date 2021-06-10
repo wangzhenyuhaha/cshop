@@ -98,7 +98,10 @@ data class ApplyShopInfo(
     var shopType: String?=null,
 
     @SerializedName("order_setting")
-    var orderSetting: OrderSetting? = null
+    var orderSetting: OrderSetting? = null,
+
+    @SerializedName("shop_template_type")
+    var shopTemplateType: String? = ""
 ) : Serializable {
 
     fun getShopTypeStr() : String {

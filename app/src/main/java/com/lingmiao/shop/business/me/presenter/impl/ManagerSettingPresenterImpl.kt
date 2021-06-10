@@ -13,6 +13,7 @@ Auther      : Fox
 Desc        :
  **/
 class ManagerSettingPresenterImpl (val view : ManagerSettingPresenter.View) : BasePreImpl(view) ,ManagerSettingPresenter {
+
     override fun loadShopInfo() {
         mCoroutine.launch {
             view?.showPageLoading()

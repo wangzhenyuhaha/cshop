@@ -13,14 +13,16 @@ import com.lingmiao.shop.business.order.view.GoodsItemRvLayout
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.stampToDate
-import java.text.SimpleDateFormat
-import java.util.*
 
 class OrderListAdapter :
     BaseQuickAdapter<OrderList, BaseViewHolder>(R.layout.order_adapter_order_list) {
     override fun convert(helper: BaseViewHolder, item: OrderList) {
         helper.setText(R.id.tvOrderSn, "订单编号："+item.sn)
             .setText(R.id.tvOrderStatus, item.orderStatusText)
+
+        helper.setText(R.id.tvReplenishRemark, item.replenishRemark);
+        helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice);
+        helper.setGone(R.id.replenishLayout, item?.replenishRemark?.isNotEmpty() == true);
 
         helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
 

@@ -5,6 +5,7 @@ import com.lingmiao.shop.business.order.api.OrderRepository
 import  com.lingmiao.shop.business.order.presenter.AfterSalePresenter
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.order.bean.RefoundReqVo
 import kotlinx.coroutines.launch
 
 class AfterSalePresenterImpl(context: Context, private var view: AfterSalePresenter.View) :
@@ -47,7 +48,13 @@ class AfterSalePresenterImpl(context: Context, private var view: AfterSalePresen
     ) {
         mCoroutine.launch {
             try {
-                val resp = OrderRepository.apiService.doAfterSaleAction(refundId,agree,refundMoney,remark)
+                var item = RefoundReqVo();
+                item.agree = agree;
+                item.remark = remark;
+                item.refundMoney = refundMoney;
+                item.sn = refundId;
+
+                val resp = OrderRepository.apiService.doAfterSaleAction(refundId, item)
                 if (resp.isSuccessful) {
                     view.onAfterSaleActionSuccess()
                 } else {

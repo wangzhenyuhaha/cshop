@@ -1,18 +1,39 @@
 
-F
-java:S1128"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
-Q	java:S125P"<This block of commented-out lines of code should be removed.(€ßÔÀ
-V	java:S125L"<This block of commented-out lines of code should be removed.(³¯»¹øÿÿÿÿ
-U
-java:S1118":Add a private constructor to hide the implicit public one.(æœ½ùÿÿÿÿ
-Q	java:S125I"<This block of commented-out lines of code should be removed.(€ßÔÀ
-Q	java:S125E"<This block of commented-out lines of code should be removed.(ùì‹¸
-S
-java:S1128
-">Remove this unused import 'com.blankj.utilcode.util.AppUtils'.(óƒÆ>
-M
-java:S1128"8Remove this unused import 'android.app.ActivityManager'.(•è‡`
+b
+java:S2147v"ECombine this catch with the one at line 115, which has the same body.(ä ¹€8×ñô/
+Q	java:S125V"<This block of commented-out lines of code should be removed.(€ßÔÀ
 P
 java:S1128":Remove this unused import 'android.content.ComponentName'.(½‹æŠ
+b
+java:S1128"ERemove this unused import 'com.bumptech.glide.request.target.Target'.(‰ì¾Ş8áì²ó/
+S
+java:S1128">Remove this unused import 'com.blankj.utilcode.util.AppUtils'.(óƒÆ>
+Q	java:S125]"<This block of commented-out lines of code should be removed.(€ßÔÀ
+Q	java:S125R"<This block of commented-out lines of code should be removed.(ùì‹¸
+d
+java:S1128"GRemove this unused import 'com.bumptech.glide.request.RequestListener'.(ØÈôÉ8œ¿©ó/
+f
+java:S1128"DRemove this unused import 'com.autonavi.base.amap.mapcore.FileUtil'.(Ùƒõüşÿÿÿÿ8œ¿©ó/
+a
+java:S1128"?Remove this unused import 'com.bumptech.glide.load.DataSource'.(ÂË›²ûÿÿÿÿ8œ¿©ó/
+V
+java:S1128"9Remove this unused import 'androidx.annotation.Nullable'.(¾Èêš8œ¿©ó/
+l
+java:S1128"JRemove this unused import 'com.bumptech.glide.load.engine.GlideException'.(¡â€œıÿÿÿÿ8œ¿©ó/
+
+java:S1488‹"^Immediately return this expression instead of assigning it to the temporary variable "bitmap".(¿¯û›ÿÿÿÿÿ8ƒü¬õ/
+V	java:S125Y"<This block of commented-out lines of code should be removed.(³¯»¹øÿÿÿÿ
+M
+java:S1128"8Remove this unused import 'android.app.ActivityManager'.(•è‡`
 Q
-java:S1128"4Remove this unused import 'com.lingmiao.shop.MyApp'.(¥Ëü»8æ§¤Â–/
+java:S1128"4Remove this unused import 'com.lingmiao.shop.MyApp'.(¥Ëü»8æ§¤Â–/
+F
+java:S1128!"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ
+c
+java:S2142v"FEither re-interrupt this method or rethrow the "InterruptedException".(ä ¹€8×ñô/
+a
+java:S1128"?Remove this unused import 'android.graphics.drawable.Drawable'.(Á‰º„ùÿÿÿÿ8Ë²õ/
+h
+java:S1128"KRemove this unused import 'com.bumptech.glide.request.target.SimpleTarget'.(¸€·‹8œ¿©ó/
+\
+java:S1118(":Add a private constructor to hide the implicit public one.(æœ½ùÿÿÿÿ8¹Ã²õ/

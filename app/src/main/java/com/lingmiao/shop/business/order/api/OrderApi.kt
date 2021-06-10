@@ -109,9 +109,7 @@ interface OrderApi {
     //    审核退款操作  agree 是否同意退款:同意 1，不同意 0
     @POST("seller/after-sales/audits/{sn}")
     suspend fun doAfterSaleAction(
-        @Path("sn") refundId: String, @Query("agree") agree: Int,
-        @Query("refund_price") refundMoney: String?, @Query("remark") remark: String
-    ): Response<ResponseBody>
+        @Path("sn") refundId: String, @Body item : RefoundReqVo): Response<ResponseBody>
 
 
     //    入库操作

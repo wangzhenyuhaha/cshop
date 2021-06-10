@@ -5,6 +5,7 @@ import com.james.common.base.BaseView
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
+import com.lingmiao.shop.business.tools.bean.FreightVoItem
 
 /**
 Create Date : 2021/3/24:07 PM
@@ -19,6 +20,8 @@ interface ShopOperateSettingPresenter : BasePresenter {
 
     fun loadShopSetting();
 
+    fun loadTemplate();
+
     interface View : BaseView {
 
         fun onUpdateWorkTime(workTimeVo1: WorkTimeVo?, workTimeVo2: WorkTimeVo?);
@@ -26,5 +29,7 @@ interface ShopOperateSettingPresenter : BasePresenter {
         fun onSetSetting();
 
         fun onLoadedShopSetting(vo : ApplyShopInfo);
+
+        fun onLoadedTemplate(tcItem : FreightVoItem?, qsItem : FreightVoItem?);
     }
 }

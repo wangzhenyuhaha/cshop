@@ -66,7 +66,7 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
         //shops/ship-templates
         mCoroutine.launch {
             //view.showDialogLoading();
-            val resp = ToolsRepository.shipTemplates("QISHOU");
+            val resp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_QISHOU);
             handleResponse(resp) {
                 if(resp.data.size > 0) {
                     view.setModel(resp?.data?.get(0));
@@ -78,7 +78,7 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
 
     override fun getShopTemplate() {
         mCoroutine.launch {
-            val resp = ToolsRepository.shipTemplates("TONGCHENG");
+            val resp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_LOCAL);
             handleResponse(resp) {
                 if(resp.data.size > 0) {
                     view.onSetShopTemplate(resp?.data?.get(0));

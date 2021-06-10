@@ -11,4 +11,6 @@ object IWXConstant {
 
     const val APP_ID: String = "wx05dcef797d1278d1";
 
+    const val APP_ORIGINAL_ID = "gh_dbbbe37a6ac7";
+
 }

@@ -54,8 +54,6 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
                 clickOnRebate(goodsVO?.goodsId) {
 
                 }
-            } else if(menuType == GoodsMenuPop.TYPE_SHARE) {
-                menuPopPre.clickShareGoods(context, goodsVO)
             }
         }
     }

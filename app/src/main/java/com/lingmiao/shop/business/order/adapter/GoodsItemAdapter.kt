@@ -17,6 +17,7 @@ class GoodsItemAdapter : BaseQuickAdapter<Sku, BaseViewHolder>(R.layout.sales_ad
         helper.setText(R.id.orderGoodsNameTv, item?.name)
         helper.setText(R.id.orderGoodsQuantityTv, "x" + item?.num)
 
+        helper.setText(R.id.orderGoodsSkuTv, String.format("%s%s", if(item?.getSpecValues() == null) "" else  "规格：", item?.getSpecValues()?:""))
         GlideUtils.setImageUrl(helper.getView(R.id.orderGoodsIv), item?.goodsImage)
     }
 }

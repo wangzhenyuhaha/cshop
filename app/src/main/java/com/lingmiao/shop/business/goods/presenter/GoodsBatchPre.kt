@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.presenter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
+import com.lingmiao.shop.business.me.bean.ShareVo
 
 
 interface GoodsBatchPre : BasePresenter {
@@ -18,6 +19,8 @@ interface GoodsBatchPre : BasePresenter {
     fun clickDelete(list: List<GoodsVO>?, callback: (ids: String) -> Unit);
 
     fun getCheckedCount(list: List<GoodsVO>?) : Int
+
+    fun clickShare(id : GoodsVO?, callback: (ShareVo) -> Unit)
 
     interface View : BaseView {
         fun onLineSuccess();

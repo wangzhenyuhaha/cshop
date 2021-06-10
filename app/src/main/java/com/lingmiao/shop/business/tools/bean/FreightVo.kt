@@ -109,8 +109,11 @@ data class FreightVoItem(
 
     companion object {
         val TYPE_KUAIDI = "KUAIDI";
+
+        val TYPE_QISHOU = "QISHOU";
+
         val TYPE_LOCAL = "TONGCHENG";
-//        val TYPE_LOCAL = "LOCAL";
+
         val TYPE_WEIGHT = 1;
         val TYPE_COUNT = 2;
         val TYPE_KM_COUNT = 3;
@@ -553,7 +556,7 @@ data class FeeSettingReqVo(
     var feeType: Int? = 0,
     @SerializedName("peek_times")
     var peekTimes: List<PeekTimeReq>? = listOf()
-) {
+) : Serializable {
     constructor(item : FeeSettingVo) : this() {
         baseDistance = item?.baseDistance;
         basePrice = item?.basePrice;
@@ -607,7 +610,7 @@ data class TimeSettingReqVo(
     @SerializedName("is_allow_trans_temp")
     var isAllowTransTemp : Int? = 0
     
-) {
+) : Serializable{
     constructor(item : TimeSettingVo) : this() {
         baseDistance = item?.baseDistance;
         baseTime = item?.baseTime;
@@ -637,7 +640,7 @@ data class DistanceSectionReq(
     var shipPrice: Any? = Any(),
     @SerializedName("start_distance")
     var startDistance: String? = ""
-) {
+) : Serializable {
     constructor(item : DistanceSection) : this() {
         endDistance = item?.endDistance;
         shipPrice = item?.shipPrice;
@@ -656,7 +659,7 @@ data class PeekTimeReq(
     var peekTimeStart: String? = "",
     @SerializedName("start_time_count")
     var startTimeCount: Int? = 0
-) {
+) : Serializable {
     constructor(item : PeekTime) : this() {
         endTimeCount = item?.endTimeCount;
         peekTimeEnd = item?.peekTimeEnd;
@@ -673,7 +676,7 @@ data class TimeSectionReq(
     var shipTime: String? = "",
     @SerializedName("ship_time_type")
     var shipTimeType: Int? = 0
-) {
+) : Serializable {
     constructor(item : TimeSection) : this() {
         arriveTime = item?.arriveTime;
         shipTime = item?.shipTime;

@@ -11,10 +11,14 @@ import com.lingmiao.shop.business.goods.api.bean.RebateVo
 import com.lingmiao.shop.business.goods.pop.GoodsRebatePop
 import com.lingmiao.shop.business.goods.presenter.GoodsBatchPre
 import com.james.common.base.BasePreImpl
+import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.business.main.api.MainRepository
+import com.lingmiao.shop.business.me.bean.ShareVo
 import kotlinx.coroutines.launch
 
 open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatchPre.View) : BasePreImpl(view),GoodsBatchPre {
+
 
     override fun clickOffLine(oldList: List<GoodsVO>, callback: () -> Unit) {
         var list = oldList.filter { it?.isChecked == true };
@@ -121,6 +125,15 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
 
     override fun getCheckedCount(list: List<GoodsVO>?): Int {
         return list?.filter { it?.isChecked == true }?.size?:0;
+    }
+
+    override fun clickShare(id: GoodsVO?, callback: (ShareVo) -> Unit) {
+        mCoroutine.launch {
+            val item = MainRepository.apiService.getShareInfo(1, id?.goodsId!!, 1).awaitHiResponse()
+            handleResponse(item) {
+                callback.invoke(it);
+            }
+        }
     }
 
     /**

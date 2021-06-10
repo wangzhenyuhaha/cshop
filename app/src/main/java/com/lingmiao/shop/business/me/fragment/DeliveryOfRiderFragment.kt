@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -39,19 +40,28 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
     private lateinit var mTimeValueList : MutableList<TimeValue>;
     private lateinit var mDayTypeList : MutableList<String>;
 
-    private lateinit var mItem: FreightVoItem;
+    private var mItem: FreightVoItem? = null;
 
-    private lateinit var mShopItem: FreightVoItem;
+    private var mShopItem: FreightVoItem? = null;
 
     var mFeeSetting : FeeSettingVo = FeeSettingVo();
 
     var mTimeSetting : TimeSettingVo = TimeSettingVo();
 
     companion object {
-        fun newInstance(): DeliveryOfRiderFragment {
-            return DeliveryOfRiderFragment()
+        fun newInstance(item : FreightVoItem?): DeliveryOfRiderFragment {
+            return DeliveryOfRiderFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("item", item);
+                }
+            }
         }
     }
+
+    override fun initBundles() {
+        mItem = arguments?.getSerializable("item") as FreightVoItem?;
+    }
+
 
     override fun getLayoutId(): Int? {
         return R.layout.me_fragment_delivery_of_rider;
@@ -73,7 +83,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
          updateCityExpressPayTypeCheckBox();
 
         tvShopSettingSubmit.singleClick {
-            if(mShopItem == null || mShopItem.id == null || mShopItem?.id?.length == 0) {
+            if(mShopItem == null || mShopItem?.id == null || mShopItem?.id?.length == 0) {
                 return@singleClick;
             }
             var setting = TimeSettingVo();
@@ -86,7 +96,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                 setting.transTempLimitTime = 0
             }
 
-            mPresenter?.updateModel(mShopItem.id!!, setting.isAllowTransTemp!!, setting.transTempLimitTime!!);
+            mPresenter?.updateModel(mShopItem?.id!!, setting.isAllowTransTemp!!, setting.transTempLimitTime!!);
         }
 
 //        shiftDeliveryCb.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -95,7 +105,12 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
 //            }
 //        }
 
-        mPresenter?.getTemplate();
+        if(mItem == null) {
+            mPresenter?.getTemplate();
+        } else {
+            setUi();
+        }
+
         mPresenter?.getShopTemplate();
     }
 
@@ -288,17 +303,16 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
         showToast("提交成功");
     }
 
-    override fun setModel(item: FreightVoItem?) {
-         mItem = item ?: FreightVoItem();
+    fun setUi() {
         // 模板名称
         //cb_model_type_express_city.isChecked = true;
         // 起送价
-        et_model_km_price.setText(String.format("%s", item?.baseShipPrice));
+        et_model_km_price.setText(String.format("%s", mItem?.baseShipPrice));
         // 配送范围
-        et_model_out_range_km.setText(String.format("%s", item?.shipRange));
+        et_model_out_range_km.setText(String.format("%s", mItem?.shipRange));
 
-        mFeeSetting = mPresenter?.getFeeSetting(item) ?: FeeSettingVo();
-        mTimeSetting = mPresenter?.getTimeSetting(item) ?: TimeSettingVo();
+        mFeeSetting = mPresenter?.getFeeSetting(mItem) ?: FeeSettingVo();
+        mTimeSetting = mPresenter?.getTimeSetting(mItem) ?: TimeSettingVo();
 
         mFeeSetting?.apply {
             // 配送范围加收费用
@@ -335,6 +349,11 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                 mTimeAdapter.replaceData(mTimeList);
             }
         }
+    }
+    override fun setModel(item: FreightVoItem?) {
+        mItem = item ?: FreightVoItem();
+
+        setUi();
     }
 
     override fun onSetShopDeliveryStatus(size : Int, item: FreightVoItem?) {

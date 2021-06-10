@@ -2,8 +2,12 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.View
-import com.amap.api.mapcore.util.it
+import com.blankj.utilcode.util.ImageUtils
+import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ResourceUtils
+import com.blankj.utilcode.util.ThreadUtils
 import com.fox7.wx.WxShare
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
@@ -21,8 +25,12 @@ import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.pop.GoodsMultiQuantityPop
 import com.lingmiao.shop.business.goods.pop.GoodsQuantityPop
 import com.lingmiao.shop.business.goods.pop.GoodsQuantityPricePop
+import com.lingmiao.shop.business.me.bean.ShareVo
+import com.lingmiao.shop.util.BitmapShareUtils
+import com.lingmiao.shop.util.GlideUtils
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.coroutines.launch
+import java.util.concurrent.CountDownLatch
 
 
 /**
@@ -41,23 +49,94 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
     }
 
     // ---------------------------- share------------------------------
-    fun clickShareGoods(context: Context, goodsVO: GoodsVO?) {
+
+    fun clickShareShop(item : ShareVo) {
+        //调用api接口，发送数据到微信
+        val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
+        var share = WxShare(context, api);
+        share.mTitle = item.title;
+        share.mDescription = item.content;
+        share.shareToFriend();
+        share.miniTypeToRelease();
+        share.miniTypeToRelease();
+
+        var imageByes : ByteArray? = null;
+        if(item.imageUrl == null || item.imageUrl.length == 0) {
+            imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
+            share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes);
+            return;
+        }
+
+        ThreadUtils.executeBySingle(object : ThreadUtils.SimpleTask<Bitmap?>() {
+            override fun doInBackground(): Bitmap? {
+                return GlideUtils.getImage(context, item.imageUrl);
+            }
+
+            override fun onSuccess(result: Bitmap?) {
+                if(result != null) {
+                    imageByes = ImageUtils.bitmap2Bytes(BitmapShareUtils.drawWXMiniBitmap(result));
+                } else {
+                    imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
+                }
+                share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes!!);
+            }
+        })
+        //share.shareImageResource(R.mipmap.ic_launcher);
+        //share.shareWeb("www.baidu.com", R.mipmap.ic_launcher);
+        // share.shareText("分享一个商品：" + goodsVO?.goodsName)
+    }
+
+    fun clickShare(item: ShareVo) {
+        mGoodsMenuPop?.dismiss()
         //调用api接口，发送数据到微信
         val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
 
         var share = WxShare(context, api);
-        share.mTitle = "这是一条测试分享";
-        share.mDescription = "这里发现一个很好的网站";
+        share.mTitle = item.title;
+        share.mDescription = item.content;
         share.shareToFriend();
 
-        share.shareWeb("http://www.c-dian.cn/", R.mipmap.ic_launcher, 50);
-        // share.miniTypeToTest();
-        // share.shareMini("wxc622abeb5c68dffa", "pages/index/index")
+        share.shareWeb(item?.imageUrl ?:"http://www.c-dian.cn/", R.mipmap.ic_launcher, 50);
 
-        // share.shareImageResource(R.mipmap.ic_launcher);
-        //share.shareWeb("www.baidu.com", R.mipmap.ic_launcher);
+//        val url = item?.imageUrl?.replace("_400x400", "");
+//        LogUtils.d("...", url)
+//        var share = WxShare(context, api);
+//        LogUtils.d(".........")
+//        share.mTitle = item.title;
+//        share.mDescription = item.content;
+//        share.shareToFriend();
+//        share.miniTypeToRelease();
+//
+//        var imageByes : ByteArray? = null;
+//        if(url == null || url.length == 0) {
+//            imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
+//            share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes);
+//            return;
+//        }
+//
+//        LogUtils.d("1.........")
+//        try {
+//            ThreadUtils.executeBySingle(object : ThreadUtils.SimpleTask<Bitmap?>() {
+//                override fun doInBackground(): Bitmap? {
+//                    LogUtils.d("...", "来了........")
+//                    return GlideUtils.getImage(context, url);
+//                }
+//
+//                override fun onSuccess(result: Bitmap?) {
+//                    LogUtils.d("...", "来这了者")
+//                    if(result != null) {
+//                        imageByes = ImageUtils.bitmap2Bytes(BitmapShareUtils.drawWXMiniBitmap(result));
+//                    } else {
+//                        imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
+//                    }
+//                    LogUtils.d("...", "来这了者2")
+//                    share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes!!);
+//                }
+//            })
+//        }catch (e : Exception) {
+//            e.printStackTrace();
+//        }
 
-       // share.shareText("分享一个商品：" + goodsVO?.goodsName)
     }
 
     // ---------------------------- 商品编辑------------------------------

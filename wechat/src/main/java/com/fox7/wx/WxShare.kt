@@ -3,12 +3,18 @@ package com.fox7.wx
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import androidx.annotation.DrawableRes
 import com.fox7.wx.Util.Bitmap2Bytes
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
 import com.tencent.mm.opensdk.modelmsg.*
 import com.tencent.mm.opensdk.openapi.IWXAPI
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
 import java.net.URL
 
 
@@ -27,9 +33,6 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
     var mDescription: String?=""
 
     var mTag: String?=""
-    // 内容
-    var mContent : String?= ""
-
 
     companion object {
         const val THUMB_SIZE = 150
@@ -112,6 +115,31 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         api.sendReq(req)
     }
 
+    fun shareImage(bmp : Bitmap, mThumbSize : Int = THUMB_SIZE) {
+        if(!checkApiAndContext()) {
+            return;
+        }
+
+        val msg = WXMediaMessage()
+        msg.title = mTitle;
+        msg.description = mDescription;
+
+        var thumbBmp = Bitmap.createScaledBitmap(bmp, mThumbSize, mThumbSize, true);
+        bmp.recycle();
+        msg.thumbData = Bitmap2Bytes(thumbBmp)//Util.bmpToByteArray(thumbBmp, true)
+
+
+        val imgObj = WXImageObject(thumbBmp)
+        msg.mediaObject = imgObj
+
+
+        val req = SendMessageToWX.Req()
+        req.transaction = buildTransaction("img")
+        req.message = msg
+        req.scene = mTargetScene
+        api.sendReq(req)
+    }
+
     fun shareImage(mUrl : String, mThumbSize : Int = THUMB_SIZE) {
         if(!checkApiAndContext()) {
             return;
@@ -139,8 +167,6 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         req.message = msg
         req.scene = mTargetScene
         api.sendReq(req)
-
-
     }
 
     fun shareImageResource(@DrawableRes mIconDrawable : Int = 0, mThumbSize : Int = THUMB_SIZE) {
@@ -283,8 +309,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         mMiniProgramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
     }
 
-    // appId填移动应用(App)的 AppId，非小程序的 AppID
-    fun shareMini(miniId : String, path : String) {
+    fun openMinii(miniId : String, path : String) {
         val req = WXLaunchMiniProgram.Req()
         // 填小程序原始id
         req.userName = miniId;
@@ -292,8 +317,35 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         //拉起小程序页面的可带参路径，不填默认拉起小程序首页，对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"。
         req.path = path
 
-        miniTypeToTest();
         req.miniprogramType = mMiniProgramType
+
+        api.sendReq(req)
+    }
+
+    // appId填移动应用(App)的 AppId，非小程序的 AppID
+    fun shareMini(miniId : String, path : String, url : ByteArray) {
+        val miniProgramObj = WXMiniProgramObject()
+        miniProgramObj.webpageUrl = "http://www.qq.com" // 兼容低版本的网页链接
+        // 正式版:0，测试版:1，体验版:2
+        miniProgramObj.miniprogramType = mMiniProgramType
+        // 小程序原始id
+        miniProgramObj.userName = miniId
+        //小程序页面路径
+        miniProgramObj.path = path
+
+        val msg = WXMediaMessage(miniProgramObj)
+        // 小程序消息title
+        msg.title = mTitle
+        // 小程序消息desc
+        msg.description = mDescription
+
+        msg.thumbData = url // 小程序消息封面图片，小于128k
+
+        val req = SendMessageToWX.Req()
+        req.transaction = buildTransaction("webpage")
+        req.message = msg
+        // 目前支持会话
+        req.scene = SendMessageToWX.Req.WXSceneSession
 
         api.sendReq(req)
     }

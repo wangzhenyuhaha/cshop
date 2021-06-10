@@ -1,17 +1,18 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import androidx.core.widget.addTextChangedListener
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseFragment
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.DeliveryManagerActivity
 import com.lingmiao.shop.business.me.presenter.ShopOperateSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ShopOperateSettingPresenterImpl
-import com.lingmiao.shop.business.tools.adapter.addTextChangeListener
+import com.lingmiao.shop.business.tools.bean.FreightVoItem
 import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 
 /**
@@ -52,7 +53,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
              mPresenter?.showWorkTimePop(it)
          }
 
-
         // 未接订单自动取消时间
 //        addTextChangeListener(tvShopManageNumber, "") {
 //            if(it?.toInt() > 15) {
@@ -76,28 +76,39 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 //            ActivityUtils.startActivity(LogisticsToolActivity::class.java)
         }
 
+
         // 保存
         tvShopOperateSubmit.setOnClickListener {
             val cancelOrderTime =  tvShopManageNumber.text?.toString()?.toInt()?:0;
-            if(cancelOrderTime > 15) {
-                showToast("不能大于15分钟");
+            if(cancelOrderTime > 5) {
+                showToast("不能大于5分钟");
                 return@setOnClickListener;
             }
             shopReq.autoAccept = if(autoOrderSb.isChecked) 1 else 0;
             shopReq.cancelOrderTime = cancelOrderTime;
             shopReq.companyPhone = linkTelEt.text.toString();
-
+            shopReq.shopTemplateType = getTemplate();
             mPresenter?.setSetting(shopReq);
         }
 
         if(shopReq != null) {
             onLoadedShopSetting(shopReq!!);
+            mPresenter?.loadTemplate();
         } else {
-            showPageLoading()
             mPresenter?.loadShopSetting()
+            mPresenter?.loadTemplate();
         }
     }
 
+    fun getTemplate() : String {
+        if(cb_model_shop.isChecked) {
+            return FreightVoItem.TYPE_LOCAL
+        } else if(cb_model_rider.isChecked) {
+            return FreightVoItem.TYPE_QISHOU;
+        } else {
+            return "";
+        }
+    }
 
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
         shopReq.openStartTime = item1?.itemName;
@@ -110,14 +121,51 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 
     }
 
-    override fun onLoadedShopSetting(vo : ApplyShopInfo) {
-        vo?.orderSetting?.apply {
-            autoOrderSb.isChecked = autoAccept == 1;
+    var mLocalItem : FreightVoItem? = null;
 
-            tvShopManageNumber.setText(cancelOrderDay?.toString())
+    var mRiderItem : FreightVoItem? = null;
+
+    override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {
+        this.mLocalItem = tcItem;
+        this.mRiderItem = qsItem;
+        tcItem?.apply {
+            tvShopStatus.text = "已设置"
         }
-        tvShopOperateTime.setText(String.format("%s-%s", vo?.openStartTime, vo?.openEndTime));
-        linkTelEt.setText(vo.companyPhone);
+        qsItem?.apply {
+            tvRiderStatus.text = "已设置"
+        }
+        layoutShop.setOnCheckedChangeListener { group, checkedId ->
+            if(checkedId == R.id.cb_model_shop) {
+                if((mLocalItem == null || mLocalItem?.id == null) && cb_model_shop.isChecked) {
+                    showToast("请先设置商家配送模板");
+                }
+            } else if(checkedId == R.id.cb_model_rider){
+                if((mRiderItem == null || mRiderItem?.id == null) && cb_model_rider.isChecked) {
+                    showToast("请先设置骑手配送模板");
+                }
+            }
+        }
+        tvShopStatus.singleClick {
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem);
+        }
+        tvRiderStatus.singleClick {
+            DeliveryManagerActivity.rider(mContext as Activity, mRiderItem);
+        }
+    }
+
+    override fun onLoadedShopSetting(vo : ApplyShopInfo) {
+        vo?.apply {
+            orderSetting?.apply {
+                autoOrderSb.isChecked = autoAccept == 1;
+                tvShopManageNumber.setText(cancelOrderDay?.toString())
+            }
+            tvShopOperateTime.setText(String.format("%s-%s", openStartTime, openEndTime));
+            linkTelEt.setText(companyPhone);
+
+            cb_model_rider.isChecked = shopTemplateType == FreightVoItem.TYPE_QISHOU
+            cb_model_shop.isChecked = shopTemplateType == FreightVoItem.TYPE_LOCAL
+        }
+
     }
 
 }

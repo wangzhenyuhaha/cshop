@@ -197,7 +197,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/dimen_15"
                 android:paddingRight="@dimen/dimen_15"
-                android:text="支付"
+                android:text="缴纳"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:layout_marginRight="@dimen/dimen_15"
@@ -228,7 +228,7 @@
                 android:gravity="center"
                 android:paddingLeft="@dimen/dimen_5"
                 android:paddingRight="@dimen/dimen_15"
-                android:text="充值"
+                android:text="缴纳"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"
                 app:ivRadius="18dp"/>

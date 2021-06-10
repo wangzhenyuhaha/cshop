@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import com.blankj.utilcode.util.TimeUtils
 import com.james.common.base.BaseActivity
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.bean.OrderDetail
@@ -94,9 +96,17 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
         orderShipRiderTv.singleClick {
             OtherUtils.goToDialApp(context!!, IConstant.SERVICE_PHONE)
         }
+
+        tvReplenishRemark.text = mItem?.replenishRemark;
+        tvReplenishPrice.text = "￥" + mItem?.replenishPrice
+        if(mItem?.replenishRemark?.isNotEmpty() == true) {
+            replenishLayout.visiable();
+            replenishLine.visiable();
+        } else {
+            replenishLayout.gone();
+            replenishLine.gone();
+        }
     }
-
-
 
     override fun onOrderDetailSuccess(bean: OrderDetail) {
 

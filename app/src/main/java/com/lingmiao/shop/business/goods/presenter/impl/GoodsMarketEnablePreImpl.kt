@@ -71,7 +71,9 @@ class GoodsMarketEnablePreImpl(override var context: Context,override var view: 
                     }
                 }
                 GoodsMenuPop.TYPE_SHARE -> {
-                    menuPopPre.clickShareGoods(context, goodsVO)
+                    clickShare(goodsVO) {
+                        menuPopPre.clickShare(it)
+                    }
                 }
                 GoodsMenuPop.TYPE_DELETE -> {
                     menuPopPre.clickDeleteGoods(goodsVO.goodsId) {

@@ -80,7 +80,9 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
                     }
                 }
                 GoodsMenuPop.TYPE_SHARE -> {
-                    menuPopPre.clickShareGoods(context, goodsVO)
+                    clickShare(goodsVO) {
+                        menuPopPre.clickShare(it)
+                    }
                 }
             }
         }

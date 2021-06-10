@@ -51,13 +51,13 @@ class WorkTimeVo : ItemData {
                 data.add(item);
 
 
-                if(index < 24) {
-                    position ++;
-                    item = WorkTimeVo();
-                    item.itemName = String.format("%s%s:30",if(value == 1) "第二天" else "",  if (index > 9) index else "0" + index);
-                    item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
-                    data.add(item);
-                }
+//                if(index < 24) {
+//                    position ++;
+//                    item = WorkTimeVo();
+//                    item.itemName = String.format("%s%s:30",if(value == 1) "第二天" else "",  if (index > 9) index else "0" + index);
+//                    item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
+//                    data.add(item);
+//                }
             }
             return data;
         }
@@ -72,12 +72,13 @@ class WorkTimeVo : ItemData {
 
         fun getWorkTimeList(value: String?, list: List<WorkTimeVo>?): List<WorkTimeVo> {
             var newList : MutableList<WorkTimeVo> = mutableListOf();
-            list?.forEachIndexed { index, item ->
-                if (item?.getIValue() == value && index < list?.size) {
-                    newList.addAll(list?.subList(index + 1, list?.size));
-                }
-            }
-            newList.addAll(getTomorrowWorkTimeList())
+//            list?.forEachIndexed { index, item ->
+//                if (item?.getIValue() == value && index < list?.size) {
+//                    newList.addAll(list?.subList(index + 1, list?.size));
+//                }
+//            }
+//            newList.addAll(getTomorrowWorkTimeList())
+            newList.addAll(getWorkTimeList());
             return newList;
         }
     }
