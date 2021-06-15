@@ -81,7 +81,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
         tvShopOperateSubmit.setOnClickListener {
             val cancelOrderTime =  tvShopManageNumber.text?.toString()?.toInt()?:0;
             if(cancelOrderTime > 5) {
-                showToast("不能大于5分钟");
+                showToast("未接订单自动取消时间不能大于5分钟");
                 return@setOnClickListener;
             }
             shopReq.autoAccept = if(autoOrderSb.isChecked) 1 else 0;

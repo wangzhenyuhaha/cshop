@@ -83,8 +83,17 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
 
         tvShopSettingSubmit.singleClick {
             mItem?.apply {
-                name = "商家配送";
 
+                if(et_model_km_price.getViewText() == null || et_model_km_price.getViewText().isEmpty()) {
+                    showToast("请输入起送价");
+                    return@singleClick;
+                }
+                val readyTime = deliveryThingEt.getViewText().toInt();
+                if(readyTime > 10) {
+                    showToast("配货时间不大于10分钟");
+                    return@singleClick;
+                }
+                name = "商家配送";
                 // 基础
                 templateType = FreightVoItem.TYPE_LOCAL;
                 type = if(cb_model_pay_km_section.isChecked) FreightVoItem.TYPE_KM_SECTION else FreightVoItem.TYPE_KM_COUNT;
@@ -94,11 +103,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
 
                 shipRange = et_model_out_range_km.getViewText();
 
-                val readyTime = deliveryThingEt.getViewText().toInt();
-                if(readyTime > 10) {
-                    showToast("请输入配货时间");
-                    return@singleClick;
-                }
                 var setting = mTimeSetting;
                 if(cb_model_time_km.isChecked) {
                     // 按公里数
@@ -141,11 +145,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 // 快递 clear data
                 items = null;
                 type = null;
-            }
-
-            if(et_model_km_price.getViewText() == null || et_model_km_price.getViewText().isEmpty()) {
-                showToast("请输入起送价");
-                return@singleClick;
             }
 
             mPresenter?.addModel(mItem!!);
