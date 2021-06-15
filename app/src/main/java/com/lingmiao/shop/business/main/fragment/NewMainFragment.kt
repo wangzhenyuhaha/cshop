@@ -266,16 +266,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         if (mainInfo == null) {
             return;
         }
-
-        val loginInfo = UserManager.getLoginInfo()
-        loginInfo?.let {
-            tvMainShopName.text = loginInfo.shopName
-            if (!TextUtils.isEmpty(loginInfo.shopLogo)) GlideUtils.setImageUrl(
-                civMainShopHead,
-                loginInfo.shopLogo
-            )
-        }
-
+        setShop();
 
         // 总信息
         // 未接订单
@@ -424,6 +415,24 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: ApplyShopInfoEvent) {
         mPresenter?.requestMainInfoData()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun updateLogo(event : LoginInfo) {
+        event?.apply {
+            setShop();
+        }
+    }
+
+    fun setShop() {
+        val loginInfo = UserManager.getLoginInfo()
+        loginInfo?.let {
+            tvMainShopName.text = loginInfo.shopName
+            if (!TextUtils.isEmpty(loginInfo.shopLogo)) GlideUtils.setImageUrl(
+                civMainShopHead,
+                loginInfo.shopLogo
+            )
+        }
     }
 
     override fun onResume() {

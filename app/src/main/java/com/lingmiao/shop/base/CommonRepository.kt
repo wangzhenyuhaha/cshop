@@ -41,7 +41,9 @@ object CommonRepository {
         } else if (file.name.endsWith("jpeg")) {
             imageType = "image/jpeg"
         }
-        if(isImage) file = Compressor.compress(Utils.getApp(), beforeFile)
+        if(isImage) {
+            file = Compressor.compress(Utils.getApp(), beforeFile)
+        }
         val currentType = if(isImage) imageType else videoType
         val requestFile: RequestBody = RequestBody.create(
             MediaType.parse(currentType),

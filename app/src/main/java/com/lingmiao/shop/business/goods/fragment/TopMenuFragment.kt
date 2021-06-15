@@ -3,15 +3,19 @@ package com.lingmiao.shop.business.goods.fragment
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
+import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.GoodsOfMenuActivity
-import com.lingmiao.shop.business.goods.GoodsMenuSelectActivity
 import com.lingmiao.shop.business.goods.MenuEditActivity
 import com.lingmiao.shop.business.goods.adapter.MenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
@@ -51,7 +55,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
     }
 
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
-        return MenuAdapter().apply {
+        val dadapter = MenuAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
 //                GroupManagerLv2Activity.openActivity(
 //                    this@GroupManagerLv1Activity,
@@ -87,6 +91,8 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
 //                    }
                 }
             }
+
+//            setOnItemDragListener(listener)
 //            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
 //                if(menuBottom.visibility != View.VISIBLE) {
 //                    menuBottom.visibility = View.VISIBLE;
@@ -98,6 +104,40 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
                 setBackgroundResource(R.color.common_bg)
             }
         }
+
+        val listener: OnItemDragListener = object : OnItemDragListener {
+            override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
+                LogUtils.d(" ..start : $pos")
+                val holder = viewHolder as BaseViewHolder
+                //                holder.setTextColor(R.id.tv, Color.WHITE);
+            }
+
+            override fun onItemDragMoving(
+                source: RecyclerView.ViewHolder,
+                from: Int,
+                target: RecyclerView.ViewHolder,
+                to: Int
+            ) {
+                LogUtils.d(" ..move : $from $to")
+            }
+
+            override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
+                LogUtils.d(" ..end : $pos")
+                val holder = viewHolder as BaseViewHolder
+                //                holder.setTextColor(R.id.tv, Color.BLACK);
+            }
+        }
+
+
+        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(dadapter)
+
+        val mItemTouchHelper: ItemTouchHelper? = ItemTouchHelper(mItemDragAndSwipeCallback)
+        mItemTouchHelper!!.attachToRecyclerView(mLoadMoreRv)
+
+        dadapter.setOnItemDragListener(listener);
+        dadapter.enableDragItem(mItemTouchHelper);
+
+        return dadapter;
     }
 
     override fun initOthers(rootView: View) {
@@ -131,7 +171,11 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
 //            val list = mAdapter?.data?.filter { it-> it.isChecked };
 //            mPresenter?.deleteGoodsGroup()
         }
+
+        mSmartRefreshLayout?.setEnableRefresh(false);
+        mSmartRefreshLayout?.setEnableLoadMore(false);
     }
+
 
     override fun createPresenter(): CateManagerPre? {
         return CateManagerPreImpl(this);

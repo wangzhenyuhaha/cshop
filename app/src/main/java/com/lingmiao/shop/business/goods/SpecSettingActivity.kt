@@ -123,8 +123,6 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     private fun initSpecContainerLayout() {
         specContainerLayout.apply {
             bindAddSpecBtn(addSpecLl)
-            // 非商品编辑状态下的数据回显
-            specContainerLayout.addSpecItems(specKeyList, true)
             addSpecValueListener = {
                 showInputValueDialog(it)
             }
@@ -135,6 +133,8 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
                 mAdapter?.clear()
                 mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
             }
+            // 非商品编辑状态下的数据回显
+            specContainerLayout.addSpecItems(specKeyList, true)
         }
         addSpecLl.setOnClickListener {
             SpecKeyActivity.openActivity(this, SPEC_REQUEST_CODE, categoryId, specContainerLayout.getSpecList())

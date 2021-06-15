@@ -124,7 +124,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
                         android:gravity="center"
-                        android:hint="请输入时间，5分钟以内"
+                        android:hint="5分钟以内"
                         android:inputType="number"
                         android:paddingRight="@dimen/dimen_5"
                         android:textColor="#ff999999"

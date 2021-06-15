@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.adapter
 
 import android.widget.CompoundButton
+import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
@@ -13,7 +14,7 @@ import com.lingmiao.shop.business.tools.adapter.setOnCheckedChangeListener
  * 菜单
  */
 class MenuAdapter() :
-    BaseQuickAdapter<ShopGroupVO, BaseViewHolder>(R.layout.goods_adapter_menu) {
+    BaseItemDraggableAdapter<ShopGroupVO, BaseViewHolder>(R.layout.goods_adapter_menu, null) {
 
     private var isBatchEditModel: Boolean = false;
 
@@ -23,7 +24,7 @@ class MenuAdapter() :
             helper.setText(R.id.menuNameTv, shopCatName)
             // helper.setText(R.id.menuDescTv, getShopCatDesc(item))
             // helper.setText(R.id.menuOrderTv, "排序：${sort}")
-            helper.setGone(R.id.marginView, helper.adapterPosition == data.size - 1)
+            //helper.setGone(R.id.marginView, helper.adapterPosition == data.size - 1)
             helper.setGone(R.id.menuCheckCb, isBatchEditModel);
             // 删除选中
             helper.setChecked(R.id.menuCheckCb, isChecked?:false);

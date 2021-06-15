@@ -12,6 +12,7 @@ import com.lingmiao.shop.business.me.presenter.IShopQRCodePre
 import com.lingmiao.shop.business.me.presenter.impl.ShopQRCodePreImpl
 import com.lingmiao.shop.util.GlideUtils
 import kotlinx.android.synthetic.main.me_activity_qr_code.*
+import java.io.File
 
 /**
 Create Date : 2021/6/43:07 PM
@@ -36,17 +37,18 @@ class ShopQRCodeActivity : BaseActivity<IShopQRCodePre>(), IShopQRCodePre.View {
         mPresenter?.getQRCode();
 
         ivQRCode.singleClick {
-            ThreadUtils.executeBySingle(object : ThreadUtils.SimpleTask<Boolean?>() {
-                override fun doInBackground(): Boolean? {
-                    return ImageUtils.save(ImageUtils.view2Bitmap(it), path, Bitmap.CompressFormat.JPEG);
+            ThreadUtils.executeBySingle(object : ThreadUtils.SimpleTask<File?>() {
+                override fun doInBackground(): File? {
+                    return ImageUtils.save2Album(ImageUtils.view2Bitmap(it), Bitmap.CompressFormat.JPEG);
                 }
 
-                override fun onSuccess(result: Boolean?) {
+                override fun onSuccess(result: File?) {
                     SnackbarUtils.with(it)
                         .setDuration(SnackbarUtils.LENGTH_LONG)
                         .apply {
-                            if(result == true) {
-                                setMessage("图片保存在"+path).showSuccess(true)
+
+                            if(result?.exists() == true) {
+                                setMessage("图片保存在"+result?.absolutePath).showSuccess(true)
                             } else {
                                 setMessage("保存失败.").showError(true)
                             }

@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.adapter
 
 import android.widget.CompoundButton
 import android.widget.TextView
+import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
@@ -18,7 +19,7 @@ import org.greenrobot.eventbus.EventBus
  * Desc   : 商品分组管理列表
  */
 class MenuOfUserAdapter() :
-    BaseQuickAdapter<ShopGroupVO, BaseViewHolder>(R.layout.goods_adapter_menu_user) {
+    BaseItemDraggableAdapter<ShopGroupVO, BaseViewHolder>(R.layout.goods_adapter_menu_user, null) {
 
     private var isBatchEditModel: Boolean = false;
 

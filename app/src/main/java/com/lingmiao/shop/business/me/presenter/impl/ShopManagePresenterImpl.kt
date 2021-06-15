@@ -6,8 +6,10 @@ import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import kotlinx.coroutines.launch
+import org.greenrobot.eventbus.EventBus
 
 class ShopManagePresenterImpl(context: Context, private var view: ShopManagePresenter.View) :
     BasePreImpl(view), ShopManagePresenter{
@@ -27,6 +29,12 @@ class ShopManagePresenterImpl(context: Context, private var view: ShopManagePres
 		mCoroutine.launch {
 			val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
 			if (resp.isSuccess) {
+				var info = UserManager.getLoginInfo()
+				info?.apply {
+					shopLogo = bean.shopLogo;
+					UserManager.setLoginInfo(info!!);
+					EventBus.getDefault().post(info);
+				}
 				view.onUpdateShopSuccess()
 			} else {
 				view.onUpdateShopError(resp.code)
