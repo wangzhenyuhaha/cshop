@@ -1,7 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
-import com.amap.api.mapcore.util.it
+import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
@@ -15,6 +15,7 @@ import com.james.common.exception.BizException
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.GoodsListActivity
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -172,7 +173,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 view.showToast("商品上架成功")
                 EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
                 EventBus.getDefault().post(RefreshGoodsStatusEvent())
-                view.finish()
+                ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+               // view.finish()
             }
         }
     }

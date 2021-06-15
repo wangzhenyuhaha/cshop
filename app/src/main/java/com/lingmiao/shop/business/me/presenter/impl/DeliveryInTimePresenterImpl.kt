@@ -57,11 +57,11 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
     }
 
     override fun getFeeSetting(item: FreightVoItem?): FeeSettingVo {
-        return json?.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting);
+        return json?.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting?:"");
     }
 
     override fun getTimeSetting(item: FreightVoItem?): TimeSettingVo {
-        return json?.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting);
+        return json?.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting?:"");
     }
 
     override fun getTemplate(str : String) {
@@ -69,10 +69,14 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
         mCoroutine.launch {
             //view.showDialogLoading();
             val resp = ToolsRepository.shipTemplates(str);
-            handleResponse(resp) {
+            if(resp.isSuccess) {
                 if(resp.data.size > 0) {
                     view.setModel(resp?.data?.get(0));
+                } else {
+                    view.setModel(null)
                 }
+            } else {
+                view.setModel(null)
             }
             //view.hideDialogLoading();
         }

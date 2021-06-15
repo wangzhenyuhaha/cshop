@@ -343,7 +343,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
 
     override fun setModel(item: FreightVoItem?) {
         mItem = item ?: FreightVoItem();
-
         setUi();
     }
 
@@ -355,8 +354,9 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
         // 配送范围
         et_model_out_range_km.setText(String.format("%s", mItem?.shipRange));
 
-        mFeeSetting = mPresenter?.getFeeSetting(mItem) ?: FeeSettingVo();
-        mTimeSetting = mPresenter?.getTimeSetting(mItem) ?: TimeSettingVo();
+        mFeeSetting = if(mItem?.feeSetting?.isNullOrEmpty() == true) FeeSettingVo() else mPresenter?.getFeeSetting(mItem) ?: FeeSettingVo();
+
+        mTimeSetting = if(mItem?.timeSetting?.isNullOrEmpty() == true) TimeSettingVo() else mPresenter?.getTimeSetting(mItem) ?: TimeSettingVo();
 
         mFeeSetting?.apply {
             // 配送范围加收费用
