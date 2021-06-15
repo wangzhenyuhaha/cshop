@@ -112,14 +112,15 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
             }
 
             mItem?.title = menuNameEdt.getViewText()
-            mItem?.startTime = dateTime2Date(firstMenuTv.getViewText())?.time?:0/1000;
-            mItem?.endTime = dateTime2Date(secondMenuTv.getViewText())?.time?:0/1000;
+            val s = dateTime2Date(firstMenuTv.getViewText())?.time?:0;
+            val e = dateTime2Date(secondMenuTv.getViewText())?.time?:0;
+            mItem?.startTime = s/1000;
+            mItem?.endTime = e/1000;
 
             mItem?.fullType = "MONEY"
             val it = mDiscountAdapter.data.get(0);
             mItem?.fullMoney = it.peach;
             mItem?.minusValue = it.least
-            mItem?.rangeType = 1;
 
             mPresenter?.submitDiscount(mItem);
         }
@@ -212,8 +213,6 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         setResult(Activity.RESULT_OK)
         finish();
     }
-
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
