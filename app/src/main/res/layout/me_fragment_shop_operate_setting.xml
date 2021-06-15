@@ -112,6 +112,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:layout_centerVertical="true"
                         android:text="未接订单自动取消时间"
                         android:textColor="#ff333333"
@@ -119,18 +120,16 @@
 
                     <EditText
                         android:id="@+id/tvShopManageNumber"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="center|right"
+                        android:gravity="center"
                         android:hint="请输入时间，5分钟以内"
                         android:inputType="number"
                         android:paddingRight="@dimen/dimen_5"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
-                        tools:text="8018101011" />
+                        tools:text="10" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -173,13 +172,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
-                        android:background="@null"
-                        android:gravity="center|right"
+                        android:gravity="center"
                         android:hint="请输入联系电话"
                         android:inputType="number"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
-                        tools:text="8018101011" />
+                        tools:text="18621774835" />
 
                 </RelativeLayout>
 

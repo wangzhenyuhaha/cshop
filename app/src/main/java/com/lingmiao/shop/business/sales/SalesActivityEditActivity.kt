@@ -122,7 +122,11 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
             mItem?.fullMoney = it.peach;
             mItem?.minusValue = it.least
 
-            mPresenter?.submitDiscount(mItem);
+            if(mItem?.id?.isNotEmpty() ==true) {
+                mPresenter?.update(mItem);
+            } else {
+                mPresenter?.submitDiscount(mItem);
+            }
         }
 
 
@@ -137,9 +141,15 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
 
     fun resetUi() {
         menuNameEdt.setText(mItem?.title)
-        firstMenuTv.setText(longToDate(mItem?.startTime, DATE_TIME_FORMAT))
-        secondMenuTv.setText(longToDate(mItem?.endTime, DATE_TIME_FORMAT))
+        firstMenuTv.setText(stampToDate(mItem?.startTime, DATE_TIME_FORMAT))
+        secondMenuTv.setText(stampToDate(mItem?.endTime, DATE_TIME_FORMAT))
         mDiscountAdapter?.addData(mItem?.convertDiscountItem()!!);
+        activityGoodsPickTv.setText(if(mItem?.rangeType == null) "请选择参与活动的商品" else "已选择")
+
+        if(mItem?.status.equals("UNDERWAY")) {
+            submitTv.gone();
+        }
+
     }
 
     private lateinit var mDiscountList : MutableList<SalesActivityItemVo>;
@@ -210,6 +220,11 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
     }
 
     override fun onSubmitDiscount() {
+        setResult(Activity.RESULT_OK)
+        finish();
+    }
+
+    override fun onUpdate() {
         setResult(Activity.RESULT_OK)
         finish();
     }

@@ -23,27 +23,33 @@ class SalesAdapter() : BaseQuickAdapter<SalesVo, BaseViewHolder>(R.layout.sales_
             helper.addOnClickListener(R.id.tvSalesDelete);
             helper.addOnClickListener(R.id.tvSalesEnd);
             helper.addOnClickListener(R.id.tvSalesView);
+            helper.addOnClickListener(R.id.tvSalesEdit);
             helper.addOnClickListener(R.id.salesGoodsTv);
 
             when(status) {
                 "WAIT" -> {
-                    helper.setGone(R.id.tvSalesView, true);
+                    helper.setGone(R.id.tvSalesView, false);
+                    helper.setGone(R.id.tvSalesEdit, true);
                     helper.setGone(R.id.tvSalesDelete, true);
                     helper.setGone(R.id.tvSalesEnd, false);
                 }
                 "UNDERWAY" -> {
                     helper.setGone(R.id.tvSalesEnd, true);
                     helper.setGone(R.id.tvSalesView, true);
-                    helper.setGone(R.id.tvSalesDelete, true);
+                    helper.setGone(R.id.tvSalesDelete, false);
+                    helper.setGone(R.id.tvSalesEdit, false);
                 }
                 "END" -> {
-                    helper.setGone(R.id.tvSalesEnd, true);
-                    helper.setGone(R.id.tvSalesView, true);
+                    helper.setGone(R.id.tvSalesEnd, false);
+                    helper.setGone(R.id.tvSalesView, false);
+                    helper.setGone(R.id.tvSalesDelete, true);
+                    helper.setGone(R.id.tvSalesEdit, true);
                 }
                 else -> {
                     helper.setGone(R.id.tvSalesView, false);
                     helper.setGone(R.id.tvSalesDelete, false);
                     helper.setGone(R.id.tvSalesEnd, false);
+                    helper.setGone(R.id.tvSalesEdit, false);
                 }
 
             }

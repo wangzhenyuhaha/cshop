@@ -32,7 +32,7 @@ object PromotionRepository {
         return apiService.getDiscountById(id).awaitHiResponse();
     }
 
-    suspend fun update(item : SalesVo) : HiResponse<SalesVo> {
+    suspend fun update(item : SalesVo?) : HiResponse<SalesVo> {
         return apiService.update(item?.id!!, item).awaitHiResponse();
     }
 

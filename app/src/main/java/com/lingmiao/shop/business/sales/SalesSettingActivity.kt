@@ -54,6 +54,9 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo,ISalesSettingPresenter
                     R.id.tvSalesView -> {
                         SalesActivityEditActivity.view(context as Activity, item)
                     }
+                    R.id.tvSalesEdit -> {
+                        SalesActivityEditActivity.edit(context as Activity, item, REQUEST_EDIT);
+                    }
                     R.id.salesGoodsTv -> {
                         SalesGoodsActivity.edit(context as Activity, item, REQUEST_GOODS)
                     }
@@ -74,7 +77,7 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo,ISalesSettingPresenter
             if(requestCode == REQUEST_EDIT) {
                 mLoadMoreDelegate?.refresh()
             } else if(requestCode == REQUEST_GOODS) {
-
+                mLoadMoreDelegate?.refresh()
             }
         }
     }

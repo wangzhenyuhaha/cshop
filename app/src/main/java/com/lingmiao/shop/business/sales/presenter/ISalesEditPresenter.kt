@@ -13,9 +13,12 @@ interface ISalesEditPresenter : BasePresenter {
 
     fun submitDiscount(mItem: SalesVo?)
 
+    fun update(mItem: SalesVo?);
+
     interface PubView : BaseView {
 
         fun onSubmitDiscount();
 
+        fun onUpdate();
     }
 }

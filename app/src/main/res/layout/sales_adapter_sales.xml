@@ -100,6 +100,22 @@
         app:layout_constraintTop_toBottomOf="@id/vCLine">
 
 
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvSalesEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="28dp"
+            android:layout_marginTop="@dimen/dimen_2"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_15"
+            android:text="编辑"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            app:ivBgColor="@color/red"
+            app:ivRadius="18dp" />
+
         <com.james.common.view.ITextView
             android:id="@+id/tvSalesView"
             android:layout_width="wrap_content"

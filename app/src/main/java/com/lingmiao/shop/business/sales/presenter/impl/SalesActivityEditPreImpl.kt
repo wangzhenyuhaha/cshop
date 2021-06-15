@@ -25,4 +25,18 @@ class SalesActivityEditPreImpl(var context: Context, var view: ISalesEditPresent
         }
     }
 
+    override fun update(mItem: SalesVo?) {
+        if(mItem?.id?.isNullOrEmpty() == true) {
+            return;
+        }
+        mCoroutine.launch {
+            view?.showDialogLoading()
+            val resp = PromotionRepository.update(mItem!!);
+            handleResponse(resp) {
+                view?.onUpdate();
+            }
+            view?.hideDialogLoading();
+        }
+    }
+
 }

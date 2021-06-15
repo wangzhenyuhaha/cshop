@@ -20,13 +20,6 @@ interface PromotionService {
     @WithHiResponse
     fun submitDiscount(@Body goods : SalesVo?): Call<SalesVo>
 
-    /**
-     * 新增商品
-     */
-    @GET(" /seller/promotion/full-discounts")
-    @WithHiResponse
-    fun getDiscounts(@QueryMap map: MutableMap<String, Any>): Call<PageVO<SalesVo>>
-
     @PUT("/seller/promotion/full-discounts/{id}")
     @WithHiResponse
     fun update(@Path(value = "id") id: String?, @Body item : SalesVo) : Call<SalesVo>
@@ -48,4 +41,12 @@ interface PromotionService {
     @PUT("seller/promotion/full-discounts/end/{id}")
     @WithHiResponse
     fun endDiscount(@Path(value = "id") id: String) : Call<Unit>
+
+    /**
+     * 获取列表
+     */
+    @GET(" /seller/promotion/full-discounts")
+    @WithHiResponse
+    fun getDiscounts(@QueryMap map: MutableMap<String, Any>): Call<PageVO<SalesVo>>
+
 }
