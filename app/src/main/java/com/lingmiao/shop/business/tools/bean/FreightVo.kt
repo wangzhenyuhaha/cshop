@@ -540,7 +540,6 @@ data class TimeSection(
     }
 }
 
-
 data class FeeSettingReqVo(
     @SerializedName("base_distance")
     var baseDistance: String? = "",

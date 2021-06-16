@@ -71,6 +71,22 @@ data class OrderList(
     var sellerLogo: String?,
     @SerializedName("seller_name")
     var sellerName: String?,
+    /**
+     * /** 未申请 */
+    NOT_APPLY("未申请"),
+
+    /** 已申请 */
+    APPLY("已申请"),
+
+    /** 审核通过 */
+    PASS("审核通过"),
+
+    /** 审核未通过 */
+    REFUSE("审核未通过"),
+
+    /** 已失效或不允许申请售后 */
+    EXPIRED("已失效不允许申请售后");
+     */
     @SerializedName("service_status")
     var serviceStatus: String?,
     @SerializedName("ship_addr")
@@ -105,6 +121,8 @@ data class OrderList(
     var skuList: List<Sku>,
     @SerializedName("sn")
     var sn: String?,
+    @SerializedName("order_sn")
+    var orderSn: String?,
     @SerializedName("total_num")
     var totalNum: Int,
     @SerializedName("is_virtual_order")

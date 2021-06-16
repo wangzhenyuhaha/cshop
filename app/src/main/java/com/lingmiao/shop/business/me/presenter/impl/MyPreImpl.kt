@@ -1,14 +1,19 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
+import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import com.blankj.utilcode.util.ConvertUtils
-import com.blankj.utilcode.util.ImageUtils
-import com.blankj.utilcode.util.ResourceUtils
-import com.blankj.utilcode.util.ThreadUtils
+import android.media.MediaScannerConnection
+import android.net.Uri
+import android.os.Build
+import android.os.Environment
+import android.provider.MediaStore
+import com.blankj.utilcode.util.*
 import com.fox7.wx.WxShare
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.business.main.api.MainRepository
@@ -19,8 +24,13 @@ import com.lingmiao.shop.business.wallet.presenter.MyWalletPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.MyWalletPresenterImpl
 import com.lingmiao.shop.util.BitmapShareUtils
 import com.lingmiao.shop.util.GlideUtils
+import com.luck.picture.lib.config.PictureMimeType.getImageMimeType
+import com.luck.picture.lib.config.PictureMimeType.getMimeType
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileInputStream
+import java.io.IOException
 
 
 class MyPreImpl(val context: Context, private var view: MyPresenter.View) : BasePreImpl(view), MyPresenter {
@@ -78,10 +88,8 @@ class MyPreImpl(val context: Context, private var view: MyPresenter.View) : Base
 				share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes!!);
 			}
 		})
-		 //share.shareImageResource(R.mipmap.ic_launcher);
-		//share.shareWeb("www.baidu.com", R.mipmap.ic_launcher);
-		// share.shareText("分享一个商品：" + goodsVO?.goodsName)
 	}
+
 
 	override fun getShareInfo(shopId : Int) {
 		mCoroutine.launch {

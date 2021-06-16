@@ -154,6 +154,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
             mPresenter?.getTemplate(FreightVoItem.TYPE_LOCAL);
         } else {
             setUi();
+            mPresenter?.getTemplate(FreightVoItem.TYPE_LOCAL);
         }
     }
 

@@ -109,6 +109,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             mPresenter?.getTemplate();
         } else {
             setUi();
+            mPresenter?.getTemplate();
         }
 
         mPresenter?.getShopTemplate();

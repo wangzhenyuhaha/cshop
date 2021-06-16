@@ -81,9 +81,6 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
                 share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes!!);
             }
         })
-        //share.shareImageResource(R.mipmap.ic_launcher);
-        //share.shareWeb("www.baidu.com", R.mipmap.ic_launcher);
-        // share.shareText("分享一个商品：" + goodsVO?.goodsName)
     }
 
     fun clickShare(item: ShareVo) {
@@ -97,46 +94,6 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
         share.shareToFriend();
 
         share.shareWeb(item?.imageUrl ?:"http://www.c-dian.cn/", R.mipmap.ic_launcher, 50);
-
-//        val url = item?.imageUrl?.replace("_400x400", "");
-//        LogUtils.d("...", url)
-//        var share = WxShare(context, api);
-//        LogUtils.d(".........")
-//        share.mTitle = item.title;
-//        share.mDescription = item.content;
-//        share.shareToFriend();
-//        share.miniTypeToRelease();
-//
-//        var imageByes : ByteArray? = null;
-//        if(url == null || url.length == 0) {
-//            imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
-//            share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes);
-//            return;
-//        }
-//
-//        LogUtils.d("1.........")
-//        try {
-//            ThreadUtils.executeBySingle(object : ThreadUtils.SimpleTask<Bitmap?>() {
-//                override fun doInBackground(): Bitmap? {
-//                    LogUtils.d("...", "来了........")
-//                    return GlideUtils.getImage(context, url);
-//                }
-//
-//                override fun onSuccess(result: Bitmap?) {
-//                    LogUtils.d("...", "来这了者")
-//                    if(result != null) {
-//                        imageByes = ImageUtils.bitmap2Bytes(BitmapShareUtils.drawWXMiniBitmap(result));
-//                    } else {
-//                        imageByes = ImageUtils.drawable2Bytes(ResourceUtils.getDrawable(R.mipmap.ic_launcher));
-//                    }
-//                    LogUtils.d("...", "来这了者2")
-//                    share.shareMini(IWXConstant.APP_ORIGINAL_ID, item.path, imageByes!!);
-//                }
-//            })
-//        }catch (e : Exception) {
-//            e.printStackTrace();
-//        }
-
     }
 
     // ---------------------------- 商品编辑------------------------------

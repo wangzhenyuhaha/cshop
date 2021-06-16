@@ -56,6 +56,11 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
         }
         menuPopPre.showMenuPop(goodsVO.getMenuType(), target) { menuType ->
             when (menuType) {
+                GoodsMenuPop.TYPE_DELETE -> {
+                    menuPopPre.clickDeleteGoods(goodsVO.goodsId) {
+                        view.onGoodsDelete(goodsVO.goodsId, position)
+                    }
+                }
                 GoodsMenuPop.TYPE_EDIT -> {
                     menuPopPre.clickEditGoods(context, goodsVO)
                 }
