@@ -6,6 +6,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.order.bean.OrderList
@@ -33,19 +35,9 @@ class OrderListAdapter :
         }
         val tvProductAttribute = helper.getView<TextView>(R.id.tvProductAttribute)
         val tvProductRefund = helper.getView<TextView>(R.id.tvProductRefund)
-        val product = item.skuList[0]
-        if (item.skuList.size > 1) {
-            helper.setText(
-                R.id.tvProductName,
-                MyApp.getInstance().getString(R.string.order_product_count, item.totalNum)
-            )
-            ivProduct2.visibility = View.VISIBLE
-            tvProductRefund.visibility = View.GONE
-            GlideUtils.setImageUrl(ivProduct2, item.skuList[1].goodsImage)
-            tvProductAttribute.text = ""
-            helper.setText(R.id.tvProductPrice, "")
-            helper.setText(R.id.tvProductCount, "")
-        } else {
+
+        if(item.skuList.size == 1) {
+            val product = item.skuList[0]
             ivProduct2.visibility = View.GONE
             when (product.serviceStatus) {
                 "APPLY" -> {
@@ -74,6 +66,19 @@ class OrderListAdapter :
                 attributeString = attributeString.substring(0, attributeString.length - 1)
                 tvProductAttribute.text = attributeString
             }
+//        GlideUtils.setCornerImageUrl(helper.getView(R.id.ivBuyerHead),item.)
+            GlideUtils.setImageUrl(helper.getView(R.id.ivProduct1), product.goodsImage)
+        } else if(item.skuList.size > 1) {
+            helper.setText(
+                R.id.tvProductName,
+                MyApp.getInstance().getString(R.string.order_product_count, item.totalNum)
+            )
+            ivProduct2.visibility = View.VISIBLE
+            tvProductRefund.visibility = View.GONE
+            GlideUtils.setImageUrl(ivProduct2, item.skuList[1].goodsImage)
+            tvProductAttribute.text = ""
+            helper.setText(R.id.tvProductPrice, "")
+            helper.setText(R.id.tvProductCount, "")
         }
 
         helper.getView<GoodsItemRvLayout>(R.id.goodsItemC).addItems(item.skuList);
@@ -82,9 +87,6 @@ class OrderListAdapter :
             MyApp.getInstance()
                 .getString(R.string.order_money_new, item.orderAmount.toString())
         )
-
-//        GlideUtils.setCornerImageUrl(helper.getView(R.id.ivBuyerHead),item.)
-        GlideUtils.setImageUrl(helper.getView(R.id.ivProduct1), product.goodsImage)
 
 
         val tvAccept = helper.getView<TextView>(R.id.tvAccept)
@@ -185,13 +187,14 @@ class OrderListAdapter :
             }
             "CANCELLED" -> {
                 // 已取消
+                showBottomArea = false;
             }
             "COMPLETE" -> {
                 // 已完成
+                showBottomArea = false;
             }
             "AFTER_SERVICE" -> {
                 // 售后中
-
             }
         }
 
@@ -201,9 +204,15 @@ class OrderListAdapter :
             }
             "APPLY" -> {
                 showBottomArea = true;
+
+                tvAccept.gone()
+                tvRefuse.gone()
+                tvSign.gone()
+                tvShipment.gone()
+
                 //已申请
-                tvRefuseService.visibility = View.VISIBLE
-                tvAcceptService.visibility = View.VISIBLE
+                tvRefuseService.visiable()
+                tvAcceptService.visiable()
             }
             "PASS" -> {
                 // 通过

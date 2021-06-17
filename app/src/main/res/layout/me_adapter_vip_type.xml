@@ -22,6 +22,7 @@
             android:layout_height="wrap_content"
             tools:text="年卡门店"
             android:textSize="14sp"
+            android:textStyle="bold"
             android:clickable="false"
             android:focusable="false"/>
 
@@ -29,9 +30,10 @@
             android:id="@+id/vipItemValueTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="￥299"
+            tools:text="￥299.00"
             android:textColor="#E2654B"
-            android:textSize="26sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             android:clickable="false"
             android:focusable="false" />
 

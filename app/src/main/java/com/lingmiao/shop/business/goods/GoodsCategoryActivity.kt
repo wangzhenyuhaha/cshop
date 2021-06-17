@@ -72,7 +72,7 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
                     }
                     // 更多
                     R.id.cateMoreIv -> {
-                        mPresenter?.clickMenuView(mAdapter.getItem(position), position, view)
+                        mPresenter?.clickMenuView(item, position, view)
 //                        val item = getItem(position) as CategoryVO;
 //                        showAddDialog(item.categoryId!!.toInt());
                     }
@@ -257,6 +257,10 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
 
         mAdapter?.notifyDataSetChanged();
 //        mPresenter.loadLv1GoodsGroup();
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

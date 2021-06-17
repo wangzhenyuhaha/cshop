@@ -20,8 +20,12 @@ class GoodsUnitPopPreImpl(view: BaseView) : BasePreImpl(view) {
 
     fun showWeightPop(context: Context, value : String?, callback : (String?, UnitVo?)-> Unit) {
         goodsWeightPop = AbsOneItemPop<UnitVo>(context, value, UnitVo.getWeightList(), "请选择重量").apply {
-            listener = { item: UnitVo ->
-                callback.invoke(item?.name, item);
+            listener = { items: List<UnitVo> ->
+                if(items?.size > 0) {
+                    val item = items.get(0);
+                    callback.invoke(item?.name, item);
+                }
+
             }
         }
         goodsWeightPop?.showPopupWindow();
@@ -29,8 +33,11 @@ class GoodsUnitPopPreImpl(view: BaseView) : BasePreImpl(view) {
 
     fun showUnitPop(context: Context, value : String?, callback : (String?, UnitVo?)-> Unit) {
         goodsUnitPop = AbsOneItemPop<UnitVo>(context, value, UnitVo.getUnitList(), "请选择单位").apply {
-            listener = { item: UnitVo ->
-                callback.invoke(item?.name, item);
+            listener = { items: List<UnitVo> ->
+                if(items?.size > 0) {
+                    val item = items.get(0);
+                    callback.invoke(item?.name, item);
+                }
             }
         }
         goodsUnitPop?.showPopupWindow();

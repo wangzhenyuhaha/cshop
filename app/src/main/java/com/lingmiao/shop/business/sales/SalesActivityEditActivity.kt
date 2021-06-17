@@ -82,7 +82,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
 
 
         activityGoodsPickTv.singleClick {
-            SalesGoodsActivity.open(context, REQUEST_GOODS);
+            SalesGoodsActivity.edit(context, mItem, REQUEST_GOODS);
         }
         initPricePart();
 

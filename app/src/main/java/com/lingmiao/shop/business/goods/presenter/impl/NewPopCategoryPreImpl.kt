@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
+import com.amap.api.mapcore.util.it
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.pop.GoodsCategoryPop
@@ -9,12 +10,9 @@ import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.commonpop.adapter.CenterItemAdapter
 import com.lingmiao.shop.business.commonpop.adapter.DefaultItemAdapter
 import com.lingmiao.shop.business.commonpop.pop.AbsThreeItemPop
 import com.lingmiao.shop.business.commonpop.pop.AbsTwoItemPop
-import com.lingmiao.shop.business.goods.adapter.GoodsCategoryAdapter
-import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import kotlinx.coroutines.launch
 
 /**
@@ -37,12 +35,23 @@ class NewPopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
     private var lv2CacheMap: HashMap<String, List<CategoryVO>> = HashMap()
     private var lv3CacheMap: HashMap<String, List<CategoryVO>> = HashMap()
 
+    var shopId : Int? = null;
+
+    fun getSellerId() : String? {
+        if(shopId == null) {
+            shopId = UserManager.getLoginInfo()?.shopId;
+        }
+        return String.format("%s", shopId);
+    }
+
     private var mSelectList: MutableList<CategoryVO> = arrayListOf();
     fun showTypePop(context: Context, targetView : View, callback: (List<CategoryVO>?, String?) -> Unit) {
         mCoroutine.launch {
             view?.showDialogLoading();
             // 一级类目 categoryId=0
-            val resp = GoodsRepository.loadUserCategory(UserManager?.getLoginInfo()?.goodsCateId?:"0","0")
+
+            val resp = GoodsRepository.loadUserCategory("0", getSellerId());
+                //GoodsRepository.loadUserCategory(UserManager?.getLoginInfo()?.goodsCateId?:"0","0")
             if (resp.isSuccess) {
                 showTypePop(context, targetView, resp.data, callback)
             }
@@ -125,48 +134,6 @@ class NewPopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
             if (resp.isSuccess) {
                 lv2CacheMap[categoryVO.categoryId!!] = resp.data
                 categoryPop?.setLv2Data(resp.data)
-            }
-            view?.hideDialogLoading();
-        }
-    }
-
-    private fun showPopWindow(
-        context: Context,
-        list: List<CategoryVO>,
-        callback: (String?, String?) -> Unit
-    ) {
-        categoryPop = GoodsCategoryPop(context).apply {
-            lv1Callback = {
-                categoryName = it.name
-                loadLv2Category(it)
-            }
-            lv2Callback = {
-                categoryName = "${categoryName}/${it.name}"
-                loadLv3Category(it)
-            }
-            lv3Callback = {
-                categoryName = "${categoryName}/${it.name}"
-                callback.invoke(it.categoryId, categoryName)
-            }
-        }
-        categoryPop?.setLv1Data(list)
-        categoryPop?.showPopupWindow()
-    }
-
-    private fun loadLv3Category(categoryVO: CategoryVO) {
-        if (categoryVO.categoryId.isNullOrBlank()) return
-        val lv3List = lv3CacheMap[categoryVO.categoryId!!]
-        if (lv3List.isNotEmpty()) {
-            categoryPop?.setLv3Data(lv3List!!)
-            return
-        }
-
-        mCoroutine.launch {
-            view?.showDialogLoading();
-            val resp = GoodsRepository.loadCategory(categoryVO.categoryId!!)
-            if (resp.isSuccess) {
-                lv3CacheMap[categoryVO.categoryId!!] = resp.data
-                categoryPop?.setLv3Data(resp.data)
             }
             view?.hideDialogLoading();
         }

@@ -29,5 +29,10 @@ class GoodsCategoryAdapter :
         }
     }
 
+    fun clearData() {
+        mData.clear()
+        notifyDataSetChanged()
+    }
+
 
 }

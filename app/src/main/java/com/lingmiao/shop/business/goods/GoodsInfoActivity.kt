@@ -18,14 +18,13 @@ import kotlinx.android.synthetic.main.goods_activity_goods_info.smartRefreshLayo
 
 
 /**
- * Author : Elson
- * Date   : 2020/7/31
- * Desc   : 规格设置页
+ * Desc   : 商品信息
  */
 class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
     GoodsInfoPre.PublicView {
 
     private var categoryId: String? = null
+    private var level: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -35,13 +34,15 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
     companion object {
 
         const val KEY_CATEGORY_ID = "KEY_CATEGORY_ID"
+        const val KEY_CATEGORY_LEVEL = "KEY_CATEGORY_LEVEL"
 
         const val SPEC_REQUEST_CODE = 1000
 
-        fun openActivity(context: Context, requestCode: Int, id : String) {
+        fun openActivity(context: Context, requestCode: Int, item : CategoryVO?) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsInfoActivity::class.java)
-                intent.putExtra(KEY_CATEGORY_ID, id)
+                intent.putExtra(KEY_CATEGORY_ID, item?.categoryId)
+                intent.putExtra(KEY_CATEGORY_LEVEL, item?.showLevel)
                 context.startActivityForResult(intent, requestCode)
             }
         }
@@ -58,6 +59,7 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
 
     override fun initBundles() {
         categoryId = intent.getStringExtra(KEY_CATEGORY_ID)
+        level = intent.getIntExtra(KEY_CATEGORY_LEVEL, 1)
     }
 
     override fun createPresenter(): GoodsInfoPre {
@@ -76,16 +78,20 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
         infoNameTv.setText("商品信息");
 
         addInfoTv.singleClick {
-            DialogUtils.showInputDialog(
-                this, "商品信息", "", "请输入具体信息，不同信息用\",\"分隔",
-                "取消", "保存", null
-            ) {
-                val its = it?.split(",");
-                its.forEachIndexed { index, s ->
-                    if(s?.isNotEmpty()) {
-                        mPresenter.addInfo(categoryId!!, s)
+            if(level == 1) {
+                DialogUtils.showInputDialog(
+                    this, "商品信息", "", "请输入具体信息，不同信息用\",\"分隔",
+                    "取消", "保存", null
+                ) {
+                    val its = it?.split(",");
+                    its.forEachIndexed { index, s ->
+                        if(s?.isNotEmpty()) {
+                            mPresenter.addInfo(categoryId!!, s)
+                        }
                     }
                 }
+            } else {
+                GoodsInfoUpdateActivity.add(this, categoryId, SPEC_REQUEST_CODE);
             }
         }
         infoFlowLayout.apply {
@@ -97,6 +103,13 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
         }
         mPresenter?.loadInfoList(categoryId);
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK && requestCode == SPEC_REQUEST_CODE) {
+            mPresenter?.loadInfoList(categoryId);
+        }
     }
 
     override fun onLoadInfoListSuccess(list: List<GoodsParamVo>) {

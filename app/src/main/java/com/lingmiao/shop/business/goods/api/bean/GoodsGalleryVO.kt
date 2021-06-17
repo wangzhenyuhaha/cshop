@@ -4,6 +4,7 @@ import com.lingmiao.shop.business.photo.getImagePath
 import com.google.gson.annotations.SerializedName
 import com.james.common.utils.exts.checkNotBlank
 import com.luck.picture.lib.entity.LocalMedia
+import java.io.Serializable
 
 /**
  * Author : liuqi
@@ -17,7 +18,7 @@ data class GoodsGalleryVO(
     var original: String?,
     @SerializedName("sort")
     var sort: String?
-) {
+) : Serializable {
     companion object {
         fun convert(localMedia: LocalMedia): GoodsGalleryVO {
             val imagePath = localMedia.compressPath.checkNotBlank(localMedia.getImagePath())

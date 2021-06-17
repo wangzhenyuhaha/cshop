@@ -99,7 +99,7 @@ class ApplyShopCategoryActivity : BaseActivity<ApplyShopCategoryPresenter>(),
         if(initSelectedList.size>0){
             tempList.forEachIndexed { index, item ->
                 if(initSelectedList.contains(item.categoryId)){
-                    item.selected = true
+                    item.isChecked = true
                     mSelectedPosition = index;
                 }
             }

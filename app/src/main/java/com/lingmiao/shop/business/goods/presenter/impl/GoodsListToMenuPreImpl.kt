@@ -16,8 +16,6 @@ Desc        :
  **/
 class GoodsListToMenuPreImpl(val context: Context, val view : GoodsListToMenuPre.View) : BasePreImpl(), GoodsListToMenuPre{
 
-    private val mCategoryPreImpl: NewPopCategoryPreImpl by lazy { NewPopCategoryPreImpl(view) }
-
     private val mCatePopPreImpl : PopUserCatePreImpl by lazy { PopUserCatePreImpl(view) }
 
     override fun showCategoryPop(cid : String?,target: View) {

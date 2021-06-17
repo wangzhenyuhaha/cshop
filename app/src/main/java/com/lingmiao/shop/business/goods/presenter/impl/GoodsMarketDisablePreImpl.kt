@@ -33,7 +33,7 @@ class GoodsMarketDisablePreImpl(override var context: Context,override var view:
             val resp = GoodsRepository.loadGoodsList(
                 page.getPageIndex(),
                 GoodsVO.MARKET_STATUS_DISABLE.toString(),
-                ""
+                GoodsVO.getDisableAuth()
             )
             if (resp.isSuccess) {
                 val goodsList = resp.data.data

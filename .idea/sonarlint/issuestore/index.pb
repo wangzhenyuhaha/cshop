@@ -1042,8 +1042,6 @@ Wapp/src/main/java/com/lingmiao/shop/business/order/presenter/impl/OrderSearchPr
 Vapp/src/main/java/com/lingmiao/shop/business/goods/presenter/impl/GoodsVideoPreImpl.kt,b/b/bb91e8ae67ab04f06d59f14b0e0ba2081e81e285
 {
 Kapp/src/main/java/com/lingmiao/shop/business/wallet/bean/AlipayAccountVo.kt,b/a/ba00e7d58aba6101cab7f5b5963ed2c76a2686cf
-{
-Kapp/src/main/java/com/lingmiao/shop/business/goods/presenter/impl/TaskVo.kt,c/d/cd2ff37c427620be9408a1514b89eb4e824b008d
 t
 Dapp/src/main/java/com/lingmiao/shop/business/order/bean/AfterSale.kt,a/3/a3f1297067638e8512123a6121ca31c17f654508
 w
@@ -1070,3 +1068,9 @@ y
 Ipicture_library/src/main/java/com/luck/picture/lib/tools/BitmapUtils.java,d/b/dbe7c73dfbbd56735f01095e12a352150006d2a7
 n
 >app/src/main/java/com/lingmiao/shop/util/BitmapShareUtils.java,3/1/31e1bc80c986ca25407cbce3d4d3450bb6ad9276
+‹
+[app/src/main/java/com/lingmiao/shop/business/goods/presenter/impl/GoodsInfoUpdatePreImpl.kt,b/b/bb9359dd9f09d84bac3537eff60ec3bdc59eae57
+}
+Mapp/src/main/java/com/lingmiao/shop/business/goods/GoodsInfoUpdateActivity.kt,0/8/089b024efb41a3fe289212501d2e1d498205fea2
+€
+Papp/src/main/java/com/lingmiao/shop/business/goods/presenter/GoodsInfoEditPre.kt,f/5/f5fda26e1f527d099f46d38fafcf1c6660f8f21d

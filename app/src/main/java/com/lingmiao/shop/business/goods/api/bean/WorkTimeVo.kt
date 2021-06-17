@@ -27,6 +27,16 @@ class WorkTimeVo : ItemData {
         return itemHint;
     }
 
+    @Deprecated("暂未启用")
+    override fun isItemChecked(): Boolean? {
+        return false;
+    }
+
+    @Deprecated("暂未启用")
+    override fun shiftChecked(flag: Boolean?) {
+
+    }
+
     fun getFullDayType() : Int {
         return if(isFullDay(itemValue?.toInt()?:0)) 1 else 0;
     }
@@ -43,12 +53,18 @@ class WorkTimeVo : ItemData {
             val data = mutableListOf<WorkTimeVo>()
             var item: WorkTimeVo? = null;
             var position : Int = 0;
+            var hour = "";
             for (index in 0..24) {
                 position ++;
-                item = WorkTimeVo();
-                item.itemName = String.format("%s%s:00", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
-                item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
-                data.add(item);
+
+                hour = String.format("%s%s", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
+
+                for(i in 0..59) {
+                    item = WorkTimeVo();
+                    item.itemName = String.format("%s:%s", hour, if(i < 10) "0" + i else i);
+                    item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
+                    data.add(item);
+                }
 
 
 //                if(index < 24) {

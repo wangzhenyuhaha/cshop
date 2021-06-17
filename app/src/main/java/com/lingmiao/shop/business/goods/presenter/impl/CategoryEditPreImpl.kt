@@ -111,7 +111,7 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
         menuPopPre.showMenuPop(item.getMenuType(), target) { menuType ->
             when (menuType) {
                 CateMenuPop.TYPE_GOODS_INFO -> {
-                    GoodsInfoActivity.openActivity(context, 1009, item.categoryId!!);
+                    GoodsInfoActivity.openActivity(context, 1009, item);
                 }
                 CateMenuPop.TYPE_SPEC -> {
                     GoodsSpecActivity.openActivity(context, 1019, item.categoryId!!)

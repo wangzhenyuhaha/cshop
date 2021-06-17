@@ -162,6 +162,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".business.goods.GoodsInfoActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".business.goods.GoodsInfoUpdateActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".business.goods.GoodsSpecActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".business.goods.UserMenuEditActivity"

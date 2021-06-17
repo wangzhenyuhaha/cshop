@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:paddingLeft="@dimen/dimen_15"
+            android:text="商品信息名称"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_666666"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:padding="@dimen/dimen_15"
+            android:id="@+id/tvGoodsInfoName"
+            android:background="@null"
+            android:hint="请输入商品信息名称"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_999999"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        style="@style/DivideLineHorizontal"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:paddingLeft="@dimen/dimen_15"
+            android:text="同步到分类"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_666666"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tvCategoriesName"
+            android:hint="请选择"
+            android:gravity="right"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_333333"
+            android:textColorHint="@color/color_999999"
+            android:drawablePadding="@dimen/dimen_15"
+            android:drawableRight="@mipmap/common_arrow_right"
+            android:padding="@dimen/dimen_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/infoSubmitTv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_38"
+        android:layout_margin="@dimen/dimen_14"
+        android:background="@drawable/shape_goods_pop_btn"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="@color/color_ffffff"
+        android:textSize="@dimen/dimen_14" />
+
+
+</LinearLayout>

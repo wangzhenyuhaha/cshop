@@ -3,12 +3,10 @@ package com.lingmiao.shop.business.sales
 import android.app.Activity
 import android.content.Intent
 import android.view.View
-import com.amap.api.mapcore.util.it
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
-import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
@@ -76,18 +74,18 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
         }
         submitTv.singleClick {
             val list = mAdapter?.data.filter { it?.isChecked == true };
-            if(mItem != null) {
-                mItem?.goodsList = list
-                mItem?.rangeType = if(allGoodsRb.isChecked) 1 else 2;
-                mPresenter?.updateSalesGoods(mItem!!);
-            } else {
+            if(mItem == null || mItem?.id?.isNullOrEmpty() == true) {
                 val intent = Intent();
                 intent.putExtra("type", if(allGoodsRb.isChecked) 1 else 2);
-                if(allGoodsRb.isChecked) {
+                if(partGoodsRb.isChecked) {
                     intent.putExtra("goodsList", list as ArrayList<GoodsVO>);
                 }
                 setResult(Activity.RESULT_OK, intent)
                 finish();
+            } else {
+                mItem?.goodsList = list
+                mItem?.rangeType = if(allGoodsRb.isChecked) 1 else 2;
+                mPresenter?.updateSalesGoods(mItem!!);
             }
 
         }
@@ -96,12 +94,8 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
             if(mItem?.id?.isNotEmpty()?:false) {
                 mPresenter?.getSalesGoods(mItem?.id!!);
             }
-//            allGoodsRb.isChecked = rangeType == 1
-//            partGoodsRb.isChecked = rangeType == 0;
+            setUi();
         }
-//        if(mItem != null && mItem?.id?.isNotEmpty()?:false) {
-//            mPresenter?.getSalesGoods(mItem?.id!!);
-//        }
     }
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
@@ -140,20 +134,24 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
 
     override fun onSetSalesGoods(item: SalesVo) {
         mItem = item;
-        item?.apply {
-            if(item.rangeType ==1) {
+        setUi();
+    }
+
+    fun setUi() {
+        mItem?.apply {
+            if(rangeType ==1) {
                 if(!allGoodsRb.isChecked) {
                     allGoodsRb.isChecked = true;
                 }
-            } else if(item.rangeType ==2){
+            } else if(rangeType ==2){
                 if(!partGoodsRb.isChecked) {
                     partGoodsRb.isChecked = true;
                 }
             }
-            item?.goodsList?.forEach {
+            goodsList?.forEach {
                 it.isChecked = true;
             }
-            mAdapter?.replaceData(item?.goodsList?: mutableListOf());
+            mAdapter?.replaceData(goodsList?: mutableListOf());
         }
     }
 
@@ -169,14 +167,6 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
 
     override fun autoRefresh(): Boolean {
         return false;
-    }
-
-//    fun setCheckedCount(count: Int) {
-//        goodsCheckedCountTv.text = String.format("已选择%s件商品", count);
-//    }
-
-    fun getCheckedCount(): Int {
-        return mAdapter?.data?.filter { it?.isChecked == true }?.size;
     }
 
 }

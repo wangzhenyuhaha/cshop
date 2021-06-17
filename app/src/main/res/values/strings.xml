@@ -41,6 +41,10 @@
     <string name="goods_category_manager_title">分类管理</string>
     <string name="goods_menu_title">菜单管理</string>
 
+
+
+    <string name="goods_info_update_title">新增商品信息</string>
+    <string name="goods_info_add_title">新增商品信息</string>
     <!--  =================== 商品  END  ===================  -->
 
     <!--  =================== 订单 START ===================  -->

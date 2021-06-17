@@ -79,7 +79,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:paddingTop="@dimen/dp_10"
             android:paddingBottom="@dimen/dp_10"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider"/>

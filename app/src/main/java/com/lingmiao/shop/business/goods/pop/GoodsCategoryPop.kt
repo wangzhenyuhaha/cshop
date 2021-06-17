@@ -14,6 +14,7 @@ import com.lingmiao.shop.util.hideYTranslateAnim
 import com.lingmiao.shop.util.showYTranslateAnim
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import razerdp.basepopup.BasePopupWindow
 
 /**
@@ -34,9 +35,9 @@ class GoodsCategoryPop(context: Context): BasePopupWindow(context) {
     private lateinit var lv2Adapter: GoodsCategoryAdapter
     private lateinit var lv3Adapter: GoodsCategoryAdapter
 
-    var lv1Callback: ((CategoryVO) -> Unit)? = null
-    var lv2Callback: ((CategoryVO) -> Unit)? = null
-    var lv3Callback: ((CategoryVO) -> Unit)? = null
+    var lv1Callback: ((List<CategoryVO>, String?) -> Unit)? = null
+    private var groupName: String? = null
+    private var mSelectList: MutableList<CategoryVO> = arrayListOf();
 
     override fun onCreateContentView(): View {
         return createPopupById(R.layout.goods_pop_category)
@@ -66,35 +67,54 @@ class GoodsCategoryPop(context: Context): BasePopupWindow(context) {
 
         lv1Adapter.setOnItemClickListener { adapter, view, position ->
             lv1Adapter.getItem(position)?.apply {
-                lv1Callback?.invoke(this)
+                if(this.children.isNullOrEmpty()) {
+                    lv1Adapter.setSelectedItem(this.categoryId)
+                    lv1Adapter.notifyDataSetChanged()
+                    lv2Adapter.clearData()
+                    lv1Callback?.invoke(listOf(this), this.name);
+                    dismiss();
+                    return@apply;
+                }
                 resetIndicator()
                 lv1IndicatorIv?.visiable()
-
                 lv1Adapter.setSelectedItem(this.categoryId)
                 lv1Adapter.notifyDataSetChanged()
-                lv3Adapter.data.clear()
-                lv3Adapter.notifyDataSetChanged()
+                lv2Adapter.replaceData(this.children!!)
+                groupName = this.name
+
+                mSelectList.clear();
+                mSelectList.add(this);
+
             }
         }
         lv2Adapter.setOnItemClickListener { adapter, view, position ->
             lv2Adapter.getItem(position)?.apply {
-                lv2Callback?.invoke(this)
+//                lv2Callback?.invoke(this)
+//                resetIndicator()
+//                lv2IndicatorIv?.visiable()
+//
+//                lv2Adapter.setSelectedItem(this.categoryId)
+//                lv2Adapter.notifyDataSetChanged()
+//
+//                dismiss();
+
+                mSelectList.add(this);
+                lv1Callback?.invoke(mSelectList, "${groupName}/${this.name}")
                 resetIndicator()
                 lv2IndicatorIv?.visiable()
-
-                lv2Adapter.setSelectedItem(this.categoryId)
-                lv2Adapter.notifyDataSetChanged()
-
-                dismiss();
+                dismiss()
             }
         }
         lv3Adapter.setOnItemClickListener { adapter, view, position ->
             lv3Adapter.getItem(position)?.apply {
-                lv3Callback?.invoke(this)
-                resetIndicator()
-                lv3IndicatorIv?.visiable()
+//                lv3Callback?.invoke(this)
+//                resetIndicator()
+//                lv3IndicatorIv?.visiable()
+//
+//                dismiss()
+//                mSelectList.add(this);
+//                lv1Callback?.invoke(mSelectList, "${groupName}/${this.name}")
 
-                dismiss()
             }
         }
     }

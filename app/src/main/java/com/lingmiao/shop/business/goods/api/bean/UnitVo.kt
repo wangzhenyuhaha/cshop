@@ -24,6 +24,16 @@ class UnitVo : ItemData {
     }
 
 
+    @Deprecated("暂未启用")
+    override fun isItemChecked(): Boolean? {
+        return false;
+    }
+
+    @Deprecated("暂未启用")
+    override fun shiftChecked(flag: Boolean?) {
+
+    }
+
     companion object {
         fun getWeightList() : MutableList<UnitVo> {
             var list = mutableListOf<UnitVo>();

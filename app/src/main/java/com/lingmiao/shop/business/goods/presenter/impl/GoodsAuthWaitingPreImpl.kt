@@ -43,17 +43,31 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
         }
     }
 
-    override fun clickMenuView(goodsVO: GoodsVO?, position: Int, view: View) {
+    override fun clickMenuView(goodsVO: GoodsVO?, position: Int, target: View) {
         if (goodsVO == null) {
             return
         }
-        menuPopPre.showMenuPop(goodsVO.getMenuType(), view) { menuType ->
-            if (menuType == GoodsMenuPop.TYPE_EDIT) {
-                menuPopPre.clickEditGoods(context, goodsVO)
-            } else if(menuType == GoodsMenuPop.TYPE_REBATE) {
-                clickOnRebate(goodsVO?.goodsId) {
-
+        menuPopPre.showMenuPop(goodsVO.getMenuType(), target) { menuType ->
+            when(menuType) {
+                GoodsMenuPop.TYPE_EDIT -> {
+                    menuPopPre.clickEditGoods(context, goodsVO)
                 }
+                GoodsMenuPop.TYPE_REBATE -> {
+                    clickOnRebate(goodsVO?.goodsId) {
+
+                    }
+                }
+                GoodsMenuPop.TYPE_ENABLE -> {
+                    menuPopPre.clickEnableGoods(goodsVO.goodsId) {
+                        view.onGoodsDisable(goodsVO.goodsId, position)
+                    }
+                }
+                GoodsMenuPop.TYPE_DELETE -> {
+                    menuPopPre.clickDeleteGoods(goodsVO.goodsId) {
+                        view.onGoodsDelete(goodsVO.goodsId, position)
+                    }
+                }
+
             }
         }
     }

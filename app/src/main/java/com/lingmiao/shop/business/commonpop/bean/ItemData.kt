@@ -9,4 +9,6 @@ interface ItemData {
     fun getIValue() : String?;
     fun getIName() : String?;
     fun getIHint() : String?;
+    fun isItemChecked() : Boolean?;
+    fun shiftChecked(flag : Boolean?);
 }

@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.api.bean
 
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 /**
@@ -70,7 +71,7 @@ data class GoodsVO(
      * 是否选中
      */
     var isChecked : Boolean ? = false
-) {
+) : Serializable {
 
     companion object {
         /**
@@ -111,6 +112,9 @@ data class GoodsVO(
             return String.format("%s,%s,%s", AUTH_STATUS_WAITING, AUTH_STATUS_CHECK_AND_REJECT, AUTH_STATUS_EDITING);
         }
 
+        fun getDisableAuth() : String {
+            return String.format("%s,%s", AUTH_STATUS_NO_CHECK, AUTH_STATUS_CHECK_AND_PASS);
+        }
     }
 
     fun isSellOut() : Boolean {

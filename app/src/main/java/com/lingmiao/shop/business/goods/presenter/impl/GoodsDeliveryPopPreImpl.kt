@@ -18,8 +18,12 @@ class GoodsDeliveryPopPreImpl(view: BaseView) : BasePreImpl(view) {
 
     fun showTypePop(context: Context, value : String?, callback : (String?, GoodsDeliveryVo?)-> Unit) {
         deliveryTypePop = AbsOneItemPop<GoodsDeliveryVo>(context, value, GoodsDeliveryVo.getTypeList(), "请选择配送时效").apply {
-            listener = { item: GoodsDeliveryVo ->
-                callback.invoke(item?.name, item);
+            listener = { items: List<GoodsDeliveryVo> ->
+                if(items?.size > 0) {
+                    val item = items.get(0);
+                    callback.invoke(item?.name, item);
+                }
+
             }
         }
         deliveryTypePop?.showPopupWindow();
@@ -27,8 +31,11 @@ class GoodsDeliveryPopPreImpl(view: BaseView) : BasePreImpl(view) {
 
     fun showModelPop(context: Context, value : String?, callback : (String?, GoodsDeliveryVo?)-> Unit) {
         deliveryMoodPop = AbsOneItemPop<GoodsDeliveryVo>(context, value, GoodsDeliveryVo.getModeList(), "请选择配送方式").apply {
-            listener = { item: GoodsDeliveryVo ->
-                callback.invoke(item?.name, item);
+            listener = { items: List<GoodsDeliveryVo> ->
+                if(items?.size > 0) {
+                    val item = items.get(0);
+                    callback.invoke(item?.name, item);
+                }
             }
         }
         deliveryMoodPop?.showPopupWindow();

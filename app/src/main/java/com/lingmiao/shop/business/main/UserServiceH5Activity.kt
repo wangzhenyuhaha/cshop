@@ -26,7 +26,7 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
         const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
         const val VIEW_PRIVACY = 1;
         const val VIEW_SERVICE = 2;
-        const val VIEW_SECURITY = 2;
+        const val VIEW_SECURITY = 3;
 
         fun service(context: Activity, result : Int) {
             val intent = Intent(context, UserServiceH5Activity::class.java)
@@ -56,7 +56,7 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
     }
 
     override fun initView() {
-        mToolBarDelegate.setMidTitle("C店商家服务条款")
+        mToolBarDelegate.setMidTitle("C店商家用户协议")
 
 
         ivService.isSelected = true
@@ -73,8 +73,10 @@ class UserServiceH5Activity : BaseActivity<BasePresenter>() {
         when(mType) {
             VIEW_PRIVACY -> {
                 url = IConstant.getPrivacyServiceH5();
+                mToolBarDelegate.setMidTitle("C店隐私政策")
             }
             VIEW_SECURITY -> {
+                mToolBarDelegate.setMidTitle("C店服务保障金协议和说明")
                 url = IConstant.getSecurityH5();
             }
         }

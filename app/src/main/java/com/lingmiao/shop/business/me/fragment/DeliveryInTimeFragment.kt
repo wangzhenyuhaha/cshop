@@ -89,10 +89,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     return@singleClick;
                 }
                 val readyTime = deliveryThingEt.getViewText().toInt();
-                if(readyTime > 10) {
-                    showToast("配货时间不大于10分钟");
-                    return@singleClick;
-                }
+//                if(readyTime > 10) {
+//                    showToast("配货时间不大于10分钟");
+//                    return@singleClick;
+//                }
                 name = "商家配送";
                 // 基础
                 templateType = FreightVoItem.TYPE_LOCAL;
