@@ -1,7 +1,0 @@
-
-N	java:S1068"9Replace this use of System.out or System.err by a logger.(„ú™ì
-V	java:S1250"<This block of commented-out lines of code should be removed.(’‚¬ùÿÿÿÿ
-Q	java:S110"<This class has 9 parents which is greater than 5 authorized.(«éÂ¯
-e
-java:S1874&"JDon't override a deprecated method or explicitly mark it as "@Deprecated".(µÛÎ°üÿÿÿÿ
->	java:S108B")Either remove or fill this block of code.(å¥ž‡

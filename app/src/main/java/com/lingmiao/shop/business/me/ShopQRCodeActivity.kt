@@ -40,7 +40,7 @@ class ShopQRCodeActivity : BaseActivity<IShopQRCodePre>(), IShopQRCodePre.View {
     }
 
     override fun initView() {
-        mToolBarDelegate.setMidTitle("店铺二维码")
+        mToolBarDelegate.setMidTitle("点击二维码可保存")
 
         mPresenter?.getQRCode();
 

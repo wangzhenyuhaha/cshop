@@ -17,6 +17,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.me.*
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
@@ -122,24 +123,22 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         }
     }
 
-
     override fun onMyDataSuccess(bean: My) {
         smartRefreshLayout.finishRefresh()
-        val loginInfo = UserManager.getLoginInfo()
-        if(loginInfo!=null){
-            tvMyShopName.text = loginInfo.shopName
-        }
         my = bean
         tvMyName.text = bean.uname
         tvMyShopName.text = bean.shopName
         tvMyAccount.text = bean.founderText
-        if(!TextUtils.isEmpty(bean.face)){
-            GlideUtils.setImageUrl(ivMyHead,bean.face)
-        }
+//        if(!TextUtils.isEmpty(bean.face)){
+//            GlideUtils.setImageUrl(ivMyHead,bean.face)
+//        }
+
         if(!TextUtils.isEmpty(bean.mobile)&& bean.mobile?.length!! >7){
             tvMyPhone.text = "${bean.mobile!!.substring(0, 3)}****${bean.mobile!!.substring(7)}"
         }
 
+        val loginInfo = UserManager.getLoginInfo()
+        setUserUi(loginInfo);
         loginInfo?.clerkId = my?.clerkId
         loginInfo?.mobile = my?.mobile
         loginInfo?.shopId = my?.shopId
@@ -151,6 +150,13 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
 //        tvDeposit.text = String.format("￥%s", 0);
 //        tvUseTime.text = String.format("%s天", 0);
 
+    }
+
+    fun setUserUi(loginInfo : LoginInfo?) {
+        loginInfo?.apply {
+            tvMyShopName.text = shopName
+            GlideUtils.setImageUrl(ivMyHead,shopLogo)
+        }
     }
 
     override fun ontMyDataError() {
@@ -197,6 +203,14 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updatePersonInfo(event:PersonInfoRequest){
         refreshData()
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun updateLogo(event : LoginInfo) {
+        event?.apply {
+            setUserUi(event)
+        }
     }
 
     fun refreshData() {

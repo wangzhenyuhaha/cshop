@@ -68,11 +68,13 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
             return
         }
         mCoroutine.launch {
+            view?.showDialogLoading()
             val resp = GoodsRepository.loadUserCategory(id, getSellerId()?.toString())
             if (resp.isSuccess) {
                 mCateList = resp?.data;
                 call?.invoke(resp?.data);
             }
+            view?.hideDialogLoading()
         }
     }
 

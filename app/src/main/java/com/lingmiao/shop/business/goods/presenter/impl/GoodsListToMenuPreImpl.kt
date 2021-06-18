@@ -26,7 +26,7 @@ class GoodsListToMenuPreImpl(val context: Context, val view : GoodsListToMenuPre
 
     override fun loadListData(path : String?, page: IPage, list: List<*>) {
         mCoroutine.launch {
-            val resp = GoodsRepository.loadGoodsListOfCatePath(1, GoodsVO.MARKET_STATUS_ENABLE.toString(), GoodsVO.getEnableAuth(), path)
+            val resp = GoodsRepository.loadGoodsListOfCatePath(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), GoodsVO.getEnableAuth(), path)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onLoadMoreSuccess(goodsList, goodsList?.size?:0 >= 10)

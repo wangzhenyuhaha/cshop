@@ -74,9 +74,10 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
         }
         submitTv.singleClick {
             val list = mAdapter?.data.filter { it?.isChecked == true };
+            val rangeType = if(allGoodsRb.isChecked) SalesActivityEditActivity.VALUE_ALL else SalesActivityEditActivity.VALUE_PART
             if(mItem == null || mItem?.id?.isNullOrEmpty() == true) {
                 val intent = Intent();
-                intent.putExtra("type", if(allGoodsRb.isChecked) 1 else 2);
+                intent.putExtra("type", rangeType);
                 if(partGoodsRb.isChecked) {
                     intent.putExtra("goodsList", list as ArrayList<GoodsVO>);
                 }
@@ -84,7 +85,7 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
                 finish();
             } else {
                 mItem?.goodsList = list
-                mItem?.rangeType = if(allGoodsRb.isChecked) 1 else 2;
+                mItem?.rangeType = rangeType;
                 mPresenter?.updateSalesGoods(mItem!!);
             }
 
@@ -139,11 +140,11 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
 
     fun setUi() {
         mItem?.apply {
-            if(rangeType ==1) {
+            if(rangeType == SalesActivityEditActivity.VALUE_ALL) {
                 if(!allGoodsRb.isChecked) {
                     allGoodsRb.isChecked = true;
                 }
-            } else if(rangeType ==2){
+            } else if(rangeType ==SalesActivityEditActivity.VALUE_PART){
                 if(!partGoodsRb.isChecked) {
                     partGoodsRb.isChecked = true;
                 }

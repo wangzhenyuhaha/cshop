@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 /**
 Create Date : 2021/3/24:12 PM
 Auther      : Fox
-Desc        :
+Desc        : 运营设置
  **/
 class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), ShopOperateSettingPresenter.View {
 

@@ -25,7 +25,6 @@ import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
-import com.tencent.mm.opensdk.modelpay.PayReq
 import com.tencent.mm.opensdk.openapi.IWXAPI
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.me_activity_apply_vip.*
@@ -115,11 +114,11 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
 
     fun setUserInfo() {
         val loginInfo = UserManager.getLoginInfo()
-        tvMyShopName.setText(loginInfo?.shopName)
-        tvMyName.setText(mUserInfo?.uname)
-        if(!TextUtils.isEmpty(mUserInfo?.face)){
-            GlideUtils.setImageUrl(ivMyHead,mUserInfo?.face)
+        loginInfo?.apply {
+            GlideUtils.setImageUrl(ivMyHead, shopLogo)
+            tvMyShopName.setText(shopName)
         }
+        tvMyName.setText(mUserInfo?.uname)
         //ivMyShopStatus.visibility = if(loginInfo?.shopStatus=="OPEN") View.VISIBLE else View.GONE
     }
 

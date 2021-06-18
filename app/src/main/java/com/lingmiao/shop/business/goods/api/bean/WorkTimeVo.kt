@@ -59,14 +59,16 @@ class WorkTimeVo : ItemData {
 
                 hour = String.format("%s%s", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
 
-                for(i in 0..59) {
-                    item = WorkTimeVo();
-                    item.itemName = String.format("%s:%s", hour, if(i < 10) "0" + i else i);
-                    item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
-                    data.add(item);
-                }
+                item = WorkTimeVo();
+                item.itemName = String.format("%s:00", hour);
+                item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
+                data.add(item);
 
 
+                item = WorkTimeVo();
+                item.itemName = String.format("%s:30", hour);
+                item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
+                data.add(item);
 //                if(index < 24) {
 //                    position ++;
 //                    item = WorkTimeVo();

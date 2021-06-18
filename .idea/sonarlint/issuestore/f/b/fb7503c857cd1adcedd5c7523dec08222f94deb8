@@ -1,5 +1,0 @@
-
-…
-java:S1319Æ"oThe type of the "list" object should be an interface such as "List" rather than the implementation "ArrayList".(±‹®i
-u
-java:S2293ë"YReplace the type specification in this constructor call with the diamond operator ("<>").(ŠÝö‡üÿÿÿÿ

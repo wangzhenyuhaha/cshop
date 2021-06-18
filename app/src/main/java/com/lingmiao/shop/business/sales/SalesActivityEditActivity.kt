@@ -32,6 +32,8 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
 
         const val KEY_ITEM = "KEY_ITEM"
         const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
+        const val VALUE_ALL = 1;
+        const val VALUE_PART = 2;
         val REQUEST_GOODS = 299;
 
         fun open(context: Activity, result : Int) {
@@ -47,7 +49,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         fun view(context: Activity, item: SalesVo?) {
             val intent = Intent(context, SalesActivityEditActivity::class.java)
             intent.putExtra(KEY_ITEM, item)
-            intent.putExtra(KEY_VIEW_TYPE, 2)
+            intent.putExtra(KEY_VIEW_TYPE, VALUE_PART)
             context.startActivity(intent)
         }
 
@@ -81,14 +83,19 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         mToolBarDelegate.setMidTitle(getString(R.string.sales_activity_edit_title))
 
 
-        activityGoodsPickTv.singleClick {
-            SalesGoodsActivity.edit(context, mItem, REQUEST_GOODS);
-        }
+
         initPricePart();
 
         initDate()
 
-        submitTv.visibility = if(mViewType == 2) View.GONE else View.VISIBLE;
+        if(mViewType == VALUE_PART) {
+            submitTv.gone()
+        } else {
+            submitTv.visiable()
+            activityGoodsPickTv.singleClick {
+                SalesGoodsActivity.edit(context, mItem, REQUEST_GOODS);
+            }
+        }
         submitTv.singleClick {
             try {
                 checkNotBlack(menuNameEdt.getViewText()) { "请输入活动名称" };
@@ -144,7 +151,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         firstMenuTv.setText(stampToDate(mItem?.startTime, DATE_TIME_FORMAT))
         secondMenuTv.setText(stampToDate(mItem?.endTime, DATE_TIME_FORMAT))
         mDiscountAdapter?.addData(mItem?.convertDiscountItem()!!);
-        activityGoodsPickTv.setText(if(mItem?.rangeType == null) "请选择参与活动的商品" else "已选择")
+        setGoodsUi();
 
         if(mItem?.status.equals("UNDERWAY")) {
             submitTv.gone();
@@ -237,12 +244,24 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
                     mItem = SalesVo();
                 }
 
-                mItem?.rangeType = data?.getIntExtra("type", 1);
+                mItem?.rangeType = data?.getIntExtra("type", VALUE_ALL);
                 mItem?.goodsList = data?.getSerializableExtra("goodsList") as ArrayList<GoodsVO>?;
-                activityGoodsPickTv.text = "已选择";
+                setGoodsUi();
             }
         }
     }
 
+    fun setGoodsUi() {
+        var str = "请选择参与活动的商品";
+        when(mItem?.rangeType) {
+            VALUE_ALL -> {
+                str = "全部商品参与";
+            }
+            VALUE_PART -> {
+                str = "部分商品参与";
+            }
+        }
+        activityGoodsPickTv.setText(str)
+    }
 
 }

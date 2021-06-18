@@ -2,8 +2,6 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
-import com.amap.api.mapcore.util.it
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.pop.GoodsCategoryPop
@@ -21,7 +19,7 @@ import kotlinx.coroutines.launch
  * @date 2020/7/16
  * @Desc 商品分类
  */
-class PopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
+class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
 
     companion object {
         // 一级商品分类id
@@ -55,6 +53,18 @@ class PopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
             }
         }
     }
+
+    fun showCenterCategoryPop(context: Context, callback: (List<CategoryVO>?, String?) -> Unit) {
+        mCoroutine.launch {
+            // 一级类目 categoryId=0
+            val resp = GoodsRepository.loadUserCategory("0", "0");
+            //GoodsRepository.loadUserCategory(LV1_CATEGORY_ID, String.format("%s", id))
+            if (resp.isSuccess) {
+                showCenterPopWindow(context, resp.data, callback)
+            }
+        }
+    }
+
 
     fun showCategoryPop(context: Context, callback: (String?, String?) -> Unit) {
         showCategoryPop(context, 0, callback)
@@ -99,11 +109,33 @@ class PopCategoryPreImpl(view: BaseView) : BasePreImpl(view) {
         typePop?.showPopupWindow(targetView)
     }
 
+    private fun showCenterPopWindow(
+        context: Context,
+        list: List<CategoryVO>,
+        callback: (List<CategoryVO>?, String?) -> Unit
+    ) {
+        if(list == null || list?.size == 0) {
+            view?.showToast("没有查找到相关分类")
+            return;
+        }
+        categoryPop = GoodsCategoryPop(context).apply {
+            lv1Callback = { items, names ->
+                callback.invoke(items, names)
+            }
+        }
+        categoryPop?.setLv1Data(list)
+        categoryPop?.showPopupWindow()
+    }
+
     private fun showPopWindow(
         context: Context,
         list: List<CategoryVO>,
         callback: (String?, String?) -> Unit
     ) {
+        if(list == null || list?.size == 0) {
+            view?.showToast("没有查找到相关分类")
+            return;
+        }
         categoryPop = GoodsCategoryPop(context).apply {
             lv1Callback = { items, names ->
                 if(items != null && items?.size > 0) {

@@ -14,7 +14,6 @@ import com.lingmiao.shop.util.hideYTranslateAnim
 import com.lingmiao.shop.util.showYTranslateAnim
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
-import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import razerdp.basepopup.BasePopupWindow
 
 /**

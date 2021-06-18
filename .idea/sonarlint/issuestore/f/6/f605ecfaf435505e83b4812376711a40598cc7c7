@@ -1,29 +1,0 @@
-
-f
-java:S3252"PUse static access with "android.view.ViewGroup$LayoutParams" for "WRAP_CONTENT".(éä½•
-d
-java:S1871Ô"MThis branch's code block is the same as the block for the branch on line 206.(­á½î
-g
-java:S3252î"PUse static access with "android.view.ViewGroup$LayoutParams" for "WRAP_CONTENT".(ûë‰
-=
-java:S1068"'Remove this unused "RWC" private field.(éä½•
-k
-java:S3252"PUse static access with "android.view.ViewGroup$LayoutParams" for "WRAP_CONTENT".(ğ¹ú£øÿÿÿÿ
-1
-java:S1700L"Rename field "tabview"(Äê°¤şÿÿÿÿ
-|
-java:S1450N"aRemove the "mFragmentContainer" field and declare it as a local variable in the relevant methods.(‹”çÓúÿÿÿÿ
-N
-java:S1197P"8Move the array designator from the variable to the type.(’È³¢
-n
-java:S3776¶"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(²ûğõşÿÿÿÿ
-e
-java:S3252"PUse static access with "android.view.ViewGroup$LayoutParams" for "MATCH_PARENT".(ëŠ¿T
-d
-java:S1871Ñ"MThis branch's code block is the same as the block for the branch on line 203.(†­«Á
-g
-java:S3252í"PUse static access with "android.view.ViewGroup$LayoutParams" for "WRAP_CONTENT".(œšÌ¾
-k
-java:S3252"PUse static access with "android.view.ViewGroup$LayoutParams" for "MATCH_PARENT".(»…æ·úÿÿÿÿ
-B
-java:S1068"'Remove this unused "LWC" private field.(ğ¹ú£øÿÿÿÿ
