@@ -81,6 +81,7 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
                     helper.setGone(R.id.goodsAuthStatusTv, false);
                 }
             }
+            helper.setText(R.id.goodsStatusTv, goodsStatusText)
 
             //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
 //            helper.setText(R.id.goodsOwnerTv, String.format("[来源：%s]", supplierName));

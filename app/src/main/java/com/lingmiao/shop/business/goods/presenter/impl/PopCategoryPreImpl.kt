@@ -54,6 +54,17 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
         }
     }
 
+    fun showCenterCategoryPop(context: Context, id : String, callback: (List<CategoryVO>?, String?) -> Unit) {
+        mCoroutine.launch {
+            // 一级类目 categoryId=0
+            val resp = GoodsRepository.loadUserCategory(id, "0");
+            //GoodsRepository.loadUserCategory(LV1_CATEGORY_ID, String.format("%s", id))
+            if (resp.isSuccess) {
+                showCenterPopWindow(context, resp.data, callback)
+            }
+        }
+    }
+
     fun showCenterCategoryPop(context: Context, callback: (List<CategoryVO>?, String?) -> Unit) {
         mCoroutine.launch {
             // 一级类目 categoryId=0

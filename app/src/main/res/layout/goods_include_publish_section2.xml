@@ -8,7 +8,7 @@
     <LinearLayout style="@style/goods_publish_sub_container">
 
         <TextView
-            style="@style/goods_publish_left"
+            style="@style/goods_publish_left_mark"
             android:text="商品名称" />
 
         <EditText

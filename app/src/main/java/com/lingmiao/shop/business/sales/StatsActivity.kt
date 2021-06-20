@@ -22,7 +22,8 @@ Desc        :
  **/
 class StatsActivity  : BaseActivity<IStatsPresenter>(), IStatsPresenter.PubView {
 
-    private var mTabTitles = arrayOf("销售", "支付", "商品", "活动", "用户")
+    private var mTabTitles = arrayOf("销售", "商品")
+//    private var mTabTitles = arrayOf("销售", "支付", "商品", "活动", "用户")
 
     override fun getLayoutId(): Int {
         return R.layout.sales_activity_stats;
@@ -50,10 +51,10 @@ class StatsActivity  : BaseActivity<IStatsPresenter>(), IStatsPresenter.PubView 
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(StatsDateSalesFragment.new())
-        fragments.add(StatsDatePayFragment.new())
+//        fragments.add(StatsDatePayFragment.new())
         fragments.add(StatsDateGoodsFragment.new())
-        fragments.add(StatsDateActivityFragment.new())
-        fragments.add(StatsDateUserFragment.new())
+//        fragments.add(StatsDateActivityFragment.new())
+//        fragments.add(StatsDateUserFragment.new())
 
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)

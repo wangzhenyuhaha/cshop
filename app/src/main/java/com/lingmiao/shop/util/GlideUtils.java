@@ -51,8 +51,17 @@ public class GlideUtils {
                 .into(iv);
     }
 
+
     public static void setImageUrl1(ImageView iv, String url) {
         RequestOptions options = new RequestOptions().centerCrop()
+                .placeholder(R.color.color_F1F1F1);
+        Glide.with(iv.getContext()).load(url)
+                .apply(options)
+                .into(iv);
+    }
+
+    public static void setImageUrl12(ImageView iv, String url) {
+        RequestOptions options = new RequestOptions().centerInside()
                 .placeholder(R.color.color_F1F1F1);
         Glide.with(iv.getContext()).load(url)
                 .apply(options)

@@ -186,7 +186,8 @@
                 android:id="@+id/llSpecNo"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_50"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout style="@style/goods_spec_sub_container">
 

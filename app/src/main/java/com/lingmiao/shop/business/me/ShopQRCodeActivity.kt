@@ -88,7 +88,7 @@ class ShopQRCodeActivity : BaseActivity<IShopQRCodePre>(), IShopQRCodePre.View {
     }
 
     override fun onSetQRCode(url: String) {
-        GlideUtils.setImageUrl1(ivQRCode, url)
+        GlideUtils.setImageUrl12(ivQRCode, url)
     }
 
     override fun onGetQRCodeFail() {

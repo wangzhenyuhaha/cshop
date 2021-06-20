@@ -112,14 +112,16 @@
 
     <View
         android:id="@+id/vSpecNo"
-        style="@style/common_divider" />
+        style="@style/common_divider"
+        android:visibility="gone"/>
 
     <!--  货号/型号、重量  -->
     <LinearLayout
         android:id="@+id/llSpecNo"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout style="@style/goods_spec_sub_container">
 
@@ -157,14 +159,16 @@
 
     <View
         android:id="@+id/vSpecSku"
-        style="@style/common_divider" />
+        style="@style/common_divider"
+        android:visibility="gone" />
 
     <!--  SKU编码  -->
     <LinearLayout
         android:id="@+id/llSpecSku"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             style="@style/goods_spce_item_left"

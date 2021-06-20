@@ -46,6 +46,8 @@ data class GoodsVO(
      */
     @SerializedName("is_auth")
     var isAuth: Int = 0,
+    @SerializedName("goods_status_text")
+    var goodsStatusText : String="",
     @SerializedName("auth_message")
     var authMessage : String = "",
     @SerializedName("market_enable")

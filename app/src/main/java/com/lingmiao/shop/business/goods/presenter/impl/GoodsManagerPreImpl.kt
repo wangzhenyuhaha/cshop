@@ -5,6 +5,7 @@ import android.view.View
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.isNotEmpty
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.presenter.GoodsManagerPre
 import kotlinx.coroutines.launch
@@ -19,7 +20,8 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
     private val mCategoryPreImpl: PopCategoryPreImpl by lazy { PopCategoryPreImpl(view) }
 
     override fun showCategoryPop(target: View) {
-        mCategoryPreImpl?.showCenterCategoryPop(context) { items,str ->
+        val id = UserManager?.getLoginInfo()?.goodsCateId?:"0"
+        mCategoryPreImpl?.showCenterCategoryPop(context, id) { items,str ->
             if(items?.size?:0 > 0) {
                 val item = items?.get(items?.size!! - 1)
                 view.onUpdateCategory(item)
