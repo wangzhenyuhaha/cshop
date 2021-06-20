@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.goods_fragment_goods_to_menu.menuCateL2Tv
 /**
 Create Date : 2021/6/110:46 AM
 Auther      : Fox
-Desc        :
+Desc        : 菜单-商品管理-订单列表
  **/
 class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre>(), GoodsListToMenuPre.View {
 
@@ -45,7 +45,7 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
 
     override fun initBundles() {
         mItem = arguments?.getSerializable(KEY_ITEM) as ShopGroupVO?;
-        catPath = "0";
+        catPath = mItem?.shopCatId;
     }
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
@@ -105,8 +105,7 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
 
         if(mCateList?.size?:0 > 0) {
             val item = mCateList?.get(mCateList?.size!! - 1)
-            catPath = item?.categoryPath;
-
+            catPath = item?.categoryId;
             mLoadMoreDelegate?.refresh()
         }
     }

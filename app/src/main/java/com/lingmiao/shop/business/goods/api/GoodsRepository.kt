@@ -65,7 +65,6 @@ object GoodsRepository {
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
-
     suspend fun loadGoodsListOfCatePath(pageNo: Int, marketEnable: String, isAuth: String, path : String?): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
@@ -74,6 +73,18 @@ object GoodsRepository {
         map.put("is_auth_string", isAuth)
         if(path != null) {
             map.put("category_path", path!!)
+        }
+        return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+
+    suspend fun loadGoodsListOfCateId(pageNo: Int, marketEnable: String, isAuth: String, cid : String?): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("page_no", pageNo)
+        map.put("page_size", 10)
+        map.put("market_enable", marketEnable)
+        map.put("is_auth_string", isAuth)
+        if(cid != null) {
+            map.put("not_in_cat_id", cid);
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }

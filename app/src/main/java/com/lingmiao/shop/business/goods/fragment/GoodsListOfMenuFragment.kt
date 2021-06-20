@@ -17,7 +17,7 @@ import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.*
 
 /**
-Desc        : 菜单-商品管理-列表
+Desc        : 菜单-商品管理-已添加列表
  **/
 class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre>(), GoodsListOfMenuPre.View {
 
