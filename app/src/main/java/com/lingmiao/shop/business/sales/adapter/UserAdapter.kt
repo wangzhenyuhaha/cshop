@@ -1,25 +1,19 @@
 package com.lingmiao.shop.business.sales.adapter
 
-import android.widget.CompoundButton
-import android.widget.TextView
-import com.blankj.utilcode.util.TimeUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
-import com.lingmiao.shop.util.GlideUtils
-import com.james.common.utils.exts.isNotBlank
-import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.sales.bean.UserVo
-import com.lingmiao.shop.business.tools.adapter.setOnCheckedChangeListener
-import org.greenrobot.eventbus.EventBus
+import com.lingmiao.shop.util.DATE_FORMAT
+import com.lingmiao.shop.util.GlideUtils
+import com.lingmiao.shop.util.stampToDate
 
 /**
  * Author : Elson
  * Date   : 2020/7/18
  * Desc   : 商品分组管理列表
  */
-class UserAdapter() : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_adapter_user) {
+class UserAdapter : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_adapter_user) {
 
     private var isBatchEditModel : Boolean = false;
 
@@ -28,6 +22,8 @@ class UserAdapter() : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_ad
         item?.apply {
 
 
+            GlideUtils.setImageUrl(helper.getView(R.id.userAvatar), "", R.mipmap.main_shop_logo_default)
+            //main_shop_logo_default
             helper.setGone(R.id.userCheckCb, isBatchEditModel);
 
             helper.setText(R.id.userNameTv, item?.nickname);
@@ -39,10 +35,12 @@ class UserAdapter() : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_ad
 
             helper.setText(R.id.userAddressTv, "上海市");
 
-            helper.setText(R.id.userInTimeTv, TimeUtils.millis2String(item?.createTime?:0, "yyyy-MM-dd"));
+            helper.setText(R.id.userInTimeTv, stampToDate(item?.createTime?:0, DATE_FORMAT));
+            //helper.setText(R.id.userInTimeTv, TimeUtils.millis2String(item?.createTime?:0, "yyyy-MM-dd"));
 
             helper.addOnClickListener(R.id.userOrderDetailTv)
             helper.addOnClickListener(R.id.userPortraitTv)
+            helper.addOnClickListener(R.id.userPhoneTv)
 //            setOnCheckedChangeListener(helper.getView(R.id.userCheckCb), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
 //                item?.isChecked = isChecked;
 //            }

@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:tvSelected="false"
-            app:tvTitle="退款"  />
+            app:tvTitle="退款中"  />
 
         <com.lingmiao.shop.widget.IOrderTabView
             android:id="@+id/tvTab4"

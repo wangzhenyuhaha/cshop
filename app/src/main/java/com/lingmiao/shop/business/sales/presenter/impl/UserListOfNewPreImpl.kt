@@ -37,6 +37,7 @@ class UserListOfNewPreImpl(var context: Context, var view: IUserStatusListPresen
                 } else {
                     view.hidePageLoading()
                 }
+                view.setUserListCount(resp.data.dataTotal)
                 view.onLoadMoreSuccess(userList, userList.isNotEmpty())
             } else {
                 view.onLoadMoreFailed()

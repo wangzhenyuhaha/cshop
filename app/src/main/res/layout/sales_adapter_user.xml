@@ -6,17 +6,18 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <com.james.common.view.IRelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_14"
         android:paddingHorizontal="@dimen/dimen_10"
-        android:paddingTop="@dimen/dimen_11"
-        app:ivBgColor="@color/white"
-        android:paddingBottom="@dimen/dimen_18">
-
+        android:paddingTop="@dimen/dimen_15"
+        android:background="@color/white"
+        android:paddingBottom="@dimen/dimen_15">
 
         <CheckBox
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/userCheckCb"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
@@ -28,12 +29,25 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
+
+        <ImageView
+            android:id="@+id/userAvatar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/userCheckCb"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_toEndOf="@+id/userCheckCb"
+            android:layout_width="@dimen/dimen_29"
+            android:layout_height="@dimen/dimen_29" />
+
+
         <TextView
             android:id="@+id/userNameTv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/userAvatar"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
             android:layout_marginStart="@dimen/dimen_10"
-            android:layout_toEndOf="@+id/userCheckCb"
+            android:layout_toEndOf="@+id/userAvatar"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxWidth="150dp"
@@ -43,13 +57,18 @@
             tools:text="测试1测试1测试1测试1测试1测试1测试1" />
 
         <TextView
+            app:layout_constraintTop_toTopOf="parent"
             android:id="@+id/userPhoneTv"
             android:layout_width="match_parent"
+
+            app:layout_constraintRight_toRightOf="parent"
             android:layout_height="@dimen/dimen_29"
+            android:drawablePadding="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
+            android:drawableRight="@mipmap/ic_tel"
             android:layout_toEndOf="@+id/userNameTv"
             android:ellipsize="end"
-            android:gravity="center_vertical"
+            android:gravity="center|right"
             android:maxWidth="70dp"
             android:singleLine="true"
             android:textColor="@color/color_999999"
@@ -58,6 +77,9 @@
 
         <View
             android:id="@+id/divider"
+            app:layout_constraintLeft_toRightOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/userNameTv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_half"
             android:layout_below="@+id/userNameTv"
@@ -66,6 +88,9 @@
             android:background="@color/color_E6E6E6" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
@@ -197,11 +222,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.james.common.view.IRelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:id="@+id/marginView"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_20"
-        android:visibility="gone" />
 </LinearLayout>

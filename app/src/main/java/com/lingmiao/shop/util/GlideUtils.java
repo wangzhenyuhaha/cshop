@@ -11,6 +11,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
+import androidx.annotation.DrawableRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -51,6 +53,14 @@ public class GlideUtils {
                 .into(iv);
     }
 
+    public static void setImageUrl(ImageView iv, String url, @DrawableRes int res) {
+        RequestOptions options = new RequestOptions().centerCrop()
+                .placeholder(res);
+        Glide.with(iv.getContext()).load(url)
+                .apply(options)
+                .into(iv);
+    }
+
 
     public static void setImageUrl1(ImageView iv, String url) {
         RequestOptions options = new RequestOptions().centerCrop()
@@ -85,41 +95,6 @@ public class GlideUtils {
                 .into(iv);
     }
 
-    public static void setCornerImageUrl(ImageView iv, String url, float corner) {
-        Glide.with(Utils.getApp()).load(url)
-                .apply(new RequestOptions().transforms(new CenterCrop(), new RoundedCorners(ConvertUtils.dp2px(corner))))
-//                .error(R.mipmap.default_load)
-//                .placeholder(R.mipmap.default_load)
-                .into(iv);
-    }
-
-//    public static void setImageUrl(Context context, ImageView iv, String url) {
-//        Glide.with(context).load(url)
-////                .error(R.mipmap.default_load)
-////                .placeholder(R.mipmap.default_load)
-//                .into(iv);
-//    }
-//
-//    public static void setImageUrl(Fragment context, ImageView iv, String url) {
-//        Glide.with(context).load(url)
-////                .error(R.mipmap.default_load)
-////                .placeholder(R.mipmap.default_load)
-//                .into(iv);
-//    }
-
-    public static void setCircleImageUrl(Context context, ImageView iv, String url) {
-        Glide.with(context).load(url)
-//                .error(R.mipmap.default_load)
-//                .placeholder(R.mipmap.default_load)
-                .into(iv);
-    }
-
-    public static void setCircleImageUrl(Fragment context, ImageView iv, String url) {
-        Glide.with(context).load(url)
-//                .error(R.mipmap.default_load)
-//                .placeholder(R.mipmap.default_load)
-                .into(iv);
-    }
 
     public static Bitmap getImage(Context context, String url) {
         try {

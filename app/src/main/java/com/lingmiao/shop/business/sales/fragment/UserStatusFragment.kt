@@ -8,7 +8,9 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.UserOrderDetailActivity
 import com.lingmiao.shop.business.sales.adapter.UserAdapter
@@ -16,6 +18,7 @@ import com.lingmiao.shop.business.sales.bean.UserVo
 import com.lingmiao.shop.business.sales.presenter.IUserStatusListPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.UserListOfAllPreImpl
 import com.lingmiao.shop.business.sales.presenter.impl.UserListOfNewPreImpl
+import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.sales_fragment_user_list.*
 
@@ -67,6 +70,9 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
             setOnItemChildClickListener { adapter, view, position ->
                 var item = mAdapter.getItem(position) as UserVo;
                 when(view.id) {
+                    R.id.userPhoneTv -> {
+                        OtherUtils.goToDialApp(activity, item?.mobile)
+                    }
                     R.id.userOrderDetailTv -> {
                         // 查看订单
                         ActivityUtils.startActivity(UserOrderDetailActivity::class.java)
@@ -91,7 +97,8 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
             }
             onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
                 if(userBottomContainer.visibility != View.VISIBLE) {
-                    userBottomContainer.visibility = View.VISIBLE;
+                    userBottomContainer.visiable();
+                    userAllCountTv.gone();
                 }
                 setBatchEditModel(true);
                 return@OnItemLongClickListener true;
@@ -126,7 +133,8 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
         }
         // 取消
         userBatchOptCancelTv.setOnClickListener{
-            userBottomContainer.visibility = View.GONE;
+            userBottomContainer.gone();
+            userAllCountTv.visiable();
             userAllCb.isChecked = false;
             var list = mAdapter?.data?.filter { it?.isChecked == true };
             if(list?.size > 0) {
@@ -152,6 +160,10 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
             TYPE_NEW -> UserListOfNewPreImpl(context!!, this)
             else -> null;
         }
+    }
+
+    override fun setUserListCount(count: Int?) {
+        userAllCountTv.setText(String.format("用户共%s人", count))
     }
 
     override fun executePageRequest(page: IPage) {

@@ -16,6 +16,6 @@ interface IUserStatusListPresenter : BasePresenter {
     fun loadListData(page: IPage, list: List<*>)
 
     interface PubView : BaseView, BaseLoadMoreView<UserVo>  {
-
+        fun setUserListCount(count : Int?);
     }
 }

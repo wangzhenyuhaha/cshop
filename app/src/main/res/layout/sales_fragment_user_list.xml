@@ -15,6 +15,13 @@
 
     <View style="@style/DivideLineHorizontal" />
 
+    <TextView
+        android:id="@+id/userAllCountTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_15"
+        tools:text="" />
+
     <LinearLayout
         android:id="@+id/userBottomContainer"
         android:layout_width="match_parent"
@@ -75,7 +82,9 @@
             android:text="取消"/>
     </LinearLayout>
 
+
     <View style="@style/DivideLineHorizontal" />
+
 
 </LinearLayout>
 
