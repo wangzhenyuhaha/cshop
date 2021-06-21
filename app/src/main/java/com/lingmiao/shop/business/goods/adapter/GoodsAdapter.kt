@@ -38,8 +38,7 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
                 R.id.goodsQuantityTv,
                 mContext.getString(R.string.goods_home_quantity, quantity)
             )
-            // todo
-            helper.setText(R.id.goodsSpecTv, "规格：50ml");
+            // helper.setText(R.id.goodsSpecTv, "规格：50ml");
 //            helper.setText(R.id.enableGoodsQuantityTv, mContext.getString(R.string.goods_home_enable_quantity, enableQuantity));
             val salesCount = mContext.getString(R.string.goods_home_sales, buyCount.check("0"))
             helper.setText(R.id.goodsSalesTv, salesCount)
@@ -48,18 +47,11 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
 
             setOnCheckedChangeListener(helper.getView(R.id.cb_goods_check), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
                 goodsVO?.isChecked = isChecked;
-//                if(!isChecked) {
-//                    EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
-//                }
             }
             helper.setGone(R.id.cb_goods_check, isBatchEditModel);
-            helper.setGone(R.id.menuIv, !isBatchEditModel);
+            helper.setGone(R.id.menuIv, !isBatchEditModel && !(goodsStatusMix == GoodsVO.STATUS_MIX_0));
 
-            if(helper.adapterPosition % 3 == 2) {
-                helper.setText(R.id.goodsSourceIv, "自有")
-            } else if(helper.adapterPosition %5 == 2) {
-                helper.setText(R.id.goodsSourceIv, "库")
-            }
+            helper.setGone(R.id.goodsSourceC, false);
 
             helper.setGone(R.id.goodsSoldOutTv, isSellOut());
             when(isAuth) {
@@ -70,11 +62,20 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
                     helper.setText(R.id.goodsAuthStatusTv, authMessage)
                     helper.setGone(R.id.goodsAuthStatusTv, true)
                 }
-                0, 4 -> {
+                0 -> {
                     // 审核中
                     helper.setGone(R.id.goodsStatusTv, true);
                     helper.setText(R.id.goodsStatusTv, "审核中")
                     helper.setGone(R.id.goodsAuthStatusTv, false)
+                }
+                4 -> {
+                    // 审核中
+                    helper.setGone(R.id.goodsStatusTv, true);
+                    helper.setText(R.id.goodsStatusTv, "审核中")
+                    helper.setGone(R.id.goodsAuthStatusTv, false)
+
+                    helper.setGone(R.id.goodsSourceC, true);
+                    helper.setText(R.id.goodsSourceIv, "库")
                 }
                 else -> {
                     helper.setGone(R.id.goodsStatusTv, false);
@@ -82,7 +83,6 @@ open class GoodsAdapter(val goodsStatus: Int, @LayoutRes layout: Int = R.layout.
                 }
             }
             helper.setText(R.id.goodsStatusTv, goodsStatusText)
-
             //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
 //            helper.setText(R.id.goodsOwnerTv, String.format("[来源：%s]", supplierName));
 //            helper.setGone(R.id.goodsOwnerTv, supplierName?.length?:0 > 0);

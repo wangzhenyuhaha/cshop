@@ -92,9 +92,7 @@ data class GoodsVO(
         const val MARKET_STATUS_ENABLE = 1
 
         /**
-         * 0 待审核 1 售卖中 2 已下架 3 审核拒绝
-         * |
-         * 0 待上架 1 已上架 2 已下架 3 已售馨
+         * 0 待上架 1 已上架 2 已下架 3 待上架
          */
         const val STATUS_MIX_0 = 0
         const val STATUS_MIX_1 = 1
@@ -128,6 +126,7 @@ data class GoodsVO(
             STATUS_MIX_0 -> (GoodsMenuPop.TYPE_EDIT)
             STATUS_MIX_1 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_DISABLE or GoodsMenuPop.TYPE_QUANTITY or GoodsMenuPop.TYPE_SHARE)
             STATUS_MIX_2 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_ENABLE or GoodsMenuPop.TYPE_DELETE)
+            STATUS_MIX_3 -> (GoodsMenuPop.TYPE_ENABLE)
             else -> (GoodsMenuPop.TYPE_EDIT)
         }
     }
