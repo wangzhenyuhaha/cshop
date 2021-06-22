@@ -5,9 +5,9 @@ import java.io.Serializable
 
 data class WithdrawAccountVo(
     @SerializedName("alipayWithdrawAccount")
-    var alipayWithdrawAccount: AlipayAccountVo? = AlipayAccountVo(),
+    var alipayWithdrawAccount: ThirdPayAccountVo? = ThirdPayAccountVo(),
     @SerializedName("wechatWithdrawAccount")
-    var wechatWithdrawAccount: AlipayAccountVo? = AlipayAccountVo(),
+    var wechatWithdrawAccount: ThirdPayAccountVo? = ThirdPayAccountVo(),
 
     @SerializedName("bankCard")
     var bankCard: BankCardAccountBean? = BankCardAccountBean()

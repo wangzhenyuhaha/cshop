@@ -13,6 +13,8 @@ import com.lingmiao.shop.business.wallet.event.RefreshListEvent
 import com.lingmiao.shop.business.wallet.presenter.WithdrawPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.WithdrawPresenterImpl
 import com.james.common.base.BaseActivity
+import com.lingmiao.shop.business.wallet.adapter.WithdrawTypeAdapter
+import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.wallet_activity_withdraw.*
 import kotlinx.android.synthetic.main.wallet_activity_withdraw.et_wallet_account_name
 import kotlinx.android.synthetic.main.wallet_activity_withdraw.et_wallet_account_no
@@ -25,16 +27,14 @@ import org.greenrobot.eventbus.EventBus
  */
 class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.View {
 
-    private var checkType: Int? = TYPE_ALI_PAY;
-
     private var accountId : String ? = "";
 
     private var accountInfo: WithdrawAccountVo? = null;
 
+    lateinit var mAdapter : WithdrawTypeAdapter;
+
     companion object {
-        const val TYPE_ALI_PAY = 1;
-        const val TYPE_CARD_PAY = 2;
-        const val RESULT_CHECK_BANK_CARD = 3;
+        const val RESULT_CHECK_BANK_CARD = 900;
     }
 
     override fun getLayoutId(): Int {
@@ -53,14 +53,31 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
 
         accountId = SPUtils.getInstance().getString(WalletConstants.BALANCE_ACCOUNT_ID);
 
-        ll_ali_pay.setOnClickListener {
-            setAliPayChecked();
-        }
-        ll_card_pay.setOnClickListener {
-            setBankCardChecked();
-//            BankCardListActivity.withdrawToActivity(this);
-        }
+        mAdapter = WithdrawTypeAdapter().apply{
+            setOnItemChildClickListener { adapter, view, position ->
+                val it = adapter.data[position] as WithdrawTypeVo;
+                when(view.id) {
+                    R.id.tvTypeHint -> {
+                        shiftType(it);
+                        shiftCheckPosition(position);
+                        if(it.type == IPayConstants.CHANNEL_CARD) {
+                            setBankCardChecked();
+                        } else if(it.type == IPayConstants.CHANNEL_ALI) {
+                            setAliPayChecked();
+                        } else if(it.type == IPayConstants.CHANNEL_WECHAT) {
+                            setWechatChecked();
+                        }
+                        notifyDataSetChanged()
+                    }
+                }
+            }
+            addData(WithdrawTypeVo.getWechat())
+            rvWithdrawType.initAdapter(this);
+        };
+
+
         ll_wallet_bank_card.setOnClickListener{
+            // 选择银行卡
             ActivityUtils.startActivityForResult(BankCardListActivity.withdrawBundle(this), this, BankCardListActivity::class.java, RESULT_CHECK_BANK_CARD);
         }
         tv_submit.setOnClickListener {
@@ -68,29 +85,39 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
                 ToastUtils.showLong("请先输入提现金额");
                 return@setOnClickListener;
             }
-            if(checkType === TYPE_ALI_PAY && accountInfo?.notExistAliPayAccount() === true) {
+            if(mAdapter.mCheckPosition < 0) {
+                ToastUtils.showLong("请先选择提现方式");
+                return@setOnClickListener;
+            }
+            var it = mAdapter.data[mAdapter.mCheckPosition];
+
+            if(it.type === IPayConstants.CHANNEL_ALI && accountInfo?.notExistAliPayAccount() === true) {
                 ToastUtils.showLong("请先设置支付宝账号");
                 return@setOnClickListener;
             }
-            if(checkType === TYPE_CARD_PAY && accountInfo?.notExistBankAccount() == true) {
+            if(it.type === IPayConstants.CHANNEL_WECHAT && accountInfo?.notExistWechatAccount() == true) {
+                ToastUtils.showLong("请先设置微信账号");
+                return@setOnClickListener;
+            }
+            if(it.type === IPayConstants.CHANNEL_CARD && accountInfo?.notExistBankAccount() == true) {
                 ToastUtils.showLong("请先添加银行卡账号");
                 return@setOnClickListener;
             }
 
-            if (checkType === TYPE_ALI_PAY) {
-                applyAliPayWithdraw();
-            } else if (checkType === TYPE_CARD_PAY) {
+            if (it.type === IPayConstants.CHANNEL_CARD) {
                 applyBankWithdraw();
+            } else {
+                applyWithdraw(it);
             }
         }
     }
 
-    private fun applyAliPayWithdraw() {
+    fun applyWithdraw(item : WithdrawTypeVo) {
         var data = WithdrawApplyVo();
         data.accountId = accountId;
         data.amount = et_wallet_account_amount.text.toString().toDouble();
-        data.withdrawChannel = 2;
-        data.otherAccountTypeName = "支付宝";
+        data.withdrawChannel = item.type;
+        data.otherAccountTypeName = item.hint;
         data.otherAccountName = et_wallet_account_name.text.toString();
         data.otherAccountNo = et_wallet_account_no.text.toString();
 
@@ -101,7 +128,7 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
         var data = WithdrawApplyVo();
         data.accountId = accountId;
         data.amount = et_wallet_account_amount.text.toString().toDouble();
-        data.withdrawChannel = 1;
+        data.withdrawChannel = IPayConstants.CHANNEL_CARD;
         data.bankName = tv_wallet_account_bank_deposit.text.toString();
         data.cardNo = et_wallet_account_no.text.toString();
         data.openAccountName = et_wallet_account_name.text.toString();
@@ -109,40 +136,34 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
         mPresenter.applyWithdraw(data);
     }
 
+    private fun setWechatChecked() {
+        setThirdPayChecked(accountInfo?.wechatWithdrawAccount);
+    }
+
     private fun setAliPayChecked() {
-        checkType = TYPE_ALI_PAY;
-        ivApliPay.setImageResource(WalletConstants.CHECKED);
-        ivCardPay.setImageResource(WalletConstants.UNCHECK);
+        setThirdPayChecked(accountInfo?.alipayWithdrawAccount);
+    }
 
-
+    private fun setThirdPayChecked(account : ThirdPayAccountVo?) {
         // 有一些设置没有删除，等方案稳定了再删除
         ll_wallet_ali_pay_info.visibility = View.VISIBLE;
         ll_wallet_bank_card.visibility = View.GONE;
         ll_wallet_account_bank_deposit.visibility = View.GONE;
         v_wallet_account_bank_deposit.visibility = View.GONE;
-        tv_withdraw_account_type.setText(getString(R.string.withdraw_ali_pay_account));
-        tv_withdraw_account_name.setText(getString(R.string.withdraw_real_name));
-        tv_withdraw_account_no.setText(getString(R.string.withdraw_ali_pay_account_no));
 
-        et_wallet_account_name.setText(accountInfo?.alipayWithdrawAccount?.accountName ?: "");
-        et_wallet_account_no.setText(accountInfo?.alipayWithdrawAccount?.accountNo ?: "");
+        et_wallet_account_name.setText(account?.accountName ?: "");
+        et_wallet_account_no.setText(account?.accountNo ?: "");
 
-        setAliPayEnable(accountInfo == null || accountInfo?.alipayWithdrawAccount == null);
+        setThirdPayEnable(accountInfo == null || account == null);
     }
 
-    private fun setBankCardChecked() {
-        checkType = TYPE_CARD_PAY;
-        ivCardPay.setImageResource(WalletConstants.CHECKED);
-        ivApliPay.setImageResource(WalletConstants.UNCHECK);
 
+    private fun setBankCardChecked() {
         // 有一些设置没有删除，等方案稳定了再删除
         ll_wallet_ali_pay_info.visibility = View.GONE;
         ll_wallet_bank_card.visibility = View.VISIBLE;
         ll_wallet_account_bank_deposit.visibility = View.VISIBLE;
         v_wallet_account_bank_deposit.visibility = View.VISIBLE;
-        tv_withdraw_account_type.setText(getString(R.string.withdraw_bank_account));
-        tv_withdraw_account_name.setText(getString(R.string.withdraw_bank_name));
-        tv_withdraw_account_no.setText(getString(R.string.withdraw_bank_no));
 
         tv_wallet_bank_info.setText(accountInfo?.bankCard?.getBankInfo() ?: "请选择收款银行账号");
 
@@ -159,15 +180,27 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
         et_wallet_account_no.isEnabled = flag;
     }
 
-    private fun setAliPayEnable(flag : Boolean) {
+    private fun setThirdPayEnable(flag : Boolean) {
         et_wallet_account_name.isEnabled = flag;
         et_wallet_account_no.isEnabled = flag;
+    }
+
+    fun shiftType(it : WithdrawTypeVo) {
+        tv_withdraw_account_type.setText(String.format("%s账户", it?.hint))
+        tv_withdraw_account_no.setText(String.format("%s账户", it?.hint))
     }
 
     override fun getWithdrawAccountSuccess(info: WithdrawAccountVo) {
         if (info != null) {
             this.accountInfo = info;
-            setAliPayChecked();
+
+            val position = 0;
+            shiftType(mAdapter.data[position]);
+
+            mAdapter.shiftCheckPosition(position)
+            mAdapter.notifyDataSetChanged()
+
+            setWechatChecked();
         }
     }
 

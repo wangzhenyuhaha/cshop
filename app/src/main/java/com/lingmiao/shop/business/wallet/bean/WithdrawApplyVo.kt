@@ -24,6 +24,11 @@ data class WithdrawApplyVo(
     var otherAccountTypeName: String? = "",
     @SerializedName("sub_bank_name")
     var subBankName: String? = "",
+    /**
+     * 选择类型 1银行卡 2支付宝 3微信
+     */
     @SerializedName("withdraw_channel")
     var withdrawChannel: Int? = 0
-) : Serializable
+) : Serializable {
+
+}

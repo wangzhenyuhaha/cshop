@@ -6,7 +6,7 @@ import android.content.Intent
 import com.blankj.utilcode.util.ToastUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.wallet.api.WalletConstants
-import com.lingmiao.shop.business.wallet.bean.AlipayAccountVo
+import com.lingmiao.shop.business.wallet.bean.ThirdPayAccountVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountBean
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.business.wallet.pop.ItemListPop
@@ -26,14 +26,14 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
 
     var name : String? = "微信";
 
-    private var aLiAccount : AlipayAccountVo? = null;
+    private var aLiAccount : ThirdPayAccountVo? = null;
 
     private var mAccountTypes = mutableListOf<String>();
 
     private var mAccountType : Int ? = WalletConstants.PUBLIC_PRIVATE;
 
     companion object {
-        fun wechat(context: Context, account: AlipayAccountVo?) {
+        fun wechat(context: Context, account: ThirdPayAccountVo?) {
             if (context is Activity) {
                 val intent = Intent(context, AliPayAccountActivity::class.java)
                 intent.putExtra("type", WithdrawAccountBean.TYPE_WECHAT)
@@ -53,7 +53,7 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
 
     override fun initBundles() {
         type = intent.getIntExtra("type", WithdrawAccountBean.TYPE_WECHAT);
-        aLiAccount = intent.getSerializableExtra("item") as AlipayAccountVo?;
+        aLiAccount = intent.getSerializableExtra("item") as ThirdPayAccountVo?;
         if(type == WithdrawAccountBean.TYPE_ALI_PAY) {
             name = "支付宝"
         }
@@ -136,7 +136,7 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
         setUiData(aLiAccount);
     }
 
-    fun setUiData(aLiAccount : AlipayAccountVo?) {
+    fun setUiData(aLiAccount : ThirdPayAccountVo?) {
         tv_account_submit.setText(if(aLiAccount == null) "确定提交" else "确定修改")
         tv_wallet_third_account_type.setText(aLiAccount?.getPublicName());
         et_wallet_third_account_detail_name.setText(aLiAccount?.accountNo ?: "");

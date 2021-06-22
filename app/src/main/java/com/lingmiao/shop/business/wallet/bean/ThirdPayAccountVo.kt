@@ -4,7 +4,7 @@ import com.lingmiao.shop.business.wallet.api.WalletConstants
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class AlipayAccountVo(
+data class ThirdPayAccountVo(
     @SerializedName("accountName")
     var accountName: String? = "",
     @SerializedName("accountNo")

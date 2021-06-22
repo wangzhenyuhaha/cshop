@@ -77,62 +77,10 @@
             app:ivBgColor="@color/white"
             app:ivRadius="5dp">
 
-            <LinearLayout
-                android:id="@+id/ll_ali_pay"
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_20">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="提现到支付宝"
-                    android:textColor="#333"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/ivApliPay"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/goods_spec_checked" />
-
-            </LinearLayout>
-
-            <View
-                style="@style/DivideLineHorizontal"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:layout_marginRight="@dimen/dimen_10" />
-
-            <LinearLayout
-                android:id="@+id/ll_card_pay"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_20">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="提现到银行卡"
-                    android:textColor="#333"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:id="@+id/ivCardPay"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/iv_single_default" />
-
-            </LinearLayout>
+                android:id="@+id/rvWithdrawType"/>
 
         </com.james.common.view.ILinearLayout>
 
@@ -160,11 +108,11 @@
                 android:id="@+id/ll_wallet_bank_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:paddingVertical="@dimen/dimen_20">
+                android:orientation="horizontal">
 
                 <TextView
+                    android:paddingHorizontal="@dimen/dimen_10"
+                    android:paddingVertical="@dimen/dimen_20"
                     android:id="@+id/tv_wallet_bank_info"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -3,7 +3,7 @@ package com.lingmiao.shop.business.wallet
 import com.blankj.utilcode.util.ToastUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.wallet.api.WalletConstants
-import com.lingmiao.shop.business.wallet.bean.AlipayAccountVo
+import com.lingmiao.shop.business.wallet.bean.ThirdPayAccountVo
 import com.lingmiao.shop.business.wallet.presenter.ChargeDepositPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.ChargeDepositPresenterImpl
 import com.james.common.base.BaseActivity
@@ -16,9 +16,9 @@ class ChargeDepositActivity : BaseActivity<ChargeDepositPresenter>(), ChargeDepo
 
     private var checkType: Int? = TYPE_ALI_PAY;
 
-    private var accountData : AlipayAccountVo? = null;
+    private var accountData : ThirdPayAccountVo? = null;
 
-    private var aliPayData : AlipayAccountVo? = null;
+    private var aliPayData : ThirdPayAccountVo? = null;
 
 
     companion object {

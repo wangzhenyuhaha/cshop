@@ -31,7 +31,7 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
                 view.showPageLoading()
             }
 
-            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_DISABLE.toString(), GoodsVO.getWaitAuth())
+            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), "", GoodsVO.getWaitAuth())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_WAITING,resp.data.dataTotal));
