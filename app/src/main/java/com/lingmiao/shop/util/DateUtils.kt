@@ -17,9 +17,13 @@ Desc        :
 
 const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
+const val MINUTES_TIME_FORMAT = "yyyy-MM-dd HH:mm"
+
 const val DATE_FORMAT = "yyyy-MM-dd"
 
 const val DATE_FORMAT_OTHER = "yyyy/MM/dd"
+
+const val MINUTES_TIME_FORMAT_OTHER = "yyyy/MM/dd HH:mm"
 
 const val DATE_TIME_FORMAT_OTHER = "yyyy/MM/dd HH:mm:ss"
 
@@ -121,7 +125,7 @@ fun getDefaultTimePicker(context: Context, selectedDate: Calendar, start: Calend
         .setRangDate(start, end)
         .setOutSideCancelable(true)
         .setContentTextSize(16)
-        .setType(booleanArrayOf(true, true, true, true, true, true))
+        .setType(booleanArrayOf(true, true, true, true, true, false))
         .setLabel("年", "月", "日", "时", "分", "秒")
         .setLineSpacingMultiplier(2.2f)
         .setTextXOffset(0, 0, 0, 40, 0, -40)

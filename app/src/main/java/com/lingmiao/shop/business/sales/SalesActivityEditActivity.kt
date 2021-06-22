@@ -9,7 +9,6 @@ import com.james.common.base.BaseActivity
 import com.james.common.exception.BizException
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.GoodsSalesSelectActivity
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.sales.adapter.ActivitySalesAdapter
 import com.lingmiao.shop.business.sales.bean.SalesActivityItemVo
@@ -27,6 +26,16 @@ Auther      : Fox
 Desc        :
  **/
 class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEditPresenter.PubView {
+
+    var pvCustomTime : TimePickerView?= null;
+    var pvCustomTime2 : TimePickerView? = null;
+
+    var mItem : SalesVo? = null;
+    var mViewType : Int? = 0
+
+    private lateinit var mDiscountList : MutableList<SalesActivityItemVo>;
+
+    private lateinit var mDiscountAdapter : ActivitySalesAdapter;
 
     companion object {
 
@@ -72,12 +81,6 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
     override fun useLightMode(): Boolean {
         return false;
     }
-
-    var pvCustomTime : TimePickerView?= null;
-    var pvCustomTime2 : TimePickerView? = null;
-
-    var mItem : SalesVo? = null;
-    var mViewType : Int? = 0
 
     override fun initView() {
         mToolBarDelegate.setMidTitle(getString(R.string.sales_activity_edit_title))
@@ -148,8 +151,8 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
 
     fun resetUi() {
         menuNameEdt.setText(mItem?.title)
-        firstMenuTv.setText(stampToDate(mItem?.startTime, DATE_TIME_FORMAT))
-        secondMenuTv.setText(stampToDate(mItem?.endTime, DATE_TIME_FORMAT))
+        firstMenuTv.setText(stampToDate(mItem?.startTime, MINUTES_TIME_FORMAT))
+        secondMenuTv.setText(stampToDate(mItem?.endTime, MINUTES_TIME_FORMAT))
         mDiscountAdapter?.addData(mItem?.convertDiscountItem()!!);
         setGoodsUi();
 
@@ -158,10 +161,6 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
         }
 
     }
-
-    private lateinit var mDiscountList : MutableList<SalesActivityItemVo>;
-
-    private lateinit var mDiscountAdapter : ActivitySalesAdapter;
 
     private fun initPricePart() {
         mDiscountList = arrayListOf();
@@ -200,7 +199,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime = getDefaultTimePicker(this, selectedDate, startDate, endDate , { date, view ->
-                firstMenuTv.text = formatDateTime(date)
+                firstMenuTv.text = formatString(date, MINUTES_TIME_FORMAT)
                 //firstMenuTv.setText(formatDateTime(date))
             }, {
                 pvCustomTime?.returnData()
@@ -215,7 +214,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime2 = getDefaultTimePicker(this, selectedDate, startDate, endDate , { date, view ->
-                secondMenuTv.setText(formatDateTime(date))
+                secondMenuTv.setText(formatString(date, MINUTES_TIME_FORMAT))
             }, {
                 pvCustomTime2?.returnData()
                 pvCustomTime2?.dismiss()

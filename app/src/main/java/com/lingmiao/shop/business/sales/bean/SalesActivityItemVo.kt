@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.sales.bean
 
-import com.lingmiao.shop.util.DATE_TIME_FORMAT_OTHER
-import com.lingmiao.shop.util.longToDate
+import com.lingmiao.shop.util.MINUTES_TIME_FORMAT_OTHER
 import com.lingmiao.shop.util.stampToDate
 
 /**
@@ -20,8 +19,8 @@ class SalesActivityItemVo {
             var it = SalesActivityItemVo();
             it.peach = item.fullMoney
             it.least = item.minusValue
-            it.startTime = stampToDate(item?.startTime?:0, DATE_TIME_FORMAT_OTHER);
-            it.endTime = stampToDate(item?.endTime?:0, DATE_TIME_FORMAT_OTHER);
+            it.startTime = stampToDate(item?.startTime?:0, MINUTES_TIME_FORMAT_OTHER);
+            it.endTime = stampToDate(item?.endTime?:0, MINUTES_TIME_FORMAT_OTHER);
             return it;
         }
     }
