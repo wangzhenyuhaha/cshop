@@ -1,13 +1,10 @@
 package com.lingmiao.shop.business.goods.api
 
-import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
-import com.lingmiao.shop.business.wallet.bean.PageListVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
-import com.lingmiao.shop.business.goods.api.request.BindGoodsReq
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -265,6 +262,8 @@ interface GoodsApiService {
     @POST("seller/goods/parameters")
     fun addInfo(@Body body: GoodsParamVo): Call<GoodsParamVo>
 
+
+
     /**
      * 获取商品信息列表
      */
@@ -285,7 +284,7 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @GET("seller/goods/categories/{cid}/specs")
-    fun getSpecList(@Path(value = "cid") id: String): Call<List<GoodsSpecVo>>
+    fun getSpecList(@Path(value = "cid") id: String): Call<List<SpecKeyVO>>
 
     /**
      * 规格添加
@@ -293,5 +292,12 @@ interface GoodsApiService {
     @WithHiResponse
     @POST("seller/goods/categories/{c_id}/specs")
     fun addSpec(@Path(value = "c_id") cid: String, @Query("spec_name") name: String): Call<GoodsSpecVo>
+
+    /**
+     * 商家自定义某分类的规格项
+     */
+    @WithHiResponse
+    @POST("seller/goods/categories/specsAndValue")
+    fun addSpecAndValue(@Body body: CateSpecAndValueVo): Call<CateSpecAndValueVo>
 
 }

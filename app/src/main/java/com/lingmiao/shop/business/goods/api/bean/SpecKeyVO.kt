@@ -24,7 +24,7 @@ class SpecKeyVO: MultiItemEntity, Serializable {
     @SerializedName("spec_name")
     var specName: String? = null
     @SerializedName("value_list")
-    var valueList: List<SpecValueVO>? = null
+    var valueList: MutableList<SpecValueVO>? = null
 
     // 业务字段
     var isSelected: Boolean = false

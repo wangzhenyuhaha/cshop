@@ -18,6 +18,9 @@ import kotlinx.android.synthetic.main.wallet_activity_my_wallet.*
  */
 class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.View {
 
+    companion object {
+        const val RESULT_WECHAT = 1001;
+    }
     override fun createPresenter(): MyWalletPresenter {
         return MyWalletPresenterImpl(this)
     }
@@ -52,7 +55,7 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
             AliPayAccountActivity.ali(this);
         };
         ll_wallet_wechat_part.setOnClickListener {
-            AliPayAccountActivity.wechat(this, mAccount?.wechatWithdrawAccount);
+            AliPayAccountActivity.wechat(this, mAccount?.wechatWithdrawAccount, RESULT_WECHAT);
         }
         ll_wallet_card.setOnClickListener {
             ActivityUtils.startActivity(BankCardListActivity::class.java);

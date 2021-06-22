@@ -224,6 +224,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     }
 
     override fun onLoadedSpecListByCid(list: List<SpecKeyVO>) {
-        specContainerLayout.addSpecItems(list, false)
+        specContainerLayout.addSpecItems(list, true)
+        mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
     }
 }

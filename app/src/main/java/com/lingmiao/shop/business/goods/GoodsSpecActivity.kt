@@ -4,14 +4,18 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.james.common.base.BaseActivity
 import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.singleClick
+import com.lingmiao.shop.business.goods.adapter.GoodsSpecAdapter
 import com.lingmiao.shop.business.goods.presenter.GoodsSpecPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsSpecPreImpl
+import com.lingmiao.shop.util.initAdapter
+import com.lingmiao.shop.widget.EmptyView
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.goods_activity_goods_spec.*
 import kotlinx.android.synthetic.main.goods_activity_goods_spec.smartRefreshLayout
@@ -24,7 +28,9 @@ import kotlinx.android.synthetic.main.goods_activity_goods_spec.smartRefreshLayo
 class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
     GoodsSpecPre.PublicView {
 
-    private var categoryId: String? = null
+    private lateinit var mAdapter : GoodsSpecAdapter;
+
+    private lateinit var categoryId: String;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -60,56 +66,78 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
     }
 
     override fun createPresenter(): GoodsSpecPre {
-        return GoodsSpecPreImpl(this)
+        return GoodsSpecPreImpl(this, this)
     }
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("规格信息")
+        mToolBarDelegate.setRightText("新增", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
+            mPresenter?.showAddPop(categoryId);
+        });
 
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
             mPresenter?.loadList(categoryId);
         }
 
-        specNameTv.setText("规格信息");
+        mAdapter = GoodsSpecAdapter().apply {
+            setOnItemClickListener { adapter, view, position ->
 
-        addSpecTv.singleClick {
-            DialogUtils.showInputDialog(
-                this, "规格信息", "", "请输入具体信息，不同信息用\",\"分隔",
-                "取消", "保存", null
-            ) {
-                val its = it?.split(",");
-                its.forEachIndexed { index, s ->
-                    if(s?.isNotEmpty()) {
-                        mPresenter.add(categoryId!!, s)
+            }
+            setOnItemChildClickListener { adapter, view, position ->
+                val item = mAdapter.data[position] as SpecKeyVO
+                when(view.id) {
+                    R.id.deleteSpecTv -> {
+                        if(item?.specId?.isNotEmpty() == true) {
+                            DialogUtils.showDialog(context as Activity,
+                                "删除提示", "删除后不可恢复，确定要删除吗？",
+                                "取消", "确定删除",
+                                null, View.OnClickListener {
+                                    mPresenter?.delete(item?.specId!!);
+                                })
+                        }
+
+                    }
+                    R.id.addSpecValueTv -> {
+                        DialogUtils.showInputDialog(
+                            context as Activity, "规格值", "", "请输入具体规格值，不同值用\",\"分隔",
+                            "取消", "保存", null
+                        ) { _str ->
+                            if(_str?.isNotEmpty()) {
+                                mPresenter?.addSpecValue(item?.specId!!, _str);
+                            }
+                        }
                     }
                 }
             }
-        }
-
-        specFlowLayout.apply {
-            clickDeleteCallback = {
-//                if(it?.isNotEmpty() == true) {
-//                    mPresenter?.delete(it!!);
-//                }
+            emptyView = EmptyView(context).apply {
+                setBackgroundResource(R.color.color_ffffff)
             }
         }
+        rvSpec.initAdapter(mAdapter)
+
         mPresenter?.loadList(categoryId);
     }
 
-    override fun onLoaded(list: List<GoodsSpecVo>) {
+    override fun onLoaded(list: List<SpecKeyVO>) {
         smartRefreshLayout.finishRefresh()
-        specFlowLayout.removeAllViews();
-        specFlowLayout.addSpecValues(categoryId, list);
+        mAdapter.replaceData(list);
     }
 
     override fun onAdded(vo : GoodsSpecVo) {
-        val list = mutableListOf<GoodsSpecVo>();
-        list.add(vo)
-        specFlowLayout.addSpecValues(categoryId, list);
+        mPresenter?.loadList(categoryId);
     }
 
     override fun onDeleted(id: String) {
+        mPresenter?.loadList(categoryId);
+    }
 
+    override fun onAddSpecValueSuccess(specKeyId: String, data: List<SpecValueVO>?) {
+        mAdapter?.data?.forEachIndexed { index, item ->
+            if(item.specId == specKeyId && data?.isNotEmpty() == true) {
+                item.valueList?.addAll(data)
+            }
+        }
+        mAdapter.notifyDataSetChanged();
     }
 }

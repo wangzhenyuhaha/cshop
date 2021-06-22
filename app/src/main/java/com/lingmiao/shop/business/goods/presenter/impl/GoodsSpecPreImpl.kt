@@ -1,7 +1,11 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
+import android.content.Context
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.james.common.base.BasePreImpl
+import com.lingmiao.shop.business.goods.api.bean.CateSpecAndValueVo
+import com.lingmiao.shop.business.goods.api.bean.GoodsSpecVo
+import com.lingmiao.shop.business.goods.pop.SpecAndValuePop
 import com.lingmiao.shop.business.goods.presenter.GoodsSpecPre
 import kotlinx.coroutines.launch
 
@@ -11,15 +15,33 @@ import kotlinx.coroutines.launch
  * Date   : 2020/8/13
  * Desc   : 规格设置页
  */
-class GoodsSpecPreImpl(val view: GoodsSpecPre.PublicView) : BasePreImpl(view),
+class GoodsSpecPreImpl(val context: Context, val view: GoodsSpecPre.PublicView) : BasePreImpl(view),
     GoodsSpecPre {
 
-    override fun add(cId: String, name: String) {
+    override fun addSpecValue(specKeyId: String, valueNames: String) {
+        mCoroutine.launch {
+            view.showDialogLoading()
+            val resp = GoodsRepository.submitSpceValues(specKeyId, valueNames)
+            handleResponse(resp) {
+                view.onAddSpecValueSuccess(specKeyId, resp.data)
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+    override fun add(id: String, key: String, value: String) {
         mCoroutine.launch {
             view?.showDialogLoading()
-            val resp = GoodsRepository.addSpec(cId, name);
+
+            val item = CateSpecAndValueVo();
+            item.categoryId = id;
+            item.specName = key;
+            item.valueString = value;
+            val resp = GoodsRepository.addSpecAndValue(item);
             handleResponse(resp) {
-                view?.onAdded(resp.data);
+                val _it = GoodsSpecVo();
+                _it.specName = it.specName;
+                view?.onAdded(_it);
             }
             view?.hideDialogLoading()
         }
@@ -38,13 +60,45 @@ class GoodsSpecPreImpl(val view: GoodsSpecPre.PublicView) : BasePreImpl(view),
         }
     }
 
-    override fun delete(id: String) {
+    fun addRequest(id: String, key: String, value: String,callback : (CateSpecAndValueVo) -> Unit) {
         mCoroutine.launch {
-            val resp = GoodsRepository.deleteInfo(id)
+            view?.showDialogLoading()
+
+            val item = CateSpecAndValueVo();
+            item.categoryId = id;
+            item.specName = key;
+            item.valueString = value;
+
+            val resp = GoodsRepository.addSpecAndValue(item);
+
             handleResponse(resp) {
-                view?.onDeleted(id);
+                val _it = GoodsSpecVo();
+                _it.specName = it.specName;
+                view?.onAdded(_it);
+
+                callback?.invoke(item);
             }
+            view?.hideDialogLoading()
         }
     }
 
+    override fun delete(id: String) {
+        mCoroutine.launch {
+//            val resp = GoodsRepository.deleteInfo(id)
+//            handleResponse(resp) {
+//                view?.onDeleted(id);
+            }
+        }
+
+    override fun showAddPop(cId: String) {
+        val pop = SpecAndValuePop(context);
+        pop.setConfirmListener { s1, s2 ->
+            if(s1?.isNotEmpty() == true) {
+                addRequest(cId, s1?:"", s2?:"") {
+                    pop.dismiss();
+                }
+            }
+        }
+        pop.showPopupWindow()
+    }
 }

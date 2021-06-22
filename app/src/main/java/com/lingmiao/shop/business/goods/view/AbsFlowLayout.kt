@@ -12,8 +12,10 @@ import com.blankj.utilcode.util.ToastUtils
 import com.lingmiao.shop.R
 import com.google.android.material.internal.FlowLayout
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.removeIf1
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 
 /**
  * Date   : 2020/7/31
@@ -30,7 +32,8 @@ abstract class AbsFlowLayout<T : FlowViewVo> @JvmOverloads constructor(
 
     var clickAddCallback: ((String) -> Unit)? = null
     var clickDeleteCallback: ((String?) -> Unit)? = null
-
+    //var clickAddCallBack: ((valueVO: T) -> Unit)? = null
+    //var showEdit : Boolean = false;
     init {
         //createAddItem()
     }
@@ -61,6 +64,16 @@ abstract class AbsFlowLayout<T : FlowViewVo> @JvmOverloads constructor(
                     clickDeleteCallback?.invoke(view.tag as String?)
                 })
         }
+//        view.findViewById<ImageView>(R.id.addTv).apply {
+//            singleClick {
+//                clickAddCallBack?.invoke(valueVO)
+//            }
+//            if(showEdit) {
+//                visiable()
+//            } else {
+//                gone()
+//            }
+//        }
         view.tag = valueVO.getFId()
         addView(view, childCount - 1)
     }

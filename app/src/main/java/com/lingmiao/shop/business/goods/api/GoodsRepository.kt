@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.goods.api
 
-import com.blankj.utilcode.util.JsonUtils
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -10,9 +9,6 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
-import com.lingmiao.shop.business.goods.api.request.BindGoodsReq
-import retrofit2.Call
-import retrofit2.http.Body
 
 /**
  * Author : Elson
@@ -422,11 +418,15 @@ object GoodsRepository {
     }
 
     /***************************商品信息****************************************************/
-    suspend fun getSpecList(cid: String): HiResponse<List<GoodsSpecVo>> {
+    suspend fun getSpecList(cid: String): HiResponse<List<SpecKeyVO>> {
         return apiService.getSpecList(cid).awaitHiResponse();
     }
 
     suspend fun addSpec(cid: String, name: String): HiResponse<GoodsSpecVo> {
         return apiService.addSpec(cid, name).awaitHiResponse();
+    }
+
+    suspend fun addSpecAndValue(item : CateSpecAndValueVo) : HiResponse<CateSpecAndValueVo> {
+        return apiService.addSpecAndValue(item).awaitHiResponse();
     }
 }

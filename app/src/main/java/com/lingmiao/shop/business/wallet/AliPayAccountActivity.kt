@@ -33,12 +33,12 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
     private var mAccountType : Int ? = WalletConstants.PUBLIC_PRIVATE;
 
     companion object {
-        fun wechat(context: Context, account: ThirdPayAccountVo?) {
+        fun wechat(context: Context, account: ThirdPayAccountVo?, result : Int) {
             if (context is Activity) {
                 val intent = Intent(context, AliPayAccountActivity::class.java)
                 intent.putExtra("type", WithdrawAccountBean.TYPE_WECHAT)
                 intent.putExtra("item", account)
-                context.startActivity(intent)
+                context.startActivityForResult(intent, result)
             }
         }
 
@@ -128,6 +128,7 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
     }
 
     override fun setAccountSuccess() {
+        setResult(Activity.RESULT_OK)
         finish();
     }
 

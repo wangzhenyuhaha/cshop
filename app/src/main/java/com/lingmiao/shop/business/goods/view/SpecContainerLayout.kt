@@ -36,7 +36,7 @@ class SpecContainerLayout @JvmOverloads constructor(
     /**
      * 删除规格名
      */
-    var deleteSpecItemListener: (() -> Unit)? = null
+    var deleteSpecItemListener: ((String?) -> Unit)? = null
     /**
      * 关联添加规格按钮
      */
@@ -71,13 +71,13 @@ class SpecContainerLayout @JvmOverloads constructor(
             return
         }
         // 移除不存在的
-        specKeyViews.removeIf1 { view -> (-1 == specKeys.indexOfFirst { it.specId == view.tag }) }
+        specKeyViews?.removeIf1 { view -> (-1 == specKeys.indexOfFirst { it.specId == view.tag }) }
         // 清除重新添加
         specKeyList.clear()
         specKeyList.addAll(specKeys)
         // 遍历
         specKeys.forEach { specKey ->
-            val index = specKeyViews.indexOfFirst { specKey.specId == it.tag }
+            val index = specKeyViews?.indexOfFirst { specKey.specId == it.tag }
             if (index == -1) {
                 createSpecItem(specKey, showSpecValue)
             } else {
@@ -104,9 +104,10 @@ class SpecContainerLayout @JvmOverloads constructor(
         view.findViewById<TextView>(R.id.specNameTv).text = "规格名：${specKey.specName}"
         view.findViewById<TextView>(R.id.deleteSpecTv).singleClick {
             removeChildItem(view)
-            deleteSpecItemListener?.invoke()
+            deleteSpecItemListener?.invoke(specKey.specId)
         }
         view.findViewById<SpecFlowLayout>(R.id.specFlowLayout).let {
+            it.showAddButton = false;
             it.clickAddCallback = this.addSpecValueListener
             it.clickDeleteCallback = this.deleteSpecValueListener
             it.addSpecValues(specKey.specId, if(showSpecValue) specKey.valueList else arrayListOf())

@@ -28,14 +28,17 @@ class SpecFlowLayout @JvmOverloads constructor(
     private val specValues: MutableList<SpecValueVO> = mutableListOf()
     private val inflate: LayoutInflater = LayoutInflater.from(context)
 
+    var showAddButton : Boolean = true;
     var clickAddCallback: ((String) -> Unit)? = null
     var clickDeleteCallback: ((String?) -> Unit)? = null
 
     init {
-        createAddItem()
+        if(showAddButton) {
+            createAddItem()
+        }
     }
 
-    fun getSpecValueList(): List<SpecValueVO> {
+    fun getSpecValueList(): MutableList<SpecValueVO> {
         return specValues
     }
 

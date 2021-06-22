@@ -13,6 +13,7 @@ import com.lingmiao.shop.business.wallet.event.RefreshListEvent
 import com.lingmiao.shop.business.wallet.presenter.WithdrawPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.WithdrawPresenterImpl
 import com.james.common.base.BaseActivity
+import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.business.wallet.adapter.WithdrawTypeAdapter
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.wallet_activity_withdraw.*
@@ -34,6 +35,7 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
     lateinit var mAdapter : WithdrawTypeAdapter;
 
     companion object {
+        const val RESULT_WECHAT = 100;
         const val RESULT_CHECK_BANK_CARD = 900;
     }
 
@@ -96,7 +98,11 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
                 return@setOnClickListener;
             }
             if(it.type === IPayConstants.CHANNEL_WECHAT && accountInfo?.notExistWechatAccount() == true) {
-                ToastUtils.showLong("请先设置微信账号");
+                DialogUtils.showDialog(context, "设置微信帐号", "请先设置微信帐号?",
+                    "取消", "确定", View.OnClickListener { }, View.OnClickListener {
+                        AliPayAccountActivity.wechat(this, accountInfo?.wechatWithdrawAccount, RESULT_WECHAT);
+                    })
+                //ToastUtils.showLong("请先设置微信账号");
                 return@setOnClickListener;
             }
             if(it.type === IPayConstants.CHANNEL_CARD && accountInfo?.notExistBankAccount() == true) {
@@ -215,12 +221,17 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == RESULT_CHECK_BANK_CARD) {
-            var item : BankCardAccountBean = data?.getSerializableExtra(WalletConstants.KEY_ITEM) as BankCardAccountBean;
-            if(item != null) {
-                accountInfo?.bankCard = item;
+        if(resultCode == Activity.RESULT_OK) {
+            if(requestCode == RESULT_CHECK_BANK_CARD) {
+                var item : BankCardAccountBean = data?.getSerializableExtra(WalletConstants.KEY_ITEM) as BankCardAccountBean;
+                if(item != null) {
+                    accountInfo?.bankCard = item;
+                }
+                setBankCardChecked();
+            } else if(requestCode == RESULT_WECHAT) {
+                mPresenter.getWithdrawAccount();
             }
-            setBankCardChecked();
         }
+
     }
 }

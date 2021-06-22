@@ -20,7 +20,7 @@ class GoodsSpecVo : FlowViewVo {
     @SerializedName("spec_name")
     var specName: String? = "";
     @SerializedName("value_list")
-    var valueList: Any? = Any()
+    var valueList: List<SpecKeyVO>? = listOf()
     override fun getFName(): String? {
         return specName;
     }

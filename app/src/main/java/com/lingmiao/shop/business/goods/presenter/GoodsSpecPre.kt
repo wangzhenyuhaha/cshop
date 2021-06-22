@@ -11,18 +11,24 @@ import com.lingmiao.shop.business.goods.api.bean.*
  */
 interface GoodsSpecPre: BasePresenter {
 
-    fun add(id: String, value: String)
+    fun add(id: String, key: String, value: String)
+
+    fun addSpecValue(specKeyId: String, valueNames: String)
 
     fun loadList(id: String?)
 
     fun delete(id : String);
 
+    fun showAddPop(cId: String);
+
     interface PublicView : BaseView {
 
-        fun onLoaded(list: List<GoodsSpecVo>)
+        fun onLoaded(list: List<SpecKeyVO>)
 
         fun onAdded(vo: GoodsSpecVo)
 
         fun onDeleted(id : String);
+
+        fun onAddSpecValueSuccess(specKeyId: String, data: List<SpecValueVO>?)
     }
 }
