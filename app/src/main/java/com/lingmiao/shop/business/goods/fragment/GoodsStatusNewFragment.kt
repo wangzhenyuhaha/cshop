@@ -173,7 +173,6 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onLoadMoreSuccess(list: List<GoodsVO>?, hasMore: Boolean) {
         super.onLoadMoreSuccess(list, hasMore)
-        tvGoodsCount.setText(String.format("商品共%s件", mAdapter.data.size))
         list?.forEachIndexed { index, goodsVO ->
             goodsVO?.isChecked = cb_goods_list_check_all.isChecked;
         }
@@ -200,6 +199,10 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     override fun onGoodsDelete(goodsId: String?, position: Int) {
         mAdapter.remove(position)
         //EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
+    }
+
+    override fun onSetTotalCount(count: Int?) {
+        tvGoodsCount.setText(String.format("商品共%s件", count?:0))
     }
 
     override fun onLineSuccess() {

@@ -41,6 +41,7 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
                 GoodsRepository.loadAllGoodsList(page.getPageIndex())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
+                view.onSetTotalCount(resp.data.dataTotal);
                 //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_ALL,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {

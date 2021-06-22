@@ -40,6 +40,7 @@ class GoodsSellOutPreImpl(override var context: Context, override var view: Good
                 GoodsRepository.loadSellOutGoodsList(page.getPageIndex())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
+                view.onSetTotalCount(resp.data.dataTotal);
                 //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {

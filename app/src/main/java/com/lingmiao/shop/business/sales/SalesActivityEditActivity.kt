@@ -257,7 +257,7 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
                 str = "全部商品参与";
             }
             VALUE_PART -> {
-                str = "部分商品参与";
+                str = "部分商品不参与";
             }
         }
         activityGoodsPickTv.setText(str)

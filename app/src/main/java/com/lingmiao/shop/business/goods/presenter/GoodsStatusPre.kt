@@ -26,6 +26,7 @@ interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
         fun onGoodsDisable(goodsId: String?, position: Int)
         fun onGoodsQuantity(quantity: String?, position: Int)
         fun onGoodsDelete(goodsId: String?, position: Int)
+        fun onSetTotalCount(count: Int?);
     }
 
 }

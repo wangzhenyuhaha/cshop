@@ -37,6 +37,7 @@ class GoodsMarketEnablePreImpl(override var context: Context,override var view: 
                 GoodsRepository.loadGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), GoodsVO.getEnableAuth())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
+                view.onSetTotalCount(resp.data.dataTotal);
                 //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_ENABLE,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {

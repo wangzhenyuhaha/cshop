@@ -37,6 +37,7 @@ class GoodsMarketDisablePreImpl(override var context: Context,override var view:
             )
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
+                view.onSetTotalCount(resp.data.dataTotal);
                 //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_DISABLE,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {

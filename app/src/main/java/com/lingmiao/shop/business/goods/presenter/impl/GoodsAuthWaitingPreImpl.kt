@@ -34,6 +34,7 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
             val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), "", GoodsVO.getWaitAuth())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
+                view.onSetTotalCount(resp.data.dataTotal);
                 //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_WAITING,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {

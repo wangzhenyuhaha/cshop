@@ -175,6 +175,10 @@ class GoodsStatusFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         mAdapter.remove(position)
     }
 
+    override fun onSetTotalCount(count: Int?) {
+
+    }
+
     override fun onLineSuccess() {
         EventBus.getDefault().post(BatchStatusEvent(goodsStatus!!))
         EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
