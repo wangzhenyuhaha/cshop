@@ -9,7 +9,6 @@ import com.lingmiao.shop.business.goods.GoodsSearchActivity
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
 import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
-import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.presenter.GoodsTabNumberPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsTabNumberPreImpl
@@ -153,25 +152,25 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
         viewPager.setCurrentItem(event.getNewTabIndex(), false)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshSingleGoodsTabNumber(event: GoodsNumberEvent) {
-        when (event.status) {
-            GOODS_STATUS_ALL -> {
-                tvTabAll.setTabNumber(event.number)
-            }
-            GOODS_STATUS_ENABLE -> {
-                tvTabSelling.setTabNumber(event.number)
-            }
-            GOODS_STATUS_WAITING -> {
-                tvTabWaiting.setTabNumber(event.number)
-            }
-            GOODS_STATUS_DISABLE -> {
-                tvTabOffLine.setTabNumber(event.number)
-            }
-            GOODS_STATUS_SOLD_OUT -> {
-                tvTabSoldOut.setTabNumber(event.number)
-            }
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun refreshSingleGoodsTabNumber(event: GoodsNumberEvent) {
+//        when (event.status) {
+//            GOODS_STATUS_ALL -> {
+//                tvTabAll.setTabNumber(event.number)
+//            }
+//            GOODS_STATUS_ENABLE -> {
+//                tvTabSelling.setTabNumber(event.number)
+//            }
+//            GOODS_STATUS_WAITING -> {
+//                tvTabWaiting.setTabNumber(event.number)
+//            }
+//            GOODS_STATUS_DISABLE -> {
+//                tvTabOffLine.setTabNumber(event.number)
+//            }
+//            GOODS_STATUS_SOLD_OUT -> {
+//                tvTabSoldOut.setTabNumber(event.number)
+//            }
+//        }
+//    }
 
 }

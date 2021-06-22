@@ -135,19 +135,19 @@ class GoodsFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChangeL
         viewPager.setCurrentItem(event.getTabIndex(), false)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshSingleGoodsTabNumber(event: GoodsNumberEvent) {
-        when (event.status) {
-            GOODS_STATUS_ENABLE -> {
-                tvTabSelling.setTabNumber(event.number)
-            }
-            GOODS_STATUS_IS_AUTH -> {
-                tvTabWaiting.setTabNumber(event.number)
-            }
-            GOODS_STATUS_DISABLE -> {
-                tvTabOffLine.setTabNumber(event.number)
-            }
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun refreshSingleGoodsTabNumber(event: GoodsNumberEvent) {
+//        when (event.status) {
+//            GOODS_STATUS_ENABLE -> {
+//                tvTabSelling.setTabNumber(event.number)
+//            }
+//            GOODS_STATUS_IS_AUTH -> {
+//                tvTabWaiting.setTabNumber(event.number)
+//            }
+//            GOODS_STATUS_DISABLE -> {
+//                tvTabOffLine.setTabNumber(event.number)
+//            }
+//        }
+//    }
 
 }

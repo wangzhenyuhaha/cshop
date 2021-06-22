@@ -185,12 +185,12 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {
         mAdapter.remove(position)
-        EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
+        //EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
     }
 
     override fun onGoodsDisable(goodsId: String?, position: Int) {
         mAdapter.remove(position)
-        EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
+        //EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
     }
 
     override fun onGoodsQuantity(quantity: String?, position: Int) {
@@ -199,7 +199,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onGoodsDelete(goodsId: String?, position: Int) {
         mAdapter.remove(position)
-        EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
+        //EventBus.getDefault().post(GoodsNumberEvent(goodsStatus!!,mAdapter.data.size));
     }
 
     override fun onLineSuccess() {

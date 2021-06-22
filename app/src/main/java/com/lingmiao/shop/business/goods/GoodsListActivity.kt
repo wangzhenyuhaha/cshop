@@ -176,26 +176,26 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         viewPager.setCurrentItem(event.getNewTabIndex(), false)
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshSingleGoodsTabNumber(event: GoodsNumberEvent) {
-        when (event.status) {
-            GoodsNewFragment.GOODS_STATUS_ALL -> {
-                tvTabAll.setTabNumber(event.number)
-            }
-            GoodsNewFragment.GOODS_STATUS_ENABLE -> {
-                tvTabSelling.setTabNumber(event.number)
-            }
-            GoodsNewFragment.GOODS_STATUS_WAITING -> {
-                tvTabWaiting.setTabNumber(event.number)
-            }
-            GoodsNewFragment.GOODS_STATUS_DISABLE -> {
-                tvTabOffLine.setTabNumber(event.number)
-            }
-            GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> {
-                tvTabSoldOut.setTabNumber(event.number)
-            }
-        }
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    fun refreshSingleGoodsTabNumber(event: GoodsNumberEvent) {
+//        when (event.status) {
+//            GoodsNewFragment.GOODS_STATUS_ALL -> {
+//                tvTabAll.setTabNumber(event.number)
+//            }
+//            GoodsNewFragment.GOODS_STATUS_ENABLE -> {
+//                tvTabSelling.setTabNumber(event.number)
+//            }
+//            GoodsNewFragment.GOODS_STATUS_WAITING -> {
+//                tvTabWaiting.setTabNumber(event.number)
+//            }
+//            GoodsNewFragment.GOODS_STATUS_DISABLE -> {
+//                tvTabOffLine.setTabNumber(event.number)
+//            }
+//            GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> {
+//                tvTabSoldOut.setTabNumber(event.number)
+//            }
+//        }
+//    }
 
     override fun loadNumberSuccess(vo: DashboardDataVo) {
 

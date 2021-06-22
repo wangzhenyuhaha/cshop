@@ -8,7 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.lingmiao.shop.business.goods.GoodsPublishActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
-import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
+//import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import com.lingmiao.shop.business.goods.fragment.GoodsFragment
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
@@ -16,6 +16,7 @@ import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
+import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import com.lingmiao.shop.business.tools.bean.RegionVo
 import kotlinx.coroutines.launch
@@ -40,7 +41,7 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
                 GoodsRepository.loadAllGoodsList(page.getPageIndex())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
-                EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_ALL,resp.data.dataTotal));
+                //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_ALL,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {
                 view.onLoadMoreFailed()
