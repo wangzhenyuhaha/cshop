@@ -10,6 +10,7 @@ import com.bigkoo.pickerview.view.TimePickerView
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
@@ -21,9 +22,8 @@ import com.lingmiao.shop.business.order.bean.OrderList
 import com.lingmiao.shop.business.order.bean.OrderNumberEvent
 import com.lingmiao.shop.business.order.presenter.OrderListPresenter
 import com.lingmiao.shop.business.order.presenter.impl.OrderListPresenterImpl
-import com.lingmiao.shop.util.DATE_FORMAT
-import com.lingmiao.shop.util.formatString
-import com.lingmiao.shop.util.getDatePicker
+import com.lingmiao.shop.util.*
+import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
 import kotlinx.android.synthetic.main.order_view_menu_header.*
 import org.greenrobot.eventbus.EventBus
@@ -39,11 +39,26 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     //    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUND
     private var orderType: String? = "ALL"
 
-    override fun getLayoutId(): Int? {
-        return R.layout.order_fragment_single_order;
-    }
+    private var mCStatus: String? = null;
 
-    private var mCStatus : String? = "";
+
+    var pvCustomTime: TimePickerView? = null;
+    var pvCustomTime2: TimePickerView? = null;
+    var mStart : Long? = null;
+    var mEnd : Long? = null;
+
+    companion object {
+
+        const val REQUEST_CODE = 64
+
+        @JvmStatic
+        fun newInstance(status: String) =
+            SingleOrderListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(STATUS, status)
+                }
+            }
+    }
 
     override fun initBundles() {
         super.initBundles()
@@ -52,12 +67,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
+    override fun getLayoutId(): Int? {
+        return R.layout.order_fragment_single_order;
+    }
+
     override fun initOthers(rootView: View) {
         super.initOthers(rootView)
-        mAdapter.setEmptyView(R.layout.order_empty,mLoadMoreRv)
 
-
-        when(orderType) {
+        when (orderType) {
             "PROCESSING" -> {
                 rgEnable.visiable();
             }
@@ -78,13 +95,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
 
         rgEnable.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.rbTaking) {
+            if (checkedId == R.id.rbTaking) {
                 mCStatus = "ACCEPT";
-            } else if(checkedId == R.id.rbShipping) {
+            } else if (checkedId == R.id.rbShipping) {
                 mCStatus = "SHIPPED";
-            } else if(checkedId == R.id.rbSign) {
+            } else if (checkedId == R.id.rbSign) {
                 mCStatus = "ROG";
             }
+            mLoadMoreDelegate?.refresh()
         }
 
         orderFilterTv.singleClick {
@@ -93,33 +111,28 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         initDate();
 
         val headview: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
-        headview.findViewById<RadioGroup>(R.id.rgAll).setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.rbContinue) {
-                //mCStatus = "ACCEPT";
-            } else if(checkedId == R.id.rbComplete) {
-                //mCStatus = "SHIPPED";
-            } else if(checkedId == R.id.rbCancel) {
-                //mCStatus = "ROG";
+        headview.findViewById<RadioGroup>(R.id.rgAll)
+            .setOnCheckedChangeListener { group, checkedId ->
+                if (checkedId == R.id.rbContinue) {
+                    mCStatus = "PROCESSING";
+                } else if (checkedId == R.id.rbComplete) {
+                    mCStatus = "COMPLETE";
+                } else if (checkedId == R.id.rbCancel) {
+                    mCStatus = "CANCELLED";
+                }
             }
-        }
 
         headview.findViewById<ITextView>(R.id.tvFinish).singleClick {
             drawerO.closeDrawers();
+            mLoadMoreDelegate?.refresh()
         }
     }
 
-
-    var pvCustomTime : TimePickerView?= null;
-    var pvCustomTime2 : TimePickerView? = null;
     fun initDate() {
         // 系统当前时间
         val selectedDate: Calendar = Calendar.getInstance()
         val startDate: Calendar = Calendar.getInstance()
-        startDate.set(
-            selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(
-                Calendar.DATE
-            )
-        )
+        startDate.set(selectedDate.get(Calendar.YEAR), 1, 1)
 
         val endDate: Calendar = Calendar.getInstance()
         endDate.set(
@@ -129,8 +142,15 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         )
 
         startOrderDateTv.singleClick {
-            pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate , { date, view ->
+            pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
                 startOrderDateTv.text = formatString(date, DATE_FORMAT)
+
+                val s = date2Date(startOrderDateTv.getViewText())?.time?:0;
+                mStart = s/1000;
+
+                if(mStart != null && mEnd != null) {
+                    mLoadMoreDelegate?.refresh()
+                }
                 //firstMenuTv.setText(formatDateTime(date))
             }, {
                 pvCustomTime?.returnData()
@@ -141,29 +161,23 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             pvCustomTime?.show();
         }
         endOrderDateTv.singleClick {
-            pvCustomTime2 = getDatePicker(mContext, selectedDate, startDate, endDate , { date, view ->
-                endOrderDateTv.setText(formatString(date, DATE_FORMAT))
-            }, {
-                pvCustomTime2?.returnData()
-                pvCustomTime2?.dismiss()
-            }, {
-                pvCustomTime2?.dismiss()
-            });
+            pvCustomTime2 =
+                getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
+                    endOrderDateTv.setText(formatString(date, DATE_FORMAT))
+                    val e = date2Date(endOrderDateTv.getViewText())?.time?:0;
+                    mEnd = e/1000;
+
+                    if(mStart != null && mEnd != null) {
+                        mLoadMoreDelegate?.refresh()
+                    }
+                }, {
+                    pvCustomTime2?.returnData()
+                    pvCustomTime2?.dismiss()
+                }, {
+                    pvCustomTime2?.dismiss()
+                });
             pvCustomTime2?.show();
         }
-    }
-
-        companion object {
-
-        const val REQUEST_CODE = 64
-
-        @JvmStatic
-        fun newInstance(status: String) =
-            SingleOrderListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(STATUS, status)
-                }
-            }
     }
 
     override fun initAdapter(): OrderListAdapter {
@@ -195,7 +209,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                                 showDialogLoading()
                                 mPresenter?.shipOrder(orderBean.sn!!);
                             })
-                          //发货
+                        //发货
 //                        val intent = Intent(activity, OrderSendGoodsActivity::class.java)
 //                        intent.putExtra("orderId", orderBean.sn)
 //                        intent.putExtra("shippingType", orderBean.shippingType)
@@ -267,11 +281,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 //                startActivity(intent)
                 OrderShowActivity.open(activity!!, orderBean, 11);
             }
+            emptyView = EmptyView(mContext).apply {
+                setBackgroundResource(R.color.color_ffffff)
+            }
         }
     }
 
     override fun autoRefresh(): Boolean {
-        if(isVisible) {
+        if (isVisible) {
             return true;
         }
         return false;
@@ -331,7 +348,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, mCStatus?:orderType!!, 0, 0, mAdapter.data)
+        mPresenter?.loadListData(page, mCStatus ?: orderType!!, mStart, mEnd, mAdapter.data)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -96,6 +96,7 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
 
+        mAdapter.setEmptyView(R.layout.order_empty,mLoadMoreRv)
 
         categoryAddTv.setOnClickListener {
             mPresenter?.showAddDialog(0);

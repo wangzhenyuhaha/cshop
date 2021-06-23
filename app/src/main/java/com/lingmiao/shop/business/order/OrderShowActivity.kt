@@ -72,29 +72,33 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 //        orderPayTypeTv
         orderTimeTv.text = stampToDate(mItem?.createTime);
 
-         orderRemarkTv.text = mItem?.remark;
-         orderDeliveryTimeTv.text = stampToDate(mItem?.shipTime);
+        orderRemarkTv.text = mItem?.remark;
+        orderDeliveryTimeTv.text = stampToDate(mItem?.shipTime);
 
         val address = mItem?.shipProvince.orEmpty() + mItem?.shipCity.orEmpty() +
                 mItem?.shipCounty.orEmpty() +
                 mItem?.shipTown.orEmpty() + mItem?.shipAddr.orEmpty()
-         orderAddressTv.text = address
+        orderAddressTv.text = address
 
 
-         orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile);
 
-        var shippingType = "快递发货"
-        if (mItem?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
-            shippingType = "同城配送"
-        } else if (mItem?.shippingType == IConstant.SHIP_TYPE_SELF) {
-            shippingType = "门店自提"
+        orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile);
+        orderOwnerTv.singleClick {
+            OtherUtils.goToDialApp(context!!, mItem?.shipMobile)
         }
 
-        orderShipTypeTv.text = shippingType;
-        orderShipRiderTv.text = "张三";
+        var shippingType = "骑手配送"
+        var shippingMobile = mItem?.riderMobile;
+        if (mItem?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
+            shippingType = "商家配送"
+            shippingMobile = mItem?.sellerMobile;
+        }
+        //orderShipTypeTv.text = shippingType;
 
+        orderShipHintTv.text = shippingType;
+        orderShipRiderTv.text = shippingMobile;
         orderShipRiderTv.singleClick {
-            OtherUtils.goToDialApp(context!!, IConstant.SERVICE_PHONE)
+            OtherUtils.goToDialApp(context!!, shippingMobile)
         }
 
         tvReplenishRemark.text = mItem?.replenishRemark;

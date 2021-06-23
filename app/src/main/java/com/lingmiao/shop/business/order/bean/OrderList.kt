@@ -97,6 +97,10 @@ data class OrderList(
     var shipCounty: String?,
     @SerializedName("ship_mobile")
     var shipMobile: String?,
+    @SerializedName("rider_mobile")
+    var riderMobile: String?,
+    @SerializedName("seller_phone")
+    var sellerMobile: String?,
     @SerializedName("ship_name")
     var shipName: String?,
     @SerializedName("ship_no")

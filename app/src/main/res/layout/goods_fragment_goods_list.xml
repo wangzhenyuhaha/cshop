@@ -1,139 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/fragment_base_load_more"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <include
-            layout="@layout/fragment_base_load_more"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+    <View style="@style/DivideLineHorizontal" />
 
-        <View style="@style/DivideLineHorizontal" />
+    <LinearLayout
+        android:id="@+id/rl_goods_check"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ffffff"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/rl_goods_check"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_48"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_ffffff"
+        <CheckBox
+            android:id="@+id/cb_goods_list_check_all"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:button="@drawable/selector_goods_spce_checkbox"
+            android:paddingStart="@dimen/dimen_5"
+            android:text="全选"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_13" />
+
+        <TextView
+            android:id="@+id/tvGoodsSelectCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="已选择0件商品"
+            android:textColor="@color/color_999999"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_goods_on"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/cb_goods_list_check_all"
             android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/dimen_15"
-            android:visibility="gone">
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="批量上架"
+            android:textColor="@color/color_3870EA"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="gone" />
 
-            <CheckBox
-                android:id="@+id/cb_goods_list_check_all"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:button="@drawable/selector_goods_spce_checkbox"
-                android:paddingStart="@dimen/dimen_5"
-                android:text="全选"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/dimen_13" />
-
-            <TextView
-                android:id="@+id/tvGoodsSelectCount"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="已选择0件商品"
-                android:visibility="gone"
-                android:textColor="@color/color_999999"/>
-
-            <TextView
-                android:id="@+id/tv_goods_on"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/cb_goods_list_check_all"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:text="批量上架"
-                android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_goods_off"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/cb_goods_list_check_all"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:text="批量下架"
-                android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13"
-                android:visibility="gone" />
-
-            <TextView
-                android:visibility="gone"
-                android:id="@+id/tv_goods_rebate"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/tv_goods_off"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:text="设置佣金"
-                android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13" />
-
-            <TextView
-                android:id="@+id/tv_goods_quantity"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/tv_goods_rebate"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:text="设置库存"
-                android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tv_goods_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_toEndOf="@+id/tv_goods_rebate"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/dimen_10"
-                android:text="批量删除"
-                android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13" />
-
-            <TextView
-                android:id="@+id/tv_goods_cancel_batch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
-                android:text="完成操作"
-                android:textColor="@color/red" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/rl_goods_option"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_48"
-            android:layout_alignParentBottom="true"
-            android:background="@color/color_ffffff"
+        <TextView
+            android:id="@+id/tv_goods_off"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/cb_goods_list_check_all"
             android:gravity="center_vertical"
-            android:paddingHorizontal="@dimen/dimen_15">
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="批量下架"
+            android:textColor="@color/color_3870EA"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/tvGoodsCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="共0件商品"
-                android:textColor="@color/color_999999"/>
+        <TextView
+            android:id="@+id/tv_goods_rebate"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/tv_goods_off"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="设置佣金"
+            android:textColor="@color/color_3870EA"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="gone" />
 
-            <TextView
-                android:textColor="@color/color_666666"
-                android:id="@+id/tv_goods_batch"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
-                android:text="批量操作" />
-        </LinearLayout>
-        <View style="@style/DivideLineHorizontal" />
+        <TextView
+            android:id="@+id/tv_goods_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/tv_goods_rebate"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="设置库存"
+            android:textColor="@color/color_3870EA"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="gone" />
 
+        <TextView
+            android:id="@+id/tv_goods_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@+id/tv_goods_rebate"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:text="批量删除"
+            android:textColor="@color/color_3870EA"
+            android:textSize="@dimen/dimen_13" />
+
+        <TextView
+            android:id="@+id/tv_goods_cancel_batch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:text="完成操作"
+            android:textColor="@color/red" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/rl_goods_option"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_ffffff"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="@dimen/dimen_15">
+
+        <TextView
+            android:id="@+id/tvGoodsCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="共0件商品"
+            android:textColor="@color/color_999999" />
+
+        <TextView
+            android:id="@+id/tv_goods_batch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|right"
+            android:text="批量操作"
+            android:textColor="@color/color_666666" />
+    </LinearLayout>
+
+    <View style="@style/DivideLineHorizontal" />
+
+</LinearLayout>
 

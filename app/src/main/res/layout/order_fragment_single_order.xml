@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawerO"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
 
     <androidx.core.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -106,7 +104,7 @@
                         android:drawableRight="@mipmap/common_arrow_right"
                         android:layout_width="85dp"
                         android:layout_height="@dimen/dimen_17"
-                        android:text="2020-09-09"
+                        android:hint="请选择开始时间"
                         android:drawablePadding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_11" />
@@ -132,7 +130,7 @@
                         android:drawableRight="@mipmap/common_arrow_right"
                         android:layout_width="85dp"
                         android:layout_height="@dimen/dimen_17"
-                        android:text="2020-09-09"
+                        android:hint="请选择结束时间"
                         android:drawablePadding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_11" />
