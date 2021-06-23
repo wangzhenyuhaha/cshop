@@ -197,4 +197,5 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         app:headerLayout="@layout/goods_view_menu_header" />
+
 </androidx.drawerlayout.widget.DrawerLayout>

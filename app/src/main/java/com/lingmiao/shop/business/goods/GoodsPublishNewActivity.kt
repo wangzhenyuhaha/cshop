@@ -223,9 +223,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         goodsVO.apply {
             this.categoryId = categoryId
             this.categoryName = categoryName
-            if(this.shopCatId?.isNullOrEmpty() == true) {
-                this.shopCatId = categoryId
-                this.shopCatName = categoryName
+            if(this.shopCatId.isNullOrEmpty() == true) {
+//                this.shopCatId = categoryId
+//                this.shopCatName = categoryName
+                onUpdateGroup(categoryId, categoryName);
             }
         }
     }

@@ -336,11 +336,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 销售额
         salesDataOfTodayTv.singleClick {
-            ActivityUtils.startActivity(StatsActivity::class.java)
+            //ActivityUtils.startActivity(StatsActivity::class.java)
         }
         // 用户数据
         userDataOfTodayTv.singleClick {
-            ActivityUtils.startActivity(UserManagerActivity::class.java)
+            UserManagerActivity.newUser(context!!);
         }
 
 

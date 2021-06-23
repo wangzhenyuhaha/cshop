@@ -1,13 +1,17 @@
 package com.lingmiao.shop.business.sales
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import androidx.fragment.app.Fragment
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
+import com.lingmiao.shop.business.sales.bean.SalesVo
 import com.lingmiao.shop.business.sales.fragment.UserStatusFragment
 import com.lingmiao.shop.business.sales.presenter.IUserManagerPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.UserManagerPreImpl
-import kotlinx.android.synthetic.main.goods_fragment_goods_top_menu.*
 import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
 
 /**
@@ -19,12 +23,31 @@ class UserManagerActivity : BaseActivity<IUserManagerPresenter>(), IUserManagerP
 
     private var mTabTitles = arrayOf("全部用户", "新增用户")
 
+    private var mCurrentIndex : Int = ALL_USER;
+
+    companion object {
+
+        const val NEW_USER = 1;
+        const val ALL_USER = 1;
+
+        fun newUser(context: Context) {
+            val intent = Intent(context, UserManagerActivity::class.java)
+            intent.putExtra(IConstant.BUNDLE_KEY_OF_VIEW_TYPE, NEW_USER)
+            context.startActivity(intent)
+        }
+
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.sales_activity_stats;
     }
 
     override fun useLightMode(): Boolean {
         return false
+    }
+
+    override fun initBundles() {
+        mCurrentIndex = intent?.getIntExtra(IConstant.BUNDLE_KEY_OF_VIEW_TYPE, ALL_USER)?:ALL_USER;
     }
 
     override fun createPresenter(): IUserManagerPresenter {
@@ -50,6 +73,8 @@ class UserManagerActivity : BaseActivity<IUserManagerPresenter>(), IUserManagerP
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)
         tabLayout.setViewPager(viewPager)
+
+        viewPager.currentItem = mCurrentIndex;
     }
 
 }

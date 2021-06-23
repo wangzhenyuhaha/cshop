@@ -17,7 +17,9 @@ interface OrderApi {
     @WithHiResponse
     fun getOrderList(
         @Query("page_no") pageNo: String, @Query("page_size") pageSize: String,
-        @Query("order_status") orderStatus: String,@Query("channel") channel: String = "app"
+        @Query("order_status") orderStatus: String,
+        @Query("start_time") start : Long?, @Query("end_time") end : Long?,
+        @Query("channel") channel: String = "app"
     ): Call<PageVO<OrderList>>
 
 

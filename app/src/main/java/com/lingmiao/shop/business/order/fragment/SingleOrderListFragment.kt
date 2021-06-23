@@ -3,8 +3,17 @@ package com.lingmiao.shop.business.order.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
-import com.blankj.utilcode.util.ActivityUtils
+import android.widget.RadioGroup
+import com.bigkoo.pickerview.view.TimePickerView
+import com.james.common.base.loadmore.BaseLoadMoreFragment
+import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
+import com.james.common.view.ITextView
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.order.*
 import com.lingmiao.shop.business.order.adapter.OrderListAdapter
@@ -12,10 +21,13 @@ import com.lingmiao.shop.business.order.bean.OrderList
 import com.lingmiao.shop.business.order.bean.OrderNumberEvent
 import com.lingmiao.shop.business.order.presenter.OrderListPresenter
 import com.lingmiao.shop.business.order.presenter.impl.OrderListPresenterImpl
-import com.james.common.base.loadmore.BaseLoadMoreFragment
-import com.james.common.base.loadmore.core.IPage
-import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.util.DATE_FORMAT
+import com.lingmiao.shop.util.formatString
+import com.lingmiao.shop.util.getDatePicker
+import kotlinx.android.synthetic.main.order_fragment_single_order.*
+import kotlinx.android.synthetic.main.order_view_menu_header.*
 import org.greenrobot.eventbus.EventBus
+import java.util.*
 
 private const val STATUS = "param1"
 
@@ -27,9 +39,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     //    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUND
     private var orderType: String? = "ALL"
 
+    override fun getLayoutId(): Int? {
+        return R.layout.order_fragment_single_order;
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    private var mCStatus : String? = "";
+
+    override fun initBundles() {
+        super.initBundles()
         arguments?.let {
             orderType = it.getString(STATUS)
         }
@@ -38,10 +55,105 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     override fun initOthers(rootView: View) {
         super.initOthers(rootView)
         mAdapter.setEmptyView(R.layout.order_empty,mLoadMoreRv)
+
+
+        when(orderType) {
+            "PROCESSING" -> {
+                rgEnable.visiable();
+            }
+            "COMPLETE" -> {
+                dateLayout.visiable();
+                orderFilterTv.gone()
+            }
+            "ALL" -> {
+                dateLayout.visiable();
+                orderFilterTv.visiable()
+            }
+            else -> {
+                rgEnable.gone();
+                dateLayout.gone();
+                orderFilterTv.gone()
+            }
+        }
+
+
+        rgEnable.setOnCheckedChangeListener { group, checkedId ->
+            if(checkedId == R.id.rbTaking) {
+                mCStatus = "ACCEPT";
+            } else if(checkedId == R.id.rbShipping) {
+                mCStatus = "SHIPPED";
+            } else if(checkedId == R.id.rbSign) {
+                mCStatus = "ROG";
+            }
+        }
+
+        orderFilterTv.singleClick {
+            drawerO.openDrawer(Gravity.RIGHT)
+        }
+        initDate();
+
+        val headview: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
+        headview.findViewById<RadioGroup>(R.id.rgAll).setOnCheckedChangeListener { group, checkedId ->
+            if(checkedId == R.id.rbContinue) {
+                //mCStatus = "ACCEPT";
+            } else if(checkedId == R.id.rbComplete) {
+                //mCStatus = "SHIPPED";
+            } else if(checkedId == R.id.rbCancel) {
+                //mCStatus = "ROG";
+            }
+        }
+
+        headview.findViewById<ITextView>(R.id.tvFinish).singleClick {
+            drawerO.closeDrawers();
+        }
     }
 
 
-    companion object {
+    var pvCustomTime : TimePickerView?= null;
+    var pvCustomTime2 : TimePickerView? = null;
+    fun initDate() {
+        // 系统当前时间
+        val selectedDate: Calendar = Calendar.getInstance()
+        val startDate: Calendar = Calendar.getInstance()
+        startDate.set(
+            selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(
+                Calendar.DATE
+            )
+        )
+
+        val endDate: Calendar = Calendar.getInstance()
+        endDate.set(
+            selectedDate.get(Calendar.YEAR) + 5, selectedDate.get(Calendar.MONTH), selectedDate.get(
+                Calendar.DATE
+            )
+        )
+
+        startOrderDateTv.singleClick {
+            pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate , { date, view ->
+                startOrderDateTv.text = formatString(date, DATE_FORMAT)
+                //firstMenuTv.setText(formatDateTime(date))
+            }, {
+                pvCustomTime?.returnData()
+                pvCustomTime?.dismiss()
+            }, {
+                pvCustomTime?.dismiss()
+            });
+            pvCustomTime?.show();
+        }
+        endOrderDateTv.singleClick {
+            pvCustomTime2 = getDatePicker(mContext, selectedDate, startDate, endDate , { date, view ->
+                endOrderDateTv.setText(formatString(date, DATE_FORMAT))
+            }, {
+                pvCustomTime2?.returnData()
+                pvCustomTime2?.dismiss()
+            }, {
+                pvCustomTime2?.dismiss()
+            });
+            pvCustomTime2?.show();
+        }
+    }
+
+        companion object {
 
         const val REQUEST_CODE = 64
 
@@ -219,7 +331,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, orderType!!, mAdapter.data)
+        mPresenter?.loadListData(page, mCStatus?:orderType!!, 0, 0, mAdapter.data)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -24,6 +24,7 @@ interface GoodsListOfMenuPre : BasePresenter {
 
         fun onUpdateGroup(groupId : List<ShopGroupVO>?, groupName: String?);
 
+        fun setGoodsCount(count : Int);
     }
 
 }

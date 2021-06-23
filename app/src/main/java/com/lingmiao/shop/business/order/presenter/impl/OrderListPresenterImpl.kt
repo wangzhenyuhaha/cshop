@@ -19,6 +19,8 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
     override fun loadListData(
         page: IPage,
         status: String,
+        start: Long?,
+        end: Long?,
         datas: MutableList<OrderList>
     ) {
         mCoroutine.launch {
@@ -28,7 +30,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
             }
 
             val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),IConstant.PAGE_SIZE.toString(),
-                status).awaitHiResponse()
+                status, start, end).awaitHiResponse()
             if (resp.isSuccess) {
                 val orderList = resp.data.data
                 LogUtils.d("orderList:"+orderList?.size)

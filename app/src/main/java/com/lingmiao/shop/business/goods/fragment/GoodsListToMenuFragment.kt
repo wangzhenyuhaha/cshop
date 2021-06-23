@@ -118,6 +118,10 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
         mPresenter?.loadListData(catPath, page, mAdapter.data)
     }
 
+    override fun setGoodsCount(count : Int) {
+        goodsCountTv.text = String.format("共%s件商品，", count);
+    }
+
     fun setCheckedCount(count: Int) {
         goodsCheckedCountTv.text = String.format("已选择%s件商品", count);
     }

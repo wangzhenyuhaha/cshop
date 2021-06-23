@@ -10,6 +10,8 @@ interface OrderListPresenter: BasePresenter {
     fun loadListData(
         page: IPage,
         status: String,
+        start: Long?,
+        end: Long?,
         data: MutableList<OrderList>
     )
 

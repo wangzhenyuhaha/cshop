@@ -119,6 +119,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             GoodsNewFragment.GOODS_STATUS_ENABLE -> {
                 tv_goods_off.visibility = View.VISIBLE;
             }
+            GoodsNewFragment.GOODS_STATUS_WAITING,
             GoodsNewFragment.GOODS_STATUS_DISABLE -> {
                 tv_goods_on.visibility = View.VISIBLE;
             }

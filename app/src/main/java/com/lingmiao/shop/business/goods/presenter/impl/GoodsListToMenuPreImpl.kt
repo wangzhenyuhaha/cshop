@@ -30,6 +30,7 @@ class GoodsListToMenuPreImpl(val context: Context, val view : GoodsListToMenuPre
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onLoadMoreSuccess(goodsList, goodsList?.size?:0 >= 10)
+                view.setGoodsCount(resp.data.dataTotal)
             } else {
                 view.onLoadMoreFailed()
             }
