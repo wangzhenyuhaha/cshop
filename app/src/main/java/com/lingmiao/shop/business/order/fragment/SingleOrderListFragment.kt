@@ -303,44 +303,44 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     override fun onTakeSuccess() {
         showToast("接单成功")
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun onRefuseSuccess() {
         showToast("操作成功")
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun onDeleteOrderSuccess() {
         showToast("删除成功")
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun onShipped() {
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun onSigned() {
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun onRefusedService() {
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun onAcceptService() {
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun verifySuccess() {
         mLoadMoreDelegate?.refresh()
-        EventBus.getDefault().post(OrderNumberEvent())
+        //EventBus.getDefault().post(OrderNumberEvent())
     }
 
     override fun verifyFailed() {

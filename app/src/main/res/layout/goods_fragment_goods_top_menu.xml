@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.james.common.view.IRelativeLayout
+    <com.james.common.view.ILinearLayout
         android:id="@+id/addMenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +14,7 @@
         android:layout_marginTop="@dimen/dimen_10"
         app:ivBgColor="@color/gray_bg_click"
         app:ivRadius="@dimen/dimen_5"
+        android:orientation="horizontal"
         android:layout_marginBottom="@dimen/dimen_10">
 
         <TextView
@@ -23,10 +24,24 @@
             android:paddingHorizontal="@dimen/dimen_15"
             android:gravity="center_vertical"
             android:drawableRight="@mipmap/goods_spec_blue_plus"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="添加菜单"/>
-    </com.james.common.view.IRelativeLayout>
+
+        <TextView
+            android:id="@+id/menuSortTv"
+            android:layout_width="100dp"
+            android:paddingLeft="@dimen/dimen_15"
+            android:paddingRight="@dimen/dimen_10"
+            android:layout_height="@dimen/dimen_38"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/ic_sort_up"
+            android:text="菜单排序"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/dimen_14" />
+
+    </com.james.common.view.ILinearLayout>
 
     <include
         android:layout_width="match_parent"
@@ -42,22 +57,14 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dimen_15"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tvMenuSort"
             android:text=""/>
-
-        <TextView
-            android:id="@+id/menuSortTv"
-            android:layout_width="100dp"
-            android:layout_height="@dimen/dimen_38"
-            android:gravity="center"
-            android:text="菜单排序"
-            android:textColor="@color/color_999999"
-            android:textSize="@dimen/dimen_14" />
 
         <CheckBox
             android:id="@+id/menuAllCheckCb"

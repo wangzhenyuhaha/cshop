@@ -63,6 +63,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
     }
 
 
+
     private fun initView() {
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this)
         adapter = OrderFragmentAdapter(childFragmentManager)

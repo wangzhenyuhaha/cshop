@@ -25,28 +25,28 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
     ) {
         mCoroutine.launch {
 
-            if (datas.isEmpty()) {
-                view.showPageLoading()
-            }
+//            if (datas.isEmpty()) {
+//                view.showPageLoading()
+//            }
 
             val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),IConstant.PAGE_SIZE.toString(),
                 status, start, end).awaitHiResponse()
             if (resp.isSuccess) {
                 val orderList = resp.data.data
                 LogUtils.d("orderList:"+orderList?.size)
-                if(page.isRefreshing()){
-                    LogUtils.d("page.isRefreshing()")
-                    EventBus.getDefault().post(OrderTabNumberEvent(status,resp.data.dataTotal))
-                }
+//                if(page.isRefreshing()){
+//                    LogUtils.d("page.isRefreshing()")
+//                   // EventBus.getDefault().post(OrderTabNumberEvent(status,resp.data.dataTotal))
+//                }
                 view.onLoadMoreSuccess(orderList, orderList.isNotEmpty())
-                if(page.isRefreshing()&&orderList.isNullOrEmpty()){
-//                    view.showNoData()
-                    LogUtils.d("showNoData")
-                }
+//                if(page.isRefreshing()&&orderList.isNullOrEmpty()){
+////                    view.showNoData()
+//                    LogUtils.d("showNoData")
+//                }
             } else {
                 view.onLoadMoreFailed()
             }
-            view.hidePageLoading()
+            //view.hidePageLoading()
         }
     }
 

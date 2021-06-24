@@ -45,6 +45,10 @@ class SpecSettingPreImpl(val view: SpecSettingPre.SpceSettingView) : BasePreImpl
         }
 
         // 3.将相同 SpecValue 值的数据保留 (规格值的个数不一致时，说明新增了一种规格类型，故不保留数据)
+        if(specList.isEmpty() || specList.first() == null
+            || oldList.isEmpty() ||oldList.first() == null) {
+            return;
+        }
         if (oldList.isNotEmpty() && oldList.first().specList?.size == specList.first().valueList?.size) {
             skuList.forEachIndexed { index, newSku ->
                 oldList.forEach { oldSku ->

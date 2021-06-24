@@ -206,20 +206,26 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
 //                }
 //            }
             (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-            menuSortTv.visiable();
+            //menuSortTv.visiable();
             menuCancelTv.gone();
             menuDeleteTv.gone();
+            menuBottom.gone();
+            addMenuLayout.visiable();
         }
         // 操作完成
         menuDeleteTv.setOnClickListener {
             (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-            menuSortTv.visiable();
+            //menuSortTv.visiable();
             //menuCancelTv.gone();
             menuDeleteTv.gone();
+            menuBottom.gone();
+            addMenuLayout.visiable();
         }
         // 排序
         menuSortTv.singleClick {
-            menuSortTv.gone();
+            //menuSortTv.gone();
+            addMenuLayout.gone();
+            menuBottom.visiable();
             //.visiable();
             menuDeleteTv.visiable();
             (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true);

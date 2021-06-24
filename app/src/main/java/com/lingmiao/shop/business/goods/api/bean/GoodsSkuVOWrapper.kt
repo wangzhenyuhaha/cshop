@@ -10,7 +10,7 @@ import com.james.common.utils.exts.isNotBlank
 class GoodsSkuVOWrapper : GoodsSkuVO() {
 
     // 业务字段
-    var skuNameDesc: String? = null
+    var skuNameDesc: String? = ""
     // id拼接，格式如下：id1,id2,id3
     var skuIds: String? = null
     var isChecked: Boolean = false

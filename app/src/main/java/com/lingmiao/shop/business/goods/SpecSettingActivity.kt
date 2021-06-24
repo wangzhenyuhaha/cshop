@@ -105,7 +105,6 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         initAdapter()
         initBottomView()
         mPresenter.loadSpecKeyList(goodsId)
-        mPresenter.loadSpecListByCid(categoryId);
     }
 
     private fun initAdapter() {
@@ -221,6 +220,8 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         mAdapter?.replaceData(skuCache.skuList ?: arrayListOf())
         // 展示顶部规格名称
         specContainerLayout.addSpecItems(skuCache.specInfo, true)
+
+        mPresenter.loadSpecListByCid(categoryId);
     }
 
     override fun onLoadedSpecListByCid(list: List<SpecKeyVO>) {
