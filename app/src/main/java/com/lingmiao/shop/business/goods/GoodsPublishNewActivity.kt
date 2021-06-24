@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.lingmiao.shop.R
@@ -7,9 +8,14 @@ import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.*
+import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
+import com.lingmiao.shop.business.photo.PhotoHelper
+import com.lingmiao.shop.util.GlideUtils
+import com.luck.picture.lib.entity.LocalMedia
 import kotlinx.android.synthetic.main.goods_activity_publish_new.*
+import kotlinx.android.synthetic.main.goods_adapter_goods_gallery.*
 import kotlinx.android.synthetic.main.goods_include_publish_section1.*
 import kotlinx.android.synthetic.main.goods_include_publish_section2.*
 import kotlinx.android.synthetic.main.goods_include_publish_section3_new.*
@@ -304,6 +310,41 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     private fun initSection2View() {
         galleryRv.setCountLimit(1, 20)
+        deleteIv.gone();
+        imageView.singleClick {
+            openGallery();
+        }
+    }
+
+    private fun openGallery() {
+        val menus = MediaMenuPop.TYPE_SELECT_PHOTO or MediaMenuPop.TYPE_PLAY_PHOTO
+        MediaMenuPop(context, menus).apply {
+            setOnClickListener { type ->
+                when (type) {
+                    MediaMenuPop.TYPE_SELECT_PHOTO -> {
+                        PhotoHelper.openAlbum(context as Activity, 1, null, true, 32) {
+//                            addDataList(convert2GalleryVO(it))
+                            val item = convert2GalleryVO(it)[0];
+                            GlideUtils.setImageUrl1(imageView, item?.original)
+                        }
+                    }
+                    MediaMenuPop.TYPE_PLAY_PHOTO -> {
+                        PhotoHelper.openCamera(context as Activity, null, true, 32) {
+                            val item = convert2GalleryVO(it)[0];
+                            GlideUtils.setImageUrl1(imageView, item?.original)
+                        }
+                    }
+                }
+            }
+        }.showPopupWindow()
+    }
+
+    private fun convert2GalleryVO(list: List<LocalMedia>): List<GoodsGalleryVO> {
+        val galleryList = mutableListOf<GoodsGalleryVO>()
+        list.forEach {
+            galleryList.add(GoodsGalleryVO.convert(it))
+        }
+        return galleryList
     }
 
     private fun initSection3View() {

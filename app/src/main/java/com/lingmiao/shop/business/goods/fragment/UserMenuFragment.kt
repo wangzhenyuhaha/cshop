@@ -13,7 +13,9 @@ import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.GoodsOfMenuActivity
 import com.lingmiao.shop.business.goods.UserMenuEditActivity
@@ -54,6 +56,8 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
         return R.layout.goods_fragment_goods_top_menu;
     }
 
+    var mSelectPosition: Int? = null;
+    var mCheckedItem : ShopGroupVO? = null;
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
         val dadapter = MenuOfUserAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
@@ -65,6 +69,9 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
             setOnItemChildClickListener { adapter, view, position ->
                 var item = adapter.getItem(position) as ShopGroupVO;
                 when (view.id) {
+                    R.id.menuTopTv -> {
+                        handleSort(position, item);
+                    }
                     R.id.menuEditTv -> {
                         UserMenuEditActivity.openActivity(activity!!, mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
                     }
@@ -74,7 +81,6 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
                     }
                     R.id.menuVisibleCb -> {
                         item.disable = if(item.disable == 1) 0 else 1;
-
                         mPresenter?.updateGroup(item, position);
                     }
                     R.id.menuDeleteTv -> {
@@ -102,9 +108,12 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
             }
         }
 
+        var mStartPoi : Int = -1;
+
         val listener: OnItemDragListener = object : OnItemDragListener {
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
                 LogUtils.d(" ..start : $pos")
+                mStartPoi = pos;
                 val holder = viewHolder as BaseViewHolder
                 //                holder.setTextColor(R.id.tv, Color.WHITE);
             }
@@ -119,9 +128,30 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
             }
 
             override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
-                LogUtils.d(" ..end : $pos")
-                val holder = viewHolder as BaseViewHolder
-                //                holder.setTextColor(R.id.tv, Color.BLACK);
+                LogUtils.d(" ..end : $pos");
+                if(pos > 0) {
+                    mSelectPosition = pos;
+
+                    if(mStartPoi > pos) {
+                        // 向上
+                        mAdapter.notifyItemRangeChanged(pos, mStartPoi-pos+1);
+                    } else {
+                        // 向上
+                        mAdapter.notifyItemRangeChanged(mStartPoi, pos-mStartPoi+1);
+
+                    }
+
+                    val pre = dadapter.data.get(pos-1);
+                    val current = dadapter.data.get(pos);
+                     mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort+1);
+                } else {
+                    // 移到顶
+                    val item = dadapter.data.get(pos);
+                    mPresenter?.sort(isTop!!, item.shopCatId!!, 0);
+                    handleSort(0, item);
+                }
+
+                //val holder = viewHolder as BaseViewHolder
             }
         }
 
@@ -135,36 +165,64 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
         return dadapter;
     }
 
+    fun handleSort(position: Int, toPosition : Int, item : ShopGroupVO, sortValue : Int) {
+        mSelectPosition = position;
+        // 移除
+        mAdapter.remove(position);
+        // 放置顶部
+        mAdapter.addData(toPosition, item);
+        // 更新第二条
+        mAdapter.notifyItemChanged(toPosition+1);
+        // 滑到顶部
+        mLoadMoreRv.smoothScrollToPosition(toPosition);
+
+        mPresenter?.sort(isTop!!, item.shopCatId!!, sortValue);
+    }
+
+    fun handleSort(position: Int, item : ShopGroupVO) {
+        handleSort(position, 0, item, 0);
+    }
+
     override fun initOthers(rootView: View) {
         menuAddTv.setOnClickListener {
             UserMenuEditActivity.openActivity(activity!!, "0", null);
         }
-        menuCancelTv.setOnClickListener {
-            menuBottom.visibility = View.GONE;
-            menuAllCheckCb.isChecked = false;
-            var list = mAdapter?.data?.filter { it?.isChecked == true };
-            if(list?.size > 0) {
-                list?.forEachIndexed { index, goodsVO ->
-                    goodsVO.isChecked = false;
-                }
-            }
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-        }
+
         menuAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
                 goodsVO.isChecked = isChecked;
             }
             mAdapter?.notifyDataSetChanged();
         }
-        menuDeleteTv.setOnClickListener {
-            mAdapter.data.forEachIndexed { index, shopGroupVO ->
 
-            }
-            //mLoadMoreDelegate?.refresh()
+        // 取消操作
+        menuCancelTv.setOnClickListener {
+//            menuBottom.visibility = View.GONE;
+//            menuAllCheckCb.isChecked = false;
+//            var list = mAdapter?.data?.filter { it?.isChecked == true };
+//            if(list?.size > 0) {
+//                list?.forEachIndexed { index, goodsVO ->
+//                    goodsVO.isChecked = false;
+//                }
+//            }
+            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
+            menuSortTv.visiable();
+            menuCancelTv.gone();
+            menuDeleteTv.gone();
         }
-        menuDeleteTv.singleClick {
-//            val list = mAdapter?.data?.filter { it-> it.isChecked };
-//            mPresenter?.deleteGoodsGroup()
+        // 操作完成
+        menuDeleteTv.setOnClickListener {
+            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
+            menuSortTv.visiable();
+            //menuCancelTv.gone();
+            menuDeleteTv.gone();
+        }
+        // 排序
+        menuSortTv.singleClick {
+            menuSortTv.gone();
+            //.visiable();
+            menuDeleteTv.visiable();
+            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true);
         }
 
         mSmartRefreshLayout?.setEnableRefresh(false);
@@ -184,6 +242,10 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
 
     override fun onGroupUpdated(position: Int) {
         mAdapter?.notifyItemChanged(position);
+    }
+
+    override fun onSortSuccess() {
+
     }
 
     override fun useEventBus(): Boolean {

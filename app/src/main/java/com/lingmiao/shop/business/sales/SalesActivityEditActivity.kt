@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
+import com.blankj.utilcode.util.TimeUtils.string2Date
 import com.james.common.base.BaseActivity
 import com.james.common.exception.BizException
 import com.james.common.utils.exts.*
@@ -116,14 +117,14 @@ class SalesActivityEditActivity : BaseActivity<ISalesEditPresenter>(), ISalesEdi
                 showToast("请输入满减金额")
                 return@singleClick;
             }
-            if(mItem?.rangeType == null) {
+            if(mItem?.rangeType == null || mItem?.rangeType == 0) {
                 showToast("请选择参与活动的商品")
                 return@singleClick;
             }
 
             mItem?.title = menuNameEdt.getViewText()
-            val s = dateTime2Date(firstMenuTv.getViewText())?.time?:0;
-            val e = dateTime2Date(secondMenuTv.getViewText())?.time?:0;
+            val s = string2Date(firstMenuTv.getViewText(), MINUTES_TIME_FORMAT)?.time?:0;
+            val e = string2Date(secondMenuTv.getViewText(), MINUTES_TIME_FORMAT)?.time?:0;
             mItem?.startTime = s/1000;
             mItem?.endTime = e/1000;
 

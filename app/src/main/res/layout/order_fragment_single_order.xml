@@ -102,7 +102,7 @@
                     <TextView
                         android:id="@+id/startOrderDateTv"
                         android:drawableRight="@mipmap/common_arrow_right"
-                        android:layout_width="85dp"
+                        android:layout_width="100dp"
                         android:layout_height="@dimen/dimen_17"
                         android:hint="请选择开始时间"
                         android:drawablePadding="@dimen/dimen_5"
@@ -128,7 +128,7 @@
                     <TextView
                         android:id="@+id/endOrderDateTv"
                         android:drawableRight="@mipmap/common_arrow_right"
-                        android:layout_width="85dp"
+                        android:layout_width="100dp"
                         android:layout_height="@dimen/dimen_17"
                         android:hint="请选择结束时间"
                         android:drawablePadding="@dimen/dimen_5"

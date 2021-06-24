@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <com.james.common.view.IRelativeLayout
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_14"
+        android:layout_marginTop="@dimen/dimen_15"
         android:paddingLeft="@dimen/dimen_15"
-        android:paddingTop="@dimen/dimen_11"
+        android:paddingTop="@dimen/dimen_15"
         android:paddingBottom="@dimen/dimen_18"
         app:ivBgColor="@color/color_ffffff">
 
         <!--        app:ivRadius="@dimen/dimen_5"-->
 
         <ImageView
-            android:visibility="gone"
             android:id="@+id/menuIconIv"
             android:layout_width="@dimen/dimen_29"
-            android:layout_height="@dimen/dimen_29" />
+            android:layout_height="@dimen/dimen_29"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/menuNameTv"
@@ -66,38 +68,56 @@
             android:visibility="gone"
             tools:text="排序：1" />
 
+
         <CheckBox
             android:id="@+id/menuCheckCb"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
             android:layout_alignParentEnd="true"
-            android:paddingRight="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
             android:button="@drawable/selector_goods_spce_checkbox"
             android:drawablePadding="@dimen/dimen_5"
             android:ellipsize="end"
             android:gravity="center_vertical"
+            android:paddingRight="@dimen/dimen_10"
             android:singleLine="true"
             android:textColor="@color/color_000000"
             android:textSize="@dimen/dimen_13"
-            android:visibility="gone"
-            tools:visibility="visible"/>
+            android:visibility="gone" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/menuEditGoodsTv"
-            android:paddingRight="@dimen/dimen_10"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dimen_10"
+            android:drawableRight="@mipmap/common_arrow_right"
             android:drawablePadding="@dimen/dimen_10"
             android:ellipsize="end"
             android:gravity="center_vertical"
+            android:paddingRight="@dimen/dimen_10"
             android:singleLine="true"
-            android:drawableRight="@mipmap/common_arrow_right"
+            android:text="商品管理"
             android:textColor="@color/color_000000"
             android:textSize="@dimen/dimen_13"
-            android:text="商品管理"/>
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/menuTopTv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_29"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:drawableRight="@mipmap/ic_top"
+            android:drawablePadding="@dimen/dimen_5"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingRight="@dimen/dimen_10"
+            android:singleLine="true"
+            android:text="排序置顶"
+            android:textColor="@color/color_000000"
+            android:textSize="@dimen/dimen_13"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/divider"
@@ -110,16 +130,16 @@
 
         <CheckBox
             android:id="@+id/menuVisibleCb"
-            android:layout_below="@+id/divider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_10"
+            android:layout_below="@+id/divider"
             android:button="@drawable/selector_goods_spce_checkbox"
-            android:singleLine="true"
+            android:padding="@dimen/dimen_10"
             android:paddingLeft="@dimen/dimen_15"
+            android:singleLine="true"
+            android:text="不显示"
             android:textColor="@color/selector_primary_holo"
-            android:textSize="@dimen/dimen_13"
-            android:text="不显示"/>
+            android:textSize="@dimen/dimen_13" />
 
 
         <TextView
@@ -127,10 +147,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:padding="@dimen/dimen_10"
             android:layout_alignParentRight="true"
             android:drawableStart="@mipmap/goods_group_manager_edit"
             android:drawablePadding="@dimen/dimen_5"
+            android:padding="@dimen/dimen_10"
             android:text="编辑"
             android:textColor="@color/color_3870EA"
             android:textSize="@dimen/dimen_13" />
@@ -140,19 +160,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:padding="@dimen/dimen_10"
+            android:layout_toLeftOf="@id/menuEditTv"
             android:drawableStart="@mipmap/goods_group_manager_delete"
             android:drawablePadding="@dimen/dimen_5"
+            android:padding="@dimen/dimen_10"
             android:text="删除"
-            android:layout_toLeftOf="@id/menuEditTv"
             android:textColor="@color/red"
             android:textSize="@dimen/dimen_13" />
 
     </com.james.common.view.IRelativeLayout>
 
     <View
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/marginView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_20"
         android:visibility="gone" />
-</LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/ivMenuTop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/dimen_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:src="@mipmap/ic_toped" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

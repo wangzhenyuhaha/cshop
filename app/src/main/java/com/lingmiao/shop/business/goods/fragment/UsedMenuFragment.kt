@@ -7,6 +7,9 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.GoodsManagerActivity
 import com.lingmiao.shop.business.goods.GroupManagerEditActivity
@@ -35,6 +38,7 @@ Create Date : 2021/3/101:00 AM
 Auther      : Fox
 Desc        :
  **/
+@Deprecated("暂停使用")
 class UsedMenuFragment : BaseLoadMoreFragment<ShopGroupVO, UsedMenuPre>(), UsedMenuPre.PubView {
 
     private var list : MutableList<ShopGroupVO>? = mutableListOf();
@@ -110,14 +114,14 @@ class UsedMenuFragment : BaseLoadMoreFragment<ShopGroupVO, UsedMenuPre>(), UsedM
             }
         }
         menuCancelTv.setOnClickListener {
-            menuBottom.visibility = View.GONE;
-            menuAllCheckCb.isChecked = false;
-            var list = mAdapter?.data?.filter { it?.isChecked == true };
-            if(list?.size > 0) {
-                list?.forEachIndexed { index, goodsVO ->
-                    goodsVO.isChecked = false;
-                }
-            }
+//            menuBottom.visibility = View.GONE;
+//            menuAllCheckCb.isChecked = false;
+//            var list = mAdapter?.data?.filter { it?.isChecked == true };
+//            if(list?.size > 0) {
+//                list?.forEachIndexed { index, goodsVO ->
+//                    goodsVO.isChecked = false;
+//                }
+//            }
             (mAdapter as UsedMenuAdapter)?.setBatchEditModel(false);
         }
         menuAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -127,7 +131,14 @@ class UsedMenuFragment : BaseLoadMoreFragment<ShopGroupVO, UsedMenuPre>(), UsedM
             mAdapter?.notifyDataSetChanged();
         }
         menuDeleteTv.setOnClickListener {
-            mLoadMoreDelegate?.refresh()
+            //mLoadMoreDelegate?.refresh()
+        }
+
+        menuSortTv.singleClick {
+            menuSortTv.gone();
+            menuCancelTv.visiable();
+            menuDeleteTv.visiable();
+            (mAdapter as UsedMenuAdapter)?.setBatchEditModel(true);
         }
 
         mSmartRefreshLayout?.setEnableLoadMore(false);

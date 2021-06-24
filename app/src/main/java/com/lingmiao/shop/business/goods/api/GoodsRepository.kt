@@ -349,6 +349,10 @@ object GoodsRepository {
         return apiService.updateShopGroup(groupId, map).awaitHiResponse()
     }
 
+    suspend fun sort(isTop: Int, cId : String, sort: Int) : HiResponse<Unit> {
+        return apiService.sort(isTop, cId, sort).awaitHiResponse();
+    }
+
     /**
      * 删除商品分组
      */

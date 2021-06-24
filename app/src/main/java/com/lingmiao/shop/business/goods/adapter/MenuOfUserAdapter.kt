@@ -30,15 +30,20 @@ class MenuOfUserAdapter() :
             // helper.setText(R.id.menuDescTv, getShopCatDesc(item))
             // helper.setText(R.id.menuOrderTv, "排序：${sort}")
             helper.setGone(R.id.marginView, helper.adapterPosition == data.size - 1)
-            helper.setGone(R.id.menuCheckCb, isBatchEditModel);
+           // helper.setGone(R.id.menuCheckCb, isBatchEditModel);
             // 删除选中
             helper.setChecked(R.id.menuCheckCb, isChecked?:false);
             helper.setGone(R.id.menuEditTv, !isBatchEditModel);
             helper.setGone(R.id.menuEditGoodsTv, !isBatchEditModel)
             helper.setGone(R.id.menuDeleteTv, !isBatchEditModel)
+            helper.setGone(R.id.divider, !isBatchEditModel);
+            helper.setGone(R.id.ivMenuTop, isBatchEditModel && helper.adapterPosition == 0);
+            helper.setGone(R.id.menuTopTv, isBatchEditModel && helper.adapterPosition > 0);
+
             helper.addOnClickListener(R.id.menuEditTv)
             helper.addOnClickListener(R.id.menuDeleteTv)
             helper.addOnClickListener(R.id.menuEditGoodsTv)
+            helper.addOnClickListener(R.id.menuTopTv);
 
             helper.setChecked(R.id.menuVisibleCb, disable == 1);
             helper.setText(R.id.menuVisibleCb, if(disable == 1) "显示" else "不显示")
@@ -63,6 +68,10 @@ class MenuOfUserAdapter() :
     fun setBatchEditModel(flag: Boolean) {
         isBatchEditModel = flag;
         notifyDataSetChanged();
+    }
+
+    fun isEditMode() : Boolean {
+        return isBatchEditModel;
     }
 
 }

@@ -19,10 +19,15 @@ interface CateManagerPre: BasePresenter {
     fun deleteGoodsGroup(shopCatId: ShopGroupVO?, position: Int)
 
     fun updateGroup(groupVO: ShopGroupVO?, position: Int)
+
+    fun sort(isTop : Int, cid: String, sort : Int);
+
     interface GroupManagerView: BaseView, BaseLoadMoreView<ShopGroupVO> {
 
         fun onDeleteGroupSuccess(position: Int)
 
         fun onGroupUpdated(position: Int);
+
+        fun onSortSuccess()
     }
 }

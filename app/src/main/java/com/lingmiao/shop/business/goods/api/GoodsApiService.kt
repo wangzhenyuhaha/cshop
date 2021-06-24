@@ -5,6 +5,7 @@ import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.james.common.netcore.networking.http.core.HiResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -217,6 +218,10 @@ interface GoodsApiService {
     @WithHiResponse
     @PUT("seller/shops/cats/{id}")
     fun updateShopGroup(@Path(value = "id") groupId: String, @QueryMap map: MutableMap<String, Any>): Call<ShopGroupVO>
+
+    @WithHiResponse
+    @GET("seller/shops/cats/adjust_sort")
+    fun sort(@Query("is_top") isTop: Int, @Query("shop_cat_id") shopCatId : String, @Query("sort") sort : Int) : Call<Unit>
 
     @WithHiResponse
     @DELETE("seller/shops/cats/{id}")

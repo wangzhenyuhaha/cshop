@@ -192,6 +192,10 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
         mAdapter?.notifyItemChanged(position);
     }
 
+    override fun onSortSuccess() {
+
+    }
+
     override fun useEventBus(): Boolean {
         return true;
     }

@@ -131,10 +131,18 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                     view.showToast("图片上传失败，请重试")
                     view.hideDialogLoading()
                 }) {
-                    uploadDesImages(goodsVO, fail = {
-                        view.showToast("图片上传失败，请重试")
-                        view.hideDialogLoading()
-                    }){
+                    if(goodsVO?.intro.isNotBlank()) {
+                        uploadDesImages(goodsVO, fail = {
+                            view.showToast("图片上传失败，请重试")
+                            view.hideDialogLoading()
+                        }){
+                            if (goodsVO.goodsId.isNullOrBlank()) {
+                                submitGoods(goodsVO) // 添加商品
+                            } else {
+                                modifyGoods(goodsVO) // 编辑商品
+                            }
+                        }
+                    } else {
                         if (goodsVO.goodsId.isNullOrBlank()) {
                             submitGoods(goodsVO) // 添加商品
                         } else {

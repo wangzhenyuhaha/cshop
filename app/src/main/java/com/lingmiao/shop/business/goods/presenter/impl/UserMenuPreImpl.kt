@@ -54,4 +54,13 @@ class UserMenuPreImpl(var view: CateManagerPre.GroupManagerView) : BasePreImpl(v
         }
     }
 
+    override fun sort(isTop: Int, cid: String, sort: Int) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.sort(isTop, cid, sort);
+            handleResponse(resp) {
+                view.onSortSuccess();
+            }
+        }
+    }
+
 }

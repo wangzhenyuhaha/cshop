@@ -26,11 +26,20 @@ class PhotoHelper {
          */
         @JvmStatic
         fun openAlbum(activity: Activity, maxCount: Int, cancel: (() -> Unit)?, success: ((List<LocalMedia>) -> Unit)?) {
+            openAlbum(activity, maxCount, cancel, false, 500, success);
+        }
+
+        /**
+         * 获取图片，图片大小超过500K，则开启压缩
+         */
+        @JvmStatic
+        fun openAlbum(activity: Activity, maxCount: Int, cancel: (() -> Unit)?, crop : Boolean?, size : Int, success: ((List<LocalMedia>) -> Unit)?) {
             PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
                 .maxSelectNum(maxCount)
                 .isCompress(true)
-                .minimumCompressSize(500)
+                .isEnableCrop(crop?:false)
+                .minimumCompressSize(size)
                 .imageEngine(GlideEngine.createGlideEngine())
                 .forResult(object : OnResultCallbackListener<LocalMedia> {
                     override fun onResult(result: List<LocalMedia>) { // 结果回调
@@ -48,9 +57,40 @@ class PhotoHelper {
          */
         @JvmStatic
         fun openCamera(activity: Activity, cancel: (() -> Unit)?, success: ((List<LocalMedia>) -> Unit)?) {
+            openCamera(activity, cancel, false, 500, success);
+        }
+
+        /**
+         * 拍照：图片大小超过500K，则开启压缩
+         */
+        @JvmStatic
+        fun openCamera(activity: Activity, cancel: (() -> Unit)?, crop : Boolean? = false, size : Int, success: ((List<LocalMedia>) -> Unit)?) {
             PictureSelector.create(activity)
                 .openCamera(PictureMimeType.ofImage())
-                .isCompress(true)
+                .isCompress(crop?:false)
+                .isEnableCrop(true)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
+
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
+        }
+
+        /**
+         * 拍照：图片大小超过500K，则开启压缩
+         */
+        @JvmStatic
+        fun openCamera(activity: Activity, cancel: (() -> Unit)?, crop : Boolean? = false, success: ((List<LocalMedia>) -> Unit)?) {
+            PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .isCompress(crop?:false)
+                .isEnableCrop(true)
                 .minimumCompressSize(500)
                 .imageEngine(GlideEngine.createGlideEngine())
                 .forResult(object : OnResultCallbackListener<LocalMedia> {
