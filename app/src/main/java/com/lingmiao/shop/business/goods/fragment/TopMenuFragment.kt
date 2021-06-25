@@ -19,7 +19,7 @@ import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.GoodsOfMenuActivity
 import com.lingmiao.shop.business.goods.MenuEditActivity
-import com.lingmiao.shop.business.goods.adapter.MenuOfUserAdapter
+import com.lingmiao.shop.business.goods.adapter.MenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.event.GroupRefreshEvent
 import com.lingmiao.shop.business.goods.presenter.CateManagerPre
@@ -59,7 +59,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
     var mSelectPosition: Int? = null;
     var mCheckedItem : ShopGroupVO? = null;
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
-        val dadapter = MenuOfUserAdapter().apply {
+        val dadapter = MenuAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
 //                GroupManagerLv2Activity.openActivity(
 //                    this@GroupManagerLv1Activity,
@@ -207,7 +207,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
 //                    goodsVO.isChecked = false;
 //                }
 //            }
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
+            (mAdapter as MenuAdapter)?.setBatchEditModel(false);
             //menuSortTv.visiable();
             menuCancelTv.gone();
             menuDeleteTv.gone();
@@ -216,7 +216,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
         }
         // 操作完成
         menuDeleteTv.setOnClickListener {
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
+            (mAdapter as MenuAdapter)?.setBatchEditModel(false);
             //menuSortTv.visiable();
             //menuCancelTv.gone();
             menuDeleteTv.gone();
@@ -230,7 +230,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
             menuBottom.visiable();
             //.visiable();
             menuDeleteTv.visiable();
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true);
+            (mAdapter as MenuAdapter)?.setBatchEditModel(true);
         }
 
         mSmartRefreshLayout?.setEnableRefresh(false);
