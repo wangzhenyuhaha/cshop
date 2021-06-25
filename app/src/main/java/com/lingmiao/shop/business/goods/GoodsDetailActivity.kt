@@ -127,7 +127,10 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
         mPresenter?.loadInfoByCId(categoryId!!)
 
         mImages?.split(",")?.forEachIndexed { index, s ->
-            goodsDetailImageRv.addData(GoodsGalleryVO("", s, ""));
+            if(s.isNotEmpty()) {
+                goodsDetailImageRv.addData(GoodsGalleryVO("", s, ""));
+            }
+
         }
 
     }

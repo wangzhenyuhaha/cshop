@@ -39,7 +39,6 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/selector_goods_item_check"
                     android:button="@null"
-                    android:checked="true"
                     android:paddingHorizontal="@dimen/dimen_10"
                     android:paddingVertical="@dimen/dimen_5"
                     android:text="备货中"
