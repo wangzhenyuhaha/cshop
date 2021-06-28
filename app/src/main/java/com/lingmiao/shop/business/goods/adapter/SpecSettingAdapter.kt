@@ -64,10 +64,10 @@ class SpecSettingAdapter(val type : Int) :
         // 最后一个Item展示下边距，避免太丑
         helper.setGone(R.id.space, (helper.adapterPosition == data.size - 1))
 
-        helper.setGone(R.id.vSpecNo, type != 2)
-        helper.setGone(R.id.llSpecNo, type != 2)
-        helper.setGone(R.id.vSpecSku, type != 2)
-        helper.setGone(R.id.llSpecSku, type != 2)
+//        helper.setGone(R.id.vSpecNo, type != 2)
+//        helper.setGone(R.id.llSpecNo, type != 2)
+//        helper.setGone(R.id.vSpecSku, type != 2)
+//        helper.setGone(R.id.llSpecSku, type != 2)
     }
 
     private fun addTextChangeListener(editText: EditText, input: String?, callback: (String) -> Unit) {

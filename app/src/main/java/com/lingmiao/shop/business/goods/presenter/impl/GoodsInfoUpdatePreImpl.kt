@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.PublicView) : BasePreImpl(view),
     GoodsInfoEditPre {
 
-    private val mItemPreImpl: ChildrenCatePopPreImpl by lazy { ChildrenCatePopPreImpl(view) }
+    private val mItemPreImpl: ChildrenCatePopPreImpl<CategoryVO> by lazy { ChildrenCatePopPreImpl<CategoryVO>(view) }
 
     var mCateList : List<CategoryVO> ? = null;
 

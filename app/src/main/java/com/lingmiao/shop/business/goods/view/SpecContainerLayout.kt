@@ -28,6 +28,10 @@ class SpecContainerLayout @JvmOverloads constructor(
     /**
      * 添加规格值
      */
+    var loadSpecValueListener: ((String?) -> Unit)? = null
+    /**
+     * 添加规格值
+     */
     var addSpecValueListener: ((String) -> Unit)? = null
     /**
      * 删除规格值
@@ -58,6 +62,10 @@ class SpecContainerLayout @JvmOverloads constructor(
             specKeyVO.valueList = specKeyViews[index].specFlowLayout.getSpecValueList()
         }
         return specKeyList
+    }
+
+    fun getSpecValueList(id : String?) : List<SpecValueVO>? {
+        return specKeyList?.filter { it->it.specId == id }?.get(0)?.valueList?:null;
     }
 
     fun bindAddSpecBtn(view: View?) {
@@ -101,6 +109,9 @@ class SpecContainerLayout @JvmOverloads constructor(
      */
     private fun createSpecItem(specKey: SpecKeyVO, showSpecValue: Boolean) {
         val view = inflate.inflate(R.layout.goods_view_spec_setting_item, this, false)
+        view.findViewById<TextView>(R.id.tvLoadSpec).setOnClickListener {
+            loadSpecValueListener?.invoke(specKey.specId);
+        }
         view.findViewById<TextView>(R.id.specNameTv).text = "规格名：${specKey.specName}"
         view.findViewById<TextView>(R.id.deleteSpecTv).singleClick {
             removeChildItem(view)

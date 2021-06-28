@@ -33,11 +33,24 @@
         style="@style/common_divider"
         android:layout_below="@+id/specNameTv" />
 
+    <TextView
+        android:visibility="gone"
+        android:drawablePadding="@dimen/dimen_15"
+        android:drawableRight="@mipmap/goods_spec_blue_plus"
+        android:layout_below="@+id/divider"
+        android:id="@+id/tvLoadSpec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dimen_4"
+        android:paddingStart="@dimen/dimen_6"
+        android:background="@drawable/shape_goods_spec_value_bg"
+        android:text="加载原有规格值"/>
+
     <com.lingmiao.shop.business.goods.view.SpecFlowLayout
         android:id="@+id/specFlowLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
+        android:layout_below="@+id/tvLoadSpec"
         android:layout_marginTop="@dimen/dimen_14"
         android:layout_marginBottom="@dimen/dimen_17"
         app:itemSpacing="@dimen/dimen_10"

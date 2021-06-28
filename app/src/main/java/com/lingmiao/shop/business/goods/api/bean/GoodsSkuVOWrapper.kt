@@ -33,6 +33,35 @@ class GoodsSkuVOWrapper : GoodsSkuVO() {
         }
     }
 
+    fun convert(params: GoodsSkuVOWrapper) {
+        params.let {
+            if (it.cost.isNotBlank()) {
+                cost = it.cost
+            }
+            if (it.mktprice.isNotBlank()) {
+                mktprice = it.mktprice
+            }
+            if (it.price.isNotBlank()) {
+                price = it.price
+            }
+            if (it.quantity.isNotBlank()) {
+                quantity = it.quantity
+            }
+            if(it.eventPrice.isNotBlank()) {
+                eventPrice = it.eventPrice;
+            }
+            if(it.eventQuantity.isNotBlank()) {
+                eventQuantity = it.eventQuantity;
+            }
+            if (it.weight.isNotBlank()) {
+                weight = it.weight
+            }
+//            if (it.goodsSKU.isNotBlank()) {
+//                upSkuId = it.goodsSKU
+//            }
+        }
+    }
+
     fun convert(params: SpecSettingParams) {
         params.let {
             if (it.price.isNotBlank()) {
@@ -58,5 +87,4 @@ class GoodsSkuVOWrapper : GoodsSkuVO() {
             }
         }
     }
-
 }

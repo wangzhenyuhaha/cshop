@@ -298,6 +298,14 @@ interface GoodsApiService {
     @POST("seller/goods/categories/{c_id}/specs")
     fun addSpec(@Path(value = "c_id") cid: String, @Query("spec_name") name: String): Call<GoodsSpecVo>
 
+    @WithHiResponse
+    @DELETE("seller/goods/specs/{ids}")
+    fun delSpecName(@Path(value = "ids") ids: String): Call<Unit>
+
+    @WithHiResponse
+    @DELETE("seller/goods/specsValue/{ids}")
+    fun delSpecValue(@Path(value = "ids") ids: String): Call<Unit>
+
     /**
      * 商家自定义某分类的规格项
      */

@@ -19,6 +19,8 @@ interface GoodsSpecPre: BasePresenter {
 
     fun delete(id : String);
 
+    fun deleteValue(position : Int , id : String);
+
     fun showAddPop(cId: String);
 
     interface PublicView : BaseView {
@@ -28,6 +30,8 @@ interface GoodsSpecPre: BasePresenter {
         fun onAdded(vo: GoodsSpecVo)
 
         fun onDeleted(id : String);
+
+        fun onDeletedValue(position : Int , id : String);
 
         fun onAddSpecValueSuccess(specKeyId: String, data: List<SpecValueVO>?)
     }

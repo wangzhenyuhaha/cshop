@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
+import com.lingmiao.shop.business.commonpop.bean.ItemData
 import com.lingmiao.shop.business.commonpop.pop.AbsOneItemPop
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 
@@ -11,14 +12,14 @@ Create Date : 2021/3/74:52 PM
 Auther      : Fox
 Desc        :
  **/
-class ChildrenCatePopPreImpl(view: BaseView) : BasePreImpl(view) {
+class ChildrenCatePopPreImpl<T : ItemData>(view: BaseView) : BasePreImpl(view) {
 
-    private var mItemPop : AbsOneItemPop<CategoryVO>? = null;
+    private var mItemPop : AbsOneItemPop<T>? = null;
 
-    fun showPop(context: Context, value : String?, list : List<CategoryVO>?, callback: ( List<CategoryVO>?) -> Unit) {
-        mItemPop = AbsOneItemPop<CategoryVO>(context, value, list, "请选择分类").apply {
+    fun showPop(context: Context, value : String?, list : List<T>?, callback: ( List<T>?) -> Unit) {
+        mItemPop = AbsOneItemPop<T>(context, value, list, "请选择分类").apply {
             isMultiChecked = true;
-            listener = { item: List<CategoryVO> ->
+            listener = { item: List<T> ->
                 callback.invoke(item);
             }
         }

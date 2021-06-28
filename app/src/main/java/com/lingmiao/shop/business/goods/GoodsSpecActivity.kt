@@ -80,7 +80,9 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
             mPresenter?.loadList(categoryId);
         }
 
-        mAdapter = GoodsSpecAdapter().apply {
+        mAdapter = GoodsSpecAdapter{position, item ->
+            mPresenter?.deleteValue(position, item!!);
+        }.apply {
             setOnItemClickListener { adapter, view, position ->
 
             }
@@ -129,6 +131,10 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
     }
 
     override fun onDeleted(id: String) {
+        mPresenter?.loadList(categoryId);
+    }
+
+    override fun onDeletedValue(position: Int, id: String) {
         mPresenter?.loadList(categoryId);
     }
 

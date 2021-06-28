@@ -228,6 +228,20 @@ object GoodsRepository {
     }
 
     /**
+     * 删除规格名
+     */
+    suspend fun delSpecName(ids : String) : HiResponse<Unit> {
+        return apiService.delSpecName(ids).awaitHiResponse();
+    }
+
+    /**
+     * 删除规格值
+     */
+    suspend fun delSpecValue(ids : String) : HiResponse<Unit> {
+        return apiService.delSpecValue(ids).awaitHiResponse();
+    }
+
+    /**
      * 获取指定商品对应的sku信息
      */
     suspend fun loadGoodsSKU(goodsId: String): HiResponse<List<GoodsSkuVOWrapper>> {

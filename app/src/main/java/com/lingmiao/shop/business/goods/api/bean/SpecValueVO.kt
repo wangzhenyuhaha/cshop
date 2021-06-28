@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.api.bean
 
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.business.commonpop.bean.ItemData
 import java.io.Serializable
 
 /**
@@ -8,7 +9,7 @@ import java.io.Serializable
  * Date   : 2020/8/8
  * Desc   : 规格值
  */
-class SpecValueVO : Serializable {
+class SpecValueVO : Serializable, ItemData {
 
     @SerializedName("seller_id")
     var sellerId: String? = null
@@ -30,4 +31,27 @@ class SpecValueVO : Serializable {
 
     @SerializedName("spec_value_id")
     var specValueId: String? = null
+    override fun getIValue(): String? {
+        return specValueId;
+    }
+
+    override fun getIName(): String? {
+        return specValue;
+    }
+
+    override fun getIHint(): String? {
+        return specValue;
+    }
+
+    /**
+     * 是否选中
+     */
+    var isChecked : Boolean ? = false
+    override fun isItemChecked(): Boolean? {
+        return isChecked;
+    }
+
+    override fun shiftChecked(flag: Boolean?) {
+        isChecked = !(flag?:false!!);
+    }
 }

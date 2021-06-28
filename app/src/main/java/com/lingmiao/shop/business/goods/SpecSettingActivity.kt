@@ -96,7 +96,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     }
 
     override fun createPresenter(): SpecSettingPre {
-        return SpecSettingPreImpl(this)
+        return SpecSettingPreImpl(this, this);
     }
 
     override fun initView() {
@@ -104,7 +104,9 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         initSpecContainerLayout()
         initAdapter()
         initBottomView()
-        mPresenter.loadSpecKeyList(goodsId)
+        if(skuList == null || specKeyList == null) {
+            mPresenter.loadSpecKeyList(goodsId)
+        }
     }
 
     private fun initAdapter() {
@@ -122,6 +124,9 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     private fun initSpecContainerLayout() {
         specContainerLayout.apply {
             bindAddSpecBtn(addSpecLl)
+            loadSpecValueListener = {
+                mPresenter?.showAddOldKey(categoryId, it, getSpecValueList(it));
+            }
             addSpecValueListener = {
                 showInputValueDialog(it)
             }
@@ -145,6 +150,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
             this, "添加规格值", "", "请输入规格名，多个用逗号\",\"分隔",
             "取消", "保存", null
         ) {
+//            val list = skuList?.filter { _it->_it.specList == specKeyID };
             mPresenter.submitSpecValue(specKeyID, it)
         }
     }
@@ -199,7 +205,8 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         if (data == null) return
         if (requestCode == SPEC_REQUEST_CODE) {
             val list = data.getSerializableExtra(SpecKeyActivity.KEY_SPEC_LIST) as? ArrayList<SpecKeyVO>
-            specContainerLayout.addSpecItems(list, false)
+            specContainerLayout.addSpecItems(list, true)
+            mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
         }
     }
 
@@ -221,7 +228,9 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         // 展示顶部规格名称
         specContainerLayout.addSpecItems(skuCache.specInfo, true)
 
-        mPresenter.loadSpecListByCid(categoryId);
+
+        mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
+        //mPresenter.loadSpecListByCid(categoryId);
     }
 
     override fun onLoadedSpecListByCid(list: List<SpecKeyVO>) {

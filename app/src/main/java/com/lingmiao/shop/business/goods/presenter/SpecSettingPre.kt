@@ -24,6 +24,8 @@ interface SpecSettingPre: BasePresenter {
 
     fun loadSpecListByCid(cid : String?);
 
+    fun showAddOldKey(cid : String?, keyId : String?, list: List<SpecValueVO>?);
+
     interface SpceSettingView : BaseView {
         fun onAddSpecValueSuccess(specKeyID: String, spceValueList: List<SpecValueVO>)
 

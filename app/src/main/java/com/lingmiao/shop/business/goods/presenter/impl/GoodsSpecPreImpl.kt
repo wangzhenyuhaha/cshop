@@ -84,11 +84,21 @@ class GoodsSpecPreImpl(val context: Context, val view: GoodsSpecPre.PublicView) 
 
     override fun delete(id: String) {
         mCoroutine.launch {
-//            val resp = GoodsRepository.deleteInfo(id)
-//            handleResponse(resp) {
-//                view?.onDeleted(id);
+            val resp = GoodsRepository.delSpecName(id)
+            handleResponse(resp) {
+                view?.onDeleted(id);
             }
         }
+    }
+
+    override fun deleteValue(position : Int , id : String) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.delSpecValue(id)
+            handleResponse(resp) {
+                view?.onDeletedValue(position, id);
+            }
+        }
+    }
 
     override fun showAddPop(cId: String) {
         val pop = SpecAndValuePop(context);

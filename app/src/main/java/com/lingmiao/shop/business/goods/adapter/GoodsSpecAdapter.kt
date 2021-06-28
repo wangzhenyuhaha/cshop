@@ -11,7 +11,7 @@ Create Date : 2021/6/221:57 PM
 Auther      : Fox
 Desc        : 商品规格
  **/
-class GoodsSpecAdapter : BaseQuickAdapter<SpecKeyVO, BaseViewHolder>(R.layout.goods_adapter_spec) {
+class GoodsSpecAdapter(val callback : (Int,String?)-> Unit): BaseQuickAdapter<SpecKeyVO, BaseViewHolder>(R.layout.goods_adapter_spec) {
     /**
      * Implement this method and use the helper to adapt the view to the given item.
      *
@@ -25,6 +25,9 @@ class GoodsSpecAdapter : BaseQuickAdapter<SpecKeyVO, BaseViewHolder>(R.layout.go
         helper.getView<SpecFlowLayout>(R.id.specFlowLayout).apply{
             removeAllViews();
             addSpecValues(item?.specId, item?.valueList);
+            clickDeleteCallback = {
+                callback.invoke(helper.adapterPosition, it);
+            }
         }
 
     }
