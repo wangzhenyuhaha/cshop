@@ -174,6 +174,8 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onTabChangeEvent(event: GoodsHomeTabEvent) {
         viewPager.setCurrentItem(event.getNewTabIndex(), false)
+
+        refreshListData();
     }
 
 //    @Subscribe(threadMode = ThreadMode.MAIN)

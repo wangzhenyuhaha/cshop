@@ -107,6 +107,9 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         if(skuList == null || specKeyList == null) {
             mPresenter.loadSpecKeyList(goodsId)
         }
+        if(goodsId == null) {
+            mPresenter.loadSpecListByCid(categoryId);
+        }
     }
 
     private fun initAdapter() {

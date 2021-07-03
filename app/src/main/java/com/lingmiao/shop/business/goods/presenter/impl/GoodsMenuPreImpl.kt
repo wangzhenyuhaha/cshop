@@ -250,7 +250,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
      * 修改多规格库存
      */
     private fun showMultiQuantityPop(goodsId: String, skuList: List<GoodsSkuVOWrapper>, callback: (String) -> Unit) {
-        val multiQuantityPop = GoodsMultiQuantityPop(context)
+        val multiQuantityPop = GoodsMultiQuantityPop(context);
         multiQuantityPop.setConfirmListener {
             if (it.isNullOrEmpty()) {
                  view.showToast("请输入库存数量")
@@ -284,7 +284,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
      * 修改多规格库存
      */
     private fun showQuantityPricePop(goodsId: String, skuList: List<GoodsSkuVOWrapper>, callback: (String) -> Unit) {
-        val multiQuantityPop = GoodsQuantityPricePop(context)
+        val multiQuantityPop = GoodsQuantityPricePop(context, "活动价格/库存")
         multiQuantityPop.setConfirmListener {
             if (it.isNullOrEmpty()) {
                 view.showToast("请输入活动价格及库存数量")

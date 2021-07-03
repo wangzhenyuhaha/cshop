@@ -6,6 +6,7 @@ import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.james.common.netcore.networking.http.core.HiResponse
+import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -74,6 +75,11 @@ interface GoodsApiService {
     @WithHiResponse
     fun updateGoodsQuantity(@Path(value = "goods_id") goodsId: String, @Body skuList: List<QuantityRequest>): Call<GoodsVO>
 
+    /**
+     * 活动库存与价格
+     */
+    @POST("seller/goods/{goods_id}/quantityAndPrice")
+    fun updateGoodsQuantityAndPrice(@Path(value = "goods_id") goodsId: String, @Body list : List<QuantityPriceRequest>) : Call<Unit>;
     /**
      * 批量佣金
      * http://t-api.seller.fisheagle.cn:7003/seller/distribution/batchEditGoods/{goods_id}

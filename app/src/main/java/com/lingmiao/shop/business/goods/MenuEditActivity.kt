@@ -96,8 +96,9 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {
             groupVO.apply {
-                disable = if(switchBtn.isChecked) 1 else 0
+                //disable = if(switchBtn.isChecked) 1 else 0
                 shopCatPid = parentGroupId
+                isEvent = if(switchBtn.isChecked) 1 else 0
                 shopCatName = menuNameEdt.getViewText()
                 shopCatDesc = ""//groupDescEdt.getViewText()
                 sort = 0;//groupOrderEdt.getViewText().parseString()
@@ -122,6 +123,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
                 menuNameEdt.setText(this.shopCatName)
 //                groupDescEdt.setText(this.shopCatDesc)
 //                groupOrderEdt.setText("${this.sort}")
+                switchBtn.isChecked = this.isEvent == 1
                 showRadio.isChecked = this.isGroupShow()
                 hideRadio.isChecked = !this.isGroupShow()
                 if (this.shopCatPic.isNotBlank()) {

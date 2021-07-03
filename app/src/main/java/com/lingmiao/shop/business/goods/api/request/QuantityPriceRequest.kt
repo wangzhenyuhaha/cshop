@@ -13,10 +13,10 @@ class QuantityPriceRequest {
     @SerializedName("sku_id")
     var skuId: String? = null
 
-    @SerializedName("event_price")
+    @SerializedName("price")
     var eventPrice: String? = null //活动价格
 
-    @SerializedName("event_quantity")
+    @SerializedName("quantity_count")
     var eventQuantity: String? = null //活动库存
 
     // 业务字段

@@ -13,6 +13,7 @@
         android:paddingStart="@dimen/dimen_14">
 
         <TextView
+            android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_30"
             android:layout_weight="1"

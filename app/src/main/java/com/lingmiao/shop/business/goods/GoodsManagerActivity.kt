@@ -95,7 +95,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
     }
 
     override fun initOthers() {
-        mToolBarDelegate.setMidTitle(getString(R.string.goods_manager_title))
+        mToolBarDelegate.setMidTitle("中心库商品管理")
 
         firstTypeTv.setOnClickListener {
             mPresenter?.showCategoryPop(it);

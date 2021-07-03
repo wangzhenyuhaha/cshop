@@ -30,7 +30,7 @@ class QuantityPricePreImpl(var context: Context, var view: BaseView) : BasePreIm
      * 修改多规格库存
      */
     private fun showQuantityPricePop(goodsId: String, skuList: List<GoodsSkuVOWrapper>, callback: (String) -> Unit) {
-        val multiQuantityPop = GoodsQuantityPricePop(context)
+        val multiQuantityPop = GoodsQuantityPricePop(context, "活动价格/库存")
         multiQuantityPop.setConfirmListener {
             if (it.isNullOrEmpty()) {
                 view.showToast("请输入活动价格及库存数量")
@@ -52,10 +52,10 @@ class QuantityPricePreImpl(var context: Context, var view: BaseView) : BasePreIm
      */
     private fun exeQuantityPriceRequest(goodsId: String, skuList: List<QuantityPriceRequest>, callback: (String) -> Unit) {
         mCoroutine.launch {
-//            val resp = GoodsRepository.updateGoodsQuantity(goodsId, skuList)
-//            handleResponse(resp) {
-//                callback.invoke(it.quantity.check("0"))
-//            }
+            val resp = GoodsRepository.updateGoodsQuantityAndPrice(goodsId, skuList)
+            handleResponse(resp) {
+                callback.invoke(goodsId)
+            }
         }
     }
 

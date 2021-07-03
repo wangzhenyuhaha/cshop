@@ -9,6 +9,7 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
 
 /**
  * Author : Elson
@@ -138,6 +139,13 @@ object GoodsRepository {
      */
     suspend fun updateGoodsQuantity(goodsId: String, skuList: List<QuantityRequest>): HiResponse<GoodsVO> {
         return apiService.updateGoodsQuantity(goodsId, skuList).awaitHiResponse()
+    }
+
+    /**
+     * 修改活动库存与价格
+     */
+    suspend fun updateGoodsQuantityAndPrice(goodsId: String, skuList: List<QuantityPriceRequest>) : HiResponse<Unit> {
+        return apiService.updateGoodsQuantityAndPrice(goodsId, skuList).awaitHiResponse();
     }
 
     /**
@@ -355,6 +363,7 @@ object GoodsRepository {
         map["shop_cat_pid"] = group.shopCatPid.check()
         map["shop_cat_name"] = group.shopCatName.check()
         map["disable"] = group.disable
+        map["is_event"] = group.isEvent;
         map["shop_cat_name"] = group.shopCatName.check()
         map["shop_cat_desc"] = group.shopCatDesc.check()
         map["shop_cat_pic"] = group.shopCatPic.check()

@@ -119,6 +119,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 //                    checkBoolean(goodsVO.isSelectDeliveryWay()) { "请选择配送方式" }
                     if (isMutilSpec) {
                         checkBoolean(goodsVO.skuList.isNotEmpty()) { "请添加商品规格" }
+                        checkBoolean(goodsVO.skuList?.get(0)?.specList?.isNotEmpty() == true) { "请完善商品多规格" }
                     } else {
                         checkNotBlack(goodsVO.price) { "请输入商品价格" }
                         checkNotBlack(goodsVO.quantity) { "请输入商品库存" }

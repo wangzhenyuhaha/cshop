@@ -21,8 +21,9 @@ import razerdp.basepopup.BasePopupWindow
  * Date   : 2020/8/16
  * Desc   : 商品多规格库存
  */
-class GoodsQuantityPricePop(context: Context) : BasePopupWindow(context) {
+class GoodsQuantityPricePop(context: Context,val title : String?) : BasePopupWindow(context) {
 
+    private var titleTv: TextView? = null
     private var closeIv: ImageView? = null
     private var recyclerView: RecyclerView? = null
     private var mAdapter: MultiQuantityAndPriceAdapter? = null
@@ -49,6 +50,7 @@ class GoodsQuantityPricePop(context: Context) : BasePopupWindow(context) {
     override fun onViewCreated(contentView: View) {
         setPopupGravity(Gravity.BOTTOM or Gravity.CENTER_VERTICAL)
         super.onViewCreated(contentView)
+        titleTv = contentView.findViewById(R.id.tvTitle)
         closeIv = contentView.findViewById(R.id.closeIv)
         recyclerView = contentView.findViewById(R.id.recyclerView)
         mAdapter = MultiQuantityAndPriceAdapter()
@@ -62,6 +64,9 @@ class GoodsQuantityPricePop(context: Context) : BasePopupWindow(context) {
         }
         closeIv?.setOnClickListener {
             dismiss()
+        }
+        if(title?.isNotEmpty() == true) {
+            titleTv?.setText(title);
         }
     }
 

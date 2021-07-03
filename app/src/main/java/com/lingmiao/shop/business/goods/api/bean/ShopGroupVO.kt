@@ -31,6 +31,8 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     var shopCatPid: String? = null
     @SerializedName("shop_id")
     var shopId: String? = null
+    @SerializedName("is_event")
+    var isEvent: Int = 0
     @SerializedName("is_top")
     var isTop: Int = 0
     @SerializedName("sort")
@@ -52,6 +54,7 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
             } else {
                 ShopGroupVO().apply {
                     this.catPath = groupVO.catPath
+                    this.isEvent = groupVO.isEvent
                     this.children = groupVO.children
                     this.disable = groupVO.disable
                     this.shopCatDesc = groupVO.shopCatDesc
