@@ -39,7 +39,34 @@
         </LinearLayout>
 
         <View style="@style/common_divider" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_50"
+            android:orientation="horizontal">
 
+            <TextView
+                style="@style/goods_group_edit_left"
+                android:text="使用活动价格"
+                android:layout_weight="1"
+                android:layout_width="0dp" />
+
+            <EditText
+                android:visibility="gone"
+                android:id="@+id/groupDescEdt"
+                style="@style/goods_group_edit_right"
+                android:hint="分组名称，建议4个字以内" />
+
+            <com.kyleduo.switchbutton.SwitchButton
+                android:id="@+id/switchBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginLeft="@dimen/dimen_20"
+                app:kswTintColor="@color/white"
+                app:kswBackDrawable="@drawable/flyme_back_drawable" />
+
+        </LinearLayout>
+        <View style="@style/common_divider" />
         <!--   二级分组     -->
         <LinearLayout
             android:layout_width="match_parent"

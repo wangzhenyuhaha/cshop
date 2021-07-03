@@ -97,6 +97,7 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
                 shopCatDesc = ""
                 sort = 0;
                 isTop = 0
+                isEvent = if(switchBtn.isChecked) 1 else 0
             }
             if (isEditMode) {
                 mPresenter.modifyGroup(groupVO)
@@ -133,6 +134,7 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
      */
     private fun restoreUI() {
         if (isEditMode) {
+            switchBtn.isChecked = groupVO.isEvent == 1
             menuNameEdt.setText(groupVO?.shopCatName)
             mChildrenList = groupVO?.children ?: mutableListOf()
             mChildrenAdapter?.replaceData(mChildrenList!!);

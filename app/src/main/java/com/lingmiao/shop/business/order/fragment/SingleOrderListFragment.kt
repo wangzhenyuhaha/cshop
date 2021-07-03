@@ -5,7 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.TextView
 import com.bigkoo.pickerview.view.TimePickerView
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
@@ -71,8 +73,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         return R.layout.order_fragment_single_order;
     }
 
+    var rbContinue : RadioButton? = null;
+    var rbComplete: RadioButton? = null;
+    var rbCancel: RadioButton? = null;
+
     override fun initOthers(rootView: View) {
         super.initOthers(rootView)
+
+        initDate();
 
         when (orderType) {
             "PROCESSING" -> {
@@ -80,20 +88,27 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             "COMPLETE" -> {
                 dateLayout.visiable();
+                orderResetTv.visiable();
                 orderFilterTv.gone()
             }
             "ALL" -> {
                 dateLayout.visiable();
+                orderResetTv.visiable();
                 orderFilterTv.visiable()
             }
             else -> {
                 rgEnable.gone();
                 dateLayout.gone();
+                orderResetTv.gone();
                 orderFilterTv.gone()
             }
         }
 
-
+        orderStatusResetTv.singleClick {
+            rgEnable.clearCheck();
+            mCStatus = null;
+            mLoadMoreDelegate?.refresh()
+        }
         rgEnable.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.rbTaking) {
                 mCStatus = "ACCEPT";
@@ -108,19 +123,27 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         orderFilterTv.singleClick {
             drawerO.openDrawer(Gravity.RIGHT)
         }
-        initDate();
 
         val headview: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
-        headview.findViewById<RadioGroup>(R.id.rgAll)
-            .setOnCheckedChangeListener { group, checkedId ->
-                if (checkedId == R.id.rbContinue) {
-                    mCStatus = "PROCESSING";
-                } else if (checkedId == R.id.rbComplete) {
-                    mCStatus = "COMPLETE";
-                } else if (checkedId == R.id.rbCancel) {
-                    mCStatus = "CANCELLED";
-                }
+        val rgAll : RadioGroup = headview.findViewById<RadioGroup>(R.id.rgAll);
+        rgAll.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.rbContinue) {
+                mCStatus = "PROCESSING";
+            } else if (checkedId == R.id.rbComplete) {
+                mCStatus = "COMPLETE";
+            } else if (checkedId == R.id.rbCancel) {
+                mCStatus = "CANCELLED";
             }
+        }
+        headview.findViewById<TextView>(R.id.tvReset).singleClick {
+            rgAll.clearCheck();
+            drawerO.closeDrawers();
+            mCStatus = null;
+            mLoadMoreDelegate?.refresh()
+        }
+        rbContinue = headview.findViewById(R.id.rbContinue);
+        rbComplete = headview.findViewById(R.id.rbComplete);
+        rbCancel = headview.findViewById(R.id.rbCancel);
 
         headview.findViewById<ITextView>(R.id.tvFinish).singleClick {
             drawerO.closeDrawers();
@@ -136,16 +159,27 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
         val endDate: Calendar = Calendar.getInstance()
         endDate.set(
-            selectedDate.get(Calendar.YEAR) + 5, selectedDate.get(Calendar.MONTH), selectedDate.get(
+            startDate.get(Calendar.YEAR) + 5, startDate.get(Calendar.MONTH), startDate.get(
                 Calendar.DATE
             )
         )
+
+        if(orderType == "COMPLETE" || orderType == "ALL") {
+            startOrderDateTv.text = String.format("%s-%s-%s", selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH)+1, selectedDate.get(
+                Calendar.DATE));
+            endOrderDateTv.text = startOrderDateTv.text;
+            val s = stringToDate(startOrderDateTv.getViewText()+" 00:00:00",DATE_TIME_FORMAT)?.time?:0;
+            mStart = s/1000;
+
+            val e = stringToDate(startOrderDateTv.getViewText()+" 23:59:59",DATE_TIME_FORMAT)?.time?:0;
+            mEnd = e/1000;
+        }
 
         startOrderDateTv.singleClick {
             pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
                 startOrderDateTv.text = formatString(date, DATE_FORMAT)
 
-                val s = date2Date(startOrderDateTv.getViewText())?.time?:0;
+                val s = dateTime2Date(startOrderDateTv.getViewText()+" 00:00:00")?.time?:0;
                 mStart = s/1000;
 
                 if(mStart != null && mEnd != null) {
@@ -164,7 +198,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             pvCustomTime2 =
                 getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
                     endOrderDateTv.setText(formatString(date, DATE_FORMAT))
-                    val e = date2Date(endOrderDateTv.getViewText())?.time?:0;
+                    val e = dateTime2Date(endOrderDateTv.getViewText()+" 23:59:59")?.time?:0;
                     mEnd = e/1000;
 
                     if(mStart != null && mEnd != null) {
@@ -177,6 +211,19 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     pvCustomTime2?.dismiss()
                 });
             pvCustomTime2?.show();
+        }
+        orderResetTv.singleClick {
+            if(orderType == "COMPLETE" || orderType == "ALL") {
+                mStart = null;
+                mEnd = null;
+                mCStatus = null;
+                startOrderDateTv.text = "";
+                endOrderDateTv.text = "";
+                rbContinue?.isChecked = false;
+                rbComplete?.isChecked = false;
+                rbCancel?.isChecked = false;
+                mLoadMoreDelegate?.refresh()
+            }
         }
     }
 

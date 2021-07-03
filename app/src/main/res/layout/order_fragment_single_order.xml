@@ -26,7 +26,7 @@
 
             <RadioGroup
                 android:id="@+id/rgEnable"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="@dimen/dp_10"
@@ -71,6 +71,16 @@
                     android:textColor="@color/selector_primary_to_99"
                     android:textSize="@dimen/sp_12" />
 
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_marginLeft="@dimen/dimen_15"
+                    android:id="@+id/orderStatusResetTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_10"
+                    android:text="重置"/>
+
             </RadioGroup>
 
             <LinearLayout
@@ -101,7 +111,7 @@
                     <TextView
                         android:id="@+id/startOrderDateTv"
                         android:drawableRight="@mipmap/common_arrow_right"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="@dimen/dimen_17"
                         android:hint="请选择开始时间"
                         android:drawablePadding="@dimen/dimen_5"
@@ -127,7 +137,7 @@
                     <TextView
                         android:id="@+id/endOrderDateTv"
                         android:drawableRight="@mipmap/common_arrow_right"
-                        android:layout_width="100dp"
+                        android:layout_width="90dp"
                         android:layout_height="@dimen/dimen_17"
                         android:hint="请选择结束时间"
                         android:drawablePadding="@dimen/dimen_5"
@@ -140,6 +150,13 @@
                     android:layout_width="0dp"
                     android:layout_height="10dp"
                     android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/orderResetTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_10"
+                    android:text="重置"/>
 
                 <TextView
                     android:id="@+id/orderFilterTv"

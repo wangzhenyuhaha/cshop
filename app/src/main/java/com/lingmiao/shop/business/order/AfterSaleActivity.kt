@@ -13,10 +13,6 @@ import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.order.bean.AfterSale
-import com.lingmiao.shop.business.order.bean.AfterSaleSpec
-import com.lingmiao.shop.business.order.bean.RefundGood
-import com.lingmiao.shop.business.order.bean.Spec
 import com.lingmiao.shop.business.order.presenter.AfterSalePresenter
 import com.lingmiao.shop.business.order.presenter.impl.AfterSalePresenterImpl
 import com.lingmiao.shop.util.GlideUtils
@@ -24,8 +20,10 @@ import com.google.gson.reflect.TypeToken
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.business.order.bean.*
 import kotlinx.android.synthetic.main.order_activity_after_sale.*
 import kotlinx.android.synthetic.main.order_activity_after_sale.rvOrderDetailGoods
+import org.greenrobot.eventbus.EventBus
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -138,6 +136,7 @@ class AfterSaleActivity : BaseActivity<AfterSalePresenter>(), AfterSalePresenter
         hideDialogLoading()
         ToastUtils.showShort("提交成功")
         setResult(Activity.RESULT_OK)
+        EventBus.getDefault().post(OrderTabChangeEvent(2));
         finish()
     }
 
