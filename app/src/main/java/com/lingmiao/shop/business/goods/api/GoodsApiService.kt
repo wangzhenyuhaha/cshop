@@ -23,12 +23,27 @@ interface GoodsApiService {
     @GET("seller/statistics/dashboard/shop")
     @WithHiResponse
     fun getDashboardData() : Call<DashboardDataVo>;
+
+    /**
+     * 查询预警商品
+     */
+    @GET("/seller/goods/getQuantityWarnGoods")
+    @WithHiResponse
+    fun getGoodsWarningData() : Call<GoodsVO>;
+
     /**
      * 查询商品列表
      */
     @GET("seller/goods")
     @WithHiResponse
     fun loadGoodsList(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
+
+    /**
+     * 查询预警商品列表
+     */
+    @GET("seller/goods/getQuantityWarnGoods")
+    @WithHiResponse
+    fun loadWarningGoodsList(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
 
     /**
      * 新增商品

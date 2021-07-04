@@ -6,7 +6,7 @@ package com.james.common.utils.exts
  */
 abstract class Interceptor {
 
-    private var mInterceptor :  Interceptor? = null
+    private var mInterceptor: Interceptor? = null
 
     // 关联下一个拦截器
     fun setNextInterceptor(interceptor: Interceptor?) {
@@ -17,7 +17,11 @@ abstract class Interceptor {
 }
 
 
-fun doIntercept(vararg interceptors: Interceptor, failed: ((Any?) -> Unit)?, success: ((Any?) -> Unit)?) {
+fun doIntercept(
+    vararg interceptors: Interceptor,
+    failed: ((Any?) -> Unit)?,
+    success: ((Any?) -> Unit)?
+) {
     if (interceptors.isEmpty()) {
         success?.invoke(null)
         return

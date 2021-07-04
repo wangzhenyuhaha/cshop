@@ -2,30 +2,34 @@ package com.lingmiao.shop.business.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.lingmiao.shop.R
-import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.main.bean.TabChangeEvent
-import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
-import com.lingmiao.shop.business.order.fragment.OrderTabFragment
-import com.lingmiao.shop.util.OtherUtils
-import com.lingmiao.shop.util.VoiceUtils
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
+import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
+import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
+import com.lingmiao.shop.business.order.fragment.OrderTabFragment
+import com.lingmiao.shop.util.OtherUtils
+import com.lingmiao.shop.util.VoiceUtils
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private fun initData() {
         EventBus.getDefault().register(this)
         OtherUtils.setJpushAlias()
-        doIntercept(StorageInterceptor(this),failed = {}){
+        doIntercept(StorageInterceptor(this), failed = {}) {
 
         }
     }
@@ -59,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         BarUtils.transparentStatusBar(this)
         val statusBarHeight = BarUtils.getStatusBarHeight()
         viStatusBar.layoutParams.height = statusBarHeight
-        viStatusBar.setBackgroundColor(ContextCompat.getColor(this,R.color.primary))
+        viStatusBar.setBackgroundColor(ContextCompat.getColor(this, R.color.primary))
 //        BarUtils.setStatusBarLightMode(this, false)
         val mainFragment = NewMainFragment.newInstance(true)
         mainFragment.setFromMain(true)
@@ -93,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         tbMain.tabMode = TabLayout.MODE_FIXED
-        TabLayoutMediator(tbMain, vpMain,true,false) { tab, position ->
+        TabLayoutMediator(tbMain, vpMain, true, false) { tab, position ->
             tab.setCustomView(R.layout.tab_main)
             val tvTitle = tab.customView?.findViewById<TextView>(R.id.tvTitle)
             val ivIcon = tab.customView?.findViewById<ImageView>(R.id.ivIcon)
@@ -121,9 +125,9 @@ class MainActivity : AppCompatActivity() {
         })
 
 //      极光推送   支付新订单跳转到订单列表待发货界面
-        val jpushType:String? = intent.extras?.getString(IConstant.JPUSH_TYPE)
+        val jpushType: String? = intent.extras?.getString(IConstant.JPUSH_TYPE)
         LogUtils.d("jpushType:$jpushType")
-        if(jpushType==IConstant.MESSAGE_ORDER_PAY_SUCCESS){
+        if (jpushType == IConstant.MESSAGE_ORDER_PAY_SUCCESS) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
         }
     }
@@ -135,15 +139,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun changeTabPosition(event : TabChangeEvent){
-       tbMain.selectTab(tbMain.getTabAt(1))
-       MainScope().launch {
-           delay(100)
-           EventBus.getDefault().post(OrderTabChangeEvent(event.type))
-       }
+    fun changeTabPosition(event: TabChangeEvent) {
+        tbMain.selectTab(tbMain.getTabAt(1))
+        MainScope().launch {
+            delay(100)
+            EventBus.getDefault().post(OrderTabChangeEvent(event.type))
+        }
     }
 
-    override fun onNewIntent(intent : Intent) {
+    override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent);
         setIntent(intent);
     }

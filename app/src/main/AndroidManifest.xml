@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.lingmiao.shop">
 
+    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -32,21 +34,26 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" /> <!-- 支持A-GPS辅助定位 -->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于 log 日志 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-sdk tools:overrideLibrary="com.google.zxing.client.android" />
+
+    <queries>
+
+        <!-- 用于微信支付,指定微信包名 -->
+        <package android:name="com.tencent.mm" />
+    </queries>
 
     <application
-        android:hardwareAccelerated="true"
         android:name=".MyApp"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".business.sales.SalesActivityGoodsWarning"
+            android:screenOrientation="portrait"/>
         <!-- ======================= 登录 START ======================== -->
         <activity
             android:name=".business.main.UserServiceH5Activity"
@@ -71,16 +78,15 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".business.login.CaptchaH5Activity"
-            android:screenOrientation="portrait" />
-        <!-- ======================= 登录 END ======================== -->
-
+            android:screenOrientation="portrait" /> <!-- ======================= 登录 END ======================== -->
         <!-- ======================= 首页 START ======================== -->
-
-        <activity android:name=".business.main.ShopWaitApplyActivity"
+        <activity
+            android:name=".business.main.ShopWaitApplyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".business.main.AddressActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
-            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.main.AddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".business.main.ApplyShopHintActivity"
             android:screenOrientation="portrait" />
@@ -95,10 +101,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".business.main.MessageCenterActivity"
-            android:screenOrientation="portrait" />
-        <!-- ======================= 首页 END ======================== -->
-
-
+            android:screenOrientation="portrait" /> <!-- ======================= 首页 END ======================== -->
         <!-- ======================= 商品模块 START ======================== -->
         <activity
             android:name=".business.goods.GoodsSearchActivity"
@@ -154,25 +157,30 @@
         <activity
             android:name=".business.goods.GoodsSalesSelectActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".business.goods.MenuManagerActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.goods.MenuEditActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.goods.GoodsCategoryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.goods.GoodsInfoActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.goods.GoodsInfoUpdateActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.goods.GoodsSpecActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.goods.UserMenuEditActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.GoodsOfMenuActivity"
-            android:screenOrientation="portrait"/>
-        <!-- ======================= 商品模块  END ========================= -->
-
-
+        <activity
+            android:name=".business.goods.MenuManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.MenuEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsCategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsInfoUpdateActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.GoodsSpecActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.goods.UserMenuEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.GoodsOfMenuActivity"
+            android:screenOrientation="portrait" /> <!-- ======================= 商品模块  END ========================= -->
         <!-- ======================= 订单模块 START ======================== -->
         <activity
             android:name=".business.order.OrderDetailActivity"
@@ -204,13 +212,9 @@
         <activity
             android:name=".business.order.LogisticsCompanyListActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".business.order.ScanOrderActivity"
-            android:screenOrientation="portrait" />
-        <!-- ======================= 订单模块  END ========================= -->
-
-
+            android:screenOrientation="portrait" /> <!-- ======================= 订单模块  END ========================= -->
         <!-- ======================= 个人中心 START ======================== -->
         <activity
             android:name=".business.me.PersonInfoActivity"
@@ -233,26 +237,24 @@
         <activity
             android:name=".business.me.ShopQualificationActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".business.me.ForgetPasswordActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".business.me.ManagerSettingActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.me.DeliveryManagerActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.me.LinkInSettingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.me.AboutUsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.me.ShopQRCodeActivity"
-            android:screenOrientation="portrait"/>
-        <!-- ======================= 个人中心  END ========================= -->
-
-
+        <activity
+            android:name=".business.me.ManagerSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.DeliveryManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.LinkInSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.ShopQRCodeActivity"
+            android:screenOrientation="portrait" /> <!-- ======================= 个人中心  END ========================= -->
         <!-- ======================= 我的钱包 START ======================== -->
         <activity
             android:name=".business.wallet.MyWalletActivity"
@@ -277,65 +279,65 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".business.me.ApplyVipActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- ======================= 我的钱包 END ======================== -->
-
-
+            android:screenOrientation="portrait" /> <!-- ======================= 我的钱包 END ======================== -->
         <!-- ======================= 首页工具 START ======================== -->
-        <activity android:name=".business.tools.LogisticsToolActivity"
+        <activity
+            android:name=".business.tools.LogisticsToolActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".business.tools.EditFreightModelActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.tools.AreasActivity"
-            android:screenOrientation="portrait"
-            android:process=":areas" />
-        <!-- ======================= 首页工具 END ======================== -->
-
+        <activity
+            android:name=".business.tools.EditFreightModelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tools.AreasActivity"
+            android:process=":areas"
+            android:screenOrientation="portrait" /> <!-- ======================= 首页工具 END ======================== -->
         <!-- ======================= 团购 END ======================== -->
-        <activity android:name=".business.tuan.ActivityIndexActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.tuan.ActivityViewActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.tuan.GoodsSubmitActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.tuan.GoodsSelectActivity"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".business.tuan.OrderIndexActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.tuan.OrderDetailActivity"
-            android:screenOrientation="landscape"/>
-
-        <activity android:name=".business.tuan.OrderRefuseActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.tuan.OrderDeliveryActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.tuan.OrderExpressActivity"
-            android:screenOrientation="portrait"/>
-        <!-- ======================= 团购 START ======================== -->
-
-
+        <activity
+            android:name=".business.tuan.ActivityIndexActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.ActivityViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.GoodsSubmitActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.GoodsSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.OrderIndexActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.OrderDetailActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".business.tuan.OrderRefuseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.OrderDeliveryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.tuan.OrderExpressActivity"
+            android:screenOrientation="portrait" /> <!-- ======================= 团购 START ======================== -->
         <!-- ======================= 营销 START ======================== -->
-        <activity android:name=".business.sales.SalesSettingActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.sales.SalesActivityEditActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.sales.StatsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.sales.UserManagerActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.sales.UserOrderDetailActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".business.sales.SalesGoodsActivity"
-            android:screenOrientation="portrait"/>
-
-        <!-- ======================= 团购 END ======================== -->
+        <activity
+            android:name=".business.sales.SalesSettingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.sales.SalesActivityEditActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.sales.StatsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.sales.UserManagerActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.sales.UserOrderDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.sales.SalesGoodsActivity"
+            android:screenOrientation="portrait" /> <!-- ======================= 团购 END ======================== -->
         <!-- 极光统计  START -->
         <!-- Since JCore2.0.0 Required SDK核心功能 -->
         <!-- 可配置android:process参数将Service放在其他进程中；android:enabled属性不能是false -->
@@ -348,8 +350,7 @@
             <intent-filter>
                 <action android:name="cn.jiguang.user.service.action" />
             </intent-filter>
-        </service>
-        <!-- Required since 3.0.7 -->
+        </service> <!-- Required since 3.0.7 -->
         <!-- 新的 tag/alias 接口结果返回需要开发者配置一个自定的广播 -->
         <!-- 3.3.0开始所有事件将通过该类回调 -->
         <!-- 该广播需要继承 JPush 提供的 JPushMessageReceiver 类, 并如下新增一个 Intent-Filter -->
@@ -362,40 +363,30 @@
 
                 <category android:name="${applicationId}" />
             </intent-filter>
-        </receiver>
-        <!-- 极光统计  END -->
-
+        </receiver> <!-- 极光统计  END -->
         <meta-data
             android:name="TencentMapSDK"
-            android:value="IRABZ-UT6WF-UI3JV-JAGAO-L2AYV-MCFJU" />
+            android:value="IRABZ-UT6WF-UI3JV-JAGAO-L2AYV-MCFJU" /> <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
+        <service android:name="com.amap.api.location.APSService" />
 
-
-
-        <!-- 定位需要的服务 使用2.0的定位需要加上这个 -->
-        <service android:name="com.amap.api.location.APSService"></service>
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="6b5941e6be9ffe3f7f7fd26179e24ebf"> </meta-data>
-
-
-        <!--用于微信支付-->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="6b5941e6be9ffe3f7f7fd26179e24ebf"></meta-data> <!-- 用于微信支付 -->
         <receiver
             android:name=".receiver.AppRegister"
-            android:permission="com.tencent.mm.plugin.permission.SEND" >
+            android:permission="com.tencent.mm.plugin.permission.SEND">
             <intent-filter>
                 <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
             </intent-filter>
         </receiver>
+
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
-            android:launchMode="singleTask">
-        </activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
     </application>
 
-    <queries>
-        <!--用于微信支付,指定微信包名-->
-        <package android:name="com.tencent.mm" />
-    </queries>
 </manifest>

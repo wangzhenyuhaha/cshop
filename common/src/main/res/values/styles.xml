@@ -34,7 +34,6 @@
         <item name="android:background">@color/divide_line</item>
     </style>
 
-
     <style name="DivideLineHorizontalOfC1">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>

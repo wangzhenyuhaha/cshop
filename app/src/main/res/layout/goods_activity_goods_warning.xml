@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_half"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:background="@color/color_E6E6E6" />
+
+        <LinearLayout
+            android:id="@+id/goods_activity_goods_warning_goodsSearchLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:background="@drawable/shape_goods_search_edt">
+
+            <TextView
+                android:id="@+id/inputEdt"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/dimen_30"
+                android:layout_weight="1"
+                android:background="@null"
+                android:drawableStart="@mipmap/goods_search_edit"
+                android:drawablePadding="@dimen/dimen_5"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:hint="@string/goods_list_search_hint"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:singleLine="true"
+                android:textColor="@color/color_666666"
+                android:textColorHint="@color/color_999999"
+                android:textSize="@dimen/sp_12"
+                tools:ignore="NestedWeights" />
+
+            <ImageView
+                android:id="@+id/deleteIv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="@dimen/dimen_10"
+                android:src="@mipmap/goods_search_delete" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/goods_activity_goods_warning_viewPager2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

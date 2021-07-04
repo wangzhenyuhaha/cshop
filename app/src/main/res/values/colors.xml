@@ -21,6 +21,7 @@
     <color name="color_EEEEEE">#EEEEEE</color>
     <color name="color_EDEDED">#EDEDED</color>
     <color name="color_ffffff">#ffffff</color>
+    <color name="color_FFFFFF">#ffffff</color>
     <color name="color_F1F1F1">#F1F1F1</color>
     <color name="color_3870EA">@color/primary</color>
     <color name="color_FD8424">#FD8424</color>

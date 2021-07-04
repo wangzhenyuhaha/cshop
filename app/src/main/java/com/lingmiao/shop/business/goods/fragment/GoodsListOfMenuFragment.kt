@@ -15,26 +15,23 @@ import com.lingmiao.shop.business.goods.presenter.GoodsListOfMenuPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsListOfMenuPreImpl
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.*
-import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.goodsCountTv
-import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.menuCateL1Tv
-import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.menuCateL2Tv
-import kotlinx.android.synthetic.main.goods_fragment_goods_to_menu.*
 
 /**
 Desc        : 菜单-商品管理-已添加列表
  **/
-class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre>(), GoodsListOfMenuPre.View {
+class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre>(),
+    GoodsListOfMenuPre.View {
 
-    var mItem : ShopGroupVO? = null;
+    private var mItem: ShopGroupVO? = null
 
-    var mGroups: List<ShopGroupVO>? = null;
+    private var mGroups: List<ShopGroupVO>? = null
 
-    var catPath : String ? = null;
+    private var catPath: String? = null
 
     companion object {
         const val KEY_ITEM = "KEY_ITEM"
 
-        fun newInstance(item : ShopGroupVO): GoodsListOfMenuFragment {
+        fun newInstance(item: ShopGroupVO): GoodsListOfMenuFragment {
             return GoodsListOfMenuFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(KEY_ITEM, item)
@@ -44,21 +41,40 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
     }
 
     override fun initBundles() {
-        mItem = arguments?.getSerializable(KEY_ITEM) as ShopGroupVO?;
-        catPath = mItem?.catPath;
+        mItem = arguments?.getSerializable(KEY_ITEM) as ShopGroupVO?
+        catPath = mItem?.catPath
     }
+
+    override fun initOthers(rootView: View) {
+        menuCateL1Tv.text = mItem?.shopCatName
+
+        menuCateL1Tv.singleClick {
+            mPresenter?.showGroupPop(mItem?.isTop!!)
+        }
+        menuCateL2Tv.singleClick {
+
+        }
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.goods_fragment_goods_of_menu
+    }
+
+
+    //----------------必须重写------------------------
+
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
         return GoodsMenuAdapter().apply {
             //menuIv
-            setOnItemChildClickListener { adapter, view, position ->
-                var item = mAdapter.getItem(position) as GoodsVO;
-                if(view.id == R.id.menuIv) {
+            setOnItemChildClickListener { _, view, position ->
+                var item = mAdapter.getItem(position) as GoodsVO
+                if (view.id == R.id.menuIv) {
                     mPresenter?.clickMenuView(item, position, view)
                 }
             }
-            setOnItemClickListener { adapter, view, position ->
-                var item = mAdapter.getItem(position) as GoodsVO;
+            setOnItemClickListener { _, _, position ->
+                var item = mAdapter.getItem(position) as GoodsVO
             }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.common_bg)
@@ -66,35 +82,8 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
         }
     }
 
-    override fun getLayoutId(): Int? {
-        return R.layout.goods_fragment_goods_of_menu;
-    }
-
     override fun createPresenter(): GoodsListOfMenuPre {
-        return GoodsListOfMenuPreImpl(mContext, this);
-    }
-
-    override fun initOthers(rootView: View) {
-        menuCateL1Tv.setText(mItem?.shopCatName);
-
-        menuCateL1Tv.singleClick {
-            mPresenter?.showGroupPop(mItem?.isTop!!);
-        }
-        menuCateL2Tv.singleClick {
-
-        }
-    }
-
-    override fun onUpdateGroup(groups: List<ShopGroupVO>?, groupName: String?) {
-        mGroups = groups;
-        menuCateL1Tv.setText(groupName)
-
-        if(mGroups?.size?:0 > 0) {
-            val item = mGroups?.get(mGroups?.size!! - 1)
-            catPath = item?.catPath;
-
-            mLoadMoreDelegate?.refresh()
-        }
+        return GoodsListOfMenuPreImpl(mContext, this)
     }
 
     /**
@@ -104,8 +93,20 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
         mPresenter?.loadListData(catPath, page, mAdapter.data)
     }
 
-    override fun setGoodsCount(count : Int) {
-        goodsCountTv.text = String.format("共%s件商品", count);
+    override fun onUpdateGroup(groups: List<ShopGroupVO>?, groupName: String?) {
+        mGroups = groups
+        menuCateL1Tv.text = groupName
+
+        if (mGroups?.size ?: 0 > 0) {
+            val item = mGroups?.get(mGroups?.size!! - 1)
+            catPath = item?.catPath;
+
+            mLoadMoreDelegate?.refresh()
+        }
+    }
+
+    override fun setGoodsCount(count: Int) {
+        goodsCountTv.text = String.format("共%s件商品", count)
     }
 
 }

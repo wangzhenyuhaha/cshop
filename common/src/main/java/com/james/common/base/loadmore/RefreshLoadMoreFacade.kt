@@ -11,7 +11,7 @@ import com.james.common.base.loadmore.core.*
 class RefreshLoadMoreFacade : IRefreshLoadMoreDelegate {
 
     companion object {
-        const val TAG = "RefreshLoadMoree"
+        const val TAG = "RefreshLoadMore"
     }
 
     private lateinit var mConfig: LoadMoreConfig

@@ -2,15 +2,15 @@ package com.lingmiao.shop.business.main
 
 import android.content.Intent
 import android.view.View
-import com.lingmiao.shop.R
-import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.main.bean.*
-import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
-import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.exts.checkNotBlack
+import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
+import com.lingmiao.shop.business.main.bean.*
+import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
+import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import kotlinx.android.synthetic.main.main_activity_apply_shop_info.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -223,12 +223,12 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 applyShopInfo.shopType = "1"
             }
             R.id.rlShopInfoCategory -> {
-                val intent = Intent(this,ApplyShopCategoryActivity::class.java)
-                intent.putExtra("goodsManagementCategory",applyShopInfo.goodsManagementCategory)
+                val intent = Intent(this, ApplyShopCategoryActivity::class.java)
+                intent.putExtra("goodsManagementCategory", applyShopInfo.goodsManagementCategory)
                 startActivity(intent)
             }
             R.id.rlShopInfoAddress -> {
-                AddressActivity.openActivity(this, adInfo?.latLng, adInfo?.address);
+               AddressActivity.openActivity(this, adInfo?.latLng, adInfo?.address);
                 // ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
             }
             R.id.rlShopInfoLicense -> {

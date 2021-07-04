@@ -1,8 +1,11 @@
 package com.lingmiao.shop.business.main
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -75,19 +78,25 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     // 缩放比例
     private var zoom = 19.0f;
 
-    private var addressData : AddressData? = null
+    private var addressData: AddressData? = null
+
     // 城市
-    private var city : String? = "";
+    private var city: String? = "";
+
     // 经伟度
     private var latlng: LatLng? = null;
+
     // 目标marker
     private var marker: Marker? = null
+
     // 地图高
     private var mMapHeight = 0
+
     // 地图宽
     private var mMapWidth = 0
 
-    private var address : String? = null
+    private var address: String? = null
+
     companion object {
 
         fun openActivity(context: Context, latLng: LatLng?, address: String?) {
@@ -119,23 +128,26 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("店铺地址")
-        mToolBarDelegate.setRightText("保存", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
-            if(etShopAddress.text.length == 0) {
-                showToast("请输入店铺地址");
-                return@OnClickListener;
-            }
-            addressData?.address = etShopAddress.text.toString();
-            if(latlng != null) {
-                EventBus.getDefault().post(ApplyShopPoiEvent(addressData))
-                finish();
-            }
-        });
+        mToolBarDelegate.setRightText(
+            "保存",
+            ContextCompat.getColor(context, R.color.white),
+            View.OnClickListener {
+                if (etShopAddress.text.length == 0) {
+                    showToast("请输入店铺地址");
+                    return@OnClickListener;
+                }
+                addressData?.address = etShopAddress.text.toString();
+                if (latlng != null) {
+                    EventBus.getDefault().post(ApplyShopPoiEvent(addressData))
+                    finish();
+                }
+            });
 
         initGeoSearch()
 
-        initMap();
+        initMap()
 
-        initData();
+        initData()
 
         // 搜索
         btnSearch.singleClick {
@@ -152,9 +164,10 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
         // Demo中为了其他界面可以使用下载的离线地图，使用默认位置存储，屏蔽了自定义设置
         // MapsInitializer.sdcardDir =OffLineMapUtils.getSdCacheDir(this);
         // 此方法必须重写
-         mvShopAddress.onCreate(savedInstanceState)
+        mvShopAddress.onCreate(savedInstanceState)
 
         if (aMap == null) {
+
             aMap = mvShopAddress.getMap()
             //旋转手势是否可用
             aMap?.uiSettings?.isRotateGesturesEnabled = false
@@ -167,14 +180,85 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
         mapListener();
     }
 
-    private fun initData() {
-        if(latlng == null) {
 
-            doIntercept(LocationInterceptor(context),failed = {}){
-                //显示定位层并且可以触发定位
-                // aMap?.isMyLocationEnabled = true;
-                locate();
+    private fun requestLocationPermission() {
+        if (Build.VERSION.SDK_INT > 23) {
+            val checkList = arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
+            val needRequestPermission = checkPermission(this, checkList)
+            if (needRequestPermission.isEmpty()) {
+                doIt()
+            } else {
+                requestPermissions(needRequestPermission.toTypedArray(), 32)
+                doIt()
             }
+        } else {
+            doIt()
+        }
+
+    }
+
+    //检查权限，返回需要申请的权限
+    private fun checkPermission(context: Context, checkList: Array<String>): ArrayList<String> {
+        val list: ArrayList<String> = ArrayList()
+        for (i in 1..checkList.size) {
+            if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(
+                    context,
+                    checkList[i - 1]
+                )
+            ) {
+                list.add(checkList[i - 1])
+            }
+        }
+        return list
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            32 -> {
+                if (grantResults.isNotEmpty()) {
+                    var a: Boolean = true
+                    var b: Int = 0
+                    for (i in grantResults) {
+                        ++b
+                        if (i != PackageManager.PERMISSION_GRANTED) {
+                            a = false
+                        }
+                    }
+                    if (!a) {
+                        Log.d("AddressActivityTAG", "未全部获取权限")
+                    } else {
+                        doIt()
+                    }
+                } else {
+                    Log.d("AddressActivityTAG", "未获取权限")
+                }
+            }
+        }
+    }
+
+    private fun doIt() {
+        locate()
+    }
+
+    private fun initData() {
+        if (latlng == null) {
+
+            //请求权限
+            requestLocationPermission()
+// doIntercept(LocationInterceptor(context),failed = {}){
+//               //显示定位层并且可以触发定位
+//                // aMap?.isMyLocationEnabled = true;
+//                locate();
+//            }
         } else {
             etShopAddress.setText(address);
 
@@ -192,6 +276,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
             override fun onCameraChange(cameraPosition: CameraPosition) {
 
             }
+
             override fun onCameraChangeFinish(cameraPosition: CameraPosition) {
                 // 记录缩放比例
                 zoom = cameraPosition.zoom
@@ -223,7 +308,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
             //设置定位监听
             mlocationClient?.setLocationListener(mLocationListener)
             //设置为高精度定位模式
-            mLocationOption?.setLocationMode(AMapLocationMode.Hight_Accuracy)
+            mLocationOption?.locationMode = AMapLocationMode.Hight_Accuracy
             //设置定位参数
             mlocationClient?.setLocationOption(mLocationOption)
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -258,7 +343,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     /**
      * 定位
      */
-    val mLocationListener : AMapLocationListener = object : AMapLocationListener {
+    val mLocationListener: AMapLocationListener = object : AMapLocationListener {
         override fun onLocationChanged(amapLocation: AMapLocation?) {
             if (amapLocation != null) {//mListener != null &&
                 if (amapLocation != null && amapLocation.getErrorCode() == 0) {
@@ -289,7 +374,10 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         city = amapLocation.getCity()
                         latlng = LatLng(amapLocation.getLatitude(), amapLocation.getLongitude())
 
-                        Log.e("定位", "province:$mProvince--city:$mCity--area:$mArea--street:$street--streetNum:$streetNum--mAddress:$mAddress")
+                        Log.e(
+                            "定位",
+                            "province:$mProvince--city:$mCity--area:$mArea--street:$street--streetNum:$streetNum--mAddress:$mAddress"
+                        )
 
                         Log.e("定位", "latlng : $amapLocation")
 
@@ -300,7 +388,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         addressData?.address = mAddress;
                         addressData?.latLng = latlng;
 
-                       // etShopAddress.setText(mAddress);
+                        // etShopAddress.setText(mAddress);
 
                         mFirstFix = true
 
@@ -345,11 +433,11 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     fun startJumpAnimation() {
 
-        if(marker == null) {
+        if (marker == null) {
             addMarkersToMap();
         }
 
-        if(marker != null) {
+        if (marker != null) {
 
             //根据屏幕距离计算需要移动的目标点
             val latLng: LatLng = marker!!.getPosition()
@@ -428,7 +516,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
         mvShopAddress.onDestroy()
     }
 
-    fun searchAddressByKeyword(key : String) {
+    fun searchAddressByKeyword(key: String) {
 //        query = PoiSearch.Query(key, "", city)
         query = PoiSearch.Query(key, "")
         //keyWord表示搜索字符串，
@@ -445,13 +533,16 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
         query!!.pageNum = 0
 
         poiSearch = PoiSearch(context, query)
-        poiSearch?.setOnPoiSearchListener(object : OnPoiSearchListener{
+        poiSearch?.setOnPoiSearchListener(object : OnPoiSearchListener {
             override fun onPoiItemSearched(p0: PoiItem?, p1: Int) {
 
             }
 
             override fun onPoiSearched(poiResult: PoiResult?, p1: Int) {
-                if(poiResult == null || poiResult?.pois == null || poiResult?.pois.size == 0 || poiResult?.pois.get(0) == null) {
+                if (poiResult == null || poiResult?.pois == null || poiResult?.pois.size == 0 || poiResult?.pois.get(
+                        0
+                    ) == null
+                ) {
                     Toast.makeText(context, "未搜索到当前位置信息", Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -483,7 +574,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
         geocoderSearch!!.setOnGeocodeSearchListener(object : OnGeocodeSearchListener {
             override fun onRegeocodeSearched(result: RegeocodeResult, rCode: Int) {
                 if (rCode == AMapException.CODE_AMAP_SUCCESS) {
-                    if(result?.regeocodeAddress == null || result.regeocodeAddress.formatAddress == null) {
+                    if (result?.regeocodeAddress == null || result.regeocodeAddress.formatAddress == null) {
                         ToastUtil.show(this@AddressActivity, "对不起，没有搜索到相关数据！");
                         return;
                     }
@@ -496,7 +587,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                     addressData?.latLng = latlng;
 
                     city = result.regeocodeAddress.city;
-                   // etShopAddress.setText(addressData?.address?:"");
+                    // etShopAddress.setText(addressData?.address?:"");
                 } else {
                     ToastUtil.showerror(this@AddressActivity, rCode)
                 }
@@ -509,7 +600,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     }
 
     private fun geo() {
-        if(latlng != null) {
+        if (latlng != null) {
             val query = RegeocodeQuery(
                 // 第一个参数表示一个Latlng，
                 LatLonPoint(latlng!!.latitude, latlng!!.longitude),

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEDED"
+    tools:ignore="HardcodedText"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/llHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/primary">
+        android:background="@color/primary"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -34,9 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="40dp"
-                tools:text="月亮不睡的店"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="月亮不睡的店" />
 
             <ImageView
                 android:id="@+id/ivMainMessage"
@@ -65,21 +65,21 @@
                 android:textSize="14sp" />
 
             <com.kyleduo.switchbutton.SwitchButton
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
                 android:id="@+id/switchStatusBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="end|center_vertical"
                 android:layout_marginLeft="@dimen/dimen_20"
-                app:kswTintColor="@color/white"
-                app:kswBackDrawable="@drawable/flyme_back_drawable"/>
+                app:kswBackDrawable="@drawable/flyme_back_drawable"
+                app:kswTintColor="@color/white" />
 
         </RelativeLayout>
 
     </LinearLayout>
 
-    <View style="@style/DivideLineHorizontal"/>
+    <View style="@style/DivideLineHorizontal" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
@@ -97,8 +97,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:orientation="vertical"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
@@ -107,36 +107,36 @@
                     <LinearLayout
                         android:id="@+id/llMainShopOpen"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        tools:visibility="visible"
-                        android:layout_height="wrap_content">
+                        tools:visibility="visible">
 
                         <!--今日营业情况start-->
                         <LinearLayout
-                            tools:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
+                            android:background="@drawable/shape_primary_bg"
                             android:orientation="vertical"
-                            android:background="@drawable/shape_primary_bg">
+                            tools:visibility="visible">
 
                             <LinearLayout
-                                android:orientation="horizontal"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
                                 <TextView
-                                    android:paddingTop="15dp"
                                     style="@style/main_parts_hint"
+                                    android:layout_weight="1"
+                                    android:paddingTop="15dp"
                                     android:text="今日订单"
-                                    android:textColor="@color/white"
-                                    android:layout_weight="1"/>
+                                    android:textColor="@color/white" />
 
                                 <ImageView
-                                    android:padding="@dimen/dimen_15"
-                                    android:src="@mipmap/ic_refresh"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/dimen_15"
+                                    android:src="@mipmap/ic_refresh" />
                             </LinearLayout>
 
                             <!--总信息start-->
@@ -157,8 +157,7 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View
-                                    style="@style/dash_v_line"/>
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@+id/llMainWaitTakeGoods"
@@ -175,8 +174,7 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View
-                                    style="@style/dash_v_line"/>
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@+id/llMainWaitSendGoods"
@@ -199,11 +197,10 @@
                             <View
                                 style="@style/dash_line"
                                 android:layout_marginLeft="@dimen/dimen_30"
-                                android:layout_marginRight="@dimen/dimen_30"/>
+                                android:layout_marginRight="@dimen/dimen_30" />
 
                             <!--退款、完成、失效-->
-                            <LinearLayout
-                                style="@style/main_data_layout">
+                            <LinearLayout style="@style/main_data_layout">
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@id/llMainWaitRefund"
@@ -220,8 +217,7 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View
-                                    style="@style/dash_v_line"/>
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@+id/layoutTodayFinish"
@@ -238,8 +234,7 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View
-                                    style="@style/dash_v_line"/>
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@+id/layoutTodayInvalid"
@@ -267,26 +262,26 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:orientation="vertical"
-                            android:background="@drawable/shape_primary_bg">
+                            android:background="@drawable/shape_primary_bg"
+                            android:orientation="vertical">
 
                             <LinearLayout
-                                android:orientation="horizontal"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
                                 <TextView
-                                    android:paddingTop="15dp"
                                     style="@style/main_parts_hint"
+                                    android:layout_weight="1"
+                                    android:paddingTop="15dp"
                                     android:text="今日数据"
-                                    android:textColor="@color/white"
-                                    android:layout_weight="1"/>
+                                    android:textColor="@color/white" />
 
                                 <ImageView
-                                    android:padding="@dimen/dimen_15"
-                                    android:src="@mipmap/ic_refresh"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"/>
+                                    android:layout_height="wrap_content"
+                                    android:padding="@dimen/dimen_15"
+                                    android:src="@mipmap/ic_refresh" />
                             </LinearLayout>
 
                             <!--总信息start-->
@@ -307,8 +302,7 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View
-                                    style="@style/dash_v_line"/>
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@+id/salesDataOfTodayTv"
@@ -325,8 +319,7 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View
-                                    style="@style/dash_v_line"/>
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
                                     android:id="@+id/userDataOfTodayTv"
@@ -352,8 +345,8 @@
                         <com.james.common.view.ILinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginBottom="20dp"
                             android:layout_marginTop="@dimen/dimen_15"
+                            android:layout_marginBottom="20dp"
                             android:gravity="center"
                             android:orientation="vertical"
                             android:paddingTop="15dp"
@@ -436,10 +429,9 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvComeSoon"
-                                    android:drawableBottom="@mipmap/ic_more"
                                     style="@style/main_tools"
-                                    android:layout_gravity="bottom"
-                                    android:text="更多功能\n敬请期待" />
+                                    android:drawableTop="@drawable/main_ic_stock_warning"
+                                    android:text="库存预警" />
 
                             </LinearLayout>
                             <!--第3行end-->
@@ -453,16 +445,17 @@
                 <LinearLayout
                     android:id="@+id/llMainShopOther"
                     android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:visibility="gone"
+                    android:layout_height="match_parent"
                     android:background="@color/white"
-                    android:layout_height="match_parent">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="178dp"
-                        android:layout_height="wrap_content">
+                        android:orientation="vertical">
+
                         <TextView
                             android:id="@+id/tvMainShopHint"
                             android:layout_width="wrap_content"
@@ -472,8 +465,8 @@
                             android:layout_marginRight="40dp"
                             android:text="你还有没有开通店铺"
                             android:textColor="#ff909090"
-                            android:textSize="13sp"
-                            />
+                            android:textSize="13sp" />
+
                         <TextView
                             android:id="@+id/tvMainShopReason"
                             android:layout_width="wrap_content"
@@ -481,11 +474,10 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:visibility="gone"
-                            tools:text="xxxxx"
                             android:textColor="@color/color_fc0000"
                             android:textSize="13sp"
-                            />
+                            android:visibility="gone"
+                            tools:text="xxxxx" />
                     </LinearLayout>
 
                     <com.james.common.view.ITextView
@@ -493,16 +485,15 @@
                         android:layout_width="120dp"
                         android:layout_height="38dp"
                         android:layout_gravity="center_horizontal"
-                        android:text="申请开店 >>"
                         android:layout_marginTop="18dp"
-                        app:ivBgColor="@color/white"
-                        app:ivRadius="19dp"
-                        app:ivBorderColor="#ff3870ea"
-                        app:ivBorderWidth="1px"
                         android:gravity="center"
+                        android:text="申请开店 >>"
                         android:textColor="#ff3870ea"
                         android:textSize="13sp"
-                        />
+                        app:ivBgColor="@color/white"
+                        app:ivBorderColor="#ff3870ea"
+                        app:ivBorderWidth="1px"
+                        app:ivRadius="19dp" />
 
                     <View
                         android:layout_width="match_parent"
@@ -518,8 +509,8 @@
                         android:layout_marginBottom="12dp"
                         android:gravity="center"
                         android:text="退出登录"
-                        android:visibility="visible"
                         android:textColor="#FF340B"
+                        android:visibility="visible"
                         app:ivBgColor="@color/white"
                         app:ivBorderColor="#FF340B"
                         app:ivBorderWidth="1px"
