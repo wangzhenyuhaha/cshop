@@ -18,6 +18,7 @@ import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.lingmiao.shop.business.goods.presenter.impl.*
 import com.lingmiao.shop.business.photo.PhotoHelper
+import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
 import org.greenrobot.eventbus.EventBus
@@ -27,7 +28,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * Author : Elson
  * Date   : 2020/7/11
- * Desc   : 商品(出售中、待审核、已下架)列表
+ * Desc   : 商品(出售中、待审核、已下架、库存预警)列表
  */
 class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     GoodsStatusPre.StatusView {
@@ -168,6 +169,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             GoodsNewFragment.GOODS_STATUS_WAITING -> GoodsAuthWaitingPreImpl(mContext, this)
             GoodsNewFragment.GOODS_STATUS_DISABLE -> GoodsMarketDisablePreImpl(mContext, this)
             GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> GoodsSellOutPreImpl(mContext, this)
+            GoodsNewFragment.GOODS_STATUE_WARNING -> GoodsWarningPreImpl(mContext, this)
             else -> null
         }
     }

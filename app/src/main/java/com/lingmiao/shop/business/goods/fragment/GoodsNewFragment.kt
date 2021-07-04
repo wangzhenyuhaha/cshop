@@ -30,17 +30,18 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
         const val GOODS_STATUS_WAITING = 3
         const val GOODS_STATUS_DISABLE = 4
         const val GOODS_STATUS_SOLD_OUT = 5
+        const val GOODS_STATUE_WARNING = 6
 
         fun newInstance(): GoodsNewFragment {
             return GoodsNewFragment()
         }
     }
 
-    private val tvTabList: ArrayList<IGoodsTabView> = ArrayList();
+    private val tvTabList: ArrayList<IGoodsTabView> = ArrayList()
 
     private var mTabTitles = arrayOf("全部", "已上架", "待上架", "已下架", "已售罄")
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int{
         return R.layout.goods_fragment_goods_home
     }
 
@@ -55,7 +56,7 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
     override fun initViewsAndData(rootView: View) {
         initToolbar()
         initTabLayout()
-        mPresenter?.loadNumbers();
+        mPresenter?.loadNumbers()
     }
 
     private fun initToolbar() {
@@ -72,23 +73,23 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
 
     private fun initTabLayout() {
         tvTabAll.setOnClickListener {
-            viewPager.currentItem = 0;
+            viewPager.currentItem = 0
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_ALL))
         }
         tvTabSelling.setOnClickListener {
-            viewPager.currentItem = 1;
+            viewPager.currentItem = 1
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_ENABLE))
         }
         tvTabWaiting.setOnClickListener {
-            viewPager.currentItem = 2;
+            viewPager.currentItem = 2
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_WAITING))
         }
         tvTabOffLine.setOnClickListener {
-            viewPager.currentItem = 3;
+            viewPager.currentItem = 3
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_DISABLE))
         }
         tvTabSoldOut.setOnClickListener {
-            viewPager.currentItem = 4;
+            viewPager.currentItem = 4
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GOODS_STATUS_SOLD_OUT))
         }
 
@@ -105,9 +106,9 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
         fragments.add(GoodsStatusNewFragment.newInstance(GOODS_STATUS_DISABLE))
         fragments.add(GoodsStatusNewFragment.newInstance(GOODS_STATUS_SOLD_OUT))
         val fragmentAdapter = GoodsHomePageAdapter(childFragmentManager, fragments, mTabTitles)
-        viewPager.setAdapter(fragmentAdapter)
-        viewPager.addOnPageChangeListener(this);
-        viewPager.offscreenPageLimit = 1;
+        viewPager.adapter = fragmentAdapter
+        viewPager.addOnPageChangeListener(this)
+        viewPager.offscreenPageLimit = 1
     }
 
     override fun onPageScrollStateChanged(state: Int) {
@@ -120,9 +121,9 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
 
     override fun onPageSelected(position: Int) {
 
-        setTabStatus(position);
+        setTabStatus(position)
 
-        refreshListData();
+        refreshListData()
     }
 
     private fun setTabStatus(tabIndex: Int) {
@@ -131,7 +132,7 @@ class GoodsNewFragment : BaseFragment<GoodsTabNumberPre>(), ViewPager.OnPageChan
         tvTabWaiting.setTabSelected(false)
         tvTabOffLine.setTabSelected(false)
         tvTabSoldOut.setTabSelected(false)
-        viewPager.currentItem = tabIndex;
+        viewPager.currentItem = tabIndex
         tvTabList[tabIndex].setTabSelected(true)
     }
 

@@ -1,13 +1,10 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.graphics.Color.green
-import android.icu.text.CompactDecimalFormat
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
@@ -35,11 +32,10 @@ import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.main.bean.MainInfoVo
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.me.ManagerSettingActivity
-import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
+import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
 import com.lingmiao.shop.business.sales.UserManagerActivity
-import com.lingmiao.shop.business.tuan.ActivityIndexActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
@@ -87,7 +83,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         return MainPresenterImpl(context!!, this)
     }
 
-    fun setFromMain(fromType: Boolean){
+    fun setFromMain(fromType: Boolean) {
         fromMain = fromType
     }
 
@@ -116,7 +112,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             }
         }
         tvMainLoginOut.setOnClickListener {
-            DialogUtils.showDialog(activity!!,"退出登录","确定退出登录吗？",null,View.OnClickListener{
+            DialogUtils.showDialog(activity!!, "退出登录", "确定退出登录吗？", null, View.OnClickListener {
                 UserManager.loginOut()
                 ActivityUtils.startActivity(LoginActivity::class.java)
                 ActivityUtils.finishAllActivitiesExceptNewest()
@@ -134,10 +130,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
-        switchStatusBtn.isChecked =loginInfo?.openStatus?:false
+        switchStatusBtn.isChecked = loginInfo?.openStatus ?: false
 
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPresenter?.editShopStatus(if(isChecked) 1 else 0);
+            mPresenter?.editShopStatus(if (isChecked) 1 else 0);
         }
         onShopStatusEdited();
 
@@ -188,7 +184,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
                 }
                 "OPEN" -> {
-                    if(fromMain!=true&& ActivityUtils.getTopActivity() !is MainActivity){
+                    if (fromMain != true && ActivityUtils.getTopActivity() !is MainActivity) {
                         versionUpdateDialog?.dismiss()
                         activity?.finish()
                         ActivityUtils.startActivity(MainActivity::class.java)
@@ -295,38 +291,38 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             ActivityUtils.startActivity(ManagerSettingActivity::class.java)
         }
         // 商品管理
-         tvGoodsManager.setOnClickListener {
-             GoodsListActivity.openActivity(context!!);
-         }
+        tvGoodsManager.setOnClickListener {
+            GoodsListActivity.openActivity(context!!);
+        }
         // 商品分类
         tvCategoryManager.setOnClickListener {
             GoodsCategoryActivity.openActivity(context!!);
         }
         // 菜单管理
-         tvMenuManager.setOnClickListener {
-             ActivityUtils.startActivity(MenuManagerActivity::class.java)
+        tvMenuManager.setOnClickListener {
+            ActivityUtils.startActivity(MenuManagerActivity::class.java)
 //             ActivityUtils.startActivity(GoodsPublishActivity::class.java)
 //             GoodsPublishActivity.openActivity(context!!, "");
-         }
+        }
         // 营销设置
-         tvSaleSetting.setOnClickListener {
+        tvSaleSetting.setOnClickListener {
             ActivityUtils.startActivity(SalesSettingActivity::class.java)
-         }
+        }
         // 钱包账户
-         tvWalletAccount.setOnClickListener {
-             ActivityUtils.startActivity(MyWalletActivity::class.java);
-         }
+        tvWalletAccount.setOnClickListener {
+            ActivityUtils.startActivity(MyWalletActivity::class.java);
+        }
         // 用户管理
-         tvUserManager.setOnClickListener {
-             ActivityUtils.startActivity(UserManagerActivity::class.java)
-         }
+        tvUserManager.setOnClickListener {
+            ActivityUtils.startActivity(UserManagerActivity::class.java)
+        }
         // 数据统计
-         tvDataAnalysis.setOnClickListener {
-             ActivityUtils.startActivity(StatsActivity::class.java)
-         }
-        // 敬请期待
+        tvDataAnalysis.setOnClickListener {
+            ActivityUtils.startActivity(StatsActivity::class.java)
+        }
+        // 库存预警
         tvComeSoon.setOnClickListener {
-
+            ActivityUtils.startActivity(SalesActivityGoodsWarning::class.java)
         }
 
         // 今日数据
@@ -342,7 +338,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         userDataOfTodayTv.singleClick {
             UserManagerActivity.newUser(context!!);
         }
-
 
 
         // 未接订单
@@ -382,8 +377,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //            bean.castUpdate = true
 //            bean.needUpgrade = true
 //        }
-        if(!bean.needUpgrade) return
-        versionUpdateDialog = DialogUtils.showVersionUpdateDialog(activity!!, "版本更新", bean.upgradeContent ?: "", null,
+        if (!bean.needUpgrade) return
+        versionUpdateDialog = DialogUtils.showVersionUpdateDialog(
+            activity!!, "版本更新", bean.upgradeContent ?: "", null,
             View.OnClickListener {
                 val builder = AllenVersionChecker
                     .getInstance()
@@ -409,7 +405,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onShopStatusEdited() {
 //        shopStatusTv.setTextColor(ContextCompat.getColor(context!!, if(switchStatusBtn.isChecked) R.color.color_0EA60 else R.color.white));
-        shopStatusTv.text = if(switchStatusBtn.isChecked) "开店中" else "休息中";
+        shopStatusTv.text = if (switchStatusBtn.isChecked) "开店中" else "休息中";
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -418,7 +414,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateLogo(event : LoginInfo) {
+    fun updateLogo(event: LoginInfo) {
         event?.apply {
             setShop();
         }

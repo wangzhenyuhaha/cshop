@@ -1,92 +1,92 @@
 <resources>
-    <string name="app_name">C店</string>
-    <string name="main">首页</string>
-    <string name="product">商品</string>
-    <string name="order">订单</string>
-    <string name="my">我的</string>
-    <string name="login_by_phone">C店商户登录</string>
-    <string name="register_by_phone">C店商户注册</string>
-    <string name="no_account_register">没有账号？立即注册</string>
-    <string name="has_account_login">已有账号？立即登录</string>
-    <string name="input_sms_code">请您输入验证码</string>
-    <string name="get_code">获取验证码</string>
-    <string name="yes">确定</string>
-    <string name="save">保存</string>
-    <string name="copy_right">@Copyright 2019-2029 All Rights reserved</string>
-    <string name="company_info">上海邻妙信息科技有限公司是创新型科技企业；利用自主研发的数字化软硬件产品服务于广大的实体商户；核心产品“C 店”是一款实体商户使用的数字化全链路工具；集网上下单、支付、配送、集成管理于一体；它具有操作简便、实用、美观、独立等特性；“C店”由用户下单微信小程序“C店+”和商户管理端“C店”APP组成；它使实体商户更好的服务于用户、形成自己的私域流量，增加自身的生存能力；</string>
+    <string name="app_name" translatable="false">C店</string>
+    <string name="main" translatable="false">首页</string>
+    <string name="product" translatable="false">商品</string>
+    <string name="order" translatable="false">订单</string>
+    <string name="my" translatable="false">我的</string>
+    <string name="login_by_phone" translatable="false">C店商户登录</string>
+    <string name="register_by_phone" translatable="false">C店商户注册</string>
+    <string name="no_account_register" translatable="false">没有账号？立即注册</string>
+    <string name="has_account_login" translatable="false">已有账号？立即登录</string>
+    <string name="input_sms_code" translatable="false">请您输入验证码</string>
+    <string name="get_code" translatable="false">获取验证码</string>
+    <string name="yes" translatable="false">确定</string>
+    <string name="save" translatable="false">保存</string>
+    <string name="copy_right" translatable="false">\@Copyright 2019-2029 All Rights reserved</string>
+    <string name="company_info" translatable="false">上海邻妙信息科技有限公司是创新型科技企业；利用自主研发的数字化软硬件产品服务于广大的实体商户；核心产品“C 店”是一款实体商户使用的数字化全链路工具；集网上下单、支付、配送、集成管理于一体；它具有操作简便、实用、美观、独立等特性；“C店”由用户下单微信小程序“C店+”和商户管理端“C店”APP组成；它使实体商户更好的服务于用户、形成自己的私域流量，增加自身的生存能力；</string>
 
 
-    <string name="pay_success">支付成功</string>
-    <string name="pay_cancel">取消支付</string>
-    <string name="pay_unknown">支付异常</string>
+    <string name="pay_success" translatable="false">支付成功</string>
+    <string name="pay_cancel" translatable="false">取消支付</string>
+    <string name="pay_unknown" translatable="false">支付异常</string>
 
-    <string name="errcode_success">操作成功</string>
-    <string name="errcode_cancel">操作取消</string>
-    <string name="errcode_deny">操作被拒绝</string>
-    <string name="errcode_unsupported">不支持错误</string>
-    <string name="errcode_unknown">发送返回</string>
+    <string name="errcode_success" translatable="false">操作成功</string>
+    <string name="errcode_cancel" translatable="false">操作取消</string>
+    <string name="errcode_deny" translatable="false">操作被拒绝</string>
+    <string name="errcode_unsupported" translatable="false">不支持错误</string>
+    <string name="errcode_unknown" translatable="false">发送返回</string>
 
     <!--  =================== 商品 START ===================  -->
-    <string name="goods_home_title">管理商品</string>
-    <string name="goods_home_quantity">库存：%s</string>
-    <string name="goods_home_spec">规格：%s</string>
-    <string name="goods_home_enable_quantity">可用库存：%s</string>
-    <string name="goods_home_sales">销量：%s</string>
-    <string name="goods_search_start">搜索</string>
-    <string name="goods_search_edt_hint">搜索商品名称</string>
-    <string name="goods_publish_type_title">商品发布</string>
-    <string name="goods_detail_title">商品详情</string>
-    <string name="goods_manager_title">商品管理</string>
-    <string name="goods_list_search_hint">搜索商品名称</string>
-    <string name="goods_category_manager_title">分类管理</string>
-    <string name="goods_menu_title">菜单管理</string>
+    <string name="goods_home_title" translatable="false">管理商品</string>
+    <string name="goods_home_quantity" translatable="false">库存：%s</string>
+    <string name="goods_home_spec" translatable="false">规格：%s</string>
+    <string name="goods_home_enable_quantity" translatable="false">可用库存：%s</string>
+    <string name="goods_home_sales" translatable="false">销量：%s</string>
+    <string name="goods_search_start" translatable="false">搜索</string>
+    <string name="goods_search_edt_hint" translatable="false">搜索商品名称</string>
+    <string name="goods_publish_type_title" translatable="false">商品发布</string>
+    <string name="goods_detail_title" translatable="false">商品详情</string>
+    <string name="goods_manager_title" translatable="false">商品管理</string>
+    <string name="goods_warning_title" translatable="false">库存预警</string>
+    <string name="goods_list_search_hint" translatable="false">搜索商品名称</string>
+    <string name="goods_category_manager_title" translatable="false">分类管理</string>
+    <string name="goods_menu_title" translatable="false">菜单管理</string>
 
 
-
-    <string name="goods_info_update_title">新增商品信息</string>
-    <string name="goods_info_add_title">新增商品信息</string>
+    <string name="goods_info_update_title" translatable="false">新增商品信息</string>
+    <string name="goods_info_add_title" translatable="false">新增商品信息</string>
     <!--  =================== 商品  END  ===================  -->
 
     <!--  =================== 订单 START ===================  -->
-    <string name="order_product_count">等%d款商品</string>
-    <string name="order_money">共%d件商品，实付款￥%s</string>
-    <string name="order_money_new">已付款：￥%s</string>
-    <string name="order_hint_bar_code">请扫描条码/二维码核销订单</string>
-    <string name="order_discount_hint">优惠满减金额</string>
-    <string name="order_ship_fee_hint">配送费</string>
+    <string name="order_product_count" translatable="false">等%d款商品</string>
+    <string name="order_money" translatable="false">共%d件商品，实付款￥%s</string>
+    <string name="order_money_new" translatable="false">已付款：￥%s</string>
+    <string name="order_hint_bar_code" translatable="false">请扫描条码/二维码核销订单</string>
+    <string name="order_discount_hint" translatable="false">优惠满减金额</string>
+    <string name="order_ship_fee_hint" translatable="false">配送费</string>
     <!--  =================== 订单  END  ===================  -->
 
 
     <!--  =================== 钱包  START ===================  -->
-    <string name="wallet_hint_account_info">余额</string>
-    <string name="wallet_hint_account_bind">账户绑写</string>
-    <string name="wallet_hint_balance">余额</string>
-    <string name="wallet_hint_deposit">保障金</string>
-    <string name="wallet_value">￥%s</string>
-    <string name="wallet_hint_card">银行卡</string>
-    <string name="wallet_hint_zfb">支付宝</string>
-    <string name="wallet_hint_wechat">微信</string>
-    <string name="wallet_title_deposit">@string/wallet_hint_deposit</string>
-    <string name="wallet_title_balance">@string/wallet_hint_balance</string>
-    <string name="wallet_deposit_opt_fill">保证金充值</string>
-    <string name="wallet_deposit_opt_detail">保证金明细</string>
-    <string name="wallet_deposit_balance">余额（元）</string>
-    <string name="wallet_deposit_hint">保证金（元）</string>
-    <string name="wallet_account_hint_type">账户类型</string>
-    <string name="wallet_account_hint_bank_deposit">开户银行</string>
-    <string name="wallet_account_hint_name">账户名称</string>
-    <string name="wallet_account_hint_bank_no">银行卡号</string>
-    <string name="wallet_balance_opt_detail">钱包明细</string>
-    <string name="wallet_balance_opt_fill">提现</string>
-    <string name="wallet_title_withdraw">账户提现</string>
-    <string name="wallet_bank_card_title">银行卡列表</string>
-    <string name="yuan_amount">%s元</string>
-    <string name="withdraw_bank_account">银行账户</string>
-    <string name="withdraw_bank_name">账户名称</string>
-    <string name="withdraw_bank_no">银行账号</string>
-    <string name="withdraw_ali_pay_account">支付宝账户</string>
-    <string name="withdraw_real_name">真实姓名</string>
-    <string name="withdraw_ali_pay_account_no">支付宝账号</string>
+    <string name="wallet_hint_account_info" translatable="false">余额</string>
+    <string name="wallet_hint_account_bind" translatable="false">账户绑写</string>
+    <string name="wallet_hint_balance" translatable="false">余额</string>
+    <string name="wallet_hint_deposit" translatable="false">保障金</string>
+    <string name="wallet_value" translatable="false">￥%s</string>
+    <string name="wallet_hint_card" translatable="false">银行卡</string>
+    <string name="wallet_hint_zfb" translatable="false">支付宝</string>
+    <string name="wallet_hint_wechat" translatable="false">微信</string>
+    <string name="wallet_title_deposit" translatable="false">@string/wallet_hint_deposit</string>
+    <string name="wallet_title_balance" translatable="false">@string/wallet_hint_balance</string>
+    <string name="wallet_deposit_opt_fill" translatable="false">保证金充值</string>
+    <string name="wallet_deposit_opt_detail" translatable="false">保证金明细</string>
+    <string name="wallet_deposit_balance" translatable="false">余额（元）</string>
+    <string name="wallet_deposit_hint" translatable="false">保证金（元）</string>
+    <string name="wallet_account_hint_type" translatable="false">账户类型</string>
+    <string name="wallet_account_hint_bank_deposit" translatable="false">开户银行</string>
+    <string name="wallet_account_hint_name" translatable="false">账户名称</string>
+    <string name="wallet_account_hint_bank_no" translatable="false">银行卡号</string>
+    <string name="wallet_balance_opt_detail" translatable="false">钱包明细</string>
+    <string name="wallet_balance_opt_fill" translatable="false">提现</string>
+    <string name="wallet_title_withdraw" translatable="false">账户提现</string>
+    <string name="wallet_bank_card_title" translatable="false">银行卡列表</string>
+    <string name="yuan_amount" translatable="false">%s元</string>
+    <string name="withdraw_bank_account" translatable="false">银行账户</string>
+    <string name="withdraw_bank_name" translatable="false">账户名称</string>
+    <string name="withdraw_bank_no" translatable="false">银行账号</string>
+    <string name="withdraw_ali_pay_account" translatable="false">支付宝账户</string>
+    <string name="withdraw_real_name" translatable="false">真实姓名</string>
+    <string name="withdraw_ali_pay_account_no" translatable="false">支付宝账号</string>
     <array name="bank_card_list">
         <item>中国工商银行</item>
         <item>中国农业银行</item>
@@ -111,50 +111,50 @@
 
 
     <!--  =================== 首页工具  START ===================  -->
-    <string name="tools_logistics_tool_title">物流工具</string>
-    <string name="tools_logistics_model_add">添加模板</string>
-    <string name="tools_logistics_model_edit">修改模板</string>
-    <string name="tools_area_title">选择区域</string>
+    <string name="tools_logistics_tool_title" translatable="false">物流工具</string>
+    <string name="tools_logistics_model_add" translatable="false">添加模板</string>
+    <string name="tools_logistics_model_edit" translatable="false">修改模板</string>
+    <string name="tools_area_title" translatable="false">选择区域</string>
     <!--  =================== 首页工具  END  ===================  -->
 
 
     <!--  =================== 首页工具  START ===================  -->
-    <string name="tuan_title_activity_index">团购报名</string>
-    <string name="tuan_title_order_index">团购供货</string>
-    <string name="tuan_title_goods_submit">提报商品</string>
-    <string name="tuan_hint_goods_select">选择商品</string>
-    <string name="company_name">上海邻妙信息科技有限公司 版权所有</string>
+    <string name="tuan_title_activity_index" translatable="false">团购报名</string>
+    <string name="tuan_title_order_index" translatable="false">团购供货</string>
+    <string name="tuan_title_goods_submit" translatable="false">提报商品</string>
+    <string name="tuan_hint_goods_select" translatable="false">选择商品</string>
+    <string name="company_name" translatable="false">上海邻妙信息科技有限公司 版权所有</string>
     <!--  =================== 首页工具  END  ===================  -->
 
 
     <!--管理设置-->
-    <string name="manager_setting_title">管理设置</string>
+    <string name="manager_setting_title" translatable="false">管理设置</string>
 
 
-    <string name="delivery_manager_title">配送管理</string>
+    <string name="delivery_manager_title" translatable="false">配送管理</string>
 
 
-    <string name="link_in_title">联系设置</string>
+    <string name="link_in_title" translatable="false">联系设置</string>
 
     <!--sales-->
-    <string name="user_manager_title">用户管理</string>
-    <string name="user_order_title">用户订单</string>
-    <string name="sales_setting_title">营销设置</string>
-    <string name="sales_activity_edit_title">活动设置</string>
-    <string name="stats_analysis_title">数据统计</string>
-    <string name="order_pay_money_hint">实付金额</string>
-    <string name="order_pay_type_hint">支付方式</string>
-    <string name="order_time_hint">下单时间</string>
-    <string name="order_remark_hint">订单备注</string>
-    <string name="order_delivery_time_hint">送达时间</string>
-    <string name="order_address_hint">收货地址</string>
-    <string name="order_ship_type_hint">配送方式</string>
-    <string name="order_ship_rider_hint">配送骑士</string>
-    <string name="order_ship_hint">配送信息</string>
-    <string name="sales_goods_title">选择商品</string>
+    <string name="user_manager_title" translatable="false">用户管理</string>
+    <string name="user_order_title" translatable="false">用户订单</string>
+    <string name="sales_setting_title" translatable="false">营销设置</string>
+    <string name="sales_activity_edit_title" translatable="false">活动设置</string>
+    <string name="stats_analysis_title" translatable="false">数据统计</string>
+    <string name="order_pay_money_hint" translatable="false">实付金额</string>
+    <string name="order_pay_type_hint" translatable="false">支付方式</string>
+    <string name="order_time_hint" translatable="false">下单时间</string>
+    <string name="order_remark_hint" translatable="false">订单备注</string>
+    <string name="order_delivery_time_hint" translatable="false">送达时间</string>
+    <string name="order_address_hint" translatable="false">收货地址</string>
+    <string name="order_ship_type_hint" translatable="false">配送方式</string>
+    <string name="order_ship_rider_hint" translatable="false">配送骑士</string>
+    <string name="order_ship_hint" translatable="false">配送信息</string>
+    <string name="sales_goods_title" translatable="false">选择商品</string>
 
     <!--vip-->
-    <string name="vip_deposit_applied">已加入保障体系</string>
-    <string name="vip_deposit_apply">加入保障体系</string>
+    <string name="vip_deposit_applied" translatable="false">已加入保障体系</string>
+    <string name="vip_deposit_apply" translatable="false">加入保障体系</string>
 
 </resources>

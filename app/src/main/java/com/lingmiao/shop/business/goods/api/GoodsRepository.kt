@@ -25,8 +25,15 @@ object GoodsRepository {
     /**
      * 商品数
      */
-    suspend fun getDashboardData() : HiResponse<DashboardDataVo> {
+    suspend fun getDashboardData(): HiResponse<DashboardDataVo> {
         return apiService.getDashboardData().awaitHiResponse();
+    }
+
+    /**
+     * 库存预警
+     */
+    suspend fun getGoodsWarningData(): HiResponse<GoodsVO> {
+        return apiService.getGoodsWarningData().awaitHiResponse();
     }
 
     /**
@@ -38,6 +45,17 @@ object GoodsRepository {
         map.put("page_size", 10)
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
+
+    /**
+     * 预警商品
+     */
+    suspend fun loadWarningGoodsList(pageNum: Int): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map.put("page_num", pageNum)
+        map.put("page_size", 10)
+        return apiService.loadWarningGoodsList(map).awaitHiResponse()
+    }
+
 
     /**
      * 售馨商品列表
@@ -53,7 +71,11 @@ object GoodsRepository {
     /**
      * 已上架、待上架、已下架
      */
-    suspend fun loadGoodsList(pageNo: Int, marketEnable: String, isAuth: String): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadGoodsList(
+        pageNo: Int,
+        marketEnable: String,
+        isAuth: String
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
@@ -62,37 +84,52 @@ object GoodsRepository {
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
-    suspend fun loadGoodsListOfCatePath(pageNo: Int, marketEnable: String, isAuth: String, path : String?): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadGoodsListOfCatePath(
+        pageNo: Int,
+        marketEnable: String,
+        isAuth: String,
+        path: String?
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("market_enable", marketEnable)
         map.put("is_auth_string", isAuth)
-        if(path != null) {
+        if (path != null) {
             map.put("category_path", path!!)
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
-    suspend fun loadGoodsListOfCateId(pageNo: Int, marketEnable: String, isAuth: String, cid : String?): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadGoodsListOfCateId(
+        pageNo: Int,
+        marketEnable: String,
+        isAuth: String,
+        cid: String?
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("market_enable", marketEnable)
         map.put("is_auth_string", isAuth)
-        if(cid != null) {
+        if (cid != null) {
             map.put("not_in_cat_id", cid);
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
-    suspend fun loadMenuGoodsList(pageNo: Int, marketEnable: String, isAuth: String, catPath : String?): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadMenuGoodsList(
+        pageNo: Int,
+        marketEnable: String,
+        isAuth: String,
+        catPath: String?
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         // map.put("market_enable", marketEnable)
         // map.put("is_auth_string", isAuth)
-        if(catPath != null) {
+        if (catPath != null) {
             map.put("shop_cat_path", catPath!!)
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
@@ -102,14 +139,14 @@ object GoodsRepository {
     /**
      * 新增商品
      */
-    suspend fun submitGoods(goods : GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
+    suspend fun submitGoods(goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
         return apiService.submitGoods(goods).awaitHiResponse()
     }
 
     /**
      * 编辑商品
      */
-    suspend fun modifyGoods(goodsId: String, goods : GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
+    suspend fun modifyGoods(goodsId: String, goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
         return apiService.modifyGoods(goodsId, goods).awaitHiResponse()
     }
 
@@ -137,7 +174,10 @@ object GoodsRepository {
     /**
      * 修改商品库存
      */
-    suspend fun updateGoodsQuantity(goodsId: String, skuList: List<QuantityRequest>): HiResponse<GoodsVO> {
+    suspend fun updateGoodsQuantity(
+        goodsId: String,
+        skuList: List<QuantityRequest>
+    ): HiResponse<GoodsVO> {
         return apiService.updateGoodsQuantity(goodsId, skuList).awaitHiResponse()
     }
 
@@ -151,8 +191,8 @@ object GoodsRepository {
     /**
      * 批量分销佣金
      */
-    suspend fun batchRebate(goodsIds : String, rebate : RebateVo) : HiResponse<Boolean> {
-        var map : HashMap<String, Any> = hashMapOf();
+    suspend fun batchRebate(goodsIds: String, rebate: RebateVo): HiResponse<Boolean> {
+        var map: HashMap<String, Any> = hashMapOf();
         map.put("grade1Rebate", rebate?.grade1Rebate!!);
         map.put("grade2Rebate", rebate?.grade2Rebate!!);
         map.put("inviterRate", rebate?.inviterRate!!);
@@ -162,8 +202,8 @@ object GoodsRepository {
     /**
      * 分销佣金
      */
-    suspend fun rebate(goodsId : String, rebate: RebateVo) : HiResponse<Unit> {
-        var map : HashMap<String, Any> = hashMapOf();
+    suspend fun rebate(goodsId: String, rebate: RebateVo): HiResponse<Unit> {
+        var map: HashMap<String, Any> = hashMapOf();
         map.put("goods_id", goodsId);
         map.put("grade1Rebate", rebate?.grade1Rebate!!);
         map.put("grade2Rebate", rebate?.grade2Rebate!!);
@@ -174,7 +214,7 @@ object GoodsRepository {
     /**
      * 查询分销佣金
      */
-    suspend fun loadRebateById(goodsId: String) : HiResponse<RebateResponseVo> {
+    suspend fun loadRebateById(goodsId: String): HiResponse<RebateResponseVo> {
         return apiService.loadRebateById(goodsId).awaitHiResponse();
     }
 
@@ -189,24 +229,28 @@ object GoodsRepository {
      * 通过商品名称进行匹配
      * @param goodsName：商品名称
      */
-    suspend fun loadGoodsListByName(pageNo: Int, goodsName: String?, supplier_name : String?): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadGoodsListByName(
+        pageNo: Int,
+        goodsName: String?,
+        supplier_name: String?
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 20)
-        if(goodsName?.isNotBlank() == true) {
+        if (goodsName?.isNotBlank() == true) {
             map.put("goods_name", goodsName)
         }
-        if(supplier_name?.isNotBlank() == true) {
+        if (supplier_name?.isNotBlank() == true) {
             map.put("supplier_name", supplier_name)
         }
-        return apiService.loadGoodsList (map).awaitHiResponse()
+        return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
     /**
      * 通过商品名称进行匹配
      * @param goodsName：商品名称
      */
-    suspend fun loadGoodsListByCId(pageNo: Int, cId : String): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadGoodsListByCId(pageNo: Int, cId: String): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 20)
@@ -231,7 +275,10 @@ object GoodsRepository {
     /**
      * 批量添加自定义规格值
      */
-    suspend fun submitSpceValues(specKeyId: String, valueNames: String): HiResponse<List<SpecValueVO>> {
+    suspend fun submitSpceValues(
+        specKeyId: String,
+        valueNames: String
+    ): HiResponse<List<SpecValueVO>> {
         return apiService.submitSpceValues(specKeyId, valueNames).awaitHiResponse()
     }
 
@@ -274,11 +321,14 @@ object GoodsRepository {
     /**
      * 获取商品分类(一类、二类、三类)
      */
-    suspend fun loadUserCategory(categoryId: String?, sellerId : String?=null): HiResponse<List<CategoryVO>> {
+    suspend fun loadUserCategory(
+        categoryId: String?,
+        sellerId: String? = null
+    ): HiResponse<List<CategoryVO>> {
         return apiService.loadUserCategory(categoryId, sellerId).awaitHiResponse()
     }
 
-    suspend fun addCategory(bean : CategoryVO) : HiResponse<CategoryVO> {
+    suspend fun addCategory(bean: CategoryVO): HiResponse<CategoryVO> {
         return apiService.addCategory(bean).awaitHiResponse();
     }
 
@@ -291,7 +341,7 @@ object GoodsRepository {
         map.put("parent_id", cate.parentId)
         map.put("category_id", cate.categoryId)
         map.put("categoryPath", cate.categoryPath)
-        map.put("image", cate.image?:"")
+        map.put("image", cate.image ?: "")
         map.put("goodsCount", cate.goodsCount)
         map.put("categoryOrder", cate.categoryOrder)
         return apiService.updateCategory(cate.categoryId, map).awaitHiResponse()
@@ -351,7 +401,7 @@ object GoodsRepository {
         return apiService.submitShopGroup(map).awaitHiResponse()
     }
 
-    suspend fun getShopGroup(groupId: String) : HiResponse<ShopGroupVO> {
+    suspend fun getShopGroup(groupId: String): HiResponse<ShopGroupVO> {
         return apiService.getShopGroup(groupId).awaitHiResponse()
     }
 
@@ -372,7 +422,7 @@ object GoodsRepository {
         return apiService.updateShopGroup(groupId, map).awaitHiResponse()
     }
 
-    suspend fun sort(isTop: Int, cId : String, sort: Int) : HiResponse<Unit> {
+    suspend fun sort(isTop: Int, cId: String, sort: Int): HiResponse<Unit> {
         return apiService.sort(isTop, cId, sort).awaitHiResponse();
     }
 
@@ -383,9 +433,10 @@ object GoodsRepository {
         return apiService.deleteShopGroupPop(shopCatId).awaitHiResponse()
     }
 
-    suspend fun bindGoods(ids: List<Int?>?, id : String?) : HiResponse<Unit> {
+    suspend fun bindGoods(ids: List<Int?>?, id: String?): HiResponse<Unit> {
         return apiService.bindGoods(ids, id).awaitHiResponse();
     }
+
     /**
      * 获取配送模板
      * template_type = TONGCHENG
@@ -400,7 +451,7 @@ object GoodsRepository {
      * 通过商品名称进行匹配
      * @param goodsName：商品名称
      */
-    suspend fun getCenterGoods(pageNo: Int, cId : String): HiResponse<PageVO<GoodsVO>> {
+    suspend fun getCenterGoods(pageNo: Int, cId: String): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("category_path", cId)
         map.put("page_no", pageNo)
@@ -411,7 +462,7 @@ object GoodsRepository {
     /**
      * 从中心库添加商品
      */
-    suspend fun addGoodsOfCenter(ids : String) : HiResponse<Unit> {
+    suspend fun addGoodsOfCenter(ids: String): HiResponse<Unit> {
         return apiService.addGoodsOfCenter(ids).awaitHiResponse();
     }
 
@@ -419,28 +470,31 @@ object GoodsRepository {
     /**
      * 获取商品信息列表
      */
-    suspend fun getInfoList(id : String) : HiResponse<List<GoodsParamVo>> {
+    suspend fun getInfoList(id: String): HiResponse<List<GoodsParamVo>> {
         return apiService.getInfoList(id).awaitHiResponse();
     }
 
     /**
      * 商品信息添加
      */
-    suspend fun addInfo(vo: GoodsParamVo) : HiResponse<GoodsParamVo> {
+    suspend fun addInfo(vo: GoodsParamVo): HiResponse<GoodsParamVo> {
         return apiService.addInfo(vo).awaitHiResponse();
     }
 
     /**
      * 商品信息删除
      */
-    suspend fun deleteInfo(id : String) : HiResponse<Unit> {
+    suspend fun deleteInfo(id: String): HiResponse<Unit> {
         return apiService.deleteInfo(id).awaitHiResponse();
     }
 
     /**
      * 跟据分类id获取商品信息列表
      */
-    suspend fun getInfoListOfCategory(categoryIds: String, id : Int?=null): HiResponse<List<GoodsParamVo>> {
+    suspend fun getInfoListOfCategory(
+        categoryIds: String,
+        id: Int? = null
+    ): HiResponse<List<GoodsParamVo>> {
         return apiService.getInfoListOfCategory(categoryIds, id).awaitHiResponse()
     }
 
@@ -453,7 +507,7 @@ object GoodsRepository {
         return apiService.addSpec(cid, name).awaitHiResponse();
     }
 
-    suspend fun addSpecAndValue(item : CateSpecAndValueVo) : HiResponse<CateSpecAndValueVo> {
+    suspend fun addSpecAndValue(item: CateSpecAndValueVo): HiResponse<CateSpecAndValueVo> {
         return apiService.addSpecAndValue(item).awaitHiResponse();
     }
 }

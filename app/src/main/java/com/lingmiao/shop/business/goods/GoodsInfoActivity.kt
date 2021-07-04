@@ -5,16 +5,17 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
-import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.*
 import com.james.common.base.BaseActivity
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
+import com.lingmiao.shop.R
+import com.lingmiao.shop.business.goods.api.bean.CategoryVO
+import com.lingmiao.shop.business.goods.api.bean.GoodsParamVo
+import com.lingmiao.shop.business.goods.fragment.GoodsInfoDialogFragment
 import com.lingmiao.shop.business.goods.presenter.GoodsInfoPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsInfoPreImpl
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.goods_activity_goods_info.*
-import kotlinx.android.synthetic.main.goods_activity_goods_info.smartRefreshLayout
 
 
 /**
@@ -27,7 +28,7 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
     private var level: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState)
     }
 
@@ -38,7 +39,7 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
 
         const val SPEC_REQUEST_CODE = 1000
 
-        fun openActivity(context: Context, requestCode: Int, item : CategoryVO?) {
+        fun openActivity(context: Context, requestCode: Int, item: CategoryVO?) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsInfoActivity::class.java)
                 intent.putExtra(KEY_CATEGORY_ID, item?.categoryId)
@@ -75,17 +76,23 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
             mPresenter?.loadInfoList(categoryId);
         }
 
-        infoNameTv.setText("商品信息");
+        infoNameTv.text = "商品信息";
+
+        //显示图片
+        goods_activity_goods_info_pictureButton.singleClick {
+            GoodsInfoDialogFragment.nesInstance()
+                .show(supportFragmentManager, "goodsInfoActivityDialog")
+        }
 
         addInfoTv.singleClick {
-            if(level == 1) {
+            if (level == 1) {
                 DialogUtils.showInputDialog(
                     this, "商品信息", "", "请输入具体信息，不同信息用\",\"分隔",
                     "取消", "保存", null
                 ) {
-                    val its = it?.split(",");
-                    its.forEachIndexed { index, s ->
-                        if(s?.isNotEmpty()) {
+                    val its = it.split(",");
+                    its.forEachIndexed { _, s ->
+                        if (s.isNotEmpty()) {
                             mPresenter.addInfo(categoryId!!, s)
                         }
                     }
@@ -96,7 +103,7 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
         }
         infoFlowLayout.apply {
             clickDeleteCallback = {
-                if(it?.isNotEmpty() == true) {
+                if (it?.isNotEmpty() == true) {
                     mPresenter?.deleteInfo(it!!);
                 }
             }
@@ -107,7 +114,7 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == Activity.RESULT_OK && requestCode == SPEC_REQUEST_CODE) {
+        if (resultCode == Activity.RESULT_OK && requestCode == SPEC_REQUEST_CODE) {
             mPresenter?.loadInfoList(categoryId);
         }
     }
@@ -118,7 +125,7 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
         infoFlowLayout.addSpecValues(categoryId, list);
     }
 
-    override fun onAddInfo(vo : GoodsParamVo) {
+    override fun onAddInfo(vo: GoodsParamVo) {
         val list = mutableListOf<GoodsParamVo>();
         list.add(vo)
         infoFlowLayout.addSpecValues(categoryId, list);
@@ -127,4 +134,12 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
     override fun onInfoDeleted(id: String) {
 
     }
+
+
+
+
+
+
+
+
 }

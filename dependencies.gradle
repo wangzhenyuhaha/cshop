@@ -25,13 +25,13 @@ ext {
      * AndroidX 依赖
      */
     androidX = [
-            appcompat       : "androidx.appcompat:appcompat:$androidx_appcompat",
-            multidex        : "androidx.multidex:multidex:2.0.1",
-            recyclerView    : "androidx.recyclerview:recyclerview:1.1.0",
-            cardview        : "androidx.cardview:cardview:1.0.0",
-            design          : "com.google.android.material:material:1.2.0",
-            viewpager2      : "androidx.viewpager2:viewpager2:1.0.0",
-            constraintlayout: "androidx.constraintlayout:constraintlayout:1.1.3",
+            appcompat        : "androidx.appcompat:appcompat:$androidx_appcompat",
+            multidex         : "androidx.multidex:multidex:2.0.1",
+            recyclerView     : "androidx.recyclerview:recyclerview:1.1.0",
+            cardview         : "androidx.cardview:cardview:1.0.0",
+            design           : "com.google.android.material:material:1.2.0",
+            viewpager2       : "androidx.viewpager2:viewpager2:1.0.0",
+            constraintlayout : "androidx.constraintlayout:constraintlayout:1.1.3",
             concurrentFutures: "androidx.concurrent:concurrent-futures:1.0.0",
     ]
 
