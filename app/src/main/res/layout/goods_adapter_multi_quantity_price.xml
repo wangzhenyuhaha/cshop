@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingHorizontal="@dimen/dimen_14">
-
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +13,7 @@
         <TextView
             android:id="@+id/quantityNameTv"
             android:layout_width="0dp"
+            android:lines="1"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical"
@@ -22,19 +21,37 @@
             android:textSize="@dimen/dimen_13"
             tools:text="规格值1，规格值2" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:gravity="right|center_vertical"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimen_12"
+            android:textColor="@color/color_666666"
+            android:text="价格"/>
+
         <EditText
+            android:paddingLeft="@dimen/dimen_5"
             android:id="@+id/priceEdt"
             style="@style/goods_spec_item_right_edt"
             android:layout_width="100dp"
-            android:gravity="end|center_vertical"
             android:hint="请输入价格"
             android:paddingEnd="@dimen/dimen_5" />
-        
+
+        <TextView
+            android:paddingLeft="@dimen/dimen_15"
+            android:layout_width="wrap_content"
+            android:gravity="right|center_vertical"
+            android:textSize="@dimen/dimen_12"
+            android:textColor="@color/color_666666"
+            android:layout_height="wrap_content"
+            android:text="库存"/>
+
         <EditText
+            android:paddingLeft="@dimen/dimen_5"
             android:id="@+id/quantityEdt"
             style="@style/goods_spec_item_right_edt"
             android:layout_width="100dp"
-            android:gravity="end|center_vertical"
+            android:gravity="center_vertical"
             android:hint="请输入库存"
             android:paddingEnd="@dimen/dimen_5" />
 
