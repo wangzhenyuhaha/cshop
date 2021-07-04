@@ -60,7 +60,10 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("订单详情")
+        refreshView();
+    }
 
+    fun refreshView() {
         goodsItemC.addItems(mItem?.skuList);
 
         tvOrderSn.setText(String.format("订单编号：%s", mItem?.sn));
@@ -113,7 +116,8 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
     }
 
     override fun onOrderDetailSuccess(bean: OrderDetail) {
-
+//        mItem = bean;
+//        refreshView();
     }
 
     override fun onOrderDetailError(code: Int) {

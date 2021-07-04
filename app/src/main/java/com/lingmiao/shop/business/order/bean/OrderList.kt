@@ -147,6 +147,16 @@ data class OrderList(
     // 补充说明
     @SerializedName("replenish_remark")
     var replenishRemark : String? = ""
+
+//    @SerializedName("available_date")
+//    var availableDate: String?,
+//    @SerializedName("order_sku_list")
+//    var orderSkuList: List<OrderSku>?,
+//    @SerializedName("rog_left_time")
+//    var rogLeftTime: Long?,//自动收货剩余时间，如果已经超时会为0
+//
+//    @SerializedName("order_operate_allowable_vo")
+//    var orderOperateAllowableVo: OrderOperateAllowable?,
 ) : Serializable {
     fun isVirtualOrderTag() : Boolean {
         return isVirtualOrder == 1;

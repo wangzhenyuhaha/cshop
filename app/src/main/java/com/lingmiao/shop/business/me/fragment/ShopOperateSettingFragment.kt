@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseFragment
+import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
@@ -79,6 +80,10 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 
         // 保存
         tvShopOperateSubmit.setOnClickListener {
+            if(tvShopManageNumber.getViewText()?.isEmpty()) {
+                showToast("请输入未接订单自动取消时间");
+                return@setOnClickListener;
+            }
             val cancelOrderTime =  tvShopManageNumber.text?.toString()?.toInt()?:0;
             if(cancelOrderTime > 5) {
                 showToast("未接订单自动取消时间不能大于5分钟");

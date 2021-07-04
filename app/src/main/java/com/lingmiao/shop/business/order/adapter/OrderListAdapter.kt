@@ -52,6 +52,10 @@ class OrderListAdapter :
                     tvProductRefund.visibility = View.VISIBLE
                     tvProductRefund.text = "退款拒绝"
                 }
+                "EXPIRED" -> {
+                    tvProductRefund.visibility = View.VISIBLE
+                    tvProductRefund.text = "退款已失效"
+                }
             }
             helper.setText(R.id.tvProductName, product.name)
 //            helper.setText(R.id.tvProductAttribute,product.name)
@@ -165,6 +169,7 @@ class OrderListAdapter :
 //                showBottomArea = true
 //            }
 //        }
+        helper.setText(R.id.tvOrderSubStatus, "");
         when(item.orderStatus) {
            "PAID_OFF" -> {
                showBottomArea = true;
@@ -188,6 +193,40 @@ class OrderListAdapter :
             "CANCELLED" -> {
                 // 已取消
                 showBottomArea = false;
+//                tvProductRefund.visibility = View.VISIBLE
+//                tvProductRefund.text = item.cancelReason;
+
+
+                when(item.serviceStatus) {
+                    "NOT_APPLY" -> {
+                        // 未申请
+                    }
+                    "APPLY" -> {
+                        showBottomArea = true;
+
+                        tvAccept.gone()
+                        tvRefuse.gone()
+                        tvSign.gone()
+                        tvShipment.gone()
+
+                        //已申请
+                        tvRefuseService.visiable()
+                        tvAcceptService.visiable()
+                    }
+                    "PASS" -> {
+                        // 通过
+                    }
+                    "REFUSE" -> {
+                        // 未通过
+
+                    }
+                    "EXPIRED" -> {
+                        //已失效不允许申请售后
+                    }
+                }
+
+                helper.setText(R.id.tvOrderSubStatus, item.cancelReason)
+
             }
             "COMPLETE" -> {
                 // 已完成
@@ -197,35 +236,6 @@ class OrderListAdapter :
                 // 售后中
             }
         }
-
-        when(item.serviceStatus) {
-            "NOT_APPLY" -> {
-                // 未申请
-            }
-            "APPLY" -> {
-                showBottomArea = true;
-
-                tvAccept.gone()
-                tvRefuse.gone()
-                tvSign.gone()
-                tvShipment.gone()
-
-                //已申请
-                tvRefuseService.visiable()
-                tvAcceptService.visiable()
-            }
-            "PASS" -> {
-                // 通过
-            }
-            "REFUSE" -> {
-                // 未通过
-
-            }
-            "EXPIRED" -> {
-                //已失效不允许申请售后
-            }
-        }
-
 
         val viOrderDivide = helper.getView<View>(R.id.viOrderDivide)
         val llOrderBottom = helper.getView<LinearLayout>(R.id.llOrderBottom)
