@@ -136,16 +136,16 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
     }
 
     private fun initData() {
-        mCoroutine.launch {
-            val resp = OrderRepository.apiService.getOrderStatusNumber().awaitHiResponse()
-            if (resp.isSuccess && activity != null && !activity!!.isFinishing) {
-                val orderNumber = resp.data
-                tvTab2.setTabNumber(orderNumber.waitPayNum)
-                tvTab3.setTabNumber(orderNumber.waitShipNum)
-                tvTab5.setTabNumber(orderNumber.refundNum)
-            }
-
-        }
+//        mCoroutine.launch {
+//            val resp = OrderRepository.apiService.getOrderStatusNumber().awaitHiResponse()
+//            if (resp.isSuccess && activity != null && !activity!!.isFinishing) {
+//                val orderNumber = resp.data
+//                tvTab2.setTabNumber(orderNumber.waitPayNum)
+//                tvTab3.setTabNumber(orderNumber.waitShipNum)
+//                tvTab5.setTabNumber(orderNumber.refundNum)
+//            }
+//
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -156,17 +156,17 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshSingleOrderTabNumber(event: OrderTabNumberEvent) {
         LogUtils.d("refreshSingleOrderTabNumber")
-        when (event?.status) {
-            "WAIT_PAY" -> {
-                tvTab2?.setTabNumber(event?.number)
-            }
-            "WAIT_SHIP" -> {
-                tvTab3?.setTabNumber(event?.number)
-            }
-            "WAIT_REFUND" -> {
-                tvTab5?.setTabNumber(event?.number)
-            }
-        }
+//        when (event?.status) {
+//            "WAIT_PAY" -> {
+//                tvTab2?.setTabNumber(event?.number)
+//            }
+//            "WAIT_SHIP" -> {
+//                tvTab3?.setTabNumber(event?.number)
+//            }
+//            "WAIT_REFUND" -> {
+//                tvTab5?.setTabNumber(event?.number)
+//            }
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

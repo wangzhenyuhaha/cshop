@@ -28,6 +28,10 @@ class OrderListAdapter :
 
         helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
 
+
+        helper.setText(R.id.tvTableAware, item?.getTableAwareHint());
+        helper.setGone(R.id.tableAwareLayout, item?.getTableAwareHint()?.isNotEmpty())
+
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)
         val ivOrderNumberCopy = helper.getView<ImageView>(R.id.ivOrderNumberCopy)
         ivOrderNumberCopy.setOnClickListener {

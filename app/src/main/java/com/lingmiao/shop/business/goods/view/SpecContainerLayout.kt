@@ -59,6 +59,7 @@ class SpecContainerLayout @JvmOverloads constructor(
     fun getSpecKeyAndValueList():  List<SpecKeyVO> {
         specKeyList.forEachIndexed { index, specKeyVO ->
             specKeyVO.valueList = specKeyViews[index].specFlowLayout.getSpecValueList()
+            specKeyViews[index].noValueTv.visibility = if(specKeyVO.valueList?.size?:0 > 0) View.GONE else View.VISIBLE;
         }
         return specKeyList
     }
