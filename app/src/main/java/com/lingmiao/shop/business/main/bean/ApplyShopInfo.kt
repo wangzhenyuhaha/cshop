@@ -110,8 +110,25 @@ data class ApplyShopInfo(
     }
 
     fun getFullAddress() : String {
-        return String.format("%s%s%s%s", shopProvince, shopCity, shopCounty, shopAdd);
+        return String.format("%s%s%s%s",
+            if(isExistProvince()) "" else shopProvince,
+            if(isExistCity()) "" else shopCity,
+            if(isExistCounty()) "" else shopCounty,
+            shopAdd);
     }
+
+    fun isExistProvince() : Boolean {
+        return shopProvince?.let { shopAdd?.indexOf(it) } ?:-1 > 0;
+    }
+
+    fun isExistCity() : Boolean {
+        return shopCity?.let { shopAdd?.indexOf(it) } ?:-1 > -1;
+    }
+
+    fun isExistCounty() : Boolean {
+        return shopCounty?.let { shopCounty?.indexOf(it) } ?:-1 > -1;
+    }
+
 }
 
 

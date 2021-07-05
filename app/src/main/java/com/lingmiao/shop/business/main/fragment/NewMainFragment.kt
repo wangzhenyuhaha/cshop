@@ -328,7 +328,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 今日数据
         // 订单数量
         storeDataOfTodayTv.singleClick {
-            ActivityUtils.startActivity(StatsActivity::class.java)
+            EventBus.getDefault().post(TabChangeEvent(4))
+            //ActivityUtils.startActivity(StatsActivity::class.java)
         }
         // 销售额
         salesDataOfTodayTv.singleClick {

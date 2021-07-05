@@ -5,14 +5,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import com.james.common.utils.exts.*
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.SpecKeyActivity
 import com.lingmiao.shop.business.goods.api.bean.SpecKeyVO
 import com.lingmiao.shop.business.goods.api.bean.SpecValueVO
-import com.james.common.utils.exts.removeIf1
-import com.james.common.utils.exts.show
-import com.james.common.utils.exts.singleClick
-import com.james.common.utils.exts.visiable
 import com.james.common.view.ILinearLayout
 import kotlinx.android.synthetic.main.goods_view_spec_setting_item.view.*
 
@@ -45,6 +43,7 @@ class SpecContainerLayout @JvmOverloads constructor(
      * 关联添加规格按钮
      */
     private var addSpecBtn: View? = null
+    var nonValueView : TextView? = null
     /**
      * 缓存规格Item
      */
@@ -92,6 +91,11 @@ class SpecContainerLayout @JvmOverloads constructor(
                 addView(specKeyViews[index])
             }
         }
+        if(specKeyList?.size == 0) {
+            noValueTv?.visiable()
+        } else {
+            noValueTv?.gone()
+        }
         // 最多只有5
         addSpecBtn?.show(specKeyList.size < SpecKeyActivity.MAX_SPEC_SELECTED)
     }
@@ -112,6 +116,7 @@ class SpecContainerLayout @JvmOverloads constructor(
         view.findViewById<TextView>(R.id.tvLoadSpec).setOnClickListener {
             loadSpecValueListener?.invoke(specKey.specId);
         }
+        nonValueView = view.findViewById(R.id.noValueTv);
         view.findViewById<TextView>(R.id.specNameTv).text = "规格名：${specKey.specName}"
         view.findViewById<TextView>(R.id.deleteSpecTv).singleClick {
             removeChildItem(view)
