@@ -21,6 +21,7 @@ import com.james.common.utils.permission.interceptor.StorageInterceptor
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
@@ -108,6 +109,9 @@ class MainActivity : AppCompatActivity() {
         vpMain.offscreenPageLimit = 1
         tbMain.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                if(tab.position == 0) {
+                    EventBus.getDefault().post(ApplyShopInfoEvent());
+                }
 //                if(tab.position==2){
 ////                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
 //                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_secondary))
