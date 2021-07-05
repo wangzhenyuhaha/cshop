@@ -65,6 +65,18 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+//    flavorDimensions "version"
+
+//    productFlavors {
+//        xiaomi {}
+//    }
+//    applicationVariants.all {
+//        variant ->
+//            variant.outputs.all {
+//                output ->
+//                outputFileName = "${variant.name}-${variant.versionName}(${variant.versionCode}).apk"
+//            }
+//    }
 }
 
 dependencies {
