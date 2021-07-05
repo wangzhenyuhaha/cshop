@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.order
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.view.View
 import com.blankj.utilcode.util.TimeUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.gone
@@ -83,7 +84,8 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
                 mItem?.shipTown.orEmpty() + mItem?.shipAddr.orEmpty()
         orderAddressTv.text = address
 
-
+        tvTableAware.text = mItem?.getTableAwareHint();
+        tableAwareLayout.visibility = if(tvTableAware.text?.isNotEmpty() == true) View.VISIBLE else View.GONE;
 
         orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile);
         orderOwnerTv.singleClick {

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="@dimen/dimen_14"
     android:paddingHorizontal="@dimen/dimen_10"
     app:ivBgColor="@color/color_ffffff"
@@ -55,5 +56,15 @@
         android:layout_marginBottom="@dimen/dimen_17"
         app:itemSpacing="@dimen/dimen_10"
         app:lineSpacing="@dimen/dimen_10" />
+
+    <TextView
+        android:id="@+id/noValueTv"
+        android:visibility="gone"
+        tools:visibility="visible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/red"
+        android:text="如果商品没有规格及规格值，库存设为0"/>
 
 </com.james.common.view.IRelativeLayout>

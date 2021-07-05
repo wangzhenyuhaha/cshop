@@ -24,6 +24,7 @@ import com.james.common.net.BaseResponse
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.login.bean.CaptchaAli
 import com.lingmiao.shop.business.login.bean.LoginInfo
@@ -137,7 +138,8 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         }
         wvCaptcha.settings.javaScriptEnabled = true
         wvCaptcha.addJavascriptInterface(this, "android")
-        wvCaptcha.loadUrl("http://47.117.112.134:9527/captcha.html")
+//        wvCaptcha.loadUrl("http://47.117.112.134:9527/captcha.html")
+        wvCaptcha.loadUrl(IConstant.getCaptchaUrl())
 //        wvCaptcha.loadUrl("http://t-api.seller.fisheagle.cn:7003/captcha.html")
         LogUtils.d(wvCaptcha.url)
     }

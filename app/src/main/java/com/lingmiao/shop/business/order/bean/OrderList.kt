@@ -146,7 +146,10 @@ data class OrderList(
     var replenishPrice: Double? = 0.0,
     // 补充说明
     @SerializedName("replenish_remark")
-    var replenishRemark : String? = ""
+    var replenishRemark : String? = "",
+
+    @SerializedName("tableware_type")
+    var tablewareType : Int?
 
 //    @SerializedName("available_date")
 //    var availableDate: String?,
@@ -160,6 +163,30 @@ data class OrderList(
 ) : Serializable {
     fun isVirtualOrderTag() : Boolean {
         return isVirtualOrder == 1;
+    }
+
+
+    fun getTableAwareHint() : String {
+        when(tablewareType) {
+            0 -> {
+                return "无需餐具";
+            }
+            100 -> {
+                return "依据餐量提供餐具";
+            }
+            1 -> {
+                return "1份";
+            }
+            2 -> {
+                return "2份";
+            }
+            3 -> {
+                return "3份";
+            }
+            else -> {
+                return "";
+            }
+        }
     }
 }
 

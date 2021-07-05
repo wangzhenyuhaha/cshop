@@ -28,16 +28,6 @@ object IConstant {
 
     var official = false
 
-//    // 生产环境
-//      pro: {
-//            base: 'https://api.base.fisheagle.cn',
-//            buyer: 'https://api.buyer.fisheagle.cn',
-//            seller: 'https://api.seller.fisheagle.cn',
-//            admin: 'https://api.admin.fisheagle.cn'
-//          }
-
-//    private const val baseUrl = "http://t-api.seller.fisheagle.cn:7003"
-
     const val TEST_URL = "http://47.117.112.134";
     const val PRO_URL = "http://47.117.112.134";
 
@@ -72,6 +62,11 @@ object IConstant {
     fun getUploadFileUrl(): String {
         return  String.format("%s/uploaders", getCommonUrl());
     }
+
+    fun getCaptchaUrl(): String {
+        return "http://47.117.112.134:9527/captcha.html";
+    }
+
     /**
      * 传递的不同类型
      */
