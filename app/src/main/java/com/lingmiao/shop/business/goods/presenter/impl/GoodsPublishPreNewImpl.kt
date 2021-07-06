@@ -49,6 +49,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         return shopId;
     }
 
+
+    //GoodsPublishNewPre
     /**
      * 配送方式
      */
@@ -84,6 +86,23 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
             view?.onUpdateGoodsUnit(it?.value, name);
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //GoodsPublishPre
 
     /**
      * 编辑商品时，根据"商品Id"拉去接口数据
@@ -157,6 +176,52 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
+
+    override fun showCategoryPop() {
+        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { categoryId, categoryName ->
+            view.onUpdateCategory(categoryId, categoryName)
+        }
+    }
+
+    override fun showGroupPop() {
+        mGroupPreImpl.showGoodsGroupPop(context) { groupId, groupName ->
+            view.onUpdateGroup(groupId, groupName)
+        }
+    }
+
+    override fun showExpirePop(str: String) {
+        mExpirePreImpl.showPop(context, str) { item ->
+            view?.onUpdateExpire(item)
+        }
+    }
+
+    override fun showUseTimePop(str: String) {
+        mUseTimePreImpl.showPop(context, str) { items ->
+            view?.onUpdateUseTime(items)
+        }
+    }
+
+    override fun showGoodsType(str: Boolean) {
+        mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(str)) { item ->
+            view?.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value));
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * 编辑商品时，获取商品关联的规格值
      */
@@ -203,36 +268,6 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                     goodsVO.skuList = null
                 }
             }
-        }
-    }
-
-    override fun showCategoryPop() {
-        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { categoryId, categoryName ->
-            view.onUpdateCategory(categoryId, categoryName)
-        }
-    }
-
-    override fun showGroupPop() {
-        mGroupPreImpl.showGoodsGroupPop(context) { groupId, groupName ->
-            view.onUpdateGroup(groupId, groupName)
-        }
-    }
-
-    override fun showExpirePop(str: String) {
-        mExpirePreImpl.showPop(context, str) { item ->
-            view?.onUpdateExpire(item)
-        }
-    }
-
-    override fun showUseTimePop(str: String) {
-        mUseTimePreImpl.showPop(context, str) { items ->
-            view?.onUpdateUseTime(items)
-        }
-    }
-
-    override fun showGoodsType(str: Boolean) {
-        mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(str)) { item ->
-            view?.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value));
         }
     }
 

@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.goods_activity_goods_spec.smartRefreshLayo
 class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
     GoodsSpecPre.PublicView {
 
-    private lateinit var mAdapter : GoodsSpecAdapter;
+    private lateinit var mAdapter: GoodsSpecAdapter;
 
     private lateinit var categoryId: String;
 
@@ -43,7 +43,7 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
 
         const val SPEC_REQUEST_CODE = 1000
 
-        fun openActivity(context: Context, requestCode: Int, id : String) {
+        fun openActivity(context: Context, requestCode: Int, id: String) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsSpecActivity::class.java)
                 intent.putExtra(KEY_CATEGORY_ID, id)
@@ -62,7 +62,7 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
     }
 
     override fun initBundles() {
-        categoryId = intent.getStringExtra(KEY_CATEGORY_ID)
+        categoryId = intent.getStringExtra(KEY_CATEGORY_ID).toString()
     }
 
     override fun createPresenter(): GoodsSpecPre {
@@ -71,16 +71,19 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("规格信息")
-        mToolBarDelegate.setRightText("新增", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
-            mPresenter?.showAddPop(categoryId);
-        });
+        mToolBarDelegate.setRightText(
+            "新增",
+            ContextCompat.getColor(context, R.color.white),
+            View.OnClickListener {
+                mPresenter?.showAddPop(categoryId);
+            });
 
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
             mPresenter?.loadList(categoryId);
         }
 
-        mAdapter = GoodsSpecAdapter{position, item ->
+        mAdapter = GoodsSpecAdapter { position, item ->
             mPresenter?.deleteValue(position, item!!);
         }.apply {
             setOnItemClickListener { adapter, view, position ->
@@ -88,9 +91,9 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
             }
             setOnItemChildClickListener { adapter, view, position ->
                 val item = mAdapter.data[position] as SpecKeyVO
-                when(view.id) {
+                when (view.id) {
                     R.id.deleteSpecTv -> {
-                        if(item?.specId?.isNotEmpty() == true) {
+                        if (item?.specId?.isNotEmpty() == true) {
                             DialogUtils.showDialog(context as Activity,
                                 "删除提示", "删除后不可恢复，确定要删除吗？",
                                 "取消", "确定删除",
@@ -105,7 +108,7 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
                             context as Activity, "规格值", "", "请输入具体规格值，不同值用\",\"分隔",
                             "取消", "保存", null
                         ) { _str ->
-                            if(_str?.isNotEmpty()) {
+                            if (_str?.isNotEmpty()) {
                                 mPresenter?.addSpecValue(item?.specId!!, _str);
                             }
                         }
@@ -126,7 +129,7 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
         mAdapter.replaceData(list);
     }
 
-    override fun onAdded(vo : GoodsSpecVo) {
+    override fun onAdded(vo: GoodsSpecVo) {
         mPresenter?.loadList(categoryId);
     }
 
@@ -140,7 +143,7 @@ class GoodsSpecActivity : BaseActivity<GoodsSpecPre>(),
 
     override fun onAddSpecValueSuccess(specKeyId: String, data: List<SpecValueVO>?) {
         mAdapter?.data?.forEachIndexed { index, item ->
-            if(item.specId == specKeyId && data?.isNotEmpty() == true) {
+            if (item.specId == specKeyId && data?.isNotEmpty() == true) {
                 item.valueList?.addAll(data)
             }
         }

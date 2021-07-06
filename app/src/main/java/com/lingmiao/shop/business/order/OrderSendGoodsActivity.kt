@@ -51,7 +51,7 @@ class OrderSendGoodsActivity : BaseActivity<OrderSendGoodsPresenter>(),
             shippingType = IConstant.SHIP_TYPE_GLOBAL
             LogUtils.e("shippingType 为null")
         }else{
-            shippingType = tempType
+            shippingType = tempType.toString()
         }
         val tempList = initAdapter()
 

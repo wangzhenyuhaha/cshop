@@ -45,7 +45,7 @@ class AfterSaleActivity : BaseActivity<AfterSalePresenter>(), AfterSalePresenter
     override fun initView() {
         mToolBarDelegate.setMidTitle("售后处理")
 //        orderId = "20200702000007"
-        orderId = intent.getStringExtra("orderId")
+        orderId = intent.getStringExtra("orderId").toString()
         showPageLoading()
 
         mPresenter.requestAfterSaleData(orderId)

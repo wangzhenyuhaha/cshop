@@ -148,4 +148,6 @@ dependencies {
 //    }
 // jetified-kotlinx-coroutines-core-jvm-1.4.1.jar (org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.1) and jetified-kotlinx-coroutines-core-jvm-1.4.1.jar (org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1)
 //Duplicate class kotlinx.coroutines.AbstractCoroutine found in modules jetified-kotlinx-coroutines-core-jvm-1.4.1.jar (org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.4.1) and jetified-kotlinx-coroutines-core-jvm-1.4.1.jar (org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1)
+
+//    implementation 'androidx.databinding:viewbinding:3.6.4@aar'
 }

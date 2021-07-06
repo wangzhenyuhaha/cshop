@@ -48,10 +48,11 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     private var goodsStatus: Int? = null
 
     override fun initBundles() {
+        //获取当前加载种类
         goodsStatus = arguments?.getInt(KEY_GOODS_STATUS)
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.goods_fragment_goods_list;
     }
 

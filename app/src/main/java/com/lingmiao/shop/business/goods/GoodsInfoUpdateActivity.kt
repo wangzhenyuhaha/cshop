@@ -42,7 +42,7 @@ class GoodsInfoUpdateActivity : BaseActivity<GoodsInfoEditPre>(), GoodsInfoEditP
 
 
     override fun initBundles() {
-        cId = intent.getStringExtra("pId")
+        cId = intent.getStringExtra("pId").toString()
     }
 
     override fun useLightMode(): Boolean {

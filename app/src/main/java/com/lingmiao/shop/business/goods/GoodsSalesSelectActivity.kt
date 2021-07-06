@@ -62,7 +62,7 @@ class GoodsSalesSelectActivity : BaseLoadMoreActivity<GoodsVO, GoodsSalesSelectP
 
 
     override fun initBundles() {
-        cId = intent.getStringExtra(KEY_ID)
+        cId = intent.getStringExtra(KEY_ID).toString()
         mSourceId = intent.getIntExtra(KEY_SOURCE, SOURCE_TYPE);
     }
 
