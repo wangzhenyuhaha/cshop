@@ -200,37 +200,7 @@ class OrderListAdapter :
 //                tvProductRefund.visibility = View.VISIBLE
 //                tvProductRefund.text = item.cancelReason;
 
-
-                when(item.serviceStatus) {
-                    "NOT_APPLY" -> {
-                        // 未申请
-                    }
-                    "APPLY" -> {
-                        showBottomArea = true;
-
-                        tvAccept.gone()
-                        tvRefuse.gone()
-                        tvSign.gone()
-                        tvShipment.gone()
-
-                        //已申请
-                        tvRefuseService.visiable()
-                        tvAcceptService.visiable()
-                    }
-                    "PASS" -> {
-                        // 通过
-                    }
-                    "REFUSE" -> {
-                        // 未通过
-
-                    }
-                    "EXPIRED" -> {
-                        //已失效不允许申请售后
-                    }
-                }
-
                 helper.setText(R.id.tvOrderSubStatus, item.cancelReason)
-
             }
             "COMPLETE" -> {
                 // 已完成
@@ -238,8 +208,39 @@ class OrderListAdapter :
             }
             "AFTER_SERVICE" -> {
                 // 售后中
+                helper.setText(R.id.tvOrderSubStatus, item.cancelReason)
             }
         }
+
+
+        when(item.serviceStatus) {
+            "NOT_APPLY" -> {
+                // 未申请
+            }
+            "APPLY" -> {
+                showBottomArea = true;
+
+                tvAccept.gone()
+                tvRefuse.gone()
+                tvSign.gone()
+                tvShipment.gone()
+
+                //已申请
+                tvRefuseService.visiable()
+                tvAcceptService.visiable()
+            }
+            "PASS" -> {
+                // 通过
+            }
+            "REFUSE" -> {
+                // 未通过
+
+            }
+            "EXPIRED" -> {
+                //已失效不允许申请售后
+            }
+        }
+
 
         val viOrderDivide = helper.getView<View>(R.id.viOrderDivide)
         val llOrderBottom = helper.getView<LinearLayout>(R.id.llOrderBottom)

@@ -42,6 +42,34 @@
                 android:textColor="@color/primary"
                 android:textSize="12sp" />
 
+
+            <TextView
+                android:id="@+id/tvOrderTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff000000"
+                android:textSize="13sp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_below="@id/tvOrderSn"
+                tools:text="下单时间:2010-01-01 24:23" />
+
+
+            <TextView
+                android:layout_marginTop="@dimen/dimen_12"
+                android:id="@+id/tvOrderSubStatus"
+                android:layout_below="@id/tvOrderSn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/tvOrderTime"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:paddingLeft="@dimen/dimen_5"
+                tools:text="待付款"
+                android:lines="1"
+                android:textColor="#ff3870ea"
+                android:textSize="12sp" />
+
         </RelativeLayout>
 
         <View style="@style/DivideLineHorizontal" />

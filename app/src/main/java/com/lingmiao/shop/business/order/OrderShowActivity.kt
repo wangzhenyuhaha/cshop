@@ -69,6 +69,8 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
         tvOrderSn.setText(String.format("订单编号：%s", mItem?.sn));
         tvOrderStatus.setText(mItem?.orderStatusText);
+        tvOrderTime.setText(String.format("下单时间：%s", stampToDate(mItem?.createTime)))
+        tvOrderSubStatus.setText(mItem?.cancelReason)
 
         orderShipFeeTv.text = String.format("￥%s", mItem?.shippingAmount)
         orderDiscountTv.text = String.format("￥%s", mItem?.discountPrice);
