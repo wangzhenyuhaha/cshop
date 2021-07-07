@@ -270,7 +270,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 已接订单
         tvTodayTakenOrderCount.text = String.format("%s", mainInfo?.alreadyAcceptNum);
         // 待配送
-        tvTodayDistributeOrderCount.text = String.format("%s", mainInfo?.waitShipNum);
+        tvTodayDistributeOrderCount.text = String.format("%s", mainInfo?.waitRogNum);
 
         // 待退款
         tvTodayRefund.text = String.format("%s", mainInfo?.refundNum);

@@ -92,7 +92,7 @@ data class GoodsVO(
         const val MARKET_STATUS_ENABLE = 1
 
         /**
-         * 0 待上架 1 已上架 2 已下架 3 待上架
+         * 0 待上架 1 已上架 2 已下架 3 待上架  4库存预警
          */
         const val STATUS_MIX_0 = 0
         const val STATUS_MIX_1 = 1
@@ -118,13 +118,13 @@ data class GoodsVO(
     }
 
     fun isSellOut() : Boolean {
-        return goodsQuantityStatusMix == 1;
+       // return goodsQuantityStatusMix == 1;
+        return false
     }
 
     fun getMenuType(): Int {
-        ;
         return when (goodsStatusMix) {
-            STATUS_MIX_0 -> (GoodsMenuPop.TYPE_EDIT)
+            STATUS_MIX_0 -> (GoodsMenuPop.TYPE_QUANTITY)
             STATUS_MIX_1 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_DISABLE or GoodsMenuPop.TYPE_QUANTITY or GoodsMenuPop.TYPE_SHARE)
             STATUS_MIX_2 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_ENABLE or GoodsMenuPop.TYPE_DELETE)
             STATUS_MIX_3 -> (GoodsMenuPop.TYPE_ENABLE or (if(isAuth == 4) GoodsMenuPop.TYPE_EDIT else 0))

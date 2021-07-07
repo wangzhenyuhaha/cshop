@@ -52,9 +52,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".business.sales.SalesActivityGoodsWarning"
-            android:screenOrientation="portrait"/>
-        <!-- ======================= 登录 START ======================== -->
+        <activity
+            android:name=".business.sales.SalesActivityGoodsWarning"
+            android:screenOrientation="portrait" /> <!-- ======================= 登录 START ======================== -->
         <activity
             android:name=".business.main.UserServiceH5Activity"
             android:screenOrientation="portrait" />
@@ -371,7 +371,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="6b5941e6be9ffe3f7f7fd26179e24ebf"></meta-data> <!-- 用于微信支付 -->
+            android:value="6b5941e6be9ffe3f7f7fd26179e24ebf" /> <!-- 用于微信支付 -->
         <receiver
             android:name=".receiver.AppRegister"
             android:permission="com.tencent.mm.plugin.permission.SEND">
@@ -386,7 +386,7 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:taskAffinity="net.sourceforge.simcpux"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>
