@@ -141,7 +141,6 @@ abstract class AbsThreeItemPop<T : ItemData>(context: Context, open var title : 
                 dismiss()
             }
         }
-        setPopTitle(title);
     }
 
     private fun initL2AdapterClick() {
@@ -194,9 +193,14 @@ abstract class AbsThreeItemPop<T : ItemData>(context: Context, open var title : 
         return false;
     }
 
-    open fun setPopTitle(title : String?) {
+    fun setPopTitle(title : String?) {
         popTitleRl?.visiable();
         popTitleTv?.text = title;
+    }
+
+    fun showPopupWindow(title : String?) {
+        setPopTitle(title);
+        super.showPopupWindow();
     }
 
     private fun initRecyclerView(rv: RecyclerView?, lvAdapter: BaseQuickAdapter<T, BaseViewHolder>) {
@@ -219,18 +223,11 @@ abstract class AbsThreeItemPop<T : ItemData>(context: Context, open var title : 
     }
 
     override fun onCreateShowAnimation(): Animation? {
-        if(hasTitle()) {
-            return showYTranslateAnim(300)
-        } else {
-            return showYTranslateAnimOfTopToBottom(300)
-        }
+        return showYTranslateAnim(300)
     }
 
     override fun onCreateDismissAnimation(): Animation? {
-        if(hasTitle()) {
-            return hideYTranslateAnim(300)
-        } else {
-            return hideYTranslateAnimOfBottomToTop(300)
-        }
+        return hideYTranslateAnim(300)
     }
+
 }

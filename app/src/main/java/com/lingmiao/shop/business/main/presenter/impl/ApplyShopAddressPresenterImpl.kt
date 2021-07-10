@@ -16,6 +16,7 @@ class ApplyShopAddressPresenterImpl(val context: Context, private var view: Appl
 	var mList : List<RegionVo> = listOf();
 
 	private val address : PopAddressPreImpl by lazy { PopAddressPreImpl(view); };
+
 	override fun requestApplyShopAddressData(){
 		//		mCoroutine.launch {
 		//			val resp = MainRepository.apiService.getApplyShopAddress().awaitHiResponse()
@@ -29,10 +30,6 @@ class ApplyShopAddressPresenterImpl(val context: Context, private var view: Appl
 	}
 
 	override fun showAddress(layout : android.view.View, old : List<RegionVo>?) {
-//		val regionsType = object : TypeToken<List<RegionVo>>(){}.type;
-//		var json = Gson().fromJson<MutableList<RegionVo>>(ResourceUtils.readAssets2String("areas.json"), regionsType);
-
-
 		if(mList == null || mList.size == 0) {
 			mCoroutine.launch {
 				view?.showDialogLoading()
@@ -47,9 +44,9 @@ class ApplyShopAddressPresenterImpl(val context: Context, private var view: Appl
 	}
 
 	fun show(layout : android.view.View,old : List<RegionVo>?) {
-		address.showTypePop(context, layout, mList, old) { str, list ->
-			if(list == null || list.size ==0) {
-				return@showTypePop;
+		address.showAddressPop(context, layout, mList, old) { str, list ->
+			if(list == null || list.isEmpty()) {
+				return@showAddressPop;
 			}
 			view.onSetAddress(list);
 		}

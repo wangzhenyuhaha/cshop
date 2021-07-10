@@ -12,6 +12,7 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:singleLine="true"
+        android:lines="1"
         android:textColor="@drawable/selector_goods_category_item"
         android:textSize="@dimen/dimen_12"
         tools:text="测试1" />

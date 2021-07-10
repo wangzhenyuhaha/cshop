@@ -126,7 +126,7 @@ data class ApplyShopInfo(
     }
 
     fun isExistCounty() : Boolean {
-        return shopCounty?.let { shopCounty?.indexOf(it) } ?:-1 > -1;
+        return shopCounty?.let { shopAdd?.indexOf(it) } ?:-1 > -1;
     }
 
 }

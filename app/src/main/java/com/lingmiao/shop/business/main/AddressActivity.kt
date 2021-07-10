@@ -432,18 +432,13 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         addressData?.address = mAddress;
                         addressData?.latLng = latlng;
 
-
-                        tvAddressProvince.setText(addressData?.province);
-                        tvAddressCity.setText(addressData?.city)
-                        tvAddressArea.setText(addressData?.address);
-                        // etShopAddress.setText(mAddress);
-
                         mFirstFix = true
 
                         mapMove();
 
                         addMarkersToMap();
 
+                        resetLocation();
                     }
                 } else {
                     val errText =
@@ -606,16 +601,23 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                 addressData?.address = poiItem.title;
                 addressData?.latLng = latlng;
 
-                //etShopAddress.setText(addressData?.address?:"");
                 Log.e("定位", "new latlng :$latlng")
+
 
                 mapMove();
 
+                resetLocation();
             }
 
         })
 
         poiSearch?.searchPOIAsyn()
+    }
+
+    fun resetLocation() {
+        tvAddressProvince.setText(addressData?.province);
+        tvAddressCity.setText(addressData?.city)
+        tvAddressArea.setText(addressData?.district);
     }
 
     private fun initGeoSearch() {
@@ -636,6 +638,8 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                     addressData?.latLng = latlng;
 
                     city = result.regeocodeAddress.city;
+
+                    resetLocation();
                     // etShopAddress.setText(addressData?.address?:"");
                 } else {
                     ToastUtil.showerror(this@AddressActivity, rCode)
@@ -678,9 +682,8 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
             tvAddressProvince.setText(list.get(0).localName);
             tvAddressCity.setText(list.get(1).localName)
             tvAddressArea.setText(list.get(2).localName);
-        } else if(list.size == 2) {
-            tvAddressProvince.setText(list.get(0).localName);
-            tvAddressCity.setText(list.get(1).localName)
+
+            // searchAddressByKeyword(etShopAddress.text.toString())
         }
     }
 
