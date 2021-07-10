@@ -214,7 +214,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             }
         }
         rlShopManageAddress.singleClick {
-            AddressActivity.openActivity(context!!, LatLng(shopManage?.shopLat?: 0.0, shopManage?.shopLng?:0.0), shopManage?.shopAdd);
+            AddressActivity.openActivity(context!!, shopManage);
         }
         rlShopManageQualification.setOnClickListener{
             //店铺资质

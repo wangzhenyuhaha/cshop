@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import com.amap.api.mapcore.util.it
 import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
@@ -129,6 +130,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         loadSpecKeyList(goodsVO, isMutilSpec) {
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
+                checkNotBlack(goodsVO.thumbnail) { "请添加缩略图" }
                 checkBoolean(goodsVO.goodsGalleryList.isNotEmpty()) { "请添加商品主图" }
                 if (isVirtualGoods) {
                     checkBoolean(goodsVO.skuList.isNotEmpty()) { "请添加商品规格" }
@@ -150,23 +152,30 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 uploadImages(goodsVO, fail = {
                     view.showToast("图片上传失败，请重试")
                     view.hideDialogLoading()
+                    return@uploadImages;
                 }) {
-                    if(goodsVO?.intro.isNotBlank()) {
-                        uploadDesImages(goodsVO, fail = {
-                            view.showToast("图片上传失败，请重试")
-                            view.hideDialogLoading()
-                        }){
+                    uploadThumbnailImage(goodsVO, fail = {
+                        view.showToast("商品缩略图片上传失败，请重试")
+                        view.hideDialogLoading()
+                        return@uploadThumbnailImage;
+                    }) {
+                        if(goodsVO?.intro.isNotBlank()) {
+                            uploadDesImages(goodsVO, fail = {
+                                view.showToast("图片上传失败，请重试")
+                                view.hideDialogLoading()
+                            }){
+                                if (goodsVO.goodsId.isNullOrBlank()) {
+                                    submitGoods(goodsVO) // 添加商品
+                                } else {
+                                    modifyGoods(goodsVO) // 编辑商品
+                                }
+                            }
+                        } else {
                             if (goodsVO.goodsId.isNullOrBlank()) {
                                 submitGoods(goodsVO) // 添加商品
                             } else {
                                 modifyGoods(goodsVO) // 编辑商品
                             }
-                        }
-                    } else {
-                        if (goodsVO.goodsId.isNullOrBlank()) {
-                            submitGoods(goodsVO) // 添加商品
-                        } else {
-                            modifyGoods(goodsVO) // 编辑商品
                         }
                     }
                 }
@@ -267,6 +276,26 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 if (!goodsVO.isAddSpec) {
                     goodsVO.skuList = null
                 }
+            }
+        }
+    }
+
+    private fun uploadThumbnailImage(goodsVO: GoodsVOWrapper, fail: () -> Unit, success: () -> Unit) {
+        if(goodsVO.thumbnail.isNetUrl()) {
+            success.invoke();
+            return;
+        }
+        mCoroutine.launch {
+            val resp = CommonRepository.uploadFile(
+                File(goodsVO.thumbnail),
+                true,
+                CommonRepository.SCENE_GOODS
+            )
+            if(resp.isSuccess) {
+                goodsVO.thumbnail = resp.data.url;
+                success.invoke()
+            } else {
+                fail.invoke()
             }
         }
     }

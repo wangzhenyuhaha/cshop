@@ -3,6 +3,7 @@ import com.chad.library.adapter.base.entity.AbstractExpandableItem
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.lingmiao.shop.business.tools.adapter.AreasAdapter
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.business.commonpop.bean.ItemData
 import java.io.Serializable
 
 data class TempRegionVo(
@@ -267,7 +268,7 @@ data class RegionVo(
     var isCheck : Boolean = false,
     var pPosition : Int ? = -1,
     var cPosition : Int ? = -1
-) : AbstractExpandableItem<RegionVo>(), MultiItemEntity, Serializable {
+) : AbstractExpandableItem<RegionVo>(), MultiItemEntity, ItemData, Serializable {
 
     override fun getLevel(): Int {
         return (level ?: 1) - 1;
@@ -399,6 +400,26 @@ data class RegionVo(
 
             }
         }
+    }
+
+    override fun getIValue(): String? {
+        return id?.toString();
+    }
+
+    override fun getIName(): String? {
+        return localName;
+    }
+
+    override fun getIHint(): String? {
+        return localName;
+    }
+
+    override fun isItemChecked(): Boolean? {
+        return isCheck;
+    }
+
+    override fun shiftChecked(flag: Boolean?) {
+        isCheck = flag ?: false;
     }
 }
 

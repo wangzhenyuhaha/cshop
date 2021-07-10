@@ -45,9 +45,11 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.main.bean.AddressData
 import com.lingmiao.shop.business.main.bean.ApplyShopAddress
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
 import com.lingmiao.shop.business.main.presenter.ApplyShopAddressPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopAddressPresenterImpl
+import com.lingmiao.shop.business.tools.bean.RegionVo
 import kotlinx.android.synthetic.main.main_activity_address.*
 import org.greenrobot.eventbus.EventBus
 
@@ -99,19 +101,46 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     companion object {
 
-        fun openActivity(context: Context, latLng: LatLng?, address: String?) {
+        //,
+
+        fun openActivity(context: Context, adInfo: AddressData?) {
             if (context is Activity) {
+                //latLng: LatLng?, address: String?
+                //LatLng(shopManage?.shopLat?: 0.0, shopManage?.shopLng?:0.0), shopManage?.shopAdd
                 val intent = Intent(context, AddressActivity::class.java)
-                intent.putExtra(IConstant.BUNDLE_KEY_OF_ITEM, latLng)
-                intent.putExtra("address", address);
+                intent.putExtra(IConstant.BUNDLE_KEY_OF_ITEM, adInfo?.latLng)
+                intent.putExtra("address", adInfo?.address)
+                intent.putExtra("province", adInfo?.province)
+                intent.putExtra("city", adInfo?.city)
+                intent.putExtra("district", adInfo?.district)
+                context.startActivity(intent)
+            }
+        }
+
+        fun openActivity(context: Context, shopManage: ApplyShopInfo?) {
+            if (context is Activity) {
+                //latLng: LatLng?, address: String?
+                //LatLng(shopManage?.shopLat?: 0.0, shopManage?.shopLng?:0.0), shopManage?.shopAdd
+                val intent = Intent(context, AddressActivity::class.java)
+                intent.putExtra(IConstant.BUNDLE_KEY_OF_ITEM, LatLng(shopManage?.shopLat?: 0.0, shopManage?.shopLng?:0.0))
+                intent.putExtra("address", shopManage?.shopAdd)
+                intent.putExtra("province", shopManage?.shopProvince)
+                intent.putExtra("city", shopManage?.shopCity)
+                intent.putExtra("district", shopManage?.shopCounty)
                 context.startActivity(intent)
             }
         }
     }
 
+    private var province: String? = null
+    private var district: String? = null
+
     override fun initBundles() {
         latlng = intent.getParcelableExtra<LatLng>(IConstant.BUNDLE_KEY_OF_ITEM);
         address = intent.getStringExtra("address");
+        province = intent.getStringExtra("province")
+        city = intent.getStringExtra("city")
+        district = intent.getStringExtra("district")
     }
 
     override fun getLayoutId(): Int {
@@ -152,7 +181,19 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
         // 搜索
         btnSearch.singleClick {
             KeyboardUtils.hideSoftInput(it);
+
+
             searchAddressByKeyword(etShopAddress.text.toString())
+        }
+
+        tvAddressProvince.singleClick {
+            mPresenter.showAddress(it, mList);
+        }
+        tvAddressCity.singleClick {
+            mPresenter.showAddress(it, mList);
+        }
+        tvAddressArea.singleClick {
+            mPresenter.showAddress(it, mList);
         }
     }
 
@@ -261,6 +302,9 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 //            }
         } else {
             etShopAddress.setText(address);
+            tvAddressProvince.setText(province);
+            tvAddressCity.setText(city);
+            tvAddressArea.setText(district);
 
             geo();
 
@@ -388,6 +432,10 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         addressData?.address = mAddress;
                         addressData?.latLng = latlng;
 
+
+                        tvAddressProvince.setText(addressData?.province);
+                        tvAddressCity.setText(addressData?.city)
+                        tvAddressArea.setText(addressData?.address);
                         // etShopAddress.setText(mAddress);
 
                         mFirstFix = true
@@ -518,7 +566,8 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     fun searchAddressByKeyword(key: String) {
 //        query = PoiSearch.Query(key, "", city)
-        query = PoiSearch.Query(key, "")
+        var str = mList?.map { it?.localName }?.joinToString(separator = "");
+        query = PoiSearch.Query(key, "", str);
         //keyWord表示搜索字符串，
         //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
         //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
@@ -620,6 +669,19 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     override fun onApplyShopAddressError(code: Int) {
 
+    }
+
+    var mList: List<RegionVo>? = null;
+    override fun onSetAddress(list: List<RegionVo>) {
+        mList = list;
+        if(list.size == 3) {
+            tvAddressProvince.setText(list.get(0).localName);
+            tvAddressCity.setText(list.get(1).localName)
+            tvAddressArea.setText(list.get(2).localName);
+        } else if(list.size == 2) {
+            tvAddressProvince.setText(list.get(0).localName);
+            tvAddressCity.setText(list.get(1).localName)
+        }
     }
 
 }

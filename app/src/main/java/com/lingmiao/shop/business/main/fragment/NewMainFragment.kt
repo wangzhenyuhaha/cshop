@@ -219,7 +219,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     tvMainShopReason.text = loginInfo.statusReason
                     tvMainShopReason.show(true)
                 }
-                "REFUSED" -> {
+                "REFUSED" -> {//店铺审核未通过，重新提交页面
                     tvMainShopName.text = "店铺审核不通过"
                     tvMainShopNext.text = "重新提交"
                     SpanUtils.with(tvMainShopHint)

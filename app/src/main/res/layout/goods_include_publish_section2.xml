@@ -29,7 +29,6 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -39,21 +38,21 @@
                 style="@style/goods_publish_left_mark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="商品正图" />
+                android:text="商品缩略图" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" (用于分享)"
+                android:text=""
                 android:textColor="@color/color_999999"
                 android:textSize="9sp" />
         </LinearLayout>
 
-        <include layout="@layout/goods_adapter_goods_gallery"
-            android:visibility="gone"/>
+        <include
+            layout="@layout/goods_adapter_goods_gallery"/>
 
-<!--        android:paddingTop="@dimen/dimen_15"-->
         <LinearLayout
+            android:paddingTop="@dimen/dimen_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">

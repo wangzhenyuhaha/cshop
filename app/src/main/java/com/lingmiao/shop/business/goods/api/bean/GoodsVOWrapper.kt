@@ -70,6 +70,9 @@ class GoodsVOWrapper : Serializable {
     @SerializedName("goods_gallery_list")
     var goodsGalleryList: List<GoodsGalleryVO>? = null  //商品主图 List
 
+    @SerializedName("thumbnail")
+    var thumbnail : String? = null
+
     @SerializedName("goods_id")
     var goodsId: String? = null
 

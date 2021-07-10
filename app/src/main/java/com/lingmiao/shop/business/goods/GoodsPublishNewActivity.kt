@@ -191,6 +191,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             } else {
                 authFailLayout.gone()
             }
+            GlideUtils.setImageUrl(imageView, goodsVO.thumbnail, R.mipmap.goods_selected_img)
             // 商品分类
 //            goodsCategoryTv.text = Html.fromHtml(categoryName)
             goodsCategoryTv.text = categoryName?.replace("&gt;", "/")
@@ -357,12 +358,14 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 //                            addDataList(convert2GalleryVO(it))
                             val item = convert2GalleryVO(it)[0];
                             GlideUtils.setImageUrl1(imageView, item?.original)
+                            goodsVO.thumbnail = item?.original;
                         }
                     }
                     MediaMenuPop.TYPE_PLAY_PHOTO -> {
                         PhotoHelper.openCamera(context as Activity, null, true, 32) {
                             val item = convert2GalleryVO(it)[0];
                             GlideUtils.setImageUrl1(imageView, item?.original)
+                            goodsVO.thumbnail = item?.original;
                         }
                     }
                 }
