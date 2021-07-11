@@ -5,12 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
-import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.*
-import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.*
+import com.lingmiao.shop.R
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
+import com.lingmiao.shop.business.goods.api.bean.*
+import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
 import com.lingmiao.shop.business.photo.PhotoHelper
@@ -114,6 +114,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         initBottomView()
         mPresenter.loadGoodsInfo(goodsId)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
@@ -486,10 +487,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 }
             }
             // 默认
-            if (this.shopCatId == null) {
-                this.shopCatId = categoryId
-                this.shopCatName = categoryName
-            }
+//            if (this.shopCatId == null) {
+//                this.shopCatId = categoryId
+//                this.shopCatName = categoryName
+//            }
         }
         mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked)
     }

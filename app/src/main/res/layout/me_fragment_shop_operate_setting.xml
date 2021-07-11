@@ -113,8 +113,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_centerVertical="true"
+                        android:layout_weight="1"
                         android:text="未接订单自动取消时间"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
@@ -301,6 +301,49 @@
                     </LinearLayout>
 
                 </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/dimen_15">
+
+                        <TextView
+                            style="@style/goods_publish_left_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="店铺广告图上传" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" (最少1张，最多5张)"
+                            android:textColor="@color/color_999999"
+                            android:textSize="9sp" />
+                    </LinearLayout>
+
+                    <com.lingmiao.shop.business.goods.view.GalleryRecyclerView
+                        android:id="@+id/galleryRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:nestedScrollingEnabled="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" (建议尺寸：750X136px)"
+                        android:textColor="@color/color_999999"
+                        android:textSize="9sp" />
+
+                </LinearLayout>
 
 
             </com.james.common.view.ILinearLayout>

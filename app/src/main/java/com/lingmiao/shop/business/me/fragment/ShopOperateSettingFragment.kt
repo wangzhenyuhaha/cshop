@@ -2,31 +2,58 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseFragment
+import com.james.common.netcore.networking.http.core.HiResponse
+import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.getViewText
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.isNetUrl
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
+import com.lingmiao.shop.business.common.bean.FileResponse
+import com.lingmiao.shop.business.common.pop.MediaMenuPop
+import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.DeliveryManagerActivity
+import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.presenter.ShopOperateSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ShopOperateSettingPresenterImpl
+import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
+import com.lingmiao.shop.util.GlideUtils
+import com.luck.picture.lib.entity.LocalMedia
+import kotlinx.android.synthetic.main.goods_adapter_goods_gallery.*
+import kotlinx.android.synthetic.main.goods_include_publish_section2.*
 import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
+import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.galleryRv
+import kotlinx.coroutines.*
+import java.io.File
 
 /**
 Create Date : 2021/3/24:12 PM
 Auther      : Fox
 Desc        : 运营设置
  **/
-class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), ShopOperateSettingPresenter.View {
+class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
+    ShopOperateSettingPresenter.View {
 
     var shopReq: ApplyShopInfo = ApplyShopInfo()
 
+    private val temp = MutableLiveData<List<String>>().also {
+        it.value = mutableListOf()
+    }
+
     companion object {
-        fun newInstance(item : ApplyShopInfo?): ShopOperateSettingFragment {
+        fun newInstance(item: ApplyShopInfo?): ShopOperateSettingFragment {
             return ShopOperateSettingFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("item", item)
@@ -49,10 +76,13 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 
     override fun initViewsAndData(rootView: View) {
 
+
+        initSection2View()
+
         // 营业时间
-         tvShopOperateTime.setOnClickListener {
-             mPresenter?.showWorkTimePop(it)
-         }
+        tvShopOperateTime.setOnClickListener {
+            mPresenter?.showWorkTimePop(it)
+        }
 
         // 未接订单自动取消时间
 //        addTextChangeListener(tvShopManageNumber, "") {
@@ -80,40 +110,194 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 
         // 保存
         tvShopOperateSubmit.setOnClickListener {
-            if(tvShopManageNumber.getViewText()?.isEmpty()) {
+            if (tvShopManageNumber.getViewText()?.isEmpty()) {
                 showToast("请输入未接订单自动取消时间");
                 return@setOnClickListener;
             }
-            val cancelOrderTime =  tvShopManageNumber.text?.toString()?.toInt()?:0;
-            if(cancelOrderTime > 5) {
+            val cancelOrderTime = tvShopManageNumber.text?.toString()?.toInt() ?: 0;
+            if (cancelOrderTime > 5) {
                 showToast("未接订单自动取消时间不能大于5分钟");
                 return@setOnClickListener;
             }
-            shopReq.autoAccept = if(autoOrderSb.isChecked) 1 else 0;
+            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0;
             shopReq.cancelOrderTime = cancelOrderTime;
             shopReq.companyPhone = linkTelEt.text.toString();
             shopReq.shopTemplateType = getTemplate();
             mPresenter?.setSetting(shopReq);
+
+
+            Log.d("WZY", "开始")
+            val goodsGalleryList = galleryRv.getSelectPhotos()
+            Log.d("WZY", goodsGalleryList.toString())
+
+            upPicture(goodsGalleryList)
+            Log.d("WZY123321", goodsGalleryList.toString())
+
+            temp.observe(viewLifecycleOwner, Observer {
+                if (it.isNotEmpty()) {
+                    //获取了URL
+
+                    val mid: MutableList<BannerItem> = mutableListOf()
+
+                    for (a in it) {
+                        mid.add(BannerItem(a))
+                    }
+
+                    Log.d("WZY321", mid.toString())
+                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
+                    {
+                        val request = MeRepository.apiService.updateBanner(mid).awaitHiResponse()
+                        Log.d("WZY321", request.toString())
+                    }
+                }
+            })
+
+
         }
 
-        if(shopReq != null) {
+        if (shopReq != null) {
             onLoadedShopSetting(shopReq!!);
             mPresenter?.loadTemplate();
         } else {
             mPresenter?.loadShopSetting()
             mPresenter?.loadTemplate();
         }
+
+
+        //获取广告图
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
+        {
+            val resp = MeRepository.apiService.getBanner().awaitHiResponse()
+            Log.d("WZY123321", resp.toString())
+            withContext(Dispatchers.Main) {
+                if (resp.data.isEmpty()) {
+                    val data: List<GoodsGalleryVO> =
+                        listOf(
+                            GoodsGalleryVO(
+                                original = "https://c-shop-test.oss-cn-hangzhou.aliyuncs.com/goodsgoods/F0D585A2EDFB4F5DBCEA89A1341FB22B.png",
+                                sort = null
+                            )
+                        )
+                    galleryRv.addDataList(data)
+                } else {
+                    val data: MutableList<GoodsGalleryVO> = mutableListOf()
+                    for (it in resp.data) {
+                        galleryRv.addData(
+                            GoodsGalleryVO(
+                                original = it.banner_url,
+                                sort = null
+                            )
+                        )
+
+                    }
+                }
+            }
+        }
+
+
     }
 
-    fun getTemplate() : String {
-        if(cb_model_shop.isChecked) {
+    //图片上传
+    private fun upPicture(data: List<GoodsGalleryVO>) {
+
+
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+
+            val url = mutableListOf<String>()
+
+            val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
+            // 多张图片并行上传
+            data.forEach {
+                val request = async {
+                    if (it.original.isNetUrl()) {
+                        HiResponse(0, "", FileResponse("", "", it.original))
+                    } else {
+                        CommonRepository.uploadFile(
+                            File(it.original!!),
+                            true,
+                            CommonRepository.SCENE_GOODS
+                        )
+                    }
+                }
+                requestList.add(request)
+            }
+
+            // 多个接口相互等待
+            val respList = requestList.awaitAll()
+            var isAllSuccess: Boolean = true
+            respList.forEachIndexed { index, it ->
+                if (it.isSuccess) {
+                    data?.get(index)?.apply {
+                        original = it?.data?.url
+                        sort = "${index}"
+                        url.add(original!!)
+                    }
+                } else {
+                    isAllSuccess = false
+                }
+            }
+            if (isAllSuccess) {
+
+            }
+            temp.postValue(url)
+        }
+
+
+    }
+
+
+    fun getTemplate(): String {
+        if (cb_model_shop.isChecked) {
             return FreightVoItem.TYPE_LOCAL
-        } else if(cb_model_rider.isChecked) {
+        } else if (cb_model_rider.isChecked) {
             return FreightVoItem.TYPE_QISHOU;
         } else {
             return "";
         }
     }
+
+
+    private fun initSection2View() {
+        galleryRv.setCountLimit(1, 5)
+        //  deleteIv.gone();
+//        imageView.singleClick {
+//            openGallery();
+//        }
+    }
+
+
+    private fun openGallery() {
+        val menus = MediaMenuPop.TYPE_SELECT_PHOTO or MediaMenuPop.TYPE_PLAY_PHOTO
+        MediaMenuPop(mContext, menus).apply {
+            setOnClickListener { type ->
+                when (type) {
+                    MediaMenuPop.TYPE_SELECT_PHOTO -> {
+                        PhotoHelper.openAlbum(context as Activity, 1, null, true, 32) {
+//                            addDataList(convert2GalleryVO(it))
+                            val item = convert2GalleryVO(it)[0];
+                            GlideUtils.setImageUrl1(imageView, item?.original)
+                        }
+                    }
+                    MediaMenuPop.TYPE_PLAY_PHOTO -> {
+                        PhotoHelper.openCamera(context as Activity, null, true, 32) {
+                            val item = convert2GalleryVO(it)[0];
+                            GlideUtils.setImageUrl1(imageView, item?.original)
+                        }
+                    }
+                }
+            }
+        }.showPopupWindow()
+    }
+
+
+    private fun convert2GalleryVO(list: List<LocalMedia>): List<GoodsGalleryVO> {
+        val galleryList = mutableListOf<GoodsGalleryVO>()
+        list.forEach {
+            galleryList.add(GoodsGalleryVO.convert(it))
+        }
+        return galleryList
+    }
+
 
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
         shopReq.openStartTime = item1?.itemName;
@@ -126,9 +310,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
 
     }
 
-    var mLocalItem : FreightVoItem? = null;
+    var mLocalItem: FreightVoItem? = null;
 
-    var mRiderItem : FreightVoItem? = null;
+    var mRiderItem: FreightVoItem? = null;
 
     override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {
         this.mLocalItem = tcItem;
@@ -140,12 +324,12 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
             tvRiderStatus.text = "已设置"
         }
         layoutShop.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.cb_model_shop) {
-                if((mLocalItem == null || mLocalItem?.id == null) && cb_model_shop.isChecked) {
+            if (checkedId == R.id.cb_model_shop) {
+                if ((mLocalItem == null || mLocalItem?.id == null) && cb_model_shop.isChecked) {
                     showToast("请先设置商家配送模板");
                 }
-            } else if(checkedId == R.id.cb_model_rider){
-                if((mRiderItem == null || mRiderItem?.id == null) && cb_model_rider.isChecked) {
+            } else if (checkedId == R.id.cb_model_rider) {
+                if ((mRiderItem == null || mRiderItem?.id == null) && cb_model_rider.isChecked) {
                     showToast("请先设置骑手配送模板");
                 }
             }
@@ -158,7 +342,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
         }
     }
 
-    override fun onLoadedShopSetting(vo : ApplyShopInfo) {
+    override fun onLoadedShopSetting(vo: ApplyShopInfo) {
         vo?.apply {
             orderSetting?.apply {
                 autoOrderSb.isChecked = autoAccept == 1;
@@ -172,5 +356,21 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(), 
         }
 
     }
+
+
+    data class BannerItem(
+        var banner_url: String? = null,
+        var create_time: String? = null,
+        var creater_id: String? = null,
+        var id: String? = null,
+        var is_delete: Int? = null,
+        var link_url: String? = null,
+        var merchant_id: String? = null,
+        var org_id: String? = null,
+        var remarks: String? = null,
+        var shop_id: Int? = null,
+        var update_time: String? = null,
+        var updater_id: String? = null
+    )
 
 }
