@@ -2,7 +2,6 @@ package com.lingmiao.shop
 
 
 import android.os.Build
-import android.os.StrictMode
 import android.webkit.WebView
 import androidx.core.content.ContextCompat
 import cn.jpush.android.api.JPushInterface
@@ -12,7 +11,7 @@ import com.lingmiao.shop.net.Fetch
 import com.james.common.BaseApplication
 import com.james.common.R
 import com.tencent.bugly.crashreport.CrashReport
-
+import com.lingmiao.shop.BuildConfig
 
 class MyApp : BaseApplication() {
 

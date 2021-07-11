@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.adapter
 
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -10,11 +11,12 @@ import androidx.fragment.app.FragmentPagerAdapter
  * Date   : 2020/7/11
  * Desc   : 商品管理
  */
+@SuppressLint("WrongConstant")
 class GoodsHomePageAdapter(
     val fm: FragmentManager,
     val fragments: MutableList<Fragment>,
     val tabTitles: Array<String>
-): FragmentPagerAdapter(fm) {
+): FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Fragment {
         val fragment = super.instantiateItem(container, position) as Fragment

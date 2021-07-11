@@ -11,9 +11,9 @@
         android:layout_width="@dimen/dimen_40"
         android:layout_height="@dimen/dimen_40"
         android:layout_margin="@dimen/dimen_15"
-        tools:src="@mipmap/ic_launcher_round"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher_round" />
 
 
     <TextView
@@ -24,43 +24,43 @@
         android:paddingHorizontal="@dimen/dimen_15"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/sp_12"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/orderGoodsIv"
         app:layout_constraintTop_toTopOf="@id/orderGoodsIv"
         tools:text="苹果" />
-
-    <TextView
-        app:layout_constraintBottom_toBottomOf="@id/orderGoodsIv"
-        android:id="@+id/goodsTotalTv"
-        android:paddingRight="@dimen/dimen_15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="fs"/>
 
     <TextView
         android:id="@+id/orderGoodsQuantityTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_15"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/sp_12"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/orderGoodsIv"
-        android:paddingHorizontal="@dimen/dimen_15"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/goodsTotalTv"
+        app:layout_constraintTop_toTopOf="@id/orderGoodsIv"
         tools:text="x1" />
 
     <TextView
         android:id="@+id/orderGoodsSkuTv"
-        android:text="dfsafsa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:text="dfsafsa"
+        android:textColor="@color/color_999999"
         android:textSize="@dimen/sp_11"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/orderGoodsIv"
-        app:layout_constraintRight_toLeftOf="@id/orderGoodsQuantityTv"
-        android:textColor="@color/color_999999"
-        android:paddingHorizontal="@dimen/dimen_15"
+        app:layout_constraintLeft_toRightOf="@id/orderGoodsIv"
         tools:text="宽/高" />
+
+    <TextView
+        android:id="@+id/goodsTotalTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/dimen_15"
+        android:text="fs"
+        app:layout_constraintBottom_toBottomOf="@id/orderGoodsIv"
+        app:layout_constraintRight_toRightOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

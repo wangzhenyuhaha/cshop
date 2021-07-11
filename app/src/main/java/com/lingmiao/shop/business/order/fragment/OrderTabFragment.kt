@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.order.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -82,7 +83,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
 //        fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
         vpContent.adapter = adapter
-        vpContent.offscreenPageLimit = 0
+//        vpContent.offscreenPageLimit = 1
         vpContent.addOnPageChangeListener(this)
 
         tvTab1.setOnClickListener { vpContent.currentItem = 0 }
@@ -103,8 +104,9 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         }
     }
 
+    @SuppressLint("WrongConstant")
     private class OrderFragmentAdapter(fm: FragmentManager) :
-        FragmentPagerAdapter(fm) {
+        FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         override fun getItem(position: Int): Fragment {
             return fragmentList[position]
         }

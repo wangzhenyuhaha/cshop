@@ -152,27 +152,7 @@ class OrderListAdapter :
             R.id.tvOrderStatus,
             MyApp.getInstance().resources.getColor(R.color.color_3870EA)
         )
-        val orderOperateAllowable = item.orderOperateAllowable
         var showBottomArea = false
-//        if (orderOperateAllowable != null) {
-//            if (orderOperateAllowable.allowAuditAfterSell) tvAfterSale.visibility = View.VISIBLE
-//            if (orderOperateAllowable.allowCancel || orderOperateAllowable.allowServiceCancel) tvCancelOrder.visibility = View.VISIBLE
-//            if (orderOperateAllowable.allowDelete) tvDelete.visibility = View.VISIBLE
-//            if (orderOperateAllowable.allowCheckExpress) tvLookLogistics.visibility = View.VISIBLE
-//            if (orderOperateAllowable.allowEditPrice) tvUpdatePrice.visibility = View.VISIBLE
-//            if (orderOperateAllowable.allowShip) {
-//                if(item?.isVirtualOrderTag()) {
-//                    tvVerify.visibility = View.VISIBLE
-//                } else {
-//                    tvShipment.visibility = View.VISIBLE
-//                }
-//            }
-//            if (orderOperateAllowable.allowAuditAfterSell||orderOperateAllowable.allowCancel||orderOperateAllowable.allowServiceCancel
-//                ||orderOperateAllowable.allowDelete||orderOperateAllowable.allowCheckExpress
-//                ||orderOperateAllowable.allowEditPrice||orderOperateAllowable.allowShip){
-//                showBottomArea = true
-//            }
-//        }
         helper.setText(R.id.tvOrderSubStatus, "");
         when(item.orderStatus) {
            "PAID_OFF" -> {

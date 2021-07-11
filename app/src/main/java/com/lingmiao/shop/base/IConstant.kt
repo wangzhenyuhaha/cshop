@@ -16,7 +16,7 @@ object IConstant {
     const val MESSAGE_OTHER = "3"
     const val MESSAGE_APPLY_SHOP_REFUSE = "4"
 
-    const val TAB_WAIT_SEND_GOODS = 1
+    const val TAB_WAIT_SEND_GOODS = 0
     const val TAB_WAIT_REFUND = 2
 
     const val JPUSH_TYPE = "jpush_type"

@@ -44,7 +44,7 @@ class MyJPushReceiver: JPushMessageReceiver() {
             jpushExtra?.let {
 //                LogUtils.e(TAG, "jpushExtra:$jpushExtra")
                 if(IConstant.MESSAGE_ORDER_PAY_SUCCESS == jpushExtra.type){
-                    bundle.putString(IConstant.JPUSH_TYPE,IConstant.MESSAGE_ORDER_PAY_SUCCESS)
+                    bundle.putString(IConstant.JPUSH_TYPE, IConstant.MESSAGE_ORDER_PAY_SUCCESS)
                 } else if(IConstant.MESSAGE_APPLY_SHOP_REFUSE == jpushExtra.type){
                     i = Intent(context, ShopWaitApplyActivity::class.java)
                 }
@@ -54,6 +54,7 @@ class MyJPushReceiver: JPushMessageReceiver() {
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             context.startActivity(i)
         } catch (throwable: Throwable) {
+            throwable.printStackTrace()
         }
     }
 
@@ -123,7 +124,7 @@ class MyJPushReceiver: JPushMessageReceiver() {
         context: Context?,
         cmdMessage: CmdMessage
     ) {
-        LogUtils.e(TAG, "[onCommandResult] $cmdMessage")
+        LogUtils.d(TAG, "[onCommandResult] $cmdMessage")
     }
 
     override fun onTagOperatorResult(

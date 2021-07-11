@@ -342,7 +342,7 @@ public class TagAliasOperatorHelper {
 
     public static void showToast(final String toast, final Context context)
     {
-        LogUtils.e(toast);
+        //LogUtils.d(toast);
 //        new Thread(new Runnable() {
 //
 //            @Override

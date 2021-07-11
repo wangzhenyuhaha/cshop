@@ -30,7 +30,9 @@ data class My(
     @SerializedName("uname")
     var uname: String?=null,//账号名称
     @SerializedName("user_state")
-    var userState: Int?=null
+    var userState: Int?=null,
+    @SerializedName("shop_logo")
+    var shopLogo: String? = ""
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readValue(Int::class.java.classLoader) as? Int,

@@ -27,7 +27,6 @@ import com.lingmiao.shop.business.order.presenter.impl.OrderListPresenterImpl
 import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
-import kotlinx.android.synthetic.main.order_view_menu_header.*
 import org.greenrobot.eventbus.EventBus
 import java.util.*
 
@@ -60,6 +59,11 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     putString(STATUS, status)
                 }
             }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        retainInstance = true
+        super.onCreate(savedInstanceState)
     }
 
     override fun initBundles() {

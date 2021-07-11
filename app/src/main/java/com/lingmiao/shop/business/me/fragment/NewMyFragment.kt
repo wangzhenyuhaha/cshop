@@ -129,26 +129,20 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         tvMyName.text = bean.uname
         tvMyShopName.text = bean.shopName
         tvMyAccount.text = bean.founderText
-//        if(!TextUtils.isEmpty(bean.face)){
-//            GlideUtils.setImageUrl(ivMyHead,bean.face)
-//        }
 
         if(!TextUtils.isEmpty(bean.mobile)&& bean.mobile?.length!! >7){
             tvMyPhone.text = "${bean.mobile!!.substring(0, 3)}****${bean.mobile!!.substring(7)}"
         }
 
         val loginInfo = UserManager.getLoginInfo()
-        setUserUi(loginInfo);
+        loginInfo?.shopLogo = my?.shopLogo;
         loginInfo?.clerkId = my?.clerkId
         loginInfo?.mobile = my?.mobile
         loginInfo?.shopId = my?.shopId
+        setUserUi(loginInfo);
         if (loginInfo != null) {
             UserManager.setLoginInfo(loginInfo)
         }
-
-        //tvBalance.text = String.format("￥%s", 0);
-//        tvDeposit.text = String.format("￥%s", 0);
-//        tvUseTime.text = String.format("%s天", 0);
 
     }
 
