@@ -2,14 +2,12 @@ package com.lingmiao.shop.business.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.LogUtils
@@ -20,7 +18,6 @@ import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
@@ -30,7 +27,6 @@ import com.lingmiao.shop.business.order.fragment.OrderTabFragment
 import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.VoiceUtils
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

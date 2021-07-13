@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar" />
+
+    <include layout="@layout/include_view" />
+
+    <include layout="@layout/include_tab" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_half"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:background="#E6E6E6" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/activity_viewpager_viewpager2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <include layout="@layout/include_empty" />
+    </FrameLayout>
+
+
+</LinearLayout>

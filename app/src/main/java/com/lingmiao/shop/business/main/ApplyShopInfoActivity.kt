@@ -99,6 +99,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                     applyShopInfo.shopAdd
             etShopInfoContactName.setText(applyShopInfo.linkName)
             etShopInfoContactPhone.setText(applyShopInfo.linkPhone)
+            etShopInfoInvitationCode.setText(applyShopInfo.promo_code)
 
             if (!applyShopInfo.licenceImg.isNullOrEmpty()) tvShopInfoLicense.text = "已上传"
             if (!applyShopInfo.legalImg.isNullOrEmpty()) tvShopInfoIdCardFront.text = "已上传"
@@ -228,7 +229,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 startActivity(intent)
             }
             R.id.rlShopInfoAddress -> {
-               AddressActivity.openActivity(this, adInfo);
+                AddressActivity.openActivity(this, adInfo);
                 // ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
             }
             R.id.rlShopInfoLicense -> {
@@ -254,6 +255,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         applyShopInfo.shopName = etShopInfoName.text.toString()
         applyShopInfo.linkName = etShopInfoContactName.text.toString()
         applyShopInfo.linkPhone = etShopInfoContactPhone.text.toString()
+        applyShopInfo.promo_code = etShopInfoInvitationCode.text.toString()
         try {
             checkNotBlack(applyShopInfo.shopType) { "请选择店铺类型" }
             checkNotBlack(applyShopInfo.shopName) { "请输入店铺名称" }
@@ -266,7 +268,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             checkNotBlack(applyShopInfo.legalBackImg) { "请上传身份证反面照" }
             checkNotBlack(applyShopInfo.holdImg) { "手持证件照" }
             showDialogLoading()
-            mPresenter?.requestApplyShopInfoData(applyShopInfo)
+           mPresenter?.requestApplyShopInfoData(applyShopInfo)
         } catch (e: IllegalStateException) {
             e.printStackTrace()
             showToast(e.message ?: "")

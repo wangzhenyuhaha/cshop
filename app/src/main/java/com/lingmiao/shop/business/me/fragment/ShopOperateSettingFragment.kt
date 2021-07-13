@@ -4,10 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseFragment
 import com.james.common.netcore.networking.http.core.HiResponse
@@ -46,18 +43,36 @@ Desc        : 运营设置
 class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     ShopOperateSettingPresenter.View {
 
+
     var shopReq: ApplyShopInfo = ApplyShopInfo()
 
-    private val temp = MutableLiveData<List<String>>().also {
-        it.value = mutableListOf()
-    }
-
     companion object {
+
+
+        const val TAG = "ShopOperateSetting"
+
         fun newInstance(item: ApplyShopInfo?): ShopOperateSettingFragment {
             return ShopOperateSettingFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("item", item)
                 }
+            }
+        }
+    }
+
+    //获取Banner图
+    private fun getBanner() {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
+        {
+            val resp: List<BannerItem> = MeRepository.apiService.getBanner().awaitHiResponse().data
+
+            val list = mutableListOf<GoodsGalleryVO>()
+            for (it in resp) {
+                list.add(GoodsGalleryVO(original = it.banner_url, sort = null))
+            }
+            withContext(Dispatchers.Main)
+            {
+                galleryRv.addDataList(list)
             }
         }
     }
@@ -76,6 +91,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     override fun initViewsAndData(rootView: View) {
 
+        getBanner()
 
         initSection2View()
 
@@ -126,32 +142,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.setSetting(shopReq);
 
 
-            Log.d("WZY", "开始")
             val goodsGalleryList = galleryRv.getSelectPhotos()
-            Log.d("WZY", goodsGalleryList.toString())
 
             upPicture(goodsGalleryList)
-            Log.d("WZY123321", goodsGalleryList.toString())
-
-            temp.observe(viewLifecycleOwner, Observer {
-                if (it.isNotEmpty()) {
-                    //获取了URL
-
-                    val mid: MutableList<BannerItem> = mutableListOf()
-
-                    for (a in it) {
-                        mid.add(BannerItem(a))
-                    }
-
-                    Log.d("WZY321", mid.toString())
-                    viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
-                    {
-                        val request = MeRepository.apiService.updateBanner(mid).awaitHiResponse()
-                        Log.d("WZY321", request.toString())
-                    }
-                }
-            })
-
 
         }
 
@@ -162,38 +155,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.loadShopSetting()
             mPresenter?.loadTemplate();
         }
-
-
-        //获取广告图
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
-        {
-            val resp = MeRepository.apiService.getBanner().awaitHiResponse()
-            Log.d("WZY123321", resp.toString())
-            withContext(Dispatchers.Main) {
-                if (resp.data.isEmpty()) {
-                    val data: List<GoodsGalleryVO> =
-                        listOf(
-                            GoodsGalleryVO(
-                                original = "https://c-shop-test.oss-cn-hangzhou.aliyuncs.com/goodsgoods/F0D585A2EDFB4F5DBCEA89A1341FB22B.png",
-                                sort = null
-                            )
-                        )
-                    galleryRv.addDataList(data)
-                } else {
-                    val data: MutableList<GoodsGalleryVO> = mutableListOf()
-                    for (it in resp.data) {
-                        galleryRv.addData(
-                            GoodsGalleryVO(
-                                original = it.banner_url,
-                                sort = null
-                            )
-                        )
-
-                    }
-                }
-            }
-        }
-
 
     }
 
@@ -239,7 +200,21 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             if (isAllSuccess) {
 
             }
-            temp.postValue(url)
+            if (url.isNotEmpty()) {
+                val data = mutableListOf<BannerItem>()
+                for (i in url) {
+                    data.add(BannerItem(i))
+                }
+                val request = MeRepository.apiService.updateBanner(data).awaitHiResponse()
+                Log.d(TAG, request.toString())
+            } else {
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
+                {
+                    val data = listOf<BannerItem>()
+                    val request = MeRepository.apiService.updateBanner(data).awaitHiResponse()
+                    Log.d(TAG, request.toString())
+                }
+            }
         }
 
 
@@ -372,5 +347,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         var update_time: String? = null,
         var updater_id: String? = null
     )
+
 
 }

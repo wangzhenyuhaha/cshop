@@ -443,14 +443,58 @@
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
 
-                    <ImageView
-                        android:layout_width="6dp"
-                        android:layout_height="11dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:src="@mipmap/me_arrow_right" />
                 </RelativeLayout>
             </com.james.common.view.ILinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:text="推广码"
+                android:textColor="#ff333333"
+                android:textSize="13sp" />
+
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="推广码"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:id="@+id/etShopInfoInvitationCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="80dp"
+                        android:background="@null"
+                        android:gravity="end"
+                        android:hint="请输入邀请码"
+                        android:inputType="none"
+                        android:singleLine="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+
+            </com.james.common.view.ILinearLayout>
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

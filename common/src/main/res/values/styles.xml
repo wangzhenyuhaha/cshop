@@ -13,6 +13,7 @@
     <style name="MyToolBar" parent="ThemeOverlay.AppCompat.ActionBar">
         <!--  菜单文字颜色 -->
         <item name="android:actionMenuTextColor">#fff</item>
+        <item name="android:colorAccent">#03DAC5</item>
     </style>
 
     <style name="LoadingDialogStyle">
