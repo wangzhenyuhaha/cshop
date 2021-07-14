@@ -26,10 +26,10 @@ object IConstant {
     const val  SHIP_TYPE_LOCAL = "LOCAL"    //同城
     const val  SHIP_TYPE_SELF = "SELF"      //自提
 
-    var official = false
+    var official = true;
 
+    const val PRO_URL = "https://api.base.c-dian.cn";
     const val TEST_URL = "http://47.117.112.134";
-    const val PRO_URL = "http://47.117.112.134";
 
     fun getPrivacyServiceH5(): String {
         return "https://docs.qq.com/doc/DR2lkRUNpWFJobmxE"
@@ -44,19 +44,13 @@ object IConstant {
     }
 
     fun getSellerUrl(): String {
-        if(official) return String.format("%s:7003", PRO_URL);
+        if(official) return String.format("%s:7003", "http://api.seller.c-dian.cn");
         return "http://47.116.78.248:7003";
     }
 
     fun getCommonUrl() : String {
-        if(official) return String.format("%s:7000", PRO_URL);
+        if(official) return String.format("%s", PRO_URL);
         return "http://47.117.112.134:7000";
-    }
-
-    fun getGoodsDetailH5(): String {
-        var baseUrl = "http://t-mms.fisheagle.cn"
-        if (official) baseUrl = "http://sellershop.fisheagle.cn"
-        return "$baseUrl/static/editer/editer.html"
     }
 
     fun getUploadFileUrl(): String {
@@ -64,7 +58,14 @@ object IConstant {
     }
 
     fun getCaptchaUrl(): String {
+        if(official) return String.format("%s:7003/captcha.html", "http://api.base.c-dian.cn");
         return "http://47.117.112.134:9527/captcha.html";
+    }
+
+    fun getGoodsDetailH5(): String {
+        var baseUrl = "http://t-mms.fisheagle.cn"
+        if (official) baseUrl = "http://sellershop.fisheagle.cn"
+        return "$baseUrl/static/editer/editer.html"
     }
 
     /**
