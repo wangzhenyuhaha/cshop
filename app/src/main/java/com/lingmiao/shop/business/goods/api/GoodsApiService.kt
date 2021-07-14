@@ -5,8 +5,8 @@ import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
-import com.james.common.netcore.networking.http.core.HiResponse
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
+import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -334,4 +334,7 @@ interface GoodsApiService {
     @POST("seller/goods/categories/specsAndValue")
     fun addSpecAndValue(@Body body: CateSpecAndValueVo): Call<CateSpecAndValueVo>
 
+    @WithHiResponse
+    @GET("seller/statistics/goods/goodsSales")
+    fun goodsSales(@Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<GoodsSalesRespBean>
 }

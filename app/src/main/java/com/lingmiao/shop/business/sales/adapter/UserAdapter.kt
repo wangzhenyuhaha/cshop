@@ -22,7 +22,7 @@ class UserAdapter : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_adap
         item?.apply {
 
 
-            GlideUtils.setImageUrl(helper.getView(R.id.userAvatar), "", R.mipmap.main_shop_logo_default)
+            GlideUtils.setImageUrl(helper.getView(R.id.userAvatar), item?.face, R.mipmap.main_shop_logo_default)
             //main_shop_logo_default
             helper.setGone(R.id.userCheckCb, isBatchEditModel);
 
@@ -33,7 +33,7 @@ class UserAdapter : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_adap
 
             helper.setText(R.id.userOrderTv, String.format("%s", item?.orderNum));
 
-            helper.setText(R.id.userAddressTv, "上海市");
+            helper.setText(R.id.userAddressTv, item?.fullAddress);
 
             helper.setText(R.id.userInTimeTv, stampToDate(item?.createTime?:0, DATE_FORMAT));
             //helper.setText(R.id.userInTimeTv, TimeUtils.millis2String(item?.createTime?:0, "yyyy-MM-dd"));

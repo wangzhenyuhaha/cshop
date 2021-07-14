@@ -135,6 +135,40 @@ fun getDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end
         .build()
 }
 
+
+
+fun getDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end: Calendar, type : Int, click :((Date?, View?) -> Unit)?, confirm : ((View?) -> Unit)?, cancel : ((View?) -> Unit)?) : TimePickerView {
+    var values = booleanArrayOf(true, true, true, false, false, false)
+    if(type == 1) {
+        values = booleanArrayOf(true, false, false, false, false, false)
+    } else if(type == 2) {
+        values = booleanArrayOf(true, true, false, false, false, false)
+    }
+    return TimePickerBuilder(context, click)
+        .setLayoutRes(
+            R.layout.goods_view_time
+        ) { v ->
+            val tvSubmit: TextView = v.findViewById<View>(R.id.tv_finish) as TextView
+            val ivCancel: TextView = v.findViewById<View>(R.id.iv_cancel) as TextView
+            tvSubmit.setOnClickListener {
+                confirm?.invoke(it);
+            }
+            ivCancel.setOnClickListener { cancel?.invoke(it) }
+        }
+        .setDate(selectedDate)
+        .setRangDate(start, end)
+        .setOutSideCancelable(true)
+        .setContentTextSize(16)
+        .setType(values)
+        .setLabel("年", "月", "日", "时", "分", "秒")
+        .setLineSpacingMultiplier(2.2f)
+        .setTextXOffset(0, 0, 0, 40, 0, -40)
+        //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+        .isCenterLabel(false)
+        .setDividerColor(-0x666666)
+        .build()
+}
+
 fun getDefaultTimePicker(context: Context, selectedDate: Calendar, start: Calendar, end: Calendar, click :((Date?, View?) -> Unit)?, confirm : ((View?) -> Unit)?, cancel : ((View?) -> Unit)?) : TimePickerView {
     return TimePickerBuilder(context, click)
         .setLayoutRes(

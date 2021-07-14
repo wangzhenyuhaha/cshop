@@ -4,18 +4,24 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.GsonUtils
 import com.github.aachartmodel.aainfographics.aachartcreator.*
 import com.james.common.base.BaseFragment
+import com.james.common.utils.exts.getViewText
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
+import com.lingmiao.shop.business.sales.bean.GoodsSalesBean
+import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import com.lingmiao.shop.business.sales.presenter.IStateGoodsDataPresenter
-import com.lingmiao.shop.business.sales.presenter.IStateSalesDataPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.StatsGoodsDataPreImpl
-import com.lingmiao.shop.business.sales.presenter.impl.StatsSalesDataPreImpl
+import com.lingmiao.shop.util.DATE_FORMAT
+import com.lingmiao.shop.util.dateTime2Date
+import com.lingmiao.shop.util.formatString
+import com.lingmiao.shop.util.getDatePicker
 import kotlinx.android.synthetic.main.sales_fragment_stats_goods.*
-import kotlinx.android.synthetic.main.sales_fragment_stats_pay.*
-import kotlinx.android.synthetic.main.sales_fragment_stats_pay.aaChartView
+import java.util.*
 
 /**
 Create Date : 2021/3/101:21 AM
@@ -24,6 +30,10 @@ Desc        :
  **/
 class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateGoodsDataPresenter.PubView {
 
+    var pvCustomTime: TimePickerView? = null;
+    var pvCustomTime2: TimePickerView? = null;
+    var mStart : Long? = null;
+    var mEnd : Long? = null;
     private var aaChartModel = AAChartModel()
 
     companion object {
@@ -52,6 +62,7 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     override fun initViewsAndData(rootView: View) {
         initChartView();
         initTabLayout();
+        initDate();
     }
 
     private var mTabTitles = arrayOf("销售TOP10", "滞销TOP10")
@@ -64,6 +75,124 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         val fragmentAdapter = GoodsHomePageAdapter(childFragmentManager, fragments, mTabTitles)
         goodsTopVp.setAdapter(fragmentAdapter)
         goodsTopLayout.setViewPager(goodsTopVp)
+    }
+
+    fun getCheckType() : Int {
+        if(btn1.isChecked) {
+            return 1;
+        } else if(btn2.isChecked) {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
+    fun getCheckStartTimeStr() : String {
+        if(btn1.isChecked) {
+            return "-01-01 00:00:00";
+        } else if(btn2.isChecked) {
+            return "-01 00:00:00";
+        }  else {
+            return " 00:00:00";
+        }
+    }
+
+    fun getCheckEndTimeStr() : String {
+        if(btn1.isChecked) {
+            return "-01-01 23:59:59";
+        } else if(btn2.isChecked) {
+            //yyyy-MM-dd HH:mm
+            return "-01 23:59:59";
+        } else {
+            return " 23:59:59";
+        }
+    }
+
+    fun getCheckTimeFormat() : String {
+        if(btn1.isChecked) {
+            return "yyyy";
+        } else if(btn2.isChecked) {
+            //yyyy-MM-dd HH:mm
+            return "yyyy-MM";
+        } else {
+            return DATE_FORMAT;
+        }
+    }
+
+
+    fun initDate() {
+        // 系统当前时间
+        val selectedDate: Calendar = Calendar.getInstance()
+        val startDate: Calendar = Calendar.getInstance()
+        startDate.set(selectedDate.get(Calendar.YEAR), 1, 1)
+
+        val endDate: Calendar = Calendar.getInstance()
+        endDate.set(
+            startDate.get(Calendar.YEAR) + 5, startDate.get(Calendar.MONTH), startDate.get(
+                Calendar.DATE
+            )
+        )
+
+        mStart = startDate.timeInMillis/1000;
+        mEnd = endDate.timeInMillis/1000;
+        mPresenter?.getGoodsSales(mStart, mEnd);
+
+        toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
+            mStart = 0;
+            mEnd = 0;
+            dateStartTv.text = "";
+            dateEndTv.text = "";
+            if(checkedId == R.id.btn1) {
+
+            } else if(checkedId == R.id.btn2) {
+
+            }else if(checkedId == R.id.btn3) {
+
+            }
+        }
+
+        dateStartTv.singleClick{
+
+
+            pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, getCheckType(), { date, view ->
+                dateStartTv.text = formatString(date, getCheckTimeFormat())
+
+                val s = dateTime2Date(dateStartTv.getViewText()+getCheckStartTimeStr())?.time?:0;
+                mStart = s/1000;
+
+                if(mStart?:0 > 0 && mEnd?:0 > 0) {
+                    mPresenter?.getGoodsSales(mStart, mEnd);
+                    //mLoadMoreDelegate?.refresh()
+                }
+                //firstMenuTv.setText(formatDateTime(date))
+            }, {
+                pvCustomTime?.returnData()
+                pvCustomTime?.dismiss()
+            }, {
+                pvCustomTime?.dismiss()
+            });
+            pvCustomTime?.show();
+        }
+        dateEndTv.singleClick{
+            pvCustomTime2 =
+                getDatePicker(mContext, selectedDate, startDate, endDate, getCheckType(), { date, view ->
+                    dateEndTv.setText(formatString(date, getCheckTimeFormat()))
+                    val e = dateTime2Date(dateEndTv.getViewText()+getCheckEndTimeStr())?.time?:0;
+                    mEnd = e/1000;
+
+                    if(mStart?:0 > 0 && mEnd?:0 > 0) {
+                        mPresenter?.getGoodsSales(mStart, mEnd);
+                        //mLoadMoreDelegate?.refresh()
+                    }
+                }, {
+                    pvCustomTime2?.returnData()
+                    pvCustomTime2?.dismiss()
+                }, {
+                    pvCustomTime2?.dismiss()
+                });
+            pvCustomTime2?.show();
+        }
+
     }
 
     fun initChartView() {
@@ -180,4 +309,10 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
             println("🚀move over event message " + GsonUtils.toJson(messageModel))
         }
     };
+
+    override fun setGoodsSales(item: GoodsSalesRespBean?) {
+        val goodsSales = item?.goodsSales;
+        orderCountTv.setText(String.format("共计%s单，合计", goodsSales?.sumOrderNum))
+        goodsCountTv.setText(String.format("%s个", goodsSales?.sumGoodsNum));//300个
+    }
 }

@@ -6,6 +6,7 @@ import com.blankj.utilcode.util.GsonUtils
 import com.github.aachartmodel.aainfographics.aachartcreator.*
 import com.james.common.base.BaseFragment
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import com.lingmiao.shop.business.sales.presenter.IStateGoodsDataPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.StatsGoodsDataPreImpl
 import kotlinx.android.synthetic.main.sales_fragment_stats_pay.aaChartView
@@ -103,4 +104,8 @@ class StatsDateUserFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateGo
             println("🚀move over event message " + GsonUtils.toJson(messageModel))
         }
     };
+
+    override fun setGoodsSales(item: GoodsSalesRespBean?) {
+
+    }
 }

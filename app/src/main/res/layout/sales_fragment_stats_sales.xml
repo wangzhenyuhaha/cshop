@@ -13,41 +13,61 @@
         android:orientation="horizontal"
         android:padding="@dimen/dimen_5">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dp_10"
-            android:paddingRight="@dimen/dp_10">
-
-            <RadioButton
+               <com.google.android.material.button.MaterialButtonToggleGroup
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toggleGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:button="@null"
-                android:checked="true"
-                android:padding="@dimen/dimen_5"
-                android:text="按年"
-                android:textColor="@color/selector_primary_to_99"
-                android:textSize="@dimen/sp_12" />
+                app:checkedButton="@id/btn1"
+                app:singleSelection="true">
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@null"
-                android:padding="@dimen/dimen_5"
-                android:text="按月"
-                android:textColor="@color/selector_primary_to_99"
-                android:textSize="@dimen/sp_12" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn1"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
 
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:button="@null"
-                android:padding="@dimen/dimen_5"
-                android:text="按日"
-                android:textColor="@color/selector_primary_to_99"
-                android:textSize="@dimen/sp_12" />
-        </RadioGroup>
+                    android:layout_width="54dp"
+                    android:layout_height="34dp"
+                    android:textSize="@dimen/sp_9"
+                    app:backgroundTint="@color/white"
+                    android:textColor="@color/selector_primary_to_99"
+                    app:cornerRadius="@dimen/dimen_10"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="@dimen/dimen_2"
+                    android:text="按年"
+                    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn2"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="54dp"
+                    android:layout_height="34dp"
+                    android:textSize="@dimen/sp_9"
+                    app:backgroundTint="@color/white"
+                    android:textColor="@color/selector_primary_to_99"
+                    app:cornerRadius="@dimen/dimen_10"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="@dimen/dimen_2"
+                    android:text="按月"
+                    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn3"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+
+                    android:layout_width="54dp"
+                    android:layout_height="34dp"
+                    android:textSize="@dimen/sp_9"
+                    app:backgroundTint="@color/white"
+                    android:textColor="@color/selector_primary_to_99"
+                    app:cornerRadius="@dimen/dimen_10"
+                    app:strokeColor="@color/colorPrimary"
+                    app:strokeWidth="@dimen/dimen_2"
+                    android:text="按日"
+                    android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
 
         <LinearLayout
             android:layout_width="0dp"

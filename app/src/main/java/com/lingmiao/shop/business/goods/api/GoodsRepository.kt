@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.api
 
+import android.telecom.Call
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -10,6 +11,7 @@ import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
+import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 
 /**
  * Author : Elson
@@ -509,5 +511,9 @@ object GoodsRepository {
 
     suspend fun addSpecAndValue(item: CateSpecAndValueVo): HiResponse<CateSpecAndValueVo> {
         return apiService.addSpecAndValue(item).awaitHiResponse();
+    }
+
+    suspend fun  goodsSales(startTime : Long, endTime : Long) : HiResponse<GoodsSalesRespBean> {
+        return apiService.goodsSales(startTime, endTime).awaitHiResponse();
     }
 }

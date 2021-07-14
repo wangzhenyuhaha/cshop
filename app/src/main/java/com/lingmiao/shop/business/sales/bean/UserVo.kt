@@ -23,6 +23,10 @@ class UserVo : Serializable {
     var realName: String? = ""
     @SerializedName("remarks")
     var remarks: String? = ""
+    @SerializedName("face")
+    var face: String? = ""
+    @SerializedName("full_address")
+    var fullAddress: String? = "";
     @SerializedName("source_name")
     var sourceName: String? = ""
     /**
