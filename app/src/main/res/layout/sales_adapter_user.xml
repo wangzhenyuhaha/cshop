@@ -94,7 +94,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:layout_toLeftOf="@+id/groupDeleteTv"
             android:orientation="vertical">
 
             <TextView

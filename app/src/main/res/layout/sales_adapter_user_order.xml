@@ -61,7 +61,7 @@
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_half"
-        android:layout_below="@+id/salesNameTv"
+        android:layout_below="@+id/userOrderTimeTv"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginBottom="@dimen/dimen_18"
         android:background="@color/color_E6E6E6"

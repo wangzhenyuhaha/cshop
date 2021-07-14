@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomRl"
-        android:layout_below="@+id/toolbarView"
         android:paddingHorizontal="@dimen/dimen_14">
 
         <com.google.android.material.appbar.AppBarLayout

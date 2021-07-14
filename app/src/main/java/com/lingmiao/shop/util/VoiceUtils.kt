@@ -15,8 +15,8 @@ object VoiceUtils {
 
     fun playVoice(context: Context?) {
         if (soundPool == null) {
-           // soundPool = SoundPool.Builder().setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_ALARM).build()).setMaxStreams(1).build();
-            soundPool = SoundPool(1, AudioManager.STREAM_ALARM, 0)
+            soundPool = SoundPool.Builder().setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_ALARM).build()).setMaxStreams(1).build();
+//            soundPool = SoundPool(1, AudioManager.STREAM_ALARM, 0)
             soundID = soundPool!!.load(context, R.raw.message_new_order, 1)
         }
         MainScope().launch {

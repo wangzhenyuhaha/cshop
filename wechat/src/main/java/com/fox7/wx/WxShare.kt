@@ -34,11 +34,11 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
     }
 
     fun checkApi() : Boolean {
-        return api != null && api.isWXAppInstalled;
+        return api.isWXAppInstalled;
     }
 
     fun checkApiAndContext() : Boolean {
-        return checkApi() && context != null;
+        return context != null && checkApi();
     }
 
     fun shareToFriend() {
