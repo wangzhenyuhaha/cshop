@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.api
 
+import StatsSalesVo
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -337,4 +338,8 @@ interface GoodsApiService {
     @WithHiResponse
     @GET("seller/statistics/goods/goodsSales")
     fun goodsSales(@Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<GoodsSalesRespBean>
+
+    @WithHiResponse
+    @GET("seller/statistics/reports/sales_count")
+    fun salesCount(@Query("cycle_type") type: String, @Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<StatsSalesVo>;
 }

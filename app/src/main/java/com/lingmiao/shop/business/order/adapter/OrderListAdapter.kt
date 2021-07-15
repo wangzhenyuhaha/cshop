@@ -10,6 +10,7 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.bean.OrderList
 import com.lingmiao.shop.business.order.view.GoodsItemRvLayout
 import com.lingmiao.shop.util.GlideUtils
@@ -110,6 +111,7 @@ class OrderListAdapter :
         val tvDelete = helper.getView<TextView>(R.id.tvDelete)
         val tvRefuseService = helper.getView<TextView>(R.id.tvRefuseService)
         val tvAcceptService = helper.getView<TextView>(R.id.tvAcceptService)
+        val tvPhoneUser = helper.getView<TextView>(R.id.tvPhoneUser)
 
         tvAccept.visibility = View.GONE
         tvRefuse.visibility = View.GONE
@@ -124,6 +126,7 @@ class OrderListAdapter :
         tvLookLogistics.visibility = View.GONE
         tvAfterSale.visibility = View.GONE
         tvDelete.visibility = View.GONE
+        tvPhoneUser.visibility = View.GONE
 
         helper.addOnClickListener(R.id.tvAccept)
         helper.addOnClickListener(R.id.tvRefuse)
@@ -138,6 +141,7 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvAcceptService)
         helper.addOnClickListener(R.id.tvRefuseService)
         helper.addOnClickListener(R.id.tvSign)
+        helper.addOnClickListener(R.id.tvPhoneUser)
 
 //        订单类型是否如下:
 //        全部ALL
@@ -164,12 +168,22 @@ class OrderListAdapter :
             "ACCEPT" -> {
                 showBottomArea = true;
                 // 已接单,进行中,待送配
+                if(item?.shippingType == IConstant.SHIP_TYPE_GLOBAL) {
+                    // 骑手配送
+                    tvShipment.setText("备货完成");
+                    tvPhoneUser.visibility = View.VISIBLE
+                }
                 tvShipment.visibility = View.VISIBLE
             }
             "SHIPPED" -> {
                 showBottomArea = true;
-                // 已发货,进行中,送配达
-                tvSign.visibility = View.VISIBLE
+                if(item?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
+                    // 已发货,进行中,送配达
+                    tvSign.visibility = View.VISIBLE
+                } else {
+                    // 骑手配送
+                    tvPhoneUser.visibility = View.VISIBLE
+                }
             }
             "ROG" -> {
                 // 已发货,已送达

@@ -19,9 +19,9 @@ class GoodsTopPreImpl(var context: Context, var view: GoodsTopPresenter.PubView)
 
     override fun loadListData(page: IPage, list: List<*>) {
         mCoroutine.launch {
-            if (list.isEmpty()) {
-                view.showPageLoading()
-            }
+//            if (list.isEmpty()) {
+//                view.showPageLoading()
+//            }
 
 //            val resp = GoodsRepository.loadGoodsListByName(page.getPageIndex(), goodsName ?:"", "");
 //            if (resp.isSuccess) {
@@ -36,9 +36,9 @@ class GoodsTopPreImpl(var context: Context, var view: GoodsTopPresenter.PubView)
 //                view.onLoadMoreFailed()
 //                view.hidePageLoading()
 //            }
-            val userList = getItems();
-            view.onLoadMoreSuccess(userList, userList.isNotEmpty())
-            view.hidePageLoading()
+//            val userList = getItems();
+//            view.onLoadMoreSuccess(userList, userList.isNotEmpty())
+//            view.hidePageLoading()
         }
     }
 

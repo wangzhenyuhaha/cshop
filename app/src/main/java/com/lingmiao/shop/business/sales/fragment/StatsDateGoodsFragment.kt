@@ -12,8 +12,10 @@ import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
+import com.lingmiao.shop.business.sales.bean.CategorySales
 import com.lingmiao.shop.business.sales.bean.GoodsSalesBean
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
+import com.lingmiao.shop.business.sales.bean.SalesGoodsTop10
 import com.lingmiao.shop.business.sales.presenter.IStateGoodsDataPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.StatsGoodsDataPreImpl
 import com.lingmiao.shop.util.DATE_FORMAT
@@ -61,21 +63,11 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
 
     override fun initViewsAndData(rootView: View) {
         initChartView();
-        initTabLayout();
+//        initTabLayout();
         initDate();
     }
 
     private var mTabTitles = arrayOf("销售TOP10", "滞销TOP10")
-
-    private fun initTabLayout() {
-        val fragments = mutableListOf<Fragment>()
-        fragments.add(GoodsTopFragment.new())
-        fragments.add(GoodsTopFragment.new())
-
-        val fragmentAdapter = GoodsHomePageAdapter(childFragmentManager, fragments, mTabTitles)
-        goodsTopVp.setAdapter(fragmentAdapter)
-        goodsTopLayout.setViewPager(goodsTopVp)
-    }
 
     fun getCheckType() : Int {
         if(btn1.isChecked) {
@@ -199,36 +191,10 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         aaChartView?.setBackgroundColor(0)
         aaChartView?.background?.alpha = 0
         aaChartView?.callBack = click
-        aaChartModel = configurePieChart()
-
-//        val aaOptions = configureTheChartOptions();
-        aaChartView?.aa_drawChartWithChartModel(aaChartModel)
-//        aaChartView.aa_drawChartWithChartOptions(aaOptions)
-
         orderChartView?.setBackgroundColor(0)
         orderChartView?.background?.alpha = 0
         orderChartView?.callBack = click
         orderChartView?.aa_drawChartWithChartModel(configureAAChartModel());
-    }
-
-    fun configurePieChart(): AAChartModel {
-        return AAChartModel()
-            .chartType(AAChartType.Pie)
-            .backgroundColor("#ffffff")
-            .title("品类占比")
-//            .subtitle("virtual data")
-            .dataLabelsEnabled(true)//是否直接显示扇形图数据
-            .yAxisTitle("℃")
-            .series(arrayOf(
-                AASeriesElement()
-                    .name("数量")
-                    .data(arrayOf(
-                        arrayOf("零食",   67),
-                        arrayOf("小吃", 999),
-                        arrayOf("鲜花", 83),
-                        arrayOf("外卖",     11),
-                        arrayOf("其他",     30)
-                    ))))
     }
 
     private fun configureColumnChartAndBarChartStyle() {
@@ -251,10 +217,6 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
             .xAxisVisible(true)
             .yAxisTitle("订单量")
             .yAxisGridLineWidth(0f)
-//            .scrollablePlotArea(
-//                AAScrollablePlotArea()
-//                    .minWidth(500)
-//                    .scrollPositionX(1f))
             .legendEnabled(true)
             .touchEventEnabled(true)
             .categories(arrayOf( "一月", "二月", "三月", "四月", "五月", "六月",
@@ -270,28 +232,6 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
             ))
 
         configureColumnChartAndBarChartStyle()
-
-//        val aaYAxisLabels = AALabels()
-//            .formatter("""
-//function () {
-//        var yValue = this.value;
-//        if (yValue >= 200) {
-//            return "极佳";
-//        } else if (yValue >= 150 && yValue < 200) {
-//            return "非常棒";
-//        } else if (yValue >= 100 && yValue < 150) {
-//            return "相当棒";
-//        } else if (yValue >= 50 && yValue < 100) {
-//            return "还不错";
-//        } else {
-//            return "一般";
-//        }
-//    }
-//                """.trimIndent()
-//            )
-//
-//        val aaOptions = aaChartModel.aa_toAAOptions()
-//        aaOptions.xAxis?.labels(aaYAxisLabels)
 
         return aaChartModel
     }
@@ -314,5 +254,47 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         val goodsSales = item?.goodsSales;
         orderCountTv.setText(String.format("共计%s单，合计", goodsSales?.sumOrderNum))
         goodsCountTv.setText(String.format("%s个", goodsSales?.sumGoodsNum));//300个
+
+        initTabLayout(item?.salesGoodsTop10, item?.unsalesGoodsTop10);
+
     }
+
+    private fun initTabLayout(sales : List<SalesGoodsTop10?>?, unSales : List<SalesGoodsTop10?>?) {
+
+        val fragments = mutableListOf<Fragment>()
+        fragments.add(GoodsTopFragment.newInstance(2, sales));
+        fragments.add(GoodsTopFragment.newInstance(1, unSales))
+
+        val fragmentAdapter = GoodsHomePageAdapter(childFragmentManager, fragments, mTabTitles)
+        goodsTopVp.setAdapter(fragmentAdapter)
+        goodsTopLayout.setViewPager(goodsTopVp)
+
+    }
+
+    fun setGoodsCategory(list : List<CategorySales?>?) {
+        aaChartModel = configurePieChart(list)
+        aaChartView?.aa_drawChartWithChartModel(aaChartModel);
+    }
+
+    fun configurePieChart(cateList : List<CategorySales?>?): AAChartModel {
+        var catoryList : Array<Any> = arrayOf();
+
+        cateList?.forEachIndexed { index, categorySales ->
+            catoryList[index] = arrayOf(categorySales?.categoryName, categorySales?.num);
+        }
+
+        var list : Array<AASeriesElement> = arrayOf(
+            AASeriesElement()
+                .name("数量")
+                .data(catoryList));
+        return AAChartModel()
+            .chartType(AAChartType.Pie)
+            .backgroundColor("#ffffff")
+            .title("品类占比")
+//            .subtitle("virtual data")
+            .dataLabelsEnabled(true)//是否直接显示扇形图数据
+            .yAxisTitle("℃")
+            .series(list)
+    }
+
 }

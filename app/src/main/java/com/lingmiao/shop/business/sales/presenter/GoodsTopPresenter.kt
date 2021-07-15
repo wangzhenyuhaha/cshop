@@ -5,6 +5,7 @@ import com.james.common.base.BaseView
 import com.james.common.base.loadmore.BaseLoadMoreView
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.sales.bean.GoodsItem
+import com.lingmiao.shop.business.sales.bean.SalesGoodsTop10
 
 /**
 Create Date : 2021/4/71:22 PM
@@ -15,7 +16,7 @@ interface GoodsTopPresenter : BasePresenter {
 
     fun loadListData(page: IPage, list: List<*>)
 
-    interface PubView : BaseView, BaseLoadMoreView<GoodsItem> {
+    interface PubView : BaseView, BaseLoadMoreView<SalesGoodsTop10> {
 
     }
 }

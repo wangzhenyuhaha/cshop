@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.api
 
+import StatsSalesVo
 import android.telecom.Call
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
@@ -515,5 +516,9 @@ object GoodsRepository {
 
     suspend fun  goodsSales(startTime : Long, endTime : Long) : HiResponse<GoodsSalesRespBean> {
         return apiService.goodsSales(startTime, endTime).awaitHiResponse();
+    }
+
+    suspend fun salesCount(type: String, startTime : Long, endTime : Long) : HiResponse<StatsSalesVo> {
+        return apiService.salesCount(type, startTime, endTime).awaitHiResponse();
     }
 }

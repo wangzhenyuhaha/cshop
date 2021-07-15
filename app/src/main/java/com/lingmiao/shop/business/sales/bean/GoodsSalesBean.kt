@@ -16,6 +16,9 @@ class GoodsSalesRespBean : Serializable {
     @SerializedName("salesGoodsTop10")
     var salesGoodsTop10 : List<SalesGoodsTop10?>? = null;
 
+    @SerializedName("unsalesGoodsTop10")
+    var unsalesGoodsTop10 : List<SalesGoodsTop10?>? = null;
+
     @SerializedName("categorySales")
     var categorySales : List<CategorySales?>? = null;
 

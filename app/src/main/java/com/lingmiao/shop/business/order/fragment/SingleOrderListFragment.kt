@@ -236,6 +236,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             setOnItemChildClickListener { adapter, view, position ->
                 val orderBean = adapter.data[position] as OrderList
                 when (view.id) {
+                    R.id.tvPhoneUser -> {
+                        OtherUtils.goToDialApp(activity, orderBean?.shipMobile);
+                    }
                     R.id.tvCancelOrder -> {
                         val intent = Intent(activity, OrderCancelActivity::class.java)
                         intent.putExtra("orderId", orderBean.sn)

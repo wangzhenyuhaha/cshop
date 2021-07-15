@@ -333,6 +333,21 @@
             app:ivBorderColor="#ff3870ea"
             />
 
+        <com.james.common.view.ITextView
+            android:id="@+id/tvPhoneUser"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:text="联系用户"
+            android:layout_marginLeft="10dp"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            app:ivBgColor="#ff3870ea"
+            app:ivRadius="15dp"
+            android:gravity="center"
+            app:ivBorderWidth="1px"
+            app:ivBorderColor="#ff3870ea"
+            />
+
 
         <com.james.common.view.ITextView
             android:id="@+id/tvSign"

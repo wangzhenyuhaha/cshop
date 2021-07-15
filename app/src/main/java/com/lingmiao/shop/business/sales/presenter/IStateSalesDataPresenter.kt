@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.sales.presenter
 
+import StatsSalesVo
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
 
@@ -10,7 +11,8 @@ Desc        :
  **/
 interface IStateSalesDataPresenter : BasePresenter {
 
+    fun getSalesCount(type : String, start: Long?, end: Long?);
     interface PubView : BaseView {
-
+        fun setSalesCount(item : StatsSalesVo?);
     }
 }
