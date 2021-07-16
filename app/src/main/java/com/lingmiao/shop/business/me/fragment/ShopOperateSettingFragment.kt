@@ -15,6 +15,7 @@ import com.james.common.utils.exts.isNetUrl
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
@@ -156,6 +157,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.loadTemplate();
         }
 
+        if(IConstant.official) {
+            cb_model_rider.gone();
+        }
     }
 
     //图片上传

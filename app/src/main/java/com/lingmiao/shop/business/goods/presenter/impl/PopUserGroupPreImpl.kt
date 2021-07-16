@@ -38,6 +38,7 @@ class PopUserGroupPreImpl(view: BaseView) : BasePreImpl(view) {
                 callback.invoke(groupVO, groupName)
             }
         }
+        goodsGroupPop?.setTitle("请选择商品分组", "(移动商品到所选分组)");
         goodsGroupPop?.setLv1Data(list)
         goodsGroupPop?.showPopupWindow()
     }

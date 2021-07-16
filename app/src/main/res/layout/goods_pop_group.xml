@@ -14,13 +14,22 @@
         android:paddingStart="@dimen/dimen_15">
 
         <TextView
+            android:id="@+id/groupNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_30"
+            android:gravity="center_vertical"
+            android:text="请选择商品分组"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/dimen_15" />
+        <TextView
+            android:id="@+id/groupHintTv"
             android:layout_width="0dp"
             android:layout_height="@dimen/dimen_30"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="请选择店铺内商品分组"
+            android:text=""
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/dimen_15" />
+            android:textSize="@dimen/sp_11" />
 
         <ImageView
             android:id="@+id/closeIv"

@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.lingmiao.shop.R
@@ -28,6 +29,9 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
     private var level1Rv: RecyclerView? = null
     private var level2Rv: RecyclerView? = null
 
+    private var groupNameTv : TextView? = null
+    private var groupHintTv : TextView? = null
+
     private lateinit var lv1Adapter: GroupAdapter
     private lateinit var lv2Adapter: GroupAdapter
 
@@ -45,6 +49,8 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
         contentView.findViewById<ImageView>(R.id.closeIv).setOnClickListener {
             dismiss()
         }
+        groupNameTv = contentView.findViewById(R.id.groupNameTv)
+        groupHintTv = contentView.findViewById(R.id.groupHintTv)
         lv1IndicatorIv = contentView.findViewById(R.id.level1IndicatorIv)
         lv2IndicatorIv = contentView.findViewById(R.id.level2IndicatorIv)
         lv1IndicatorIv?.visiable()
@@ -113,4 +119,10 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
     fun setLv1Data(lv1List: List<ShopGroupVO>) {
         lv1Adapter.replaceData(lv1List)
     }
+
+    fun setTitle(name: String?, hint: String?) {
+        groupNameTv?.setText(name?:"请选择")
+        groupHintTv?.setText(hint?:"");
+    }
+
 }
