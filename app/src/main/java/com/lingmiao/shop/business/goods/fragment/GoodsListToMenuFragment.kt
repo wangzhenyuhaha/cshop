@@ -23,13 +23,15 @@ import kotlinx.android.synthetic.main.goods_fragment_goods_to_menu.menuCateL2Tv
 /**
 Create Date : 2021/6/110:46 AM
 Auther      : Fox
-Desc        : 菜单-商品管理-订单列表
+Desc        : 常用菜单-商品管理-订单列表
  **/
 class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre>(), GoodsListToMenuPre.View {
 
     var mItem : ShopGroupVO? = null;
 
     var catPath : String ? = null;
+
+    var catId : String ? = null;
 
     companion object {
         const val KEY_ITEM = "KEY_ITEM"
@@ -45,7 +47,8 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
 
     override fun initBundles() {
         mItem = arguments?.getSerializable(KEY_ITEM) as ShopGroupVO?;
-        catPath = mItem?.shopCatId;
+        catId = mItem?.shopCatId;
+//        catPath = mItem?.catPath;
     }
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
@@ -105,7 +108,8 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
 
         if(mCateList?.size?:0 > 0) {
             val item = mCateList?.get(mCateList?.size!! - 1)
-            catPath = item?.categoryId;
+//            catId = item?.categoryId;
+            catPath = item?.categoryPath;
             mLoadMoreDelegate?.refresh()
         }
     }
@@ -115,7 +119,7 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
      */
     override fun executePageRequest(page: IPage) {
         setCheckedCount(0);
-        mPresenter?.loadListData(catPath, page, mAdapter.data)
+        mPresenter?.loadListData(catId, catPath, page, mAdapter.data)
     }
 
     override fun setGoodsCount(count : Int) {

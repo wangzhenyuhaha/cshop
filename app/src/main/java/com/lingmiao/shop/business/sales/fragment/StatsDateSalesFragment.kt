@@ -34,6 +34,10 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
     var mStart : Long? = null;
     var mEnd : Long? = null;
 
+    lateinit var endDate: Calendar;
+
+    lateinit var selectedDate: Calendar
+
     companion object {
 
         fun new(): StatsDateSalesFragment {
@@ -229,11 +233,11 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
 
     fun initDate() {
         // 系统当前时间
-        val selectedDate: Calendar = Calendar.getInstance()
+        selectedDate = Calendar.getInstance()
         val startDate: Calendar = Calendar.getInstance()
         startDate.set(selectedDate.get(Calendar.YEAR), 1, 1)
 
-        val endDate: Calendar = Calendar.getInstance()
+        endDate = Calendar.getInstance()
         endDate.set(
             startDate.get(Calendar.YEAR) + 5, startDate.get(Calendar.MONTH), startDate.get(
                 Calendar.DATE
@@ -245,10 +249,15 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
         mPresenter?.getSalesCount("YEAR",mStart, mEnd);
 
         toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            mStart = 0;
-            mEnd = 0;
-            dateStartTv.text = "";
-            dateEndTv.text = "";
+            resetData(getCheckTypeStr());
+//            when(checkedId) {
+//                R.id.btn1 -> {
+//                }
+//                R.id.btn2 -> {
+//                }
+//                R.id.btn3 -> {
+//                }
+//            }
         }
 
         dateStartTv.singleClick{
@@ -293,6 +302,26 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
             pvCustomTime2?.show();
         }
 
+        resetData(getCheckTypeStr());
+    }
+
+    fun resetData(type : String) {
+        dateStartTv.text = formatString(selectedDate.time, getCheckTimeFormat())
+
+        val s = dateTime2Date(dateStartTv.getViewText()+getCheckStartTimeStr())?.time?:0;
+        mStart = s/1000;
+
+        if(mStart?:0 > 0 && mEnd?:0 > 0) {
+            mPresenter?.getSalesCount(type, mStart, mEnd);
+        }
+
+        dateEndTv.setText(formatString(endDate.time, getCheckTimeFormat()))
+        val e = dateTime2Date(dateEndTv.getViewText()+getCheckEndTimeStr())?.time?:0;
+        mEnd = e/1000;
+
+        if(mStart?:0 > 0 && mEnd?:0 > 0) {
+            mPresenter?.getSalesCount(type, mStart, mEnd);
+        }
     }
 
     override fun setSalesCount(item : StatsSalesVo?) {

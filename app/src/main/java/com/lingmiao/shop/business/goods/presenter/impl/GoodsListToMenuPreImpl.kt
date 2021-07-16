@@ -18,15 +18,15 @@ class GoodsListToMenuPreImpl(val context: Context, val view : GoodsListToMenuPre
 
     private val mCatePopPreImpl : PopUserCatePreImpl by lazy { PopUserCatePreImpl(view) }
 
-    override fun showCategoryPop(cid : String?,target: View) {
+    override fun showCategoryPop(cid : String?, target: View) {
         mCatePopPreImpl.showGoodsGroupPop(context, cid) { its, name ->
             view.onUpdatedCategory(its, name)
         }
     }
 
-    override fun loadListData(path : String?, page: IPage, list: List<*>) {
+    override fun loadListData(id: String?, path : String?, page: IPage, list: List<*>) {
         mCoroutine.launch {
-            val resp = GoodsRepository.loadGoodsListOfCateId(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), GoodsVO.getEnableAuth(), path!!)
+            val resp = GoodsRepository.loadGoodsListOfCateId(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), GoodsVO.getEnableAuth(), id, path)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onLoadMoreSuccess(goodsList, goodsList?.size?:0 >= 10)

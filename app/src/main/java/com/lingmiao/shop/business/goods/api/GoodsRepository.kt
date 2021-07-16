@@ -108,7 +108,8 @@ object GoodsRepository {
         pageNo: Int,
         marketEnable: String,
         isAuth: String,
-        cid: String?
+        cid: String?,
+        cPath: String?
     ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
@@ -117,6 +118,9 @@ object GoodsRepository {
         map.put("is_auth_string", isAuth)
         if (cid != null) {
             map.put("not_in_cat_id", cid);
+        }
+        if(cPath != null) {
+            map.put("category_path", cPath);
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }

@@ -13,6 +13,7 @@ import com.lingmiao.shop.business.sales.adapter.GoodsTopAdapter
 import com.lingmiao.shop.business.sales.bean.SalesGoodsTop10
 import com.lingmiao.shop.business.sales.presenter.GoodsTopPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.GoodsTopPreImpl
+import com.lingmiao.shop.widget.EmptyView
 import java.io.Serializable
 
 /**
@@ -31,7 +32,9 @@ class GoodsTopFragment : BaseLoadMoreFragment<SalesGoodsTop10, GoodsTopPresenter
         fun newInstance(status: Int, list: List<SalesGoodsTop10?>?): GoodsTopFragment {
             return GoodsTopFragment().apply {
                 val intent = Intent();
-                intent.putExtra("_list", list as Serializable);
+                if(list != null) {
+                    intent.putExtra("_list", list as Serializable);
+                }
                 intent.putExtra(IConstant.BUNDLE_KEY_OF_VIEW_TYPE, status);
                 arguments = intent.extras;
             }
@@ -57,7 +60,9 @@ class GoodsTopFragment : BaseLoadMoreFragment<SalesGoodsTop10, GoodsTopPresenter
 
     override fun initAdapter(): BaseQuickAdapter<SalesGoodsTop10, BaseViewHolder> {
         return GoodsTopAdapter().apply {
-
+            emptyView = EmptyView(mContext).apply {
+                setBackgroundResource(R.color.color_ffffff)
+            }
         }
     }
 
@@ -69,6 +74,9 @@ class GoodsTopFragment : BaseLoadMoreFragment<SalesGoodsTop10, GoodsTopPresenter
         mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setEnableLoadMore(false)
 
+        if(list == null) {
+            list = listOf();
+        }
         mAdapter.replaceData(list!!);
     }
 

@@ -18,13 +18,15 @@ interface GoodsListOfMenuPre : BasePresenter {
 
     fun showGroupPop(isTop : Int);
 
-    fun clickMenuView(item: GoodsVO?, position: Int, target: android.view.View);
+    fun clickMenuView(isTop : Int, item: GoodsVO?, position: Int, target: android.view.View);
 
     interface View : BaseView, BaseLoadMoreView<GoodsVO> {
 
         fun onUpdateGroup(groupId : List<ShopGroupVO>?, groupName: String?);
 
         fun setGoodsCount(count : Int);
+
+        fun onUpdatedGoodsGroup();
     }
 
 }

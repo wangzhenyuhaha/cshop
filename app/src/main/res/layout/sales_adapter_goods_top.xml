@@ -24,6 +24,7 @@
         android:layout_weight="0.9"
         android:paddingTop="@dimen/dimen_15"
         android:paddingBottom="@dimen/dimen_15"
+        android:visibility="gone"
         android:text="3.00" />
 
     <TextView

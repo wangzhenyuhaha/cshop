@@ -14,10 +14,12 @@ import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GoodsListOfMenuPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsListOfMenuPreImpl
 import com.lingmiao.shop.widget.EmptyView
-import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.*
+import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.goodsCountTv
+import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.menuCateL1Tv
+import kotlinx.android.synthetic.main.goods_fragment_goods_of_menu.menuCateL2Tv
 
 /**
-Desc        : 菜单-商品管理-已添加列表
+Desc        : 置顶菜单-商品管理-已添加列表
  **/
 class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre>(),
     GoodsListOfMenuPre.View {
@@ -70,7 +72,7 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
             setOnItemChildClickListener { _, view, position ->
                 var item = mAdapter.getItem(position) as GoodsVO
                 if (view.id == R.id.menuIv) {
-                    mPresenter?.clickMenuView(item, position, view)
+                    mPresenter?.clickMenuView(mItem?.isTop!!, item, position, view)
                 }
             }
             setOnItemClickListener { _, _, position ->
@@ -91,6 +93,10 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
      */
     override fun executePageRequest(page: IPage) {
         mPresenter?.loadListData(catPath, page, mAdapter.data)
+    }
+
+    override fun onUpdatedGoodsGroup() {
+        mLoadMoreDelegate?.refresh()
     }
 
     override fun onUpdateGroup(groups: List<ShopGroupVO>?, groupName: String?) {

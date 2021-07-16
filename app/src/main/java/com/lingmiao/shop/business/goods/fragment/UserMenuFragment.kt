@@ -32,7 +32,7 @@ import org.greenrobot.eventbus.ThreadMode
 /**
 Create Date : 2021/3/101:00 AM
 Auther      : Fox
-Desc        :
+Desc        : 常用菜单列表
  **/
 class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), CateManagerPre.GroupManagerView {
 

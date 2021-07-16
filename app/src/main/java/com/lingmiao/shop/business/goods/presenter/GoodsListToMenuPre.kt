@@ -14,7 +14,7 @@ Desc        :
  **/
 interface GoodsListToMenuPre : BasePresenter {
 
-    fun loadListData(cid : String?, page: IPage, list: List<*>)
+    fun loadListData(cid : String?,cpath : String?, page: IPage, list: List<*>)
 
     fun bindGoods(ids : List<Int?>?, id : String);
 

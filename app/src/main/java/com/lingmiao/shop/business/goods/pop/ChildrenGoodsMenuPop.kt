@@ -21,7 +21,8 @@ class ChildrenGoodsMenuPop(context: Context, var flags: Int = TYPE_PRICE) :
     companion object {
         const val TYPE_PRICE = 0x001            //库存/价格
         const val TYPE_EDIT = 0x002;            //编辑
-        const val TYPE_DELETE = 0x004;          //删除
+        const val TYPE_EDIT_CATE = 0x004;            //编辑
+        const val TYPE_DELETE = 0x008;          //删除
     }
 
     init {
@@ -30,6 +31,7 @@ class ChildrenGoodsMenuPop(context: Context, var flags: Int = TYPE_PRICE) :
     }
 
     private var childrenPriceTv: TextView? = null
+    private var childrenCateTv: TextView? = null
     private var childrenDeleteTv : TextView? = null
     private var childrenEditTv : TextView? = null
 
@@ -47,11 +49,19 @@ class ChildrenGoodsMenuPop(context: Context, var flags: Int = TYPE_PRICE) :
         // 显示的位置
         setPopupGravity(Gravity.LEFT or Gravity.CENTER_VERTICAL)
 
-        // 编辑
+        // 库存
         childrenPriceTv = contentView.findViewById<TextView>(R.id.childrenPriceTv).apply {
             show(flags and TYPE_PRICE != 0)
             setOnClickListener {
                 listener?.invoke(TYPE_PRICE)
+                dismiss()
+            }
+        }
+        // 编辑
+        childrenCateTv = contentView.findViewById<TextView>(R.id.childrenCateTv).apply {
+            show(flags and TYPE_EDIT_CATE != 0)
+            setOnClickListener {
+                listener?.invoke(TYPE_EDIT_CATE)
                 dismiss()
             }
         }

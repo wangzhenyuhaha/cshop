@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.sales_activity_stats.*
 /**
 Create Date : 2021/5/312:22 PM
 Auther      : Fox
-Desc        :
+Desc        : 商品管理列表
  **/
 class GoodsOfMenuActivity : BaseActivity<GoodsOfMenuPre>(), GoodsOfMenuPre.View {
 

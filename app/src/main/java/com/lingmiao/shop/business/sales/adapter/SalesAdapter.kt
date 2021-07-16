@@ -43,7 +43,7 @@ class SalesAdapter() : BaseQuickAdapter<SalesVo, BaseViewHolder>(R.layout.sales_
                     helper.setGone(R.id.tvSalesEnd, false);
                     helper.setGone(R.id.tvSalesView, false);
                     helper.setGone(R.id.tvSalesDelete, true);
-                    helper.setGone(R.id.tvSalesEdit, true);
+                    helper.setGone(R.id.tvSalesEdit, false);
                 }
                 else -> {
                     helper.setGone(R.id.tvSalesView, false);

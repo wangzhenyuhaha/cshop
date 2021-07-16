@@ -13,7 +13,6 @@ import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.sales.bean.CategorySales
-import com.lingmiao.shop.business.sales.bean.GoodsSalesBean
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import com.lingmiao.shop.business.sales.bean.SalesGoodsTop10
 import com.lingmiao.shop.business.sales.presenter.IStateGoodsDataPresenter
@@ -36,6 +35,11 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     var pvCustomTime2: TimePickerView? = null;
     var mStart : Long? = null;
     var mEnd : Long? = null;
+
+    lateinit var endDate: Calendar;
+
+    lateinit var selectedDate: Calendar
+
     private var aaChartModel = AAChartModel()
 
     companion object {
@@ -111,14 +115,13 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         }
     }
 
-
     fun initDate() {
+        selectedDate = Calendar.getInstance();
         // 系统当前时间
-        val selectedDate: Calendar = Calendar.getInstance()
         val startDate: Calendar = Calendar.getInstance()
         startDate.set(selectedDate.get(Calendar.YEAR), 1, 1)
 
-        val endDate: Calendar = Calendar.getInstance()
+        endDate = Calendar.getInstance()
         endDate.set(
             startDate.get(Calendar.YEAR) + 5, startDate.get(Calendar.MONTH), startDate.get(
                 Calendar.DATE
@@ -130,22 +133,11 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         mPresenter?.getGoodsSales(mStart, mEnd);
 
         toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
-            mStart = 0;
-            mEnd = 0;
-            dateStartTv.text = "";
-            dateEndTv.text = "";
-            if(checkedId == R.id.btn1) {
-
-            } else if(checkedId == R.id.btn2) {
-
-            }else if(checkedId == R.id.btn3) {
-
-            }
+            resetData();
+            // R.id.btn1, R.id.btn2, R.id.btn3
         }
 
         dateStartTv.singleClick{
-
-
             pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, getCheckType(), { date, view ->
                 dateStartTv.text = formatString(date, getCheckTimeFormat())
 
@@ -184,7 +176,26 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
                 });
             pvCustomTime2?.show();
         }
+        resetData();
+    }
 
+    fun resetData() {
+        dateStartTv.text = formatString(selectedDate.time, getCheckTimeFormat())
+
+        val s = dateTime2Date(dateStartTv.getViewText()+getCheckStartTimeStr())?.time?:0;
+        mStart = s/1000;
+
+        if(mStart?:0 > 0 && mEnd?:0 > 0) {
+            mPresenter?.getGoodsSales(mStart, mEnd);
+        }
+
+        dateEndTv.setText(formatString(endDate.time, getCheckTimeFormat()))
+        val e = dateTime2Date(dateEndTv.getViewText()+getCheckEndTimeStr())?.time?:0;
+        mEnd = e/1000;
+
+        if(mStart?:0 > 0 && mEnd?:0 > 0) {
+            mPresenter?.getGoodsSales(mStart, mEnd);
+        }
     }
 
     fun initChartView() {
@@ -194,7 +205,7 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         orderChartView?.setBackgroundColor(0)
         orderChartView?.background?.alpha = 0
         orderChartView?.callBack = click
-        orderChartView?.aa_drawChartWithChartModel(configureAAChartModel());
+        //orderChartView?.aa_drawChartWithChartModel(configureAAChartModel());
     }
 
     private fun configureColumnChartAndBarChartStyle() {
@@ -253,10 +264,10 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     override fun setGoodsSales(item: GoodsSalesRespBean?) {
         val goodsSales = item?.goodsSales;
         orderCountTv.setText(String.format("共计%s单，合计", goodsSales?.sumOrderNum))
-        goodsCountTv.setText(String.format("%s个", goodsSales?.sumGoodsNum));//300个
+        goodsCountTv.setText(String.format("%s个", goodsSales?.sumGoodsNum));
+        perTicketSalesTv.setText(String.format("%s元", goodsSales?.perTicketSales))
 
         initTabLayout(item?.salesGoodsTop10, item?.unsalesGoodsTop10);
-
     }
 
     private fun initTabLayout(sales : List<SalesGoodsTop10?>?, unSales : List<SalesGoodsTop10?>?) {
@@ -269,6 +280,7 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
         goodsTopVp.setAdapter(fragmentAdapter)
         goodsTopLayout.setViewPager(goodsTopVp)
 
+        setGoodsCategory(listOf<CategorySales>());
     }
 
     fun setGoodsCategory(list : List<CategorySales?>?) {
@@ -277,20 +289,23 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     }
 
     fun configurePieChart(cateList : List<CategorySales?>?): AAChartModel {
-        var catoryList : Array<Any> = arrayOf();
+        var catoryList : MutableList<Any> = mutableListOf();
 
         cateList?.forEachIndexed { index, categorySales ->
-            catoryList[index] = arrayOf(categorySales?.categoryName, categorySales?.num);
+            catoryList.add(arrayOf(categorySales?.categoryName, categorySales?.num));
+        }
+        if(catoryList.isEmpty()) {
+            catoryList.add( arrayOf("暂无", 0))
         }
 
         var list : Array<AASeriesElement> = arrayOf(
             AASeriesElement()
                 .name("数量")
-                .data(catoryList));
+                .data(arrayOf(catoryList)));
         return AAChartModel()
             .chartType(AAChartType.Pie)
             .backgroundColor("#ffffff")
-            .title("品类占比")
+//            .title("品类占比")
 //            .subtitle("virtual data")
             .dataLabelsEnabled(true)//是否直接显示扇形图数据
             .yAxisTitle("℃")

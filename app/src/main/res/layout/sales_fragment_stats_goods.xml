@@ -2,7 +2,8 @@
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -101,7 +102,7 @@
                         android:layout_height="@dimen/dimen_17"
                         android:drawableRight="@mipmap/ic_date"
                         android:drawablePadding="@dimen/dimen_5"
-                        android:text="2020年"
+                        tools:text="2021年"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_11" />
 
@@ -127,7 +128,7 @@
                         android:layout_height="@dimen/dimen_17"
                         android:drawableRight="@mipmap/ic_date"
                         android:drawablePadding="@dimen/dimen_5"
-                        android:text="2022年"
+                        tools:text="2021年"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/sp_11" />
 
@@ -166,21 +167,53 @@
                     android:textColor="@color/color_999999"
                     android:textSize="@dimen/sp_14" />
 
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_10"
+                    android:text="客单价"
+                    android:gravity="right"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_14" />
+
             </LinearLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:theme="@style/Widget.MaterialComponents.TextView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:id="@+id/goodsCountTv"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dimen_15"
-                android:paddingRight="@dimen/dimen_15"
-                android:paddingBottom="@dimen/dimen_15"
-                android:text="300个"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold" />
+                android:orientation="horizontal">
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:theme="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:id="@+id/goodsCountTv"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    tools:text="300个"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:theme="@style/Widget.MaterialComponents.TextView"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:id="@+id/perTicketSalesTv"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    tools:text="300元"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <com.ogaclejapan.smarttablayout.SmartTabLayout
@@ -242,6 +275,7 @@
             android:padding="@dimen/dimen_15">
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="连带率分析" />
