@@ -329,7 +329,7 @@
                             android:textSize="9sp" />
                     </LinearLayout>
 
-                    <com.lingmiao.shop.business.goods.view.GalleryRecyclerView
+                    <com.lingmiao.shop.business.me.view.OtherGalleryRecyclerView
                         android:id="@+id/galleryRv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

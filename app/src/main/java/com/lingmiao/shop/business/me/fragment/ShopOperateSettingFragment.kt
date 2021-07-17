@@ -157,7 +157,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.loadTemplate();
         }
 
-        if(IConstant.official) {
+        if (IConstant.official) {
             cb_model_rider.gone();
         }
     }
@@ -238,6 +238,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     private fun initSection2View() {
         galleryRv.setCountLimit(1, 5)
+        galleryRv.setAspectRatio(750, 136)
         //  deleteIv.gone();
 //        imageView.singleClick {
 //            openGallery();
