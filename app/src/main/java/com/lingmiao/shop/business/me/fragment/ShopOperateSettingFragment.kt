@@ -87,7 +87,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun createPresenter(): ShopOperateSettingPresenter? {
-        return ShopOperateSettingPresenterImpl(context!!, this)
+        return ShopOperateSettingPresenterImpl(requireContext(), this)
     }
 
     override fun initViewsAndData(rootView: View) {

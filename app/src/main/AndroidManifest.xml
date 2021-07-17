@@ -51,6 +51,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".business.common.ui.PhotoListActivity"></activity>
         <activity
             android:name=".business.sales.SalesActivityGoodsWarning"
             android:screenOrientation="portrait" /> <!-- ======================= 登录 START ======================== -->

@@ -1,9 +1,14 @@
 package com.lingmiao.shop.business.photo
 
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Build
+import android.os.Bundle
+import android.util.Log
+import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.common.ui.PhotoListActivity
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -25,7 +30,12 @@ class PhotoHelper {
          * 获取图片，图片大小超过500K，则开启压缩
          */
         @JvmStatic
-        fun openAlbum(activity: Activity, maxCount: Int, cancel: (() -> Unit)?, success: ((List<LocalMedia>) -> Unit)?) {
+        fun openAlbum(
+            activity: Activity,
+            maxCount: Int,
+            cancel: (() -> Unit)?,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
             openAlbum(activity, maxCount, cancel, false, 500, success);
         }
 
@@ -33,12 +43,19 @@ class PhotoHelper {
          * 获取图片，图片大小超过500K，则开启压缩
          */
         @JvmStatic
-        fun openAlbum(activity: Activity, maxCount: Int, cancel: (() -> Unit)?, crop : Boolean?, size : Int, success: ((List<LocalMedia>) -> Unit)?) {
+        fun openAlbum(
+            activity: Activity,
+            maxCount: Int,
+            cancel: (() -> Unit)?,
+            crop: Boolean?,
+            size: Int,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
             PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofImage())
                 .maxSelectNum(maxCount)
                 .isCompress(true)
-                .isEnableCrop(crop?:false)
+                .isEnableCrop(crop ?: false)
                 .minimumCompressSize(size)
                 .imageEngine(GlideEngine.createGlideEngine())
                 .forResult(object : OnResultCallbackListener<LocalMedia> {
@@ -56,7 +73,11 @@ class PhotoHelper {
          * 拍照：图片大小超过500K，则开启压缩
          */
         @JvmStatic
-        fun openCamera(activity: Activity, cancel: (() -> Unit)?, success: ((List<LocalMedia>) -> Unit)?) {
+        fun openCamera(
+            activity: Activity,
+            cancel: (() -> Unit)?,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
             openCamera(activity, cancel, false, 500, success);
         }
 
@@ -64,10 +85,16 @@ class PhotoHelper {
          * 拍照：图片大小超过500K，则开启压缩
          */
         @JvmStatic
-        fun openCamera(activity: Activity, cancel: (() -> Unit)?, crop : Boolean? = false, size : Int, success: ((List<LocalMedia>) -> Unit)?) {
+        fun openCamera(
+            activity: Activity,
+            cancel: (() -> Unit)?,
+            crop: Boolean? = false,
+            size: Int,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
             PictureSelector.create(activity)
                 .openCamera(PictureMimeType.ofImage())
-                .isCompress(crop?:false)
+                .isCompress(crop ?: false)
                 .isEnableCrop(true)
                 .minimumCompressSize(size)
                 .imageEngine(GlideEngine.createGlideEngine())
@@ -86,10 +113,15 @@ class PhotoHelper {
          * 拍照：图片大小超过500K，则开启压缩
          */
         @JvmStatic
-        fun openCamera(activity: Activity, cancel: (() -> Unit)?, crop : Boolean? = false, success: ((List<LocalMedia>) -> Unit)?) {
+        fun openCamera(
+            activity: Activity,
+            cancel: (() -> Unit)?,
+            crop: Boolean? = false,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
             PictureSelector.create(activity)
                 .openCamera(PictureMimeType.ofImage())
-                .isCompress(crop?:false)
+                .isCompress(crop ?: false)
                 .isEnableCrop(true)
                 .minimumCompressSize(500)
                 .imageEngine(GlideEngine.createGlideEngine())
@@ -108,7 +140,12 @@ class PhotoHelper {
          * 选择视频
          */
         @JvmStatic
-        fun openVideo(activity: Activity, maxCount: Int = 1, cancel: (() -> Unit)?, success: ((List<LocalMedia>) -> Unit)?) {
+        fun openVideo(
+            activity: Activity,
+            maxCount: Int = 1,
+            cancel: (() -> Unit)?,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
             PictureSelector.create(activity)
                 .openGallery(PictureMimeType.ofVideo())
                 .maxSelectNum(maxCount)
@@ -132,14 +169,31 @@ class PhotoHelper {
             if (newList.isNullOrEmpty()) {
                 return
             }
-            PictureSelectionConfig.imageEngine = GlideEngine.createGlideEngine()
-            PictureSelectionConfig.getInstance().requestedOrientation =
-                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-            PictureSelector.create(activity)
-                .externalPicturePreview(position, newList, 0)
+
+
+            val context = ActivityUtils.getTopActivity()
+
+            val new: ArrayList<String> = ArrayList()
+            for (i in list!!) {
+                new.add(i.original!!)
+            }
+
+            val bundle = Bundle().apply {
+                putStringArrayList("list", new)
+                putInt("position", position)
+            }
+            val intent = Intent(context, PhotoListActivity::class.java)
+            intent.putExtra("Photo", bundle)
+            context.startActivity(intent)
+            //no
+//            PictureSelectionConfig.imageEngine = GlideEngine.createGlideEngine()
+//            PictureSelectionConfig.getInstance().requestedOrientation =
+//                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+//            PictureSelector.create(activity)
+//                .externalPicturePreview(position, newList, 0)
         }
 
-        fun previewImage(activity: Activity, imageUrl : String?) {
+        fun previewImage(activity: Activity, imageUrl: String?) {
             val newList = mutableListOf<LocalMedia>()
             var image = GoodsGalleryVO(imageUrl, imageUrl, "0");
             newList.add(image.convert2LocalMedia())
