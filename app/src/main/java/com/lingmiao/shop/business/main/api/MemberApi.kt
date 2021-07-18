@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.main.api
 
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.main.bean.MemberOrderBean
 import com.lingmiao.shop.business.me.bean.MemberVo
 import com.lingmiao.shop.business.sales.bean.UserVo
 import com.lingmiao.shop.business.wallet.bean.DataVO
@@ -27,4 +28,7 @@ interface MemberApi {
     @WithHiResponse
     fun getMemberListOfNew(@Query("page_no") pageIndex:Int, @Query("page_size") pageSize:Int): Call<PageVO<UserVo>>
 
+    @GET("seller/shops/members/member-buy-count")
+    @WithHiResponse
+    fun getBuyCountOfMember(@Query("member_id") memberId : String) : Call<MemberOrderBean>;
 }

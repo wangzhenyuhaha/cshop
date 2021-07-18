@@ -30,6 +30,7 @@ class OrderListAdapter :
         helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
 
 
+        helper.setText(R.id.tvFullAddress, item.getSimpleAddress())
         helper.setText(R.id.tvTableAware, item?.getTableAwareHint());
         helper.setGone(R.id.tableAwareLayout, item?.getTableAwareHint()?.isNotEmpty())
 
@@ -94,7 +95,7 @@ class OrderListAdapter :
         helper.setText(
             R.id.tvTotalMoney,
             MyApp.getInstance()
-                .getString(R.string.order_money_new, item.orderAmount.toString())
+                .getString(R.string.order_money, item.skuList?.size?:0, item.orderAmount.toString())
         )
 
 

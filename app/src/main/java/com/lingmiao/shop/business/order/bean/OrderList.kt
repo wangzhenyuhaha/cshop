@@ -163,6 +163,16 @@ data class OrderList(
         return isVirtualOrder == 1;
     }
 
+    fun getSimpleAddress() : String {
+        return shipTown.orEmpty() + shipAddr.orEmpty();
+    }
+
+    fun getFullAddress() : String {
+        return shipProvince.orEmpty() + shipCity.orEmpty() +
+                shipCounty.orEmpty() +
+                shipTown.orEmpty() + shipAddr.orEmpty();
+    }
+
 
     fun getTableAwareHint() : String {
         when(tablewareType) {

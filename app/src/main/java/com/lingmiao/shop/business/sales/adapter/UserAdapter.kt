@@ -26,14 +26,14 @@ class UserAdapter : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_adap
             //main_shop_logo_default
             helper.setGone(R.id.userCheckCb, isBatchEditModel);
 
-            helper.setText(R.id.userNameTv, item?.nickname);
-            helper.setText(R.id.userPhoneTv, item?.mobile);
+            helper.setText(R.id.userNameTv, item?.nickname ?: "");
+            helper.setText(R.id.userPhoneTv, item?.mobile ?: "");
 
-            helper.setText(R.id.userInTypeTv, item?.sourceName);
+            helper.setText(R.id.userInTypeTv, item?.sourceName ?: "");
 
             helper.setText(R.id.userOrderTv, String.format("%s", item?.orderNum));
 
-            helper.setText(R.id.userAddressTv, item?.fullAddress);
+            helper.setText(R.id.userAddressTv, item?.fullAddress ?: "");
 
             helper.setText(R.id.userInTimeTv, stampToDate(item?.createTime?:0, DATE_FORMAT));
             //helper.setText(R.id.userInTimeTv, TimeUtils.millis2String(item?.createTime?:0, "yyyy-MM-dd"));

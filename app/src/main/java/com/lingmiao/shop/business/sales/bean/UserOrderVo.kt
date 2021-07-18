@@ -6,4 +6,5 @@ Auther      : Fox
 Desc        :
  **/
 class UserOrderVo {
+
 }

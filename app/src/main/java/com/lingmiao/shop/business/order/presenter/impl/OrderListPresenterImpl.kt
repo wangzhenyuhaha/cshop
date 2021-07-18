@@ -4,7 +4,6 @@ import com.blankj.utilcode.util.LogUtils
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.api.OrderRepository
 import com.lingmiao.shop.business.order.bean.OrderList
-import com.lingmiao.shop.business.order.bean.OrderTabNumberEvent
 import com.lingmiao.shop.business.order.presenter.OrderListPresenter
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.BasePreImpl
@@ -12,7 +11,6 @@ import com.james.common.base.loadmore.core.IPage
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.order.bean.OrderServiceVo
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
 
 class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreImpl(view),
     OrderListPresenter {
@@ -24,29 +22,14 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
         datas: MutableList<OrderList>
     ) {
         mCoroutine.launch {
-
-//            if (datas.isEmpty()) {
-//                view.showPageLoading()
-//            }
-
             val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),IConstant.PAGE_SIZE.toString(),
                 status, start, end).awaitHiResponse()
             if (resp.isSuccess) {
                 val orderList = resp.data.data
-                LogUtils.d("orderList:"+orderList?.size)
-//                if(page.isRefreshing()){
-//                    LogUtils.d("page.isRefreshing()")
-//                   // EventBus.getDefault().post(OrderTabNumberEvent(status,resp.data.dataTotal))
-//                }
-                view.onLoadMoreSuccess(orderList, orderList.isNotEmpty())
-//                if(page.isRefreshing()&&orderList.isNullOrEmpty()){
-////                    view.showNoData()
-//                    LogUtils.d("showNoData")
-//                }
+                view.onLoadMoreSuccess(orderList, orderList?.isNotEmpty()?:false)
             } else {
                 view.onLoadMoreFailed()
             }
-            //view.hidePageLoading()
         }
     }
 

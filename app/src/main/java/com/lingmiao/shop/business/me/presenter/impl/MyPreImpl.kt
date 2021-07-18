@@ -7,6 +7,7 @@ import com.fox7.wx.WxShare
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.me.api.MeRepository
@@ -51,8 +52,7 @@ class MyPreImpl(val context: Context, private var view: MyPresenter.View) : Base
 		share.mTitle = item.title;
 		share.mDescription = item.content;
 		share.shareToFriend();
-		share.miniTypeToRelease();
-		share.miniTypeToRelease();
+		share.miniType(IConstant.official);
 
 		var imageByes : ByteArray? = null;
 		if(item.imageUrl == null || item.imageUrl.length == 0) {

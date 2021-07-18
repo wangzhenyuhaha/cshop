@@ -22,6 +22,12 @@ interface OrderApi {
         @Query("channel") channel: String = "app"
     ): Call<PageVO<OrderList>>
 
+    @GET("seller/trade/orders")
+    @WithHiResponse
+    fun memberOrderList(
+        @Query("page_no") pageNo: Int, @Query("page_size") pageSize: Int,@Query("member_id") memberId: String = ""
+    ): Call<PageVO<OrderList>>
+
 
     @GET("seller/trade/orders")
     @WithHiResponse

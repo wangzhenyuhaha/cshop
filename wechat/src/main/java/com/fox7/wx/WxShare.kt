@@ -304,6 +304,14 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         mMiniProgramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
     }
 
+    fun miniType(isTest : Boolean) {
+        if(isTest) {
+            miniTypeToPreview();
+        } else {
+            miniTypeToRelease();
+        }
+    }
+
     fun openMini(miniId : String, path : String) {
         val req = WXLaunchMiniProgram.Req()
         // 填小程序原始id

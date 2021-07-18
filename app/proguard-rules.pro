@@ -344,3 +344,5 @@ public void *(android.view.View);
  -keep class com.tencent.mm.sdk.** {
      *;
  }
+
+ -keep class com.github.aachartmodel.aainfographics.** { *; }

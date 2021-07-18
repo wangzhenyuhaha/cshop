@@ -283,8 +283,8 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     }
 
     fun setGoodsCategory(list : List<CategorySales?>?) {
-//        aaChartModel = configurePieChart(list)
-//        aaChartView?.aa_drawChartWithChartModel(aaChartModel);
+        aaChartModel = configurePieChart(list)
+        aaChartView?.aa_drawChartWithChartModel(aaChartModel);
     }
 
     fun configurePieChart(cateList : List<CategorySales?>?): AAChartModel {

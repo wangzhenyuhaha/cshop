@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/userOrderNoTv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_29"
         android:layout_marginStart="@dimen/dimen_10"
         android:ellipsize="end"
@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/userOrderTimeTv"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_29"
         android:layout_marginStart="@dimen/dimen_10"
         android:ellipsize="end"
@@ -67,12 +67,12 @@
         android:background="@color/color_E6E6E6"
         app:layout_constraintTop_toBottomOf="@id/userOrderTimeTv" />
 
-    <com.lingmiao.shop.business.sales.view.OrderItemRvLayout
+
+    <com.lingmiao.shop.business.order.view.GoodsItemRvLayout
         android:id="@+id/userOrderItemC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider"
-        android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider"/>

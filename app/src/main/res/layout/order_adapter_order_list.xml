@@ -250,6 +250,33 @@
             android:textColor="#ffa5a5a5"
             android:textSize="12sp" />
     </RelativeLayout>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="80dp"
+            android:text="@string/order_address_hint"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            android:paddingLeft="@dimen/dimen_15"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            android:id="@+id/tvFullAddress"
+            android:layout_width="0dp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            tools:text="fsafdsa"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen_15"
+            android:layout_height="wrap_content"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:id="@+id/tvTotalMoney"

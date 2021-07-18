@@ -81,10 +81,7 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
         orderRemarkTv.text = mItem?.remark;
         orderDeliveryTimeTv.text = stampToDate(mItem?.shipTime);
 
-        val address = mItem?.shipProvince.orEmpty() + mItem?.shipCity.orEmpty() +
-                mItem?.shipCounty.orEmpty() +
-                mItem?.shipTown.orEmpty() + mItem?.shipAddr.orEmpty()
-        orderAddressTv.text = address
+        orderAddressTv.text = mItem?.getFullAddress()
 
         tvTableAware.text = mItem?.getTableAwareHint();
         tableAwareLayout.visibility = if(tvTableAware.text?.isNotEmpty() == true) View.VISIBLE else View.GONE;

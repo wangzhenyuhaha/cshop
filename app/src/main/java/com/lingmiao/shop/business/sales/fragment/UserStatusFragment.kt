@@ -75,7 +75,8 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
                     }
                     R.id.userOrderDetailTv -> {
                         // 查看订单
-                        ActivityUtils.startActivity(UserOrderDetailActivity::class.java)
+                        UserOrderDetailActivity.open(context!!, item, 100);
+                        //ActivityUtils.startActivity(UserOrderDetailActivity::class.java)
                     }
                     R.id.userPortraitTv -> {
                         // 用户画像

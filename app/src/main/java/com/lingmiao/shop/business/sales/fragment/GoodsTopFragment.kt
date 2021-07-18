@@ -74,9 +74,7 @@ class GoodsTopFragment : BaseLoadMoreFragment<SalesGoodsTop10, GoodsTopPresenter
         mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setEnableLoadMore(false)
 
-        if(list == null) {
-            list = listOf();
-        }
+        list = list ?: listOf()
         mAdapter.replaceData(list!!);
     }
 

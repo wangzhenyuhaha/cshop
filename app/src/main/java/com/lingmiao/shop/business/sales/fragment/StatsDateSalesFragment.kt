@@ -35,6 +35,7 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
     var mEnd : Long? = null;
 
     lateinit var endDate: Calendar;
+    lateinit var startDate: Calendar;
 
     lateinit var selectedDate: Calendar
 
@@ -82,7 +83,7 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
     private fun configureAAChartModel(): AAChartModel {
         val aaChartModel = AAChartModel()
             .chartType(AAChartType.Column)
-            .title("2020年")
+//            .title("2020年")
             .subtitle("")
             .subtitleAlign(AAChartAlignType.Right)
             .markerSymbolStyle(AAChartSymbolStyleType.BorderBlank)
@@ -115,9 +116,23 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
     }
 
     private fun configureYearChartModel(): AAChartModel {
-        var categoryList = arrayOf( "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月");
+        var categoryList = arrayOf<String>();//arrayOf( "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月");
         var dataList : Array<Any> = arrayOf(17.0, 26.9, 39.5, 144.5, 118.2, 121.5, 75.2, 86.5, 93.3, 48.3, 113.9, 29.6);
         var salesList : Array<Any> = arrayOf(0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5);
+
+
+        if(btn1.isChecked) {
+            val firstYear  = selectedDate.get(Calendar.YEAR);
+            val secondYear  = selectedDate.get(Calendar.YEAR);
+            var i = 0;
+            for (index in firstYear until secondYear){
+                categoryList[i++] = ""+firstYear;
+            }
+        } else if(btn2.isChecked) {
+            categoryList = arrayOf( "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月");
+        } else {
+
+        }
 
         val aaChartModel = AAChartModel()
             .chartType(AAChartType.Column)
@@ -234,7 +249,7 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
     fun initDate() {
         // 系统当前时间
         selectedDate = Calendar.getInstance()
-        val startDate: Calendar = Calendar.getInstance()
+        startDate = Calendar.getInstance()
         startDate.set(selectedDate.get(Calendar.YEAR), 1, 1)
 
         endDate = Calendar.getInstance()
@@ -250,14 +265,6 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
 
         toggleGroup.addOnButtonCheckedListener { group, checkedId, isChecked ->
             resetData(getCheckTypeStr());
-//            when(checkedId) {
-//                R.id.btn1 -> {
-//                }
-//                R.id.btn2 -> {
-//                }
-//                R.id.btn3 -> {
-//                }
-//            }
         }
 
         dateStartTv.singleClick{
@@ -271,9 +278,7 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
 
                 if(mStart?:0 > 0 && mEnd?:0 > 0) {
                     mPresenter?.getSalesCount(getCheckTypeStr(), mStart, mEnd);
-                    //mLoadMoreDelegate?.refresh()
                 }
-                //firstMenuTv.setText(formatDateTime(date))
             }, {
                 pvCustomTime?.returnData()
                 pvCustomTime?.dismiss()

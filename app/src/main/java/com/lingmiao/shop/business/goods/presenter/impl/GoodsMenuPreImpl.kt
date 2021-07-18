@@ -14,6 +14,7 @@ import com.james.common.base.BaseView
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.check
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
@@ -57,8 +58,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
         share.mTitle = item.title;
         share.mDescription = item.content;
         share.shareToFriend();
-        share.miniTypeToRelease();
-        share.miniTypeToRelease();
+        share.miniType(IConstant.official);
 
         var imageByes : ByteArray? = null;
         if(item.imageUrl == null || item.imageUrl.length == 0) {
@@ -92,6 +92,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
         share.mTitle = item.title;
         share.mDescription = item.content;
         share.shareToFriend();
+        share.miniType(IConstant.official);
 
         share.shareWeb(item?.imageUrl ?:"http://www.c-dian.cn/", R.mipmap.ic_launcher, 50);
     }

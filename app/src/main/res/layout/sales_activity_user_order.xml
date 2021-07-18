@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingVertical="@dimen/dimen_5"
-                android:text="231次"
+                android:text="0次"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingVertical="@dimen/dimen_5"
-                android:text="¥231元"
+                android:text="¥0元"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingVertical="@dimen/dimen_5"
-                android:text="231次"
+                android:text="0次"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingVertical="@dimen/dimen_5"
-                android:text="¥231元"
+                android:text="¥0元"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 

@@ -167,7 +167,7 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:paddingVertical="@dimen/dimen_5"
-                android:text="订单"
+                android:text="订单数"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/sp_12"
                 app:layout_constraintLeft_toLeftOf="parent"
