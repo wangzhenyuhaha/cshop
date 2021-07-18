@@ -3,12 +3,14 @@ package com.lingmiao.shop.business.main
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
+import android.view.KeyEvent
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -150,6 +152,21 @@ class MainActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+    }
+
+    //双击退出应用
+    private var mExitTime: Long = 0
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(System.currentTimeMillis() - mExitTime > 2000) {
+                ToastUtils.showLong("再按一次返回桌面")
+                mExitTime = System.currentTimeMillis()
+            } else {
+                AppUtils.exitApp();
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 }

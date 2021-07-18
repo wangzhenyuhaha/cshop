@@ -26,7 +26,7 @@ object IConstant {
     const val  SHIP_TYPE_LOCAL = "LOCAL"    //同城
     const val  SHIP_TYPE_SELF = "SELF"      //自提
 
-    var official = false;
+    var official = true;
 
     const val PRO_URL = "https://api.base.c-dian.cn";
     const val TEST_URL = "http://47.117.112.134";

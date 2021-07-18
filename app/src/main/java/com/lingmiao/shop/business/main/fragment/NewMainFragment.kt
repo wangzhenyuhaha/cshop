@@ -96,9 +96,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             mPresenter?.requestMainInfoData()
         }
         LogUtils.d("fromMain:" + fromMain)
-        val loginInfo = UserManager.getLoginInfo()
         ivMainMessage.setOnClickListener {
-            ActivityUtils.startActivity(MessageCenterActivity::class.java)
+            if(UserManager.isLogin()) {
+                ActivityUtils.startActivity(MessageCenterActivity::class.java)
+            }
         }
 
         tvMainShopNext.setOnClickListener {
