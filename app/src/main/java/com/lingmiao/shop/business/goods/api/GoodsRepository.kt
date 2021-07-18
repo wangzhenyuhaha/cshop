@@ -42,10 +42,13 @@ object GoodsRepository {
     /**
      * 所有
      */
-    suspend fun loadAllGoodsList(pageNo: Int): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadAllGoodsList(pageNo: Int, groupPath : String?, catePath: String?, isEvent : Int?): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
+        groupPath?.let { it1 -> map.put("shop_cat_path", it1) };
+        catePath?.let { it1 -> map.put("category_path", it1) };
+        isEvent?.let { it1 -> map.put("is_event", it1) };
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -63,11 +66,14 @@ object GoodsRepository {
     /**
      * 售馨商品列表
      */
-    suspend fun loadSellOutGoodsList(pageNo: Int): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadSellOutGoodsList(pageNo: Int, groupPath : String?, catePath: String?, isEvent : Int?): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("enable_quantity", 0);
+        groupPath?.let { it1 -> map.put("shop_cat_path", it1) };
+        catePath?.let { it1 -> map.put("category_path", it1) };
+        isEvent?.let { it1 -> map.put("is_event", it1) };
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -77,13 +83,17 @@ object GoodsRepository {
     suspend fun loadGoodsList(
         pageNo: Int,
         marketEnable: String,
-        isAuth: String
+        isAuth: String,
+        groupPath : String?, catePath: String?, isEvent : Int?
     ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("market_enable", marketEnable)
         map.put("is_auth_string", isAuth)
+        groupPath?.let { it1 -> map.put("shop_cat_path", it1) };
+        catePath?.let { it1 -> map.put("category_path", it1) };
+        isEvent?.let { it1 -> map.put("is_event", it1) };
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 

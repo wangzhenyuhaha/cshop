@@ -19,7 +19,16 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
 
     private var lv1Cache: MutableList<ShopGroupVO> = mutableListOf()
 
-    fun showGoodsGroupPop(context: Context, callback: (String?, String?) -> Unit) {
+    fun showTopGoodsGroupPop(context: Context, callback: (ShopGroupVO?, String?) -> Unit) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.loadLv1ShopGroup(1)
+            if (resp.isSuccess) {
+                showPopWindow(context, resp.data, callback)
+            }
+        }
+    }
+
+    fun showGoodsGroupPop(context: Context, callback: (ShopGroupVO?, String?) -> Unit) {
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv1ShopGroup()
             if (resp.isSuccess) {
@@ -31,13 +40,13 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
     private fun showPopWindow(
         context: Context,
         list: List<ShopGroupVO>,
-        callback: (String?, String?) -> Unit
+        callback: (ShopGroupVO?, String?) -> Unit
     ) {
         goodsGroupPop = GoodsGroupPop(context).apply {
             lv1Callback = { groupVO, groupName ->
                 if(groupVO != null && groupVO?.size > 0) {
                     val it  = groupVO?.get(groupVO?.size -1)
-                    callback.invoke(it?.shopCatId, groupName)
+                    callback.invoke(it, groupName)
                 }
             }
         }

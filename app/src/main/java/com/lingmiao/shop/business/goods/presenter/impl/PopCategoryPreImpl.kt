@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
-import android.view.View
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.pop.GoodsCategoryPop
@@ -38,7 +37,7 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
         return String.format("%s", shopId);
     }
 
-    fun showCategoryPop(context: Context, id : Int, callback: (String?, String?) -> Unit) {
+    fun showCategoryPop(context: Context, id : Int, callback: (CategoryVO?, String?) -> Unit) {
         mCoroutine.launch {
             // 一级类目 categoryId=0
             val resp = GoodsRepository.loadUserCategory("0", getSellerId());
@@ -60,7 +59,7 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
         }
     }
 
-    fun showCategoryPop(context: Context, callback: (String?, String?) -> Unit) {
+    fun showCategoryPop(context: Context, callback: (CategoryVO?, String?) -> Unit) {
         showCategoryPop(context, 0, callback)
     }
 
@@ -85,7 +84,7 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
     private fun showPopWindow(
         context: Context,
         list: List<CategoryVO>,
-        callback: (String?, String?) -> Unit
+        callback: (CategoryVO?, String?) -> Unit
     ) {
         if(list == null || list?.size == 0) {
             view?.showToast("没有查找到相关分类")
@@ -95,7 +94,7 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
             lv1Callback = { items, names ->
                 if(items != null && items?.size > 0) {
                     val it  = items?.get(items?.size -1)
-                    callback.invoke(it?.categoryId, names)
+                    callback.invoke(it, names)
                 }
             }
         }

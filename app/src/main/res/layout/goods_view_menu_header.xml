@@ -8,8 +8,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dimen_30"
-        android:paddingTop="@dimen/dimen_30"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingTop="@dimen/dimen_15"
         android:paddingBottom="@dimen/dimen_15"
         android:text="菜单管理"
         android:textColor="@color/color_666666"
@@ -21,23 +21,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.james.common.view.ITextView
+        <TextView
             android:id="@+id/topMenuTv"
-            android:layout_width="80dp"
+            android:lines="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_15"
             android:layout_marginRight="@dimen/dimen_10"
-            android:drawableRight="@mipmap/common_arrow_right"
             android:drawablePadding="@dimen/dimen_5"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_4"
-            android:text="置顶菜单"
-            android:textColor="@color/color_666666"
+            android:paddingVertical="@dimen/dimen_5"
+            android:text="点击选择置顶菜单"
             android:textSize="@dimen/sp_11"
-            app:ivBgColor="@color/color_E6E6E6"
-            app:ivBorderColor="@color/color_666666"
-            app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5" />
+            android:background="@drawable/selector_primary_border_bg"
+            android:textColor="@color/selector_primary_to_99" />
 
         <TextView
             android:id="@+id/topGroupStatusResetTv"
@@ -47,7 +44,8 @@
             android:layout_weight="1"
             android:padding="@dimen/dimen_5"
             android:text="重置"
-            android:textSize="@dimen/sp_11" />
+            android:textSize="@dimen/sp_11"
+            android:visibility="gone"/>
 
     </LinearLayout>
 
@@ -58,23 +56,20 @@
         android:orientation="horizontal"
         android:paddingTop="@dimen/dimen_15">
 
-        <com.james.common.view.ITextView
+        <TextView
             android:id="@+id/usedMenuTv"
-            android:layout_width="80dp"
+            android:lines="1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_15"
             android:layout_marginRight="@dimen/dimen_10"
-            android:drawableRight="@mipmap/common_arrow_right"
             android:drawablePadding="@dimen/dimen_5"
             android:paddingHorizontal="@dimen/dimen_10"
             android:paddingVertical="@dimen/dimen_5"
-            android:text="常用菜单"
-            android:textColor="@color/color_666666"
+            android:text="点击选择常用菜单"
             android:textSize="@dimen/sp_11"
-            app:ivBgColor="@color/color_E6E6E6"
-            app:ivBorderColor="@color/color_666666"
-            app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5" />
+            android:background="@drawable/selector_primary_border_bg"
+            android:textColor="@color/selector_primary_to_99" />
 
         <TextView
             android:id="@+id/usedGroupStatusResetTv"
@@ -84,6 +79,7 @@
             android:layout_weight="1"
             android:padding="@dimen/dimen_5"
             android:text="重置"
+            android:visibility="gone"
             android:textSize="@dimen/sp_11" />
 
     </LinearLayout>
@@ -96,7 +92,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dimen_30"
+        android:paddingLeft="@dimen/dimen_15"
         android:text="商品信息"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/sp_14" />
@@ -107,7 +103,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen_30"
+        android:paddingLeft="@dimen/dimen_15"
         android:paddingTop="@dimen/dimen_15">
 
         <RadioButton
@@ -142,6 +138,7 @@
             android:layout_marginLeft="@dimen/dimen_15"
             android:layout_weight="1"
             android:padding="@dimen/dimen_10"
+            android:visibility="gone"
             android:text="重置" />
 
     </RadioGroup>
@@ -153,8 +150,8 @@
         android:layout_height="30dp"
         android:text="确定"
         android:layout_marginTop="@dimen/dimen_15"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginRight="@dimen/dimen_15"
         android:textColor="#fff"
         android:textSize="12sp"
         app:ivBgColor="#ff3870ea"
@@ -168,10 +165,10 @@
         android:id="@+id/tvGoodsFilterReset"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:text="全部重置"
+        android:text="重置"
         android:layout_marginTop="@dimen/dimen_15"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginRight="@dimen/dimen_15"
         android:textColor="#ff3870ea"
         android:textSize="12sp"
         app:ivBgColor="@color/gray_bg_click"

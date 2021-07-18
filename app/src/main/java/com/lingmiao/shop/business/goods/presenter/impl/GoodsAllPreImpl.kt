@@ -32,13 +32,13 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    override fun loadListData(page: IPage, datas: List<*>) {
+    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
             val resp =
-                GoodsRepository.loadAllGoodsList(page.getPageIndex())
+                GoodsRepository.loadAllGoodsList(page.getPageIndex(), groupPath, catePath, isEvent)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onSetTotalCount(resp.data.dataTotal);

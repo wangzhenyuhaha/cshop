@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -23,6 +24,7 @@ import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.lingmiao.shop.business.goods.presenter.impl.*
 import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.widget.EmptyView
+import kotlinx.android.synthetic.main.goods_activity_spec_setting.view.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.navigateView
 import org.greenrobot.eventbus.EventBus
@@ -50,6 +52,9 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     private var goodsStatus: Int? = null
+    private var groupPath: String? = ""
+    private var catePath: String? = ""
+    private var isSales: Int? = 0
 
     override fun initBundles() {
         //获取当前加载种类
@@ -80,31 +85,63 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
         val rgSalesEnable : RadioGroup = headview.findViewById(R.id.rgSalesEnable);
         // 置顶
-        headview.findViewById<TextView>(R.id.topMenuTv).singleClick {
+        val topMenuTv  = headview.findViewById<TextView>(R.id.topMenuTv);
+        // 重置置顶
+        val topGroupStatusResetTv = headview.findViewById<TextView>(R.id.topGroupStatusResetTv);
+        // 常用
+        val usedMenuTv = headview.findViewById<TextView>(R.id.usedMenuTv);
+        // 重置常用
+        val usedGroupStatusResetTv = headview.findViewById<TextView>(R.id.usedGroupStatusResetTv);
 
+        // 置顶
+        topMenuTv.singleClick {
+            mPresenter?.clickGroup { group, groupName ->
+                groupPath = group?.catPath;
+                topMenuTv.isSelected = true;
+                topMenuTv.setText(groupName);
+            }
         }
 
         // 置顶清除
-        headview.findViewById<TextView>(R.id.topGroupStatusResetTv).singleClick {
-
-        }
+        topGroupStatusResetTv.singleClick {}
 
         // 常用
-        headview.findViewById<TextView>(R.id.usedMenuTv).singleClick {
-
+        usedMenuTv.singleClick {
+            mPresenter?.clickCategory { cate, cateName ->
+                catePath = cate?.categoryPath
+                usedMenuTv.isSelected = true;
+                usedMenuTv.setText(cateName);
+            }
         }
         // 常用清除
-        headview.findViewById<TextView>(R.id.usedGroupStatusResetTv).singleClick {
-            rgSalesEnable.clearCheck();
+        usedGroupStatusResetTv.singleClick {}
+        // 商品销售
+        rgSalesEnable.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.normalGoodsIv) {
+                isSales = 0;
+            }
+            else if(checkedId == R.id.goodsDiscountIv) {
+                isSales = 1;
+            }
         }
+
         // 确定
         headview.findViewById<ITextView>(R.id.tvGoodsFilterFinish).singleClick {
             drawerC.closeDrawers();
+            mLoadMoreDelegate?.refresh()
         }
         // 全部清除
         headview.findViewById<ITextView>(R.id.tvGoodsFilterReset).singleClick {
+            topMenuTv.setText("点击选择置顶菜单");
+            usedMenuTv.setText("点击选择常用菜单");
             rgSalesEnable.clearCheck();
-            drawerC.closeDrawers();
+            isSales = null;
+            groupPath = "";
+            catePath = "";
+            usedMenuTv.isSelected = false;
+            topMenuTv.isSelected = false;
+//            drawerC.closeDrawers();
+//            mLoadMoreDelegate?.refresh()
         }
         cb_goods_list_check_all.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
@@ -231,7 +268,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, mAdapter.data)
+        mPresenter?.loadListData(page, groupPath, catePath, isSales, mAdapter.data)
     }
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {

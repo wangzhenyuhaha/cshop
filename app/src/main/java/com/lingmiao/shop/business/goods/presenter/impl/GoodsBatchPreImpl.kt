@@ -3,22 +3,24 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import com.amap.api.mapcore.util.gr
 import com.amap.api.mapcore.util.it
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
-import com.lingmiao.shop.business.goods.api.bean.RebateResponseVo
-import com.lingmiao.shop.business.goods.api.bean.RebateVo
 import com.lingmiao.shop.business.goods.pop.GoodsRebatePop
 import com.lingmiao.shop.business.goods.presenter.GoodsBatchPre
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.me.bean.ShareVo
 import kotlinx.coroutines.launch
 
 open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatchPre.View) : BasePreImpl(view),GoodsBatchPre {
 
+    private val mCategoryPreImpl: PopCategoryPreImpl by lazy { PopCategoryPreImpl(view) }
+    private val mGroupPreImpl: PopGroupPreImpl by lazy { PopGroupPreImpl(view) }
 
     override fun clickOffLine(oldList: List<GoodsVO>, callback: () -> Unit) {
         var list = oldList.filter { it?.isChecked == true };
@@ -39,6 +41,27 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
             }, View.OnClickListener {
                 offLine(goodsIds, callback);
             })
+    }
+
+    var shopId : Int? = null;
+
+    fun getSellerId() : Int? {
+        if(shopId == null) {
+            shopId = UserManager.getLoginInfo()?.shopId;
+        }
+        return shopId;
+    }
+
+    override fun clickGroup(callback: (ShopGroupVO?, String?) -> Unit) {
+        mGroupPreImpl.showTopGoodsGroupPop(context) { group, groupNames ->
+            callback?.invoke(group, groupNames);
+        }
+    }
+
+    override fun clickCategory(callback: (CategoryVO?, String?) -> Unit) {
+        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { cate, names  ->
+            callback?.invoke(cate, names);
+        }
     }
 
     override fun clickOnLine(oldList: List<GoodsVO>, callback: () -> Unit) {

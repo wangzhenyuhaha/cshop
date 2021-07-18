@@ -139,14 +139,14 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
     }
 
     override fun showCategoryPop() {
-        mCategoryPreImpl.showCategoryPop(context) { categoryId, categoryName ->
-            view.onUpdateCategory(categoryId, categoryName)
+        mCategoryPreImpl.showCategoryPop(context) { category, names ->
+            view.onUpdateCategory(category?.categoryId, names)
         }
     }
 
     override fun showGroupPop() {
-        mGroupPreImpl.showGoodsGroupPop(context) { groupId, groupName ->
-            view.onUpdateGroup(groupId, groupName)
+        mGroupPreImpl.showGoodsGroupPop(context) { group, names ->
+            view.onUpdateGroup(group?.shopCatId, names)
         }
     }
 

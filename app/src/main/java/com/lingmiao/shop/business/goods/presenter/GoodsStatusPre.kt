@@ -15,7 +15,7 @@ import java.io.Serializable
  */
 interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
 
-    fun loadListData(page: IPage, list: List<*>)
+    fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, list: List<*>)
 
     fun clickMenuView(item: GoodsVO?, position: Int, view: View)
 

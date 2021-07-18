@@ -50,9 +50,10 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
     override fun initOthers(rootView: View) {
         menuCateL1Tv.text = mItem?.shopCatName
 
-        menuCateL1Tv.singleClick {
-            mPresenter?.showGroupPop(mItem?.isTop!!)
-        }
+        // 暂时不切换
+//        menuCateL1Tv.singleClick {
+//            mPresenter?.showGroupPop(mItem?.isTop!!)
+//        }
         menuCateL2Tv.singleClick {
 
         }

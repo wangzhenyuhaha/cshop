@@ -25,7 +25,7 @@ class GoodsWarningPreImpl(
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    override fun loadListData(page: IPage, datas: List<*>) {
+    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()

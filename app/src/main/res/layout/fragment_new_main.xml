@@ -401,10 +401,10 @@
                                     android:text="营销设置" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvWalletAccount"
+                                    android:id="@+id/tvComeSoon"
                                     style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_wallet_account"
-                                    android:text="钱包账户" />
+                                    android:drawableTop="@drawable/main_ic_stock_warning"
+                                    android:text="库存预警" />
 
                             </LinearLayout>
                             <!--第二行end-->
@@ -428,10 +428,10 @@
                                     android:text="数据统计" />
 
                                 <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvComeSoon"
+                                    android:id="@+id/tvWalletAccount"
                                     style="@style/main_tools"
-                                    android:drawableTop="@drawable/main_ic_stock_warning"
-                                    android:text="库存预警" />
+                                    android:drawableTop="@mipmap/main_ic_wallet_account"
+                                    android:text="钱包账户" />
 
                             </LinearLayout>
                             <!--第3行end-->
