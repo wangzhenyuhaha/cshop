@@ -135,7 +135,7 @@ open class GoodsAdapter(
             GoodsVO.STATUS_MIX_0 -> R.mipmap.goods_status_0
             GoodsVO.STATUS_MIX_1 -> R.mipmap.goods_status_1
             GoodsVO.STATUS_MIX_2 -> R.mipmap.goods_status_2
-            GoodsVO.STATUS_MIX_3 -> R.mipmap.goods_status_3
+//            GoodsVO.STATUS_MIX_3 -> R.mipmap.goods_status_3
             else -> (GoodsMenuPop.TYPE_EDIT)
         }
         if (drawableRes != GoodsMenuPop.TYPE_EDIT) {

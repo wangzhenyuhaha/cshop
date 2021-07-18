@@ -77,7 +77,7 @@
 
 # 项目混淆
 -keep class * implements java.io.Serializable { *; }
--keep class com.fishagle.mkt.**.bean.** { *; }
+-keep class com.lingmiao.shop.**.bean.** { *; }
 
 
 -optimizationpasses 5
@@ -345,4 +345,5 @@ public void *(android.view.View);
      *;
  }
 
+ -keep class com.github.aachartmodel.** { *; }
  -keep class com.github.aachartmodel.aainfographics.** { *; }
