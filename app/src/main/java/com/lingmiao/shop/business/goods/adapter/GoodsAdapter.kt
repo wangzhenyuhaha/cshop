@@ -103,7 +103,9 @@ open class GoodsAdapter(
             }
             helper.setText(R.id.goodsStatusTv, goodsStatusText)
 
-            showGoodsStatusIcon(helper, this)
+            if(goodsStatus == GoodsNewFragment.GOODS_STATUS_ALL) {
+                showGoodsStatusIcon(helper, this)
+            }
             //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
 //            helper.setText(R.id.goodsOwnerTv, String.format("[来源：%s]", supplierName));
 //            helper.setGone(R.id.goodsOwnerTv, supplierName?.length?:0 > 0);
