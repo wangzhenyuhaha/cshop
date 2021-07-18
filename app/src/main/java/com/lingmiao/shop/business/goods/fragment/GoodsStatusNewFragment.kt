@@ -198,10 +198,6 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
 
         when (goodsStatus) {
-            GoodsNewFragment.GOODS_STATUS_ALL -> {
-                rl_goods_option.gone();
-                rl_goods_check.gone();
-            }
             GoodsNewFragment.GOODS_STATUS_ENABLE -> {
                 tv_goods_off.visibility = View.VISIBLE;
                 tv_goods_delete.visibility = View.GONE;
@@ -213,6 +209,16 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             }
             GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> {
                 tv_goods_delete.visibility = View.VISIBLE;
+            }
+            GoodsNewFragment.GOODS_STATUE_WARNING -> {
+                rl_goods_option.gone();
+                rl_goods_check.gone();
+                searchLayout.gone();
+                filterLayout.gone();
+            }
+            GoodsNewFragment.GOODS_STATUS_ALL -> {
+                rl_goods_option.gone();
+                rl_goods_check.gone();
             }
             else -> {
                 tv_goods_delete.visibility = View.GONE;
