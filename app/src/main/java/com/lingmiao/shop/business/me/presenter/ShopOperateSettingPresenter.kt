@@ -2,8 +2,10 @@ package com.lingmiao.shop.business.me.presenter
 
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
+import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
+import com.lingmiao.shop.business.me.bean.BannerBean
 import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
 
@@ -16,11 +18,13 @@ interface ShopOperateSettingPresenter : BasePresenter {
 
     fun showWorkTimePop(target: android.view.View);
 
-    fun setSetting(data : ApplyShopInfo);
+    fun setSetting(data : ApplyShopInfo,gallery : List<GoodsGalleryVO>?);
 
     fun loadShopSetting();
 
     fun loadTemplate();
+
+    fun getBanner();
 
     interface View : BaseView {
 
@@ -31,5 +35,7 @@ interface ShopOperateSettingPresenter : BasePresenter {
         fun onLoadedShopSetting(vo : ApplyShopInfo);
 
         fun onLoadedTemplate(tcItem : FreightVoItem?, qsItem : FreightVoItem?);
+
+        fun onSetBanner(list : List<BannerBean>?);
     }
 }

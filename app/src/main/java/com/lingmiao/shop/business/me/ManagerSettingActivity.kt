@@ -1,39 +1,34 @@
 package com.lingmiao.shop.business.me
 
-import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.james.common.base.BaseVBActivity
-import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.james.common.databinding.IncludeTabBinding
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
-import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.fragment.ShopBaseSettingFragment
 import com.lingmiao.shop.business.me.fragment.ShopOperateSettingFragment
+import com.lingmiao.shop.business.me.presenter.ManagerSettingPresenter
+import com.lingmiao.shop.business.me.presenter.impl.ManagerSettingPresenterImpl
 import com.lingmiao.shop.databinding.ActivityViewpagerBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 /**
 Create Date : 2021/3/24:05 PM
 Author      : Fox
 Desc        :
  **/
-class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding>() {
+class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerSettingPresenter>(), ManagerSettingPresenter.View {
 
     val tabName = listOf("基础", "运营")
 
-    private lateinit var tab: TabLayout
-
-    override fun getViewBinding() = ActivityViewpagerBinding.inflate(layoutInflater)
+    override fun getViewBinding(): ActivityViewpagerBinding {
+        return ActivityViewpagerBinding.inflate(layoutInflater);
+    }
 
     override fun initView() {
-        mToolBarDelegate.setMidTitle(getString(R.string.manager_setting_title))
-        tab = findViewById(R.id.viewpager2_tabLayout)
+        mToolBarDelegate?.setMidTitle(getString(R.string.manager_setting_title))
 
-        //请求数据
-        loadShopInfo()
+        mPresenter?.loadShopInfo();
     }
 
 
@@ -41,29 +36,12 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding>() {
         return false
     }
 
-    //获取数据
-    private fun loadShopInfo() {
-        //避免重复请求
-        searchJob?.cancel()
-        searchJob = lifecycleScope.launch(Dispatchers.Main)
-        {
-            //waiting
-            showPageLoading()
-
-            val resp = MeRepository.apiService.getShop().awaitHiResponse()
-
-            handleResponse(resp) {
-                initViewPager2(resp.data)
-                hidePageLoading()
-            }
-
-        }
+    override fun createPresenter(): ManagerSettingPresenter {
+        return ManagerSettingPresenterImpl(this);
     }
 
-    //初始化ViewPager2
-    private fun initViewPager2(data: ApplyShopInfo) {
-
-        binding.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
+    override fun onLoadedShopInfo(data: ApplyShopInfo) {
+        mBinding?.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) =
                 when (position) {
@@ -73,12 +51,11 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding>() {
         }
 
         TabLayoutMediator(
-            tab,
-            binding.activityViewpagerViewpager2
+            IncludeTabBinding.bind(mBinding.root).viewpager2TabLayout,
+            mBinding?.activityViewpagerViewpager2
         ) { tab, position ->
             tab.text = tabName[position]
         }.attach()
-
     }
 
 }

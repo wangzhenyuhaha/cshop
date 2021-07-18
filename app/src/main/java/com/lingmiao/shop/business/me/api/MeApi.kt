@@ -2,10 +2,8 @@ package com.lingmiao.shop.business.me.api
 
 import com.lingmiao.shop.business.login.bean.CaptchaAli
 import com.lingmiao.shop.business.me.bean.*
-import com.james.common.net.BaseResponse
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
-import com.lingmiao.shop.business.me.fragment.ShopOperateSettingFragment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -72,11 +70,11 @@ interface MeApi {
     //获取Banner图
     @GET("seller/shops/shopBanner")
     @WithHiResponse
-    fun getBanner(): Call<List<ShopOperateSettingFragment.BannerItem>>
+    fun getBanner(): Call<List<BannerBean>>
 
 
     //上传banner图
     @POST("seller/shops/shopBanner/addShopBanner")
     @WithHiResponse
-    fun updateBanner(@Body bean: List<ShopOperateSettingFragment.BannerItem>): Call<Unit>
+    fun updateBanner(@Body bean: List<BannerBean>): Call<Unit>
 }

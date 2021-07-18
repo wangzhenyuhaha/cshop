@@ -10,345 +10,338 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
+
+
+        <com.james.common.view.ILinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:layout_marginBottom="52dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
 
-
-            <com.james.common.view.ILinearLayout
+            <LinearLayout
+                android:id="@+id/rlShopOperate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                app:ivBgColor="@color/white"
-                app:ivRadius="5dp">
+                android:layout_height="50dp">
 
-                <LinearLayout
-                    android:id="@+id/rlShopOperate"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        style="@style/goods_spce_item_left_mark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="营业时间"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingRight="@dimen/dimen_5"
-                            android:text="每天"
-                            android:textColor="@color/color_333333"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:id="@+id/tvShopOperateTime"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:drawableRight="@mipmap/me_arrow_right"
-                            android:drawablePadding="@dimen/dimen_10"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:hint="请选择-请选择"
-                            android:paddingLeft="@dimen/dimen_5"
-                            android:singleLine="true"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp"
-                            tools:text="08:00-23:00" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="自动接单"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <com.kyleduo.switchbutton.SwitchButton
-                        android:id="@+id/autoOrderSb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginLeft="@dimen/dimen_20"
-                        app:kswBackDrawable="@drawable/flyme_back_drawable"
-                        app:kswTintColor="@color/white" />
-
-                </RelativeLayout>
-
-                <View style="@style/DivideLineHorizontal" />
+                <TextView
+                    style="@style/goods_spce_item_left_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="营业时间"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_weight="1"
-                        android:text="未接订单自动取消时间"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <EditText
-                        android:id="@+id/tvShopManageNumber"
-                        android:layout_width="100dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center"
-                        android:hint="5分钟以内"
-                        android:inputType="number"
                         android:paddingRight="@dimen/dimen_5"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="10" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:paddingTop="@dimen/dimen_15"
-                        android:paddingBottom="@dimen/dimen_15"
-                        android:text="分钟"
+                        android:text="每天"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/dimen_13" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <RelativeLayout
-                    android:id="@+id/rlShopManageNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="65dp">
-
-                    <TextView
-                        android:id="@+id/linkPhontHintTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="@dimen/dimen_15"
-                        android:text="联系电话"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/linkPhontHintTv"
-                        android:paddingTop="@dimen/dimen_5"
-                        android:paddingBottom="@dimen/dimen_5"
-                        android:text="体现在顾客端 供用户联系" />
-
-                    <EditText
-                        android:id="@+id/linkTelEt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
-                        android:gravity="center"
-                        android:hint="请输入联系电话"
-                        android:inputType="number"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="18621774835" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlShopManageLink"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="联系设置"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageLink"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:ellipsize="end"
-                        android:hint="设置联系方式"
-                        android:singleLine="true"
-                        android:textColor="#ff999999"
                         android:textSize="12sp" />
 
-                </RelativeLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <RelativeLayout
-                    android:id="@+id/rlShopManageDelivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
                     <TextView
-                        android:id="@+id/tvDeliver"
+                        android:id="@+id/tvShopOperateTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/dimen_15"
-                        android:text="配送设置"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageDelivery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
+                        android:layout_height="match_parent"
                         android:drawableRight="@mipmap/me_arrow_right"
                         android:drawablePadding="@dimen/dimen_10"
                         android:ellipsize="end"
-                        android:hint="请选择"
+                        android:gravity="center"
+                        android:hint="请选择-请选择"
+                        android:paddingLeft="@dimen/dimen_5"
                         android:singleLine="true"
                         android:textColor="#ff999999"
                         android:textSize="12sp"
-                        android:visibility="gone" />
+                        tools:text="08:00-23:00" />
 
-                    <RadioGroup
-                        android:id="@+id/layoutShop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvDeliver"
-                        android:orientation="vertical">
+                </LinearLayout>
+            </LinearLayout>
 
-                        <RadioButton
-                            android:id="@+id/cb_model_shop"
-                            style="@style/tools_sub_item_radio_box"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="@dimen/dimen_15"
-                            android:text="商家配送" />
+            <View style="@style/DivideLineHorizontal" />
 
-                        <RadioButton
-                            android:id="@+id/cb_model_rider"
-                            style="@style/tools_sub_item_radio_box"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="@dimen/dimen_15"
-                            android:text="骑手配送" />
-                    </RadioGroup>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
 
-                    <LinearLayout
-                        android:id="@+id/layoutRider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvDeliver"
-                        android:layout_alignParentRight="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvShopStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableRight="@mipmap/me_arrow_right"
-                            android:drawablePadding="@dimen/dimen_15"
-                            android:gravity="right"
-                            android:paddingVertical="@dimen/dimen_15"
-                            android:text="请设置" />
-
-                        <TextView
-                            android:id="@+id/tvRiderStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableRight="@mipmap/me_arrow_right"
-                            android:drawablePadding="@dimen/dimen_15"
-                            android:gravity="right"
-                            android:paddingVertical="@dimen/dimen_15"
-                            android:text="请设置" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="自动接单"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/autoOrderSb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    app:kswBackDrawable="@drawable/flyme_back_drawable"
+                    app:kswTintColor="@color/white" />
+
+            </RelativeLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="未接订单自动取消时间"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <EditText
+                    android:id="@+id/tvShopManageNumber"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:hint="5分钟以内"
+                    android:inputType="number"
+                    android:paddingRight="@dimen/dimen_5"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="10" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:paddingBottom="@dimen/dimen_15"
+                    android:text="分钟"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/dimen_13" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <RelativeLayout
+                android:id="@+id/rlShopManageNumber"
+                android:layout_width="match_parent"
+                android:layout_height="65dp">
+
+                <TextView
+                    android:id="@+id/linkPhontHintTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/dimen_15"
+                    android:text="联系电话"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linkPhontHintTv"
+                    android:paddingTop="@dimen/dimen_5"
+                    android:paddingBottom="@dimen/dimen_5"
+                    android:text="体现在顾客端 供用户联系" />
+
+                <EditText
+                    android:id="@+id/linkTelEt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:hint="请输入联系电话"
+                    android:inputType="number"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="18621774835" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlShopManageLink"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="联系设置"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageLink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:ellipsize="end"
+                    android:hint="设置联系方式"
+                    android:singleLine="true"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <RelativeLayout
+                android:id="@+id/rlShopManageDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvDeliver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="@dimen/dimen_15"
+                    android:text="配送设置"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:ellipsize="end"
+                    android:hint="请选择"
+                    android:singleLine="true"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+
+                <RadioGroup
+                    android:id="@+id/layoutShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDeliver"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RadioButton
+                        android:id="@+id/cb_model_shop"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15"
+                        android:text="商家配送" />
+
+                    <RadioButton
+                        android:id="@+id/cb_model_rider"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15"
+                        android:text="骑手配送" />
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/layoutRider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDeliver"
+                    android:layout_alignParentRight="true"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvShopStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="@dimen/dimen_15">
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:drawablePadding="@dimen/dimen_15"
+                        android:gravity="right"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="请设置" />
 
-                        <TextView
-                            style="@style/goods_publish_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="店铺广告图上传" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text=" (最少1张，最多5张)"
-                            android:textColor="@color/color_999999"
-                            android:textSize="9sp" />
-                    </LinearLayout>
-
-                    <com.lingmiao.shop.business.me.view.OtherGalleryRecyclerView
-                        android:id="@+id/galleryRv"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tvRiderStatus"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp_10"
-                        android:nestedScrollingEnabled="false" />
+                        android:layout_weight="1"
+                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:drawablePadding="@dimen/dimen_15"
+                        android:gravity="right"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="请设置" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dimen_15">
+
+                    <TextView
+                        style="@style/goods_publish_left_mark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺广告图上传" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" (建议尺寸：750X136px)"
+                        android:text=" (最少1张，最多5张)"
                         android:textColor="@color/color_999999"
                         android:textSize="9sp" />
-
                 </LinearLayout>
 
+                <com.lingmiao.shop.business.me.view.OtherGalleryRecyclerView
+                    android:id="@+id/galleryRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:nestedScrollingEnabled="false" />
 
-            </com.james.common.view.ILinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" (建议尺寸：750X136px)"
+                    android:textColor="@color/color_999999"
+                    android:textSize="9sp" />
+
+            </LinearLayout>
 
 
-        </LinearLayout>
+        </com.james.common.view.ILinearLayout>
+
+
     </androidx.core.widget.NestedScrollView>
 
     <com.james.common.view.ITextView

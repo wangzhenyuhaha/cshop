@@ -65,10 +65,8 @@ class OtherGalleryRecyclerView @JvmOverloads constructor(
 
     //.withAspectRatio()
     fun setAspectRatio(x: Int, y: Int) {
-
         this.x = x
         this.y = y
-
     }
 
     fun addData(it: GoodsGalleryVO?) {
