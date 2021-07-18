@@ -16,124 +16,82 @@
         android:textSize="@dimen/sp_14"
         android:textStyle="bold" />
 
-    <com.james.common.view.IRelativeLayout
-        android:layout_marginLeft="@dimen/dimen_30"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/dimen_10"
-        android:paddingHorizontal="@dimen/dimen_10"
-        android:paddingVertical="@dimen/dimen_4"
-        app:ivBgColor="@color/color_E6E6E6"
-        app:ivBorderColor="@color/color_999999"
-        app:ivBorderWidth="@dimen/dimen_1"
-        app:ivRadius="@dimen/dimen_5"
-        app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-        app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+        android:orientation="horizontal">
+
+        <com.james.common.view.ITextView
+            android:id="@+id/topMenuTv"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginRight="@dimen/dimen_10"
+            android:drawableRight="@mipmap/common_arrow_right"
+            android:drawablePadding="@dimen/dimen_5"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_4"
+            android:text="置顶菜单"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_11"
+            app:ivBgColor="@color/color_E6E6E6"
+            app:ivBorderColor="@color/color_666666"
+            app:ivBorderWidth="@dimen/dimen_1"
+            app:ivRadius="@dimen/dimen_5" />
 
         <TextView
-            android:drawableRight="@mipmap/common_arrow_right"
-            android:layout_width="65dp"
-            android:layout_height="@dimen/dimen_17"
-            android:text="置顶菜单"
-            android:drawablePadding="@dimen/dimen_5"
-            android:textColor="@color/color_666666"
+            android:id="@+id/topGroupStatusResetTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:padding="@dimen/dimen_5"
+            android:text="重置"
             android:textSize="@dimen/sp_11" />
-    </com.james.common.view.IRelativeLayout>
+
+    </LinearLayout>
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen_30"
         android:paddingTop="@dimen/dimen_15">
 
-        <com.james.common.view.IRelativeLayout
-            android:id="@+id/usedMenuC"
-            android:layout_width="wrap_content"
+        <com.james.common.view.ITextView
+            android:id="@+id/usedMenuTv"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_30"
             android:layout_marginRight="@dimen/dimen_10"
+            android:drawableRight="@mipmap/common_arrow_right"
+            android:drawablePadding="@dimen/dimen_5"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_4"
+            android:paddingVertical="@dimen/dimen_5"
+            android:text="常用菜单"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_11"
             app:ivBgColor="@color/color_E6E6E6"
-            app:ivBorderColor="@color/color_999999"
+            app:ivBorderColor="@color/color_666666"
             app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5"
-            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+            app:ivRadius="@dimen/dimen_5" />
 
-            <TextView
-                android:id="@+id/usedMenuTv"
-                android:drawableRight="@mipmap/common_arrow_right"
-                android:layout_width="65dp"
-                android:layout_height="@dimen/dimen_17"
-                android:text="常用菜单"
-                android:drawablePadding="@dimen/dimen_5"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_11" />
-
-        </com.james.common.view.IRelativeLayout>
-
-
-        <com.james.common.view.IRelativeLayout
-            android:id="@+id/firstMenuC"
+        <TextView
+            android:id="@+id/usedGroupStatusResetTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimen_10"
-            android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_4"
-            app:ivBgColor="@color/white"
-            app:ivBorderColor="@color/color_999999"
-            app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5"
-            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
-
-            <TextView
-                android:id="@+id/firstMenuTv"
-                android:drawableRight="@mipmap/goods_blue_arrow_down"
-                android:layout_width="65dp"
-                android:layout_height="@dimen/dimen_17"
-                android:text="一级分类"
-                android:drawablePadding="@dimen/dimen_5"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_11" />
-
-        </com.james.common.view.IRelativeLayout>
-
-
-        <com.james.common.view.IRelativeLayout
-            android:id="@+id/secondMenuC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimen_10"
-            android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_4"
-            app:ivBgColor="@color/white"
-            app:ivBorderColor="@color/color_999999"
-            app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5"
-            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
-
-            <TextView
-                android:id="@+id/secondMenuTv"
-                android:drawableRight="@mipmap/goods_blue_arrow_down"
-                android:layout_width="65dp"
-                android:layout_height="@dimen/dimen_17"
-                android:text="二级分类"
-                android:drawablePadding="@dimen/dimen_5"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_11" />
-
-        </com.james.common.view.IRelativeLayout>
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:padding="@dimen/dimen_5"
+            android:text="重置"
+            android:textSize="@dimen/sp_11" />
 
     </LinearLayout>
 
-    <View style="@style/common_divider"
+    <View
+        style="@style/common_divider"
         android:layout_marginTop="@dimen/dimen_10"
-        android:layout_marginBottom="@dimen/dp_10"
-        />
+        android:layout_marginBottom="@dimen/dp_10" />
 
     <TextView
         android:layout_width="match_parent"
@@ -143,58 +101,84 @@
         android:textColor="@color/color_666666"
         android:textSize="@dimen/sp_14" />
 
-    <LinearLayout
+
+    <RadioGroup
+        android:id="@+id/rgSalesEnable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dimen_30"
         android:paddingTop="@dimen/dimen_15">
 
-        <com.james.common.view.IRelativeLayout
-            android:id="@+id/C"
+        <RadioButton
+            android:id="@+id/normalGoodsIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimen_10"
+            android:background="@drawable/selector_goods_item_check"
+            android:button="@null"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_4"
-            app:ivBgColor="@color/color_E6E6E6"
-            app:ivBorderColor="@color/color_999999"
-            app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5"
-            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+            android:paddingVertical="@dimen/dimen_5"
+            android:text="正常商品"
+            android:textColor="@color/selector_primary_to_99"
+            android:textSize="@dimen/sp_12" />
 
-            <TextView
-                android:id="@+id/normalGoodsIv"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_17"
-                android:text="正常商品"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_11" />
-        </com.james.common.view.IRelativeLayout>
-
-        <com.james.common.view.IRelativeLayout
-            android:id="@+id/goodsDiscountC"
+        <RadioButton
+            android:id="@+id/goodsDiscountIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:background="@drawable/selector_goods_item_check"
+            android:button="@null"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_4"
-            app:ivBgColor="@color/color_E6E6E6"
-            app:ivBorderColor="@color/color_999999"
-            app:ivBorderWidth="@dimen/dimen_1"
-            app:ivRadius="@dimen/dimen_5"
-            app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
-            app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv">
+            android:paddingVertical="@dimen/dimen_5"
+            android:text="折扣商品"
+            android:textColor="@color/selector_primary_to_99"
+            android:textSize="@dimen/sp_12" />
 
-            <TextView
-                android:id="@+id/goodsDiscountIv"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/dimen_17"
-                android:text="折扣商品"
-                android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_11" />
-        </com.james.common.view.IRelativeLayout>
+        <TextView
+            android:id="@+id/goodsSalesStatusResetTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:padding="@dimen/dimen_10"
+            android:text="重置" />
 
-    </LinearLayout>
+    </RadioGroup>
+
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvGoodsFilterFinish"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="确定"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:textColor="#fff"
+        android:textSize="12sp"
+        app:ivBgColor="#ff3870ea"
+        app:ivRadius="15dp"
+        android:gravity="center"
+        app:ivBorderWidth="1px"
+        app:ivBorderColor="#ff3870ea"
+        />
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvGoodsFilterReset"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="全部重置"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:textColor="#ff3870ea"
+        android:textSize="12sp"
+        app:ivBgColor="@color/gray_bg_click"
+        app:ivRadius="15dp"
+        android:gravity="center"
+        app:ivBorderWidth="1px"
+        app:ivBorderColor="@color/gray_bg_click"
+        />
 
 </LinearLayout>

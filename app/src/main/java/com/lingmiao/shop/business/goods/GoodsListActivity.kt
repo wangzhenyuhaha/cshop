@@ -85,9 +85,6 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     override fun initView() {
         initTitle();
         initTabLayout();
-        goodsSearchLayout.singleClick {
-            GoodsSearchActivity.openActivity(context!!)
-        }
         mPresenter?.loadNumbers();
     }
 
@@ -137,9 +134,6 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         viewPager.addOnPageChangeListener(this);
         viewPager.offscreenPageLimit = 1;
 
-        goodsFilterTv.singleClick {
-            drawerC.openDrawer(Gravity.RIGHT)
-        }
     }
 
 

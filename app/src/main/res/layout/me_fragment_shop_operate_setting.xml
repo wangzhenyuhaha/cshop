@@ -286,7 +286,6 @@
                             android:paddingVertical="@dimen/dimen_15"
                             android:text="请设置" />
 
-
                         <TextView
                             android:id="@+id/tvRiderStatus"
                             android:layout_width="wrap_content"

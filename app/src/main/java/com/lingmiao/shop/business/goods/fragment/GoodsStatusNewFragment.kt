@@ -2,25 +2,29 @@ package com.lingmiao.shop.business.goods.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.Gravity
 import android.view.View
+import android.widget.RadioGroup
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
+import com.james.common.view.ITextView
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.goods.GoodsSearchActivity
 import com.lingmiao.shop.business.goods.adapter.GoodsAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.BatchStatusEvent
-import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.lingmiao.shop.business.goods.presenter.impl.*
 import com.lingmiao.shop.business.photo.PhotoHelper
-import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
+import kotlinx.android.synthetic.main.goods_fragment_goods_list.navigateView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -63,6 +67,45 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     override fun initOthers(rootView: View) {
         mSmartRefreshLayout.setBackgroundResource(R.color.color_ffffff)
 
+        // 搜索
+        goodsSearchLayout.singleClick {
+            GoodsSearchActivity.openActivity(context!!)
+        }
+        //  筛选
+        goodsFilterTv.singleClick {
+            drawerC.openDrawer(Gravity.RIGHT)
+        }
+
+        val headview: View = navigateView.inflateHeaderView(R.layout.goods_view_menu_header)
+
+        val rgSalesEnable : RadioGroup = headview.findViewById(R.id.rgSalesEnable);
+        // 置顶
+        headview.findViewById<TextView>(R.id.topMenuTv).singleClick {
+
+        }
+
+        // 置顶清除
+        headview.findViewById<TextView>(R.id.topGroupStatusResetTv).singleClick {
+
+        }
+
+        // 常用
+        headview.findViewById<TextView>(R.id.usedMenuTv).singleClick {
+
+        }
+        // 常用清除
+        headview.findViewById<TextView>(R.id.usedGroupStatusResetTv).singleClick {
+            rgSalesEnable.clearCheck();
+        }
+        // 确定
+        headview.findViewById<ITextView>(R.id.tvGoodsFilterFinish).singleClick {
+            drawerC.closeDrawers();
+        }
+        // 全部清除
+        headview.findViewById<ITextView>(R.id.tvGoodsFilterReset).singleClick {
+            rgSalesEnable.clearCheck();
+            drawerC.closeDrawers();
+        }
         cb_goods_list_check_all.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
                 goodsVO.isChecked = isChecked;
@@ -120,13 +163,18 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         when (goodsStatus) {
             GoodsNewFragment.GOODS_STATUS_ENABLE -> {
                 tv_goods_off.visibility = View.VISIBLE;
+                tv_goods_delete.visibility = View.GONE;
             }
             GoodsNewFragment.GOODS_STATUS_WAITING,
             GoodsNewFragment.GOODS_STATUS_DISABLE -> {
                 tv_goods_on.visibility = View.VISIBLE;
+                tv_goods_delete.visibility = View.VISIBLE;
+            }
+            GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> {
+                tv_goods_delete.visibility = View.VISIBLE;
             }
             else -> {
-                tv_goods_delete.visibility = View.VISIBLE;
+                tv_goods_delete.visibility = View.GONE;
             }
         }
     }
