@@ -37,7 +37,7 @@
         android:layout_width="@dimen/dimen_67"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:background="@color/color_C3C3C3"
+        android:background="#99C3C3C3"
         app:layout_constraintLeft_toRightOf="@id/cb_goods_check"
         app:layout_constraintRight_toRightOf="@id/goodsIv"
         app:layout_constraintBottom_toBottomOf="@+id/goodsIv"/>

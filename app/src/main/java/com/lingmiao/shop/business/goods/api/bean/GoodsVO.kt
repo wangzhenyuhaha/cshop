@@ -118,8 +118,7 @@ data class GoodsVO(
     }
 
     fun isSellOut() : Boolean {
-       // return goodsQuantityStatusMix == 1;
-        return false
+        return goodsQuantityStatusMix == 1;
     }
 
     fun getMenuType(): Int {

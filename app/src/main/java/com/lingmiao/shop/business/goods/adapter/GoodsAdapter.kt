@@ -15,6 +15,7 @@ import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.formatDouble
 import com.james.common.utils.exts.check
 import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
+import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 
 /**
  * Author : Elson
@@ -101,6 +102,8 @@ open class GoodsAdapter(
                 }
             }
             helper.setText(R.id.goodsStatusTv, goodsStatusText)
+
+            showGoodsStatusIcon(helper, this)
             //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);
 //            helper.setText(R.id.goodsOwnerTv, String.format("[来源：%s]", supplierName));
 //            helper.setGone(R.id.goodsOwnerTv, supplierName?.length?:0 > 0);
@@ -125,4 +128,19 @@ open class GoodsAdapter(
         notifyItemChanged(position)
     }
 
+    private fun showGoodsStatusIcon(helper: BaseViewHolder, goodsVO: GoodsVO) {
+        val drawableRes = when (goodsVO.goodsStatusMix) {
+            GoodsVO.STATUS_MIX_0 -> R.mipmap.goods_status_0
+            GoodsVO.STATUS_MIX_1 -> R.mipmap.goods_status_1
+            GoodsVO.STATUS_MIX_2 -> R.mipmap.goods_status_2
+            GoodsVO.STATUS_MIX_3 -> R.mipmap.goods_status_3
+            else -> (GoodsMenuPop.TYPE_EDIT)
+        }
+        if (drawableRes != GoodsMenuPop.TYPE_EDIT) {
+            helper.setGone(R.id.searchGoodsStatusIv, drawableRes != 0)
+            helper.setImageResource(R.id.searchGoodsStatusIv, drawableRes)
+        } else {
+            helper.setGone(R.id.searchGoodsStatusIv, false)
+        }
+    }
 }
