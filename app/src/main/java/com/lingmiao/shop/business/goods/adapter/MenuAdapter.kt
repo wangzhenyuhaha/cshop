@@ -65,4 +65,8 @@ class MenuAdapter() :
         notifyDataSetChanged();
     }
 
+    fun getBatchEdit() : Boolean {
+        return  isBatchEditModel;
+    }
+
 }

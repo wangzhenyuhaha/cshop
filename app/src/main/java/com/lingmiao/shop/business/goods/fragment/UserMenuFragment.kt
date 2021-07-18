@@ -250,6 +250,17 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
         mAdapter?.notifyItemChanged(position);
     }
 
+    fun isBatchModel() : Boolean {
+        return (mAdapter as MenuOfUserAdapter)?.getBatchEdit();
+    }
+
+    fun setFinishSort() {
+        (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
+        menuDeleteTv.gone();
+        menuBottom.gone();
+        addMenuLayout.visiable();
+    }
+
     override fun onSortSuccess() {
 
     }

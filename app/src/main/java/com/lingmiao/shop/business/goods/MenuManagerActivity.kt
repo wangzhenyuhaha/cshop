@@ -44,15 +44,34 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_menu_title))
     }
 
+    lateinit var topMenu : TopMenuFragment;
+    lateinit var usedMenu : UserMenuFragment;
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
-        fragments.add(TopMenuFragment.newInstance(1))
-        fragments.add(UserMenuFragment.newInstance(0))
+        topMenu = TopMenuFragment.newInstance(1);
+        usedMenu = UserMenuFragment.newInstance(0);
+        fragments.add(topMenu)
+        fragments.add(usedMenu)
 //        fragments.add(UsedMenuFragment.newInstance())
 
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)
         tabLayout.setViewPager(viewPager)
+    }
+
+    override fun onBackPressed() {
+        if(viewPager.currentItem == 0) {
+            if(topMenu.isBatchModel()) {
+                topMenu.setFinishSort();
+                return;
+            }
+        } else {
+            if(usedMenu.isBatchModel()) {
+                usedMenu.setFinishSort();
+                return;
+            }
+        }
+        super.onBackPressed()
     }
 
 }

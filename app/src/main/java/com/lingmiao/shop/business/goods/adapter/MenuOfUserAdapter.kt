@@ -74,4 +74,8 @@ class MenuOfUserAdapter() :
         return isBatchEditModel;
     }
 
+    fun getBatchEdit() : Boolean {
+        return  isBatchEditModel;
+    }
+
 }

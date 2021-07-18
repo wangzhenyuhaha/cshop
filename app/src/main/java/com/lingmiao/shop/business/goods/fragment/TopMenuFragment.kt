@@ -237,6 +237,16 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
         mSmartRefreshLayout?.setEnableLoadMore(false);
     }
 
+    fun isBatchModel() : Boolean {
+        return (mAdapter as MenuAdapter)?.getBatchEdit();
+    }
+
+    fun setFinishSort() {
+        (mAdapter as MenuAdapter)?.setBatchEditModel(false);
+        menuDeleteTv.gone();
+        menuBottom.gone();
+        addMenuLayout.visiable();
+    }
 
     override fun createPresenter(): CateManagerPre? {
         return CateManagerPreImpl(this);
