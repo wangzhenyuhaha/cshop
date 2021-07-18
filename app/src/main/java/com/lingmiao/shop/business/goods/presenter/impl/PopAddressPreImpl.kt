@@ -84,7 +84,12 @@ class PopAddressPreImpl(val view: BaseView) : BasePreImpl(view) {
                 it.children?.toList()?.let { it1 -> addressPop?.setLv2Data(it1) };
             }
             lv2Callback = {
-                mList.add(it);
+                if(mList.size <= 1) {
+                    mList.add(it);
+                } else {
+                    mList[1] = it;
+                }
+//
                 l2Adapter.setSelectedStr(it.localName);
                 if(it.children == null || it.children?.size == 0) {
                     callback.invoke(categoryName, mList);
@@ -97,7 +102,11 @@ class PopAddressPreImpl(val view: BaseView) : BasePreImpl(view) {
                 }
             }
             lv3Callback = {
-                mList.add(it);
+                if(mList.size <= 2) {
+                    mList.add(it);
+                } else {
+                    mList[2] = it;
+                }
                 l3Adapter.setSelectedStr(it.localName);
                 categoryName = "${categoryName}/${it.localName}"
                 callback.invoke(categoryName, mList)

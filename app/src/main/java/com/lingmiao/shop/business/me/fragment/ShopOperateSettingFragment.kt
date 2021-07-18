@@ -159,6 +159,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
         if (IConstant.official) {
             cb_model_rider.gone();
+            tvRiderStatus.gone();
         }
     }
 

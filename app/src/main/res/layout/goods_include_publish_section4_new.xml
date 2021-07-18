@@ -225,6 +225,7 @@
 
             <View
                 android:id="@+id/vSpecSku"
+                android:visibility="gone"
                 style="@style/common_divider" />
 
             <!--  SKU编码  -->

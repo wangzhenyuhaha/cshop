@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.fragment.DeliveryInTimeFragment
@@ -26,6 +27,8 @@ Desc        :
 class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), ManagerSettingPresenter.View  {
 
     private var mTabTitles = arrayOf("商家配送", "骑手配送")
+
+    private var mTabTitles2 = arrayOf("商家配送")
 
     var mViewType : Int? = 0
 
@@ -99,9 +102,11 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
-        fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
+        if(!IConstant.official) {
+            fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
+        }
 
-        val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
+        val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, if(IConstant.official) mTabTitles2 else mTabTitles)
         viewPager.setAdapter(fragmentAdapter)
         tabLayout.setViewPager(viewPager)
 

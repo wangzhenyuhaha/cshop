@@ -560,13 +560,9 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     }
 
     fun searchAddressByKeyword(key: String) {
-//        query = PoiSearch.Query(key, "", city)
+//        query = PoiSearch.Query(key, "", city+district)
         var str = mList?.map { it?.localName }?.joinToString(separator = "");
-        query = PoiSearch.Query(key, "", str);
-        //keyWord表示搜索字符串，
-        //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
-        //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
-        // 设置每页最多返回多少条poiitem
+        query = PoiSearch.Query(key, "", str?:(district));
         //keyWord表示搜索字符串，
         //第二个参数表示POI搜索类型，二者选填其一，选用POI搜索类型时建议填写类型代码，码表可以参考下方（而非文字）
         //cityCode表示POI搜索区域，可以是城市编码也可以是城市名称，也可以传空字符串，空字符串代表全国在全国范围内进行搜索
@@ -587,6 +583,12 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                         0
                     ) == null
                 ) {
+                    Toast.makeText(context, "未搜索到当前位置信息", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                val lst = poiResult.pois.filterIndexed { index, poiItem -> poiItem.cityName == city };
+                if(lst == null || lst.size == 0) {
                     Toast.makeText(context, "未搜索到当前位置信息", Toast.LENGTH_SHORT).show()
                     return
                 }
@@ -679,6 +681,9 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     override fun onSetAddress(list: List<RegionVo>) {
         mList = list;
         if(list.size == 3) {
+            province = list.get(0).localName;
+            city = list.get(1).localName;
+            district = list.get(2).localName;
             tvAddressProvince.setText(list.get(0).localName);
             tvAddressCity.setText(list.get(1).localName)
             tvAddressArea.setText(list.get(2).localName);

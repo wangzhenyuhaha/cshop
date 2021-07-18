@@ -140,8 +140,8 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             catePath = "";
             usedMenuTv.isSelected = false;
             topMenuTv.isSelected = false;
-//            drawerC.closeDrawers();
-//            mLoadMoreDelegate?.refresh()
+            drawerC.closeDrawers();
+            mLoadMoreDelegate?.refresh()
         }
         cb_goods_list_check_all.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
@@ -198,6 +198,10 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
 
         when (goodsStatus) {
+            GoodsNewFragment.GOODS_STATUS_ALL -> {
+                rl_goods_option.gone();
+                rl_goods_check.gone();
+            }
             GoodsNewFragment.GOODS_STATUS_ENABLE -> {
                 tv_goods_off.visibility = View.VISIBLE;
                 tv_goods_delete.visibility = View.GONE;

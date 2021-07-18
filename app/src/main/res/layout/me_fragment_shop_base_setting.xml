@@ -1,407 +1,401 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <com.james.common.view.ILinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
 
-            <com.james.common.view.ILinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                app:ivBgColor="@color/white"
-                app:ivRadius="5dp">
+                android:layout_height="66dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="店铺LOGO"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="店铺LOGO"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                <ImageView
+                    android:id="@+id/ivShopManageLogo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="centerCrop"
+                    android:src="#EDEDED" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:id="@+id/ivShopManageLogo"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:scaleType="centerCrop"
-                        android:src="#EDEDED" />
-                </RelativeLayout>
+            <View style="@style/DivideLineHorizontal" />
 
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺名称"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:ellipsize="end"
-                        android:gravity="center|right"
-                        android:singleLine="true"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="贵宾公子饰品旗舰店" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageNumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺编号"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageNumber"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="8018101011" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageSlogan"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:id="@+id/tvShopManageSloganHint"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableRight="@mipmap/ic_tips"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺口号"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageSlogan"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:gravity="center|right"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="8018101011" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageRemark"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tvShopManageRemarkHint"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableRight="@mipmap/ic_tips"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺公告"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageRemark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:ellipsize="end"
-                        android:gravity="center|right"
-                        android:singleLine="true"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="新店开业，欢迎光临" />
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rlShopManageDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:text="店铺简介"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:ellipsize="end"
-                        android:singleLine="true"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="小店已开启，欢迎光临" />
-
-                </RelativeLayout>
-
-            </com.james.common.view.ILinearLayout>
-
-
-            <com.james.common.view.ILinearLayout
+            <LinearLayout
+                android:id="@+id/rlShopManageName"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                app:ivBgColor="@color/white"
-                app:ivRadius="5dp">
+                android:layout_height="50dp">
 
-                <LinearLayout
-                    android:id="@+id/rlShopManageType"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="店铺名称"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺类型"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tvShopManageName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:ellipsize="end"
+                    android:gravity="center|right"
+                    android:singleLine="true"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="贵宾公子饰品旗舰店" />
 
-                    <TextView
-                        android:id="@+id/tvShopManageType"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center|right"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="企业店" />
+            </LinearLayout>
 
-                </LinearLayout>
+            <View style="@style/DivideLineHorizontal" />
 
-                <View style="@style/DivideLineHorizontal" />
-
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="主营类目"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageCategory"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:ellipsize="end"
-                        android:gravity="center|right"
-                        android:singleLine="true"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        tools:text="水果生鲜/安心素材/肉禽蛋品" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageQualification"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺资质"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageQualification"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:gravity="center|right"
-                        android:text="点击查看"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageAddress"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="店铺地址"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:id="@+id/tvShopManageAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:gravity="center|right"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </com.james.common.view.ILinearLayout>
-
-            <com.james.common.view.ILinearLayout
+            <LinearLayout
+                android:id="@+id/rlShopManageNumber"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="15dp"
-                app:ivBgColor="@color/white"
-                app:ivRadius="5dp">
+                android:layout_height="50dp">
 
-                <LinearLayout
-                    android:id="@+id/rlShopManageContactName"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="店铺编号"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="紧急联系人"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                <TextView
+                    android:id="@+id/tvShopManageNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="8018101011" />
 
-                    <TextView
-                        android:id="@+id/tvShopManageContactName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:gravity="center|right"
-                        android:text="点击添加"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp" />
+            </LinearLayout>
 
-                </LinearLayout>
+            <View style="@style/DivideLineHorizontal" />
 
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:id="@+id/rlShopManageServicePhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="紧急联系人电话"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageServicePhone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:gravity="center|right"
-                        android:text="点击添加"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </com.james.common.view.ILinearLayout>
-
-
-            <com.james.common.view.ITextView
-                android:id="@+id/tvShopSettingSubmit"
+            <LinearLayout
+                android:id="@+id/rlShopManageSlogan"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="@dimen/dimen_15"
-                android:gravity="center"
-                android:text="保存"
-                android:textColor="#fff"
-                android:textSize="13sp"
-                app:ivBgColor="#207AE1"
-                app:ivRadius="18dp"
-                android:visibility="gone"/>
+                android:layout_height="50dp">
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/tvShopManageSloganHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_tips"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="店铺口号"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
 
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/tvShopManageSlogan"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center|right"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="8018101011" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <LinearLayout
+                android:id="@+id/rlShopManageRemark"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tvShopManageRemarkHint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_tips"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="店铺公告"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageRemark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:ellipsize="end"
+                    android:gravity="center|right"
+                    android:singleLine="true"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="新店开业，欢迎光临" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/rlShopManageDesc"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="店铺简介"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="小店已开启，欢迎光临" />
+
+            </RelativeLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/rlShopManageType"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="店铺类型"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|right"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="企业店" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+
+            <LinearLayout
+                android:id="@+id/rlShopManageCategory"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="主营类目"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="center|right"
+                    android:singleLine="true"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp"
+                    tools:text="水果生鲜/安心素材/肉禽蛋品" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <LinearLayout
+                android:id="@+id/rlShopManageQualification"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="店铺资质"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageQualification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center|right"
+                    android:text="点击查看"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <LinearLayout
+                android:id="@+id/rlShopManageAddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="店铺地址"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center|right"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="15dp"
+            app:ivBgColor="@color/white"
+            app:ivRadius="5dp">
+
+            <LinearLayout
+                android:id="@+id/rlShopManageContactName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="紧急联系人"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageContactName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center|right"
+                    android:text="点击添加"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <LinearLayout
+                android:id="@+id/rlShopManageServicePhone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="紧急联系人电话"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvShopManageServicePhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:gravity="center|right"
+                    android:text="点击添加"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </com.james.common.view.ILinearLayout>
+
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvShopSettingSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/dimen_15"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="#fff"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:ivBgColor="#207AE1"
+            app:ivRadius="18dp" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
