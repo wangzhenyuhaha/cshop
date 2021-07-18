@@ -362,11 +362,22 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:id="@+id/tvCopyRight"
         android:layout_above="@id/companyNameTv"
         android:textColor="@color/color_999999"
         android:textSize="@dimen/sp_11"
         android:gravity="center"
         android:text="@string/copy_right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_above="@id/tvCopyRight"
+        android:id="@+id/tvVersionFlag"
+        android:textColor="@color/red"
+        android:textSize="@dimen/sp_11"
+        android:gravity="center"
+        android:layout_marginBottom="@dimen/dimen_5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

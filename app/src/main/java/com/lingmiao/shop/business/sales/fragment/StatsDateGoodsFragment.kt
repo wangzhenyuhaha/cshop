@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.sales.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.GsonUtils
 import com.github.aachartmodel.aainfographics.aachartcreator.*
@@ -257,7 +256,7 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
             aaChartView: AAChartView,
             messageModel: AAMoveOverEventMessageModel
         ) {
-            println("🚀move over event message " + GsonUtils.toJson(messageModel))
+            //println("🚀move over event message " + GsonUtils.toJson(messageModel))
         }
     };
 
@@ -284,8 +283,8 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     }
 
     fun setGoodsCategory(list : List<CategorySales?>?) {
-        aaChartModel = configurePieChart(list)
-        aaChartView?.aa_drawChartWithChartModel(aaChartModel);
+//        aaChartModel = configurePieChart(list)
+//        aaChartView?.aa_drawChartWithChartModel(aaChartModel);
     }
 
     fun configurePieChart(cateList : List<CategorySales?>?): AAChartModel {

@@ -16,6 +16,7 @@ import com.lingmiao.shop.business.me.presenter.impl.AccountSettingPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.main.UserServiceH5Activity
 import kotlinx.android.synthetic.main.me_activity_account_setting.*
 
@@ -47,7 +48,7 @@ class AccountSettingActivity : BaseActivity<AccountSettingPresenter>(),
 //        showPageLoading()
 //
 //        mPresenter.requestAccountSettingData()
-        tvAccountVersion.text = "V" + BuildConfig.VERSION_NAME
+        tvAccountVersion.text = String.format("%sV%s", if(IConstant.official) "" else "测试", BuildConfig.VERSION_NAME);
 
         rlAccountUpdatePassword.setOnClickListener(this)
         rlAccountUpdatePhone.setOnClickListener(this)

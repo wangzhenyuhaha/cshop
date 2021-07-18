@@ -4,8 +4,6 @@ import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.sales.presenter.IStateGoodsDataPresenter
-import com.lingmiao.shop.business.sales.presenter.IStateSalesDataPresenter
-import com.lingmiao.shop.business.sales.presenter.IStateUserDataPresenter
 import kotlinx.coroutines.launch
 
 /**

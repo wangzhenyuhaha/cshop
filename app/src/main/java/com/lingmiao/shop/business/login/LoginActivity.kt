@@ -23,6 +23,7 @@ import com.james.common.base.BaseActivity
 import com.james.common.net.BaseResponse
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.DialogUtils
+import com.lingmiao.shop.BuildConfig
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
@@ -77,6 +78,10 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
     override fun initView() {
 
         StatusBarUtil.setColor(context, ContextCompat.getColor(context, R.color.colorPrimary));
+
+        if(!IConstant.official) {
+            tvVersionFlag.setText(String.format("测试-%s", BuildConfig.VERSION_NAME));
+        }
 
         ToastUtils.setGravity(Gravity.BOTTOM, 0, 100)
         tvGetCode.setOnClickListener {
