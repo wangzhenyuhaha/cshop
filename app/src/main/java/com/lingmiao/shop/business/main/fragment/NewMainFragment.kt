@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
@@ -52,7 +53,7 @@ import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopReason
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-
+@SuppressLint("UseRequireInsteadOfGet")
 class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private var mainInfo: MainInfoVo? = null
