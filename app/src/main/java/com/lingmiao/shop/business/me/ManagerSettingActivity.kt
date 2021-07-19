@@ -41,7 +41,7 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
     }
 
     override fun onLoadedShopInfo(data: ApplyShopInfo) {
-        mBinding?.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
+        mBinding.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) =
                 when (position) {
@@ -52,7 +52,7 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
 
         TabLayoutMediator(
             IncludeTabBinding.bind(mBinding.root).viewpager2TabLayout,
-            mBinding?.activityViewpagerViewpager2
+            mBinding.activityViewpagerViewpager2
         ) { tab, position ->
             tab.text = tabName[position]
         }.attach()
