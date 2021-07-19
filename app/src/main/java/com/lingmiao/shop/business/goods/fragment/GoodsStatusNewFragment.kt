@@ -54,7 +54,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     private var goodsStatus: Int? = null
     private var groupPath: String? = ""
     private var catePath: String? = ""
-    private var isSales: Int? = 0
+    private var isSales: Int? = null
 
     override fun initBundles() {
         //获取当前加载种类
@@ -217,7 +217,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
                 filterLayout.gone();
             }
             GoodsNewFragment.GOODS_STATUS_ALL -> {
-                rl_goods_option.gone();
+                tv_goods_batch.gone();
                 rl_goods_check.gone();
             }
             else -> {
