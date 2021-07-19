@@ -40,7 +40,7 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         this.savedInstanceState = savedInstanceState
         initBundles()
         if (useBaseLayout()) {
-            mBinding = ActivityBaseBinding.inflate(getLayoutInflater()) as VB;
+            mBinding = ActivityBaseBinding.inflate(layoutInflater) as VB;
             setContentView(mBinding.root)
         } else {
             if (getViewBinding() != null) {

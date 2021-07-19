@@ -33,8 +33,9 @@
             android:paddingHorizontal="@dimen/dimen_5"
             android:paddingVertical="@dimen/dimen_15"
             android:text="一级分类"
-            android:textColor="@color/color_666666"
+            android:textColor="@color/primary"
             android:textSize="@dimen/sp_12" />
+<!--        android:drawableEnd="@mipmap/ic_shift"-->
 
         <TextView
             android:id="@+id/menuCateL2Tv"

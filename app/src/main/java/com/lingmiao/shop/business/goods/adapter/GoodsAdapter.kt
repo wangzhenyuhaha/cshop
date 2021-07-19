@@ -46,7 +46,7 @@ open class GoodsAdapter(
             helper.setText(R.id.goodsNameTv, goodsName)
             helper.setText(
                 R.id.goodsQuantityTv,
-                mContext.getString(R.string.goods_home_quantity, quantity)
+                mContext.getString(R.string.goods_home_quantity, eventQuantity+enableQuantity)
             )
             // helper.setText(R.id.goodsSpecTv, "规格：50ml");
 //            helper.setText(R.id.enableGoodsQuantityTv, mContext.getString(R.string.goods_home_enable_quantity, enableQuantity));

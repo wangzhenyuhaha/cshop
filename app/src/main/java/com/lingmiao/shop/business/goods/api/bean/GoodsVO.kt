@@ -22,6 +22,8 @@ data class GoodsVO(
     var quantity: String? = null,
     @SerializedName("enable_quantity")
     var enableQuantity: Int = 0,
+    @SerializedName("event_quantity")
+    var eventQuantity: Int = 0,
     @SerializedName("goods_id")
     var goodsId: String?,
     @SerializedName("goods_name")
