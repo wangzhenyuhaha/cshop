@@ -176,7 +176,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopSlogan = it
-                mPresenter?.updateShopNotice(request);
+                mPresenter?.updateShopSlogan(request);
             }
         }
 

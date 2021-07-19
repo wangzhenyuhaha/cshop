@@ -46,7 +46,7 @@ open class GoodsAdapter(
             helper.setText(R.id.goodsNameTv, goodsName)
             helper.setText(
                 R.id.goodsQuantityTv,
-                mContext.getString(R.string.goods_home_quantity, eventQuantity + enableQuantity)
+                mContext.getString(R.string.goods_home_quantity, eventQuantity+enableQuantity)
             )
             // helper.setText(R.id.goodsSpecTv, "规格：50ml");
 //            helper.setText(R.id.enableGoodsQuantityTv, mContext.getString(R.string.goods_home_enable_quantity, enableQuantity));
@@ -103,7 +103,7 @@ open class GoodsAdapter(
             }
             helper.setText(R.id.goodsStatusTv, goodsStatusText)
 
-            if (goodsStatus == GoodsNewFragment.GOODS_STATUS_ALL) {
+            if(goodsStatus == GoodsNewFragment.GOODS_STATUS_ALL) {
                 showGoodsStatusIcon(helper, this)
             }
             //helper.setGone(R.id.goodsDiscountC, helper.adapterPosition % 3 == 1);

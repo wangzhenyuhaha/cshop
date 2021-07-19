@@ -3,7 +3,9 @@ package com.james.common.base
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.widget.RelativeLayout
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
@@ -38,7 +40,7 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         this.savedInstanceState = savedInstanceState
         initBundles()
         if (useBaseLayout()) {
-            mBinding = ActivityBaseBinding.inflate(layoutInflater) as VB
+            mBinding = ActivityBaseBinding.inflate(layoutInflater) as VB;
             setContentView(mBinding.root)
         } else {
             if (getViewBinding() != null) {
