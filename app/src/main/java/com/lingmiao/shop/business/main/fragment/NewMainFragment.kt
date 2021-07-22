@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
@@ -9,9 +10,14 @@ import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
 import com.blankj.utilcode.util.*
+import com.james.common.base.BaseFragment
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.show
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.ApplyShopHintActivity
@@ -19,40 +25,27 @@ import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.MessageCenterActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
 import com.lingmiao.shop.business.main.bean.MainInfo
-import com.lingmiao.shop.business.main.presenter.MainPresenter
-import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
-import com.lingmiao.shop.business.me.bean.AccountSetting
-import com.lingmiao.shop.util.GlideUtils
-import com.lingmiao.shop.util.OtherUtils
-import com.james.common.base.BaseFragment
-import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.show
-import com.james.common.utils.exts.singleClick
-import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.main.bean.MainInfoVo
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
+import com.lingmiao.shop.business.main.presenter.MainPresenter
+import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
 import com.lingmiao.shop.business.me.ManagerSettingActivity
+import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
 import com.lingmiao.shop.business.sales.UserManagerActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
+import com.lingmiao.shop.util.GlideUtils
+import com.lingmiao.shop.util.OtherUtils
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
-import kotlinx.android.synthetic.main.fragment_new_main.civMainShopHead
-import kotlinx.android.synthetic.main.fragment_new_main.ivMainMessage
-import kotlinx.android.synthetic.main.fragment_new_main.llMainShopOpen
-import kotlinx.android.synthetic.main.fragment_new_main.llMainShopOther
-import kotlinx.android.synthetic.main.fragment_new_main.smartRefreshLayout
-import kotlinx.android.synthetic.main.fragment_new_main.tvMainLoginOut
-import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopHint
-import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopName
-import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopNext
-import kotlinx.android.synthetic.main.fragment_new_main.tvMainShopReason
+import kotlinx.android.synthetic.main.wallet_view_wallet_sum.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
+@SuppressLint("UseRequireInsteadOfGet")
 class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private var mainInfo: MainInfoVo? = null
@@ -94,10 +87,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
             mPresenter?.requestMainInfoData()
+            mPresenter?.getWaringNumber()
         }
         LogUtils.d("fromMain:" + fromMain)
         ivMainMessage.setOnClickListener {
-            if(UserManager.isLogin()) {
+            if (UserManager.isLogin()) {
                 ActivityUtils.startActivity(MessageCenterActivity::class.java)
             }
         }
@@ -123,6 +117,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         showPageLoading()
         mPresenter?.requestMainInfoData()
+        mPresenter?.getWaringNumber()
         mPresenter?.requestAccountSettingData()
     }
 
@@ -410,9 +405,28 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         shopStatusTv.text = if (switchStatusBtn.isChecked) "开店中" else "休息中";
     }
 
+    @SuppressLint("SetTextI18n")
+    override fun onWarningNumber(data: Int) {
+        when {
+            data > 99 -> {
+                tvComeSoon_number.visibility = View.VISIBLE
+                tvComeSoon_number.text = "99+"
+            }
+            data > 0 -> {
+                tvComeSoon_number.visibility = View.VISIBLE
+                tvComeSoon_number.text = data.toString()
+            }
+            else -> {
+                tvComeSoon_number.visibility = View.GONE
+            }
+        }
+    }
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: ApplyShopInfoEvent) {
         mPresenter?.requestMainInfoData()
+        mPresenter?.getWaringNumber()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

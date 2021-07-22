@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
@@ -38,6 +39,8 @@ Create Date : 2021/3/24:10 PM
 Auther      : Fox
 Desc        :
  **/
+
+@SuppressLint("UseRequireInsteadOfGet")
 class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBaseSettingPresenter.View {
 
     private var shopManage: ApplyShopInfo?=null
@@ -64,11 +67,11 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         return true
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.me_fragment_shop_base_setting;
     }
 
-    override fun createPresenter(): ShopBaseSettingPresenter? {
+    override fun createPresenter(): ShopBaseSettingPresenter {
         return ShopBaseSettingPresenterImpl(context!!, this);
     }
 

@@ -1,13 +1,12 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
 import android.content.Context
-import  com.lingmiao.shop.business.me.presenter.ShopManagePresenter
 import com.james.common.base.BasePreImpl
-import com.lingmiao.shop.business.me.api.MeRepository
-import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
+import com.lingmiao.shop.business.me.api.MeRepository
+import com.lingmiao.shop.business.me.presenter.ShopManagePresenter
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 

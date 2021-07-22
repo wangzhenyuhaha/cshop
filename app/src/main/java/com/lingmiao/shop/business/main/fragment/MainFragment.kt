@@ -398,6 +398,10 @@ class MainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     }
 
+    override fun onWarningNumber(data: Int) {
+       //xi xi
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: ApplyShopInfoEvent) {
         mPresenter?.requestMainInfoData()

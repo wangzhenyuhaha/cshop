@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEDED"
-    tools:ignore="HardcodedText"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:id="@+id/llHeader"
@@ -400,11 +400,38 @@
                                     android:drawableTop="@mipmap/main_ic_tuan_register"
                                     android:text="营销设置" />
 
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvComeSoon"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@drawable/main_ic_stock_warning"
-                                    android:text="库存预警" />
+                                <FrameLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1">
+
+                                    <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvComeSoon"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:drawableTop="@drawable/main_ic_stock_warning"
+                                        android:drawablePadding="@dimen/dp_10"
+                                        android:gravity="center"
+                                        android:padding="@dimen/dimen_15"
+                                        android:text="库存预警"
+                                        android:textColor="@color/black"
+                                        android:textSize="@dimen/sp_12" />
+
+                                    <com.james.common.view.CircleTextView
+                                        android:id="@+id/tvComeSoon_number"
+                                        android:padding="@dimen/dp_4"
+                                        android:alpha="0.8"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="end"
+                                        android:layout_marginEnd="30dp"
+                                        android:gravity="center"
+                                        android:text="GGG"
+                                        android:visibility="gone"
+                                        app:circleTint="@color/red"
+                                        tools:visibility="visible" />
+
+                                </FrameLayout>
 
                             </LinearLayout>
                             <!--第二行end-->

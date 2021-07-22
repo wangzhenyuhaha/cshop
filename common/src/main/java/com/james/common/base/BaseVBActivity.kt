@@ -3,16 +3,13 @@ package com.james.common.base
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.widget.RelativeLayout
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.R
 import com.james.common.base.delegate.*
-import com.james.common.databinding.ActivityBaseBinding
 import com.james.common.view.EmptyLayout
 import org.greenrobot.eventbus.EventBus
 
@@ -39,15 +36,10 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         super.onCreate(savedInstanceState)
         this.savedInstanceState = savedInstanceState
         initBundles()
-        if (useBaseLayout()) {
-            mBinding = ActivityBaseBinding.inflate(layoutInflater) as VB;
-            setContentView(mBinding.root)
-        } else {
-            if (getViewBinding() != null) {
-                mBinding = getViewBinding();
-                setContentView(mBinding.root)
-            }
-        }
+
+        mBinding = getViewBinding()
+        setContentView(mBinding.root)
+
         context = this
         mPresenter = createPresenter()
         mPresenter!!.onCreate()
@@ -81,14 +73,14 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
 
     protected abstract fun initView()
 
-    /**
-     * 是否使用基类里面的布局，
-     * @return true：将子类的布局作为 View 添加到父容器中。
-     * @implNote 返回false时，并且使用showPageLoading时要在自定义布局中加入empty view
-     */
-    protected open fun useBaseLayout(): Boolean {
-        return false
-    }
+//    /**
+//     * 是否使用基类里面的布局，
+//     * @return true：将子类的布局作为 View 添加到父容器中。
+//     * @implNote 返回false时，并且使用showPageLoading时要在自定义布局中加入empty view
+//     */
+//    protected open fun useBaseLayout(): Boolean {
+//        return false
+//    }
 
 
     /**
