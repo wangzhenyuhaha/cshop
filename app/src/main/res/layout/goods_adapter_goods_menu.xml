@@ -62,14 +62,13 @@
         android:id="@+id/goodsQuantityTv"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_14"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:lines="1"
         android:textColor="@color/color_999999"
         android:textSize="@dimen/sp_11"
-
         app:layout_constraintStart_toEndOf="@+id/barrier"
         app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
         tools:text="库存：20000" />
@@ -102,11 +101,46 @@
         tools:ignore="ContentDescription" />
 
     <View
+        android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_half"
         android:layout_marginTop="@dimen/dimen_16"
         android:background="@color/color_E6E6E6"
         app:layout_constraintLeft_toLeftOf="@+id/goodsNameTv"
         app:layout_constraintTop_toBottomOf="@+id/goodsIv" />
+
+    <TextView
+        android:id="@+id/goodsEventQuantityTv"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:text="TextView"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        app:layout_constraintBottom_toBottomOf="@+id/goodsQuantityTv"
+        app:layout_constraintStart_toEndOf="@+id/goodsQuantityTv"
+        app:layout_constraintTop_toTopOf="@+id/goodsQuantityTv"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="活动库存" />
+
+    <TextView
+        android:id="@+id/goodsEventPriceTv"
+        android:layout_width="@dimen/dimen_100"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:lines="1"
+        android:text="TextView"
+        android:textColor="@color/color_FD8424"
+        android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="@+id/goodsPriceTv"
+        app:layout_constraintStart_toStartOf="@+id/goodsEventQuantityTv"
+        app:layout_constraintTop_toTopOf="@+id/goodsPriceTv"
+        tools:text="￥100.00" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 
@@ -201,7 +202,7 @@ object GoodsRepository {
     /**
      * 修改活动库存与价格
      */
-    suspend fun updateGoodsQuantityAndPrice(goodsId: String, skuList: List<QuantityPriceRequest>) : HiResponse<Unit> {
+    suspend fun updateGoodsQuantityAndPrice(goodsId: String, skuList:PriceAndQuantity) : HiResponse<Unit> {
         return apiService.updateGoodsQuantityAndPrice(goodsId, skuList).awaitHiResponse();
     }
 

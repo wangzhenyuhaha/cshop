@@ -30,6 +30,18 @@ class GoodsMenuAdapter :
                 mContext.getString(R.string.goods_home_quantity, quantity)
             )
 
+            helper.setText(R.id.goodsPriceTv, formatDouble(price))
+
+
+            //活动库存
+            helper.setText(
+                R.id.goodsEventQuantityTv,
+                mContext.getString(R.string.goods_home_event_quantity, eventQuantity.toString())
+            )
+
+            //活动价格
+            helper.setText(R.id.goodsEventPriceTv, formatDouble(eventPrice))
+
             helper.setText(
                 R.id.goods_adapter_goods_menu_marketEnableTextView,
                 if (marketEnable == 1) {
@@ -39,7 +51,6 @@ class GoodsMenuAdapter :
                 }
             )
 
-            helper.setText(R.id.goodsPriceTv, formatDouble(price))
 
 //            setOnCheckedChangeListener(helper.getView(R.id.menuIv), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
 //                item?.isChecked = isChecked;
@@ -47,6 +58,7 @@ class GoodsMenuAdapter :
 
             // helper.setChecked(R.id.menuIv, item?.isChecked?:false);
             helper.addOnClickListener(R.id.menuIv)
+            helper.addOnClickListener(R.id.goodsPriceTv)
         }
     }
 

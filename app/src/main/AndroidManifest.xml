@@ -179,7 +179,7 @@
             android:name=".business.goods.UserMenuEditActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".business.GoodsOfMenuActivity"
+            android:name=".business.goods.GoodsOfMenuActivity"
             android:screenOrientation="portrait" /> <!-- ======================= 商品模块  END ========================= -->
         <!-- ======================= 订单模块 START ======================== -->
         <activity

@@ -1,4 +1,4 @@
-package com.lingmiao.shop.business
+package com.lingmiao.shop.business.goods
 
 import android.content.Context
 import android.content.Intent

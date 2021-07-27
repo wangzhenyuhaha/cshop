@@ -129,7 +129,7 @@
                                     style="@style/main_parts_hint"
                                     android:layout_weight="1"
                                     android:paddingTop="15dp"
-                                    android:text="今日订单"
+                                    android:text="订单详情"
                                     android:textColor="@color/white" />
 
                                 <ImageView

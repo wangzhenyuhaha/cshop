@@ -1,12 +1,15 @@
 package com.lingmiao.shop.business.goods.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.singleClick
+import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsMenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
