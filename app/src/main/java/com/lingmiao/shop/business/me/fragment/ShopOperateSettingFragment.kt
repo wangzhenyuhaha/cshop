@@ -142,7 +142,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     private fun initSection2View() {
         galleryRv.setCountLimit(1, 5)
-        galleryRv.setAspectRatio(750, 136)
+        galleryRv.setAspectRatio(750, 176)
     }
 
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {

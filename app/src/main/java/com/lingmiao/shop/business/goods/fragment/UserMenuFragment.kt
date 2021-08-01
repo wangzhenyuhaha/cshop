@@ -17,7 +17,7 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.GoodsOfMenuActivity
+import com.lingmiao.shop.business.goods.GoodsOfMenuActivity
 import com.lingmiao.shop.business.goods.UserMenuEditActivity
 import com.lingmiao.shop.business.goods.adapter.MenuOfUserAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO

@@ -10,11 +10,12 @@ Desc        :
  **/
 interface IShopQRCodePre : BasePresenter {
 
-    fun getQRCode();
+    fun getQRCode()
+    fun getShareInfo(shopId: Int)
 
     interface View : BaseView {
 
-        fun onSetQRCode(url : String);
+        fun onSetQRCode(url: String);
 
         fun onGetQRCodeFail();
 

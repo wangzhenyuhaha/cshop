@@ -33,10 +33,10 @@ import org.greenrobot.eventbus.ThreadMode
 /**
  * 我的
  */
-class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter.View {
+class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPresenter.View {
 
-    private var identity : IdentityVo? = null
-    private var my:My? = null
+    private var identity: IdentityVo? = null
+    private var my: My? = null
 
     companion object {
         fun newInstance(): NewMyFragment {
@@ -82,7 +82,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.rlMyPersonInfo -> {//个人信息
-                val intent = Intent(activity,PersonInfoActivity::class.java)
+                val intent = Intent(activity, PersonInfoActivity::class.java)
                 my?.let {
                     intent.putExtra("bean", my!!)
                 }
@@ -101,7 +101,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
                 ActivityUtils.startActivity(FeedbackActivity::class.java)
             }
             R.id.rlMyContactService -> {//联系客服
-                OtherUtils.goToDialApp(activity,IConstant.SERVICE_PHONE)
+                OtherUtils.goToDialApp(activity, IConstant.SERVICE_PHONE)
             }
             R.id.tvShareManager -> {
                 my?.shopId?.apply {
@@ -115,7 +115,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
             }
             R.id.tvShopQRCode -> {
                 // 二维码
-                ActivityUtils.startActivity(ShopQRCodeActivity::class.java)
+                val context = ActivityUtils.getTopActivity()
+                val intent = Intent(context, ShopQRCodeActivity::class.java)
+                intent.putExtra("SHOP_ID", my?.shopId)
+                context.startActivity(intent)
             }
             R.id.tvBalance -> {
                 // 余额
@@ -130,7 +133,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
         tvMyShopName.text = bean.shopName
         tvMyAccount.text = bean.founderText
 
-        if(!TextUtils.isEmpty(bean.mobile)&& bean.mobile?.length!! >7){
+        if (!TextUtils.isEmpty(bean.mobile) && bean.mobile?.length!! > 7) {
             tvMyPhone.text = "${bean.mobile!!.substring(0, 3)}****${bean.mobile!!.substring(7)}"
         }
 
@@ -146,10 +149,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
 
     }
 
-    fun setUserUi(loginInfo : LoginInfo?) {
+    fun setUserUi(loginInfo: LoginInfo?) {
         loginInfo?.apply {
             tvMyShopName.text = shopName
-            GlideUtils.setImageUrl(ivMyHead,shopLogo)
+            GlideUtils.setImageUrl(ivMyHead, shopLogo)
         }
     }
 
@@ -162,7 +165,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
      * 加载成功
      */
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
-        tvBalance.text = getString(R.string.wallet_value, formatDouble(data?.balanceAccount?.balanceAmount?:0.0))
+        tvBalance.text = getString(
+            R.string.wallet_value,
+            formatDouble(data?.balanceAccount?.balanceAmount ?: 0.0)
+        )
     }
 
     override fun onLoadedAccount(data: WithdrawAccountVo?) {
@@ -179,7 +185,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     override fun onSetVipInfo(item: IdentityVo?) {
         this.identity = item;
         tvTryHint.setText(item?.shopTitle)
-        if(item?.isVip() == true) {
+        if (item?.isVip() == true) {
             ivTryLogo.setImageResource(R.mipmap.ic_try_logo)
             tvTryHint.setText(String.format("%s%s", item.shopTitle, item.get_VipHint()));
             tvVip.setText("续费")
@@ -195,13 +201,13 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresen
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updatePersonInfo(event:PersonInfoRequest){
+    fun updatePersonInfo(event: PersonInfoRequest) {
         refreshData()
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateLogo(event : LoginInfo) {
+    fun updateLogo(event: LoginInfo) {
         event?.apply {
             setUserUi(event)
         }

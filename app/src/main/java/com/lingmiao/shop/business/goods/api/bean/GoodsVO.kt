@@ -31,7 +31,7 @@ data class GoodsVO(
     @SerializedName("goods_type")
     var goodsType: String?,
     @SerializedName("supplier_name")
-    var supplierName : String?,
+    var supplierName: String?,
     /**
      * STATUS_MIX_0,STATUS_MIX_1,STATUS_MIX_2,STATUS_MIX_3
      */
@@ -42,20 +42,22 @@ data class GoodsVO(
      * 1 已售馨
      */
     @SerializedName("goods_quantity_status_mix")
-    var goodsQuantityStatusMix : Int = 0,
+    var goodsQuantityStatusMix: Int = 0,
     /**
      *  3未审核通过 ；0，4审核中；1，2审核通过
      */
     @SerializedName("is_auth")
     var isAuth: Int = 0,
     @SerializedName("goods_status_text")
-    var goodsStatusText : String="",
+    var goodsStatusText: String = "",
     @SerializedName("auth_message")
-    var authMessage : String = "",
+    var authMessage: String = "",
     @SerializedName("market_enable")
     var marketEnable: Int = 0, //上架状态 1上架 0下架
     @SerializedName("price")
     var price: Double = 0.0,
+    @SerializedName("event_price")
+    var eventPrice: Double = 0.0,
     @SerializedName("priority")
     var priority: Int = 0,
     @SerializedName("seller_name")
@@ -74,7 +76,7 @@ data class GoodsVO(
     /**
      * 是否选中
      */
-    var isChecked : Boolean ? = false
+    var isChecked: Boolean? = false
 ) : Serializable {
 
     companion object {
@@ -102,24 +104,29 @@ data class GoodsVO(
         const val STATUS_MIX_3 = 3
 
 
-
-        fun getEnableAuth() : String {
-            return String.format("%s,%s",
+        fun getEnableAuth(): String {
+            return String.format(
+                "%s,%s",
                 AUTH_STATUS_NO_CHECK,
                 AUTH_STATUS_CHECK_AND_PASS
             );
         }
 
-        fun getWaitAuth() : String {
-            return String.format("%s,%s,%s", AUTH_STATUS_WAITING, AUTH_STATUS_CHECK_AND_REJECT, AUTH_STATUS_EDITING);
+        fun getWaitAuth(): String {
+            return String.format(
+                "%s,%s,%s",
+                AUTH_STATUS_WAITING,
+                AUTH_STATUS_CHECK_AND_REJECT,
+                AUTH_STATUS_EDITING
+            );
         }
 
-        fun getDisableAuth() : String {
+        fun getDisableAuth(): String {
             return String.format("%s,%s", AUTH_STATUS_NO_CHECK, AUTH_STATUS_CHECK_AND_PASS);
         }
     }
 
-    fun isSellOut() : Boolean {
+    fun isSellOut(): Boolean {
         return goodsQuantityStatusMix == 1;
     }
 
@@ -128,7 +135,7 @@ data class GoodsVO(
             STATUS_MIX_0 -> (GoodsMenuPop.TYPE_QUANTITY)
             STATUS_MIX_1 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_DISABLE or GoodsMenuPop.TYPE_QUANTITY or GoodsMenuPop.TYPE_SHARE)
             STATUS_MIX_2 -> (GoodsMenuPop.TYPE_EDIT or GoodsMenuPop.TYPE_ENABLE or GoodsMenuPop.TYPE_DELETE)
-            STATUS_MIX_3 -> (GoodsMenuPop.TYPE_ENABLE or (if(isAuth == 4) GoodsMenuPop.TYPE_EDIT else 0))
+            STATUS_MIX_3 -> (GoodsMenuPop.TYPE_ENABLE or (if (isAuth == 4) GoodsMenuPop.TYPE_EDIT else 0))
             else -> (GoodsMenuPop.TYPE_EDIT)
         }
     }

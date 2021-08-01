@@ -2,9 +2,11 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
+import android.widget.Toast
 import com.amap.api.mapcore.util.it
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
+import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
@@ -43,9 +45,12 @@ class GoodsListOfMenuPreImpl(val context: Context, val view : GoodsListOfMenuPre
         menuPopPre.showMenuPop(ChildrenGoodsMenuPop.TYPE_PRICE or ChildrenGoodsMenuPop.TYPE_EDIT_CATE, target) { menuType ->
             when (menuType) {
                 ChildrenGoodsMenuPop.TYPE_PRICE -> {
-                    quantityPopPre.clickQuantityGoods(item?.goodsId) {
+
+                    //弹出下拉菜单,输入商品ID
+                    quantityPopPre.clickQuantityGoods(item.goodsId) {
 
                     }
+
                 }
                 ChildrenGoodsMenuPop.TYPE_EDIT_CATE -> {
                     showGroup(isTop) { groups, groupName ->

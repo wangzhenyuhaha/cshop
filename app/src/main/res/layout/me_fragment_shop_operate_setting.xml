@@ -333,7 +333,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" (建议尺寸：750X136px)"
+                    android:text=" (建议尺寸：750X176px)"
                     android:textColor="@color/color_999999"
                     android:textSize="9sp" />
 
