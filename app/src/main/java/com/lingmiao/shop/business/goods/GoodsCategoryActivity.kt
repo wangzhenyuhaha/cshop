@@ -73,17 +73,10 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
                     // 更多
                     R.id.cateMoreIv -> {
                         mPresenter?.clickMenuView(item, position, view)
-//                        val item = getItem(position) as CategoryVO;
-//                        showAddDialog(item.categoryId!!.toInt());
                     }
                 }
             }
             onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
-//                if(menuBottom.visibility != View.VISIBLE) {
-//                    menuBottom.visibility = View.VISIBLE;
-//                }
-//                setBatchEditModel(true);
-
                 return@OnItemLongClickListener true;
             }
         }
@@ -92,7 +85,6 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
     override fun initOthers() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_category_manager_title))
         // 禁用上拉加载、下拉刷新
-//        mSmartRefreshLayout.setEnableRefresh(false)
         mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
 
@@ -181,30 +173,6 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         }
         mAdapter?.notifyDataSetChanged();
 
-
-
-//        mList?.forEachIndexed { index, item ->
-//            if (item?.categoryId == id) {
-//                i = index;
-//                if(i > -1) {
-//                    mList?.removeAt(i);
-//                    mAdapter?.notifyDataSetChanged();
-//                }
-//            }
-//            item?.children?.forEachIndexed { _i, it ->
-//                if(it.categoryId == id) {
-//                    i = index;
-//                    __i = _i;
-//                    item?.children?.removeAt(_i)
-//                    item?.subItems?.clear();
-//                    item?.children?.forEachIndexed { index, _it ->
-//                        item?.addSubItem(_it)
-//                    }
-//                    mAdapter?.notifyDataSetChanged();
-//                }
-//            }
-//        };
-
     }
 
     override fun onAdded(pId : Int, vo: CategoryVO) {
@@ -234,8 +202,6 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
                 mAdapter?.expand(i);
                 mAdapter?.notifyDataSetChanged();
             }
-            // val id = String.format("%s", pId);
-            // mPresenter?.loadLv2GoodsGroup(id);
         }
     }
 
@@ -257,11 +223,6 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         }
 
         mAdapter?.notifyDataSetChanged();
-//        mPresenter.loadLv1GoodsGroup();
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

@@ -60,12 +60,6 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
     var mCheckedItem : ShopGroupVO? = null;
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
         val dadapter = MenuOfUserAdapter().apply {
-            setOnItemClickListener { adapter, view, position ->
-//                GroupManagerLv2Activity.openActivity(
-//                    this@GroupManagerLv1Activity,
-//                    mAdapter.getItem(position)?.shopCatId
-//                )
-            }
             setOnItemChildClickListener { adapter, view, position ->
                 var item = adapter.getItem(position) as ShopGroupVO;
                 when (view.id) {
@@ -77,7 +71,6 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
                     }
                     R.id.menuEditGoodsTv -> {
                         GoodsOfMenuActivity.openActivity(activity!!, item);
-                        //GoodsMenuSelectActivity.menu(activity!!, item.shopCatId);
                     }
                     R.id.menuVisibleCb -> {
                         item.disable = if(item.disable == 1) 0 else 1;
@@ -91,18 +84,8 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
                                 mPresenter?.deleteGoodsGroup(mAdapter.getItem(position), position)
                             })
                     }
-//                    R.id.groupDeleteTv -> {
-//                        mPresenter?.deleteGoodsGroup(mAdapter.getItem(position), position)
-//                    }
                 }
             }
-//            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
-//                if(menuBottom.visibility != View.VISIBLE) {
-//                    menuBottom.visibility = View.VISIBLE;
-//                }
-//                setBatchEditModel(true);
-//                return@OnItemLongClickListener true;
-//            }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.common_bg)
             }
@@ -114,8 +97,6 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
                 LogUtils.d(" ..start : $pos")
                 mStartPoi = pos;
-                val holder = viewHolder as BaseViewHolder
-                //                holder.setTextColor(R.id.tv, Color.WHITE);
             }
 
             override fun onItemDragMoving(
@@ -150,8 +131,6 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
                     mPresenter?.sort(isTop!!, item.shopCatId!!, 0);
                     handleSort(0, item);
                 }
-
-                //val holder = viewHolder as BaseViewHolder
             }
         }
 
@@ -197,16 +176,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
 
         // 取消操作
         menuCancelTv.setOnClickListener {
-//            menuBottom.visibility = View.GONE;
-//            menuAllCheckCb.isChecked = false;
-//            var list = mAdapter?.data?.filter { it?.isChecked == true };
-//            if(list?.size > 0) {
-//                list?.forEachIndexed { index, goodsVO ->
-//                    goodsVO.isChecked = false;
-//                }
-//            }
             (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-            //menuSortTv.visiable();
             menuCancelTv.gone();
             menuDeleteTv.gone();
             menuBottom.gone();
@@ -215,18 +185,14 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
         // 操作完成
         menuDeleteTv.setOnClickListener {
             (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-            //menuSortTv.visiable();
-            //menuCancelTv.gone();
             menuDeleteTv.gone();
             menuBottom.gone();
             addMenuLayout.visiable();
         }
         // 排序
         menuSortTv.singleClick {
-            //menuSortTv.gone();
             addMenuLayout.gone();
             menuBottom.visiable();
-            //.visiable();
             menuDeleteTv.visiable();
             (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true);
         }

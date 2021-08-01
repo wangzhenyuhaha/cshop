@@ -74,9 +74,7 @@ class MainActivity : AppCompatActivity() {
 
         val titleList = ArrayList<String>()
         titleList.add("工作台")
-//        titleList.add("商品")
         titleList.add("订单")
-//        titleList.add("RM")
         titleList.add("我的")
         val tabIconList = ArrayList<Int>()
         tabIconList.add(R.drawable.selector_tab_1)

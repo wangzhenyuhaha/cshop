@@ -37,7 +37,6 @@ private const val STATUS = "param1"
  */
 class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresenter>(),
     OrderListPresenter.StatusView {
-    //    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUND
     private var orderType: String? = "ALL"
 
     private var mCStatus: String? = null;
@@ -251,23 +250,12 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         intent.putExtra("orderId", orderBean.sn)
                         startActivityForResult(intent, REQUEST_CODE)
                     }
-                    R.id.tvQuickPay -> {//催付 备注:已取消该功能
-//                        DialogUtils.showDialog(activity!!, "催付提示", "确定要催促用户付款吗？",
-//                            "取消", "确定", View.OnClickListener { }, View.OnClickListener {
-//                            })
-
-                    }
                     R.id.tvShipment -> {
                         DialogUtils.showDialog(activity!!, "配送提示", "确认开始配送该订单？",
                             "取消", "确定配送", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.shipOrder(orderBean.sn!!);
                             })
-                        //发货
-//                        val intent = Intent(activity, OrderSendGoodsActivity::class.java)
-//                        intent.putExtra("orderId", orderBean.sn)
-//                        intent.putExtra("shippingType", orderBean.shippingType)
-//                        startActivityForResult(intent, REQUEST_CODE)
                     }
                     R.id.tvSign -> {
                         DialogUtils.showDialog(activity!!, "送达提示", "确认已经送达该订单？",
@@ -277,13 +265,6 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                             })
                     }
                     R.id.tvVerify -> { // 核销
-//                        orderBean.verificationCode?.apply {
-//                            DialogUtils.showDialog(activity!!, "核销提示", "确定要核销该订单吗？",
-//                                "取消", "确定核销", View.OnClickListener { }, View.OnClickListener {
-//                                    showDialogLoading()
-//                                    mPresenter?.verifyOrder(orderBean.verificationCode!!)
-//                                })
-//                        }
                         val intent = Intent(activity, OrderDetailActivity::class.java)
                         intent.putExtra("orderId", orderBean.sn)
                         startActivity(intent)
@@ -329,10 +310,6 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             setOnItemClickListener { adapter, view, position ->
                 val orderBean = adapter.data[position] as OrderList
-//                val intent = Intent(activity, OrderDetailActivity::class.java)
-//                intent.putExtra("orderId", orderBean.sn)
-////                intent.putExtra("order",orderBean)
-//                startActivity(intent)
                 OrderShowActivity.open(activity!!, orderBean, 11);
             }
             emptyView = EmptyView(mContext).apply {
