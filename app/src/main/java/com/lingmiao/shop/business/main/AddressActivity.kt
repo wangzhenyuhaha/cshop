@@ -58,6 +58,7 @@ Create Date : 2021/4/203:06 PM
 Auther      : Fox
 Desc        :
  **/
+@Deprecated("已过期")
 class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     ApplyShopAddressPresenter.View {
 
@@ -101,8 +102,6 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
 
     companion object {
 
-        //,
-
         fun openActivity(context: Context, adInfo: AddressData?) {
             if (context is Activity) {
                 //latLng: LatLng?, address: String?
@@ -127,6 +126,18 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
                 intent.putExtra("province", shopManage?.shopProvince)
                 intent.putExtra("city", shopManage?.shopCity)
                 intent.putExtra("district", shopManage?.shopCounty)
+                context.startActivity(intent)
+            }
+        }
+
+
+        fun openActivity(context: Context, latLng: LatLng?, city : String?) {
+            if (context is Activity) {
+                //latLng: LatLng?, address: String?
+                //LatLng(shopManage?.shopLat?: 0.0, shopManage?.shopLng?:0.0), shopManage?.shopAdd
+                val intent = Intent(context, AddressActivity::class.java)
+                intent.putExtra(IConstant.BUNDLE_KEY_OF_ITEM, latLng)
+                intent.putExtra("city", city)
                 context.startActivity(intent)
             }
         }

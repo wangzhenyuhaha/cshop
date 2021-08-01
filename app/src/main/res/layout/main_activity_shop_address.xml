@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_15"
+    app:ivBgColor="#fff"
+    app:ivRadius="4dp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dimen_15"
+        android:text="店铺位置"
+        android:textColor="@color/color_333333"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/layoutAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:drawableLeft="@mipmap/ic_location"
+            android:id="@+id/tvAddressDetail"
+            android:gravity="center_vertical"
+            android:drawablePadding="@dimen/dimen_15"
+            android:drawableRight="@mipmap/common_arrow_right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_666666"
+            app:layout_constraintLeft_toRightOf="@id/tvAddressHint"
+            app:layout_constraintTop_toTopOf="parent"
+            android:hint="请先在地图上标记店铺位置"/>
+
+        <TextView
+            android:id="@+id/tvAddressBuild"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请先在地图上标记店铺位置"
+            android:visibility="gone"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_16"
+            app:layout_constraintLeft_toRightOf="@id/tvAddressHint"
+            app:layout_constraintTop_toBottomOf="@id/tvAddressDetail"
+            tools:text="零距空间" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:text="详细地址"
+        android:textColor="@color/color_333333"
+        android:textStyle="bold"/>
+
+    <com.james.common.view.IRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="@dimen/dimen_10"
+        app:ivBgColor="@color/white"
+        app:ivBorderColor="@color/color_EEEEEE"
+        app:ivBorderWidth="@dimen/dimen_half"
+        android:padding="@dimen/dimen_15"
+        app:ivRadius="5dp">
+
+        <EditText
+            android:id="@+id/etDetailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@null"
+            android:gravity="top"
+            android:hint="详情地址，例：xx路xx弄B栋111室"
+            android:maxLength="500"
+            android:textColor="#333"
+            android:textSize="14sp"
+            android:textColorHint="#999999" />
+
+    </com.james.common.view.IRelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="可在此处补填具体门牌信息,例：B栋111室"
+        android:textColor="@color/red" />
+
+    <com.james.common.view.ITextView
+        android:id="@+id/tvSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:text="保存"
+        android:textColor="#fff"
+        android:textSize="13sp"
+        app:ivBgColor="#207AE1"
+        app:ivRadius="4dp" />
+
+
+</com.james.common.view.ILinearLayout>
+

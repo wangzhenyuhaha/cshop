@@ -3,6 +3,7 @@ package com.james.common.base
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -10,6 +11,7 @@ import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.R
 import com.james.common.base.delegate.*
+import com.james.common.databinding.ActivityBaseBinding
 import com.james.common.view.EmptyLayout
 import org.greenrobot.eventbus.EventBus
 
@@ -30,6 +32,7 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
 
     //ViewBinding
     protected lateinit var mBinding: VB
+    protected lateinit var mRootBinding: ActivityBaseBinding
     protected var mPresenter: P? = null
     protected var savedInstanceState: Bundle? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,8 +40,15 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         this.savedInstanceState = savedInstanceState
         initBundles()
 
-        mBinding = getViewBinding()
-        setContentView(mBinding.root)
+        if (useBaseLayout()) {
+            mRootBinding = ActivityBaseBinding.inflate(layoutInflater);
+            setContentView(mRootBinding.root)
+        } else {
+            if (getViewBinding() != null) {
+                mBinding = getViewBinding();
+                setContentView(mBinding.root)
+            }
+        }
 
         context = this
         mPresenter = createPresenter()
@@ -47,7 +57,7 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
             EventBus.getDefault().register(this)
         }
         initSelf()
-//        addContentView()
+        addContentView()
         initView()
     }
 
@@ -58,11 +68,12 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         mToolBarDelegate = ToolBarDelegate(this, tlBar, useLightMode())
     }
 
-//    fun addContentView() {
-//        if (getLayoutId() != 0 && useBaseLayout()) {
-//            layoutInflater.inflate(getLayoutId(), findViewById(R.id.container), true)
-//        }
-//    }
+    fun addContentView() {
+        if (getViewBinding() != null && useBaseLayout()) {
+            mBinding = getViewBinding();
+            mRootBinding.container.addView(mBinding.root);
+        }
+    }
 
     // ------------------- Override Method start ------------------
     protected open fun initBundles() {}
@@ -73,14 +84,14 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
 
     protected abstract fun initView()
 
-//    /**
-//     * 是否使用基类里面的布局，
-//     * @return true：将子类的布局作为 View 添加到父容器中。
-//     * @implNote 返回false时，并且使用showPageLoading时要在自定义布局中加入empty view
-//     */
-//    protected open fun useBaseLayout(): Boolean {
-//        return false
-//    }
+    /**
+     * 是否使用基类里面的布局，
+     * @return true：将子类的布局作为 View 添加到父容器中。
+     * @implNote 返回false时，并且使用showPageLoading时要在自定义布局中加入empty view
+     */
+    protected open fun useBaseLayout(): Boolean {
+        return false
+    }
 
 
     /**

@@ -229,7 +229,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 startActivity(intent)
             }
             R.id.rlShopInfoAddress -> {
-                AddressActivity.openActivity(this, adInfo);
+                ShopAddressActivity.openActivity(context!!, adInfo);
                 // ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
             }
             R.id.rlShopInfoLicense -> {

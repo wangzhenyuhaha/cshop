@@ -15,7 +15,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
-import com.lingmiao.shop.business.main.AddressActivity
+import com.lingmiao.shop.business.main.ShopAddressActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
 import com.lingmiao.shop.business.me.ShopQualificationActivity
@@ -217,7 +217,8 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             }
         }
         rlShopManageAddress.singleClick {
-            AddressActivity.openActivity(context!!, shopManage);
+//            AddressActivity.openActivity(context!!, shopManage);
+            ShopAddressActivity.openActivity(context!!, shopManage);
         }
         rlShopManageQualification.setOnClickListener{
             //店铺资质
@@ -353,6 +354,9 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         request.shopLat = addressLatLng?.latitude
         request.shopLng = addressLatLng?.longitude
         request.shopAdd = event?.adInfo?.address;
+        request.shopProvince = shopManage?.shopProvince
+        request.shopCity = shopManage?.shopCity
+        request.shopCounty = shopManage?.shopCounty
         mPresenter?.updateShopManage(request)
     }
 

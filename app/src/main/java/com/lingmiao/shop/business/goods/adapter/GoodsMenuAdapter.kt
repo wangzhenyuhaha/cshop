@@ -39,7 +39,6 @@ class GoodsMenuAdapter :
                 }
             )
 
-            helper.setText(R.id.goodsPriceTv, formatDouble(price))
 
 //            setOnCheckedChangeListener(helper.getView(R.id.menuIv), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
 //                item?.isChecked = isChecked;
