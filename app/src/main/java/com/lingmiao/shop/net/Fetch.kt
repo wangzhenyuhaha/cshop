@@ -121,6 +121,7 @@ object Fetch {
                                 val loginInfo = UserManager.getLoginInfo()
 //                                var tempToken = "eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOjEwOSwic3ViIjoiQlVZRVIiLCJyb2xlcyI6WyJCVVlFUiJdLCJleHAiOjE1OTU5NTIzNDUsInV1aWQiOm51bGwsInVzZXJuYW1lIjoiYTEzMzkyNDI5NDU5In0.VWJSW6cuhxxK22WifEyTkQxB1FNUMICCT4JG-FK3Wr-V87CqBQCGgAXXX9rZVLKCAMhLk_EmHbeIsl2pfDFyNg"
                                 if (loginInfo?.refreshToken == null) {
+                                    UserManager.loginOut();
                                     goToLoginActivity()
                                 } else {
                                     val response =

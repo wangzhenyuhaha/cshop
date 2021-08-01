@@ -96,7 +96,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         tvApply.singleClick {
             val list = galleryRv.getSelectItems();
             if(list?.size > 0) {
-                val item = list.get(0);
+                val item = galleryRv.getCheckedItem();
                 mPresenter?.apply(item.id!!);
             }
         }

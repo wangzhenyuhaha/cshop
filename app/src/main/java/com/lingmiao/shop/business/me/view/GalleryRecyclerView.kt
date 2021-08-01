@@ -30,6 +30,7 @@ class GalleryRecyclerView @JvmOverloads constructor(
     private var mItemDecoration = 0
     private var mMinCount = 0
     private var mMaxCount = 0
+    private var mCheckPosition = 0;
     private val mSelectPhotos: MutableList<VipType> = mutableListOf()
 
     init {
@@ -68,6 +69,7 @@ class GalleryRecyclerView @JvmOverloads constructor(
         mAdapter?.setOnItemChildClickListener { adapter, view, position ->
              val item = adapter.data[position] as VipType;
             if (view.id == R.id.vipItemLl) {
+                mCheckPosition = position;
                 mAdapter?.setChecked(position);
             }
         }
@@ -79,6 +81,9 @@ class GalleryRecyclerView @JvmOverloads constructor(
         }
     }
 
+    fun getCheckedItem() : VipType {
+        return mSelectPhotos[mCheckPosition];
+    }
 
 }
 

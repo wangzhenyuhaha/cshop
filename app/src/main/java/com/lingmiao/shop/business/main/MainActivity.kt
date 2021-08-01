@@ -158,6 +158,10 @@ class MainActivity : AppCompatActivity() {
     private var mExitTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(vpMain.currentItem > 0) {
+                vpMain.currentItem = 0;
+                return true
+            }
             if(System.currentTimeMillis() - mExitTime > 2000) {
                 ToastUtils.showLong("再按一次返回桌面")
                 mExitTime = System.currentTimeMillis()

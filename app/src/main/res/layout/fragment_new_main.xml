@@ -461,9 +461,10 @@
                                         android:layout_gravity="end"
                                         android:layout_marginEnd="30dp"
                                         android:gravity="center"
-                                        android:text="GGG"
+                                        tools:text="GGG"
                                         android:visibility="gone"
                                         app:circleTint="@color/red"
+                                        android:textColor="@color/white"
                                         tools:visibility="visible" />
 
                                 </FrameLayout>
