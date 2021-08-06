@@ -15,6 +15,8 @@ import com.lingmiao.shop.business.wallet.presenter.WalletInfoPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.BalanceInfoPresenterImpl
 import com.lingmiao.shop.business.wallet.presenter.impl.DepositInfoPresenterImpl
 import com.james.common.base.BaseActivity
+import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.business.wallet.bean.RateVo
 import kotlinx.android.synthetic.main.wallet_view_wallet_sum.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -101,6 +103,11 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
 
     override fun loadInfoError(code: Int) {
         finish();
+    }
+
+    override fun setRate(rate: RateVo?) {
+        rateLayout.visiable();
+        tvRate.setText("${rate?.getRatePercentage()}%");
     }
 
     private fun isBalanceView(): Boolean {

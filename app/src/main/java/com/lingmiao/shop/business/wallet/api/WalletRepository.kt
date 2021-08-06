@@ -52,6 +52,13 @@ object WalletRepository {
     }
 
     /**
+     * 提现费率
+     */
+    suspend fun queryServiceChargeRate() : HiResponse<RateVo> {
+        return apiService.queryServiceChargeRate().awaitHiResponse()
+    }
+
+    /**
      * 查询账户信息
      */
     suspend fun getWithdrawAccountInfo(): HiResponse<WithdrawAccountVo> {

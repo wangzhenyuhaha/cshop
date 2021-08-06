@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEDED"
-    android:orientation="vertical"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/llHeader"
@@ -129,7 +129,7 @@
                                     style="@style/main_parts_hint"
                                     android:layout_weight="1"
                                     android:paddingTop="15dp"
-                                    android:text="订单详情"
+                                    android:text="今日订单"
                                     android:textColor="@color/white" />
 
                                 <ImageView
@@ -217,21 +217,37 @@
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View style="@style/dash_v_line"
-                                    android:visibility="invisible" />
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:visibility="invisible"
+                                    android:id="@+id/layoutTodayFinish"
                                     style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayFinish"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="已完成" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-                                <View style="@style/dash_v_line"
-                                    android:visibility="invisible" />
+                                <View style="@style/dash_v_line" />
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:visibility="invisible"
+                                    android:id="@+id/layoutTodayInvalid"
                                     style="@style/main_data_layout_item">
+
+                                    <TextView
+                                        android:id="@+id/tvTodayInvalid"
+                                        style="@style/today_data_value"
+                                        tools:text="2123" />
+
+                                    <TextView
+                                        style="@style/today_data_hint"
+                                        android:text="失效订单" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
                             </LinearLayout>
@@ -269,7 +285,6 @@
                             </LinearLayout>
 
                             <!--总信息start-->
-
                             <LinearLayout style="@style/main_data_layout">
 
                                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -322,56 +337,6 @@
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
                             </LinearLayout>
-
-                            <View
-                                style="@style/dash_line"
-                                android:layout_marginLeft="@dimen/dimen_30"
-                                android:layout_marginRight="@dimen/dimen_30" />
-
-                            <LinearLayout style="@style/main_data_layout">
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/layoutTodayFinish"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayFinish"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="已完成" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/layoutTodayInvalid"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayInvalid"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="失效订单" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-                                <View style="@style/dash_v_line"
-                                    android:visibility="invisible" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:visibility="invisible"
-                                    style="@style/main_data_layout_item">
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            </LinearLayout>
-
                             <!--总信息end-->
 
                         </LinearLayout>

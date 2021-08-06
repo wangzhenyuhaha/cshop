@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.wallet.presenter
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
+import com.lingmiao.shop.business.wallet.bean.RateVo
 
 /**
  * 提现
@@ -21,5 +22,6 @@ interface WithdrawAccountPresenter : BasePresenter {
          */
         fun getWithdrawAccountSuccess(account : WithdrawAccountVo);
 
+        fun setRate(rate : RateVo?);
     }
 }

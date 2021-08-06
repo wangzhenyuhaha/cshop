@@ -44,6 +44,13 @@ interface WalletApiService {
     fun queryWithdrawAccount() : Call<WithdrawAccountVo>;
 
     /**
+     * 提现费率
+     */
+    @WithHiResponse
+    @POST("account/withdraw/queryServiceChargeRate")
+    fun queryServiceChargeRate() : Call<RateVo>;
+
+    /**
      * 绑定提现账户信息（支付宝/微信)
      */
     @WithHiResponse

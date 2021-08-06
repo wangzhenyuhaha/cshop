@@ -18,6 +18,12 @@ class WithdrawPresenterImpl(private val view: WithdrawPresenter.View) : BasePreI
 
             val resp = WalletRepository.getWithdrawAccountInfo()
 
+            val rate = WalletRepository.queryServiceChargeRate();
+
+            handleResponse(resp) {
+                view.setRate(rate.data);
+            }
+
             handleResponse(resp) {
                 view.getWithdrawAccountSuccess(resp?.data);
             }

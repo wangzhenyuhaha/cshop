@@ -14,6 +14,7 @@ import com.lingmiao.shop.business.wallet.presenter.WithdrawPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.WithdrawPresenterImpl
 import com.james.common.base.BaseActivity
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.business.wallet.adapter.WithdrawTypeAdapter
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.wallet_activity_withdraw.*
@@ -208,6 +209,11 @@ class WithdrawActivity : BaseActivity<WithdrawPresenter>(), WithdrawPresenter.Vi
 
             setWechatChecked();
         }
+    }
+
+    override fun setRate(rate: RateVo?) {
+        tvRechargeFee.visiable();
+        tvRechargeFee.setText("提现费率：${rate?.getRatePercentage()}%")
     }
 
     override fun applySuccess() {
