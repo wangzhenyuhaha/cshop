@@ -20,8 +20,6 @@ class UserAdapter : BaseQuickAdapter<UserVo, BaseViewHolder>(R.layout.sales_adap
 
     override fun convert(helper: BaseViewHolder, item: UserVo?) {
         item?.apply {
-
-
             GlideUtils.setImageUrl(helper.getView(R.id.userAvatar), item?.face, R.mipmap.main_shop_logo_default)
             //main_shop_logo_default
             helper.setGone(R.id.userCheckCb, isBatchEditModel);

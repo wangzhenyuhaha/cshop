@@ -129,7 +129,7 @@
                                     style="@style/main_parts_hint"
                                     android:layout_weight="1"
                                     android:paddingTop="15dp"
-                                    android:text="今日订单"
+                                    android:text="订单流转"
                                     android:textColor="@color/white" />
 
                                 <ImageView
@@ -153,7 +153,7 @@
 
                                     <TextView
                                         style="@style/today_data_hint"
-                                        android:text="未接订单" />
+                                        android:text="待接单" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -298,7 +298,7 @@
 
                                     <TextView
                                         style="@style/today_data_hint"
-                                        android:text="订单数量" />
+                                        android:text="订单总量" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 

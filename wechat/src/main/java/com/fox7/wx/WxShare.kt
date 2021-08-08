@@ -304,11 +304,11 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         mMiniProgramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
     }
 
-    fun miniType(isTest : Boolean) {
-        if(isTest) {
-            miniTypeToPreview();
-        } else {
+    fun miniType(isPrd : Boolean) {
+        if(isPrd) {
             miniTypeToRelease();
+        } else {
+            miniTypeToPreview();
         }
     }
 

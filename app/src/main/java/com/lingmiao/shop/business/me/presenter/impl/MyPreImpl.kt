@@ -52,7 +52,7 @@ class MyPreImpl(val context: Context, private var view: MyPresenter.View) : Base
 		share.mTitle = item.title;
 		share.mDescription = item.content;
 		share.shareToFriend();
-		share.miniType(!IConstant.official);
+		share.miniType(IConstant.official);
 
 		var imageByes : ByteArray? = null;
 		if(item.imageUrl == null || item.imageUrl.isEmpty()) {

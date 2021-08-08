@@ -30,7 +30,7 @@
             tools:visibility="visible" />
 
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/userAvatar"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/userCheckCb"
@@ -38,7 +38,6 @@
             android:layout_toEndOf="@+id/userCheckCb"
             android:layout_width="@dimen/dimen_29"
             android:layout_height="@dimen/dimen_29" />
-
 
         <TextView
             android:id="@+id/userNameTv"
