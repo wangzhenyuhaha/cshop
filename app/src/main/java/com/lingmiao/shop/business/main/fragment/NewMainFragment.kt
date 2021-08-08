@@ -310,7 +310,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 用户管理
         tvUserManager.setOnClickListener {
-            ActivityUtils.startActivity(UserManagerActivity::class.java)
+            UserManagerActivity.newUser(context!!);
         }
         // 数据统计
         tvDataAnalysis.setOnClickListener {
@@ -333,7 +333,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 用户数据
         userDataOfTodayTv.singleClick {
-            UserManagerActivity.newUser(context!!);
+            UserManagerActivity.allUser(context!!);
         }
 
 
