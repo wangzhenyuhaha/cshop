@@ -105,6 +105,7 @@ class OrderListAdapter :
         val tvUpdatePrice = helper.getView<TextView>(R.id.tvUpdatePrice)
         val tvQuickPay = helper.getView<TextView>(R.id.tvQuickPay)
         val tvShipment = helper.getView<TextView>(R.id.tvShipment)
+        val tvPrepare = helper.getView<TextView>(R.id.tvPrepare)
         val tvSign = helper.getView<TextView>(R.id.tvSign)
         val tvVerify = helper.getView<TextView>(R.id.tvVerify);
         val tvLookLogistics = helper.getView<TextView>(R.id.tvLookLogistics)
@@ -122,6 +123,7 @@ class OrderListAdapter :
         tvUpdatePrice.visibility = View.GONE
         tvQuickPay.visibility = View.GONE
         tvShipment.visibility = View.GONE
+        tvPrepare.visibility = View.GONE
         tvSign.visibility = View.GONE
         tvVerify.visibility = View.GONE
         tvLookLogistics.visibility = View.GONE
@@ -135,6 +137,7 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvUpdatePrice)
         helper.addOnClickListener(R.id.tvQuickPay)
         helper.addOnClickListener(R.id.tvShipment)
+        helper.addOnClickListener(R.id.tvPrepare)
         helper.addOnClickListener(R.id.tvVerify)
         helper.addOnClickListener(R.id.tvLookLogistics)
         helper.addOnClickListener(R.id.tvAfterSale)
@@ -171,10 +174,14 @@ class OrderListAdapter :
                 // 已接单,进行中,待送配
                 if(item?.shippingType == IConstant.SHIP_TYPE_GLOBAL) {
                     // 骑手配送
-                    tvShipment.setText("备货完成");
-                    tvPhoneUser.visibility = View.VISIBLE
+//                    tvShipment.setText("备货完成");
+//                    tvPhoneUser.visibility = View.VISIBLE
+                    tvPrepare.visiable()
+                } else {
+                    tvShipment.visiable()
+                    tvPrepare.visiable()
                 }
-                tvShipment.visibility = View.VISIBLE
+
             }
             "SHIPPED" -> {
                 showBottomArea = true;

@@ -170,7 +170,7 @@
 
                                     <TextView
                                         style="@style/today_data_hint"
-                                        android:text="已接订单" />
+                                        android:text="待配送" />
 
                                 </androidx.appcompat.widget.LinearLayoutCompat>
 

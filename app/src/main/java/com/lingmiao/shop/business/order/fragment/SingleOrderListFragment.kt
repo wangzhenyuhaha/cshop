@@ -257,6 +257,13 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                                 mPresenter?.shipOrder(orderBean.sn!!);
                             })
                     }
+                    R.id.tvPrepare -> {
+                        DialogUtils.showDialog(activity!!, "备货提示", "确认该订单已经备货？",
+                            "取消", "备货完成", View.OnClickListener { }, View.OnClickListener {
+                                showDialogLoading()
+                                mPresenter?.prepareOrder(orderBean.sn!!);
+                            })
+                    }
                     R.id.tvSign -> {
                         DialogUtils.showDialog(activity!!, "送达提示", "确认已经送达该订单？",
                             "取消", "确定送达", View.OnClickListener { }, View.OnClickListener {

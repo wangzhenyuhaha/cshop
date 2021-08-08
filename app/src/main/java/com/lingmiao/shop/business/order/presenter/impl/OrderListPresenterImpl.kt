@@ -128,4 +128,8 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
         }
     }
 
+    override fun prepareOrder(sn: String) {
+        view.hideDialogLoading()
+    }
+
 }
