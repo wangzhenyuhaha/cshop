@@ -292,7 +292,8 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun onGoodsQuantity(quantity: String?, position: Int) {
-        (mAdapter as GoodsAdapter).updateQuantity(quantity, position)
+        // (mAdapter as GoodsAdapter).updateQuantity(quantity, position)
+        mLoadMoreDelegate?.refresh()
     }
 
     override fun onGoodsDelete(goodsId: String?, position: Int) {

@@ -347,3 +347,7 @@ public void *(android.view.View);
 
  -keep class com.github.aachartmodel.** { *; }
  -keep class com.github.aachartmodel.aainfographics.** { *; }
+
+
+ -keep class com.nurmemet.nur.** { *; }
+

@@ -169,7 +169,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
     }
 
     override fun initOthers(rootView: View) {
-        menuAddTv.setOnClickListener {
+        menuAddLayout.setOnClickListener {
             MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, null, null);
         }
 

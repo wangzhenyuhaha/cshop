@@ -163,7 +163,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
     }
 
     override fun initOthers(rootView: View) {
-        menuAddTv.setOnClickListener {
+        menuAddLayout.setOnClickListener {
             UserMenuEditActivity.openActivity(activity!!, "0", null);
         }
 

@@ -143,4 +143,5 @@ dependencies {
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
 
+    implementation 'com.gitee.nurApplication:NurVideoPlayer:2.1.6'
 }

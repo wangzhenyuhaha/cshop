@@ -10,24 +10,39 @@
         android:id="@+id/addMenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_14"
         android:layout_marginTop="@dimen/dimen_10"
         app:ivBgColor="@color/gray_bg_click"
         app:ivRadius="@dimen/dimen_5"
         android:orientation="horizontal"
         android:layout_marginBottom="@dimen/dimen_10">
 
-        <TextView
-            android:background="@color/white"
-            android:id="@+id/menuAddTv"
-            android:paddingVertical="@dimen/dimen_15"
-            android:paddingHorizontal="@dimen/dimen_15"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/goods_spec_blue_plus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_weight="1"
-            android:text="添加菜单"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingHorizontal="@dimen/dimen_15"
+            android:id="@+id/menuAddLayout">
+
+            <TextView
+                android:paddingVertical="@dimen/dimen_15"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/sp_14"
+                android:text="添加菜单"/>
+
+            <TextView
+                android:drawableRight="@mipmap/goods_spec_blue_plus"
+                android:layout_weight="1"
+                android:textSize="@dimen/sp_12"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/red"
+                android:text="(可以使用活动价)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/menuSortTv"
@@ -35,6 +50,7 @@
             android:paddingLeft="@dimen/dimen_15"
             android:paddingRight="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_38"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:drawableLeft="@mipmap/ic_sort_up"
             android:text="菜单排序"
