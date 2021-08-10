@@ -115,8 +115,8 @@ open class GoodsAdapter(
 
     fun updateQuantity(quantity: String?, position: Int) {
         val goods = data[position]
-        goods.quantity = quantity
-        goods.goodsQuantityStatusMix = if (quantity?.toInt() ?: 0 > 0) 1 else 0;
+        goods.enableQuantity = quantity?.toInt() ?: 0;
+        goods.goodsQuantityStatusMix = if (goods.enableQuantity > 0) 0 else 1;
         notifyItemChanged(position)
     }
 
