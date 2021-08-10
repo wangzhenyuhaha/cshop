@@ -14,6 +14,7 @@ import com.james.common.base.delegate.DefaultPageLoadingDelegate
 import com.james.common.base.delegate.LoadingDelegate
 import com.james.common.base.delegate.PageLoadingDelegate
 import com.james.common.view.EmptyLayout
+import org.greenrobot.eventbus.EventBus
 
 
 //If you want a layout file to be ignored while generating binding classes,
@@ -66,6 +67,9 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         emptyLayout = view.findViewById(R.id.el_empty)
 
+        if (useEventBus() && !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
         //初始化数据
         initViewsAndData(view)
     }
@@ -73,6 +77,9 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
     }
 
 
@@ -87,6 +94,13 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
     //---------------------method---------------------
 
     protected open fun initBundles() {
+    }
+
+    /**
+     * 是否开启事件注册
+     */
+    protected open fun useEventBus(): Boolean {
+        return false
     }
 
     //---------------------重写BaseView中的抽象方法---------------------

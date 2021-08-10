@@ -2,72 +2,200 @@ package com.lingmiao.shop.business.main.bean
 
 import com.blankj.utilcode.util.StringUtils
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.business.main.fragment.BindAccountFragment
 import java.io.Serializable
 
 
 data class ApplyShopInfo(
 
-    //推广码
-    var promo_code: String? = null,
-//店铺经营类目    ids
-    @SerializedName("goods_management_category")
-    var goodsManagementCategory: String? = null,
+    //店铺类型:1,企业     3,个体户
+    @SerializedName("shop_type")
+    var shopType: Int? = null,
 
-//店铺经营类目 返回文本
-    @SerializedName("category_names")
-    var categoryNames: String? = null,
+    //店铺名称
+    @SerializedName("shop_name")
+    var shopName: String? = null,
 
-//手持身份证照片
-    @SerializedName("hold_img")
-    var holdImg: String? = null,
-
-//身份证反面照片
-    @SerializedName("legal_back_img")
-    var legalBackImg: String? = null,
-
-//身份证正面照片
-    @SerializedName("legal_img")
-    var legalImg: String? = null,
-
-//营业执照电子版
+    //营业执照电子版
     @SerializedName("licence_img")
     var licenceImg: String? = null,
 
-//联系人姓名
-    @SerializedName("link_name")
-    var linkName: String? = null,
+    //店铺门头照片
+    @SerializedName("storepic")
+    var shopPhotoFront: String? = null,
 
-//联系人电话
-    @SerializedName("link_phone")
-    var linkPhone: String? = null,
+    //店铺内景照片
+    @SerializedName("storeinnerpic")
+    var shopPhotoInside: String? = null,
 
-//店铺所在省
+
+    //身份证正面照片，国徽
+    @SerializedName("legal_img")
+    var legalImg: String? = null,
+
+    //身份证反面照片，人像
+    @SerializedName("legal_back_img")
+    var legalBackImg: String? = null,
+
+    //法人手持身份证照片
+    @SerializedName("hold_img")
+    var holdImg: String? = null,
+
+    //店铺经营类目    ids
+    @SerializedName("goods_management_category")
+    var goodsManagementCategory: String? = null,
+
+    //店铺经营类目 返回文本
+    @SerializedName("category_names")
+    var categoryNames: String? = null,
+
+
+    //店铺所在省
     @SerializedName("shop_province")
     var shopProvince: String? = null,
 
-//店铺所在市
+    //店铺所在市
     @SerializedName("shop_city")
     var shopCity: String? = null,
 
-//店铺所在县
+    //店铺所在县
     @SerializedName("shop_county")
     var shopCounty: String? = null,
 
-//店铺所在镇
+    //店铺所在镇
     @SerializedName("shop_town")
     var shopTown: String? = null,
 
-//店铺详细地址
+    //店铺详细地址
     @SerializedName("shop_add")
     var shopAdd: String? = null,
 
-//店铺纬度
+    //店铺纬度
     @SerializedName("shop_lat")
     var shopLat: Double? = null,
 
-//店铺经度
+    //店铺经度
     @SerializedName("shop_lng")
     var shopLng: Double? = null,
+
+
+    //店铺联系人姓名(负责人)
+    @SerializedName("link_name")
+    var linkName: String? = null,
+
+    //店铺联系人电话(负责人电话)
+    @SerializedName("link_phone")
+    var linkPhone: String? = null,
+
+    //经营内容(法定经营范围)
+    @SerializedName("scope")
+    var scope: String? = null,
+
+
+    //身份证信息
+    //法人姓名
+    @SerializedName("legal_name")
+    var legalName: String? = null,
+
+    //法人性别(法人性别,1为男，0为女)
+    @SerializedName("legal_sex")
+    var legalSex: Int? = null,
+
+    //法人身份证号码
+    @SerializedName("legal_id")
+    var legalId: String? = null,
+
+    //证件有效期(法人身份证过期时间)  Data
+    @SerializedName("legalidexpire")
+    var legalIDExpire: Long? = null,
+
+    //如果是公司账户,填写企业资料
+
+    //注册资金  注册资本  1: 注册资本<10万元 2: 10万元<注册资本<20万元 3: 20万元<注册资本<50万元 4: 50万元<注册资本<100万元 5: 注册资本>100万元
+    @SerializedName("reg_money")
+    var regMoney: Int? = null,
+
+    //员工人数  商户性质为企业、个体户时必填 1: 员工数量<10 2: 10<员工数量<20 3: 20<员工数量<50 4: 50<员工数量<100 5:员工数量>100"
+    @SerializedName("employee_num")
+    var employeeNum: Int? = null,
+
+    //经营区域  1：城区 2: 郊区 3：边远地区
+    @SerializedName("operatelimit")
+    var operateLimit: Int? = null,
+
+    //经营地段  1：商业区 2：工业区 3：住宅区
+    @SerializedName("inspect")
+    var inspect: Int? = null,
+
+    //三证合一  是否三证合一 1：是 0：否
+    @SerializedName("thrcertflag")
+    var thrcertflag: Int? = null,
+
+
+    //组织机构代码证号 组织机构代码证号 三证合一否时需要填写
+    @SerializedName("organcode")
+    var organCode: String? = null,
+
+
+    //组织机构代码证有效期 组织机构代码证有效期 三证合一否时需要填写
+    @SerializedName("organexpire")
+    var organexpire: Long? = null,
+
+
+    //企业联系人姓名
+    @SerializedName("meizuo")
+    var companyLinkName: String? = null,
+
+
+    //企业联系人电话
+    @SerializedName("meizuo2")
+    var companyLinkPhone: String? = null,
+
+
+    //结算账户绑定
+    //账户类型 0-对私 1-对公
+    @SerializedName("accttype")
+    var accttype: Int? = null,
+
+    //账户名称或持卡人
+    @SerializedName("bank_account_name")
+    var bankAccountName: String? = null,
+
+    //账户号或卡号
+    @SerializedName("bank_number")
+    var bankNumber: String? = null,
+
+    //开户地区，即所在区的编码（通联）
+    @SerializedName("districtcode")
+    var districtcode: String? = null,
+
+
+    //所属银行,开户银行号（通联）
+    @SerializedName("bank_no")
+    var bankNo: String? = null,
+
+    //所属支行,开户银行支行名称
+    @SerializedName("bank_name")
+    var bankName: String? = null,
+
+    //开户许可证照片
+    @SerializedName("acctlicensepic")
+    var acctlicensepic: String? = null,
+
+    //银行卡正面照,对私账户
+    @SerializedName("settlebankpic")
+    var settleBankPic: String? = null,
+
+
+    //店铺绑定的银行卡
+    @SerializedName("bank_card")
+    var   bankCard: BindAccountFragment.BindBankCardDTO? = null,
+
+
+
+//推广码
+    var promo_code: String? = null,
+
 
 //店铺logo
     @SerializedName("shop_logo")
@@ -79,9 +207,6 @@ data class ApplyShopInfo(
     @SerializedName("shop_notice")
     var shopNotice: String? = null,
 
-//店铺名称
-    @SerializedName("shop_name")
-    var shopName: String? = null,
 
     @SerializedName("shop_desc")
     var shopDesc: String? = null,
@@ -126,9 +251,7 @@ data class ApplyShopInfo(
 //店铺类型
 //    @SerializedName("shop_tag")
 //    var shopTag: String?=null,
-//店铺类型
-    @SerializedName("shop_type")
-    var shopType: String? = null,
+
 
     @SerializedName("shop_setting")
     var orderSetting: OrderSetting? = null,
@@ -139,7 +262,7 @@ data class ApplyShopInfo(
 ) : Serializable {
 
     fun getShopTypeStr(): String {
-        return if (StringUtils.equals("2", shopType)) "单店" else "连锁店";
+        return if (StringUtils.equals("2", shopType.toString())) "单店" else "连锁店"
     }
 
     fun getFullAddress(): String {
@@ -149,19 +272,19 @@ data class ApplyShopInfo(
             if (isExistCity()) "" else shopCity,
             if (isExistCounty()) "" else shopCounty,
             shopAdd
-        );
+        )
     }
 
     fun isExistProvince(): Boolean {
-        return shopProvince?.let { shopAdd?.indexOf(it) } ?: -1 > 0;
+        return shopProvince?.let { shopAdd?.indexOf(it) } ?: -1 > 0
     }
 
     fun isExistCity(): Boolean {
-        return shopCity?.let { shopAdd?.indexOf(it) } ?: -1 > -1;
+        return shopCity?.let { shopAdd?.indexOf(it) } ?: -1 > -1
     }
 
     fun isExistCounty(): Boolean {
-        return shopCounty?.let { shopAdd?.indexOf(it) } ?: -1 > -1;
+        return shopCounty?.let { shopAdd?.indexOf(it) } ?: -1 > -1
     }
 
 }

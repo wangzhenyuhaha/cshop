@@ -421,6 +421,7 @@
                                         android:id="@+id/tvComeSoon_number"
                                         android:padding="@dimen/dp_4"
                                         android:alpha="0.8"
+                                        android:textColor="@color/white"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="end"
@@ -429,7 +430,6 @@
                                         tools:text="GGG"
                                         android:visibility="gone"
                                         app:circleTint="@color/red"
-                                        android:textColor="@color/white"
                                         tools:visibility="visible" />
 
                                 </FrameLayout>

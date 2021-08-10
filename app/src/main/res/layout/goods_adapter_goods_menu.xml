@@ -52,10 +52,10 @@
         android:lines="1"
         android:textColor="@color/color_999999"
         android:textSize="@dimen/sp_11"
-        app:layout_constraintBottom_toBottomOf="@id/goodsQuantityTv"
+        app:layout_constraintBottom_toBottomOf="@id/goodsNameTv"
         app:layout_constraintEnd_toEndOf="@id/menuIv"
         app:layout_constraintStart_toStartOf="@+id/menuIv"
-        app:layout_constraintTop_toTopOf="@id/goodsQuantityTv"
+        app:layout_constraintTop_toTopOf="@id/goodsNameTv"
         tools:text="已上架" />
 
     <TextView
@@ -87,27 +87,6 @@
         app:layout_constraintLeft_toRightOf="@id/barrier"
         app:layout_constraintTop_toBottomOf="@+id/goodsQuantityTv"
         tools:text="￥200.00" />
-
-    <ImageView
-        android:id="@+id/menuIv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dimen_9"
-        android:layout_marginBottom="@dimen/dimen_9"
-        android:padding="@dimen/dimen_5"
-        android:src="@mipmap/goods_status_list_menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:ignore="ContentDescription" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/dimen_half"
-        android:layout_marginTop="@dimen/dimen_16"
-        android:background="@color/color_E6E6E6"
-        app:layout_constraintLeft_toLeftOf="@+id/goodsNameTv"
-        app:layout_constraintTop_toBottomOf="@+id/goodsIv" />
 
     <TextView
         android:id="@+id/goodsEventQuantityTv"
@@ -141,6 +120,29 @@
         app:layout_constraintStart_toStartOf="@+id/goodsEventQuantityTv"
         app:layout_constraintTop_toTopOf="@+id/goodsPriceTv"
         tools:text="￥100.00" />
+
+
+    <ImageView
+        android:id="@+id/menuIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_9"
+        android:layout_marginBottom="@dimen/dimen_9"
+        android:padding="@dimen/dimen_5"
+        android:src="@mipmap/goods_status_list_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dimen_half"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:background="@color/color_E6E6E6"
+        app:layout_constraintLeft_toLeftOf="@+id/goodsNameTv"
+        app:layout_constraintTop_toBottomOf="@+id/goodsIv" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

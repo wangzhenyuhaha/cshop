@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.sales
 
 import android.app.Activity
 import android.content.Intent
-import android.view.View
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.TimeUtils.string2Date

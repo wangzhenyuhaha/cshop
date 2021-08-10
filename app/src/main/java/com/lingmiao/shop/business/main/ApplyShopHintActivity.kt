@@ -3,12 +3,11 @@ package com.lingmiao.shop.business.main
 import android.app.Activity
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
+import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.main.bean.ApplyShopHint
 import com.lingmiao.shop.business.main.presenter.ApplyShopHintPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopHintPresenterImpl
-import com.james.common.base.BaseActivity
-import com.james.common.netcore.coroutine.CoroutineSupport
 import kotlinx.android.synthetic.main.main_activity_apply_shop_hint.*
 
 /**
@@ -16,8 +15,6 @@ import kotlinx.android.synthetic.main.main_activity_apply_shop_hint.*
 */
 class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(),ApplyShopHintPresenter.View {
 
-
-    private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
 
     override fun getLayoutId(): Int {
         return R.layout.main_activity_apply_shop_hint
@@ -28,7 +25,7 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(),ApplyShopHi
     }
 
     override fun useLightMode(): Boolean {
-        return false;
+        return false
     }
 
     override fun initView() {

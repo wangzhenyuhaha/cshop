@@ -17,12 +17,17 @@ class GoodsMenuAdapter :
 
             GlideUtils.setImageUrl1(helper.getView(R.id.goodsIv), thumbnail)
 
+//            helper.setGone(R.id.goodsEventQuantityTv, enableQuantity == 0)
+//
+
             helper.getView<TextView>(R.id.goodsNameTv).setCompoundDrawablesWithIntrinsicBounds(
                 if (item.goodsType == GoodsConfig.GOODS_TYPE_VIRTUAL) R.mipmap.ic_virtual else 0,
                 0,
                 0,
                 0
             )
+
+
             helper.setText(R.id.goodsNameTv, goodsName)
 
             helper.setText(
@@ -41,6 +46,24 @@ class GoodsMenuAdapter :
 
             //活动价格
             helper.setText(R.id.goodsEventPriceTv, formatDouble(eventPrice))
+
+            helper.setText(
+                R.id.goodsPriceTv,
+                mContext.getString(R.string.goods_home_price, price.toFloat().toString())
+            )
+
+
+            //活动库存
+            helper.setText(
+                R.id.goodsEventQuantityTv,
+                mContext.getString(R.string.goods_home_event_quantity, eventQuantity.toString())
+            )
+
+            //活动价格
+            helper.setText(
+                R.id.goodsEventPriceTv,
+                mContext.getString(R.string.goods_home_event_price, eventPrice.toFloat().toString())
+            )
 
             helper.setText(
                 R.id.goods_adapter_goods_menu_marketEnableTextView,

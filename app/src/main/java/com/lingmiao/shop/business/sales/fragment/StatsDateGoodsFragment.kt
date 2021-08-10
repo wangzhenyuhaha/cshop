@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.bigkoo.pickerview.view.TimePickerView
-import com.blankj.utilcode.util.GsonUtils
 import com.github.aachartmodel.aainfographics.aachartcreator.*
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText

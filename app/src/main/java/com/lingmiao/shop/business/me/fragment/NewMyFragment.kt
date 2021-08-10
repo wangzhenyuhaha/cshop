@@ -4,29 +4,27 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.james.common.base.BaseFragment
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.login.bean.LoginInfo
+import com.lingmiao.shop.business.me.*
+import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.presenter.MyPresenter
 import com.lingmiao.shop.business.me.presenter.impl.MyPreImpl
 import com.lingmiao.shop.business.wallet.MyWalletActivity
-import com.lingmiao.shop.util.GlideUtils
-import com.lingmiao.shop.util.OtherUtils
-import com.james.common.base.BaseFragment
-import com.james.common.utils.exts.gone
-import com.james.common.utils.exts.visiable
-import com.lingmiao.shop.business.login.bean.LoginInfo
-import com.lingmiao.shop.business.me.*
-import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
+import com.lingmiao.shop.util.GlideUtils
+import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.formatDouble
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_my_new.*
-import kotlinx.android.synthetic.main.fragment_my_new.smartRefreshLayout
-import kotlinx.android.synthetic.main.fragment_my_new.tvManagerSetting
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -44,11 +42,11 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         }
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.fragment_my_new
     }
 
-    override fun createPresenter(): MyPresenter? {
+    override fun createPresenter(): MyPresenter {
         return MyPreImpl(mContext, this)
     }
 
@@ -68,8 +66,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         tvBalance.setOnClickListener(this)
         tvSetting.setOnClickListener(this)
         tvManagerSetting.setOnClickListener(this)
-        tvShopQRCode.setOnClickListener(this);
-        tvShareManager.setOnClickListener(this);
+        tvShopQRCode.setOnClickListener(this)
+        tvShareManager.setOnClickListener(this)
+        tvWeChatApprove.setOnClickListener(this)
 //        rlMyShopManage.setOnClickListener(this)
         rlMyFeedback.setOnClickListener(this)
         rlMyContactService.setOnClickListener(this)
@@ -89,10 +88,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 startActivity(intent)
             }
             R.id.tvVip -> {
-                ApplyVipActivity.openActivity(activity!!, my, identity);
+                ApplyVipActivity.openActivity(requireActivity(), my, identity)
             }
             R.id.tvMyWallet -> {//我的钱包
-                ActivityUtils.startActivity(MyWalletActivity::class.java);
+                ActivityUtils.startActivity(MyWalletActivity::class.java)
             }
             R.id.rlMyShopManage -> {//店铺管理
                 ActivityUtils.startActivity(ShopManageActivity::class.java)
@@ -107,6 +106,12 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 my?.shopId?.apply {
                     mPresenter?.getShareInfo(this)
                 }
+            }
+            R.id.tvWeChatApprove -> {
+
+                val context = ActivityUtils.getTopActivity()
+                val intent = Intent(context, ShopWeChatApproveActivity::class.java)
+                context.startActivity(intent)
             }
             R.id.tvManagerSetting,
             R.id.tvSetting,
@@ -138,11 +143,11 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         }
 
         val loginInfo = UserManager.getLoginInfo()
-        loginInfo?.shopLogo = my?.shopLogo;
+        loginInfo?.shopLogo = my?.shopLogo
         loginInfo?.clerkId = my?.clerkId
         loginInfo?.mobile = my?.mobile
         loginInfo?.shopId = my?.shopId
-        setUserUi(loginInfo);
+        setUserUi(loginInfo)
         if (loginInfo != null) {
             UserManager.setLoginInfo(loginInfo)
         }
@@ -183,20 +188,20 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
     }
 
     override fun onSetVipInfo(item: IdentityVo?) {
-        this.identity = item;
-        tvTryHint.setText(item?.shopTitle)
+        this.identity = item
+        tvTryHint.text = item?.shopTitle
         if (item?.isVip() == true) {
             ivTryLogo.setImageResource(R.mipmap.ic_try_logo)
-            tvTryHint.setText(String.format("%s%s", item.shopTitle, item.get_VipHint()));
-            tvVip.setText("续费")
+            tvTryHint.text = String.format("%s%s", item.shopTitle, item.get_VipHint())
+            tvVip.text = "续费"
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_try_logo)
-            ivMyShopStatus.visiable();
+            ivMyShopStatus.visiable()
         } else {
             ivTryLogo.setImageResource(R.mipmap.ic_vip_period)
-            tvTryHint.setText(String.format("%s%s", item?.shopTitle, item?.get_CommonHint()));
-            tvVip.setText("立即开通")
+            tvTryHint.text = String.format("%s%s", item?.shopTitle, item?.get_CommonHint())
+            tvVip.text = "立即开通"
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_vip_period)
-            ivMyShopStatus.gone();
+            ivMyShopStatus.gone()
         }
     }
 
@@ -215,8 +220,8 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
 
     fun refreshData() {
         mPresenter?.getMyData()
-        mPresenter?.getIdentity();
-        mPresenter?.loadWalletData();
+        mPresenter?.getIdentity()
+        mPresenter?.loadWalletData()
     }
 
 }

@@ -4,6 +4,7 @@ import com.lingmiao.shop.business.wallet.bean.*
 import com.lingmiao.shop.net.Fetch
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.order.bean.OrderList
 
 /**
  * Author : Elson
@@ -86,6 +87,11 @@ object WalletRepository {
         return apiService.bindBankCard(data).awaitHiResponse();
     }
 
+    //申请店铺时绑卡
+    suspend fun bindBankCardMember(data: BankCardVo): HiResponse<Unit> {
+        return apiService.bindBankCard(data).awaitHiResponse();
+    }
+
     /**
      * 解绑
      */
@@ -118,5 +124,10 @@ object WalletRepository {
         map.put("page_size", IConstant.PAGE_SIZE);
         map.put("body", Any());
         return apiService.queryWithdrawList(map).awaitHiResponse();
+    }
+
+    //获取订单详情
+    suspend fun queryOrderDetail(orderNo:String):HiResponse<OrderList>{
+        return apiService.getOrderDetail(orderNo).awaitHiResponse()
     }
 }

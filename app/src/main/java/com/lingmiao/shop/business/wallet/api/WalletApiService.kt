@@ -2,10 +2,12 @@ package com.lingmiao.shop.business.wallet.api
 
 import com.lingmiao.shop.business.wallet.bean.*
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.order.bean.OrderList
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 /**
  * Author : Elson
@@ -34,7 +36,7 @@ interface WalletApiService {
      */
     @WithHiResponse
     @POST("account/queryTradeRecordList")
-    fun queryTradeRecordList(@Body body: TradeReqVo) : Call<DataVO<PageRecordVo<DepositVo>>>;
+    fun queryTradeRecordList(@Body body: TradeReqVo) : Call<DataVO<PageRecordVo<DepositVo>>>
 
     /**
      * 查询提现账号信息
@@ -98,5 +100,10 @@ interface WalletApiService {
     @POST("account/withdraw/applyWithdraw")
     @WithHiResponse
     fun applyWithdraw(@Body data: WithdrawApplyVo) : Call<ApplyWithdrawVo>;
+
+    //    订单详情
+    @GET("seller/trade/orders/{order_sn}")
+    @WithHiResponse
+    fun getOrderDetail(@Path("order_sn") orderSn: String): Call<OrderList>
 
 }

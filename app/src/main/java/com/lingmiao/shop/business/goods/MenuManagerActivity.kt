@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
 
 /**
 Create Date : 2021/3/1012:48 AM
-Auther      : Fox
+Author      : Fox
 Desc        :
  **/
 class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {

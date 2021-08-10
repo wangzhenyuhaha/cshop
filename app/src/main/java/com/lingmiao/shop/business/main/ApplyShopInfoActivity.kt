@@ -1,74 +1,61 @@
 package com.lingmiao.shop.business.main
 
+import android.app.Activity
 import android.content.Intent
-import android.view.View
+import android.util.Log
+import androidx.activity.viewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import com.james.common.base.BaseActivity
-import com.james.common.netcore.coroutine.CoroutineSupport
-import com.james.common.utils.exts.checkNotBlack
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.api.bean.CategoryVO
-import com.lingmiao.shop.business.main.bean.*
+import com.lingmiao.shop.business.main.bean.AddressData
+import com.lingmiao.shop.business.main.bean.ApplyShopCategory
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
-import kotlinx.android.synthetic.main.main_activity_apply_shop_info.*
-import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
+import kotlinx.android.synthetic.main.goods_adapter_goods_menu.*
+import java.lang.Exception
 
 /**
  *   首页-提交资料
  */
-class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopInfoPresenter.View,
-    View.OnClickListener {
-
-
-    private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
-
-    private var selectedCategoryList: List<ApplyShopCategory>? = null
-
-    private var applyShopInfo = ApplyShopInfo()
-    private var adInfo: AddressData? = null
+class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopInfoPresenter.View {
 
     companion object {
-        private const val LICENSE = 1
-        private const val IDCARD_FRONT = 2
-        private const val IDCARD_BACK = 3
-        private const val IDCARD_HAND = 4
+        const val PERSONAL = 0
+        const val COMPANY = 1
+
+        const val LICENSE = 2
+        const val SHOP_FRONT = 3
+        const val SHOP_INSIDE = 4
+
+        const val ID_CARD_FRONT = 5
+        const val ID_CARD_BACK = 6
+        const val ID_CARD_HAND = 7
+
+        //跳转传图Activity
+        fun goUploadImageActivity(
+            activity: Activity,
+            type: Int,
+            title: String,
+            imageUrl: String? = null
+        ) {
+            val intent = Intent(activity, ApplyShopUploadActivity::class.java)
+            intent.putExtra("type", type)
+            intent.putExtra("title", title)
+            intent.putExtra("imageUrl", imageUrl)
+            activity.startActivity(intent)
+        }
+
     }
+
+    private val viewModel by viewModels<ApplyShopInfoViewModel>()
 
     override fun getLayoutId(): Int {
         return R.layout.main_activity_apply_shop_info
-    }
-
-    override fun useEventBus(): Boolean {
-        return true
-    }
-
-    override fun useLightMode(): Boolean {
-        return false;
-    }
-
-    override fun initView() {
-        mToolBarDelegate.setMidTitle("申请开店")
-
-
-        rlShopInfoSelf.setOnClickListener(this)
-        rlShopInfoCompany.setOnClickListener(this)
-        rlShopInfoCategory.setOnClickListener(this)
-        rlShopInfoAddress.setOnClickListener(this)
-        rlShopInfoLicense.setOnClickListener(this)
-        rlShopInfoIdCardFront.setOnClickListener(this)
-        rlShopInfoIdCardBack.setOnClickListener(this)
-        rlShopInfoIdCardHand.setOnClickListener(this)
-        tvApplyShopInfoNext.setOnClickListener(this)
-
-        rlShopInfoSelf.isSelected = true
-        applyShopInfo.shopType = "0"
-        val loginInfo = UserManager.getLoginInfo()
-        loginInfo?.let {
-            if (it.shopStatus != null && it.shopStatus != "UN_APPLY") mPresenter.requestShopInfoData()
-        }
     }
 
 
@@ -76,212 +63,157 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         return ApplyShopInfoPresenterImpl(this, this)
     }
 
-    override fun onShopInfoSuccess(bean: ApplyShopInfo) {
-        if (bean.shopName != null) {
-            applyShopInfo = bean
-            applyShopInfo.shopType = "0"
-//            if(applyShopInfo.shopType!=null){
-//                if (applyShopInfo.shopType == "0") {
-//                    rlShopInfoSelf.isSelected = true
-//                    rlShopInfoCompany.isSelected = false
-//                } else {
-//                    rlShopInfoCompany.isSelected = true
-//                    rlShopInfoSelf.isSelected = false
-//                }
-//            }
-            etShopInfoName.setText(applyShopInfo.shopName)
-            tvShopInfoCategory.text = applyShopInfo.categoryNames?.replace(" ", "/")
+    override fun initView() {
 
-            tvShopInfoAddress.text = applyShopInfo.shopProvince.orEmpty() +
-                    applyShopInfo.shopCity.orEmpty() +
-                    applyShopInfo.shopCounty.orEmpty() +
-                    applyShopInfo.shopTown.orEmpty() +
-                    applyShopInfo.shopAdd
-            etShopInfoContactName.setText(applyShopInfo.linkName)
-            etShopInfoContactPhone.setText(applyShopInfo.linkPhone)
-            etShopInfoInvitationCode.setText(applyShopInfo.promo_code)
+        initObserver()
 
-            if (!applyShopInfo.licenceImg.isNullOrEmpty()) tvShopInfoLicense.text = "已上传"
-            if (!applyShopInfo.legalImg.isNullOrEmpty()) tvShopInfoIdCardFront.text = "已上传"
-            if (!applyShopInfo.legalBackImg.isNullOrEmpty()) tvShopInfoIdCardBack.text = "已上传"
-            if (!applyShopInfo.holdImg.isNullOrEmpty()) tvShopInfoIdCardHand.text = "已上传"
-
+        val loginInfo = UserManager.getLoginInfo()
+        //审核失败，获取信息
+        loginInfo?.let {
+            if (it.shopStatus != null && it.shopStatus != "UN_APPLY") mPresenter.requestShopInfoData()
         }
+
+
     }
 
+    private fun initObserver() {
+
+        //修改页面title
+        viewModel.title.observe(this, Observer {
+            mToolBarDelegate.setMidTitle(it)
+        })
+
+
+        viewModel.go.observe(this, Observer {
+            when (it) {
+                0 -> {
+                    //企业对公账户结算
+
+                }
+                1 -> {
+                    //企业对私账户结算
+
+                    //暂时
+
+
+                    try {
+                        Log.d("ABC", "Do It")
+                        val resp =
+                            mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
+
+                    } catch (e: Exception) {
+                        Log.d("WZY", "错了")
+                    }
+
+
+                }
+                2 -> {
+                    //个体户对公账户结算
+
+                }
+                3 -> {
+                    //个体户对私账户结算
+
+                }
+            }
+//            if (it) {
+//                try {
+//
+//                    mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
+//                } catch (e: Exception) {
+//                    Log.d("WZY", "错了")
+//                }
+//            }
+        })
+    }
+
+    override fun useLightMode(): Boolean {
+        return false
+    }
+
+    //申请失败后成功获取已上传数据
+    override fun onShopInfoSuccess(applyShopInfo: ApplyShopInfo) {
+
+        viewModel.onShopInfoSuccess(applyShopInfo)
+
+
+    }
+
+    //申请失败后未获取已上传数据
     override fun onShopInfoError(code: Int) {
 
     }
 
+
+    //申请店铺成功
     override fun onApplyShopInfoSuccess() {
         hideDialogLoading()
         showToast("申请成功")
-        EventBus.getDefault().post(ApplyShopInfoEvent())
+        //  EventBus.getDefault().post(ApplyShopInfoEvent())
         finish()
     }
 
+    //申请店铺失败
     override fun onApplyShopInfoError(code: Int) {
         hideDialogLoading()
     }
 
-    // 单选
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateShopCategory(applyShopCategory: CategoryVO) {
-        val categoryIdSB = StringBuilder()
-        val categoryNameSB = StringBuilder()
-        categoryIdSB.append(applyShopCategory.categoryId)
-        categoryNameSB.append(applyShopCategory.name)
-        applyShopInfo.goodsManagementCategory = categoryIdSB.toString()
-        tvShopInfoCategory.text = categoryNameSB.toString()
-    }
 
-    // 多选
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateShopCategory(event: List<ApplyShopCategory>) {
-        selectedCategoryList = event
-        val categoryIdSB = StringBuilder()
-        val categoryNameSB = StringBuilder()
-        selectedCategoryList?.forEachIndexed { index, applyShopCategory ->
-            categoryIdSB.append(applyShopCategory.categoryId)
-            categoryNameSB.append(applyShopCategory.name)
-//            if (index < (selectedCategoryList?.size ?: 0) - 1) {
-//                categoryIdSB.append(",")
-//                categoryNameSB.append("/")
-//            }
+    class ApplyShopInfoViewModel : ViewModel() {
+
+        //店铺经营类型
+        private val _selectedCategoryListLiveData: MutableLiveData<List<ApplyShopCategory>> =
+            MutableLiveData()
+
+        val selectedCategoryListLiveData: LiveData<List<ApplyShopCategory>>
+            get() = _selectedCategoryListLiveData
+
+        //更改主营类目
+        fun setCategory(list: List<ApplyShopCategory>) {
+            _selectedCategoryListLiveData.value = list
         }
 
-        applyShopInfo.goodsManagementCategory = categoryIdSB.toString()
-        tvShopInfoCategory.text = categoryNameSB.toString()
-    }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateShopAddress(event: ApplyShopPoiEvent) {
-        //poi = event.poi
-
-        applyShopInfo.shopLat = event?.adInfo?.latLng?.latitude
-        applyShopInfo.shopLng = event?.adInfo?.latLng?.longitude
-        applyShopInfo.shopAdd = event?.adInfo?.address
-        tvShopInfoAddress.text = applyShopInfo.shopAdd
-        if (event.adInfo != null) {
-            adInfo = event.adInfo
-            applyShopInfo.shopProvince = adInfo?.province
-            applyShopInfo.shopCity = adInfo?.city
-            applyShopInfo.shopCounty = adInfo?.district
-//            applyShopInfo.shopProvince?.let {
-//                applyShopInfo.shopAdd = applyShopInfo.shopAdd?.replace(it, "")
-//            }
-//            applyShopInfo.shopCity?.let {
-//                applyShopInfo.shopAdd = applyShopInfo.shopAdd?.replace(it, "")
-//            }
-//            applyShopInfo.shopCounty?.let {
-//                applyShopInfo.shopAdd = applyShopInfo.shopAdd?.replace(it, "")
-//            }
-        }
-    }
-
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    fun updateShopAdInfo(event: AdInfo) {
-//        adInfo = event
-//        applyShopInfo.shopProvince = event.province
-//        applyShopInfo.shopCity = event.city
-//        applyShopInfo.shopCounty = event.district
-//
-//    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun getUploadImageUrl(event: ApplyShopImageEvent) {
-        when (event.type) {
-            LICENSE -> {
-                applyShopInfo.licenceImg = event.remoteUrl
-                tvShopInfoLicense.text = "已上传"
-            }
-            IDCARD_FRONT -> {
-                applyShopInfo.legalImg = event.remoteUrl
-                tvShopInfoIdCardFront.text = "已上传"
-            }
-            IDCARD_BACK -> {
-                applyShopInfo.legalBackImg = event.remoteUrl
-                tvShopInfoIdCardBack.text = "已上传"
-            }
-            IDCARD_HAND -> {
-                applyShopInfo.holdImg = event.remoteUrl
-                tvShopInfoIdCardHand.text = "已上传"
-            }
-        }
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.rlShopInfoSelf -> {//个人店铺和企业店铺参数值是 shop_type 0-个人 1-企业
-                rlShopInfoSelf.isSelected = true
-                rlShopInfoCompany.isSelected = false
-                applyShopInfo.shopType = "0"
-            }
-            R.id.rlShopInfoCompany -> {
-                rlShopInfoCompany.isSelected = true
-                rlShopInfoSelf.isSelected = false
-                applyShopInfo.shopType = "1"
-            }
-            R.id.rlShopInfoCategory -> {
-                val intent = Intent(this, ApplyShopCategoryActivity::class.java)
-                intent.putExtra("goodsManagementCategory", applyShopInfo.goodsManagementCategory)
-                startActivity(intent)
-            }
-            R.id.rlShopInfoAddress -> {
-                ShopAddressActivity.openActivity(context!!, adInfo);
-                // ActivityUtils.startActivity(ApplyShopAddressActivity::class.java)
-            }
-            R.id.rlShopInfoLicense -> {
-                goUploadImageActivity(LICENSE, "上传营业执照", applyShopInfo.licenceImg)
-            }
-            R.id.rlShopInfoIdCardFront -> {
-                goUploadImageActivity(IDCARD_FRONT, "上传身份证正面照", applyShopInfo.legalImg)
-            }
-            R.id.rlShopInfoIdCardBack -> {
-                goUploadImageActivity(IDCARD_BACK, "上传身份证反面照", applyShopInfo.legalBackImg)
-            }
-            R.id.rlShopInfoIdCardHand -> {
-                goUploadImageActivity(IDCARD_HAND, "上传手持证件照", applyShopInfo.holdImg)
-            }
-            R.id.tvApplyShopInfoNext -> {
-                submitApplyInfo()
-
-            }
-        }
-    }
-
-    private fun submitApplyInfo() {
-        applyShopInfo.shopName = etShopInfoName.text.toString()
-        applyShopInfo.linkName = etShopInfoContactName.text.toString()
-        applyShopInfo.linkPhone = etShopInfoContactPhone.text.toString()
-        applyShopInfo.promo_code = etShopInfoInvitationCode.text.toString()
-        try {
-            checkNotBlack(applyShopInfo.shopType) { "请选择店铺类型" }
-            checkNotBlack(applyShopInfo.shopName) { "请输入店铺名称" }
-            checkNotBlack(applyShopInfo.goodsManagementCategory) { "请选择经营类目" }
-            checkNotNull(applyShopInfo.shopAdd) { "请选择店铺地址" }
-            checkNotBlack(applyShopInfo.linkName) { "请输入联系人" }
-            checkNotBlack(applyShopInfo.linkPhone) { "请输入联系电话" }
-            checkNotBlack(applyShopInfo.licenceImg) { "请上传营业执照" }
-            checkNotBlack(applyShopInfo.legalImg) { "请上传身份证正面照" }
-            checkNotBlack(applyShopInfo.legalBackImg) { "请上传身份证反面照" }
-            checkNotBlack(applyShopInfo.holdImg) { "手持证件照" }
-            showDialogLoading()
-           mPresenter?.requestApplyShopInfoData(applyShopInfo)
-        } catch (e: IllegalStateException) {
-            e.printStackTrace()
-            showToast(e.message ?: "")
+        //店铺信息
+        private val _applyShopInfo = MutableLiveData<ApplyShopInfo>().also {
+            it.value = ApplyShopInfo()
         }
 
+        val applyShopInfo: LiveData<ApplyShopInfo>
+            get() = _applyShopInfo
+
+        //成功加载Info
+        fun onShopInfoSuccess(applyShopInfo: ApplyShopInfo) {
+            _applyShopInfo.value = applyShopInfo
+        }
+
+        //店铺地址
+        private val _adInfo: MutableLiveData<AddressData> = MutableLiveData()
+
+        val adInfo: LiveData<AddressData>
+            get() = _adInfo
+
+        //更改店铺地址
+        fun setAddress(data: AddressData) {
+            _adInfo.value = data
+        }
+
+        //title
+        private val _title: MutableLiveData<String> = MutableLiveData()
+
+        val title: LiveData<String>
+            get() = _title
+
+        //更改Title
+        fun setTitle(title: String) {
+            _title.value = title
+        }
+
+
+        // 0  企业对公账户结算  ，  1  企业对私账户结算   ， 2  个体户对公账户结算     3   个体户对私账户结算
+        val go: MutableLiveData<Int> = MutableLiveData()
+
     }
 
-    private fun goUploadImageActivity(type: Int, title: String, imageUrl: String? = null) {
-        val intent = Intent(this, ApplyShopUploadActivity::class.java)
-        intent.putExtra("type", type)
-        intent.putExtra("title", title)
-        intent.putExtra("imageUrl", imageUrl)
-        startActivity(intent)
-    }
 
 }

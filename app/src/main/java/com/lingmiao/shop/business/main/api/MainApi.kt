@@ -3,7 +3,9 @@ package com.lingmiao.shop.business.main.api
 import com.lingmiao.shop.business.main.bean.*
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
+import com.lingmiao.shop.business.main.fragment.BindAccountFragment
 import com.lingmiao.shop.business.me.bean.*
+import com.lingmiao.shop.business.wallet.bean.BankCardVo
 import com.lingmiao.shop.business.wallet.bean.DataVO
 import retrofit2.Call
 import retrofit2.http.*
@@ -84,4 +86,10 @@ interface MainApi {
     @WithHiResponse
     fun getUpgrade(@Query("current_version") version:String,
                    @Query("current_version_code") versionCode:String): Call<AccountSetting>
+
+
+    //绑定银行卡
+    @WithHiResponse
+    @POST("account/bindBankCardMember")
+    fun bindTestBankCard(@Body data : BindAccountFragment.BindBankCardDTO) : Call<Unit>;
 }

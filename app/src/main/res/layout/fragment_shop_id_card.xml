@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText,ContentDescription">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_40"
+            android:gravity="center"
+            android:lines="2"
+            android:text="请拍摄证件原件，并使照片中证件边缘完整、文字清晰、光线均匀"
+            android:textColor="#ff999999"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/container"
+            app:layout_constraintTop_toTopOf="@+id/container" />
+
+        <ImageView
+            android:id="@+id/legalImgImageView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="30dp"
+            android:scaleType="fitCenter"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/container"
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+        <ImageView
+            android:id="@+id/legalBackImgImageView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="30dp"
+            android:scaleType="fitCenter"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/container"
+            app:layout_constraintTop_toBottomOf="@+id/legalImgImageView" />
+
+        <ImageView
+            android:id="@+id/holdImgImageView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginEnd="30dp"
+            android:scaleType="fitCenter"
+            android:src="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/container"
+            app:layout_constraintTop_toBottomOf="@+id/legalBackImgImageView" />
+
+
+        <com.james.common.view.ITextView
+            android:id="@+id/backTextView"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginStart="@dimen/dimen_20"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="完成"
+            android:textColor="#fff"
+            android:textSize="13sp"
+            app:ivBgColor="#3870EA"
+            app:ivRadius="19dp"
+            app:layout_constraintBottom_toBottomOf="@+id/container"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toStartOf="@+id/container" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include layout="@layout/include_empty" />
+
+</FrameLayout>

@@ -41,6 +41,17 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
             }
         }
 
+        fun open(
+            context: Context,
+            item : OrderList?
+        ) {
+            if (context is Activity) {
+                val intent = Intent(context, OrderShowActivity::class.java)
+                intent.putExtra("item", item)
+                context.startActivity(intent)
+            }
+        }
+
     }
 
     override fun initBundles() {

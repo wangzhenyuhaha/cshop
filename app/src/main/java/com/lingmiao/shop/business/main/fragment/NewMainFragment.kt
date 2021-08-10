@@ -89,7 +89,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             mPresenter?.requestMainInfoData()
             mPresenter?.getWaringNumber()
         }
-        LogUtils.d("fromMain:" + fromMain)
+        LogUtils.d("fromMain:$fromMain")
         ivMainMessage.setOnClickListener {
             if (UserManager.isLogin()) {
                 ActivityUtils.startActivity(MessageCenterActivity::class.java)

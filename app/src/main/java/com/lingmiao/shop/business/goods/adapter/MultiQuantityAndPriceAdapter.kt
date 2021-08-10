@@ -19,7 +19,7 @@ class MultiQuantityAndPriceAdapter :
         if (quantityVO == null) return
 
         helper.setText(R.id.quantityNameTv, quantityVO.quantitiyName)
-        helper.setGone(R.id.quantityNameTv, quantityVO?.quantitiyName?.length?:0 > 0)
+        helper.setGone(R.id.quantityNameTv, quantityVO.quantitiyName?.length?:0 > 0)
         helper.setText(R.id.priceEdt, quantityVO.eventPrice)
         helper.setText(R.id.quantityEdt, quantityVO.eventQuantity)
         helper.setText(R.id.event_priceEdt, quantityVO.eventPrice)
