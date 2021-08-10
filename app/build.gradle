@@ -147,6 +147,8 @@ dependencies {
 
     implementation 'com.gitee.nurApplication:NurVideoPlayer:2.1.6'
 
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
     //Navigation
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

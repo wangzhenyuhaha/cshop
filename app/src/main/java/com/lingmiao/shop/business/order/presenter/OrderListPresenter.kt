@@ -41,6 +41,10 @@ interface OrderListPresenter: BasePresenter {
 
         fun onDeleteOrderSuccess()
 
+        fun onPreparedOrder();
+
+        fun onPrepareOrderFail();
+
         fun onShipped();
 
         fun onSigned();

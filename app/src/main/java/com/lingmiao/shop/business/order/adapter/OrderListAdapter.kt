@@ -176,9 +176,14 @@ class OrderListAdapter :
                     // 骑手配送
 //                    tvShipment.setText("备货完成");
 //                    tvPhoneUser.visibility = View.VISIBLE
-                    tvPrepare.visiable()
                 } else {
                     tvShipment.visiable()
+                }
+                if(item?.isPrepare == 1) {
+                    tvPrepare.isEnabled = false;
+                    tvPrepare.visiable()
+                } else {
+                    tvPrepare.isEnabled = true;
                     tvPrepare.visiable()
                 }
 

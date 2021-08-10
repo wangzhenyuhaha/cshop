@@ -129,7 +129,22 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
     }
 
     override fun prepareOrder(sn: String) {
-        view.hideDialogLoading()
+        mCoroutine.launch {
+            try {
+                val resp = OrderRepository.apiService.prepare(sn)
+                view.hideDialogLoading()
+                LogUtils.d("lqx","deleteOrder:"+ resp.isSuccessful)
+                if (resp.isSuccessful) {
+                    view.onPreparedOrder();
+                } else {
+                    view.onPrepareOrderFail();
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
+                view.hideDialogLoading()
+            }
+
+        }
     }
 
 }

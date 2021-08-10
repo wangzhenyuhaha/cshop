@@ -1,20 +1,23 @@
 package com.james.common.base
 
+import android.app.Activity
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.R
-import com.james.common.base.delegate.DefaultLoadingDelegate
-import com.james.common.base.delegate.DefaultPageLoadingDelegate
-import com.james.common.base.delegate.LoadingDelegate
-import com.james.common.base.delegate.PageLoadingDelegate
+import com.james.common.base.delegate.*
+import com.james.common.databinding.FragmentBaseBinding
 import com.james.common.view.EmptyLayout
+import kotlinx.android.synthetic.main.fragment_base.*
 import org.greenrobot.eventbus.EventBus
+import java.lang.NullPointerException
 
 
 //If you want a layout file to be ignored while generating binding classes,
@@ -24,33 +27,24 @@ import org.greenrobot.eventbus.EventBus
 //BaseView 对页面，Dialog，Toast的操作
 abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(), BaseView {
 
+    protected var context: AppCompatActivity? = null
 
-    private var _binding: VB? = null
-    protected val binding: VB
-        get() = _binding!!
+    protected var mToolBarDelegate: ToolBarDelegate? = null
+    protected var mLoadingDelegate: LoadingDelegate? = null
+    protected var mPageLoadingDelegate: PageLoadingDelegate? = null
+
+    protected var elEmpty: EmptyLayout? = null
 
     //引用EmptyLayout
     protected lateinit var emptyLayout: EmptyLayout
 
     protected var mPresenter: P? = null
 
-    //造作Dialog
-    protected val mLoadingDelegate: LoadingDelegate by lazy {
-        DefaultLoadingDelegate(requireActivity())
-    }
-
-    //操作EmptyLayout
-    protected val mPageLoadingDelegate: PageLoadingDelegate by lazy {
-        DefaultPageLoadingDelegate(requireActivity()).apply {
-            setPageLoadingLayout(emptyLayout)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBundles()
         mPresenter = createPresenter()
-
+        mPresenter?.onCreate()
     }
 
     override fun onCreateView(
@@ -59,98 +53,74 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = getBinding(inflater, container)
-        return binding.root
+        if(useBaseLayout()) {
+            mRootBinding = FragmentBaseBinding.inflate(layoutInflater, container, false);
+            if(getBinding(inflater, container!!) != null) {
+                binding = getBinding(inflater, container);
+                mRootBinding.containerView.addView(binding.root);
+            }
+            return mRootBinding.root;
+        } else {
+            if(getBinding(inflater, container!!) == null) {
+                throw NullPointerException("the method of getViewBinding is not null");
+            }
+            binding = getBinding(inflater, container);
+            return binding.root;
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        emptyLayout = view.findViewById(R.id.el_empty)
-
         if (useEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this)
         }
-        //初始化数据
+        if(useBaseLayout()) {
+            elEmpty = mRootBinding.elEmpty;
+        } else {
+            elEmpty = binding.root.findViewById(R.id.elEmpty);
+        }
         initViewsAndData(view)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        if (EventBus.getDefault().isRegistered(this)) {
-            EventBus.getDefault().unregister(this)
-        }
-    }
-
-
-    //---------------------override---------------------
-
-    protected abstract fun createPresenter(): P?
-
-    protected abstract fun getBinding(inflater: LayoutInflater, container: ViewGroup?): VB
-
-    protected abstract fun initViewsAndData(rootView: View)
-
-    //---------------------method---------------------
-
-    protected open fun initBundles() {
-    }
-
-    /**
-     * 是否开启事件注册
-     */
-    protected open fun useEventBus(): Boolean {
-        return false
-    }
-
-    //---------------------重写BaseView中的抽象方法---------------------
-
-    //查看当前Activity是否完成
     private fun isPageFinish(): Boolean {
-        return requireActivity().isFinishing
+        return (requireActivity() as Activity).isFinishing && !useBaseLayout()
     }
-
 
     override fun showPageLoading() {
-        if (isPageFinish()) return
-        emptyLayout.setErrorType(EmptyLayout.LOADING)
+        getPageLoadingDelegate().showPageLoading()
     }
 
     override fun hidePageLoading() {
-        if (isPageFinish()) return
-        emptyLayout.setErrorType(EmptyLayout.HIDE_LAYOUT)
+        getPageLoadingDelegate().hidePageLoading()
     }
 
     override fun showNoData() {
-        if (isPageFinish()) return
-        emptyLayout.setErrorType(EmptyLayout.NO_DATA)
+        getPageLoadingDelegate().showNoData()
     }
 
     override fun showNoNetwork() {
-        if (isPageFinish()) return
-        emptyLayout.setErrorType(EmptyLayout.NO_NETWORK)
+        getPageLoadingDelegate().showNoNetwork()
     }
 
     override fun showDataError() {
-        if (isPageFinish()) return
-        emptyLayout.setErrorType(EmptyLayout.DATA_ERROR)
+        getPageLoadingDelegate().showDataError()
     }
 
     override fun showDialogLoading() {
-        mLoadingDelegate.showDialogLoading(getString(R.string.loading))
+        getLoadingDelegate().showDialogLoading(getString(R.string.loading))
     }
 
     override fun showDialogLoading(content: String?) {
-        mLoadingDelegate.showDialogLoading(content)
+        getLoadingDelegate().showDialogLoading(content)
     }
 
     override fun hideDialogLoading() {
-        mLoadingDelegate.hideDialogLoading()
+        getLoadingDelegate().hideDialogLoading()
     }
 
     override fun showToast(content: String?) {
         content?.apply {
-            ToastUtils.setGravity(Gravity.CENTER, 0, 0)
+            ToastUtils.setGravity(Gravity.CENTER, 0, 100)
             ToastUtils.showShort(this)
         }
     }
@@ -162,6 +132,63 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
         }
     }
 
+    /**
+     * 页面 Loading
+     */
+    protected open fun getPageLoadingDelegate(): PageLoadingDelegate {
+        if (mPageLoadingDelegate == null) {
+            mPageLoadingDelegate = DefaultPageLoadingDelegate(requireContext())
+            mPageLoadingDelegate?.setPageLoadingLayout(elEmpty!!)
+        }
+        return mPageLoadingDelegate!!
+    }
 
+    /**
+     * DialogLoading
+     */
+    protected open fun getLoadingDelegate(): LoadingDelegate {
+        if (mLoadingDelegate == null) {
+            mLoadingDelegate = DefaultLoadingDelegate(requireContext())
+        }
+        return mLoadingDelegate!!
+    }
+
+    // ----------------------- Protected Method -----------------------
+
+    protected abstract fun createPresenter(): P
+
+    protected abstract fun getBinding(inflater: LayoutInflater, container: ViewGroup?): VB
+
+    protected lateinit var binding: VB
+
+    protected lateinit var mRootBinding: FragmentBaseBinding
+
+    protected open fun initBundles() {
+        // do nothing
+    }
+
+    protected abstract fun initViewsAndData(rootView: View)
+
+    /**
+     * 是否使用基类里面的布局，
+     * @return true：将子类的布局作为 View 添加到父容器中。
+     */
+    open fun useBaseLayout(): Boolean {
+        return true
+    }
+
+    /**
+     * 是否开启事件注册
+     */
+    protected open fun useEventBus(): Boolean {
+        return false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
+    }
 }
 

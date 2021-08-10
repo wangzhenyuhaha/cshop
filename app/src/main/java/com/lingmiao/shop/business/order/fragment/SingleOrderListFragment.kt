@@ -251,21 +251,21 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         startActivityForResult(intent, REQUEST_CODE)
                     }
                     R.id.tvShipment -> {
-                        DialogUtils.showDialog(activity!!, "配送提示", "确认开始配送该订单？",
+                        DialogUtils.showDialog(requireActivity(), "配送提示", "确认开始配送该订单？",
                             "取消", "确定配送", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.shipOrder(orderBean.sn!!);
                             })
                     }
                     R.id.tvPrepare -> {
-                        DialogUtils.showDialog(activity!!, "备货提示", "确认该订单已经备货？",
+                        DialogUtils.showDialog(requireActivity(), "备货提示", "确认该订单已经备货？",
                             "取消", "备货完成", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.prepareOrder(orderBean.sn!!);
                             })
                     }
                     R.id.tvSign -> {
-                        DialogUtils.showDialog(activity!!, "送达提示", "确认已经送达该订单？",
+                        DialogUtils.showDialog(requireActivity(), "送达提示", "确认已经送达该订单？",
                             "取消", "确定送达", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.signOrder(orderBean.sn!!);
@@ -292,21 +292,21 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         startActivityForResult(intent, REQUEST_CODE)
                     }
                     R.id.tvDelete -> {
-                        DialogUtils.showDialog(activity!!, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
+                        DialogUtils.showDialog(requireActivity(), "删除提示", "删除后不可恢复，确定要删除该订单吗？",
                             "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.deleteOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvAccept -> {
-                        DialogUtils.showDialog(activity!!, "接单提示", "确认是否接单?",
+                        DialogUtils.showDialog(requireActivity(), "接单提示", "确认是否接单?",
                             "取消", "确定接单", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.takeOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvRefuse -> {
-                        DialogUtils.showDialog(activity!!, "拒绝接单提示", "确认是否拒绝接单?",
+                        DialogUtils.showDialog(requireActivity(), "拒绝接单提示", "确认是否拒绝接单?",
                             "取消", "确定拒绝", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.refuseOrder(orderBean.sn!!)
@@ -317,7 +317,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             setOnItemClickListener { adapter, view, position ->
                 val orderBean = adapter.data[position] as OrderList
-                OrderShowActivity.open(activity!!, orderBean, 11);
+                OrderShowActivity.open(requireActivity(), orderBean, 11);
             }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.color_ffffff)
@@ -354,6 +354,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         showToast("删除成功")
         mLoadMoreDelegate?.refresh()
         //EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onPreparedOrder() {
+        mLoadMoreDelegate?.refresh()
+    }
+
+    override fun onPrepareOrderFail() {
+        mLoadMoreDelegate?.refresh()
     }
 
     override fun onShipped() {

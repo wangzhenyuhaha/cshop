@@ -3,7 +3,10 @@ package com.lingmiao.shop.business.me.api
 import com.lingmiao.shop.business.login.bean.CaptchaAli
 import com.lingmiao.shop.business.me.bean.*
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
+import com.lingmiao.shop.business.wallet.bean.PageListVo
+import com.lingmiao.shop.business.wallet.bean.PageRecordVo
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,4 +80,10 @@ interface MeApi {
     @POST("seller/shops/shopBanner/addShopBanner")
     @WithHiResponse
     fun updateBanner(@Body bean: List<BannerBean>): Call<Unit>
+
+    // 内容列表
+    @POST("/seller/app/content/queryContentList")
+    @WithHiResponse
+    fun queryContentList(@Body body : HelpDocReq): Call<PageRecordVo<HelpDocItemVo>>;
+
 }

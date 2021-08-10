@@ -147,7 +147,10 @@ data class OrderList(
     var replenishRemark : String? = "",
 
     @SerializedName("tableware_type")
-    var tablewareType : Int?
+    var tablewareType : Int?,
+    // 是否备货完成 1是 0否
+    @SerializedName("is_prepare")
+    var isPrepare : Int? = -1
 
 //    @SerializedName("available_date")
 //    var availableDate: String?,

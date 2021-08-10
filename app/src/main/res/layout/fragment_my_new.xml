@@ -350,7 +350,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/dimen_15"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:ivBgColor="#fff"
@@ -386,13 +385,36 @@
                     android:drawableStart="@drawable/ic_code_blue"
                     android:text="微信认证" />
 
-                <View style="@style/DivideLineHorizontal" />
+                <View
+                    android:visibility="gone"
+                    style="@style/DivideLineHorizontal" />
 
                 <TextView
-                    android:id="@+id/rlMyFeedback"
                     style="@style/my_part_item"
-                    android:drawableStart="@mipmap/my_feedback"
-                    android:text="建议反馈" />
+                    android:drawableStart="@mipmap/main_ic_comming_soon"
+                    android:visibility="gone" />
+
+            </com.james.common.view.ILinearLayout>
+            <!--常用工具end-->
+
+            <!--帮助文档-->
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:ivBgColor="#fff"
+                app:ivRadius="4dp">
+
+                <TextView
+                    android:id="@+id/rlHelpDoc"
+                    style="@style/my_part_item"
+                    android:drawableStart="@mipmap/my_help"
+                    android:text="帮助中心" />
 
                 <View style="@style/DivideLineHorizontal" />
 
@@ -405,13 +427,13 @@
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
+                    android:id="@+id/rlMyFeedback"
                     style="@style/my_part_item"
-                    android:drawableStart="@mipmap/main_ic_comming_soon"
-                    android:visibility="gone" />
+                    android:drawableStart="@mipmap/my_feedback"
+                    android:text="建议反馈" />
 
             </com.james.common.view.ILinearLayout>
-            <!--常用工具end-->
-
+            <!--帮助文档-->
 
         </LinearLayout>
 

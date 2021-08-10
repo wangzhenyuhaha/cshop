@@ -72,6 +72,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
 //        rlMyShopManage.setOnClickListener(this)
         rlMyFeedback.setOnClickListener(this)
         rlMyContactService.setOnClickListener(this)
+        rlHelpDoc.setOnClickListener(this)
 //        rlMySetting.setOnClickListener(this)
         mPresenter?.onCreate()
 
@@ -127,6 +128,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             }
             R.id.tvBalance -> {
                 // 余额
+            }
+            R.id.rlHelpDoc -> {
+                ActivityUtils.startActivity(HelpDocActivity::class.java)
             }
         }
     }
