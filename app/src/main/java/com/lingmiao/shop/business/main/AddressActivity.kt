@@ -155,7 +155,7 @@ class AddressActivity : BaseActivity<ApplyShopAddressPresenter>(),
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.main_activity_address;
+        return R.layout.main_actvAddressProvincetivity_address;
     }
 
     override fun createPresenter(): ApplyShopAddressPresenter {

@@ -55,7 +55,7 @@ class HelpDocActivity : BaseVBListActivity<HelpDocItemVo, MeActivityHelpDocBindi
      * 执行分页请求
      */
     override fun executePageRequest(page: IPage) {
-        mPresenter?.queryContentList(page, "2", mAdapter.data);
+        mPresenter?.queryContentList(page, "1", mAdapter.data);
     }
 
 }
