@@ -54,7 +54,7 @@ class WorkTimeVo : ItemData {
             var item: WorkTimeVo? = null;
             var position : Int = 0;
             var hour = "";
-            for (index in 0..24) {
+            for (index in 0..23) {
                 position ++;
 
                 hour = String.format("%s%s", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
@@ -69,6 +69,7 @@ class WorkTimeVo : ItemData {
                 item.itemName = String.format("%s:30", hour);
                 item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
                 data.add(item);
+
 //                if(index < 24) {
 //                    position ++;
 //                    item = WorkTimeVo();
@@ -95,8 +96,8 @@ class WorkTimeVo : ItemData {
 //                    newList.addAll(list?.subList(index + 1, list?.size));
 //                }
 //            }
-//            newList.addAll(getTomorrowWorkTimeList())
             newList.addAll(getWorkTimeList());
+            newList.addAll(getTomorrowWorkTimeList())
             return newList;
         }
     }
