@@ -18,6 +18,9 @@ import tv.danmaku.ijk.media.player.misc.IjkTrackInfo;
 import xyz.doikki.videoplayer.player.AbstractPlayer;
 import xyz.doikki.videoplayer.player.VideoViewManager;
 
+/**
+ * https://github.com/Doikki/DKVideoPlayer
+ */
 public class IjkPlayer extends AbstractPlayer implements IMediaPlayer.OnErrorListener,
         IMediaPlayer.OnCompletionListener, IMediaPlayer.OnInfoListener,
         IMediaPlayer.OnBufferingUpdateListener, IMediaPlayer.OnPreparedListener,
