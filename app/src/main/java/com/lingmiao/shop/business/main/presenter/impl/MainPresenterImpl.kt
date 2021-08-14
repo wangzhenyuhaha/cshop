@@ -9,6 +9,7 @@ import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.main.bean.OpenShopStatusVo
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +29,11 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                     loginInfo.openStatus = shopStatusResp.data.openStatus == 1
                     UserManager.setLoginInfo(loginInfo)
                 }
-                if (shopStatusResp.data.shopStatus == "OPEN") {
+                if (shopStatusResp.data.shopStatus == ShopStatusConstants.OPEN
+                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING
+                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
+                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
+                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                     val resp = MainRepository.apiService.getMainData().awaitHiResponse()
                     if (resp.isSuccess) {
                         view.onMainDataSuccess(resp.data)

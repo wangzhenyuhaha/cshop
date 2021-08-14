@@ -205,6 +205,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
                     auditLayout.gone();
                     signLayout.gone();
+                    shopStatusLayout.gone();
 
                     if(loginInfo.shopStatus == ShopStatusConstants.OPEN ||
                         loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING) {
