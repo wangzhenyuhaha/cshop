@@ -380,6 +380,7 @@
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
+                    android:visibility="gone"
                     android:id="@+id/tvWeChatApprove"
                     style="@style/my_part_item"
                     android:drawableStart="@drawable/ic_code_blue"

@@ -281,6 +281,26 @@ class DialogUtils {
             dialog.show()
         }
 
+
+        fun showImageDialog(
+            context: Activity,
+            imageInt : Int,
+            hint: String
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_image_hint, null)
+            dialog.setContentView(defaultView)
+            val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
+            image?.setImageResource(imageInt);
+            image.setOnClickListener {
+
+            }
+            val tvTipsHint = defaultView.findViewById<TextView>(R.id.tvTipsHint);
+            tvTipsHint.text = hint;
+            dialog.show()
+        }
+
     }
 
 }

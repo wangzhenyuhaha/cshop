@@ -17,6 +17,7 @@ import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.bean.VipType
+import com.lingmiao.shop.business.me.event.ApplyVipEvent
 import com.lingmiao.shop.business.me.event.PaySuccessEvent
 import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
@@ -218,6 +219,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
 
     fun refreshUseVipStatus() {
         if(isPayed) {
+            EventBus.getDefault().post(ApplyVipEvent(from = 1));
             EventBus.getDefault().post(PersonInfoRequest())
         }
     }

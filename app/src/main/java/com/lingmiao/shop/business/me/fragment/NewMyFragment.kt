@@ -9,6 +9,7 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.me.*
@@ -104,8 +105,12 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 OtherUtils.goToDialApp(activity, IConstant.SERVICE_PHONE)
             }
             R.id.tvShareManager -> {
-                my?.shopId?.apply {
-                    mPresenter?.getShareInfo(this)
+                if(isAudited()) {
+                    my?.shopId?.apply {
+                        mPresenter?.getShareInfo(this)
+                    }
+                } else {
+                    showToast("审核中，请稍后");
                 }
             }
             R.id.tvWeChatApprove -> {
@@ -121,10 +126,14 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             }
             R.id.tvShopQRCode -> {
                 // 二维码
-                val context = ActivityUtils.getTopActivity()
-                val intent = Intent(context, ShopQRCodeActivity::class.java)
-                intent.putExtra("SHOP_ID", my?.shopId)
-                context.startActivity(intent)
+                if(isAudited()) {
+                    val context = ActivityUtils.getTopActivity()
+                    val intent = Intent(context, ShopQRCodeActivity::class.java)
+                    intent.putExtra("SHOP_ID", my?.shopId)
+                    context.startActivity(intent)
+                } else {
+                    showToast("审核中，请稍后");
+                }
             }
             R.id.tvBalance -> {
                 // 余额
@@ -133,6 +142,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 ActivityUtils.startActivity(HelpDocActivity::class.java)
             }
         }
+    }
+
+    fun isAudited() : Boolean {
+        return UserManager.getLoginInfo()?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED;
     }
 
     override fun onMyDataSuccess(bean: My) {

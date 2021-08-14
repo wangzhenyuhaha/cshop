@@ -1,11 +1,16 @@
 package com.lingmiao.shop.business.me
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.KeyEvent
-import android.view.WindowManager
+import com.danikula.videocache.HttpProxyCacheServer
+import com.danikula.videocache.ProxyVideoCacheManager
 import com.james.common.base.BaseVBActivity
 import com.lingmiao.shop.business.me.presenter.HelpVideoPresenter
 import com.lingmiao.shop.business.me.presenter.impl.HelpVideoPresenterImpl
 import com.lingmiao.shop.databinding.MeActivityHelpVideoBinding
+import xyz.doikki.videocontroller.StandardVideoController
 
 
 /**
@@ -15,8 +20,19 @@ Desc        :
  **/
 class HelpVideoActivity : BaseVBActivity<MeActivityHelpVideoBinding, HelpVideoPresenter>(), HelpVideoPresenter.View {
 
+    var url: String? = "";
+    var title: String? = "";
     companion object {
         val TAG = "HelpViewActivity";
+
+        fun openActivity(context: Context, url: String?, title: String?) {
+            if (context is Activity) {
+                val intent = Intent(context, HelpVideoActivity::class.java)
+                intent.putExtra("url", url)
+                intent.putExtra("title", title)
+                context.startActivity(intent)
+            }
+        }
     }
     override fun createPresenter(): HelpVideoPresenter {
         return HelpVideoPresenterImpl(this);
@@ -34,15 +50,21 @@ class HelpVideoActivity : BaseVBActivity<MeActivityHelpVideoBinding, HelpVideoPr
         return false;
     }
 
+    override fun initBundles() {
+        url = intent.getStringExtra("url");
+        title = intent.getStringExtra("title");
+    }
+
     override fun initView() {
-        mToolBarDelegate?.setMidTitle("帮助视频")
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        mToolBarDelegate?.setMidTitle(title ?:"帮助视频")
 
-        mBinding.player.hideControls();
-        mBinding.player.setChangeScreen(false);
-
-        mBinding.player.setUp(this, "https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubble-gum-at-an-amusement-park-1226-large.mp4", "");
-        mBinding.player.start();
+        val cacheServer: HttpProxyCacheServer = ProxyVideoCacheManager.getProxy(this)
+        val proxyUrl = cacheServer.getProxyUrl(url)
+        mBinding.player.setUrl(proxyUrl)
+        val controller = StandardVideoController(this)
+        controller.addDefaultControlComponent(title ?:"帮助视频", false)
+        mBinding.player.setVideoController(controller)
+        mBinding.player.start()
     }
 
     override fun onResume() {
@@ -55,13 +77,8 @@ class HelpVideoActivity : BaseVBActivity<MeActivityHelpVideoBinding, HelpVideoPr
         mBinding.player.pause();
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        mBinding.player.stopPlay();
-    }
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        val b: Boolean = mBinding.player.onKeyDown(keyCode)
+        val b: Boolean = mBinding.player.onKeyDown(keyCode, event);
         return b || super.onKeyDown(keyCode, event)
     }
 }

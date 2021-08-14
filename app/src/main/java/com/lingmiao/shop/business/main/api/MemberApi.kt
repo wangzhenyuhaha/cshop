@@ -8,6 +8,7 @@ import com.lingmiao.shop.business.sales.bean.UserVo
 import com.lingmiao.shop.business.wallet.bean.DataVO
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -31,4 +32,7 @@ interface MemberApi {
     @GET("seller/shops/members/member-buy-count")
     @WithHiResponse
     fun getBuyCountOfMember(@Query("member_id") memberId : String) : Call<MemberOrderBean>;
+
+    @GET("seller/shops/allinpay/electSign/{shop_id}")
+    fun electricSign(@Path("shop_id") shop_id : String) : Call<String>
 }

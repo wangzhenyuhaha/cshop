@@ -145,7 +145,7 @@ dependencies {
     api project(':wechat')
 
 
-    implementation 'com.gitee.nurApplication:NurVideoPlayer:2.1.6'
+//    implementation 'com.gitee.nurApplication:NurVideoPlayer:2.1.6'
 
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
@@ -153,4 +153,11 @@ dependencies {
     def nav_version = "2.3.5"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+
+    implementation project(':dkplayer-java')
+    implementation project(':dkplayer-players:ijk')
+    implementation project(':dkplayer-videocache')
+    implementation project(':dkplayer-ui')
+
 }

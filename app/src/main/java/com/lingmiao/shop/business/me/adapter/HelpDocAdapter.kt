@@ -11,6 +11,7 @@ Auther      : Fox
 Desc        :
  **/
 class HelpDocAdapter : BaseQuickAdapter<HelpDocItemVo, BaseViewHolder>(R.layout.me_adapter_help_doc) {
+
     /**
      * Implement this method and use the helper to adapt the view to the given item.
      *
@@ -18,6 +19,7 @@ class HelpDocAdapter : BaseQuickAdapter<HelpDocItemVo, BaseViewHolder>(R.layout.
      * @param item   The item that needs to be displayed.
      */
     override fun convert(helper: BaseViewHolder, item: HelpDocItemVo?) {
-
+        helper.setText(R.id.tvDocTitle, item?.title);
+        helper.setText(R.id.tvDocContent, item?.content);
     }
 }
