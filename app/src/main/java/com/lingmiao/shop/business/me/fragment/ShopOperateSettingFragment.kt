@@ -148,7 +148,8 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
         shopReq.openStartTime = item1?.itemName;
-        shopReq.openEndTime = item2?.itemName;
+        // 处理【第二天】文字，服务端不需要返回
+        shopReq.openEndTime = item2?.itemName?.replace("第二天", "");
         shopReq.openTimeType = item2?.getFullDayType();
         Log.d("WZY",item1?.itemName)
         tvShopOperateTime.setText(String.format("%s-%s", item1?.itemName, item2?.itemName));
@@ -204,7 +205,8 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 autoOrderSb.isChecked = autoAccept == 1;
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
             }
-            tvShopOperateTime.setText(String.format("%s-%s", openStartTime, openEndTime));
+            // 处理显示【第二天】文字，服务端不保存,客户端计算
+            tvShopOperateTime.setText(String.format("%s-%s%s", openStartTime, if(WorkTimeVo.isSecondDay(openStartTime, openEndTime)) "" else "第二天", openEndTime));
             linkTelEt.setText(companyPhone);
 
             cb_model_rider.isChecked = shopTemplateType == FreightVoItem.TYPE_QISHOU

@@ -21,6 +21,7 @@ class DefaultItemAdapter<T : ItemData> : AbsItemAdapter<T>(R.layout.pop_item_def
 
     fun setSelectedItem(categoryId: String?) {
         this.selectedId = categoryId
+        notifyDataSetChanged();
     }
 
     fun setSelectedStr(str: String?) {

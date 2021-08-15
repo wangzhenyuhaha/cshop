@@ -180,10 +180,8 @@ class OrderListAdapter :
                     tvShipment.visiable()
                 }
                 if(item?.isPrepare == 1) {
-                    tvPrepare.isEnabled = false;
-                    tvPrepare.visiable()
+                    tvPrepare.gone()
                 } else {
-                    tvPrepare.isEnabled = true;
                     tvPrepare.visiable()
                 }
 

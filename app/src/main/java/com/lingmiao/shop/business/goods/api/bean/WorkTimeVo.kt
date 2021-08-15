@@ -45,6 +45,11 @@ class WorkTimeVo : ItemData {
 
         val DEFAULT_SECOND_DAY_BASE_VALUE = 100;
 
+        fun isSecondDay(first: String?, second: String?) : Boolean {
+            val f2 = second?.replace("第二天", "");
+            return first?.replace(":","")?.toInt()?:0 < f2?.replace(":", "")?.toInt()?:0;
+        }
+
         fun isFullDay(value : Int) : Boolean {
             return value > DEFAULT_SECOND_DAY_BASE_VALUE;
         }
@@ -55,28 +60,22 @@ class WorkTimeVo : ItemData {
             var position : Int = 0;
             var hour = "";
             for (index in 0..23) {
-                position ++;
-
+                // 小时
                 hour = String.format("%s%s", if(value == 1) "第二天" else "", if (index > 9) index else "0" + index);
 
+                // 整点小时
+                position ++;
                 item = WorkTimeVo();
                 item.itemName = String.format("%s:00", hour);
                 item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
                 data.add(item);
 
-
+                // 半小时
+                position ++;
                 item = WorkTimeVo();
                 item.itemName = String.format("%s:30", hour);
                 item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
                 data.add(item);
-
-//                if(index < 24) {
-//                    position ++;
-//                    item = WorkTimeVo();
-//                    item.itemName = String.format("%s%s:30",if(value == 1) "第二天" else "",  if (index > 9) index else "0" + index);
-//                    item.itemValue = String.format("%s", value * DEFAULT_SECOND_DAY_BASE_VALUE + position);
-//                    data.add(item);
-//                }
             }
             return data;
         }
@@ -89,15 +88,16 @@ class WorkTimeVo : ItemData {
             return getList(0);
         }
 
-        fun getWorkTimeList(value: String?, list: List<WorkTimeVo>?): List<WorkTimeVo> {
+        fun getWorkTimeList(value: WorkTimeVo?, list: List<WorkTimeVo>?): List<WorkTimeVo> {
             var newList : MutableList<WorkTimeVo> = mutableListOf();
-//            list?.forEachIndexed { index, item ->
-//                if (item?.getIValue() == value && index < list?.size) {
-//                    newList.addAll(list?.subList(index + 1, list?.size));
-//                }
-//            }
-            newList.addAll(getWorkTimeList());
-            newList.addAll(getTomorrowWorkTimeList())
+            // 截取当天
+            list?.forEachIndexed { index, item ->
+                if (item?.getIValue()!! == value?.itemValue && index < list?.size) {
+                    newList.addAll(list?.subList(index + 1, list?.size));
+                }
+            }
+            // 截取第二天
+            newList.addAll(getTomorrowWorkTimeList().subList(0, 48 - newList.size));
             return newList;
         }
     }

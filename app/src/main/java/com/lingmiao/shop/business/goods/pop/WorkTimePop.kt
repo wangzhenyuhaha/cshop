@@ -26,6 +26,6 @@ class WorkTimePop(val context: Context) : AbsDoubleItemPop<WorkTimeVo>(context) 
     }
 
     override fun getData2(data1: WorkTimeVo): List<WorkTimeVo> {
-        return WorkTimeVo.getWorkTimeList(data1?.getIValue(), WorkTimeVo.getWorkTimeList())
+        return WorkTimeVo.getWorkTimeList(data1, WorkTimeVo.getWorkTimeList())
     }
 }

@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
-import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BasePreImpl
@@ -23,88 +22,36 @@ class ItemPopPreImpl(view: BaseView) : BasePreImpl(view) {
 
     private var l2Data: WorkTimeVo? = null;
 
+    lateinit var mL1Adapter : DefaultItemAdapter<WorkTimeVo>;
+    lateinit var mL2Adapter : DefaultItemAdapter<WorkTimeVo>;
+
     fun showWorkTimePop(
         context: Context,
         value: String?,
         callback: (WorkTimeVo?, WorkTimeVo?) -> Unit
     ) {
+        mL1Adapter = DefaultItemAdapter<WorkTimeVo>().apply {
+
+        };
+        mL2Adapter = DefaultItemAdapter<WorkTimeVo>().apply {
+
+        };
         mTwoItemPop = object : AbsDoubleItemPop<WorkTimeVo>(context) {
             override fun getFirstAdapter(): BaseQuickAdapter<WorkTimeVo, BaseViewHolder> {
-                return DefaultItemAdapter<WorkTimeVo>().apply {
-
-                }
+                return mL1Adapter;
             }
 
             override fun getSecondAdapter(): BaseQuickAdapter<WorkTimeVo, BaseViewHolder> {
-                return DefaultItemAdapter<WorkTimeVo>().apply {
-
-                }
+                return mL2Adapter;
             }
 
             override fun getData2(data1: WorkTimeVo): List<WorkTimeVo> {
-
-                var time1: String? = data1.itemName
-                val list =
-                    WorkTimeVo.getWorkTimeList(data1?.getIValue(), WorkTimeVo.getWorkTimeList())
-
-                val newList: MutableList<WorkTimeVo> = mutableListOf()
-
-
-                for (it in list) {
-
-                    var temp: String? = null
-
-                    if (time1?.substring(0, 2)?.toInt()!! > it.itemName?.substring(0, 2)
-                            ?.toInt()!!
-                    ) {
-                        //第二天
-                        temp = "第二天${it.itemName}"
-                    }
-                    if (time1?.substring(0, 2)?.toInt()!! == it.itemName?.substring(0, 2)
-                            ?.toInt()!!
-                    ) {
-                        temp = if (time1?.substring(3, 5)?.toInt()!! >= it.itemName?.substring(3, 5)
-                                ?.toInt()!!
-                        ) {
-                            //第二天
-                            "第二天${it.itemName}"
-                        } else {
-                            it.itemName
-                        }
-                    }
-                    if (time1?.substring(0, 2)?.toInt()!! < it.itemName?.substring(0, 2)
-                            ?.toInt()!!
-                    ) {
-                        temp = it.itemName
-                    }
-
-                    it.itemName = temp
-                    newList?.add(it)
-
-                }
-                val long = newList.size
-                val newList2 = newList.subList(0, long - 1)
-
-
-                var num: Int = 0
-
-                for (it in newList2) {
-                    if (it.itemName?.startsWith("第") == true) {
-                        num++
-                    }
-                }
-
-                val aList = newList2.subList(0, num)
-                val bList = newList2.subList(num, newList2.size)
-
-                return bList + aList
+                return WorkTimeVo.getWorkTimeList(data1, WorkTimeVo.getWorkTimeList())
             }
         }.apply {
-
-
             lv1Callback = {
-
                 l1Data = it;
+                mL1Adapter.setSelectedItem(it.itemValue);
             }
             lv2Callback = {
                 l2Data = it;
@@ -112,9 +59,7 @@ class ItemPopPreImpl(view: BaseView) : BasePreImpl(view) {
             }
         }
         mTwoItemPop?.setPopTitle("请设置营业时间");
-        val list = WorkTimeVo.getWorkTimeList()
-        val long = list.size
-        mTwoItemPop?.setLv1Data(list.subList(0, long - 1))
+        mTwoItemPop?.setLv1Data(WorkTimeVo.getWorkTimeList())
         mTwoItemPop?.showPopupWindow();
     }
 
