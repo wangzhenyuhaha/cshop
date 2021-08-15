@@ -417,14 +417,12 @@
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
-                    android:visibility="visible"
                     android:id="@+id/tvWeChatApprove"
                     style="@style/my_part_item"
                     android:drawableStart="@drawable/ic_code_blue"
                     android:text="微信认证" />
 
                 <View
-                    android:visibility="visible"
                     style="@style/DivideLineHorizontal" />
 
                 <TextView

@@ -278,7 +278,12 @@
         <activity
             android:name=".business.me.HelpVideoActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- ======================= 个人中心  END ========================= -->
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".business.me.HelpDocActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <!-- ======================= 个人中心  END ========================= -->
         <!-- ======================= 我的钱包 START ======================== -->
         <activity
             android:name=".business.wallet.MyWalletActivity"
