@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +13,15 @@ import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.bean.ApplyShopImageEvent
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.FragmentCompanyInfoBinding
 import com.lingmiao.shop.util.DATE_FORMAT
 import com.lingmiao.shop.util.dateTime2Date
 import com.lingmiao.shop.util.formatString
 import com.lingmiao.shop.util.getDatePicker
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePresenter>() {
@@ -76,6 +78,10 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
         pop = ApplyInfoPop(requireContext())
     }
 
+    override fun useEventBus(): Boolean {
+        return true
+    }
+
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
@@ -83,7 +89,12 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
 
     override fun initViewsAndData(rootView: View) {
-        model.setTitle("企业资料")
+        if (model.applyShopInfo.value?.shopType == 1) {
+            //企业
+            model.setTitle("企业资料")
+        } else {
+            model.setTitle("商家资料")
+        }
 
         initListener()
         initObserver()
@@ -143,25 +154,26 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             }
         }
 
-        //组织机构代码证号
-        binding.organCode.setOnClickListener {
+        //三证合一   是
+        //统一社会信用代码证
+        binding.creditCode.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "组织机构代码证号",
+                "统一社会信用代码证",
                 "",
                 "请输入",
-                model.applyShopInfo.value?.organCode,
+                model.applyShopInfo.value?.creditCode,
                 "取消",
                 "保存",
                 null
             ) {
-                binding.organCodeTextView.text = it
-                model.applyShopInfo.value?.organCode = it
+                binding.creditCodeTV.text = it
+                model.applyShopInfo.value?.creditCode = it
             }
         }
 
-        //组织机构代码证有效期
-        binding.organexpire.setOnClickListener {
+        //社会信用代码证有效期
+        binding.creditCodeExpire.setOnClickListener {
             //选中的日期
             val selectedDate: Calendar = Calendar.getInstance()
             //开始日期
@@ -179,15 +191,15 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                 getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
 
                     //在界面上显示时间
-                    binding.organexpireTextView.text = formatString(date, DATE_FORMAT)
+                    binding.creditCodeExpireTV.text = formatString(date, DATE_FORMAT)
 
                     //获取当前精确时间
                     val s =
-                        dateTime2Date(binding.organexpireTextView.getViewText() + " 00:00:00")?.time
+                        dateTime2Date(binding.creditCodeExpireTV.getViewText() + " 00:00:00")?.time
                             ?: 0
                     timeCanUse = s / 1000
 
-                    model.applyShopInfo.value?.organexpire = timeCanUse
+                    model.applyShopInfo.value?.creditCodeExpire = timeCanUse
                 }, {
                     pvCustomTime?.returnData()
                     pvCustomTime?.dismiss()
@@ -197,43 +209,77 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             pvCustomTime?.show()
         }
 
-        //企业联系人姓名
-        binding.companyLinkName.setOnClickListener {
+        //三证合一   否
+        //税务登记号码
+        binding.taxRegCode.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "联系人姓名",
+                "税务登记号码",
                 "",
                 "请输入",
-                model.applyShopInfo.value?.companyLinkName,
+                model.applyShopInfo.value?.taxRegCode,
                 "取消",
                 "保存",
                 null
             ) {
-                binding.companyLinkNameTextView.text = it
-                model.applyShopInfo.value?.companyLinkName = it
+                binding.taxRegCodeTV.text = it
+                model.applyShopInfo.value?.taxRegCode = it
             }
         }
 
-        //企业联系人号码
-        binding.companyLinkPhone.setOnClickListener {
-            DialogUtils.showInputDialog(
+
+        //税务登记证日期
+        binding.taxCodeExpire.setOnClickListener {
+            //选中的日期
+            val selectedDate: Calendar = Calendar.getInstance()
+            //开始日期
+            val startDate: Calendar = Calendar.getInstance()
+            //结束日期
+            val endDate: Calendar = Calendar.getInstance()
+
+            //设定结束日期，假设可以活30年
+            endDate.set(
+                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
+                    Calendar.DATE
+                )
+            )
+            pvCustomTime =
+                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+
+                    //在界面上显示时间
+                    binding.taxCodeExpireTV.text = formatString(date, DATE_FORMAT)
+
+                    //获取当前精确时间
+                    val s =
+                        dateTime2Date(binding.taxCodeExpireTV.getViewText() + " 00:00:00")?.time
+                            ?: 0
+                    timeCanUse = s / 1000
+
+                    model.applyShopInfo.value?.taxCodeExpire = timeCanUse
+                }, {
+                    pvCustomTime?.returnData()
+                    pvCustomTime?.dismiss()
+                }, {
+                    pvCustomTime?.dismiss()
+                })
+            pvCustomTime?.show()
+        }
+
+
+        //税务登记证照片
+        binding.taxCodePic.setOnClickListener {
+            ApplyShopInfoActivity.goUploadImageActivity(
                 requireActivity(),
-                "联系人号码",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.companyLinkPhone,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.companyLinkPhoneTextView.text = it
-                model.applyShopInfo.value?.companyLinkPhone = it
-            }
+                ApplyShopInfoActivity.TAX_CODE_PIC,
+                "上传税务登记证照片",
+                model.applyShopInfo.value?.taxCodePic
+            )
         }
 
         binding.tvApplyShopInfoNext.setOnClickListener {
             findNavController().navigateUp()
         }
+
     }
 
     private fun initObserver() {
@@ -268,16 +314,22 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                 THRCERT_FLAG -> {
                     //三证合一
                     binding.thrcertflagTextView.text = thrcertflagList[it]
+
                     if (it == 0) {
-                        if (model.applyShopInfo.value?.organCode.isNullOrEmpty()) binding.organCodeTextView.text =
-                            "无需填写"
-                        if (model.applyShopInfo.value?.organexpire == null) binding.organexpireTextView.text =
-                            "无需填写"
+                        //否
+                        binding.creditCode.visibility = View.GONE
+                        binding.creditCodeExpire.visibility = View.GONE
+                        binding.taxRegCode.visibility = View.VISIBLE
+                        binding.taxCodeExpire.visibility = View.VISIBLE
+                        binding.taxCodePic.visibility = View.VISIBLE
+
                     } else {
-                        if (model.applyShopInfo.value?.organCode.isNullOrEmpty()) binding.organCodeTextView.text =
-                            "请输入组织机构代码证号"
-                        if (model.applyShopInfo.value?.organexpire == null) binding.organexpireTextView.text =
-                            "请选择有效期"
+                        //是
+                        binding.creditCode.visibility = View.VISIBLE
+                        binding.creditCodeExpire.visibility = View.VISIBLE
+                        binding.taxRegCode.visibility = View.GONE
+                        binding.taxCodeExpire.visibility = View.GONE
+                        binding.taxCodePic.visibility = View.GONE
                     }
                     model.applyShopInfo.value?.thrcertflag = it
                     pop?.dismiss()
@@ -307,25 +359,77 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             //三证合一
             applyShopInfo.thrcertflag?.also {
                 binding.thrcertflagTextView.text = thrcertflagList[it]
+                if (it == 0) {
+                    //否
+                    binding.creditCode.visibility = View.GONE
+                    binding.creditCodeExpire.visibility = View.GONE
+                    binding.taxRegCode.visibility = View.VISIBLE
+                    binding.taxCodeExpire.visibility = View.VISIBLE
+                    binding.taxCodePic.visibility = View.VISIBLE
+
+                } else {
+                    //是
+                    binding.creditCode.visibility = View.VISIBLE
+                    binding.creditCodeExpire.visibility = View.VISIBLE
+                    binding.taxRegCode.visibility = View.GONE
+                    binding.taxCodeExpire.visibility = View.GONE
+                    binding.taxCodePic.visibility = View.GONE
+                }
             }
-            //组织机构代码证号
-            applyShopInfo.organCode?.also {
-                if (it.isNotEmpty()) binding.organCodeTextView.text = it
+
+            if (applyShopInfo.thrcertflag == null) {
+                //是
+                binding.creditCode.visibility = View.VISIBLE
+                binding.creditCodeExpire.visibility = View.VISIBLE
+                binding.taxRegCode.visibility = View.GONE
+                binding.taxCodeExpire.visibility = View.GONE
+                binding.taxCodePic.visibility = View.GONE
             }
-            //组织机构代码证有效期
-            applyShopInfo.organexpire?.also {
-                binding.organexpireTextView.text = formatString(Date(it * 1000), DATE_FORMAT)
+
+
+            //三证合一   是
+            //统一社会信用代码证
+            applyShopInfo.creditCode?.also {
+                if (it.isNotEmpty()) binding.creditCodeTV.text = it
             }
-            //企业联系人姓名
-            applyShopInfo.companyLinkName?.also {
-                if (it.isNotEmpty()) binding.companyLinkNameTextView.text = it
+
+            //社会信用代码证有效期
+            applyShopInfo.creditCodeExpire?.also {
+                binding.creditCodeExpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
             }
-            //企业联系人号码
-            applyShopInfo.companyLinkPhone?.also {
-                if (it.isNotEmpty()) binding.companyLinkPhoneTextView.text = it
+
+
+            //三证合一   否
+            //税务登记号码
+            applyShopInfo.taxRegCode?.also {
+                if (it.isNotEmpty()) binding.taxRegCodeTV.text = it
+            }
+
+
+            //税务登记证日期
+            applyShopInfo.taxCodeExpire?.also {
+                binding.taxCodeExpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
+            }
+
+
+            //税务登记证照片
+            applyShopInfo.taxCodePic?.also {
+                if (it.isNotEmpty()) binding.taxCodePicTV.text = "已上传"
             }
 
         })
 
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun getUploadImageUrl(event: ApplyShopImageEvent) {
+        when (event.type) {
+            ApplyShopInfoActivity.TAX_CODE_PIC -> {
+                model.applyShopInfo.value?.taxCodePic = event.remoteUrl
+                binding.taxCodePicTV.text = "已上传"
+            }
+
+        }
     }
 }

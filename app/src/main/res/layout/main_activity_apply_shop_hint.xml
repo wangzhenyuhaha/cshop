@@ -34,6 +34,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:paddingStart="@dimen/dimen_1"
+            android:paddingEnd="@dimen/dimen_10"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
@@ -53,7 +55,6 @@
                 android:id="@+id/textViewCompany2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
                 android:text="(由正规持牌支付机构提供T+1交易服务)"
                 android:textColor="#3870EA"
                 android:textSize="@dimen/sp_14"  />

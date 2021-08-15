@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/apply_info_navagation"
-    app:startDestination="@id/shopInfoFragment">
+    app:startDestination="@id/bindAccountFragment">
 
     <fragment
         android:id="@+id/shopInfoFragment"
@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_replenishInfoFragment_to_bindAccountFragment"
             app:destination="@id/bindAccountFragment" />
+        <action
+            android:id="@+id/action_replenishInfoFragment_to_licenseInfoFragment"
+            app:destination="@id/licenseInfoFragment" />
     </fragment>
     <fragment
         android:id="@+id/identityInfoFragment"
@@ -56,4 +59,8 @@
         android:id="@+id/bindAccountFragment"
         android:name="com.lingmiao.shop.business.main.fragment.BindAccountFragment"
         android:label="BindAccountFragment" />
+    <fragment
+        android:id="@+id/licenseInfoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.LicenseInfoFragment"
+        android:label="LicenseInfoFragment" />
 </navigation>

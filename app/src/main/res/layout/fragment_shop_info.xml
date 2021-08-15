@@ -10,6 +10,7 @@
     tools:ignore="HardcodedText,ContentDescription">
 
     <LinearLayout
+        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -24,6 +25,7 @@
             app:ivRadius="5dp">
 
             <TextView
+                style="@style/goods_spce_item_left_mark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -83,6 +85,44 @@
                     android:src="@drawable/selector_login_service" />
 
             </RelativeLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <RelativeLayout
+                android:id="@+id/shopInfopromoCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="推广码（选填）"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/shopInfopromoCodeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="请填写邀请码"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="6dp"
+                    android:layout_height="11dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me_arrow_right" />
+            </RelativeLayout>
+
 
         </com.james.common.view.ILinearLayout>
 

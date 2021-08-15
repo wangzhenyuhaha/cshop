@@ -2,19 +2,18 @@ package com.lingmiao.shop.business.main.bean
 
 import com.blankj.utilcode.util.StringUtils
 import com.google.gson.annotations.SerializedName
-import com.lingmiao.shop.business.main.fragment.BindAccountFragment
 import java.io.Serializable
 
-
+//-----以上非注明皆为必填
 data class ApplyShopInfo(
 
     //店铺类型:1,企业     3,个体户
     @SerializedName("shop_type")
     var shopType: Int? = null,
 
-    //店铺名称
-    @SerializedName("shop_name")
-    var shopName: String? = null,
+    //推广码(非必填，申请店铺时如果邀请码填错，无法申请店铺)
+    @SerializedName("promo_code")
+    var promoCode: String? = null,
 
     //营业执照电子版
     @SerializedName("licence_img")
@@ -28,18 +27,21 @@ data class ApplyShopInfo(
     @SerializedName("storeinnerpic")
     var shopPhotoInside: String? = null,
 
-
-    //身份证正面照片，国徽
+    //  国徽
     @SerializedName("legal_img")
     var legalImg: String? = null,
 
-    //身份证反面照片，人像
+    //  人像
     @SerializedName("legal_back_img")
     var legalBackImg: String? = null,
 
     //法人手持身份证照片
     @SerializedName("hold_img")
     var holdImg: String? = null,
+
+    //店铺名称
+    @SerializedName("shop_name")
+    var shopName: String? = null,
 
     //店铺经营类目    ids
     @SerializedName("goods_management_category")
@@ -110,6 +112,8 @@ data class ApplyShopInfo(
     var legalIDExpire: Long? = null,
 
     //如果是公司账户,填写企业资料
+    //如果是个体户账户,填写商家资料
+
 
     //注册资金  注册资本  1: 注册资本<10万元 2: 10万元<注册资本<20万元 3: 20万元<注册资本<50万元 4: 50万元<注册资本<100万元 5: 注册资本>100万元
     @SerializedName("reg_money")
@@ -131,26 +135,37 @@ data class ApplyShopInfo(
     @SerializedName("thrcertflag")
     var thrcertflag: Int? = null,
 
+    //三证合一   是
+    //统一社会信用代码证
+    @SerializedName("creditcode")
+    var creditCode: String? = null,
 
-    //组织机构代码证号 组织机构代码证号 三证合一否时需要填写
-    @SerializedName("organcode")
-    var organCode: String? = null,
-
-
-    //组织机构代码证有效期 组织机构代码证有效期 三证合一否时需要填写
-    @SerializedName("organexpire")
-    var organexpire: Long? = null,
-
-
-    //企业联系人姓名
-    @SerializedName("meizuo")
-    var companyLinkName: String? = null,
+    //社会信用代码证有效期
+    @SerializedName("creditcodeexpire")
+    var creditCodeExpire: Long? = null,
 
 
-    //企业联系人电话
-    @SerializedName("meizuo2")
-    var companyLinkPhone: String? = null,
+    //三证合一   否
 
+    //税务登记号码
+    @SerializedName("taxregcode")
+    var taxRegCode: String? = null,
+
+    //税务登记证日期
+    @SerializedName("taxcodeexpire")
+    var taxCodeExpire: Long? = null,
+
+    //税务登记证照片
+    @SerializedName("taxcodepic")
+    var taxCodePic: String? = null,
+
+    //营业执照号
+    @SerializedName("license_num")
+    var licenseNum: String? = null,
+
+    //营业执照有效期结束
+    @SerializedName("licence_end")
+    var licenseEnd: Long? = null,
 
     //结算账户绑定
     //账户类型 0-对私 1-对公
@@ -161,40 +176,45 @@ data class ApplyShopInfo(
     @SerializedName("bank_account_name")
     var bankAccountName: String? = null,
 
+    //开户许可证照片或银行卡照片
+    @SerializedName("bank_urls")
+    var bankUrls: String? = null,
+
     //账户号或卡号
     @SerializedName("bank_number")
     var bankNumber: String? = null,
 
-    //开户地区，即所在区的编码（通联）
-    @SerializedName("districtcode")
-    var districtcode: String? = null,
+    //银行卡所在省
+    @SerializedName("bank_province")
+    var province: String? = null,
 
+    //银行卡所在市
+    @SerializedName("bank_city")
+    var city: String? = null,
 
-    //所属银行,开户银行号（通联）
+    //所属银行,开户银行号（通联）,名称
     @SerializedName("bank_no")
     var bankNo: String? = null,
 
-    //所属支行,开户银行支行名称
+    //所属支行,开户银行支行名称，名称
     @SerializedName("bank_name")
     var bankName: String? = null,
 
-    //开户许可证照片
-    @SerializedName("acctlicensepic")
-    var acctlicensepic: String? = null,
+    //所属银行,开户银行号（通联）,号码
+    @SerializedName("bankCode")
+    var bankCode: String? = null,
 
-    //银行卡正面照,对私账户
-    @SerializedName("settlebankpic")
-    var settleBankPic: String? = null,
+    //所属支行,开户银行支行名称，号码
+    @SerializedName("subBankCode")
+    var subBankCode: String? = null,
 
 
     //店铺绑定的银行卡
     @SerializedName("bank_card")
-    var   bankCard: BindAccountFragment.BindBankCardDTO? = null,
+    var bankCard: BindBankCardDTO? = null,
 
 
-
-//推广码
-    var promo_code: String? = null,
+    //----------------------
 
 
 //店铺logo

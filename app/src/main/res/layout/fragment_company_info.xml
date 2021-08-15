@@ -21,12 +21,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:orientation="vertical">
 
                 <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -219,8 +219,9 @@
 
                     <View style="@style/DivideLineHorizontal" />
 
+                    <!--                    三证合一   是-->
                     <RelativeLayout
-                        android:id="@+id/organCode"
+                        android:id="@+id/creditCode"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -228,12 +229,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="组织机构代码证号"
+                            android:text="统一社会信用代码证"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/organCodeTextView"
+                            android:id="@+id/creditCodeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -242,7 +243,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请输入组织机构代码证号"
+                            android:text="请输入统一社会信用代码证"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -257,7 +258,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/organexpire"
+                        android:id="@+id/creditCodeExpire"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -265,12 +266,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="组织机构代码证有效期"
+                            android:text="社会信用代码证有效期"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/organexpireTextView"
+                            android:id="@+id/creditCodeExpireTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -293,8 +294,9 @@
 
                     <View style="@style/DivideLineHorizontal" />
 
+                    <!--                    三证合一   否-->
                     <RelativeLayout
-                        android:id="@+id/companyLinkName"
+                        android:id="@+id/taxRegCode"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -302,12 +304,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="联系人姓名"
+                            android:text="税务登记号码"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/companyLinkNameTextView"
+                            android:id="@+id/taxRegCodeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -316,7 +318,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请填写联系人姓名"
+                            android:text="请输入税务登记号码"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -331,7 +333,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/companyLinkPhone"
+                        android:id="@+id/taxCodeExpire"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -339,12 +341,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="联系人电话"
+                            android:text="税务登记证日期"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/companyLinkPhoneTextView"
+                            android:id="@+id/taxCodeExpireTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -353,7 +355,44 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请填写联系人电话"
+                            android:text="请选择日期"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/taxCodePic"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="税务登记证照片"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/taxCodePicTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请传入照片"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 

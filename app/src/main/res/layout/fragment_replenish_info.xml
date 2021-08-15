@@ -10,6 +10,7 @@
     tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
+        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -366,6 +367,44 @@
 
                     <View style="@style/DivideLineHorizontal" />
 
+                    <RelativeLayout
+                        android:id="@+id/licenseInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            style="@style/goods_spce_item_left_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="营业执照信息"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/licenseInfoTextView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请补充"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
 
 
 
@@ -387,7 +426,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:text="商家个人信息"
+                        android:text="商家资料"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 
@@ -430,6 +469,79 @@
                     </RelativeLayout>
 
                     <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/personalInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            style="@style/goods_spce_item_left_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="商家资料"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/personalInfoTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请补充"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+                    <RelativeLayout
+                        android:id="@+id/personalLicenceInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            style="@style/goods_spce_item_left_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="营业执照信息"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/personalLicenceInfoTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请补充"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
 
                 </com.james.common.view.ILinearLayout>
 

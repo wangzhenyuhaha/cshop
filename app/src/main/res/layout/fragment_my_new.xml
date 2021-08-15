@@ -380,17 +380,6 @@
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
-                    android:visibility="gone"
-                    android:id="@+id/tvWeChatApprove"
-                    style="@style/my_part_item"
-                    android:drawableStart="@drawable/ic_code_blue"
-                    android:text="微信认证" />
-
-                <View
-                    android:visibility="gone"
-                    style="@style/DivideLineHorizontal" />
-
-                <TextView
                     style="@style/my_part_item"
                     android:drawableStart="@mipmap/main_ic_comming_soon"
                     android:visibility="gone" />
@@ -426,6 +415,17 @@
                     android:text="联系客服" />
 
                 <View style="@style/DivideLineHorizontal" />
+
+                <TextView
+                    android:visibility="visible"
+                    android:id="@+id/tvWeChatApprove"
+                    style="@style/my_part_item"
+                    android:drawableStart="@drawable/ic_code_blue"
+                    android:text="微信认证" />
+
+                <View
+                    android:visibility="visible"
+                    style="@style/DivideLineHorizontal" />
 
                 <TextView
                     android:id="@+id/rlMyFeedback"

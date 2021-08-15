@@ -26,7 +26,7 @@
                 <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -69,8 +69,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/accountCompany"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="@dimen/dimen_8">
+                        android:layout_height="50dp" >
 
                         <TextView
                             android:id="@+id/accountCompanyTVForPersonal"
@@ -100,7 +99,7 @@
 
                         <ImageView
                             android:id="@+id/accountCompany1"
-                            android:layout_width="15dp"
+                            android:layout_width="100dp"
                             android:layout_height="15dp"
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
@@ -113,7 +112,7 @@
 
                         <ImageView
                             android:id="@+id/accountCompany2"
-                            android:layout_width="15dp"
+                            android:layout_width="100dp"
                             android:layout_height="15dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
@@ -174,6 +173,43 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/acctlicensepic"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="开户许可证照片"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/acctlicensepictv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请上传"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
 
                     <View style="@style/DivideLineHorizontal" />
 
@@ -214,42 +250,6 @@
 
                     <View style="@style/DivideLineHorizontal" />
 
-                    <RelativeLayout
-                        android:id="@+id/districtcodeC"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="开户地区"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/districtcodeCtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="开户省/市"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
                         android:id="@+id/bankNoC"
@@ -324,42 +324,6 @@
                     </RelativeLayout>
 
 
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/acctlicensepic"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="开户许可证照片"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/acctlicensepictv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请上传"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
 
                 </com.james.common.view.ILinearLayout>
 
@@ -376,8 +340,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/accountPersonal"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginEnd="@dimen/dimen_8">
+                        android:layout_height="50dp">
 
                         <TextView
                             android:id="@+id/accountPersonalTVForPersonal"
@@ -406,7 +369,7 @@
 
                         <ImageView
                             android:id="@+id/accountPersonal1"
-                            android:layout_width="15dp"
+                            android:layout_width="100dp"
                             android:layout_height="15dp"
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
@@ -419,7 +382,7 @@
 
                         <ImageView
                             android:id="@+id/accountPersonal2"
-                            android:layout_width="15dp"
+                            android:layout_width="100dp"
                             android:layout_height="15dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
@@ -589,43 +552,6 @@
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/districtcodeP"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="开户地区"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/districtcodePtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="开户省/市"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
 
                     <View style="@style/DivideLineHorizontal" />

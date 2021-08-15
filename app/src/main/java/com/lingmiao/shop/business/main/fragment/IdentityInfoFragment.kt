@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.main.fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -118,6 +119,7 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
                 )
             )
 
+
             pvCustomTime =
                 getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
 
@@ -143,7 +145,8 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
 
         //身份证照片
         binding.legalPhoto.setOnClickListener {
-            findNavController().navigate(R.id.action_identityInfoFragment_to_shopIDCardFragment)
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.ID_CARD_FRONT)
+            findNavController().navigate(R.id.action_identityInfoFragment_to_shopIDCardFragment,bundle)
         }
 
         //保存
@@ -184,9 +187,7 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
             }
 
             applyShopInfo.legalIDExpire?.also {
-
                 binding.legalIDExpireTextView.text = formatString(Date(it * 1000), DATE_FORMAT)
-
             }
         })
 

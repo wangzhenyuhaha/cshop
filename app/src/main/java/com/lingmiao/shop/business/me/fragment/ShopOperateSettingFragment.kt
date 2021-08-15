@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
@@ -149,6 +150,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         shopReq.openStartTime = item1?.itemName;
         shopReq.openEndTime = item2?.itemName;
         shopReq.openTimeType = item2?.getFullDayType();
+        Log.d("WZY",item1?.itemName)
         tvShopOperateTime.setText(String.format("%s-%s", item1?.itemName, item2?.itemName));
     }
 

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.main.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
