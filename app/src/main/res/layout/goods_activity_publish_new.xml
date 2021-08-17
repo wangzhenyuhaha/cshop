@@ -116,6 +116,9 @@
                 <!-- 商品卖点 -->
                 <include layout="@layout/goods_include_publish_section8"
                     android:visibility="gone" />
+
+                <!--商品打包费-->
+                <include layout="@layout/goods_include_publish_section_package" />
             </LinearLayout>
 
             <TextView

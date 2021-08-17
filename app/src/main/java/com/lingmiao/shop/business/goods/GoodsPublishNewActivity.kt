@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.goods_include_publish_section4_new.*
 import kotlinx.android.synthetic.main.goods_include_publish_section5.*
 import kotlinx.android.synthetic.main.goods_include_publish_section6.*
 import kotlinx.android.synthetic.main.goods_include_publish_section8.*
+import kotlinx.android.synthetic.main.goods_include_publish_section_package.*
 import kotlinx.android.synthetic.main.goods_include_publish_section_v_time.*
 
 /**
@@ -251,6 +252,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             }
             // 商品卖点
             goodsSellingDescEdt.setText(selling)
+            // 打包费
+            goodsPackageFeeEdt.setText(packagePrice);
         }
     }
 
@@ -442,7 +445,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             goodsName = goodsNameEdt.getViewText()
             selling = goodsSellingDescEdt.getViewText()
             goodsGalleryList = galleryRv.getSelectPhotos()
-
             goodsType = GoodsTypeVO.getValue(isVirtualGoods)
             if (isVirtualGoods) {
                 // 虚拟
@@ -486,6 +488,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     skuList = null
                 }
             }
+            // 打包费
+            packagePrice = goodsPackageFeeEdt.getViewText();
             // 默认
 //            if (this.shopCatId == null) {
 //                this.shopCatId = categoryId

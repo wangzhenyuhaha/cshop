@@ -19,6 +19,9 @@ class GoodsVOWrapper : Serializable {
     @SerializedName("mktprice")
     var mktprice: String? = null //市场价格
 
+    @SerializedName("package_price")
+    var packagePrice : String? = "" // 打包费
+
     @SerializedName("price")
     var price: String? = null //商品价格
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/goods_publish_container"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    app:ivBgColor="@color/color_ffffff"
+    app:ivRadius="@dimen/dimen_5">
+
+    <TextView
+        style="@style/goods_publish_left"
+        android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/dimen_18"
+        android:text="商品打费费" />
+
+    <EditText
+        android:id="@+id/goodsPackageFeeEdt"
+        style="@style/goods_publish_right"
+        android:layout_height="wrap_content"
+        android:hint="请输入商品打费费"
+        android:inputType="numberDecimal"
+        android:maxLines="1"
+        android:paddingVertical="@dimen/dimen_18" />
+
+</com.james.common.view.ILinearLayout>
