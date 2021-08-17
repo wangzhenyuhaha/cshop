@@ -94,7 +94,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
             mPresenter?.requestMainInfoData()
-            mPresenter?.getWaringNumber()
+            if(loginInfo?.shopStatus == ShopStatusConstants.FINAL_OPEN) {
+                mPresenter?.getWaringNumber()
+            }
         }
         LogUtils.d("fromMain:$fromMain")
         ivMainMessage.setOnClickListener {
@@ -127,7 +129,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         showPageLoading()
         mPresenter?.requestMainInfoData()
-        mPresenter?.getWaringNumber()
         mPresenter?.requestAccountSettingData()
     }
 
@@ -247,6 +248,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     } else if(loginInfo.shopStatus == ShopStatusConstants.FINAL_OPEN) {
                         // 最终状态，显示店铺状态
                         shopStatusLayout.visiable();
+                        mPresenter?.getWaringNumber()
                     }
                     //                    tvMainShopName.text=loginInfo?.nickname
                     initOpeningShopView()
@@ -524,7 +526,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: ApplyShopInfoEvent) {
         mPresenter?.requestMainInfoData()
-        mPresenter?.getWaringNumber()
+//        mPresenter?.getWaringNumber()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
