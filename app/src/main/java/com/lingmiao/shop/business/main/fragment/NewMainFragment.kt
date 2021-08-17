@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.main.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
@@ -36,6 +35,7 @@ import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
 import com.lingmiao.shop.business.me.ApplyVipActivity
 import com.lingmiao.shop.business.me.ManagerSettingActivity
+import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.business.me.event.ApplyVipEvent
 import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
@@ -47,7 +47,6 @@ import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
-import kotlinx.android.synthetic.main.wallet_view_wallet_sum.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -56,6 +55,7 @@ import org.greenrobot.eventbus.ThreadMode
 class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private var mainInfo: MainInfoVo? = null
+    private var loginInfo: LoginInfo? = null;
     private var fromMain: Boolean? = null
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
@@ -137,6 +137,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
         switchStatusBtn.isChecked = loginInfo?.openStatus ?: false
+        this.loginInfo = loginInfo;
 
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
             mPresenter?.editShopStatus(if (isChecked) 1 else 0);
@@ -187,10 +188,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         .create()
                 }
                 ShopStatusConstants.OPEN,
+                ShopStatusConstants.OVERDUE,
                 ShopStatusConstants.ALLINPAY_APPLYING,
                 ShopStatusConstants.ALLINPAY_APPROVED,
                 ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED,
-                ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED-> {
+                ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED,
+                ShopStatusConstants.WEIXIN_AUTHEN_APPLYING,
+                ShopStatusConstants.FINAL_OPEN -> {
                     if (fromMain != true && ActivityUtils.getTopActivity() !is MainActivity) {
                         versionUpdateDialog?.dismiss()
                         activity?.finish()
@@ -203,29 +207,45 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     llMainShopOther.visibility = View.GONE
                     ivMainMessage.visibility = View.VISIBLE
 
-
-                    auditLayout.gone();
-                    signLayout.gone();
+                    // 认证中
+                    authLayout.gone();
+                    shopAuthHint.gone();
                     shopStatusLayout.gone();
 
                     if(loginInfo.shopStatus == ShopStatusConstants.OPEN ||
                         loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING) {
-                        //DialogUtils.showImageDialog(activity!!, R.mipmap.wechat_account, "店铺签约成功，请使用微信扫码进行商户认证，认证成功后才进行正常结算");
                         // 开启中，显示审核中
-                        auditLayout.visiable();
+                        authLayout.visiable();
+                        shopAuthStatus.text = "店铺审核中";
+                        shopAuthHint.gone();
                     } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED) {
                         // 进见通过，显示电子签约
-                        signLayout.visiable();
-                        shopSignStatus.text = "审核通过请进行电子签约";
-                        shopStatusLayout.gone();
+                        authLayout.visiable();
+                        shopAuthStatus.text = "审核通过,请进行电子签约";
+                        shopAuthHint.visiable();
                     } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
                         // 认败失败
-//                        authLayout.visiable();
-                        signLayout.visiable();
-                        shopSignStatus.text = "审核不通过，请重新进行电子签约";
-                        shopStatusLayout.gone();
+                        authLayout.visiable();
+                        shopAuthStatus.text = "审核不通过，请重新进行电子签约";
+                        shopAuthHint.visiable();
                     } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
-                        // 签约成功，显示店铺状态
+                        // 微信认证中
+                        authLayout.visiable();
+                        shopAuthStatus.text = "店铺签约成功,请进行商户认证";
+                        shopAuthHint.visiable();
+                    } else if(loginInfo.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
+                        // 微信认证中
+                        authLayout.visiable();
+                        shopAuthStatus.text = "店铺签约成功,请进行商户认证";
+                        shopAuthHint.visiable();
+                        //DialogUtils.showImageDialog(activity!!, R.mipmap.wechat_account, "店铺签约成功，请使用微信扫码进行商户认证，认证成功后才进行正常结算");
+                    } else if(loginInfo.shopStatus == ShopStatusConstants.OVERDUE) {
+                        // 过期
+                        authLayout.visiable();
+                        shopAuthStatus.text = "会员已过期,请继续购买";
+                        shopAuthHint.visiable();
+                    } else if(loginInfo.shopStatus == ShopStatusConstants.FINAL_OPEN) {
+                        // 最终状态，显示店铺状态
                         shopStatusLayout.visiable();
                     }
                     //                    tvMainShopName.text=loginInfo?.nickname
@@ -275,28 +295,28 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     tvMainShopReason.text = loginInfo.statusReason
                     tvMainShopReason.show(true)
                 }
-                ShopStatusConstants.OVERDUE-> {
-                    //店铺审核未通过，重新提交页面
-//                    tvMainShopName.text = "店铺审核未通过"
-                    setShop();
-                    tvMainShopNext.text = "立即购买"
-                    SpanUtils.with(tvMainShopHint)
-                        .append("会员已到期，请").setForegroundColor(
-                            ContextCompat.getColor(
-                                Utils.getApp(),
-                                R.color.color_909090
-                            )
-                        )
-                        .append("续约购买\n").setForegroundColor(
-                            ContextCompat.getColor(
-                                Utils.getApp(),
-                                R.color.color_fc0000
-                            )
-                        )
-                        .create()
-                    tvMainShopReason.text = loginInfo.statusReason
-                    tvMainShopReason.show(true)
-                }
+//                ShopStatusConstants.OVERDUE-> {
+//                    //店铺审核未通过，重新提交页面
+////                    tvMainShopName.text = "店铺审核未通过"
+//                    setShop();
+//                    tvMainShopNext.text = "立即购买"
+//                    SpanUtils.with(tvMainShopHint)
+//                        .append("会员已到期，请").setForegroundColor(
+//                            ContextCompat.getColor(
+//                                Utils.getApp(),
+//                                R.color.color_909090
+//                            )
+//                        )
+//                        .append("续约购买\n").setForegroundColor(
+//                            ContextCompat.getColor(
+//                                Utils.getApp(),
+//                                R.color.color_fc0000
+//                            )
+//                        )
+//                        .create()
+//                    tvMainShopReason.text = loginInfo.statusReason
+//                    tvMainShopReason.show(true)
+//                }
 
             }
 
@@ -321,9 +341,21 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             return;
         }
         setShop();
-        signLayout.setOnClickListener {
-            // 电子签
-            ActivityUtils.startActivity(ElectricSignActivity::class.java)
+
+        // 申请状态点击
+        authLayout.setOnClickListener {
+            if(loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
+            || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
+                // 电子签约
+                ActivityUtils.startActivity(ElectricSignActivity::class.java)
+            } else if(loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED
+                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
+                // 微信认证
+                ActivityUtils.startActivity(ShopWeChatApproveActivity::class.java)
+            } else if(loginInfo?.shopStatus == ShopStatusConstants.OVERDUE) {
+                // 过期续费
+                ActivityUtils.startActivity(ApplyVipActivity::class.java);
+            }
         }
 
         // 总信息

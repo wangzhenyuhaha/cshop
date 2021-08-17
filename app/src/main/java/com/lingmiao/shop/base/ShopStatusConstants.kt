@@ -54,6 +54,15 @@ object ShopStatusConstants {
     const val ALLINPAY_ELECTSIGN_REFUSED = "ALLINPAY_ELECTSIGN_REFUSED";
 
     /**
+     * 微信待认证
+     */
+    const val WEIXIN_AUTHEN_APPLYING = "WEIXIN_AUTHEN_APPLYING";
+
+    /**
+     * 最张状态
+     */
+    const val FINAL_OPEN = "FINAL_OPEN";
+    /**
      * 店铺关闭
      */
     const val CLOSED = "CLOSED";

@@ -51,15 +51,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/signLayout"
+            android:id="@+id/authLayout"
             android:visibility="gone">
 
             <TextView
                 android:padding="15dp"
-                android:text="审核通过请进行电子签约"
+                tools:text="店铺签约成功,请进行商户认证"
                 android:textColor="@color/white"
                 android:background="@color/color_FD8424"
-                android:id="@+id/shopSignStatus"
+                android:id="@+id/shopAuthStatus"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"/>
@@ -72,28 +72,11 @@
                 android:textColor="@color/white"
                 android:layout_alignParentRight="true"
                 android:background="@color/color_FD8424"
-                android:id="@+id/shopSignHint"
+                android:id="@+id/shopAuthHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/auditLayout"
-            android:visibility="gone">
-
-            <TextView
-                android:paddingHorizontal="@dimen/dimen_15"
-                android:paddingVertical="@dimen/dimen_10"
-                android:text="店铺审核中"
-                android:textColor="@color/white"
-                android:background="@color/color_FD8424"
-                android:id="@+id/shopAuditStatus"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/shopStatusLayout"
