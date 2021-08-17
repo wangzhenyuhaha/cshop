@@ -40,6 +40,66 @@ class PhotoHelper {
         }
 
         /**
+         * 获取带裁剪的相册，图片大小超过500K，则开启压缩
+         */
+        @JvmStatic
+        fun openCropAlbum(
+            activity: Activity,
+            maxCount: Int,
+            cancel: (() -> Unit)?,
+            crop: Boolean?,
+            size: Int,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
+            PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .maxSelectNum(maxCount)
+                .isCompress(true)
+                .withAspectRatio(1, 1)
+                .isEnableCrop(crop ?: true)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
+
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
+        }
+
+        /**
+         * 获取带裁剪的拍照：图片大小超过500K，则开启压缩
+         */
+        @JvmStatic
+        fun openCropCamera(
+            activity: Activity,
+            cancel: (() -> Unit)?,
+            crop: Boolean?,
+            size: Int,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
+            PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .isCompress(crop ?: true)
+                .withAspectRatio(1, 1)
+                .isEnableCrop(true)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
+
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
+        }
+
+        /**
          * 获取图片，图片大小超过500K，则开启压缩
          */
         @JvmStatic

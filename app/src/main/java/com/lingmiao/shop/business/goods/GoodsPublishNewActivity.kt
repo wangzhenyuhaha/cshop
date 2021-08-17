@@ -358,7 +358,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             setOnClickListener { type ->
                 when (type) {
                     MediaMenuPop.TYPE_SELECT_PHOTO -> {
-                        PhotoHelper.openAlbum(context as Activity, 1, null, true, 32) {
+                        PhotoHelper.openCropAlbum(context as Activity, 1, null, true, 32) {
 //                            addDataList(convert2GalleryVO(it))
                             val item = convert2GalleryVO(it)[0];
                             GlideUtils.setImageUrl1(imageView, item?.original)
@@ -366,7 +366,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                         }
                     }
                     MediaMenuPop.TYPE_PLAY_PHOTO -> {
-                        PhotoHelper.openCamera(context as Activity, null, true, 32) {
+                        PhotoHelper.openCropCamera(context as Activity, null, true, 32) {
                             val item = convert2GalleryVO(it)[0];
                             GlideUtils.setImageUrl1(imageView, item?.original)
                             goodsVO.thumbnail = item?.original;
