@@ -145,7 +145,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
     }
 
     fun isAudited() : Boolean {
-        return UserManager.getLoginInfo()?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED;
+        return UserManager.getLoginInfo()?.shopStatus == ShopStatusConstants.FINAL_OPEN;
     }
 
     override fun onMyDataSuccess(bean: My) {
