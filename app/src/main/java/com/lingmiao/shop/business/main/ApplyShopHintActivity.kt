@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.main.bean.ApplyShopHint
 import com.lingmiao.shop.business.main.presenter.ApplyShopHintPresenter
@@ -47,9 +49,11 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(),ApplyShopHi
             ActivityUtils.startActivity(ApplyShopInfoActivity::class.java)
             finish()
         }
+        imageView.singleClick {
+            DialogUtils.showDialog(this!!, R.mipmap.apply_shop_hint);
+        }
+
     }
-
-
 
     override fun createPresenter(): ApplyShopHintPresenter {
         return ApplyShopHintPresenterImpl(this, this)
