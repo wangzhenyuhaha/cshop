@@ -9,11 +9,11 @@ Desc        :
  **/
 class WorkTimeVo : ItemData {
 
-    var itemName: String? = null
+    var itemName: String? = ""
 
-    var itemHint: String? = null
+    var itemHint: String? = ""
 
-    var itemValue: String? = null
+    var itemValue: String? = ""
 
     override fun getIValue(): String? {
         return itemValue;

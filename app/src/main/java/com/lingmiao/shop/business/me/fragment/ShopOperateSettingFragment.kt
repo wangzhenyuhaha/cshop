@@ -151,8 +151,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         // 处理【第二天】文字，服务端不需要返回
         shopReq.openEndTime = item2?.itemName?.replace("第二天", "");
         shopReq.openTimeType = item2?.getFullDayType();
-        Log.d("WZY",item1?.itemName)
-        tvShopOperateTime.setText(String.format("%s-%s", item1?.itemName, item2?.itemName));
+        setOperateTime();
     }
 
     override fun onSetSetting() {
@@ -205,14 +204,20 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 autoOrderSb.isChecked = autoAccept == 1;
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
             }
-            // 处理显示【第二天】文字，服务端不保存,客户端计算
-            tvShopOperateTime.setText(String.format("%s-%s%s", openStartTime, if(WorkTimeVo.isSecondDay(openStartTime, openEndTime)) "" else "第二天", openEndTime));
+            shopReq.openStartTime = vo.openStartTime;
+            shopReq.openEndTime = vo.openEndTime;
+            setOperateTime();
             linkTelEt.setText(companyPhone);
 
             cb_model_rider.isChecked = shopTemplateType == FreightVoItem.TYPE_QISHOU
             cb_model_shop.isChecked = shopTemplateType == FreightVoItem.TYPE_LOCAL
         }
 
+    }
+
+    // 处理显示【第二天】文字，服务端不保存,客户端计算
+    fun setOperateTime() {
+        tvShopOperateTime.setText(String.format("%s%s%s%s", shopReq.openStartTime, if(shopReq.openStartTime?.isEmpty() == true) "" else "-" , if(WorkTimeVo.isSecondDay(shopReq.openStartTime, shopReq.openEndTime)) "" else "第二天", shopReq.openEndTime));
     }
 
 }
