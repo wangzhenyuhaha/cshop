@@ -11,6 +11,11 @@ interface ApplyShopInfoPresenter : BasePresenter {
 
     fun searchOCR(type: Int, url: String)
 
+    fun bindBankCard(company: BindBankCardDTO?, personal: BindBankCardDTO?)
+
+    fun searchBankList(memberId: Int): List<BindBankCardDTO>
+
+    fun searchBankCode(bankName: String): BankDetail
 
     interface View : BaseView {
 
@@ -31,5 +36,8 @@ interface ApplyShopInfoPresenter : BasePresenter {
 
         //更新营业执照
         fun onUpdateLicense(data: License)
+
+        //更新已有银行卡信息
+        fun updateBankList(company: BindBankCardDTO?, personal: BindBankCardDTO?)
     }
 }

@@ -26,6 +26,7 @@ import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
+//暂时不处理
 class SubBranchActivity : BaseLoadMoreActivity<BankDetail, SubBranchPre>(),
     SubBranchPre.StatusView {
 

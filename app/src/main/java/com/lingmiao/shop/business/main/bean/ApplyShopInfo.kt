@@ -167,6 +167,7 @@ data class ApplyShopInfo(
     @SerializedName("licence_end")
     var licenseEnd: Long? = null,
 
+    //关于银行卡信息11个
     //结算账户绑定
     //账户类型 0-对私 1-对公
     @SerializedName("accttype")
@@ -207,7 +208,6 @@ data class ApplyShopInfo(
     //所属支行,开户银行支行名称，号码
     @SerializedName("subBankCode")
     var subBankCode: String? = null,
-
 
     //店铺绑定的银行卡
     @SerializedName("bank_card")

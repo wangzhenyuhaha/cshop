@@ -1,17 +1,10 @@
 package com.lingmiao.shop.business.main.api
 
-import com.lingmiao.shop.business.main.bean.*
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
-import com.james.common.netcore.networking.http.core.HiResponse
-import com.james.common.netcore.networking.http.core.awaitHiResponse
-import com.james.common.utils.exts.isNotBlank
-import com.lingmiao.shop.business.common.bean.PageVO
-import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
+import com.lingmiao.shop.business.common.bean.CommonBack
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
-import com.lingmiao.shop.business.main.fragment.BindAccountFragment
+import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.me.bean.*
-import com.lingmiao.shop.business.wallet.bean.BankCardVo
 import com.lingmiao.shop.business.wallet.bean.DataVO
 import retrofit2.Call
 import retrofit2.http.*
@@ -106,7 +99,6 @@ interface MainApi {
     ): Call<AccountSetting>
 
 
-
     //查询银行卡
     @WithHiResponse
     @POST("seller/shops/tlCnapsCode/queryBankList")
@@ -153,7 +145,7 @@ interface MainApi {
     //查询已绑定银行卡
     @WithHiResponse
     @POST("account/queryBankCardList")
-    fun queryTestBankCard(@Body data: BindBankCardDTO): Call<Unit>
+    fun queryTestBankCard(@Query("member_id") id: Int): Call<CommonBack>
 
     //绑定银行卡
     @WithHiResponse

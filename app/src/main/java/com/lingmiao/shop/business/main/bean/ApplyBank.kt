@@ -17,6 +17,10 @@ data class ApplyBank(
 
     data class ApplyBankDetail(
 
+        //所属银行
+        @SerializedName("baf_name")
+        var bafName: String? = null,
+
         //所属银行码
         @SerializedName("bank_code")
         var bankCode: String? = null,

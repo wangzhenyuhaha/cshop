@@ -15,6 +15,7 @@ import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.lingmiao.shop.util.dateTime3Date
+import kotlinx.android.synthetic.main.main_adapter_apply_info.*
 
 /**
  *   首页-提交资料
@@ -23,28 +24,26 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     companion object {
 
+        //?
+
         //营业执照
         const val LICENSE = 2
 
         //店铺门头照片
         const val SHOP_FRONT = 3
 
-        //店铺内景照片
-        const val SHOP_INSIDE = 4
-
         //上传国徽面照片
         const val ID_CARD_FRONT = 5
-
-        //上传人像面照片
-        const val ID_CARD_BACK = 6
-
-        //上传手持身份证照片
-        const val ID_CARD_HAND = 7
 
         //税务登记证照片
         const val TAX_CODE_PIC = 8
 
+        const val PICTURE_COMPANY_ACCOUNT = 9
+        const val PICTURE_PERSONAL_ACCOUNT = 10
+
+
         //跳转传图Activity
+        @Deprecated("勿用")
         fun goUploadImageActivity(
             activity: Activity,
             type: Int,
@@ -82,27 +81,33 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         val loginInfo = UserManager.getLoginInfo()
         //审核失败，获取信息,暂时不处理银行卡
         loginInfo?.let {
-            if (it.shopStatus != null && it.shopStatus != "UN_APPLY") mPresenter.requestShopInfoData()
+            if (it.shopStatus != null && it.shopStatus != "UN_APPLY") {
+                mPresenter.requestShopInfoData()
+                //获取已绑定的银行卡
+                it.uid?.also { uid -> mPresenter.searchBankList(uid) }
+            }
         }
 
     }
 
     private fun initObserver() {
-
         //修改页面title
         viewModel.title.observe(this, Observer {
             mToolBarDelegate.setMidTitle(it)
         })
 
 
+        //注册店铺
         viewModel.go.observe(this, Observer {
             try {
+                Log.d("WZY", viewModel.applyShopInfo.value.toString())
                 mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
             } catch (e: Exception) {
                 showToast("失败了")
             }
         })
 
+        //OCR识别
         viewModel.getOCR.observe(this, Observer {
             // 1身份证人像面   2身份证国徽面   6银行卡     8 营业执照
             val url: String? = when (it) {
@@ -116,7 +121,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                     viewModel.applyShopInfo.value?.legalImg
                 }
                 6 -> {
-                    viewModel.applyShopInfo.value?.bankUrls
+                    //识别银行卡
+                    viewModel.personalAccount.value?.bankUrls
                 }
                 else -> {
                     null
@@ -126,6 +132,35 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 mPresenter.searchOCR(it, it_url)
             }
         })
+
+        //绑定银行卡
+        viewModel.bindBandCard.observe(this, Observer {
+            when (it) {
+                0 -> {
+                    mPresenter.bindBankCard(viewModel.companyAccount.value, null)
+                }
+                1 -> {
+                    mPresenter.bindBankCard(null, viewModel.personalAccount.value)
+                }
+                2 -> {
+                    mPresenter.bindBankCard(
+                        viewModel.companyAccount.value,
+                        viewModel.personalAccount.value
+                    )
+                }
+            }
+
+        })
+
+        viewModel.test.observe(this, Observer {
+
+            when (it) {
+                8 -> {
+                    mPresenter.searchBankCode("建设银行")
+                }
+            }
+        })
+
 
     }
 
@@ -158,8 +193,10 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     //OCR识别银行卡
     override fun onBankCard(data: BankCard) {
-        viewModel.applyShopInfo.value?.also {
-            Log.d("WZY", data.toString())
+        viewModel.personalAccount.value?.also {
+            it.cardNo = data.CardNo
+            // it.bankName  = data.BankInfo
+            // Log.d("WY",data.toString())
         }
     }
 
@@ -184,25 +221,47 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     //OCR识别营业执照
     override fun onUpdateLicense(data: License) {
         viewModel.applyShopInfo.value?.also {
+
             it.scope = data.business ?: ""
             it.licenseNum = data.regNum ?: ""
 
-            val time: String? = data.period?.run {
-                substring(12, 16) + "." + substring(17, 19) + "." + substring(20, 22)
+
+            try {
+                val time: String? = data.period?.run {
+                    substring(12, 16) + "." + substring(17, 19) + "." + substring(20, 22)
+                }
+                val s: Long? = time?.let { timeString ->
+                    dateTime3Date("$timeString 00:00:00")?.time ?: 0
+                }
+                s?.also { timeLong ->
+                    it.licenseEnd = timeLong / 1000
+                }
+
+            } catch (e: Exception) {
+                it.licenseEnd = (dateTime3Date("2080.01.01  00:00:00")?.time ?: 0) / 1000
             }
-            val s: Long? = time?.let { timeString ->
-                dateTime3Date("$timeString 00:00:00")?.time ?: 0
-            }
-            s?.also { timeLong ->
-                it.licenseEnd = timeLong / 1000
-            }
+
+            it.creditCode = it.licenseNum
+            it.creditCodeExpire = it.licenseEnd
 
         }
 
     }
 
 
+    override fun updateBankList(company: BindBankCardDTO?, personal: BindBankCardDTO?) {
+        company.also {
+            viewModel.companyAccount.value = it
+        }
+        personal.also {
+            viewModel.personalAccount.value = it
+        }
+    }
+
     class ApplyShopInfoViewModel : ViewModel() {
+
+
+        val test: MutableLiveData<Int> = MutableLiveData()
 
 
         //-----------------------------------------------------------------------------------------------
@@ -269,21 +328,32 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //调用OCR识别
         //1身份证人像面   2身份证国徽面   6银行卡      8 营业执照
+        //不能给初始值
         val getOCR: MutableLiveData<Int> = MutableLiveData()
 
         //-----------------------------------------------------------------------------------------------
 
         //绑定银行卡
         //对公账户
-        val companyAccount = BindBankCardDTO().also {
-            it.bankCardType = 1
-        }
+        val companyAccount: MutableLiveData<BindBankCardDTO> =
+            MutableLiveData<BindBankCardDTO>().also {
+                //初始化
+                val temp = BindBankCardDTO()
+                temp.bankCardType = 1
+                it.value = temp
+            }
+
 
         //对私账户
-        val personalAccount = BindBankCardDTO().also {
-            it.bankCardType = 0
-        }
+        val personalAccount: MutableLiveData<BindBankCardDTO> =
+            MutableLiveData<BindBankCardDTO>().also {
+                val temp = BindBankCardDTO()
+                temp.bankCardType = 0
+                it.value = temp
+            }
 
+        //0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
+        val bindBandCard: MutableLiveData<Int> = MutableLiveData()
 
     }
 

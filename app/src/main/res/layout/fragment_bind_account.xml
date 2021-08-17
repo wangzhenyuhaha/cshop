@@ -100,7 +100,7 @@
                         <ImageView
                             android:id="@+id/accountCompany1"
                             android:layout_width="100dp"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="100dp"
@@ -113,7 +113,7 @@
                         <ImageView
                             android:id="@+id/accountCompany2"
                             android:layout_width="100dp"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/selector_login_service"
@@ -370,7 +370,7 @@
                         <ImageView
                             android:id="@+id/accountPersonal1"
                             android:layout_width="100dp"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_centerInParent="true"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="100dp"
@@ -383,7 +383,7 @@
                         <ImageView
                             android:id="@+id/accountPersonal2"
                             android:layout_width="100dp"
-                            android:layout_height="15dp"
+                            android:layout_height="20dp"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:src="@drawable/selector_login_service"
@@ -400,7 +400,7 @@
                         android:layout_marginBottom="10dp"
                         android:text="（请绑定法人本人的银行卡）"
                         android:textColor="@color/red"
-                        android:textSize="10sp" />
+                        android:textSize="11sp" />
 
                 </com.james.common.view.ILinearLayout>
 

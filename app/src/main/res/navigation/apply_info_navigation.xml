@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/apply_info_navagation"
-    app:startDestination="@id/bindAccountFragment">
+    app:startDestination="@id/shopInfoFragment">
 
     <fragment
         android:id="@+id/shopInfoFragment"
@@ -58,7 +58,11 @@
     <fragment
         android:id="@+id/bindAccountFragment"
         android:name="com.lingmiao.shop.business.main.fragment.BindAccountFragment"
-        android:label="BindAccountFragment" />
+        android:label="BindAccountFragment" >
+        <action
+            android:id="@+id/action_bindAccountFragment_to_shopPhotoFragment"
+            app:destination="@id/shopPhotoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/licenseInfoFragment"
         android:name="com.lingmiao.shop.business.main.fragment.LicenseInfoFragment"

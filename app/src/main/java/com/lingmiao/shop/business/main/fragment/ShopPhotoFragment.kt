@@ -61,21 +61,31 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
 
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
-
                 model.applyShopInfo.value?.licenceImg?.also {
                     GlideUtils.setImageUrl(binding.imageView, it)
                 }
-
                 model.setTitle("上传营业执照")
+            }
+            ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT -> {
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.companyAccount.value?.bankUrls?.also {
+                    GlideUtils.setImageUrl(binding.imageView, it)
+                }
+                model.setTitle("上传开户许可证照片")
+            }
+            ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT -> {
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.personalAccount.value?.bankUrls?.also {
+                    GlideUtils.setImageUrl(binding.imageView, it)
+                }
+                model.setTitle("上传银行卡正面照")
             }
             else -> {
 
             }
         }
-
-
-
-
 
         initListener()
 
@@ -93,6 +103,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
             setOnClickForPhoto(type, 2)
         }
 
+        //只传一张图片时
         binding.imageView.setOnClickListener {
             setOnClickForPhoto(type, 1)
         }
@@ -180,6 +191,21 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             GlideUtils.setImageUrl(binding.imageView, it, 12f)
                             model.getOCR.value = 8
                         }
+                    }
+                    ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT ->{
+                        model.companyAccount.value?.bankUrls = uploadFile.data.url
+                        uploadFile.data.url?.also {
+                            GlideUtils.setImageUrl(binding.imageView, it, 12f)
+                        }
+
+                    }
+                    ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT ->{
+                        model.personalAccount.value?.bankUrls = uploadFile.data.url
+                        uploadFile.data.url?.also {
+                            GlideUtils.setImageUrl(binding.imageView, it, 12f)
+                            model.getOCR.value = 6
+                        }
+
                     }
                 }
                 showToast("上传成功")
