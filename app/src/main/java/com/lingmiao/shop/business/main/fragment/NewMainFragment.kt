@@ -137,13 +137,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
-        switchStatusBtn.isChecked = loginInfo?.openStatus ?: false
         this.loginInfo = loginInfo;
 
-        switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPresenter?.editShopStatus(if (isChecked) 1 else 0);
-        }
-        onShopStatusEdited();
 
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
@@ -249,6 +244,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         // 最终状态，显示店铺状态
                         shopStatusLayout.visiable();
                         mPresenter?.getWaringNumber()
+                        switchStatusBtn.setCheckedNoEvent(loginInfo?.openStatus ?: false)
                     }
                     //                    tvMainShopName.text=loginInfo?.nickname
                     initOpeningShopView()
@@ -344,6 +340,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         setShop();
 
+        switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+            mPresenter?.editShopStatus(if (isChecked) 1 else 0);
+        }
+        onShopStatusEdited();
         // 申请状态点击
         authLayout.setOnClickListener {
             if(loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
