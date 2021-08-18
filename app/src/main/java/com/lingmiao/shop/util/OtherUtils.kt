@@ -67,11 +67,7 @@ object OtherUtils {
     fun goToMainActivity() {
         val loginInfo = UserManager.getLoginInfo() ?: return
 
-        if(loginInfo.shopStatus == ShopStatusConstants.OPEN
-            || loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING
-            || loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
-            || loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED
-            || loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
+        if(ShopStatusConstants.isAuthed(loginInfo.shopStatus)) {
             ActivityUtils.startActivity(MainActivity::class.java)
         } else {
             ActivityUtils.startActivity(ShopWaitApplyActivity::class.java)

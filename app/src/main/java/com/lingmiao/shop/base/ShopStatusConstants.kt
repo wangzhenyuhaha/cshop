@@ -71,4 +71,16 @@ object ShopStatusConstants {
      * 店铺已过期
      */
     const val OVERDUE = "OVERDUE";
+
+    fun isAuthed(status: String?): Boolean {
+        return status == OPEN
+                ||status == OVERDUE
+                ||status == ALLINPAY_APPLYING
+                ||status == ALLINPAY_APPROVED
+                ||status == ALLINPAY_ELECTSIGN_REFUSED
+                ||status == ALLINPAY_ELECTSIGN_APPROVED
+                || status == WEIXIN_AUTHEN_APPLYING
+                || status == FINAL_OPEN;
+    }
+
 }

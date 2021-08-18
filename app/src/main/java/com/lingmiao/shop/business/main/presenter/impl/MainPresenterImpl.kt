@@ -1,19 +1,15 @@
 package com.lingmiao.shop.business.main.presenter.impl
 
 import android.content.Context
-import android.util.Log
 import com.lingmiao.shop.BuildConfig
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.main.presenter.MainPresenter
-import com.lingmiao.shop.business.me.api.MeRepository
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.main.bean.OpenShopStatusVo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainPresenterImpl(context: Context, private var view: MainPresenter.View) : BasePreImpl(view),
@@ -29,11 +25,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                     loginInfo.openStatus = shopStatusResp.data.openStatus == 1
                     UserManager.setLoginInfo(loginInfo)
                 }
-                if (shopStatusResp.data.shopStatus == ShopStatusConstants.OPEN
-                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING
-                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
-                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
-                    ||shopStatusResp.data.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
+                if (ShopStatusConstants.isAuthed(shopStatusResp.data.shopStatus)) {
                     val resp = MainRepository.apiService.getMainData().awaitHiResponse()
                     if (resp.isSuccess) {
                         view.onMainDataSuccess(resp.data)
