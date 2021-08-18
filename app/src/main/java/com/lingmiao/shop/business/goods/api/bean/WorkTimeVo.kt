@@ -46,6 +46,9 @@ class WorkTimeVo : ItemData {
         val DEFAULT_SECOND_DAY_BASE_VALUE = 100;
 
         fun isSecondDay(first: String?, second: String?) : Boolean {
+            if(first.isNullOrEmpty() || second.isNullOrEmpty()) {
+                return false;
+            }
             val f2 = second?.replace("第二天", "");
             return first?.replace(":","")?.toInt()?:0 < f2?.replace(":", "")?.toInt()?:0;
         }

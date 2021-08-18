@@ -217,7 +217,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     // 处理显示【第二天】文字，服务端不保存,客户端计算
     fun setOperateTime() {
-        tvShopOperateTime.setText(String.format("%s%s%s%s", shopReq.openStartTime, if(shopReq.openStartTime?.isEmpty() == true) "" else "-" , if(WorkTimeVo.isSecondDay(shopReq.openStartTime, shopReq.openEndTime)) "" else "第二天", shopReq.openEndTime));
+        tvShopOperateTime.setText(String.format("%s%s%s%s", shopReq.openStartTime ?:"", if(shopReq.openStartTime?.isEmpty() == true) "" else "-" , if(WorkTimeVo.isSecondDay(shopReq.openStartTime, shopReq.openEndTime)) "" else "第二天", shopReq.openEndTime ?:""));
     }
 
 }
