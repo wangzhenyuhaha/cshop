@@ -9,7 +9,6 @@ import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.main.bean.OpenShopStatusVo
 import kotlinx.coroutines.launch
 
 class MainPresenterImpl(context: Context, private var view: MainPresenter.View) : BasePreImpl(view),
@@ -63,10 +62,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
         val id = loginInfo?.shopId;
         if (id != null) {
             mCoroutine.launch {
-                val body = OpenShopStatusVo();
-//				body.openStatus = flag;
-
-                val resp = MainRepository.apiService.editShopStatus(flag, body).awaitHiResponse()
+                val resp = MainRepository.apiService.editShopStatus(flag).awaitHiResponse()
                 handleResponse(resp) {
                     loginInfo.openStatus = flag == 1;
                     UserManager.setLoginInfo(loginInfo)

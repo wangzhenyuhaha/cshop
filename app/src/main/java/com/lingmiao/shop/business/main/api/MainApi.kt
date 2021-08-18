@@ -34,9 +34,9 @@ interface MainApi {
     @WithHiResponse
     fun getShopStatus(): Call<ShopStatus>
 
-    @POST("seller/shops/editShopOpenStatus/{shop_id}")
+    @POST("seller/shops/editShopOpenStatus/{openStatus}")
     @WithHiResponse
-    fun editShopStatus(@Path("shop_id") id: Int, @Body status: OpenShopStatusVo): Call<Unit>
+    fun editShopStatus(@Path("openStatus") openStatus: Int): Call<Unit>
 
     //开店 经营类目列表
     @GET("seller/goods/category/0/children")
