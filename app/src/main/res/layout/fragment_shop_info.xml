@@ -10,9 +10,9 @@
     tools:ignore="HardcodedText,ContentDescription">
 
     <LinearLayout
-        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_10"
         android:orientation="vertical">
 
         <com.james.common.view.ILinearLayout
@@ -86,43 +86,6 @@
 
             </RelativeLayout>
 
-            <View style="@style/DivideLineHorizontal" />
-
-            <RelativeLayout
-                android:id="@+id/shopInfopromoCode"
-                android:layout_width="match_parent"
-                android:layout_height="50dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="推广码（选填）"
-                    android:textColor="#ff333333"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/shopInfopromoCodeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="100dp"
-                    android:layout_marginEnd="16dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="请填写邀请码"
-                    android:textColor="#ff999999"
-                    android:textSize="12sp" />
-
-                <ImageView
-                    android:layout_width="6dp"
-                    android:layout_height="11dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/me_arrow_right" />
-            </RelativeLayout>
-
 
         </com.james.common.view.ILinearLayout>
 
@@ -147,6 +110,58 @@
 
             <View style="@style/DivideLineHorizontal" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/thrcertflag"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginEnd="@dimen/dimen_8">
+
+                <TextView
+                    android:id="@+id/flagTV"
+                    style="@style/goods_spce_item_left_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="三证合一"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/thrcertflag"
+                    app:layout_constraintStart_toStartOf="@+id/thrcertflag"
+                    app:layout_constraintTop_toTopOf="@+id/thrcertflag" />
+
+                <TextView
+                    android:id="@+id/thrcertflagYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/dimen_20"
+                    android:drawableEnd="@drawable/selector_login_service"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="是   "
+                    android:textColor="#ff333333"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/thrcertflag"
+                    app:layout_constraintEnd_toStartOf="@+id/thrcertflagNO"
+                    app:layout_constraintTop_toTopOf="@+id/thrcertflag" />
+
+                <TextView
+                    android:id="@+id/thrcertflagNO"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/selector_login_service"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="否   "
+                    android:textColor="#ff333333"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/thrcertflag"
+                    app:layout_constraintEnd_toEndOf="@+id/thrcertflag"
+                    app:layout_constraintTop_toTopOf="@+id/thrcertflag" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
             <RelativeLayout
                 android:id="@+id/license"
                 android:layout_width="match_parent"
@@ -157,12 +172,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="营业执照"
+                    android:text="营业执照照片"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/tvLicense"
+                    android:id="@+id/licenseTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -171,7 +186,87 @@
                     android:layout_marginEnd="16dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="请上传营业资质"
+                    android:text="请上传营业执照"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="6dp"
+                    android:layout_height="11dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me_arrow_right" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view1"
+                style="@style/DivideLineHorizontal" />
+
+            <RelativeLayout
+                android:id="@+id/taxes"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/goods_spce_item_left_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="税务登记证照片"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/taxesTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="请上传税务登记证"
+                    android:textColor="#ff999999"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:layout_width="6dp"
+                    android:layout_height="11dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/me_arrow_right" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/view2"
+                style="@style/DivideLineHorizontal" />
+
+            <RelativeLayout
+                android:id="@+id/organ"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    style="@style/goods_spce_item_left_mark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="组织机构代码证照片"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/organTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginEnd="16dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="请上传组织机构代码"
                     android:textColor="#ff999999"
                     android:textSize="12sp" />
 
@@ -224,7 +319,7 @@
             <View style="@style/DivideLineHorizontal" />
 
             <RelativeLayout
-                android:id="@+id/ID_Card"
+                android:id="@+id/IDCard"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
@@ -238,7 +333,7 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/tv_ID_Card"
+                    android:id="@+id/IDCardTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -258,8 +353,6 @@
                     android:layout_centerVertical="true"
                     android:src="@mipmap/me_arrow_right" />
             </RelativeLayout>
-
-
         </com.james.common.view.ILinearLayout>
 
         <View

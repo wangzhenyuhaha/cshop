@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
@@ -50,10 +51,10 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 binding.imageView.visibility = View.GONE
 
                 model.applyShopInfo.value?.shopPhotoFront?.also {
-                    GlideUtils.setImageUrl(binding.shopFront, it)
+                    Glide.with(requireActivity()).load(it).into(binding.shopFront)
                 }
                 model.applyShopInfo.value?.shopPhotoInside?.also {
-                    GlideUtils.setImageUrl(binding.shopInside, it)
+                    Glide.with(requireActivity()).load(it).into(binding.shopInside)
                 }
                 model.setTitle("上传店铺照片")
             }
@@ -62,15 +63,33 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.licenceImg?.also {
-                    GlideUtils.setImageUrl(binding.imageView, it)
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
                 }
                 model.setTitle("上传营业执照")
+            }
+            ApplyShopInfoActivity.TAXES -> {
+
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.applyShopInfo.value?.taxes_certificate_img?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
+                }
+                model.setTitle("上传税务登记证照片")
+            }
+            ApplyShopInfoActivity.ORGAN -> {
+
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.applyShopInfo.value?.orgcodepic?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
+                }
+                model.setTitle("上传组织机构代码证照片")
             }
             ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT -> {
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.companyAccount.value?.bankUrls?.also {
-                    GlideUtils.setImageUrl(binding.imageView, it)
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
                 }
                 model.setTitle("上传开户许可证照片")
             }
@@ -78,7 +97,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.personalAccount.value?.bankUrls?.also {
-                    GlideUtils.setImageUrl(binding.imageView, it)
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
                 }
                 model.setTitle("上传银行卡正面照")
             }
@@ -176,33 +195,54 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                         if (number == 1) {
                             model.applyShopInfo.value?.shopPhotoFront = uploadFile.data.url
                             uploadFile.data.url?.also {
-                                GlideUtils.setImageUrl(binding.shopFront, it, 12f)
+                                Glide.with(requireActivity()).load(it).into(binding.shopFront)
                             }
                         } else {
                             model.applyShopInfo.value?.shopPhotoInside = uploadFile.data.url
                             uploadFile.data.url?.also {
-                                GlideUtils.setImageUrl(binding.shopInside, it, 12f)
+                                Glide.with(requireActivity()).load(it).into(binding.shopInside)
                             }
                         }
                     }
                     ApplyShopInfoActivity.LICENSE -> {
                         model.applyShopInfo.value?.licenceImg = uploadFile.data.url
                         uploadFile.data.url?.also {
-                            GlideUtils.setImageUrl(binding.imageView, it, 12f)
+                            //清除之前OCR识别产生的数据
+                            model.applyShopInfo.value?.also {info->
+                                info.companyName = ""
+                                info.licenseNum = ""
+                                info.licenceEnd = null
+                                info.scope = ""
+                                info.regMoney = 1
+                            }
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
                             model.getOCR.value = 8
                         }
                     }
-                    ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT ->{
+                    ApplyShopInfoActivity.TAXES -> {
+                        model.applyShopInfo.value?.taxes_certificate_img = uploadFile.data.url
+                        uploadFile.data.url?.also {
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
+                        }
+                    }
+                    ApplyShopInfoActivity.ORGAN -> {
+                        model.applyShopInfo.value?.orgcodepic = uploadFile.data.url
+                        uploadFile.data.url?.also {
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
+                        }
+                    }
+                    ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT -> {
                         model.companyAccount.value?.bankUrls = uploadFile.data.url
                         uploadFile.data.url?.also {
-                            GlideUtils.setImageUrl(binding.imageView, it, 12f)
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
                         }
 
                     }
-                    ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT ->{
+                    ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT -> {
                         model.personalAccount.value?.bankUrls = uploadFile.data.url
+                        model.personalAccount.value?.cardNo = ""
                         uploadFile.data.url?.also {
-                            GlideUtils.setImageUrl(binding.imageView, it, 12f)
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
                             model.getOCR.value = 6
                         }
 

@@ -49,9 +49,6 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(),ApplyShopHi
             ActivityUtils.startActivity(ApplyShopInfoActivity::class.java)
             finish()
         }
-        imageView.singleClick {
-            DialogUtils.showDialog(this!!, R.mipmap.apply_shop_hint);
-        }
 
     }
 

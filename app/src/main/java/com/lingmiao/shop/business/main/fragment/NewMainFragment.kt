@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
@@ -103,6 +104,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             if (UserManager.isLogin()) {
                 ActivityUtils.startActivity(MessageCenterActivity::class.java)
             }
+        }
+
+        readApplyShop.singleClick {
+            DialogUtils.showDialog(activity!!, R.mipmap.apply_shop_hint)
         }
 
         tvMainShopNext.setOnClickListener {

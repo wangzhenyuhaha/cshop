@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDEDED"
-    tools:ignore="HardcodedText"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:id="@+id/llHeader"
@@ -49,32 +49,32 @@
         </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/authLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/authLayout"
             android:visibility="gone">
 
             <TextView
-                android:padding="15dp"
-                tools:text="店铺签约成功,请进行商户认证"
-                android:textColor="@color/white"
-                android:background="@color/color_FD8424"
                 android:id="@+id/shopAuthStatus"
                 android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"/>
+                android:background="@color/color_FD8424"
+                android:padding="15dp"
+                android:textColor="@color/white"
+                tools:text="店铺签约成功,请进行商户认证" />
 
             <TextView
-                android:padding="15dp"
-                android:text="查看"
-                android:gravity="right"
-                android:drawableRight="@mipmap/arrow_right_white"
-                android:textColor="@color/white"
-                android:layout_alignParentRight="true"
-                android:background="@color/color_FD8424"
                 android:id="@+id/shopAuthHint"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@color/color_FD8424"
+                android:drawableRight="@mipmap/arrow_right_white"
+                android:gravity="right"
+                android:padding="15dp"
+                android:text="查看"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
@@ -132,7 +132,8 @@
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    tools:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/llMainShopOpen"
@@ -449,17 +450,17 @@
 
                                     <com.james.common.view.CircleTextView
                                         android:id="@+id/tvComeSoon_number"
-                                        android:padding="@dimen/dp_4"
-                                        android:alpha="0.8"
-                                        android:textColor="@color/white"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="end"
                                         android:layout_marginEnd="30dp"
+                                        android:alpha="0.8"
                                         android:gravity="center"
-                                        tools:text="GGG"
+                                        android:padding="@dimen/dp_4"
+                                        android:textColor="@color/white"
                                         android:visibility="gone"
                                         app:circleTint="@color/red"
+                                        tools:text="GGG"
                                         tools:visibility="visible" />
 
                                 </FrameLayout>
@@ -506,7 +507,8 @@
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -552,6 +554,74 @@
                         app:ivBorderColor="#ff3870ea"
                         app:ivBorderWidth="1px"
                         app:ivRadius="19dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:layout_margin="@dimen/dimen_40"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:text="C店资质"
+                            android:textColor="#ff000000"
+                            android:textSize="@dimen/sp_18" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:text="运营资质"
+                            android:textColor="#ff000000"
+                            android:textSize="@dimen/sp_14" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="增值电信业务经营许可证"
+                                android:textColor="#ff909090"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:id="@+id/readApplyShop"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="(点击查看)"
+                                android:textColor="#3870EA"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="@dimen/dimen_20"
+                            android:text="支付资质"
+                            android:textColor="#ff000000"
+                            android:textSize="@dimen/sp_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:text="由正规持牌支付机构提供T+1交易服务：通联支付"
+                            android:textColor="#ff909090"
+                            android:textSize="@dimen/sp_14" />
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"

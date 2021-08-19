@@ -11,13 +11,53 @@ data class ApplyShopInfo(
     @SerializedName("shop_type")
     var shopType: Int? = null,
 
-    //推广码(非必填，申请店铺时如果邀请码填错，无法申请店铺)
-    @SerializedName("promo_code")
-    var promoCode: String? = null,
+    //三证合一
+    //必填
+    //是否三证合一 1：是 0：否
+    @SerializedName("thrcertflag")
+    var thrcertflag: Int? = null,
 
-    //营业执照电子版
+    //营业执照名称
+    @SerializedName("company_name")
+    var companyName: String? = null,
+
+    //统一社会信用代码证(三证合一为否时传入的是营业执照的编号)（营业执照编号）
+    @SerializedName("license_num")
+    var licenseNum: String? = null,
+
+    //营业执照电子版（营业执照照片）
     @SerializedName("licence_img")
     var licenceImg: String? = null,
+
+    //社会信用代码证有效期（营业执照有效期）
+    @SerializedName("licence_end")
+    var licenceEnd: Long? = null,
+
+    //三证合一为否时再传入以下字段
+    //税务登记证号
+    @SerializedName("taxes_certificate_num")
+    var taxes_certificate_num: String? = null,
+
+    //税务登记证照片
+    @SerializedName("taxes_certificate_img")
+    var taxes_certificate_img: String? = null,
+
+    //税务登记证有效期
+    @SerializedName("taxes_distinguish_expire")
+    var taxes_distinguish_expire: Long? = null,
+
+    //组织机构代码证号
+    @SerializedName("organcode")
+    var organcode: String? = null,
+
+    //组织机构代码证照片
+    @SerializedName("orgcodepic")
+    var orgcodepic: String? = null,
+
+    //组织机构代码证有效期
+    @SerializedName("organexpire")
+    var organexpire: Long? = null,
+
 
     //店铺门头照片
     @SerializedName("storepic")
@@ -27,17 +67,42 @@ data class ApplyShopInfo(
     @SerializedName("storeinnerpic")
     var shopPhotoInside: String? = null,
 
-    //  国徽
-    @SerializedName("legal_img")
-    var legalImg: String? = null,
-
     //  人像
     @SerializedName("legal_back_img")
     var legalBackImg: String? = null,
 
+    //  国徽
+    @SerializedName("legal_img")
+    var legalImg: String? = null,
+
     //法人手持身份证照片
     @SerializedName("hold_img")
     var holdImg: String? = null,
+
+    //身份证信息
+    //法人姓名
+    @SerializedName("legal_name")
+    var legalName: String? = null,
+
+    //法人性别(法人性别,1为男，0为女)
+    @SerializedName("legal_sex")
+    var legalSex: Int? = null,
+
+    //法人身份证号码
+    @SerializedName("legal_id")
+    var legalId: String? = null,
+
+    //证件有效期(法人身份证过期时间)  Data
+    @SerializedName("legalidexpire")
+    var legalIDExpire: Long? = null,
+
+    //法人地址
+    @SerializedName("legal_address")
+    var legal_address: String? = null,
+
+    //法人电话
+    @SerializedName("legal_phone")
+    var legal_phone: String? = null,
 
     //店铺名称
     @SerializedName("shop_name")
@@ -50,7 +115,6 @@ data class ApplyShopInfo(
     //店铺经营类目 返回文本
     @SerializedName("category_names")
     var categoryNames: String? = null,
-
 
     //店铺所在省
     @SerializedName("shop_province")
@@ -80,7 +144,6 @@ data class ApplyShopInfo(
     @SerializedName("shop_lng")
     var shopLng: Double? = null,
 
-
     //店铺联系人姓名(负责人)
     @SerializedName("link_name")
     var linkName: String? = null,
@@ -92,28 +155,6 @@ data class ApplyShopInfo(
     //经营内容(法定经营范围)
     @SerializedName("scope")
     var scope: String? = null,
-
-
-    //身份证信息
-    //法人姓名
-    @SerializedName("legal_name")
-    var legalName: String? = null,
-
-    //法人性别(法人性别,1为男，0为女)
-    @SerializedName("legal_sex")
-    var legalSex: Int? = null,
-
-    //法人身份证号码
-    @SerializedName("legal_id")
-    var legalId: String? = null,
-
-    //证件有效期(法人身份证过期时间)  Data
-    @SerializedName("legalidexpire")
-    var legalIDExpire: Long? = null,
-
-    //如果是公司账户,填写企业资料
-    //如果是个体户账户,填写商家资料
-
 
     //注册资金  注册资本  1: 注册资本<10万元 2: 10万元<注册资本<20万元 3: 20万元<注册资本<50万元 4: 50万元<注册资本<100万元 5: 注册资本>100万元
     @SerializedName("reg_money")
@@ -131,90 +172,67 @@ data class ApplyShopInfo(
     @SerializedName("inspect")
     var inspect: Int? = null,
 
-    //三证合一  是否三证合一 1：是 0：否
-    @SerializedName("thrcertflag")
-    var thrcertflag: Int? = null,
 
-    //三证合一   是
-    //统一社会信用代码证
-    @SerializedName("creditcode")
-    var creditCode: String? = null,
-
-    //社会信用代码证有效期
-    @SerializedName("creditcodeexpire")
-    var creditCodeExpire: Long? = null,
-
-
-    //三证合一   否
-
-    //税务登记号码
-    @SerializedName("taxregcode")
-    var taxRegCode: String? = null,
-
-    //税务登记证日期
-    @SerializedName("taxcodeexpire")
-    var taxCodeExpire: Long? = null,
-
-    //税务登记证照片
-    @SerializedName("taxcodepic")
-    var taxCodePic: String? = null,
-
-    //营业执照号
-    @SerializedName("license_num")
-    var licenseNum: String? = null,
-
-    //营业执照有效期结束
-    @SerializedName("licence_end")
-    var licenseEnd: Long? = null,
-
-    //关于银行卡信息11个
-    //结算账户绑定
-    //账户类型 0-对私 1-对公
+//关于银行卡信息11个
+//结算账户绑定
+//账户类型 0-对私 1-对公
     @SerializedName("accttype")
     var accttype: Int? = null,
 
-    //账户名称或持卡人
+
+//账户名称或持卡人
     @SerializedName("bank_account_name")
     var bankAccountName: String? = null,
 
-    //开户许可证照片或银行卡照片
+//开户许可证照片或银行卡照片
     @SerializedName("bank_urls")
     var bankUrls: String? = null,
 
-    //账户号或卡号
+//账户号或卡号
     @SerializedName("bank_number")
     var bankNumber: String? = null,
 
-    //银行卡所在省
+//银行卡所在省
     @SerializedName("bank_province")
     var province: String? = null,
 
-    //银行卡所在市
+//银行卡所在市
     @SerializedName("bank_city")
     var city: String? = null,
 
-    //所属银行,开户银行号（通联）,名称
+//所属银行,开户银行号（通联）,名称
     @SerializedName("bank_no")
     var bankNo: String? = null,
 
-    //所属支行,开户银行支行名称，名称
+//所属支行,开户银行支行名称，名称
     @SerializedName("bank_name")
     var bankName: String? = null,
 
-    //所属银行,开户银行号（通联）,号码
+//所属银行,开户银行号（通联）,号码
     @SerializedName("bankCode")
     var bankCode: String? = null,
 
-    //所属支行,开户银行支行名称，号码
+//所属支行,开户银行支行名称，号码
     @SerializedName("subBankCode")
     var subBankCode: String? = null,
 
-    //店铺绑定的银行卡
+//店铺绑定的银行卡
     @SerializedName("bank_card")
     var bankCard: BindBankCardDTO? = null,
 
 
-    //----------------------
+
+
+
+
+
+
+//推广码(非必填，申请店铺时如果邀请码填错，无法申请店铺)
+    @SerializedName("promo_code")
+    var promoCode: String? = null,
+
+
+//----------------------
 
 
 //店铺logo

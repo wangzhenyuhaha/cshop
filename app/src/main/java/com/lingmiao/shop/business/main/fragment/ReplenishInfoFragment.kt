@@ -34,13 +34,13 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
         model.applyShopInfo.value?.also {
 
-            return !(it.legalName.isNullOrEmpty() || it.legalSex == null || it.legalId.isNullOrEmpty()
+            return !(it.legalName.isNullOrEmpty() || it.legalSex == null || it.legalId.isNullOrEmpty() || it.legal_address.isNullOrEmpty()
                     || it.legalIDExpire == null || it.legalImg.isNullOrEmpty() || it.legalBackImg.isNullOrEmpty() || it.holdImg.isNullOrEmpty())
         }
         return false
     }
 
-    //判断  企业/店铺   资料是否完整N
+    //判断企业信息是否完整
     private fun isCompanyInfoReady(): Boolean {
 
         model.applyShopInfo.value?.also {
@@ -48,31 +48,21 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
             return if (it.thrcertflag == 1) {
                 //是
                 !(it.regMoney == null || it.employeeNum == null || it.operateLimit == null || it.inspect == null || it.thrcertflag == null
-                        || it.creditCode.isNullOrEmpty() || it.creditCodeExpire == null
+                        || it.companyName.isNullOrEmpty() || it.licenseNum.isNullOrEmpty() || it.licenceImg.isNullOrEmpty() || it.licenceEnd == null
                         )
             } else {
                 //否
-                !(it.regMoney == null || it.employeeNum == null || it.operateLimit == null || it.inspect == null
-                        || it.thrcertflag == null || it.taxRegCode.isNullOrEmpty() || it.taxCodePic.isNullOrEmpty() || it.taxCodeExpire == null)
+                !(it.regMoney == null || it.employeeNum == null || it.operateLimit == null || it.inspect == null || it.thrcertflag == null
+                        || it.companyName.isNullOrEmpty() || it.licenseNum.isNullOrEmpty() || it.licenceImg.isNullOrEmpty() || it.licenceEnd == null
+                        || it.taxes_certificate_num.isNullOrEmpty() || it.taxes_certificate_img.isNullOrEmpty() || it.taxes_distinguish_expire == null
+                        || it.organcode.isNullOrEmpty() || it.orgcodepic.isNullOrEmpty() || it.organexpire == null
+                        )
             }
 
         }
 
-        return false
+        return true
     }
-
-    //判断营业执照资料是否完整
-    private fun isLicenseInfoReady(): Boolean {
-
-        model.applyShopInfo.value?.also {
-
-            return !(it.licenseNum.isNullOrEmpty() || it.licenseEnd == null)
-        }
-
-        return false
-
-    }
-
 
     private fun initListener() {
 
@@ -108,11 +98,45 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
             ShopAddressActivity.openActivity(requireActivity(), model.adInfo.value)
         }
 
+        //法人
+        binding.legalNameTV.setOnClickListener {
+            DialogUtils.showInputDialog(
+                requireActivity(),
+                "法人姓名",
+                "",
+                "请输入",
+                model.applyShopInfo.value?.legalName,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.legalNameTV.text = it
+                model.applyShopInfo.value?.legalName = it
+            }
+        }
+
+        //法人电话
+        binding.legalPhone.setOnClickListener {
+            DialogUtils.showInputDialog(
+                requireActivity(),
+                "法人电话",
+                "",
+                "请输入",
+                model.applyShopInfo.value?.legal_phone,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.legalPhoneTV.text = it
+                model.applyShopInfo.value?.legal_phone = it
+            }
+        }
+
         //负责人
         binding.linkName.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "店铺负责人姓名",
+                "负责人姓名",
                 "",
                 "请输入",
                 model.applyShopInfo.value?.linkName,
@@ -129,7 +153,7 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
         binding.linkPhone.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "店铺负责人电话",
+                "负责人电话",
                 "",
                 "请输入",
                 model.applyShopInfo.value?.linkPhone,
@@ -139,6 +163,20 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
             ) {
                 binding.linkPhoneTextView.text = it
                 model.applyShopInfo.value?.linkPhone = it
+            }
+        }
+
+        binding.legalNameSync.setOnClickListener {
+            model.applyShopInfo.value?.also {
+                if (!it.legalName.isNullOrEmpty()) {
+                    binding.linkNameTextView.text = it.legalName
+                    model.applyShopInfo.value?.linkName = it.legalName
+                }
+
+                if (!it.legal_phone.isNullOrEmpty()) {
+                    binding.linkPhoneTextView.text = it.legal_phone
+                    model.applyShopInfo.value?.linkPhone = it.legal_phone
+                }
             }
         }
 
@@ -161,36 +199,17 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
         }
 
+
         //法人身份证信息
         binding.legalInfo.setOnClickListener {
             findNavController().navigate(R.id.action_replenishInfoFragment_to_identityInfoFragment)
         }
 
-        //企业资料
+        //企业信息  或  企业信息（个体户）
         binding.companyInfo.setOnClickListener {
             findNavController().navigate(R.id.action_replenishInfoFragment_to_companyInfoFragment)
         }
 
-        //营业执照信息
-        binding.licenseInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_replenishInfoFragment_to_licenseInfoFragment)
-        }
-
-
-        //商家身份证信息
-        binding.personalLegalInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_replenishInfoFragment_to_identityInfoFragment)
-        }
-
-        //商家资料
-        binding.personalInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_replenishInfoFragment_to_companyInfoFragment)
-        }
-
-        //商家营业执照信息
-        binding.personalLicenceInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_replenishInfoFragment_to_licenseInfoFragment)
-        }
 
         //下一步
         binding.tvApplyShopInfoNext.setOnClickListener {
@@ -205,37 +224,26 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 checkNotBlack(model.applyShopInfo.value?.shopAdd) {
                     "请输入店铺地址"
                 }
+                checkNotBlack(model.applyShopInfo.value?.legalName) {
+                    "请输入法人姓名"
+                }
+                checkNotBlack(model.applyShopInfo.value?.legal_phone) {
+                    "请输入法人号码"
+                }
                 checkNotBlack(model.applyShopInfo.value?.linkName) {
-                    "请输入店铺负责人姓名"
+                    "请输入负责人姓名"
                 }
                 checkNotBlack(model.applyShopInfo.value?.linkPhone) {
-                    "请输入店铺负责人号码"
+                    "请输入负责人号码"
                 }
                 checkNotBlack(model.applyShopInfo.value?.scope) {
                     "请输入主营内容"
                 }
-                if (model.applyShopInfo.value?.shopType == 1) {
-                    //当前为企业店铺
-                    checkBoolean(isIDCardReady()) {
-                        " 请输入完整的身份证资料"
-                    }
-                    checkBoolean(isCompanyInfoReady()) {
-                        "请输入完整的企业资料"
-                    }
-                    checkBoolean(isLicenseInfoReady()) {
-                        "请输入完整的营业执照资料"
-                    }
-                } else {
-                    //当前为个体户
-                    checkBoolean(isIDCardReady()) {
-                        " 请输入完整的身份证资料"
-                    }
-                    checkBoolean(isCompanyInfoReady()) {
-                        "请输入完整的商家资料"
-                    }
-                    checkBoolean(isLicenseInfoReady()) {
-                        "请输入完整的营业执照资料"
-                    }
+                checkBoolean(isIDCardReady()) {
+                    "请输入完整的身份证资料"
+                }
+                checkBoolean(isCompanyInfoReady()) {
+                    "请输入完整的企业信息"
                 }
                 findNavController().navigate(R.id.action_replenishInfoFragment_to_bindAccountFragment)
 
@@ -252,15 +260,18 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
 
         model.applyShopInfo.observe(this, Observer { info ->
-            //店铺名字
 
+            //店铺名字
             info.shopName?.also {
                 if (it.isNotEmpty()) binding.shopNameTextView.text = it
             }
+
             //店铺经营类目
-            info.categoryNames?.also {
-                if (it.isNotEmpty()) binding.goodsManagementCategoryTextView.text = it.replace(" ","/")
+            if (!info.categoryNames.isNullOrEmpty()) {
+                binding.goodsManagementCategoryTextView.text =
+                    info.categoryNames?.replace(" ", "/")
             }
+
             //店铺地址
             if (!info.shopAdd.isNullOrEmpty()) {
                 (info.shopProvince.orEmpty() +
@@ -269,48 +280,33 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                         info.shopTown.orEmpty() +
                         info.shopAdd).also { address -> binding.shopAddressTextView.text = address }
             }
-            //店铺负责人姓名
+
+            //法人姓名
+            if (!info.legalName.isNullOrEmpty()) binding.legalNameTV.text = info.legalName
+
+            //法人电话
+            if (!info.legal_phone.isNullOrEmpty()) binding.legalPhoneTV.text = info.legal_phone
+
+            //负责人姓名
             info.linkName?.also {
                 if (it.isNotEmpty()) binding.linkNameTextView.text = it
             }
-            //店铺负责人电话
+            //负责人电话
             info.linkPhone?.also {
                 if (it.isNotEmpty()) binding.linkPhoneTextView.text = it
             }
+
             //经营内容
             info.scope?.also {
                 if (it.isNotEmpty()) binding.scopeTextView.text = it
             }
 
-            //判断店铺类型
-            if (model.applyShopInfo.value?.shopType == 1) {
-                //企业
-                binding.company.visibility = View.VISIBLE
-                binding.personal.visibility = View.GONE
-                //判断企业信息是否齐全
-                if (isIDCardReady()) {
-                    binding.legalInfoTextView.text = "已上传"
-                }
-                if (isCompanyInfoReady()) {
-                    binding.companyInfoTextView.text = "已上传"
-                }
-                if (isLicenseInfoReady()) {
-                    binding.licenseInfoTextView.text = "已上传"
-                }
-            } else {
-                //个体户
-                binding.company.visibility = View.GONE
-                binding.personal.visibility = View.VISIBLE
-                //判断个体户信息是否齐全
-                if (isIDCardReady()) {
-                    binding.personalLegalInfoTextView.text = "已上传"
-                }
-                if (isCompanyInfoReady()) {
-                    binding.personalInfoTV.text = "已上传"
-                }
-                if (isLicenseInfoReady()) {
-                    binding.personalLicenceInfoTV.text = "已上传"
-                }
+            if (isIDCardReady()) {
+                binding.legalInfoTextView.text = "已上传"
+            }
+
+            if (isCompanyInfoReady()) {
+                binding.companyInfoTextView.text = "已上传"
             }
 
         })
@@ -326,6 +322,7 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
         categoryIdSB.append(applyShopCategory.categoryId)
         categoryNameSB.append(applyShopCategory.name)
         model.applyShopInfo.value?.goodsManagementCategory = categoryIdSB.toString()
+        model.applyShopInfo.value?.categoryNames = categoryNameSB.toString()
         binding.goodsManagementCategoryTextView.text = categoryNameSB.toString()
     }
 
@@ -396,8 +393,14 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
 
     override fun initViewsAndData(rootView: View) {
-
         model.setTitle("补充资料")
+        if (model.applyShopInfo.value?.shopType == 1) {
+            //企业
+            binding.companyInfoTitle.text = "企业信息"
+        } else {
+            //个体户
+            binding.companyInfoTitle.text = "企业信息（个体户）"
+        }
         initListener()
         initObserver()
     }

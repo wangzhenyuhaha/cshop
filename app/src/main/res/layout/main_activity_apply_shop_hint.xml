@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,66 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingBottom="@dimen/dimen_15"
-            android:text="公司资质"
-            android:textColor="#ff000000"
-            android:textSize="16sp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:layout_marginBottom="@dimen/dimen_15"
-            android:background="@color/gray_bg_click"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:id="@+id/container"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:paddingStart="@dimen/dimen_1"
-                android:paddingEnd="@dimen/dimen_10">
-
-                <TextView
-                    android:id="@+id/textViewCompany1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:text="增值电信业务经营许可证"
-                    android:textColor="#ff000000"
-                    android:textSize="@dimen/sp_14"  />
-
-                <TextView
-                    android:id="@+id/textViewCompany2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:text="(由正规持牌支付机构提供T+1交易服务)"
-                    android:textColor="#3870EA"
-                    android:textSize="@dimen/sp_14" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@mipmap/apply_shop_hint" />
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_35"
             android:text="请准备好如下资料"
             android:textColor="#ff000000"
             android:textSize="19sp" />
@@ -153,6 +94,7 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -186,7 +128,6 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-
         <com.james.common.view.ITextView
             android:id="@+id/tvApplyShopHintNext"
             android:layout_width="match_parent"
@@ -203,4 +144,4 @@
 
     </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+</LinearLayout>

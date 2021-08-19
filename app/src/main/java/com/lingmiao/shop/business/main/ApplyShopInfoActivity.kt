@@ -16,6 +16,7 @@ import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.lingmiao.shop.util.dateTime3Date
 import kotlinx.android.synthetic.main.main_adapter_apply_info.*
+import java.util.regex.Pattern
 
 /**
  *   首页-提交资料
@@ -29,8 +30,15 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //营业执照
         const val LICENSE = 2
 
+        //税务登记证照片
+        const val TAXES = 0
+
+        //组织机构代码证照片
+        const val ORGAN = 1
+
         //店铺门头照片
         const val SHOP_FRONT = 3
+
 
         //上传国徽面照片
         const val ID_CARD_FRONT = 5
@@ -79,13 +87,15 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         initObserver()
 
         val loginInfo = UserManager.getLoginInfo()
-        //审核失败，获取信息,暂时不处理银行卡
+
         loginInfo?.let {
             if (it.shopStatus != null && it.shopStatus != "UN_APPLY") {
+                //加载上次上传的信息
                 mPresenter.requestShopInfoData()
-                //获取已绑定的银行卡
+                //获取已绑定的银行卡,
                 it.uid?.also { uid -> mPresenter.searchBankList(uid) }
             }
+
         }
 
     }
@@ -96,11 +106,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             mToolBarDelegate.setMidTitle(it)
         })
 
-
         //注册店铺
         viewModel.go.observe(this, Observer {
             try {
-                Log.d("WZY", viewModel.applyShopInfo.value.toString())
                 mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
             } catch (e: Exception) {
                 showToast("失败了")
@@ -152,15 +160,83 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         })
 
-        viewModel.test.observe(this, Observer {
+        viewModel.companyResult.observe(this, Observer { result ->
+            viewModel.applyShopInfo.value?.also {
 
+                if (it.shopType == 1) {
+                    //企业
+                    if (it.accttype == 0) {
+                        //对私
+                       if (viewModel.companyResult.value == 1&& viewModel.personalResult.value == 1){
+                           viewModel.go.value = 1
+                       }
+                    } else {
+                        //对公
+                        if (viewModel.companyResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    }
+                } else {
+                    //个体户
+                    if (it.accttype == 0) {
+                        //对私
+                        if (viewModel.personalResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    } else {
+                        //对公
+                        if (viewModel.companyResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    }
+                }
+
+            }
+        })
+
+        viewModel.personalAccount.observe(this, Observer { result ->
+            viewModel.applyShopInfo.value?.also {
+
+                if (it.shopType == 1) {
+                    //企业
+                    if (it.accttype == 0) {
+                        //对私
+                        if (viewModel.companyResult.value == 1&& viewModel.personalResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    } else {
+                        //对公
+                        if (viewModel.companyResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    }
+                } else {
+                    //个体户
+                    if (it.accttype == 0) {
+                        //对私
+                        if (viewModel.personalResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    } else {
+                        //对公
+                        if (viewModel.companyResult.value == 1){
+                            viewModel.go.value = 1
+                        }
+                    }
+                }
+
+            }
+        })
+
+
+        //测试接口
+        viewModel.test.observe(this, Observer {
             when (it) {
                 8 -> {
                     mPresenter.searchBankCode("建设银行")
                 }
             }
         })
-
 
     }
 
@@ -174,7 +250,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     override fun onShopInfoError(code: Int) {
         //默认使用空数据
     }
-
 
     //申请店铺成功
     override fun onApplyShopInfoSuccess() {
@@ -194,7 +269,12 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     //OCR识别银行卡
     override fun onBankCard(data: BankCard) {
         viewModel.personalAccount.value?.also {
-            it.cardNo = data.CardNo
+            try {
+                it.cardNo = data.CardNo
+
+            } catch (e: Exception) {
+
+            }
             // it.bankName  = data.BankInfo
             // Log.d("WY",data.toString())
         }
@@ -204,46 +284,61 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     //OCR识别身份证国徽面
     override fun onIDCardG(data: IDCard) {
         viewModel.applyShopInfo.value?.also {
-            val s = dateTime3Date(data.ValidDate?.substring(11, 21) + " 00:00:00")?.time ?: 0
-            it.legalIDExpire = s / 1000
+            try {
+                val s = dateTime3Date(data.ValidDate?.substring(11, 21) + " 00:00:00")?.time ?: 0
+                it.legalIDExpire = s / 1000
+            } catch (e: Exception) {
+
+            }
         }
     }
 
     //OCR识别身份证人像面
     override fun onIDCardP(data: IDCard) {
         viewModel.applyShopInfo.value?.also {
-            it.legalName = data.Name ?: ""
-            it.legalSex = if (data.Sex == "男") 1 else 0
-            it.legalId = data.IdNum ?: ""
+            if (!data.Name.isNullOrEmpty()) it.legalName = data.Name
+            if (!data.Sex.isNullOrEmpty()) it.legalSex = if (data.Sex == "男") 1 else 0
+            if (!data.Address.isNullOrEmpty()) it.legal_address = data.Address
+            if (!data.IdNum.isNullOrEmpty()) it.legalId = data.IdNum
         }
     }
 
     //OCR识别营业执照
     override fun onUpdateLicense(data: License) {
-        viewModel.applyShopInfo.value?.also {
+        viewModel.applyShopInfo.value?.also { info ->
 
-            it.scope = data.business ?: ""
-            it.licenseNum = data.regNum ?: ""
-
-
+            if (!data.name.isNullOrEmpty()) info.companyName = data.name
+            if (!data.regNum.isNullOrEmpty()) info.licenseNum = data.regNum
+            if (!data.business.isNullOrEmpty()) info.scope = data.business
             try {
-                val time: String? = data.period?.run {
-                    substring(12, 16) + "." + substring(17, 19) + "." + substring(20, 22)
-                }
-                val s: Long? = time?.let { timeString ->
-                    dateTime3Date("$timeString 00:00:00")?.time ?: 0
-                }
-                s?.also { timeLong ->
-                    it.licenseEnd = timeLong / 1000
+                //判断注册资金
+                if (!data.capital.isNullOrEmpty()) {
+                    val index: Int = data.capital?.indexOfFirst { it == '.' } ?: 1
+                    val temp: String = data.capital?.substring(0, index) ?: ""
+                    val result: Int = Pattern.compile("[^0-9]").matcher(temp).replaceAll("").toInt()
+                    info.regMoney = when {
+                        result <= 10 -> 1
+                        result <= 20 -> 2
+                        result <= 50 -> 3
+                        result <= 100 -> 4
+                        else -> 5
+                    }
                 }
 
+                if (!data.period.isNullOrEmpty()) {
+                    val time: String? = data.period?.run {
+                        substring(12, 16) + "." + substring(17, 19) + "." + substring(20, 22)
+                    }
+                    val s: Long? = time?.let { timeString ->
+                        dateTime3Date("$timeString 00:00:00")?.time ?: 0
+                    }
+                    s?.also { timeLong ->
+                        info.licenceEnd = timeLong / 1000
+                    }
+                }
             } catch (e: Exception) {
-                it.licenseEnd = (dateTime3Date("2080.01.01  00:00:00")?.time ?: 0) / 1000
+
             }
-
-            it.creditCode = it.licenseNum
-            it.creditCodeExpire = it.licenseEnd
-
         }
 
     }
@@ -258,9 +353,30 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         }
     }
 
+
+    //0对私失败   1对私成功
+    override fun companyYes() {
+        viewModel.companyResult.value = 1
+    }
+
+    override fun companyNO() {
+        viewModel.companyResult.value = 0
+        showToast("您的对公账户已存在")
+    }
+
+    override fun personalYes() {
+        viewModel.personalResult.value = 1
+    }
+
+    override fun personalNO() {
+        viewModel.personalResult.value = 0
+        showToast("您的对私人账户已存在")
+    }
+
     class ApplyShopInfoViewModel : ViewModel() {
 
 
+        //测试所用
         val test: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -354,6 +470,14 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
         val bindBandCard: MutableLiveData<Int> = MutableLiveData()
+
+
+        // 0 对公失败  1 对公成功
+        val companyResult: MutableLiveData<Int> = MutableLiveData()
+
+        //0对私失败   1对私成功
+        val personalResult: MutableLiveData<Int> = MutableLiveData()
+
 
     }
 

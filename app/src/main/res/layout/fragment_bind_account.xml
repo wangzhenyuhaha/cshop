@@ -35,12 +35,11 @@
 
                     <TextView
                         android:id="@+id/shopType"
-                        style="@style/goods_spce_item_left_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:text="企业账户"
+                        android:text="企业"
                         android:textColor="#ff333333"
                         android:textSize="15sp" />
 
@@ -49,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
-                        android:text="（对公账户必须填写，对私选填；且勾选的账户为店铺结算账户）"
+                        android:text="（对公账户必须填写）"
                         android:textColor="@color/red"
                         android:textSize="11sp" />
 
@@ -59,7 +58,7 @@
                 <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -69,10 +68,10 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/accountCompany"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" >
+                        android:layout_height="50dp">
 
                         <TextView
-                            android:id="@+id/accountCompanyTVForPersonal"
+                            android:id="@+id/accountCompanyTVP"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
@@ -85,7 +84,7 @@
                             tools:visibility="gone" />
 
                         <TextView
-                            android:id="@+id/accountCompanyTVForCompany"
+                            android:id="@+id/accountCompanyTVC"
                             style="@style/goods_spce_item_left_mark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -98,7 +97,7 @@
                             app:layout_constraintTop_toTopOf="@+id/accountCompany" />
 
                         <ImageView
-                            android:id="@+id/accountCompany1"
+                            android:id="@+id/accountCompanyIV"
                             android:layout_width="100dp"
                             android:layout_height="20dp"
                             android:layout_centerInParent="true"
@@ -109,20 +108,7 @@
                             app:layout_constraintStart_toStartOf="@+id/accountCompany"
                             app:layout_constraintTop_toTopOf="@+id/accountCompany" />
 
-
-                        <ImageView
-                            android:id="@+id/accountCompany2"
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/selector_login_service"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
-                            app:layout_constraintEnd_toEndOf="@+id/accountCompany"
-                            app:layout_constraintTop_toTopOf="@+id/accountCompany" />
-
                     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
                 </com.james.common.view.ILinearLayout>
 
@@ -173,10 +159,11 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
+
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/acctlicensepic"
+                        android:id="@+id/bankUrlC"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -189,7 +176,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/acctlicensepictv"
+                            android:id="@+id/bankUrlCTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -209,7 +196,6 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
-
 
                     <View style="@style/DivideLineHorizontal" />
 
@@ -250,9 +236,8 @@
 
                     <View style="@style/DivideLineHorizontal" />
 
-
                     <RelativeLayout
-                        android:id="@+id/bankNoC"
+                        android:id="@+id/bankC"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -265,7 +250,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/bankNoCtv"
+                            android:id="@+id/bankCtv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -289,7 +274,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/bankNameC"
+                        android:id="@+id/subBankC"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -302,7 +287,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/bankNameCtv"
+                            android:id="@+id/subBankCTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -323,14 +308,12 @@
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
 
-
-
                 </com.james.common.view.ILinearLayout>
 
                 <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -343,32 +326,21 @@
                         android:layout_height="50dp">
 
                         <TextView
-                            android:id="@+id/accountPersonalTVForPersonal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="法人银行账户"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
-                            app:layout_constraintStart_toStartOf="@+id/accountPersonal"
-                            app:layout_constraintTop_toTopOf="@+id/accountPersonal"
-                            tools:visibility="gone" />
-
-                        <TextView
                             android:id="@+id/accountPersonalTVForCompany"
+                            style="@style/goods_spce_item_left_mark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="对私银行账户"
+                            android:text="结算账户"
                             android:textColor="#ff333333"
                             android:textSize="13sp"
                             app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
                             app:layout_constraintStart_toStartOf="@+id/accountPersonal"
                             app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
 
+
                         <ImageView
-                            android:id="@+id/accountPersonal1"
+                            android:id="@+id/accountPersonalIV"
                             android:layout_width="100dp"
                             android:layout_height="20dp"
                             android:layout_centerInParent="true"
@@ -376,17 +348,38 @@
                             android:layout_marginStart="100dp"
                             android:src="@drawable/selector_item"
                             app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
-                            app:layout_constraintStart_toStartOf="@+id/accountPersonal"
-                            app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
+                            app:layout_constraintStart_toStartOf="@+id/accountPersonalTVForCompany"
+                            app:layout_constraintTop_toTopOf="@+id/accountPersonal"
+                            app:layout_constraintVertical_bias="0.466" />
 
+                        <TextView
+                            android:id="@+id/account1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="16dp"
+                            android:drawableEnd="@drawable/selector_login_service"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="对公    "
+                            android:textColor="#ff999999"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
+                            app:layout_constraintEnd_toStartOf="@+id/account2"
+                            app:layout_constraintTop_toTopOf="@+id/accountPersonal"
+                            app:layout_constraintVertical_bias="0.0" />
 
-                        <ImageView
-                            android:id="@+id/accountPersonal2"
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/selector_login_service"
+                        <TextView
+                            android:id="@+id/account2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:drawableEnd="@drawable/selector_login_service"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="对私    "
+                            android:textColor="#ff999999"
+                            android:textSize="12sp"
                             app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
                             app:layout_constraintEnd_toEndOf="@+id/accountPersonal"
                             app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
@@ -454,7 +447,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/settleBankPic"
+                        android:id="@+id/bankUrlP"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -467,7 +460,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/settleBankPictv"
+                            android:id="@+id/bankUrlPTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -513,7 +506,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="卡号"
+                            android:text="请输入卡号"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -557,7 +550,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/bankNoP"
+                        android:id="@+id/bankP"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -570,7 +563,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/bankNoPtv"
+                            android:id="@+id/bankPtv"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -594,7 +587,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/bankNameP"
+                        android:id="@+id/subBankP"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -607,7 +600,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/bankNamePtv"
+                            android:id="@+id/subBankPTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -651,7 +644,6 @@
             app:ivRadius="19dp" />
 
     </RelativeLayout>
-
 
     <include layout="@layout/include_empty" />
 

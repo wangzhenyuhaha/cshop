@@ -35,7 +35,9 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         model.setTitle("资料提交")
 
+        //处理点击事件
         initListener()
+        //处理数据的显示
         initObserver()
 
     }
@@ -56,26 +58,44 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             model.applyShopInfo.value?.shopType = 1
         }
 
-        //填写邀请码
-        binding.shopInfopromoCode.setOnClickListener {
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                "推广码",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.promoCode,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.shopInfopromoCodeTextView.text = it
-                model.applyShopInfo.value?.promoCode = it
-            }
+        //是否三证合一
+        //Yes
+        binding.thrcertflagYes.setOnClickListener {
+            model.applyShopInfo.value?.thrcertflag = 1
+            binding.thrcertflagYes.isSelected = true
+            binding.thrcertflagNO.isSelected = false
+            binding.taxes.visibility = View.GONE
+            binding.organ.visibility = View.GONE
+            binding.view1.visibility = View.GONE
+            binding.view1.visibility = View.GONE
+        }
+
+        //No
+        binding.thrcertflagNO.setOnClickListener {
+            model.applyShopInfo.value?.thrcertflag = 0
+            binding.thrcertflagYes.isSelected = false
+            binding.thrcertflagNO.isSelected = true
+            binding.taxes.visibility = View.VISIBLE
+            binding.organ.visibility = View.VISIBLE
+            binding.view1.visibility = View.VISIBLE
+            binding.view1.visibility = View.VISIBLE
         }
 
         //营业执照
         binding.license.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.LICENSE)
+            findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
+        }
+
+        //税务登记证照片
+        binding.taxes.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.TAXES)
+            findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
+        }
+
+        //组织机构代码证照片
+        binding.organ.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.ORGAN)
             findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
         }
 
@@ -88,7 +108,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
         //法人身份证照片
         binding.IDCard.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.ID_CARD_FRONT)
-            findNavController().navigate(R.id.action_shopInfoFragment_to_shopIDCardFragment,bundle)
+            findNavController().navigate(R.id.action_shopInfoFragment_to_shopIDCardFragment, bundle)
         }
 
 
@@ -101,6 +121,14 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                 }
                 checkNotBlack(model.applyShopInfo.value?.licenceImg) {
                     "请上传营业执照"
+                }
+                if (model.applyShopInfo.value?.thrcertflag == 0){
+                    checkNotBlack(model.applyShopInfo.value?.taxes_certificate_img) {
+                        "请上传税务登记证书"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.orgcodepic) {
+                        "请上传组织机构代码证照片"
+                    }
                 }
                 checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
                     "请上传店铺门头照片"
@@ -145,12 +173,47 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     binding.shopInfoCompanyImageView.isSelected = true
                 }
             }
-            //基础资料
-            if (!it.promoCode.isNullOrEmpty()) binding.shopInfopromoCodeTextView.text = it.promoCode
-            if (!it.licenceImg.isNullOrEmpty()) binding.tvLicense.text = "已上传"
+
+            //是否三证合一
+            if (it.thrcertflag == null) {
+                it.thrcertflag = 1
+                binding.thrcertflagYes.isSelected = true
+                binding.thrcertflagNO.isSelected = false
+                binding.taxes.visibility = View.GONE
+                binding.organ.visibility = View.GONE
+                binding.view1.visibility = View.GONE
+                binding.view1.visibility = View.GONE
+            } else {
+                if (it.thrcertflag == 1) {
+                    binding.thrcertflagYes.isSelected = true
+                    binding.thrcertflagNO.isSelected = false
+                    binding.taxes.visibility = View.GONE
+                    binding.organ.visibility = View.GONE
+                    binding.view1.visibility = View.GONE
+                    binding.view2.visibility = View.GONE
+                } else {
+                    binding.thrcertflagYes.isSelected = false
+                    binding.thrcertflagNO.isSelected = true
+                    binding.taxes.visibility = View.VISIBLE
+                    binding.organ.visibility = View.VISIBLE
+                    binding.view1.visibility = View.VISIBLE
+                    binding.view2.visibility = View.VISIBLE
+                }
+
+            }
+
+            //店铺营业执照是否已经上传
+            if (!it.licenceImg.isNullOrEmpty()) binding.licenseTV.text = "已上传"
+
+            //税务登记证照片是否已经上传
+            if (!it.taxes_certificate_img.isNullOrEmpty()) binding.taxesTV.text = "已上传"
+
+            //组织机构代码证照片是否已经上传
+            if (!it.orgcodepic.isNullOrEmpty()) binding.organTV.text = "已上传"
+
             if (!(it.shopPhotoFront.isNullOrEmpty() || it.shopPhotoInside.isNullOrEmpty())) binding.tvShopPhoto.text =
                 "已上传"
-            if (!(it.legalImg.isNullOrEmpty() || it.legalBackImg.isNullOrEmpty() || it.holdImg.isNullOrEmpty())) binding.tvIDCard.text =
+            if (!(it.legalImg.isNullOrEmpty() || it.legalBackImg.isNullOrEmpty() || it.holdImg.isNullOrEmpty())) binding.IDCardTV.text =
                 "已上传"
 
         })

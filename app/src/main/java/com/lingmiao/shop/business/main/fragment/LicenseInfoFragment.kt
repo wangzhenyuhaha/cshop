@@ -92,7 +92,7 @@ class LicenseInfoFragment : BaseVBFragment<FragmentLicenseInfoBinding, BasePrese
                             ?: 0
                     timeCanUse = s / 1000
 
-                    model.applyShopInfo.value?.licenseEnd = timeCanUse
+                    model.applyShopInfo.value?.licenceEnd = timeCanUse
                 }, {
                     pvCustomTime?.returnData()
                     pvCustomTime?.dismiss()
@@ -117,7 +117,7 @@ class LicenseInfoFragment : BaseVBFragment<FragmentLicenseInfoBinding, BasePrese
             }
 
             //社会信用代码证有效期
-            applyShopInfo.licenseEnd?.also {
+            applyShopInfo.licenceEnd?.also {
                 binding.licenseEndTV.text = formatString(Date(it * 1000), DATE_FORMAT)
             }
 

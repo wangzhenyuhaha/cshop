@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
@@ -44,17 +45,19 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
         model.setTitle("上传身份证照片")
         type = arguments?.getInt("type") ?: 0
 
-        //  国徽
-        model.applyShopInfo.value?.legalImg?.also {
-            GlideUtils.setImageUrl(binding.legalImgImageView, it)
-        }
         //  人像
         model.applyShopInfo.value?.legalBackImg?.also {
-            GlideUtils.setImageUrl(binding.legalBackImgImageView, it)
+            Glide.with(requireActivity()).load(it).into(binding.legalBackImgImageView)
         }
+
+        //  国徽
+        model.applyShopInfo.value?.legalImg?.also {
+            Glide.with(requireActivity()).load(it).into(binding.legalImgImageView)
+        }
+
         //法人手持身份证照片
         model.applyShopInfo.value?.holdImg?.also {
-            GlideUtils.setImageUrl(binding.holdImgImageView, it)
+            Glide.with(requireActivity()).load(it).into(binding.holdImgImageView)
         }
 
         initListener()
@@ -78,6 +81,7 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
         binding.holdImgImageView.setOnClickListener {
             setOnClickForPhoto(type, 3)
         }
+
         binding.backTextView.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -148,8 +152,10 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                 //国徽
                                 model.applyShopInfo.value?.legalImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
-                                    GlideUtils.setImageUrl(binding.legalImgImageView, it, 12f)
+                                    Glide.with(requireActivity()).load(it)
+                                        .into(binding.legalImgImageView)
                                 }
+                                model.applyShopInfo.value?.legalIDExpire = null
                                 //启用OCR识别
                                 model.getOCR.value = 2
                             }
@@ -157,7 +163,14 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                 //人像
                                 model.applyShopInfo.value?.legalBackImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
-                                    GlideUtils.setImageUrl(binding.legalBackImgImageView, it, 12f)
+                                    Glide.with(requireActivity()).load(it)
+                                        .into(binding.legalBackImgImageView)
+                                }
+                                model.applyShopInfo.value?.also {
+                                    it.legalName = ""
+                                    it.legalSex = null
+                                    it.legalId = ""
+                                    it.legal_address = ""
                                 }
                                 //启用OCR识别
                                 model.getOCR.value = 1
@@ -166,7 +179,8 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                 //手持身份证
                                 model.applyShopInfo.value?.holdImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
-                                    GlideUtils.setImageUrl(binding.holdImgImageView, it, 12f)
+                                    Glide.with(requireActivity()).load(it)
+                                        .into(binding.holdImgImageView)
                                 }
                             }
                         }

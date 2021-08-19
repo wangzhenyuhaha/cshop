@@ -10,9 +10,9 @@
     tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/dimen_10"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_10">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -59,6 +59,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/shopNameTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -66,7 +67,6 @@
                             android:layout_marginStart="100dp"
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
-                            android:id="@+id/shopNameTextView"
                             android:singleLine="true"
                             android:text="请输入店铺名称，必填"
                             android:textColor="#ff999999"
@@ -155,6 +155,111 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/legalName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:id="@+id/legalName1"
+                            style="@style/goods_spce_item_left_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="法人"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/legalName"
+                            app:layout_constraintStart_toStartOf="@+id/legalName"
+                            app:layout_constraintTop_toTopOf="@+id/legalName" />
+
+                        <Button
+                            android:id="@+id/legalNameSync"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/dimen_20"
+                            android:background="@color/zxing_transparent"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="(设为负责人)"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/legalName"
+                            app:layout_constraintStart_toEndOf="@+id/legalName1"
+                            app:layout_constraintTop_toTopOf="@+id/legalName" />
+
+
+                        <TextView
+                            android:id="@+id/legalNameTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="请输入法人名称"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/legalName"
+                            app:layout_constraintEnd_toEndOf="@+id/legalName"
+                            app:layout_constraintTop_toTopOf="@+id/legalName" />
+
+                        <ImageView
+                            android:id="@+id/legalName2"
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right"
+                            app:layout_constraintBottom_toBottomOf="@+id/legalName"
+                            app:layout_constraintEnd_toEndOf="@+id/legalName"
+                            app:layout_constraintTop_toTopOf="@+id/legalName" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/legalPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            style="@style/goods_spce_item_left_mark"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="法人电话"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/legalPhoneTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请输入法人电话"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
@@ -181,7 +286,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请输入店铺负责人名称"
+                            android:text="请输入负责人名称"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -192,6 +297,7 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
+
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
@@ -218,7 +324,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请输入店铺负责人电话"
+                            android:text="请输入负责人电话"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -229,6 +335,7 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
+
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
@@ -285,7 +392,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="10dp"
-                        android:text="企业资料"
+                        android:text="商户信息"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 
@@ -335,11 +442,12 @@
                         android:layout_height="50dp">
 
                         <TextView
+                            android:id="@+id/companyInfoTitle"
                             style="@style/goods_spce_item_left_mark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="企业资料"
+                            android:text="企业信息（个体户）"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
@@ -365,185 +473,9 @@
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
 
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/licenseInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            style="@style/goods_spce_item_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="营业执照信息"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/licenseInfoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请补充"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-
-
 
                 </com.james.common.view.ILinearLayout>
 
-                <com.james.common.view.ILinearLayout
-                    android:id="@+id/personal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="商家资料"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/personalLegalInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            style="@style/goods_spce_item_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="商家身份证信息"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/personalLegalInfoTextView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请补充"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/personalInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            style="@style/goods_spce_item_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="商家资料"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/personalInfoTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请补充"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-                    <RelativeLayout
-                        android:id="@+id/personalLicenceInfo"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            style="@style/goods_spce_item_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="营业执照信息"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/personalLicenceInfoTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请补充"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                </com.james.common.view.ILinearLayout>
 
 
 

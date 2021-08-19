@@ -30,7 +30,7 @@ data class BindBankCardDTO(
     @SerializedName("bank_city")
     var city: String? = null,
 
-//所属银行编码
+//所属银行号
     @SerializedName("bank_code")
     var bankCode: String? = null,
 

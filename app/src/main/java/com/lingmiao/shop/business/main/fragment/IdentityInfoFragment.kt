@@ -146,7 +146,27 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
         //身份证照片
         binding.legalPhoto.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.ID_CARD_FRONT)
-            findNavController().navigate(R.id.action_identityInfoFragment_to_shopIDCardFragment,bundle)
+            findNavController().navigate(
+                R.id.action_identityInfoFragment_to_shopIDCardFragment,
+                bundle
+            )
+        }
+
+        //地址
+        binding.legalAddress.setOnClickListener {
+            DialogUtils.showInputDialog(
+                requireActivity(),
+                "地址",
+                "",
+                "请输入",
+                model.applyShopInfo.value?.legal_address,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.legalAddressTV.text = it
+                model.applyShopInfo.value?.legal_address = it
+            }
         }
 
         //保存
@@ -184,6 +204,11 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
 
             applyShopInfo.legalId?.also {
                 if (it.isNotEmpty()) binding.legalIdTextView.text = it
+            }
+
+            //地址
+            if (!applyShopInfo.legal_address.isNullOrEmpty()) {
+                binding.legalAddressTV.text = applyShopInfo.legal_address
             }
 
             applyShopInfo.legalIDExpire?.also {

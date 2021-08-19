@@ -88,6 +88,7 @@ class SubBranchActivity : BaseLoadMoreActivity<BankDetail, SubBranchPre>(),
                         item.type = type
                         EventBus.getDefault().post(item)
                         ToastUtils.showShort("您选择了${item.bafName}")
+                        finish()
                     }
                     emptyView = EmptyView(context).apply {
                         setBackgroundResource(R.color.common_bg)
@@ -106,6 +107,7 @@ class SubBranchActivity : BaseLoadMoreActivity<BankDetail, SubBranchPre>(),
                         item.type = type
                         EventBus.getDefault().post(item)
                         ToastUtils.showShort("您选择了${item.bankName}")
+                        finish()
                     }
 
                     emptyView = EmptyView(context).apply {

@@ -3,15 +3,18 @@ package com.lingmiao.shop.business.main.fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bigkoo.pickerview.view.TimePickerView
+import com.google.gson.annotations.SerializedName
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
+import com.lingmiao.shop.R
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopImageEvent
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
@@ -32,7 +35,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
         const val EMPLOYEE_NUM = 1
         const val OPERATE_LIMIT = 2
         const val INSPECT = 3
-        const val THRCERT_FLAG = 4
     }
 
 
@@ -68,6 +70,9 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
     //三证合一  0   1
     private val thrcertflagList = listOf("否", "是")
 
+    private var title1: String = ""
+    private var title2: String = ""
+
 
     override fun createPresenter(): BasePresenter {
         return BasePreImpl(this)
@@ -78,9 +83,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
         pop = ApplyInfoPop(requireContext())
     }
 
-    override fun useEventBus(): Boolean {
-        return true
-    }
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -91,11 +93,30 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
     override fun initViewsAndData(rootView: View) {
         if (model.applyShopInfo.value?.shopType == 1) {
             //企业
-            model.setTitle("企业资料")
+            model.setTitle("企业信息")
         } else {
-            model.setTitle("商家资料")
+            model.setTitle("企业信息（个体户）")
         }
 
+        if (model.applyShopInfo.value?.thrcertflag == 1) {
+            //三证合一
+            title1 = "统一社会信用代码证"
+            title2 = "社会信用代码证有效期"
+            binding.taxesModule.visibility = View.GONE
+            binding.organModule.visibility = View.GONE
+            binding.licenceModuleTV1.text = title1
+            binding.licenceModuleTV2.text = title2
+
+        } else {
+            //三证不合一
+            title1 = "营业执照编号"
+            title2 = "营业执照有效期"
+            binding.taxesModule.visibility = View.VISIBLE
+            binding.organModule.visibility = View.VISIBLE
+            binding.licenceModuleTV1.text = title1
+            binding.licenceModuleTV2.text = title2
+
+        }
         initListener()
         initObserver()
     }
@@ -105,7 +126,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
         //注册资本
         binding.regMoney.setOnClickListener {
-
             pop?.apply {
                 setList(regMoneyList)
                 setTitle("注册资本")
@@ -144,36 +164,51 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             }
         }
 
-        //三证合一
-        binding.thrcertflag.setOnClickListener {
-            pop?.apply {
-                setList(thrcertflagList)
-                setTitle("三证合一")
-                setType(THRCERT_FLAG)
-                showPopupWindow()
-            }
-        }
-
-        //三证合一   是
-        //统一社会信用代码证
-        binding.creditCode.setOnClickListener {
+        //营业执照名称
+        binding.companyName.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "统一社会信用代码证",
+                "营业执照名称",
                 "",
                 "请输入",
-                model.applyShopInfo.value?.creditCode,
+                model.applyShopInfo.value?.companyName,
                 "取消",
                 "保存",
                 null
             ) {
-                binding.creditCodeTV.text = it
-                model.applyShopInfo.value?.creditCode = it
+                binding.companyNameTV.text = it
+                model.applyShopInfo.value?.companyName = it
             }
         }
 
-        //社会信用代码证有效期
-        binding.creditCodeExpire.setOnClickListener {
+        //统一社会信用代码证(三证合一为否时传入的是营业执照的编号)（营业执照编号）
+        binding.licenseNum.setOnClickListener {
+            DialogUtils.showInputDialog(
+                requireActivity(),
+                title1,
+                "",
+                "请输入",
+                model.applyShopInfo.value?.licenseNum,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.licenseNumTV.text = it
+                model.applyShopInfo.value?.licenseNum = it
+            }
+        }
+
+        //营业执照电子版
+        binding.licenceImg.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.LICENSE)
+            findNavController().navigate(
+                R.id.action_companyInfoFragment_to_shopPhotoFragment,
+                bundle
+            )
+        }
+
+        //社会信用代码证有效期（营业执照有效期）
+        binding.licenceEnd.setOnClickListener {
             //选中的日期
             val selectedDate: Calendar = Calendar.getInstance()
             //开始日期
@@ -191,15 +226,15 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                 getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
 
                     //在界面上显示时间
-                    binding.creditCodeExpireTV.text = formatString(date, DATE_FORMAT)
+                    binding.licenceEndTV.text = formatString(date, DATE_FORMAT)
 
                     //获取当前精确时间
                     val s =
-                        dateTime2Date(binding.creditCodeExpireTV.getViewText() + " 00:00:00")?.time
+                        dateTime2Date(binding.licenceEndTV.getViewText() + " 00:00:00")?.time
                             ?: 0
                     timeCanUse = s / 1000
 
-                    model.applyShopInfo.value?.creditCodeExpire = timeCanUse
+                    model.applyShopInfo.value?.licenceEnd = timeCanUse
                 }, {
                     pvCustomTime?.returnData()
                     pvCustomTime?.dismiss()
@@ -207,74 +242,140 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                     pvCustomTime?.dismiss()
                 })
             pvCustomTime?.show()
+
         }
 
-        //三证合一   否
-        //税务登记号码
-        binding.taxRegCode.setOnClickListener {
+        //三证合一为否时再传入以下字段
+        //税务登记证号
+        binding.taxesNum.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "税务登记号码",
+                "税务登记证号",
                 "",
                 "请输入",
-                model.applyShopInfo.value?.taxRegCode,
+                model.applyShopInfo.value?.taxes_certificate_num,
                 "取消",
                 "保存",
                 null
             ) {
-                binding.taxRegCodeTV.text = it
-                model.applyShopInfo.value?.taxRegCode = it
+                binding.taxesNumTV.text = it
+                model.applyShopInfo.value?.taxes_certificate_num = it
             }
         }
-
-
-        //税务登记证日期
-        binding.taxCodeExpire.setOnClickListener {
-            //选中的日期
-            val selectedDate: Calendar = Calendar.getInstance()
-            //开始日期
-            val startDate: Calendar = Calendar.getInstance()
-            //结束日期
-            val endDate: Calendar = Calendar.getInstance()
-
-            //设定结束日期，假设可以活30年
-            endDate.set(
-                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
-                    Calendar.DATE
-                )
-            )
-            pvCustomTime =
-                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
-
-                    //在界面上显示时间
-                    binding.taxCodeExpireTV.text = formatString(date, DATE_FORMAT)
-
-                    //获取当前精确时间
-                    val s =
-                        dateTime2Date(binding.taxCodeExpireTV.getViewText() + " 00:00:00")?.time
-                            ?: 0
-                    timeCanUse = s / 1000
-
-                    model.applyShopInfo.value?.taxCodeExpire = timeCanUse
-                }, {
-                    pvCustomTime?.returnData()
-                    pvCustomTime?.dismiss()
-                }, {
-                    pvCustomTime?.dismiss()
-                })
-            pvCustomTime?.show()
-        }
-
 
         //税务登记证照片
-        binding.taxCodePic.setOnClickListener {
-            ApplyShopInfoActivity.goUploadImageActivity(
-                requireActivity(),
-                ApplyShopInfoActivity.TAX_CODE_PIC,
-                "上传税务登记证照片",
-                model.applyShopInfo.value?.taxCodePic
+        binding.taxesImg.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.TAXES)
+            findNavController().navigate(
+                R.id.action_companyInfoFragment_to_shopPhotoFragment,
+                bundle
             )
         }
+
+        //税务登记证有效期
+        binding.taxesExpire.setOnClickListener {
+
+            //选中的日期
+            val selectedDate: Calendar = Calendar.getInstance()
+            //开始日期
+            val startDate: Calendar = Calendar.getInstance()
+            //结束日期
+            val endDate: Calendar = Calendar.getInstance()
+
+            //设定结束日期，假设可以活30年
+            endDate.set(
+                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
+                    Calendar.DATE
+                )
+            )
+            pvCustomTime =
+                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+
+                    //在界面上显示时间
+                    binding.taxesExpireTV.text = formatString(date, DATE_FORMAT)
+
+                    //获取当前精确时间
+                    val s =
+                        dateTime2Date(binding.taxesExpireTV.getViewText() + " 00:00:00")?.time
+                            ?: 0
+                    timeCanUse = s / 1000
+
+                    model.applyShopInfo.value?.taxes_distinguish_expire = timeCanUse
+                }, {
+                    pvCustomTime?.returnData()
+                    pvCustomTime?.dismiss()
+                }, {
+                    pvCustomTime?.dismiss()
+                })
+            pvCustomTime?.show()
+        }
+
+        //组织机构代码证号
+        binding.organcode.setOnClickListener {
+            DialogUtils.showInputDialog(
+                requireActivity(),
+                "组织机构代码证号",
+                "",
+                "请输入",
+                model.applyShopInfo.value?.organcode,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.organcodeTV.text = it
+                model.applyShopInfo.value?.organcode = it
+            }
+        }
+
+        //组织机构代码证照片
+        binding.orgcodepic.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.ORGAN)
+            findNavController().navigate(
+                R.id.action_companyInfoFragment_to_shopPhotoFragment,
+                bundle
+            )
+        }
+
+        //组织机构代码证有效期
+        binding.organexpire.setOnClickListener {
+
+            //选中的日期
+            val selectedDate: Calendar = Calendar.getInstance()
+            //开始日期
+            val startDate: Calendar = Calendar.getInstance()
+            //结束日期
+            val endDate: Calendar = Calendar.getInstance()
+
+            //设定结束日期，假设可以活30年
+            endDate.set(
+                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
+                    Calendar.DATE
+                )
+            )
+            pvCustomTime =
+                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+
+                    //在界面上显示时间
+                    binding.organexpireTV.text = formatString(date, DATE_FORMAT)
+
+                    //获取当前精确时间
+                    val s =
+                        dateTime2Date(binding.organexpireTV.getViewText() + " 00:00:00")?.time
+                            ?: 0
+                    timeCanUse = s / 1000
+
+                    model.applyShopInfo.value?.organexpire = timeCanUse
+                }, {
+                    pvCustomTime?.returnData()
+                    pvCustomTime?.dismiss()
+                }, {
+                    pvCustomTime?.dismiss()
+                })
+            pvCustomTime?.show()
+        }
+
+
+
 
         binding.tvApplyShopInfoNext.setOnClickListener {
             findNavController().navigateUp()
@@ -311,34 +412,31 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                     model.applyShopInfo.value?.inspect = it + 1
                     pop?.dismiss()
                 }
-                THRCERT_FLAG -> {
-                    //三证合一
-                    binding.thrcertflagTextView.text = thrcertflagList[it]
-
-                    if (it == 0) {
-                        //否
-                        binding.creditCode.visibility = View.GONE
-                        binding.creditCodeExpire.visibility = View.GONE
-                        binding.taxRegCode.visibility = View.VISIBLE
-                        binding.taxCodeExpire.visibility = View.VISIBLE
-                        binding.taxCodePic.visibility = View.VISIBLE
-
-                    } else {
-                        //是
-                        binding.creditCode.visibility = View.VISIBLE
-                        binding.creditCodeExpire.visibility = View.VISIBLE
-                        binding.taxRegCode.visibility = View.GONE
-                        binding.taxCodeExpire.visibility = View.GONE
-                        binding.taxCodePic.visibility = View.GONE
-                    }
-                    model.applyShopInfo.value?.thrcertflag = it
-                    pop?.dismiss()
-                }
             }
         })
 
 
         model.applyShopInfo.observe(this, Observer { applyShopInfo ->
+
+            //注册资本
+            if (applyShopInfo.regMoney == null) {
+                applyShopInfo.regMoney = 1
+            }
+
+            //员工人数
+            if (applyShopInfo.employeeNum == null) {
+                applyShopInfo.employeeNum = 1
+            }
+
+            //经营区域
+            if (applyShopInfo.operateLimit == null) {
+                applyShopInfo.operateLimit = 1
+            }
+
+            //经营地段
+            if (applyShopInfo.inspect == null) {
+                applyShopInfo.inspect = 3
+            }
 
             //注册资本
             applyShopInfo.regMoney?.also {
@@ -359,77 +457,41 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             //三证合一
             applyShopInfo.thrcertflag?.also {
                 binding.thrcertflagTextView.text = thrcertflagList[it]
-                if (it == 0) {
-                    //否
-                    binding.creditCode.visibility = View.GONE
-                    binding.creditCodeExpire.visibility = View.GONE
-                    binding.taxRegCode.visibility = View.VISIBLE
-                    binding.taxCodeExpire.visibility = View.VISIBLE
-                    binding.taxCodePic.visibility = View.VISIBLE
-
-                } else {
-                    //是
-                    binding.creditCode.visibility = View.VISIBLE
-                    binding.creditCodeExpire.visibility = View.VISIBLE
-                    binding.taxRegCode.visibility = View.GONE
-                    binding.taxCodeExpire.visibility = View.GONE
-                    binding.taxCodePic.visibility = View.GONE
-                }
             }
 
-            if (applyShopInfo.thrcertflag == null) {
-                //是
-                binding.creditCode.visibility = View.VISIBLE
-                binding.creditCodeExpire.visibility = View.VISIBLE
-                binding.taxRegCode.visibility = View.GONE
-                binding.taxCodeExpire.visibility = View.GONE
-                binding.taxCodePic.visibility = View.GONE
+            if (!applyShopInfo.companyName.isNullOrEmpty()) {
+                binding.companyNameTV.text = applyShopInfo.companyName
             }
 
-
-            //三证合一   是
-            //统一社会信用代码证
-            applyShopInfo.creditCode?.also {
-                if (it.isNotEmpty()) binding.creditCodeTV.text = it
+            if (!applyShopInfo.licenseNum.isNullOrEmpty()) {
+                binding.licenseNumTV.text = applyShopInfo.licenseNum
             }
 
-            //社会信用代码证有效期
-            applyShopInfo.creditCodeExpire?.also {
-                binding.creditCodeExpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
+            if (!applyShopInfo.taxes_certificate_num.isNullOrEmpty()) {
+                binding.taxesNumTV.text = applyShopInfo.taxes_certificate_num
+            }
+
+            if (!applyShopInfo.organcode.isNullOrEmpty()) {
+                binding.organcodeTV.text = applyShopInfo.organcode
+            }
+
+             applyShopInfo.licenceEnd?.also {
+                 binding.licenceEndTV.text = formatString(Date(it * 1000), DATE_FORMAT)
+             }
+
+            applyShopInfo.taxes_distinguish_expire?.also {
+                binding.taxesExpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
+            }
+
+            applyShopInfo.organexpire?.also {
+                binding.organexpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
             }
 
 
-            //三证合一   否
-            //税务登记号码
-            applyShopInfo.taxRegCode?.also {
-                if (it.isNotEmpty()) binding.taxRegCodeTV.text = it
-            }
-
-
-            //税务登记证日期
-            applyShopInfo.taxCodeExpire?.also {
-                binding.taxCodeExpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
-            }
-
-
-            //税务登记证照片
-            applyShopInfo.taxCodePic?.also {
-                if (it.isNotEmpty()) binding.taxCodePicTV.text = "已上传"
-            }
 
         })
 
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun getUploadImageUrl(event: ApplyShopImageEvent) {
-        when (event.type) {
-            ApplyShopInfoActivity.TAX_CODE_PIC -> {
-                model.applyShopInfo.value?.taxCodePic = event.remoteUrl
-                binding.taxCodePicTV.text = "已上传"
-            }
-
-        }
-    }
 }

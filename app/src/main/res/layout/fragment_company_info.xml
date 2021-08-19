@@ -205,6 +205,161 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
+                            android:text="是"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+                <com.james.common.view.ILinearLayout
+                    android:id="@+id/licenceModule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:paddingRight="10dp"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <RelativeLayout
+                        android:id="@+id/company_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="营业执照名称"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/company_nameTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请输入"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/license_num"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:id="@+id/licenceModuleTV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="营业执照编号"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/license_numTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请输入"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/licence_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="营业执照照片"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/licence_imgTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="已上传"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/licence_end"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:id="@+id/licenceModuleTV2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="营业执照有效期"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/licence_endTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
                             android:text="请选择"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
@@ -217,11 +372,23 @@
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
 
-                    <View style="@style/DivideLineHorizontal" />
 
-                    <!--                    三证合一   是-->
+                </com.james.common.view.ILinearLayout>
+
+
+                <com.james.common.view.ILinearLayout
+                    android:id="@+id/taxesModule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
                     <RelativeLayout
-                        android:id="@+id/creditCode"
+                        android:id="@+id/taxes_num"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -229,12 +396,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="统一社会信用代码证"
+                            android:text="税务登记证号"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/creditCodeTV"
+                            android:id="@+id/taxes_numTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -243,7 +410,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请输入统一社会信用代码证"
+                            android:text="请输入"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -258,119 +425,7 @@
                     <View style="@style/DivideLineHorizontal" />
 
                     <RelativeLayout
-                        android:id="@+id/creditCodeExpire"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="社会信用代码证有效期"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/creditCodeExpireTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请选择有效期"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <!--                    三证合一   否-->
-                    <RelativeLayout
-                        android:id="@+id/taxRegCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="税务登记号码"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/taxRegCodeTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请输入税务登记号码"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/taxCodeExpire"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="税务登记证日期"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/taxCodeExpireTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请选择日期"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/taxCodePic"
+                        android:id="@+id/taxes_img"
                         android:layout_width="match_parent"
                         android:layout_height="50dp">
 
@@ -383,7 +438,7 @@
                             android:textSize="13sp" />
 
                         <TextView
-                            android:id="@+id/taxCodePicTV"
+                            android:id="@+id/taxes_imgTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
@@ -392,7 +447,7 @@
                             android:layout_marginEnd="16dp"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="请传入照片"
+                            android:text="已上传"
                             android:textColor="#ff999999"
                             android:textSize="12sp" />
 
@@ -404,6 +459,166 @@
                             android:src="@mipmap/me_arrow_right" />
                     </RelativeLayout>
 
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/taxes_expire"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="税务登记证有效期"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/taxes_expireTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请选择"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+
+                </com.james.common.view.ILinearLayout>
+
+
+                <com.james.common.view.ILinearLayout
+                    android:id="@+id/organModule"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <RelativeLayout
+                        android:id="@+id/organcode"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="组织机构代码证号"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/organcodeTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请输入"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/orgcodepic"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="组织机构代码证照片"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/orgcodepicTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="已上传"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RelativeLayout
+                        android:id="@+id/organexpire"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="组织机构代码证有效期"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/organexpireTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="100dp"
+                            android:layout_marginEnd="16dp"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="请选择"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+                        <ImageView
+                            android:layout_width="6dp"
+                            android:layout_height="11dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/me_arrow_right" />
+                    </RelativeLayout>
 
                 </com.james.common.view.ILinearLayout>
 
