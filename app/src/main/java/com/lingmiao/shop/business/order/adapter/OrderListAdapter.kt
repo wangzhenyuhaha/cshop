@@ -26,13 +26,16 @@ class OrderListAdapter :
         helper.setText(R.id.tvReplenishRemark, item.replenishRemark);
         helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice);
         helper.setGone(R.id.replenishLayout, item?.replenishRemark?.isNotEmpty() == true);
-
         helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
-
-
+        // 地址
         helper.setText(R.id.tvFullAddress, item.getSimpleAddress())
+        // 餐费
         helper.setText(R.id.tvTableAware, item?.getTableAwareHint());
         helper.setGone(R.id.tableAwareLayout, item?.getTableAwareHint()?.isNotEmpty())
+        // 打包费
+        helper.setGone(R.id.packagePriceLayout, item?.packagePrice?.compareTo(0.0)?:0>0);
+        helper.setGone(R.id.packagePriceLine, item?.packagePrice?.compareTo(0.0)?:0>0);
+        helper.setText(R.id.tvPackagePrice, "￥" + item?.packagePrice);
 
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)
         val ivOrderNumberCopy = helper.getView<ImageView>(R.id.ivOrderNumberCopy)

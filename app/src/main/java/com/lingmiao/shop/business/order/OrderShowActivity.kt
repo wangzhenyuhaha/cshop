@@ -97,6 +97,10 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
         tvTableAware.text = mItem?.getTableAwareHint();
         tableAwareLayout.visibility = if(tvTableAware.text?.isNotEmpty() == true) View.VISIBLE else View.GONE;
 
+        tvPackagePrice.text = String.format("￥%s", mItem?.packagePrice);
+        packagePriceLayout.visibility = if(mItem?.packagePrice?.compareTo(0.0)?:0 > 0) View.VISIBLE else View.GONE;
+        packagePriceLine.visibility = if(mItem?.packagePrice?.compareTo(0.0)?:0 > 0) View.VISIBLE else View.GONE;
+
         orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile);
         orderOwnerTv.singleClick {
             OtherUtils.goToDialApp(context!!, mItem?.shipMobile)
