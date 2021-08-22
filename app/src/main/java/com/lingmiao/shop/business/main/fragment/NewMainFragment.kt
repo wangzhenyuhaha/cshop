@@ -94,15 +94,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //        fromMain = arguments?.getBoolean("fromMain", false)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 
-
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
-            mPresenter?.requestMainInfoData()
-            if (loginInfo?.shopStatus == ShopStatusConstants.FINAL_OPEN) {
-                mPresenter?.getWaringNumber()
-            }
+            refreshPageData();
         }
-        LogUtils.d("fromMain:$fromMain")
         ivMainMessage.setOnClickListener {
             if (UserManager.isLogin()) {
                 ActivityUtils.startActivity(MessageCenterActivity::class.java)
@@ -173,7 +168,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
         this.loginInfo = loginInfo;
-
 
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
@@ -328,32 +322,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     tvMainShopReason.text = loginInfo.statusReason
                     tvMainShopReason.show(true)
                 }
-//                ShopStatusConstants.OVERDUE-> {
-//                    //店铺审核未通过，重新提交页面
-////                    tvMainShopName.text = "店铺审核未通过"
-//                    setShop();
-//                    tvMainShopNext.text = "立即购买"
-//                    SpanUtils.with(tvMainShopHint)
-//                        .append("会员已到期，请").setForegroundColor(
-//                            ContextCompat.getColor(
-//                                Utils.getApp(),
-//                                R.color.color_909090
-//                            )
-//                        )
-//                        .append("续约购买\n").setForegroundColor(
-//                            ContextCompat.getColor(
-//                                Utils.getApp(),
-//                                R.color.color_fc0000
-//                            )
-//                        )
-//                        .create()
-//                    tvMainShopReason.text = loginInfo.statusReason
-//                    tvMainShopReason.show(true)
-//                }
-
             }
-
-
         }
     }
 
@@ -538,7 +507,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     override fun onShopStatusEdited() {
-//        shopStatusTv.setTextColor(ContextCompat.getColor(context!!, if(switchStatusBtn.isChecked) R.color.color_0EA60 else R.color.white));
         shopStatusTv.text = if (switchStatusBtn.isChecked) "开店中" else "休息中";
     }
 
@@ -562,8 +530,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshShopStatus(event: ApplyShopInfoEvent) {
-        mPresenter?.requestMainInfoData()
-//        mPresenter?.getWaringNumber()
+        refreshPageData()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -576,7 +543,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun vipApplied(event: ApplyVipEvent?) {
         event?.apply {
-            mPresenter?.requestMainInfoData()
+            refreshPageData()
         }
     }
 
@@ -593,14 +560,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onResume() {
         super.onResume()
-        showPageLoading()
+        refreshPageData();
+    }
+
+    private fun refreshPageData() {
         mPresenter?.requestMainInfoData()
-        mPresenter?.requestAccountSettingData()
-//        accountSetting?.let {
-//            if(it.castUpdate && versionUpdateDialog!=null){
-//                versionUpdateDialog?.dismiss()
-//                onAccountSettingSuccess(it)
-//            }
-//        }
+        if (loginInfo?.shopStatus == ShopStatusConstants.FINAL_OPEN) {
+            mPresenter?.getWaringNumber()
+        }
     }
 }
