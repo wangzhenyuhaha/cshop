@@ -368,6 +368,21 @@ class DialogUtils {
         }
 
 
+        //固定大小的图片显示
+        fun showDialogSameBig(
+            context: Activity,
+            imageInt: Int
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_image_same, null)
+            dialog.setContentView(defaultView)
+            val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
+            image?.setImageResource(imageInt);
+            dialog.show()
+        }
+
+
         fun showImageDialog(
             context: Activity,
             imageInt: Int,

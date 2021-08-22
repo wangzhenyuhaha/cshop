@@ -10,10 +10,10 @@ import androidx.navigation.fragment.findNavController
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
-import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.checkBoolean
 import com.james.common.utils.exts.checkNotBlack
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.databinding.FragmentShopInfoBinding
 
@@ -67,7 +67,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             binding.taxes.visibility = View.GONE
             binding.organ.visibility = View.GONE
             binding.view1.visibility = View.GONE
-            binding.view1.visibility = View.GONE
+            binding.view2.visibility = View.GONE
         }
 
         //No
@@ -78,7 +78,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             binding.taxes.visibility = View.VISIBLE
             binding.organ.visibility = View.VISIBLE
             binding.view1.visibility = View.VISIBLE
-            binding.view1.visibility = View.VISIBLE
+            binding.view2.visibility = View.VISIBLE
         }
 
         //营业执照
@@ -111,18 +111,22 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             findNavController().navigate(R.id.action_shopInfoFragment_to_shopIDCardFragment, bundle)
         }
 
+        binding.otherPIC.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.OTHER_PIC)
+            findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
+        }
+
 
         //下一步
         binding.nextTextView.setOnClickListener {
             try {
-
                 checkBoolean(model.applyShopInfo.value?.shopType != null) {
                     "请选择店铺类型"
                 }
                 checkNotBlack(model.applyShopInfo.value?.licenceImg) {
                     "请上传营业执照"
                 }
-                if (model.applyShopInfo.value?.thrcertflag == 0){
+                if (model.applyShopInfo.value?.thrcertflag == 0) {
                     checkNotBlack(model.applyShopInfo.value?.taxes_certificate_img) {
                         "请上传税务登记证书"
                     }
@@ -182,7 +186,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                 binding.taxes.visibility = View.GONE
                 binding.organ.visibility = View.GONE
                 binding.view1.visibility = View.GONE
-                binding.view1.visibility = View.GONE
+                binding.view2.visibility = View.GONE
             } else {
                 if (it.thrcertflag == 1) {
                     binding.thrcertflagYes.isSelected = true
@@ -199,7 +203,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     binding.view1.visibility = View.VISIBLE
                     binding.view2.visibility = View.VISIBLE
                 }
-
             }
 
             //店铺营业执照是否已经上传
@@ -215,9 +218,23 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                 "已上传"
             if (!(it.legalImg.isNullOrEmpty() || it.legalBackImg.isNullOrEmpty() || it.holdImg.isNullOrEmpty())) binding.IDCardTV.text =
                 "已上传"
-
+            if (!it.other_Pic_One.isNullOrEmpty()) {
+                binding.otherPICTV.text = "已上传"
+            }
+            if (!it.other_Pic_Two.isNullOrEmpty()) {
+                binding.otherPICTV.text = "已上传"
+            }
         })
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (model.firstApplyShop) {
+            model.applyShopInfo.value?.also {
+                UserManager.setApplyShopInfo(it)
+            }
+        }
 
     }
 

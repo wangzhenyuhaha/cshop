@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,6 @@ import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.photo.GlideEngine
 import com.lingmiao.shop.databinding.FragmentShopPhotoBinding
-import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -46,20 +46,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
 
 
         when (type) {
-            ApplyShopInfoActivity.SHOP_FRONT -> {
-                binding.linearLayout.visibility = View.VISIBLE
-                binding.imageView.visibility = View.GONE
-
-                model.applyShopInfo.value?.shopPhotoFront?.also {
-                    Glide.with(requireActivity()).load(it).into(binding.shopFront)
-                }
-                model.applyShopInfo.value?.shopPhotoInside?.also {
-                    Glide.with(requireActivity()).load(it).into(binding.shopInside)
-                }
-                model.setTitle("上传店铺照片")
-            }
             ApplyShopInfoActivity.LICENSE -> {
-
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.licenceImg?.also {
@@ -68,7 +55,6 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 model.setTitle("上传营业执照")
             }
             ApplyShopInfoActivity.TAXES -> {
-
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.taxes_certificate_img?.also {
@@ -77,7 +63,6 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 model.setTitle("上传税务登记证照片")
             }
             ApplyShopInfoActivity.ORGAN -> {
-
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.orgcodepic?.also {
@@ -85,6 +70,31 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.setTitle("上传组织机构代码证照片")
             }
+            ApplyShopInfoActivity.SHOP_FRONT -> {
+                binding.linearLayout.visibility = View.VISIBLE
+                binding.imageView.visibility = View.GONE
+                model.applyShopInfo.value?.shopPhotoFront?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.shopFront)
+                }
+                model.applyShopInfo.value?.shopPhotoInside?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.shopInside)
+                }
+                model.setTitle("上传店铺照片")
+            }
+            ApplyShopInfoActivity.OTHER_PIC -> {
+                binding.linearLayout.visibility = View.VISIBLE
+                binding.imageView.visibility = View.GONE
+                model.applyShopInfo.value?.other_Pic_One?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.shopFront)
+                }
+                model.applyShopInfo.value?.other_Pic_Two?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.shopInside)
+                }
+                binding.textView1.visibility = View.INVISIBLE
+                binding.textView2.visibility = View.INVISIBLE
+                model.setTitle("上传其他资质照片")
+            }
+
             ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT -> {
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
@@ -204,17 +214,33 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             }
                         }
                     }
+                    ApplyShopInfoActivity.OTHER_PIC -> {
+                        if (number == 1) {
+                            //第一张
+                            model.applyShopInfo.value?.other_Pic_One = uploadFile.data.url
+                            uploadFile.data.url?.also {
+                                Glide.with(requireActivity()).load(it).into(binding.shopFront)
+                            }
+                        } else {
+                            //第二张
+                            model.applyShopInfo.value?.other_Pic_Two = uploadFile.data.url
+                            uploadFile.data.url?.also {
+                                Glide.with(requireActivity()).load(it).into(binding.shopInside)
+                            }
+                        }
+                    }
                     ApplyShopInfoActivity.LICENSE -> {
                         model.applyShopInfo.value?.licenceImg = uploadFile.data.url
                         uploadFile.data.url?.also {
                             //清除之前OCR识别产生的数据
-                            model.applyShopInfo.value?.also {info->
-                                info.companyName = ""
-                                info.licenseNum = ""
+                            model.applyShopInfo.value?.also { info ->
+                                info.companyName = null
+                                info.licenseNum = null
                                 info.licenceEnd = null
-                                info.scope = ""
+                                info.scope = null
                                 info.regMoney = 1
                             }
+                            model.companyAccount.value?.openAccountName = null
                             Glide.with(requireActivity()).load(it).into(binding.imageView)
                             model.getOCR.value = 8
                         }
@@ -236,7 +262,6 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                         uploadFile.data.url?.also {
                             Glide.with(requireActivity()).load(it).into(binding.imageView)
                         }
-
                     }
                     ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT -> {
                         model.personalAccount.value?.bankUrls = uploadFile.data.url

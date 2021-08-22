@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 //所有字段必填
 data class BindBankCardDTO(
 
-//账户id
-    @SerializedName("account_id")
-    var accountId: String? = null,
+//账户id(可为空，不为空时即是修改银行卡)
+    @SerializedName("id")
+    var id: String? = null,
 
 //账户名(账户名称）
     @SerializedName("open_account_name")
@@ -51,40 +51,60 @@ data class BindBankCardDTO(
     var bankUrls: String? = null,
 
 //绑定银行卡时使用    默认为0
-//是否默认卡  0不是结算账户 1是结算账户
+//是否默认卡  0不是结算账户 1是结算账户    绑定时必给
     @SerializedName("is_default")
     var isDefault: Int = 0,
 
 //绑定银行卡时使用
-//用户ID
+//用户ID  绑定时必给
     @SerializedName("member_id")
     var memberId: Int? = null
 )
 
-
-data class CommonBack(
+data class BackBankCard(
     var code: String = "",
     var `data`: List<Data> = listOf(),
     var message: String = "",
     var success: Boolean = false
-)
+) {
 
-data class Data(
-    var account_id: Any = Any(),
-    var bank_card_type: Int = 0,
-    var bank_city: Any = Any(),
-    var bank_city_id: Any = Any(),
+    data class Data(
+        var account_id: Any = Any(),
+        var bank_card_type: Int = 0,
+        var bank_city_id: Any = Any(),
+        var bank_code: String = "",
+        var bank_name: String = "",
+        var bank_province_id: Any = Any(),
+        var bank_urls: String = "",
+        var card_no: String = "",
+        var card_status: Int = 0,
+        var city: String =" Any()",
+        var id: String = "",
+        var is_default: Int = 0,
+        var member_id: String = "",
+        var mobile: String = "",
+        var open_account_name: String = "",
+        var province: String = "",
+        var sub_bank_code: String = "",
+        var sub_bank_name: String = ""
+    )
+}
+
+class SearchBankName : ArrayList<SearchBankNameItem>()
+
+data class SearchBankNameItem(
+    var bank_code: String = "",
     var bank_name: String = "",
-    var bank_province: Any = Any(),
-    var bank_province_id: Any = Any(),
-    var bank_urls: String = "",
-    var card_no: String = "",
-    var card_status: Int = 0,
+    var create_time: Any = Any(),
+    var creater_id: Any = Any(),
     var id: String = "",
-    var is_default: Int = 0,
-    var member_id: String = "",
-    var mobile: String = "",
-    var open_account_name: String = "",
-    var sub_bank_code: String = "",
-    var sub_bank_name: String = ""
+    var is_delete: Int = 0,
+    var main_account_length: Int = 0,
+    var merchant_id: Any = Any(),
+    var org_id: Any = Any(),
+    var remarks: Any = Any(),
+    var sign_length: Int = 0,
+    var sign_no: String = "",
+    var update_time: Any = Any(),
+    var updater_id: Any = Any()
 )

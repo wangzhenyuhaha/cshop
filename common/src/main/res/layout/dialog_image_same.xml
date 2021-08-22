@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_round_dialog"
+    android:layout_height="wrap_content">
+
+
+    <ImageView
+        android:id="@+id/ivTipsImage"
+        android:layout_width="250dp"
+        android:scaleType="fitCenter"
+        android:background="#FFFFFF"
+        android:layout_height="340dp"/>
+
+</RelativeLayout>

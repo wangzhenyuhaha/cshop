@@ -14,6 +14,7 @@ import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.checkBoolean
 import com.james.common.utils.exts.checkNotBlack
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.main.ApplyShopCategoryActivity
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
@@ -261,6 +262,26 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
         model.applyShopInfo.observe(this, Observer { info ->
 
+            //注册资本
+            if (info.regMoney == null) {
+                info.regMoney = 1
+            }
+
+            //员工人数
+            if (info.employeeNum == null) {
+                info.employeeNum = 1
+            }
+
+            //经营区域
+            if (info.operateLimit == null) {
+                info.operateLimit = 1
+            }
+
+            //经营地段
+            if (info.inspect == null) {
+                info.inspect = 3
+            }
+
             //店铺名字
             info.shopName?.also {
                 if (it.isNotEmpty()) binding.shopNameTextView.text = it
@@ -313,6 +334,16 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        if (model.firstApplyShop) {
+            model.applyShopInfo.value?.also {
+                UserManager.setApplyShopInfo(it)
+            }
+        }
+
+    }
 
     // 单选
     @Subscribe(threadMode = ThreadMode.MAIN)

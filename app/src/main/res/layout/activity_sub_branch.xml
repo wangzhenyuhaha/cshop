@@ -32,7 +32,7 @@
                 android:drawableStart="@mipmap/goods_search_edit"
                 android:drawablePadding="@dimen/dimen_5"
                 android:ellipsize="end"
-                android:hint="搜索支行"
+                android:hint="搜索"
                 android:paddingHorizontal="@dimen/dimen_10"
                 android:singleLine="true"
                 android:textColor="@color/color_666666"

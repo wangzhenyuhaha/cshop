@@ -13,11 +13,9 @@ interface ApplyShopInfoPresenter : BasePresenter {
 
     fun bindBankCard(company: BindBankCardDTO?, personal: BindBankCardDTO?)
 
-    @Deprecated("勿用")
     fun searchBankList(memberId: Int)
 
-    @Deprecated("勿用")
-    fun searchBankCode(bankName: String): BankDetail
+    fun searchBankName(type:Int,cardID:String)
 
     interface View : BaseView {
 
@@ -52,6 +50,12 @@ interface ApplyShopInfoPresenter : BasePresenter {
         fun personalYes()
 
         //绑定对私账户失败
-        fun  personalNO()
+        fun personalNO()
+
+        //对公银行卡信息更新
+        fun updateCompanyBank(name:String,code:String)
+
+        //对私银行卡信息更新
+        fun updatePersonalBank(name:String,code:String)
     }
 }

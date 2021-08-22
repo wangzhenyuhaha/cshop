@@ -14,6 +14,7 @@ import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.FragmentIdentityInfoBinding
@@ -216,6 +217,15 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
             }
         })
 
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (model.firstApplyShop) {
+            model.applyShopInfo.value?.also {
+                UserManager.setApplyShopInfo(it)
+            }
+        }
     }
 
 }

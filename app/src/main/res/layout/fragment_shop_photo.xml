@@ -35,11 +35,12 @@
                     android:src="@mipmap/main_shop_image_upload" />
 
                 <TextView
+                    android:id="@+id/textView1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_marginBottom="@dimen/dimen_10"
+                    android:gravity="center"
                     android:text="店铺门头照片"
                     android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_14" />
@@ -55,10 +56,11 @@
                     android:src="@mipmap/main_shop_image_upload" />
 
                 <TextView
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_10"
                     android:gravity="center"
                     android:text="店铺内景照片"
                     android:textColor="@color/color_666666"
@@ -71,12 +73,11 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:scaleType="fitCenter"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/dimen_20"
                 android:layout_marginEnd="@dimen/dimen_20"
-                android:src="@mipmap/main_shop_image_upload"
-                tools:visibility="gone" />
+                android:scaleType="fitCenter"
+                android:src="@mipmap/main_shop_image_upload" />
 
 
         </FrameLayout>

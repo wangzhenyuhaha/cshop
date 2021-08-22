@@ -1,14 +1,12 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.ActivityUtils
@@ -17,6 +15,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
@@ -32,26 +31,22 @@ import org.greenrobot.eventbus.ThreadMode
 
 class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePresenter>() {
 
-    //0表示对公账户结算，1表示对私账户结算
-    private val selectAccount: MutableLiveData<Int> = MutableLiveData()
 
     private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
 
-    //记录当前模块的可见状态
-    //对公账户
-    private var companyModule = View.VISIBLE
-
-    //对私账户
-    private var personalModule = View.VISIBLE
-
-
     companion object {
 
-        const val COMPANY_BANK = 2
-        const val COMPANY_SUB = 3
+        //对公所属银行
+        const val COMPANY_BANK = 0
 
-        const val PERSONAL_BANK = 4
-        const val PERSONAL_SUB = 5
+        //对公所属支行
+        const val COMPANY_SUB = 1
+
+        //对私所属银行
+        const val PERSONAL_BANK = 2
+
+        //对私所属支行
+        const val PERSONAL_SUB = 3
     }
 
     private var intent: Intent? = null
@@ -76,11 +71,11 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             it.bankNo = account.bankName
             it.bankName = account.subBankName
             it.bankUrls = account.bankUrls
-
             it.bankCode = account.bankCode
             it.subBankCode = account.subBankCode
             it.province = account.province
             it.city = account.city
+
             it.bankCard = account
         }
     }
@@ -91,22 +86,6 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
         //跳转到银行选择界面
         intent = Intent(requireActivity(), SubBranchActivity::class.java)
 
-
-        //test
-        model.applyShopInfo.value?.shopType = 3
-
-        model.applyShopInfo.value?.shopType?.also {
-            if (it == 1) {
-                //企业
-                //设置不同情况下的默认可见性
-                companyModule = View.VISIBLE
-                personalModule = View.GONE
-            } else {
-                //个体户
-                companyModule = View.GONE
-                personalModule = View.GONE
-            }
-        }
     }
 
     override fun initViewsAndData(rootView: View) {
@@ -122,41 +101,33 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
 
     private fun initListener() {
 
-
+        //控制对公模块可见性
         binding.accountCompanyIV.setOnClickListener {
-            if (companyModule == View.VISIBLE) {
-                companyModule = View.GONE
-                binding.companyModule.visibility = View.GONE
-                binding.accountCompanyIV.isSelected = false
+            if (model.companyModule.value == View.VISIBLE) {
+                model.companyModule.value = View.GONE
             } else {
-                companyModule = View.VISIBLE
-                binding.companyModule.visibility = View.VISIBLE
-                binding.accountCompanyIV.isSelected = true
+                model.companyModule.value = View.VISIBLE
             }
         }
 
+        //控制对私模块可见性
         binding.accountPersonalIV.setOnClickListener {
-            if (personalModule == View.VISIBLE) {
-                personalModule = View.GONE
-                binding.personalModule.visibility = View.GONE
-                binding.accountPersonalIV.isSelected = false
+            if (model.personalModule.value == View.VISIBLE) {
+                model.personalModule.value = View.GONE
             } else {
-                personalModule = View.VISIBLE
-                binding.personalModule.visibility = View.VISIBLE
-                binding.accountPersonalIV.isSelected = true
+                model.personalModule.value = View.VISIBLE
             }
         }
-
 
         //结算账户类型
         binding.account1.setOnClickListener {
             //对公账户结算
-            selectAccount.value = 0
+            model.whichAccountToUse.value = 0
         }
 
         binding.account2.setOnClickListener {
             //对私账户结算
-            selectAccount.value = 1
+            model.whichAccountToUse.value = 1
         }
 
         //账户名称
@@ -173,11 +144,22 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             ) {
                 if (it.isEmpty()) {
                     binding.bankaccountnameCtv.text = "请填写账户名称"
+                    model.companyAccount.value?.openAccountName = null
+
                 } else {
                     binding.bankaccountnameCtv.text = it
+                    model.companyAccount.value?.openAccountName = it
                 }
-                model.companyAccount.value?.openAccountName = it
             }
+        }
+
+        //开户许可证照片
+        binding.bankUrlC.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT)
+            findNavController().navigate(
+                R.id.action_bindAccountFragment_to_shopPhotoFragment,
+                bundle
+            )
         }
 
         //账户号
@@ -194,21 +176,15 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             ) {
                 if (it.isEmpty()) {
                     binding.banknumberCtv.text = "请填写账户号"
+                    model.companyAccount.value?.cardNo = null
                 } else {
                     binding.banknumberCtv.text = it
+                    model.companyAccount.value?.cardNo = it
                 }
-                model.companyAccount.value?.cardNo = it
+                model.ocrCBankVisibility.value = 1
             }
         }
 
-        //开户许可证照片
-        binding.bankUrlC.setOnClickListener {
-            val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT)
-            findNavController().navigate(
-                R.id.action_bindAccountFragment_to_shopPhotoFragment,
-                bundle
-            )
-        }
 
         //持卡人
         binding.bankaccountnameP.setOnClickListener {
@@ -254,10 +230,12 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             ) {
                 if (it.isEmpty()) {
                     binding.banknumberPtv.text = "请输入卡号"
+                    model.personalAccount.value?.cardNo = null
                 } else {
                     binding.banknumberPtv.text = it
+                    model.personalAccount.value?.cardNo = it
                 }
-                model.personalAccount.value?.cardNo = it
+                model.ocrPBankVisibility.value = 0
             }
         }
 
@@ -297,7 +275,6 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
 
         //对私，所属支行
         binding.subBankP.setOnClickListener {
-
             if (model.personalAccount.value?.bankCode.isNullOrEmpty()) {
                 ToastUtils.showShort("请先选择银行")
                 return@setOnClickListener
@@ -311,7 +288,25 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         binding.tvApplyShopInfoNext.singleClick {
+
+
+            model.search.value = 1
 
             //检查资料是否填写完整
             if (!binding.account1.isSelected && !binding.account2.isSelected) {
@@ -331,7 +326,7 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             //检查资料是否齐全,并且绑定银行卡
             if (model.applyShopInfo.value?.shopType == 1) {
                 //企业
-                if (selectAccount.value == 0) {
+                if (model.whichAccountToUse.value == 0) {
                     //对公账户结算
                     model.companyAccount.value?.isDefault = 1
                     model.personalAccount.value?.isDefault = 0
@@ -369,7 +364,7 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 }
             } else {
                 //个体户
-                if (selectAccount.value == 0) {
+                if (model.whichAccountToUse.value == 0) {
                     //对公账户结算
                     model.companyAccount.value?.isDefault = 1
                     model.personalAccount.value?.isDefault = 0
@@ -426,8 +421,6 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 binding.shopTypeTextView.text = "对公账户必须填写"
                 binding.accountCompanyTVC.visibility = View.VISIBLE
                 binding.accountCompanyTVP.visibility = View.GONE
-                binding.accountCompanyIV.isSelected = true
-                binding.accountPersonalTV.isSelected = false
 
             } else {
                 //个体户
@@ -435,29 +428,43 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 binding.shopTypeTextView.text = "（结算账户必须填写）"
                 binding.accountCompanyTVC.visibility = View.GONE
                 binding.accountCompanyTVP.visibility = View.VISIBLE
-                binding.accountCompanyIV.isSelected = false
-                binding.accountPersonalTV.isSelected = false
-
             }
-
-            binding.companyModule.visibility = companyModule
-            binding.personalModule.visibility = personalModule
 
 
         })
 
         //确定当前结算账户类型
-        selectAccount.observe(this, Observer {
+        model.whichAccountToUse.observe(this, Observer {
             //对公账户作为结算账户
             if (it == 0) {
                 binding.account1.isSelected = true
                 binding.account2.isSelected = false
+                model.companyModule.value = View.VISIBLE
             }
             //对私账户作为结算账户
             if (it == 1) {
                 binding.account1.isSelected = false
                 binding.account2.isSelected = true
+                if (model.applyShopInfo.value?.shopType == 1) {
+                    //企业
+                    model.companyModule.value = View.VISIBLE
+                    model.personalModule.value = View.VISIBLE
+                } else {
+                    //个体户
+                    model.personalModule.value = View.VISIBLE
+                }
             }
+        })
+
+        model.companyModule.observe(this, Observer {
+            binding.companyModule.visibility = it
+            binding.accountCompanyIV.isSelected = it == View.VISIBLE
+        })
+
+        model.personalModule.observe(this, Observer {
+            binding.personalModule.visibility = it
+            binding.accountPersonalIV.isSelected = it == View.VISIBLE
+
         })
 
         //观察对公账户P
@@ -501,9 +508,60 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             }
         })
 
+        model.ocrCBankVisibilityU.observe(this, Observer {
+            if (!model.companyAccount.value?.bankName.isNullOrEmpty()) {
+                if (binding.bankCtv.getViewText() != model.companyAccount.value?.bankName) {
+                    binding.bankCtv.text = model.companyAccount.value?.bankName
+                    binding.subBankCTV.text = "请选择所属支行"
+                    model.companyAccount.value?.also {
+                        it.province = null
+                        it.city = null
+                        it.subBankName = null
+                        it.subBankCode = null
+                    }
+                }
+
+            }
+        })
+
+
+        model.ocrPBankVisibilityU.observe(this, Observer {
+
+            if (!model.personalAccount.value?.bankName.isNullOrEmpty()) {
+                if (binding.bankPtv.getViewText() != model.personalAccount.value?.bankName) {
+                    binding.bankPtv.text = model.personalAccount.value?.bankName
+                    binding.banknumberPtv .text = model.personalAccount.value?.cardNo
+                    binding.subBankPTV.text = "请选择所属支行"
+                    model.personalAccount.value?.also {
+                        it.province = null
+                        it.city = null
+                        it.subBankName = null
+                        it.subBankCode = null
+                    }
+                }
+
+            }
+
+        })
+
 
     }
 
+
+    override fun onPause() {
+        super.onPause()
+        if (model.firstApplyShop) {
+            model.applyShopInfo.value?.also {
+                UserManager.setApplyShopInfo(it)
+            }
+            model.companyAccount.value?.also {
+                UserManager.setCompanyAccount(it)
+            }
+            model.personalAccount.value?.also {
+                UserManager.setPersonalAccount(it)
+            }
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateBank(bank: BankDetail) {
@@ -511,39 +569,44 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             COMPANY_BANK -> {
                 if (model.companyAccount.value?.bankName != bank.bafName) {
                     binding.subBankCTV.text = "请选择所属支行"
-                    model.companyAccount.value?.subBankName = ""
-                    model.companyAccount.value?.subBankCode = ""
+                    model.companyAccount.value?.subBankName = null
+                    model.companyAccount.value?.subBankCode = null
+                    model.companyAccount.value?.province = null
+                    model.companyAccount.value?.city = null
                 }
                 binding.bankCtv.text = bank.bafName
                 model.companyAccount.value?.bankName = bank.bafName
                 model.companyAccount.value?.bankCode = bank.bankCode
-                model.companyAccount.value?.province = bank.province
-                model.companyAccount.value?.city = bank.city
 
             }
             COMPANY_SUB -> {
                 binding.subBankCTV.text = bank.bankName
                 model.companyAccount.value?.subBankName = bank.bankName
                 model.companyAccount.value?.subBankCode = bank.netBankCode
+                model.companyAccount.value?.province = bank.province
+                model.companyAccount.value?.city = bank.city
+
             }
 
             PERSONAL_BANK -> {
                 if (model.personalAccount.value?.bankName != bank.bafName) {
                     binding.subBankPTV.text = "请选择所属支行"
-                    model.personalAccount.value?.subBankName = ""
-                    model.personalAccount.value?.subBankCode = ""
+                    model.personalAccount.value?.subBankName = null
+                    model.personalAccount.value?.subBankCode = null
+                    model.personalAccount.value?.province = null
+                    model.personalAccount.value?.city = null
                 }
                 binding.bankPtv.text = bank.bafName
                 model.personalAccount.value?.bankName = bank.bafName
                 model.personalAccount.value?.bankCode = bank.bankCode
-                model.personalAccount.value?.province = bank.province
-                model.personalAccount.value?.city = bank.city
 
             }
             PERSONAL_SUB -> {
                 binding.subBankPTV.text = bank.bankName
                 model.personalAccount.value?.subBankName = bank.bankName
                 model.personalAccount.value?.subBankCode = bank.netBankCode
+                model.personalAccount.value?.province = bank.province
+                model.personalAccount.value?.city = bank.city
             }
         }
     }

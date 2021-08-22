@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main
 
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -53,14 +54,16 @@ class SubBranchActivity : BaseLoadMoreActivity<BankDetail, SubBranchPre>(),
         when (type) {
             BindAccountFragment.COMPANY_BANK, BindAccountFragment.PERSONAL_BANK -> {
                 mToolBarDelegate.setMidTitle("选择银行")
-                mLoadMoreDelegate?.refresh()
-                bank_container.visibility = View.GONE
             }
-            else -> {
+            else ->{
                 mToolBarDelegate.setMidTitle("选择支行")
-                mLoadMoreDelegate?.refresh()
+
             }
         }
+
+
+        mLoadMoreDelegate?.refresh()
+
 
         // 禁用下拉刷新
         mSmartRefreshLayout.setEnableRefresh(false)
@@ -124,11 +127,13 @@ class SubBranchActivity : BaseLoadMoreActivity<BankDetail, SubBranchPre>(),
     override fun executePageRequest(page: IPage) {
         when (type) {
             BindAccountFragment.COMPANY_BANK, BindAccountFragment.PERSONAL_BANK -> {
+                Log.d("WZYTest", bank_inputEdt.getViewText())
                 mPresenter.loadListData(
                     page,
                     mAdapter.data,
                     bank_inputEdt.getViewText()
                 )
+                Log.d("WZYTest", "giao")
             }
             else -> {
                 mPresenter.loadSubListData(
@@ -138,8 +143,6 @@ class SubBranchActivity : BaseLoadMoreActivity<BankDetail, SubBranchPre>(),
                     bank_inputEdt.getViewText()
                 )
             }
-
-
         }
 
     }

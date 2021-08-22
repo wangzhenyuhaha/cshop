@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
@@ -88,14 +89,16 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         fromMain = fromType
     }
 
+
     override fun initViewsAndData(rootView: View) {
 //        fromMain = arguments?.getBoolean("fromMain", false)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 
+
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
             mPresenter?.requestMainInfoData()
-            if(loginInfo?.shopStatus == ShopStatusConstants.FINAL_OPEN) {
+            if (loginInfo?.shopStatus == ShopStatusConstants.FINAL_OPEN) {
                 mPresenter?.getWaringNumber()
             }
         }
@@ -108,6 +111,33 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         readApplyShop.singleClick {
             DialogUtils.showDialog(activity!!, R.mipmap.apply_shop_hint)
+        }
+        promoCode.text =
+            if (UserManager.getPromCode().isEmpty()) "请输入推广码（选填）" else UserManager.getPromCode()
+
+        promoCode.setOnClickListener {
+            DialogUtils.showInputDialogEmpty(
+                requireActivity(),
+                "推广码",
+                "",
+                "请输入",
+                UserManager.getPromCode(),
+                "取消",
+                "保存",
+                null
+            ) {
+                if (it.isNotEmpty()) {
+                    promoCode.text = it
+                    UserManager.setPromCode(it)
+                } else {
+                    promoCode.text = "请输入推广码（选填）"
+                    UserManager.setPromCode("")
+                }
+            }
+        }
+
+        readWXPay.singleClick {
+            DialogUtils.showDialogSameBig(activity!!, R.mipmap.wechat_pay)
         }
 
         tvMainShopNext.setOnClickListener {
@@ -213,39 +243,40 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     shopAuthHint.gone();
                     shopStatusLayout.gone();
 
-                    if(loginInfo.shopStatus == ShopStatusConstants.OPEN ||
-                        loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING) {
+                    if (loginInfo.shopStatus == ShopStatusConstants.OPEN ||
+                        loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING
+                    ) {
                         // 开启中，显示审核中
                         authLayout.visiable();
                         shopAuthStatus.text = "店铺审核中";
                         shopAuthHint.gone();
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED) {
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED) {
                         // 进见通过，显示电子签约
                         authLayout.visiable();
                         shopAuthStatus.text = "审核通过,请进行电子签约";
                         shopAuthHint.visiable();
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
                         // 认败失败
                         authLayout.visiable();
                         shopAuthStatus.text = "审核不通过，请重新进行电子签约";
                         shopAuthHint.visiable();
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                         // 微信认证中
                         authLayout.visiable();
                         shopAuthStatus.text = "店铺签约成功,请进行商户认证";
                         shopAuthHint.visiable();
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
                         // 微信认证中
                         authLayout.visiable();
                         shopAuthStatus.text = "店铺签约成功,请进行商户认证";
                         shopAuthHint.visiable();
                         //DialogUtils.showImageDialog(activity!!, R.mipmap.wechat_account, "店铺签约成功，请使用微信扫码进行商户认证，认证成功后才进行正常结算");
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.OVERDUE) {
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.OVERDUE) {
                         // 过期
                         authLayout.visiable();
                         shopAuthStatus.text = "会员已过期,请继续购买";
                         shopAuthHint.visiable();
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.FINAL_OPEN) {
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.FINAL_OPEN) {
                         // 最终状态，显示店铺状态
                         shopStatusLayout.visiable();
                         mPresenter?.getWaringNumber()
@@ -275,9 +306,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     tvMainShopReason.text = loginInfo.statusReason
                     tvMainShopReason.show(true)
                 }
-                ShopStatusConstants.REFUSED ,
-                ShopStatusConstants.ALLINPAY_REFUSED ->
-                {
+                ShopStatusConstants.REFUSED,
+                ShopStatusConstants.ALLINPAY_REFUSED -> {
                     //店铺审核未通过，重新提交页面
                     tvMainShopName.text = "店铺审核未通过"
                     tvMainShopNext.text = "重新提交"
@@ -351,15 +381,17 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         onShopStatusEdited();
         // 申请状态点击
         authLayout.setOnClickListener {
-            if(loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
-            || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
+            if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
+                || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
+            ) {
                 // 电子签约
                 ActivityUtils.startActivity(ElectricSignActivity::class.java)
-            } else if(loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED
-                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
+            } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED
+                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING
+            ) {
                 // 微信认证
                 ActivityUtils.startActivity(ShopWeChatApproveActivity::class.java)
-            } else if(loginInfo?.shopStatus == ShopStatusConstants.OVERDUE) {
+            } else if (loginInfo?.shopStatus == ShopStatusConstants.OVERDUE) {
                 // 过期续费
                 ActivityUtils.startActivity(ApplyVipActivity::class.java);
             }
@@ -542,7 +574,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun vipApplied(event : ApplyVipEvent?){
+    fun vipApplied(event: ApplyVipEvent?) {
         event?.apply {
             mPresenter?.requestMainInfoData()
         }
@@ -561,6 +593,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onResume() {
         super.onResume()
+        showPageLoading()
+        mPresenter?.requestMainInfoData()
+        mPresenter?.requestAccountSettingData()
 //        accountSetting?.let {
 //            if(it.castUpdate && versionUpdateDialog!=null){
 //                versionUpdateDialog?.dismiss()

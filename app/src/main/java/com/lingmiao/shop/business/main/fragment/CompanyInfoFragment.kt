@@ -8,23 +8,20 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bigkoo.pickerview.view.TimePickerView
-import com.google.gson.annotations.SerializedName
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
-import com.lingmiao.shop.business.main.bean.ApplyShopImageEvent
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.FragmentCompanyInfoBinding
 import com.lingmiao.shop.util.DATE_FORMAT
 import com.lingmiao.shop.util.dateTime2Date
 import com.lingmiao.shop.util.formatString
 import com.lingmiao.shop.util.getDatePicker
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePresenter>() {
@@ -418,25 +415,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
         model.applyShopInfo.observe(this, Observer { applyShopInfo ->
 
-            //注册资本
-            if (applyShopInfo.regMoney == null) {
-                applyShopInfo.regMoney = 1
-            }
-
-            //员工人数
-            if (applyShopInfo.employeeNum == null) {
-                applyShopInfo.employeeNum = 1
-            }
-
-            //经营区域
-            if (applyShopInfo.operateLimit == null) {
-                applyShopInfo.operateLimit = 1
-            }
-
-            //经营地段
-            if (applyShopInfo.inspect == null) {
-                applyShopInfo.inspect = 3
-            }
 
             //注册资本
             applyShopInfo.regMoney?.also {
@@ -491,6 +469,16 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
         })
 
+    }
+
+
+    override fun onPause() {
+        super.onPause()
+        if (model.firstApplyShop) {
+            model.applyShopInfo.value?.also {
+                UserManager.setApplyShopInfo(it)
+            }
+        }
     }
 
 

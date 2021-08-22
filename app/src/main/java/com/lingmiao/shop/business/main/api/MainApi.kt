@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.main.api
 
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
-import com.lingmiao.shop.business.common.bean.CommonBack
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.me.bean.*
@@ -145,12 +144,16 @@ interface MainApi {
     //查询已绑定银行卡
     @WithHiResponse
     @POST("account/queryBankCardList")
-    fun queryTestBankCard(@Query("member_id") id: Int): Call<CommonBack>
+    fun queryTestBankCard(@Query("member_id") id: Int): Call<BackBankCard>
 
     //绑定银行卡
     @WithHiResponse
     @POST("account/bindBankCardMember")
-    fun bindTestBankCard(@Body data: BindBankCardDTO): Call<Unit>
+    fun bindTestBankCard(@Body data: Array<BindBankCardDTO>): Call<Unit>
 
-
+    //获取银行卡名字
+    @WithHiResponse
+    @GET("seller/shops/tlCnapsCode/getBankCodeByNo/{card_no}")
+    fun searchBankCardName(@Path("card_no") id: String): Call<SearchBankName>
 }
+//@Path("id") id: String

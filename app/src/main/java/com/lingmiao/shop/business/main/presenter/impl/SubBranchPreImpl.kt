@@ -23,23 +23,26 @@ class SubBranchPreImpl(var context: Context, var view: SubBranchPre.StatusView) 
         SearchStatusPreImpl(context, view);
     }
 
-    override fun loadListData(page: IPage, oldDatas: List<*>, searchText: String? ) {
-
+    override fun loadListData(page: IPage, oldDatas: List<*>, searchText: String?) {
+        Log.d("WZYTest", "ccc")
 
         mCoroutine.launch {
             if (oldDatas.isEmpty()) {
                 view.showPageLoading()
             }
-
+            Log.d("WZY", "aaaaaa")
             val body = ApplyBank()
             body.pageNum = page.getPageIndex()
             body.pageSize = 30
-            body.body = ApplyBank.ApplyBankDetail()
+            val subBody = ApplyBank.ApplyBankDetail()
+            subBody.bafName = searchText
+            body.body = subBody
 
             val response = MainRepository.apiService.searchBankCard(body)
                 .awaitHiResponse()
 
 
+            Log.d("WZY", "123")
             if (response.isSuccess) {
 
                 val goodsList = response.data.records
@@ -52,7 +55,12 @@ class SubBranchPreImpl(var context: Context, var view: SubBranchPre.StatusView) 
         }
     }
 
-    override fun loadSubListData(page: IPage, oldDatas: List<*>,bank:String, searchText: String?) {
+    override fun loadSubListData(
+        page: IPage,
+        oldDatas: List<*>,
+        bank: String,
+        searchText: String?
+    ) {
 //        if (searchText.isNullOrBlank()) {
 //            view.showToast("请输入搜索文字")
 //            return

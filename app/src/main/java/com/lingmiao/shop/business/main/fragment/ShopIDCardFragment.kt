@@ -15,7 +15,6 @@ import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.photo.GlideEngine
 import com.lingmiao.shop.databinding.FragmentShopIdCardBinding
-import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
@@ -167,10 +166,11 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                         .into(binding.legalBackImgImageView)
                                 }
                                 model.applyShopInfo.value?.also {
-                                    it.legalName = ""
+                                    it.legalName = null
                                     it.legalSex = null
-                                    it.legalId = ""
-                                    it.legal_address = ""
+                                    it.legalId = null
+                                    it.legal_address = null
+                                    model.personalAccount.value?.openAccountName = null
                                 }
                                 //启用OCR识别
                                 model.getOCR.value = 1
