@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main
 
-import android.content.Context
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
@@ -47,6 +46,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //银行卡正面照
         const val PICTURE_PERSONAL_ACCOUNT = 7
+
+        //食品卫生许可证照片
+        const val FOOD_ALLOW = 8
     }
 
 
@@ -149,29 +151,18 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
         })
 
+        viewModel.ocrCBankVisibility.observe(this, Observer {
+            //对公  0
+            mPresenter.searchBankName(0, viewModel.companyAccount.value?.cardNo ?: "")
+        })
+
         //查询银行卡名
         viewModel.ocrPBankVisibility.observe(this, Observer {
             //对私 1
             mPresenter.searchBankName(1, viewModel.personalAccount.value?.cardNo ?: "")
         })
 
-        viewModel.ocrCBankVisibility.observe(this, Observer {
-            //对公  0
-            mPresenter.searchBankName(0, viewModel.companyAccount.value?.cardNo ?: "")
-        })
-
-
-        //注册店铺
-        viewModel.go.observe(this, Observer {
-            try {
-                mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
-            } catch (e: Exception) {
-                showToast("失败了")
-            }
-        })
-
-
-        //绑定银行卡
+        //绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
         viewModel.bindBandCard.observe(this, Observer {
             when (it) {
                 0 -> {
@@ -190,81 +181,27 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         })
 
+
         //监听银行卡绑定情况，如成功，则申请店铺
-        viewModel.companyResult.observe(this, Observer { result ->
+        viewModel.bindResult.observe(this, Observer { result ->
             if (result == 1) {
                 //绑定成功，调用申请店铺
                 viewModel.go.value = 1
             }
+        })
 
-//                if (it.shopType == 1) {
-//                    //企业
-//                    if (it.accttype == 0) {
-//                        //对私
-//                        if (viewModel.companyResult.value == 1 && viewModel.personalResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    } else {
-//                        //对公
-//                        if (viewModel.companyResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    }
-//                } else {
-//                    //个体户
-//                    if (it.accttype == 0) {
-//                        //对私
-//                        if (viewModel.personalResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    } else {
-//                        //对公
-//                        if (viewModel.companyResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    }
-//                }
-
-
+        //注册店铺
+        viewModel.go.observe(this, Observer {
+            try {
+                mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
+            } catch (e: Exception) {
+                showToast("失败了")
+            }
         })
 
 
-//        viewModel.personalAccount.observe(this, Observer { result ->
-//            viewModel.applyShopInfo.value?.also {
-//
-//                if (it.shopType == 1) {
-//                    //企业
-//                    if (it.accttype == 0) {
-//                        //对私
-//                        if (viewModel.companyResult.value == 1 && viewModel.personalResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    } else {
-//                        //对公
-//                        if (viewModel.companyResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    }
-//                } else {
-//                    //个体户
-//                    if (it.accttype == 0) {
-//                        //对私
-//                        if (viewModel.personalResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    } else {
-//                        //对公
-//                        if (viewModel.companyResult.value == 1) {
-//                            viewModel.go.value = 1
-//                        }
-//                    }
-//                }
-//
-//            }
-//        })
-
-
     }
+
 
     //OCR识别营业执照
     override fun onUpdateLicense(data: License) {
@@ -339,6 +276,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         viewModel.personalAccount.value?.also {
             try {
                 it.cardNo = data.CardNo
+                //通过银行卡卡号识别银行卡所属银行及所属银行编码
                 viewModel.ocrPBankVisibility.value = 1
 
             } catch (e: Exception) {
@@ -346,6 +284,35 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
         }
     }
+
+
+    //0绑定失败   1绑定成功
+    override fun bindAccountYes() {
+        viewModel.bindResult.value = 1
+    }
+
+    override fun bindAccountNO() {
+        viewModel.bindResult.value = 0
+        showToast("您的银行账户已存在,请重试")
+    }
+
+    //申请店铺成功
+    override fun onApplyShopInfoSuccess() {
+        hideDialogLoading()
+        showToast("申请成功")
+        //  EventBus.getDefault().post(ApplyShopInfoEvent())
+        UserManager.applyShopInfoOut()
+        UserManager.companyAccountOut()
+        UserManager.personalAccountOut()
+        finish()
+    }
+
+    //申请店铺失败
+    override fun onApplyShopInfoError(code: Int) {
+        showToast("请填写正确的邀请码并重新填写数据")
+        hideDialogLoading()
+    }
+
 
     //更新所属银行信息
     override fun updateCompanyBank(name: String, code: String) {
@@ -377,23 +344,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //默认使用空数据
     }
 
-    //申请店铺成功
-    override fun onApplyShopInfoSuccess() {
-        hideDialogLoading()
-        showToast("申请成功")
-        //  EventBus.getDefault().post(ApplyShopInfoEvent())
-        UserManager.applyShopInfoOut()
-        UserManager.companyAccountOut()
-        UserManager.personalAccountOut()
-        finish()
-    }
-
-    //申请店铺失败
-    override fun onApplyShopInfoError(code: Int) {
-        showToast("请填写正确的邀请码并重新填写数据")
-        hideDialogLoading()
-    }
-
 
     override fun updateBankList(company: BindBankCardDTO?, personal: BindBankCardDTO?) {
         company?.also {
@@ -403,29 +353,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             viewModel.personalAccount.value = it
         }
     }
-
-
-    //0对私失败   1对私成功
-    override fun companyYes() {
-        viewModel.companyResult.value = 1
-    }
-
-    override fun companyNO() {
-        viewModel.companyResult.value = 0
-        showToast("您的银行账户已存在")
-    }
-
-    @Deprecated("无用")
-    override fun personalYes() {
-        viewModel.personalResult.value = 1
-    }
-
-    @Deprecated("无用")
-    override fun personalNO() {
-        viewModel.personalResult.value = 0
-        showToast("您的对私人账户已存在")
-    }
-
 
     class ApplyShopInfoViewModel : ViewModel() {
 
@@ -597,33 +524,39 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         val ocrPBankVisibilityU: MutableLiveData<Int> = MutableLiveData()
 
 
-        //绑定银行卡之前先搜索店铺，
-        val search: MutableLiveData<Int> = MutableLiveData()
-
-        val searchYes: MutableLiveData<Int> = MutableLiveData()
-
-
-        //标记是否申请店铺
-        val go: MutableLiveData<Int> = MutableLiveData()
-
-
-        //-----------------------------------------------------------------------------------------------
-
-        //绑定银行卡
-
-
+        //          / ￣￣￣＼　
+        //          |　ー　ー \　
+        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
+        //          \ 　 ▱　 / ∠    绑定银行卡
+        //          ＼      イ   \
+        //          ／　     ＼   \______________
+        //         /　|　　  \ \　
+        //        |　|　　　 | |
         //0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
         val bindBandCard: MutableLiveData<Int> = MutableLiveData()
 
-        //绑定
-        // 0 对公失败  1 对公成功
-        val companyResult: MutableLiveData<Int> = MutableLiveData()
 
-        //0对私失败   1对私成功
-        val personalResult: MutableLiveData<Int> = MutableLiveData()
+        //          / ￣￣￣＼　
+        //          |　ー　ー \　
+        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
+        //          \ 　 ▱　 / ∠    绑定银行卡结果
+        //          ＼      イ   \
+        //          ／　     ＼   \______________
+        //         /　|　　  \ \　
+        //        |　|　　　 | |
+        // 0 绑定失败  1 绑定成功
+        val bindResult: MutableLiveData<Int> = MutableLiveData()
 
+        //          / ￣￣￣＼　
+        //          |　ー　ー \　
+        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
+        //          \ 　 ▱　 / ∠    申请店铺
+        //          ＼      イ   \
+        //          ／　     ＼   \______________
+        //         /　|　　  \ \　
+        //        |　|　　　 | |
+        val go: MutableLiveData<Int> = MutableLiveData()
 
     }
-
 
 }

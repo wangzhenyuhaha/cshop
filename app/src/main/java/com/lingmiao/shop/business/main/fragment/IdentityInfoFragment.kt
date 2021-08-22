@@ -8,6 +8,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bigkoo.pickerview.view.TimePickerView
+import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
@@ -70,8 +72,12 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
                 "保存",
                 null
             ) {
-                binding.legalNameTextView.text = it
-                model.applyShopInfo.value?.legalName = it
+                if (RegexUtils.isZh(it)) {
+                    binding.legalNameTextView.text = it
+                    model.applyShopInfo.value?.legalName = it
+                } else {
+                    ToastUtils.showShort("请输入正确姓名")
+                }
             }
         }
 
@@ -98,8 +104,12 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
                 "保存",
                 null
             ) {
-                binding.legalIdTextView.text = it
-                model.applyShopInfo.value?.legalId = it
+                if (RegexUtils.isIDCard18(it) || RegexUtils.isIDCard15(it)) {
+                    binding.legalIdTextView.text = it
+                    model.applyShopInfo.value?.legalId = it
+                }else {
+                    ToastUtils.showShort("请输入正确身份证号码")
+                }
             }
         }
 

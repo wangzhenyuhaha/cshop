@@ -58,6 +58,9 @@ data class ApplyShopInfo(
     @SerializedName("organexpire")
     var organexpire: Long? = null,
 
+    //食品卫生许可证照片
+    @SerializedName("food_hygiene_licence_img")
+    var foodAllow: String? = null,
 
     //店铺门头照片
     @SerializedName("storepic")

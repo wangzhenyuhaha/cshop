@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.main.presenter.impl
 import android.content.Context
 import android.util.Log
 import com.james.common.base.BasePreImpl
-import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.api.MainRepository
@@ -91,59 +90,46 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
     override fun bindBankCard(company: BindBankCardDTO?, personal: BindBankCardDTO?) {
 
         mCoroutine.launch {
-
-
             view.showDialogLoading()
             if (company == null && personal != null) {
+                //只绑定对公账户
                 val resp1 =
                     MainRepository.apiService.bindTestBankCard(arrayOf(personal)).awaitHiResponse()
                 if (resp1.isSuccess) {
                     view.hideDialogLoading()
-                    view.companyYes()
+                    view.bindAccountYes()
                 } else {
                     view.hideDialogLoading()
-                    view.companyNO()
+                    view.bindAccountNO()
                 }
+                Log.d("ABCGiao", personal.toString())
             } else if (personal == null && company != null) {
+                //只绑定对私账户
                 val resp2 =
                     MainRepository.apiService.bindTestBankCard(arrayOf(company)).awaitHiResponse()
                 if (resp2.isSuccess) {
-                    view.hideDialogLoading()
-                    view.companyYes()
+                    view.bindAccountYes()
                 } else {
                     view.hideDialogLoading()
-                    view.companyNO()
+                    view.bindAccountNO()
                 }
+                Log.d("ABCGiao", company.toString())
             } else if (company != null && personal != null) {
-
+                //都需要绑定
                 val resp3 =
                     MainRepository.apiService.bindTestBankCard(arrayOf(company, personal))
                         .awaitHiResponse()
                 if (resp3.isSuccess) {
-                    view.hideDialogLoading()
-                    view.companyYes()
+                    view.bindAccountYes()
                 } else {
                     view.hideDialogLoading()
-                    view.companyNO()
+                    view.bindAccountNO()
                 }
+                Log.d("ABCGiao", personal.toString())
+                Log.d("ABCGiao", company.toString())
             }
 
 
-
-
-        }
-    }
-
-
-    //如果申请失败，加载已填写数据
-    override fun requestShopInfoData() {
-        mCoroutine.launch {
-            val resp = MainRepository.apiService.getShop().awaitHiResponse()
-            if (resp.isSuccess) {
-                view.onShopInfoSuccess(resp.data)
-            } else {
-                view.onShopInfoError(resp.code)
-            }
         }
     }
 
@@ -169,13 +155,23 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
         }
     }
 
+    //如果申请失败，加载已填写数据
+    override fun requestShopInfoData() {
+        mCoroutine.launch {
+            val resp = MainRepository.apiService.getShop().awaitHiResponse()
+            if (resp.isSuccess) {
+                view.onShopInfoSuccess(resp.data)
+            } else {
+                view.onShopInfoError(resp.code)
+            }
+        }
+    }
+
 
     //查询银行卡
     override fun searchBankList(memberId: Int) {
 
         mCoroutine.launch {
-
-
             val resp =
                 MainRepository.apiService.queryTestBankCard(memberId).awaitHiResponse()
 
@@ -201,7 +197,6 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                                     it.bankUrls = bank_urls
                                 }
                             }
-                            Log.d("WZYTest", personal.toString())
                             view.updateBankList(null, personal)
 
                         }
@@ -223,14 +218,11 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                                     it.bankUrls = bank_urls
                                 }
                             }
-                            Log.d("WZYTest", company.toString())
                             view.updateBankList(company, null)
                         }
                     }
                 }
-
             }
-
 
         }
 

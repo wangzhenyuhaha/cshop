@@ -372,8 +372,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
         }
 
 
-
-
         binding.tvApplyShopInfoNext.setOnClickListener {
             findNavController().navigateUp()
         }

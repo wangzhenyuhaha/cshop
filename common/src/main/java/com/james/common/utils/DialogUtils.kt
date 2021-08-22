@@ -236,6 +236,50 @@ class DialogUtils {
             dialog.show()
         }
 
+
+        fun showInputDialogEmptyNumber(
+            context: Activity, title: String,
+            leftContent: String, edtHint: String?,
+            edtText: String?,
+            left: String, right: String,
+            leftClick: (() -> Unit)?,
+            rightClick: ((String) -> Unit)?
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_common_input_number, null)
+            dialog.setContentView(defaultView)
+            val tvTitle = defaultView.findViewById<TextView>(R.id.tvTitle)
+            val tvLeftContent = defaultView.findViewById<TextView>(R.id.tvLeftContent)
+            val etRightContent = defaultView.findViewById<EditText>(R.id.etRightContent)
+            val tvLeft = defaultView.findViewById<TextView>(R.id.tvLeft)
+            val tvRight = defaultView.findViewById<TextView>(R.id.tvRight)
+            tvTitle.text = title
+            tvLeftContent.show(leftContent.isNotBlank())
+            tvLeftContent.text = leftContent
+
+            etRightContent.hint = edtHint
+            if (edtText != null) etRightContent.setText(edtText)
+            tvLeft.text = left
+            tvRight.text = right
+            tvLeft.setOnClickListener { v ->
+                dialog.dismiss()
+                leftClick?.invoke()
+            }
+            tvRight.setOnClickListener { v ->
+                if (TextUtils.isEmpty(etRightContent.getViewText())) {
+                    //内容为空时
+                    dialog.dismiss()
+                    v.tag = ""
+                    rightClick?.invoke(etRightContent.getViewText())
+                }
+                dialog.dismiss()
+                v.tag = etRightContent.text.toString()
+                rightClick?.invoke(etRightContent.getViewText())
+            }
+            dialog.show()
+        }
+
         fun showMultInputDialog(
             context: Activity, title: String,
             leftContent: String, edtHint: String?,

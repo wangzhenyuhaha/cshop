@@ -99,6 +99,12 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
         }
 
+        //食品经营许可证照片
+        binding.foodAllow.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.FOOD_ALLOW)
+            findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
+        }
+
         //店铺照片
         binding.shopPhoto.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.SHOP_FRONT)
@@ -116,7 +122,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
         }
 
-
         //下一步
         binding.nextTextView.setOnClickListener {
             try {
@@ -133,6 +138,9 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     checkNotBlack(model.applyShopInfo.value?.orgcodepic) {
                         "请上传组织机构代码证照片"
                     }
+                }
+                checkNotBlack(model.applyShopInfo.value?.foodAllow) {
+                    "请上传食品经营许可证照片"
                 }
                 checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
                     "请上传店铺门头照片"
@@ -159,7 +167,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
 
     }
-
 
     private fun initObserver() {
 
@@ -213,6 +220,9 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
             //组织机构代码证照片是否已经上传
             if (!it.orgcodepic.isNullOrEmpty()) binding.organTV.text = "已上传"
+
+            //食品经营许可证照片
+            if (!it.foodAllow.isNullOrEmpty()) binding.foodAllowTV.text = "已上传"
 
             if (!(it.shopPhotoFront.isNullOrEmpty() || it.shopPhotoInside.isNullOrEmpty())) binding.tvShopPhoto.text =
                 "已上传"

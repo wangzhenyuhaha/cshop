@@ -54,6 +54,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.setTitle("上传营业执照")
             }
+
             ApplyShopInfoActivity.TAXES -> {
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
@@ -62,6 +63,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.setTitle("上传税务登记证照片")
             }
+
             ApplyShopInfoActivity.ORGAN -> {
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
@@ -70,6 +72,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.setTitle("上传组织机构代码证照片")
             }
+
             ApplyShopInfoActivity.SHOP_FRONT -> {
                 binding.linearLayout.visibility = View.VISIBLE
                 binding.imageView.visibility = View.GONE
@@ -81,6 +84,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.setTitle("上传店铺照片")
             }
+
             ApplyShopInfoActivity.OTHER_PIC -> {
                 binding.linearLayout.visibility = View.VISIBLE
                 binding.imageView.visibility = View.GONE
@@ -93,6 +97,14 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 binding.textView1.visibility = View.INVISIBLE
                 binding.textView2.visibility = View.INVISIBLE
                 model.setTitle("上传其他资质照片")
+            }
+            ApplyShopInfoActivity.FOOD_ALLOW -> {
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.applyShopInfo.value?.foodAllow?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
+                }
+                model.setTitle("上传食品经营许可证照片")
             }
 
             ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT -> {
@@ -214,6 +226,8 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             }
                         }
                     }
+
+
                     ApplyShopInfoActivity.OTHER_PIC -> {
                         if (number == 1) {
                             //第一张
@@ -229,6 +243,8 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             }
                         }
                     }
+
+                    //上传营业执照
                     ApplyShopInfoActivity.LICENSE -> {
                         model.applyShopInfo.value?.licenceImg = uploadFile.data.url
                         uploadFile.data.url?.also {
@@ -245,18 +261,31 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             model.getOCR.value = 8
                         }
                     }
+
+
                     ApplyShopInfoActivity.TAXES -> {
                         model.applyShopInfo.value?.taxes_certificate_img = uploadFile.data.url
                         uploadFile.data.url?.also {
                             Glide.with(requireActivity()).load(it).into(binding.imageView)
                         }
                     }
+
+
                     ApplyShopInfoActivity.ORGAN -> {
                         model.applyShopInfo.value?.orgcodepic = uploadFile.data.url
                         uploadFile.data.url?.also {
                             Glide.with(requireActivity()).load(it).into(binding.imageView)
                         }
                     }
+
+                    ApplyShopInfoActivity.FOOD_ALLOW -> {
+                        model.applyShopInfo.value?.foodAllow = uploadFile.data.url
+                        uploadFile.data.url?.also {
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
+                        }
+                    }
+
+
                     ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT -> {
                         model.companyAccount.value?.bankUrls = uploadFile.data.url
                         uploadFile.data.url?.also {

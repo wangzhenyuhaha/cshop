@@ -40,17 +40,12 @@ interface ApplyShopInfoPresenter : BasePresenter {
         //更新已有银行卡信息
         fun updateBankList(company: BindBankCardDTO?, personal: BindBankCardDTO?)
 
-        //绑定对公账户成功
-        fun companyYes()
+        //绑定账户成功
+        fun bindAccountYes()
 
-        //绑定对公账户失败
-        fun companyNO()
+        //绑定账户失败
+        fun bindAccountNO()
 
-        //绑定对私账户成功
-        fun personalYes()
-
-        //绑定对私账户失败
-        fun personalNO()
 
         //对公银行卡信息更新
         fun updateCompanyBank(name:String,code:String)

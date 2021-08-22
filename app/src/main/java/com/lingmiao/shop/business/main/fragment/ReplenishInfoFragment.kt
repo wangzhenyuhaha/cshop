@@ -1,12 +1,15 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
@@ -66,7 +69,6 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
     }
 
     private fun initListener() {
-
         //店铺名称
         binding.shopName.setOnClickListener {
             DialogUtils.showInputDialog(
@@ -111,8 +113,12 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 "保存",
                 null
             ) {
-                binding.legalNameTV.text = it
-                model.applyShopInfo.value?.legalName = it
+                if (RegexUtils.isZh(it)) {
+                    binding.legalNameTV.text = it
+                    model.applyShopInfo.value?.legalName = it
+                } else {
+                    ToastUtils.showShort("请输入正确的法人姓名")
+                }
             }
         }
 
@@ -128,8 +134,12 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 "保存",
                 null
             ) {
-                binding.legalPhoneTV.text = it
-                model.applyShopInfo.value?.legal_phone = it
+                if (RegexUtils.isMobileSimple(it)) {
+                    binding.legalPhoneTV.text = it
+                    model.applyShopInfo.value?.legal_phone = it
+                } else {
+                    ToastUtils.showShort("请输入正确的法人电话")
+                }
             }
         }
 
@@ -145,8 +155,12 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 "保存",
                 null
             ) {
-                binding.linkNameTextView.text = it
-                model.applyShopInfo.value?.linkName = it
+                if (RegexUtils.isZh(it)) {
+                    binding.linkNameTextView.text = it
+                    model.applyShopInfo.value?.linkName = it
+                }else {
+                    ToastUtils.showShort("请输入正确的负责人电话")
+                }
             }
         }
 
@@ -162,11 +176,16 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 "保存",
                 null
             ) {
-                binding.linkPhoneTextView.text = it
-                model.applyShopInfo.value?.linkPhone = it
+                if (RegexUtils.isZh(it)) {
+                    binding.linkPhoneTextView.text = it
+                    model.applyShopInfo.value?.linkPhone = it
+                }else {
+                    ToastUtils.showShort("请输入正确的负责人电话")
+                }
             }
         }
 
+        //同步法人与负责人
         binding.legalNameSync.setOnClickListener {
             model.applyShopInfo.value?.also {
                 if (!it.legalName.isNullOrEmpty()) {
@@ -183,7 +202,6 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
         //经营内容
         binding.scope.setOnClickListener {
-
             DialogUtils.showMultInputDialog(
                 requireActivity(),
                 "经营内容",
@@ -211,11 +229,9 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
             findNavController().navigate(R.id.action_replenishInfoFragment_to_companyInfoFragment)
         }
 
-
         //下一步
         binding.tvApplyShopInfoNext.setOnClickListener {
             try {
-
                 checkNotBlack(model.applyShopInfo.value?.shopName) {
                     "请输入店铺名称"
                 }
