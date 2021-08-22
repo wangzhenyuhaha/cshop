@@ -105,9 +105,9 @@ class MainActivity : AppCompatActivity() {
         vpMain.offscreenPageLimit = 1
         tbMain.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if(tab.position == 0) {
-                    EventBus.getDefault().post(ApplyShopInfoEvent());
-                }
+//                if(tab.position == 0) {
+//                    EventBus.getDefault().post(ApplyShopInfoEvent());
+//                }
 //                if(tab.position==2){
 ////                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
 //                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_secondary))

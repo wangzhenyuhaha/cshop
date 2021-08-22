@@ -48,39 +48,33 @@ Desc        :
 class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding, IShopMapAddressPresenter>(), IShopMapAddressPresenter.View  {
 
     // 地图
-    private var markerOption: MarkerOptions? = null
     private var aMap: AMap? = null
+    private var markerOption: MarkerOptions? = null
+    // 目标marker
+    private var marker: Marker? = null
+    // 地图高
+    private var mMapHeight = 0
+    // 地图宽
+    private var mMapWidth = 0
+    // 缩放比例
+    private var zoom = 19.0f;
 
     // 定位
     private var mlocationClient: AMapLocationClient? = null
     private var mLocationOption: AMapLocationClientOption? = null
     private var mListener: LocationSource.OnLocationChangedListener? = null
 
-    // 缩放比例
-    private var zoom = 19.0f;
-
-    // 目标marker
-    private var marker: Marker? = null
-
-    // 地图高
-    private var mMapHeight = 0
-
-    // 地图宽
-    private var mMapWidth = 0
-
     private lateinit var mMapAdapter : AddressAdapter;
-
+    // 地址
+    private var addressData: AddressData? = null
     private var province: String? = null
     private var city: String? = null
     private var district: String? = null
     private var address: String? = null
     // 经伟度
     private var latlng: LatLng? = null;
-    private var addressData: AddressData? = null
-
+    // 输入时防止频繁请求接口
     private var lastSearchTime: Long = 0
-
-    var isAutoSet = false;
 
     companion object {
 
@@ -119,20 +113,6 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
         return true;
     }
 
-    var textWatcherAdapter : TextWatcherAdapter = object : TextWatcherAdapter(){
-        override fun afterTextChanged(s: Editable?) {
-            if (System.currentTimeMillis() - lastSearchTime < 1000) {
-                return;
-            }
-            lastSearchTime = System.currentTimeMillis()
-            doSearchQuery(s.toString());
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-        }
-    }
-
     override fun initView() {
         rlBaseRoot?.fitsSystemWindows = false
         // 不显示头部
@@ -140,31 +120,37 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
         // 沉浸透明
         OtherUtils.setStatusBarTransparent(this)
 
+        initMap()
+
+        initSearchAndConfirmView();
+
+        initSeachResultListView();
+
+        initData()
+
+    }
+
+    fun initSearchAndConfirmView() {
         // 输入
         mBinding.etShopAddress.addTextChangedListener(textWatcherAdapter);
-        // 列表滚动
-        mBinding.rvAddress.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                if (Math.abs(dy) < 10) {
-                    return;
-                }
-                if (dy > 0) {//向上滑
-                    KeyboardUtils.hideSoftInput(recyclerView);
-                }
+        // 输入焦点
+        mBinding.etShopAddress.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+            } else {
+                KeyboardUtils.hideSoftInput(v);
             }
-        });
+        };
         // 取消搜索
         mBinding.tvShopAddressCancel.singleClick {
             KeyboardUtils.hideSoftInput(it);
-             finish();
+            finish();
         }
         // 确定地图选址
         mBinding.tvShopAddressConfirm.singleClick {
             KeyboardUtils.hideSoftInput(it);
             if(mMapAdapter.mCheckedPosition > -1) {
                 val item = mMapAdapter.getItem(mMapAdapter.mCheckedPosition) as PoiItem;
-                latlng = LatLng(item.latLonPoint.latitude, item.latLonPoint.longitude)
+                latlng = marker?.position;//LatLng(item.latLonPoint.latitude, item.latLonPoint.longitude)
 
                 addressData = AddressData();
                 addressData?.province = item?.provinceName;
@@ -179,72 +165,157 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
                 finish();
             }
         }
-        // 输入焦点
-        mBinding.etShopAddress.onFocusChangeListener =
-            View.OnFocusChangeListener { v, hasFocus ->
-                if(hasFocus) {
-                } else {
-                    KeyboardUtils.hideSoftInput(v);
+    }
+
+    var textWatcherAdapter : TextWatcherAdapter = object : TextWatcherAdapter(){
+        override fun afterTextChanged(s: Editable?) {
+            if (System.currentTimeMillis() - lastSearchTime < 1000) {
+                return;
+            }
+            lastSearchTime = System.currentTimeMillis()
+            aMap?.setOnMapClickListener(null);
+            mPresenter?.searchKey(city, s.toString());
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+    }
+
+    private fun initSeachResultListView() {
+        mMapAdapter = AddressAdapter().apply {
+            setOnItemClickListener { adapter, view, position ->
+                // 关闭输入框
+                KeyboardUtils.hideSoftInput(view);
+                // 选中行，设置数据，marker移动
+                setItemChecked(position);
+            }
+        };
+        mBinding.rvAddress.initAdapter(mMapAdapter);
+        // 列表滚动
+        mBinding.rvAddress.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (Math.abs(dy) < 10) {
+                    return;
                 }
-            };
+                if (dy > 0) {
+                    //向上滑影响输入框
+                    KeyboardUtils.hideSoftInput(recyclerView);
+                }
+            }
+        });
+    }
+
+    fun setItemChecked(position : Int) {
+        if(position < 0) {
+            return;
+        }
+        val item = mMapAdapter.data[position] as PoiItem;
+        latlng = LatLng(item.latLonPoint.latitude, item.latLonPoint.longitude)
+
+        addressData = AddressData();
+        addressData?.province = item.provinceName;
+        addressData?.city = item.cityName;
+        addressData?.district = item.adName;
+        addressData?.address = item.title;
+        addressData?.latLng = latlng;
+        mMapAdapter.setCheckPosition(position);
+
+        mapMove();
+    }
+
+    private fun initMap() {
+        /*
+		 * 设置离线地图存储目录，在下载离线地图或初始化地图设置; 使用过程中可自行设置, 若自行设置了离线地图存储的路径，
+		 * 则需要在离线地图下载和使用地图页面都进行路径设置
+		 */
+        // Demo中为了其他界面可以使用下载的离线地图，使用默认位置存储，屏蔽了自定义设置
+        // MapsInitializer.sdcardDir =OffLineMapUtils.getSdCacheDir(this);
+        // 此方法必须重写
+        mBinding.mvShopAddress.onCreate(savedInstanceState)
+        if (aMap == null) {
+            aMap = mBinding.mvShopAddress.getMap()
+            //旋转手势是否可用
+            aMap?.uiSettings?.isRotateGesturesEnabled = false
+            //是否显示指南针
+            aMap?.uiSettings?.isCompassEnabled = false
+            // 是否允许显示缩放按钮
+            aMap?.uiSettings?.isZoomControlsEnabled = false
+            // 高德地图的 logo 默认在左下角显示，不可以移除，但支持调整到固定位置
+            aMap?.uiSettings?.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_RIGHT;
+            aMap?.uiSettings?.setLogoBottomMargin(-100);
+            // 显示默认的定位按钮
+            // aMap?.uiSettings?.isMyLocationButtonEnabled = true;
+            // 可触发定位并显示当前位置
+            // aMap?.setMyLocationEnabled(true);
+        }
+
+        // 获取地图的宽高
+        mapPreViewListener()
+
+        // 地图事件
+        // 地图状态侦听
+        aMap?.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
+            override fun onCameraChange(cameraPosition: CameraPosition) {
+
+            }
+
+            override fun onCameraChangeFinish(cameraPosition: CameraPosition) {
+                // 记录缩放比例
+                zoom = cameraPosition.zoom
+                // 变更经纬度
+                latlng = cameraPosition.target;
+//                startJumpAnimation()
+            }
+        })
+        // 定位源
+        aMap?.setLocationSource(object : LocationSource {
+            override fun deactivate() {
+                mListener = null
+                stopLocation()
+            }
+
+            override fun activate(listener: LocationSource.OnLocationChangedListener?) {
+                mListener = listener
+                locate();
+            }
+        });
 
         // 定位
         mBinding.ivLocation.singleClick {
             requestLocationPermission()
         }
-
-        initMap()
-
-        initRecycleView();
-
-        initData()
-
     }
 
-    fun doSearchQuery(key : String?) {
-        // 进行poi搜索时清除掉地图点击事件
-        aMap?.setOnMapClickListener(null);
-        mPresenter?.search(city, key, latlng);
+    fun mapPreViewListener() {
+        val vto: ViewTreeObserver = mBinding.mvShopAddress.getViewTreeObserver()
+        //获取地图view的宽高
+        vto.addOnPreDrawListener {
+            mMapHeight = mBinding.mvShopAddress.getMeasuredHeight()
+            mMapWidth = mBinding.mvShopAddress.getMeasuredWidth()
+            marker?.setPositionByPixels(mMapWidth / 2, mMapHeight / 2)
+            true
+        }
     }
 
-    private fun initRecycleView() {
-        mMapAdapter = AddressAdapter().apply {
-            setOnItemClickListener { adapter, view, position ->
-                KeyboardUtils.hideSoftInput(view);
-
-                val item = adapter.data[position] as PoiItem;
-
-                latlng = LatLng(item.latLonPoint.latitude, item.latLonPoint.longitude)
-
-                addressData = AddressData();
-                addressData?.province = item.provinceName;
-                addressData?.city = item.cityName;
-                addressData?.district = item.adName;
-                addressData?.address = item.title;
-                addressData?.latLng = latlng;
-
-                Log.e("定位", "new latlng :$latlng")
-
-                mapMove();
-
-                mMapAdapter.setCheckPosition(position);
-            }
-        };
-        mBinding.rvAddress.initAdapter(mMapAdapter);
+    private fun stopLocation() {
+        if (mlocationClient != null) {
+            mlocationClient?.stopLocation()
+            mlocationClient?.setLocationListener(null);
+            mlocationClient?.onDestroy()
+        }
+        mlocationClient = null
     }
 
     private fun initData() {
         if (latlng == null) {
+            // 无数据时，请求定位
             //请求权限
             requestLocationPermission()
         } else {
-
             mapMove()
-
-            addMarkersToMap()
-
             startJumpAnimation()
-
         }
     }
 
@@ -333,81 +404,6 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
         mlocationClient?.startLocation()
     }
 
-    private fun initMap() {
-        /*
-		 * 设置离线地图存储目录，在下载离线地图或初始化地图设置; 使用过程中可自行设置, 若自行设置了离线地图存储的路径，
-		 * 则需要在离线地图下载和使用地图页面都进行路径设置
-		 */
-        // Demo中为了其他界面可以使用下载的离线地图，使用默认位置存储，屏蔽了自定义设置
-        // MapsInitializer.sdcardDir =OffLineMapUtils.getSdCacheDir(this);
-        // 此方法必须重写
-        mBinding.mvShopAddress.onCreate(savedInstanceState)
-
-        if (aMap == null) {
-            aMap = mBinding.mvShopAddress.getMap()
-            //旋转手势是否可用
-            aMap?.uiSettings?.isRotateGesturesEnabled = false
-            //是否显示指南针
-            aMap?.uiSettings?.isCompassEnabled = false
-            // 是否允许显示缩放按钮
-            aMap?.uiSettings?.isZoomControlsEnabled = false
-            // 高德地图的 logo 默认在左下角显示，不可以移除，但支持调整到固定位置
-            aMap?.uiSettings?.logoPosition = AMapOptions.LOGO_POSITION_BOTTOM_RIGHT;
-            aMap?.uiSettings?.setLogoBottomMargin(-100);
-            // 显示默认的定位按钮
-            // aMap?.uiSettings?.isMyLocationButtonEnabled = true;
-            // 可触发定位并显示当前位置
-            // aMap?.setMyLocationEnabled(true);
-        }
-
-        mapPreViewListener()
-
-        mapListener();
-    }
-
-    private fun mapListener() {
-        // 地图状态侦听
-        aMap?.setOnCameraChangeListener(object : AMap.OnCameraChangeListener {
-            override fun onCameraChange(cameraPosition: CameraPosition) {
-
-            }
-
-            override fun onCameraChangeFinish(cameraPosition: CameraPosition) {
-                // 记录缩放比例
-                zoom = cameraPosition.zoom
-                //屏幕中心的Marker跳动
-                latlng = cameraPosition.target;
-                startJumpAnimation()
-            }
-        })
-        // 定位源
-        aMap?.setLocationSource(object : LocationSource {
-            override fun deactivate() {
-                mListener = null
-                stopLocation()
-            }
-
-            override fun activate(listener: LocationSource.OnLocationChangedListener?) {
-                mListener = listener
-
-                locate();
-            }
-
-        });
-    }
-
-    private fun mapPreViewListener() {
-        val vto: ViewTreeObserver = mBinding.mvShopAddress.getViewTreeObserver()
-        //获取地图view的宽高
-        vto.addOnPreDrawListener {
-            mMapHeight = mBinding.mvShopAddress.getMeasuredHeight()
-            mMapWidth = mBinding.mvShopAddress.getMeasuredWidth()
-
-            marker?.setPositionByPixels(mMapWidth / 2, mMapHeight / 2)
-            true
-        }
-    }
-
     /**
      * 定位
      */
@@ -429,11 +425,11 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
                     //详细地址
                     val mAddress = amapLocation.aoiName
 
-                    latlng = LatLng(amapLocation.getLatitude(), amapLocation.getLongitude());
+                    latlng = LatLng(amapLocation.latitude, amapLocation.longitude);
                     //marker?.position =  latlng;
 
                     mapMove();
-
+                    startJumpAnimation();
                 } else {
                     val errText =
                         "定位失败," + amapLocation.getErrorCode() + ": " + amapLocation.getErrorInfo()
@@ -443,15 +439,6 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
         }
     };
 
-    private fun stopLocation() {
-        if (mlocationClient != null) {
-            mlocationClient?.stopLocation()
-            mlocationClient?.setLocationListener(null);
-            mlocationClient?.onDestroy()
-        }
-        mlocationClient = null
-    }
-
     fun mapMove() {
         aMap!!.moveCamera(
             CameraUpdateFactory.newLatLngZoom(
@@ -459,9 +446,39 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
                 zoom
             )
         )
-        val screenPosition = aMap!!.projection.toScreenLocation(latlng);
+    }
 
-        Log.e("定位", "1x:$screenPosition.x -- y:$screenPosition.y")
+    fun startJumpAnimation() {
+        if (marker == null) {
+            addMarkersToMap();
+        }
+        marker?.apply {
+            //根据屏幕距离计算需要移动的目标点
+            val latLng: LatLng = marker!!.getPosition()
+            val point = aMap!!.projection.toScreenLocation(latLng)
+            point.y -= dip2px(context, 25f)
+            val target = aMap!!.projection.fromScreenLocation(point)
+            //使用TranslateAnimation,填写一个需要移动的目标点
+            val animation: Animation = TranslateAnimation(target)
+            // 模拟重加速度的interpolator
+            animation.setInterpolator { input ->
+                if (input <= 0.5) {
+                    (0.5f - 2 * (0.5 - input) * (0.5 - input)).toFloat()
+                } else {
+                    (0.5f - Math.sqrt((input - 0.5f) * (1.5f - input).toDouble())).toFloat()
+                }
+            }
+            //整个移动所需要的时间
+            animation.setDuration(600)
+            //设置动画
+            marker!!.setAnimation(animation)
+            //开始动画
+            marker!!.startAnimation()
+
+            // 进行poi搜索时清除掉地图点击事件
+            aMap?.setOnMapClickListener(null);
+            mPresenter?.searchLatlng(city, latlng);
+        }
     }
 
     /**
@@ -480,62 +497,38 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
         marker?.setPositionByPixels(screenPosition.x, screenPosition.y)
     }
 
-    fun startJumpAnimation() {
-        if (marker == null) {
-            addMarkersToMap();
-        }
-        if (marker != null) {
-            //根据屏幕距离计算需要移动的目标点
-            val latLng: LatLng = marker!!.getPosition()
-            val point = aMap!!.projection.toScreenLocation(latLng)
-            point.y -= dip2px(this, 25f)
-            val target = aMap!!.projection.fromScreenLocation(point)
-            //使用TranslateAnimation,填写一个需要移动的目标点
-            //使用TranslateAnimation,填写一个需要移动的目标点
-            val animation: Animation = TranslateAnimation(target)
-            animation.setInterpolator { input -> // 模拟重加速度的interpolator
-                if (input <= 0.5) {
-                    (0.5f - 2 * (0.5 - input) * (0.5 - input)).toFloat()
-                } else {
-                    (0.5f - Math.sqrt((input - 0.5f) * (1.5f - input).toDouble())).toFloat()
-                }
-            }
-            //整个移动所需要的时间
-            animation.setDuration(600)
-            //设置动画
-            //设置动画
-            marker!!.setAnimation(animation)
-            //开始动画
-            //开始动画
-            marker!!.startAnimation()
-
-            doSearchQuery("");
-        }
-
-    }
-
+    /**
+     * 首次设置数据，不进行点移动
+     */
     override fun setList(list: List<PoiItem>?) {
         mMapAdapter.replaceData(list ?: listOf());
         if(list?.size?:0 > 0) {
+            val item = mMapAdapter.data?.get(0);
+            addressData = AddressData();
+            addressData?.province = item?.provinceName;
+            addressData?.city = item.cityName;
+            addressData?.district = item.adName;
+            addressData?.latLng = latlng;
+            addressData?.address = item?.snippet;
             mMapAdapter.setCheckPosition(0);
-        } else {
-            mMapAdapter.setCheckPosition(-1);
         }
     }
 
     /**
-     * 方法必须重写
+     * 输入数据时，进行点移动
      */
+    override fun resetList(list: List<PoiItem>?) {
+        mMapAdapter.replaceData(list ?: listOf());
+        setItemChecked(if(list?.size?:0 > 0) 0 else -1);
+    }
+
     override fun onResume() {
         super.onResume()
         mBinding.mvShopAddress.onResume()
         mapPreViewListener()
     }
 
-    /**
-     * 方法必须重写
-     */
-    override fun onPause(): Unit {
+    override fun onPause() {
         super.onPause()
         mBinding.mvShopAddress.onPause()
     }

@@ -12,10 +12,13 @@ Desc        :
  **/
 interface IShopMapAddressPresenter : BasePresenter {
 
-    fun search(city : String?, key : String?, latLng: LatLng?);
+    fun searchKey(city : String?, key : String?);
+
+    fun searchLatlng(city : String?, latLng: LatLng?);
 
     interface View : BaseView {
         fun setList(list: List<PoiItem>?);
+        fun resetList(list: List<PoiItem>?);
     }
 
 }
