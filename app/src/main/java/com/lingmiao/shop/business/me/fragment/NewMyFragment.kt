@@ -61,7 +61,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             refreshData()
         }
 
-        rlMyPersonInfo.setOnClickListener(this)
+        // rlMyPersonInfo.setOnClickListener(this)
         tvVip.setOnClickListener(this)
         tvMyWallet.setOnClickListener(this)
         tvBalance.setOnClickListener(this)
@@ -110,7 +110,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                         mPresenter?.getShareInfo(this)
                     }
                 } else {
-                    showToast("审核中，请稍后");
+                    showToast("店铺审核中，审核通过后即可店铺分享");
                 }
             }
             R.id.tvWeChatApprove -> {
@@ -132,7 +132,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                     intent.putExtra("SHOP_ID", my?.shopId)
                     context.startActivity(intent)
                 } else {
-                    showToast("审核中，请稍后");
+                    showToast("店铺审核中，审核通过后即可查看二维码");
                 }
             }
             R.id.tvBalance -> {
@@ -160,6 +160,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         }
 
         val loginInfo = UserManager.getLoginInfo()
+        loginInfo?.shopName = my?.shopName
         loginInfo?.shopLogo = my?.shopLogo
         loginInfo?.clerkId = my?.clerkId
         loginInfo?.mobile = my?.mobile

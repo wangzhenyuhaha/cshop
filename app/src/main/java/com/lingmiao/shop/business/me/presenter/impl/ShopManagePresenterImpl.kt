@@ -29,8 +29,13 @@ class ShopManagePresenterImpl(context: Context, private var view: ShopManagePres
 			val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
 			if (resp.isSuccess) {
 				var info = UserManager.getLoginInfo()
+				bean.shopLogo?.apply {
+					info?.shopLogo = bean.shopLogo;
+				}
+				bean.shopName?.apply {
+					info?.shopName = bean.shopName;
+				}
 				info?.apply {
-					shopLogo = bean.shopLogo;
 					UserManager.setLoginInfo(info!!);
 					EventBus.getDefault().post(info);
 				}
