@@ -29,10 +29,7 @@ import com.lingmiao.shop.business.main.ApplyShopHintActivity
 import com.lingmiao.shop.business.main.ElectricSignActivity
 import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.MessageCenterActivity
-import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
-import com.lingmiao.shop.business.main.bean.MainInfo
-import com.lingmiao.shop.business.main.bean.MainInfoVo
-import com.lingmiao.shop.business.main.bean.TabChangeEvent
+import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
 import com.lingmiao.shop.business.me.ApplyVipActivity
@@ -56,6 +53,9 @@ import org.greenrobot.eventbus.ThreadMode
 @SuppressLint("UseRequireInsteadOfGet")
 class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
+    // 店铺状态及信息
+    private var shopStatus: ShopStatus? = null;
+    // 首页订单统计数据
     private var mainInfo: MainInfoVo? = null
     private var loginInfo: LoginInfo? = null;
     private var fromMain: Boolean? = null
@@ -331,8 +331,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     }
 
-    override fun onMainDataSuccess(bean: MainInfoVo?) {
+    override fun onMainDataSuccess(bean: MainInfoVo?, status: ShopStatus?) {
         hidePageLoading()
+        shopStatus = status;
         mainInfo = bean
         smartRefreshLayout.finishRefresh()
         initShopStatus(UserManager.getLoginInfo())
@@ -394,6 +395,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 商品管理
         tvGoodsManager.setOnClickListener {
+            if(shopStatus?.templateId?:0 <= 0 && shopStatus?.haveCategory == false) {
+                ToastUtils.showLong("请先完善店铺管理设置与分类设置，否则店铺不能进行正常营业与商品上传")
+            } else if(shopStatus?.templateId?:0 <= 0) {
+                ToastUtils.showLong("请先完善店铺管理设置，否则店铺不能进行正常营业与商品上传")
+            } else if(shopStatus?.haveCategory == false) {
+                ToastUtils.showLong("请先完善分类设置，否则店铺不能进行正常营业与商品上传")
+            }
             GoodsListActivity.openActivity(context!!);
         }
         // 商品分类

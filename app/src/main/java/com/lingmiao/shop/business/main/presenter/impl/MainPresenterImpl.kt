@@ -27,12 +27,12 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                 if (ShopStatusConstants.isAuthed(shopStatusResp.data.shopStatus)) {
                     val resp = MainRepository.apiService.getMainData().awaitHiResponse()
                     if (resp.isSuccess) {
-                        view.onMainDataSuccess(resp.data)
+                        view.onMainDataSuccess(resp.data, shopStatusResp.data)
                     } else {
                         view.onMainInfoError(resp.code)
                     }
                 } else {
-                    view.onMainDataSuccess(null)
+                    view.onMainDataSuccess(null, shopStatusResp.data)
                 }
             } else {
                 view.onMainInfoError(-1)

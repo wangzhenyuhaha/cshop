@@ -18,9 +18,6 @@ import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.ApplyShopHintActivity
 import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.MessageCenterActivity
-import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
-import com.lingmiao.shop.business.main.bean.MainInfo
-import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
 import com.lingmiao.shop.business.me.ShopManageActivity
@@ -34,7 +31,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.show
-import com.lingmiao.shop.business.main.bean.MainInfoVo
+import com.lingmiao.shop.business.main.bean.*
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.greenrobot.eventbus.EventBus
@@ -359,7 +356,7 @@ class MainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         hidePageLoading()
     }
 
-    override fun onMainDataSuccess(bean: MainInfoVo?) {
+    override fun onMainDataSuccess(bean: MainInfoVo?, status: ShopStatus?) {
 
     }
 
@@ -370,7 +367,7 @@ class MainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //            bean.needUpgrade = true
 //        }
         if(!bean.needUpgrade) return
-        versionUpdateDialog = DialogUtils.showVersionUpdateDialog(activity!!, "版本更新", bean.upgradeContent ?: "", null,
+        versionUpdateDialog = DialogUtils.showVersionUpdateDialog(requireActivity(), "版本更新", bean.upgradeContent ?: "", null,
             View.OnClickListener {
                 val builder = AllenVersionChecker
                     .getInstance()
