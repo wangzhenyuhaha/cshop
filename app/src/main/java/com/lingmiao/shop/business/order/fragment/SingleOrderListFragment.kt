@@ -168,14 +168,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         )
 
         if(orderType == "COMPLETE" || orderType == "ALL") {
-            startOrderDateTv.text = String.format("%s-%s-%s", selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH)+1, selectedDate.get(
-                Calendar.DATE));
-            endOrderDateTv.text = startOrderDateTv.text;
-            val s = stringToDate(startOrderDateTv.getViewText()+" 00:00:00",DATE_TIME_FORMAT)?.time?:0;
-            mStart = s/1000;
-
-            val e = stringToDate(startOrderDateTv.getViewText()+" 23:59:59",DATE_TIME_FORMAT)?.time?:0;
-            mEnd = e/1000;
+//            startOrderDateTv.text = String.format("%s-%s-%s", selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH)+1, selectedDate.get(
+//                Calendar.DATE));
+//            endOrderDateTv.text = startOrderDateTv.text;
+//            val s = stringToDate(startOrderDateTv.getViewText()+" 00:00:00",DATE_TIME_FORMAT)?.time?:0;
+//            mStart = s/1000;
+//
+//            val e = stringToDate(startOrderDateTv.getViewText()+" 23:59:59",DATE_TIME_FORMAT)?.time?:0;
+//            mEnd = e/1000;
         }
 
         startOrderDateTv.singleClick {

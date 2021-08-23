@@ -160,7 +160,8 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //店铺名称
             DialogUtils.showInputDialog(activity!!, "店铺名称", "", "请输入", shopManage?.shopName,"取消", "保存",null) {
                 tvShopManageName.text = it
-                showDialogLoading()
+                shopManage?.shopName = it;
+//                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
@@ -173,8 +174,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //店铺口号
             DialogUtils.showInputDialog( activity!!, "店铺口号", "", "请输入",shopManage?.shopSlogan,"取消", "保存",null) {
                 tvShopManageSlogan.text = it;
-
-                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
@@ -190,8 +189,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //店铺公告
             DialogUtils.showInputDialog(activity!!, "店铺公告", "", "请输入", shopManage?.shopNotice,"取消", "保存",null) {
                 tvShopManageRemark.text = it;
-
-                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
@@ -208,7 +205,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //店铺简介
             DialogUtils.showMultInputDialog(activity!!, "店铺简介", "", "请简单介绍你的店铺~","取消", "保存",null) {
                 tvShopManageDesc.text = it
-                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
@@ -230,7 +226,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //紧急联系人
             DialogUtils.showInputDialog(activity!!, "紧急联系人", "", "请输入",shopManage?.linkName,"取消", "保存",null) {
                 tvShopManageContactName.text = it
-                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
@@ -242,7 +237,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //客服电话
             DialogUtils.showInputDialog(activity!!, "紧急联系人电话", "", "请输入", shopManage?.linkPhone,"取消", "保存",null) {
                 tvShopManageServicePhone.text = it
-                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
@@ -257,7 +251,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         if(shopManage != null) {
             onShopManageSuccess(shopManage!!);
         } else {
-            showPageLoading()
             mPresenter?.requestShopManageData()
         }
     }
@@ -265,7 +258,6 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     private fun showAndUploadImage(localMedia: LocalMedia?) {
         GlideUtils.setImageUrl(ivShopManageLogo, OtherUtils.getImageFile(localMedia))
         mCoroutine.launch {
-            showDialogLoading()
             val uploadFile =
                 CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
             if (uploadFile.isSuccess) {
@@ -277,18 +269,22 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
                 }
                 request.shopLogo = uploadFile.data.url
                 mPresenter?.updateShopManage(request)
-            }else{
-                hideDialogLoading()
             }
         }
     }
 
     override fun onUpdateSloganSuccess(string: String?) {
+        hidePageLoading()
+        showToast("修改成功")
         tvShopManageSlogan?.setText(string);
+        shopManage?.shopSlogan = string;
     }
 
     override fun onUpdateNoticeSuccess(string: String?) {
+        hidePageLoading()
+        showToast("修改成功")
         tvShopManageRemark?.setText(string);
+        shopManage?.shopNotice = string;
     }
 
     override fun onShopManageSuccess(bean: ApplyShopInfo) {
@@ -315,9 +311,26 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         hidePageLoading()
     }
 
-    override fun onUpdateShopSuccess() {
+    override fun onUpdateShopSuccess(bean: ApplyShopInfo) {
         hideDialogLoading()
-        showToast("修改成功")
+        bean.shopLogo?.apply {
+            shopManage?.shopLogo = this;
+        }
+        bean.shopName?.apply {
+            shopManage?.shopName = this;
+        }
+        bean.shopDesc?.apply {
+            shopManage?.shopDesc = this;
+        }
+        bean.linkName?.apply {
+            shopManage?.linkName = this;
+        }
+        bean.linkPhone?.apply {
+            shopManage?.linkPhone = this;
+        }
+        bean.linkPhone?.apply {
+            shopManage?.linkPhone = this;
+        }
     }
 
     override fun onUpdateShopError(code: Int) {

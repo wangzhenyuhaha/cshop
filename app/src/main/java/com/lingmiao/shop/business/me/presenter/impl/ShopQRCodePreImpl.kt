@@ -31,6 +31,7 @@ class ShopQRCodePreImpl(val context: Context, private var view: IShopQRCodePre.V
 
     override fun getQRCode() {
         mCoroutine.launch {
+            view.showDialogLoading()
             val resp = MeRepository.apiService.getQRCode();
             if(resp.isSuccessful) {
                 resp.body()?.string()?.let { view.onSetQRCode(it) }
@@ -38,7 +39,7 @@ class ShopQRCodePreImpl(val context: Context, private var view: IShopQRCodePre.V
                 view.showToast("获取失败");
                 view.onGetQRCodeFail();
             }
-
+            view.hideDialogLoading()
         }
     }
 

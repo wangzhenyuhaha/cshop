@@ -326,8 +326,17 @@
 
                     <TextView
                         style="@style/my_part_item"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="@dimen/dimen_5"
+                        android:text="可提现金额" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="余额" />
+                        android:text="(次日自动到账)"
+                        android:textColor="@color/color_999999"
+                        android:textSize="@dimen/dimen_12" />
 
                     <TextView
                         android:id="@+id/tvBalance"

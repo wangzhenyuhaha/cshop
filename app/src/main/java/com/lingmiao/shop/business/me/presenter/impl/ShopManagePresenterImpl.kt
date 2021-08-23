@@ -14,18 +14,20 @@ class ShopManagePresenterImpl(context: Context, private var view: ShopManagePres
     BasePreImpl(view), ShopManagePresenter{
 	override fun requestShopManageData(){
 				mCoroutine.launch {
+					view.showDialogLoading()
 					val resp = MeRepository.apiService.getShop().awaitHiResponse()
 					if (resp.isSuccess) {
 						view.onShopManageSuccess(resp.data)
 					}else{
 						view.onShopManageError(resp.code)
 					}
-
+					view.hideDialogLoading();
 				}
 	}
 
 	override fun updateShopManage(bean: ApplyShopInfo) {
 		mCoroutine.launch {
+			view.showDialogLoading()
 			val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
 			if (resp.isSuccess) {
 				var info = UserManager.getLoginInfo()
@@ -39,10 +41,12 @@ class ShopManagePresenterImpl(context: Context, private var view: ShopManagePres
 					UserManager.setLoginInfo(info!!);
 					EventBus.getDefault().post(info);
 				}
-				view.onUpdateShopSuccess()
+				view.showToast("修改成功")
+				view.onUpdateShopSuccess(bean)
 			} else {
 				view.onUpdateShopError(resp.code)
 			}
+			view.hideDialogLoading()
 		}
 	}
 }
