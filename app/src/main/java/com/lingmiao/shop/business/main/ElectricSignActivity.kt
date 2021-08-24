@@ -52,6 +52,9 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         mBinding.wvView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         mBinding.wvView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                if(url.indexOf("signSuccess") > -1) {
+                    finish();
+                }
                 view.loadUrl(url)
                 return true
             }
