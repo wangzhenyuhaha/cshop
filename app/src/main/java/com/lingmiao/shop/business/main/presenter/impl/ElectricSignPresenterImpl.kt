@@ -19,12 +19,14 @@ class ElectricSignPresenterImpl(context: Context, private var view: IElectricSig
     override fun getElectricSign() {
 
         mCoroutine.launch {
+            view.showDialogLoading()
             val resp = MemberRepository.apiService.electricSign("${UserManager.getLoginInfo()?.shopId}").awaitHiResponse()
             if (resp.isSuccess) {
-//                view.onApplyShopHintSuccess(resp.data)
-            }else{
-//                view.onApplyShopHintError(resp.code)
+                view.setUrl(resp.data.sybsignurl)
+            } else{
+                view.getSignUrlFailed();
             }
+            view.hideDialogLoading();
 
         }
     }

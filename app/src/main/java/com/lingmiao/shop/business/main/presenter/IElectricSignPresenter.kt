@@ -14,6 +14,7 @@ interface IElectricSignPresenter : BasePresenter {
     fun getElectricSign();
 
     interface View : BaseView {
-
+        fun setUrl(url :String?);
+        fun getSignUrlFailed();
     }
 }

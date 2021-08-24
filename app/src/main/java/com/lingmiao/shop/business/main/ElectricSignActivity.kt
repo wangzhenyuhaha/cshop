@@ -38,8 +38,8 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
 
     override fun initView() {
         mToolBarDelegate?.setMidTitle("电子签约")
-        mPresenter?.getElectricSign();
         initWebView();
+        mPresenter?.getElectricSign();
     }
 
 
@@ -60,7 +60,12 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         mBinding.wvView.addJavascriptInterface(this, "android")
     }
 
-    fun loadUrl(url : String) {
+    override fun setUrl(url: String?) {
         mBinding.wvView.loadUrl(url)
+    }
+
+    override fun getSignUrlFailed() {
+        showToast("获取签约信息失败，请重试")
+        finish();
     }
 }
