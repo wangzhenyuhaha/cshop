@@ -44,6 +44,11 @@ object ShopStatusConstants {
     const val ALLINPAY_REFUSED = "ALLINPAY_REFUSED";
 
     /**
+     * 通联签约审核中
+     */
+    const val ALLINPAY_ELECTSIGN_ING = "ALLINPAY_ELECTSIGN_ING";
+
+    /**
      * 通联签约成功,最终的状态
      */
     const val ALLINPAY_ELECTSIGN_APPROVED = "ALLINPAY_ELECTSIGN_APPROVED";
@@ -77,10 +82,15 @@ object ShopStatusConstants {
                 ||status == OVERDUE
                 ||status == ALLINPAY_APPLYING
                 ||status == ALLINPAY_APPROVED
+                ||status == ALLINPAY_ELECTSIGN_ING
                 ||status == ALLINPAY_ELECTSIGN_REFUSED
                 ||status == ALLINPAY_ELECTSIGN_APPROVED
                 || status == WEIXIN_AUTHEN_APPLYING
                 || status == FINAL_OPEN;
+    }
+
+    fun isFinalOpen(status: String?) : Boolean {
+        return status == FINAL_OPEN;
     }
 
 }

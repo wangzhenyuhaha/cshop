@@ -249,10 +249,15 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         authLayout.visiable();
                         shopAuthStatus.text = "审核通过,请进行电子签约";
                         shopAuthHint.visiable();
-                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
-                        // 认败失败
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING) {
+                        // 签约审核中
                         authLayout.visiable();
-                        shopAuthStatus.text = "审核不通过，请重新进行电子签约";
+                        shopAuthStatus.text = "签约已提交，等待通过";
+                        shopAuthHint.gone();
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
+                        // 微信认证中
+                        authLayout.visiable();
+                        shopAuthStatus.text = "店铺签约成功,请进行商户认证";
                         shopAuthHint.visiable();
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                         // 微信认证中

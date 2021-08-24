@@ -62,7 +62,7 @@
                 android:background="@color/color_FD8424"
                 android:padding="15dp"
                 android:textColor="@color/white"
-                tools:text="店铺签约成功,请进行商户认证" />
+                tools:text="签约已通过，请进行微信商户认证" />
 
             <TextView
                 android:id="@+id/shopAuthHint"

@@ -9,6 +9,7 @@
     <View style="@style/DivideLineHorizontal" />
 
     <RelativeLayout
+        android:id="@+id/warningLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
