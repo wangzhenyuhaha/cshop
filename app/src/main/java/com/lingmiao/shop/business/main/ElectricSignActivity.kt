@@ -5,12 +5,11 @@ import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseVBActivity
-import com.james.common.net.RetrofitUtil
-import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.business.main.presenter.IElectricSignPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ElectricSignPresenterImpl
+import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
 import com.lingmiao.shop.databinding.MainActivityElectricSignBinding
 
 /**
@@ -54,8 +53,11 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         mBinding.wvView.settings.cacheMode = WebSettings.LOAD_NO_CACHE
         mBinding.wvView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                if(url.startsWith("signSuccess")) {
-                    finish();
+                if(url.startsWith("http://www.c-dian.cn")
+                    || url.startsWith("http://www.c-dian.cn/")
+                    || url.indexOf("/signSuccess?signType=allinpay") > -1) {
+                    mPresenter?.getShopStatus();
+                    return false;
                 }
                 view.loadUrl(url)
                 return true
@@ -74,17 +76,17 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         finish();
     }
 
-    override fun onBackPressed() {
-        if(mBinding.wvView.canGoBack()) {
-            mBinding.wvView.goBack();
-        } else {
-            DialogUtils.showDialog(context!!, "返回", "是否返回到首页？",
-                "取消", "确定", View.OnClickListener {
+    override fun onSignSuccess() {
+        showToast("签约成功，请进行商户认证")
+        ActivityUtils.startActivity(ShopWeChatApproveActivity::class.java);
+        finish();
+    }
 
-                }, View.OnClickListener {
-                    super.onBackPressed();
-                });
+    override fun onSupportNavigateUp(): Boolean {
+        if(mBinding.wvView.canGoBack()) {
+            return false;
         }
+        return super.onSupportNavigateUp();
     }
 
 }

@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/main_message_center_voice"
             android:drawablePadding="@dimen/dimen_10"
-            android:text="店铺签约成功，请使用微信扫码进行商户认证，认证成功后才能进行正常结算"
+            android:text="店铺签约成功，请使用法人实名认证微信扫码进行商户认证，认证成功后才能进行正常结算"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_14"
             android:textStyle="bold" />

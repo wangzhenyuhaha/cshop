@@ -66,7 +66,6 @@ object OtherUtils {
 
     fun goToMainActivity() {
         val loginInfo = UserManager.getLoginInfo() ?: return
-
         if(ShopStatusConstants.isAuthed(loginInfo.shopStatus)) {
             ActivityUtils.startActivity(MainActivity::class.java)
         } else {

@@ -93,4 +93,15 @@ object ShopStatusConstants {
         return status == FINAL_OPEN;
     }
 
+    fun isSignFail(status: String?): Boolean {
+        return status == ALLINPAY_ELECTSIGN_REFUSED;
+    }
+
+    // 兼容更高的状态
+    fun isSignSuccess(status: String?): Boolean {
+        return status == ALLINPAY_ELECTSIGN_APPROVED
+                || status == WEIXIN_AUTHEN_APPLYING
+                || status == FINAL_OPEN;
+    }
+
 }

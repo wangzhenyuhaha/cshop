@@ -3,7 +3,9 @@ package com.lingmiao.shop.business.main.presenter.impl
 import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.main.api.MemberRepository
 import com.lingmiao.shop.business.main.presenter.IElectricSignPresenter
 import com.lingmiao.shop.business.main.presenter.IShopAddressPresenter
@@ -16,8 +18,8 @@ Desc        :
  **/
 class ElectricSignPresenterImpl(context: Context, private var view: IElectricSignPresenter.View) : BasePreImpl(view),
     IElectricSignPresenter {
-    override fun getElectricSign() {
 
+    override fun getElectricSign() {
         mCoroutine.launch {
             view.showDialogLoading()
             val resp = MemberRepository.apiService.electricSign("${UserManager.getLoginInfo()?.shopId}").awaitHiResponse()
@@ -30,5 +32,19 @@ class ElectricSignPresenterImpl(context: Context, private var view: IElectricSig
 
         }
     }
+
+    override fun getShopStatus() {
+        mCoroutine.launch {
+            view.showDialogLoading()
+            val resp = MainRepository.apiService.getShopStatus().awaitHiResponse()
+            if (resp.isSuccess) {
+                if(ShopStatusConstants.isSignSuccess(resp.data.shopStatus)) {
+                    view.onSignSuccess();
+                }
+            }
+            view.hideDialogLoading();
+        }
+    }
+
 
 }

@@ -13,8 +13,11 @@ interface IElectricSignPresenter : BasePresenter {
 
     fun getElectricSign();
 
+    fun getShopStatus();
+
     interface View : BaseView {
         fun setUrl(url :String?);
         fun getSignUrlFailed();
+        fun onSignSuccess();
     }
 }
