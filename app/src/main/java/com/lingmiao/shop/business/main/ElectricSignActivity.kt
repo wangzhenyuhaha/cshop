@@ -1,12 +1,14 @@
 package com.lingmiao.shop.business.main
 
 import android.annotation.SuppressLint
+import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.BaseVBActivity
 import com.james.common.net.RetrofitUtil
+import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.business.main.presenter.IElectricSignPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ElectricSignPresenterImpl
 import com.lingmiao.shop.databinding.MainActivityElectricSignBinding
@@ -71,4 +73,18 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         showToast("获取签约信息失败，请重试")
         finish();
     }
+
+    override fun onBackPressed() {
+        if(mBinding.wvView.canGoBack()) {
+            mBinding.wvView.goBack();
+        } else {
+            DialogUtils.showDialog(context!!, "返回", "是否返回到首页？",
+                "取消", "确定", View.OnClickListener {
+
+                }, View.OnClickListener {
+                    super.onBackPressed();
+                });
+        }
+    }
+
 }
