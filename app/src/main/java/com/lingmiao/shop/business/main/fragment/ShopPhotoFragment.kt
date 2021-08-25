@@ -294,7 +294,6 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                     }
                     ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT -> {
                         model.personalAccount.value?.bankUrls = uploadFile.data.url
-                        model.personalAccount.value?.cardNo = ""
                         uploadFile.data.url?.also {
                             Glide.with(requireActivity()).load(it).into(binding.imageView)
                             model.getOCR.value = 6

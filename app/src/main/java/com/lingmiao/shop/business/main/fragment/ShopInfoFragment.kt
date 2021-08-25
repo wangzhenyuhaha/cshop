@@ -139,9 +139,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                         "请上传组织机构代码证照片"
                     }
                 }
-                checkNotBlack(model.applyShopInfo.value?.foodAllow) {
-                    "请上传食品经营许可证照片"
-                }
                 checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
                     "请上传店铺门头照片"
                 }

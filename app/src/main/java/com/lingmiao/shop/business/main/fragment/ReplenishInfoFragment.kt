@@ -116,6 +116,8 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 if (RegexUtils.isZh(it)) {
                     binding.legalNameTV.text = it
                     model.applyShopInfo.value?.legalName = it
+                    model.personalAccount.value?.openAccountName = it
+                    model.nameOfShopPerson.value = 1
                 } else {
                     ToastUtils.showShort("请输入正确的法人姓名")
                 }
@@ -158,7 +160,8 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 if (RegexUtils.isZh(it)) {
                     binding.linkNameTextView.text = it
                     model.applyShopInfo.value?.linkName = it
-                }else {
+                    model.nameOfShopPerson.value = 1
+                } else {
                     ToastUtils.showShort("请输入正确的负责人电话")
                 }
             }
@@ -176,10 +179,10 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 "保存",
                 null
             ) {
-                if (RegexUtils.isZh(it)) {
+                if (RegexUtils.isMobileSimple(it)) {
                     binding.linkPhoneTextView.text = it
                     model.applyShopInfo.value?.linkPhone = it
-                }else {
+                } else {
                     ToastUtils.showShort("请输入正确的负责人电话")
                 }
             }
@@ -197,6 +200,7 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                     binding.linkPhoneTextView.text = it.legal_phone
                     model.applyShopInfo.value?.linkPhone = it.legal_phone
                 }
+                model.nameOfShopPerson.value = 1
             }
         }
 
@@ -217,7 +221,6 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
             }
 
         }
-
 
         //法人身份证信息
         binding.legalInfo.setOnClickListener {
@@ -274,7 +277,6 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
 
     private fun initObserver() {
-
 
         model.applyShopInfo.observe(this, Observer { info ->
 
@@ -346,6 +348,15 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
                 binding.companyInfoTextView.text = "已上传"
             }
 
+        })
+
+        model.nameOfShopPerson.observe(this, Observer {
+            if (!(model.applyShopInfo.value?.legalName.isNullOrEmpty() || model.applyShopInfo.value?.linkName.isNullOrEmpty())) {
+                binding.legalNameSync.isSelected =
+                    model.applyShopInfo.value?.legalName == model.applyShopInfo.value?.linkName
+            } else {
+                binding.legalNameSync.isSelected = false
+            }
         })
 
     }

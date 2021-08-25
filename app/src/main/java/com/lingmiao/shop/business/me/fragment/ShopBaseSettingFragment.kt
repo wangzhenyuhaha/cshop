@@ -60,7 +60,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     }
 
     override fun initBundles() {
-        shopManage = arguments?.getSerializable("item") as ApplyShopInfo;
+        shopManage = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
     override fun useEventBus(): Boolean {
@@ -68,11 +68,11 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.me_fragment_shop_base_setting;
+        return R.layout.me_fragment_shop_base_setting
     }
 
     override fun createPresenter(): ShopBaseSettingPresenter {
-        return ShopBaseSettingPresenterImpl(context!!, this);
+        return ShopBaseSettingPresenterImpl(context!!, this)
     }
 
     override fun initViewsAndData(rootView: View) {
@@ -160,7 +160,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             //店铺名称
             DialogUtils.showInputDialog(activity!!, "店铺名称", "", "请输入", shopManage?.shopName,"取消", "保存",null) {
                 tvShopManageName.text = it
-                shopManage?.shopName = it;
+                shopManage?.shopName = it
 //                showDialogLoading()
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
@@ -173,32 +173,32 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopManageSlogan.setOnClickListener{
             //店铺口号
             DialogUtils.showInputDialog( activity!!, "店铺口号", "", "请输入",shopManage?.shopSlogan,"取消", "保存",null) {
-                tvShopManageSlogan.text = it;
+                tvShopManageSlogan.text = it
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopSlogan = it
-                mPresenter?.updateShopSlogan(request);
+                mPresenter?.updateShopSlogan(request)
             }
         }
 
         tvShopManageSloganHint.singleClick {
-            DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_slogan);
+            DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_slogan)
         }
         tvShopManageRemark.setOnClickListener {
             //店铺公告
             DialogUtils.showInputDialog(activity!!, "店铺公告", "", "请输入", shopManage?.shopNotice,"取消", "保存",null) {
-                tvShopManageRemark.text = it;
+                tvShopManageRemark.text = it
                 val request = ApplyShopInfo()
                 val loginInfo = UserManager.getLoginInfo()
                 loginInfo?.let { info-> request.shopId = info.shopId }
                 request.shopNotice = it
-                mPresenter?.updateShopNotice(request);
+                mPresenter?.updateShopNotice(request)
             }
         }
 
         tvShopManageRemarkHint.singleClick {
-            DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_remark);
+            DialogUtils.showDialog(activity!!, R.mipmap.ic_shop_remark)
         }
 
         rlShopManageDesc.setOnClickListener{
@@ -213,8 +213,8 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             }
         }
         rlShopManageAddress.singleClick {
-//            AddressActivity.openActivity(context!!, shopManage);
-            ShopAddressActivity.openActivity(context!!, shopManage);
+//            AddressActivity.openActivity(context!!, shopManage)
+            ShopAddressActivity.openActivity(context!!, shopManage)
         }
         rlShopManageQualification.setOnClickListener{
             //店铺资质
@@ -249,7 +249,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
             // mPresenter?.updateShopManage(request);
         }
         if(shopManage != null) {
-            onShopManageSuccess(shopManage!!);
+            onShopManageSuccess(shopManage!!)
         } else {
             mPresenter?.requestShopManageData()
         }
@@ -276,15 +276,15 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     override fun onUpdateSloganSuccess(string: String?) {
         hidePageLoading()
         showToast("修改成功")
-        tvShopManageSlogan?.setText(string);
-        shopManage?.shopSlogan = string;
+        tvShopManageSlogan?.setText(string)
+        shopManage?.shopSlogan = string
     }
 
     override fun onUpdateNoticeSuccess(string: String?) {
         hidePageLoading()
         showToast("修改成功")
-        tvShopManageRemark?.setText(string);
-        shopManage?.shopNotice = string;
+        tvShopManageRemark?.setText(string)
+        shopManage?.shopNotice = string
     }
 
     override fun onShopManageSuccess(bean: ApplyShopInfo) {
@@ -297,12 +297,12 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         tvShopManageContactName.text = bean.linkName
         tvShopManageServicePhone.text = bean.linkPhone
         tvShopManageAddress.text = bean.getFullAddress()
-        tvShopManageNumber.text = String.format("%s", bean.shopId);
-        tvShopManageType.text = bean.getShopTypeStr();
+        tvShopManageNumber.text = String.format("%s", bean.shopId)
+        tvShopManageType.text = bean.getShopTypeStr()
 
 
-        tvShopManageSlogan.text = bean.shopSlogan;
-        tvShopManageRemark.text = bean.shopNotice;
+        tvShopManageSlogan.text = bean.shopSlogan
+        tvShopManageRemark.text = bean.shopNotice
 
         licenceImg = bean.licenceImg
     }
@@ -314,22 +314,22 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
     override fun onUpdateShopSuccess(bean: ApplyShopInfo) {
         hideDialogLoading()
         bean.shopLogo?.apply {
-            shopManage?.shopLogo = this;
+            shopManage?.shopLogo = this
         }
         bean.shopName?.apply {
-            shopManage?.shopName = this;
+            shopManage?.shopName = this
         }
         bean.shopDesc?.apply {
-            shopManage?.shopDesc = this;
+            shopManage?.shopDesc = this
         }
         bean.linkName?.apply {
-            shopManage?.linkName = this;
+            shopManage?.linkName = this
         }
         bean.linkPhone?.apply {
-            shopManage?.linkPhone = this;
+            shopManage?.linkPhone = this
         }
         bean.linkPhone?.apply {
-            shopManage?.linkPhone = this;
+            shopManage?.linkPhone = this
         }
     }
 
@@ -351,14 +351,14 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun setAddress(event : ApplyShopPoiEvent) {
-        addressLatLng = event?.adInfo?.latLng;
-        shopManage?.shopLng = addressLatLng?.longitude;
-        shopManage?.shopLat = addressLatLng?.latitude;
-        shopManage?.shopAdd = event?.adInfo?.address;
-        shopManage?.shopProvince = event?.adInfo?.province;
-        shopManage?.shopCity = event?.adInfo?.city;
-        shopManage?.shopCounty = event?.adInfo?.district;
-        tvShopManageAddress.text = shopManage?.getFullAddress();
+        addressLatLng = event?.adInfo?.latLng
+        shopManage?.shopLng = addressLatLng?.longitude
+        shopManage?.shopLat = addressLatLng?.latitude
+        shopManage?.shopAdd = event?.adInfo?.address
+        shopManage?.shopProvince = event?.adInfo?.province
+        shopManage?.shopCity = event?.adInfo?.city
+        shopManage?.shopCounty = event?.adInfo?.district
+        tvShopManageAddress.text = shopManage?.getFullAddress()
 
         showDialogLoading()
         val request = ApplyShopInfo()
@@ -366,7 +366,7 @@ class ShopBaseSettingFragment : BaseFragment<ShopBaseSettingPresenter>(), ShopBa
         loginInfo?.let { info-> request.shopId = info.shopId }
         request.shopLat = addressLatLng?.latitude
         request.shopLng = addressLatLng?.longitude
-        request.shopAdd = event?.adInfo?.address;
+        request.shopAdd = event?.adInfo?.address
         request.shopProvince = shopManage?.shopProvince
         request.shopCity = shopManage?.shopCity
         request.shopCounty = shopManage?.shopCounty

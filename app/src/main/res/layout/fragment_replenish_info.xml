@@ -176,19 +176,20 @@
                             app:layout_constraintStart_toStartOf="@+id/legalName"
                             app:layout_constraintTop_toTopOf="@+id/legalName" />
 
-                        <Button
+                        <TextView
                             android:id="@+id/legalNameSync"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="@dimen/dimen_20"
+                            android:layout_marginStart="@dimen/dimen_40"
                             android:background="@color/zxing_transparent"
                             android:ellipsize="end"
                             android:singleLine="true"
-                            android:text="(设为负责人)"
+                            android:text="设为负责人  "
                             android:textColor="#ff999999"
                             android:textSize="12sp"
+                            android:drawableEnd="@drawable/selector_login_service"
                             app:layout_constraintBottom_toBottomOf="@+id/legalName"
                             app:layout_constraintStart_toEndOf="@+id/legalName1"
                             app:layout_constraintTop_toTopOf="@+id/legalName" />
@@ -498,8 +499,5 @@
             app:ivRadius="19dp" />
 
     </RelativeLayout>
-
-
-    <include layout="@layout/include_empty" />
 
 </FrameLayout>

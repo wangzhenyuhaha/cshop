@@ -74,6 +74,13 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         val loginInfo = UserManager.getLoginInfo()
 
+        //若店铺为开店中，则允许修改进件资料
+        loginInfo?.also { it ->
+            if (it.shopStatus == "OPEN") {
+                viewModel.shopOpenOrNot = true
+            }
+        }
+
         loginInfo?.also { it ->
             if (it.shopStatus != null && it.shopStatus != "UN_APPLY") {
                 //已申请过店铺
@@ -153,13 +160,43 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         viewModel.ocrCBankVisibility.observe(this, Observer {
             //对公  0
-            mPresenter.searchBankName(0, viewModel.companyAccount.value?.cardNo ?: "")
+            //获取了一个不一样的银行卡卡号
+
+            //清理之前的数据
+            viewModel.companyAccount.value?.also {
+                it.bankName = null
+                it.bankCode = null
+                it.subBankName = null
+                it.subBankCode = null
+                it.province = null
+                it.city = null
+            }
+
+            //开始获取所属银行名及号码
+            viewModel.companyAccount.value?.cardNo?.also { id ->
+                mPresenter.searchBankName(0, id)
+            }
         })
 
         //查询银行卡名
         viewModel.ocrPBankVisibility.observe(this, Observer {
             //对私 1
-            mPresenter.searchBankName(1, viewModel.personalAccount.value?.cardNo ?: "")
+            //获取了一个不一样的银行卡卡号
+
+            //清理之前的数据
+            viewModel.personalAccount.value?.also {
+                it.bankName = null
+                it.bankCode = null
+                it.subBankName = null
+                it.subBankCode = null
+                it.province = null
+                it.city = null
+            }
+
+            //开始获取所属银行名及号码
+            viewModel.personalAccount.value?.cardNo?.also { id ->
+                mPresenter.searchBankName(1, id)
+            }
         })
 
         //绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
@@ -190,10 +227,18 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
         })
 
-        //注册店铺
+        //注册店铺或者修改进件资料
         viewModel.go.observe(this, Observer {
             try {
-                mPresenter?.requestApplyShopInfoData(viewModel.applyShopInfo.value!!)
+                //身份证照片弄反了，国徽人像互换
+                val temp = viewModel.applyShopInfo.value?.legalBackImg
+                viewModel.applyShopInfo.value?.legalBackImg =
+                    viewModel.applyShopInfo.value?.legalImg
+                viewModel.applyShopInfo.value?.legalImg = temp
+                mPresenter?.requestApplyShopInfoData(
+                    viewModel.shopOpenOrNot,
+                    viewModel.applyShopInfo.value!!
+                )
             } catch (e: Exception) {
                 showToast("失败了")
             }
@@ -275,9 +320,29 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     override fun onBankCard(data: BankCard) {
         viewModel.personalAccount.value?.also {
             try {
-                it.cardNo = data.CardNo
-                //通过银行卡卡号识别银行卡所属银行及所属银行编码
-                viewModel.ocrPBankVisibility.value = 1
+
+
+                if (data.CardNo != null) {
+                    //识别成功
+
+                    if (it.cardNo != data.CardNo) {
+                        //卡号不一样
+                        it.cardNo = data.CardNo
+                        viewModel.ocrPBankVisibility.value = 1
+                    }
+                    //卡号一样处理无意义
+                } else {
+                    //识别失败
+                    it.cardNo = null
+                    it.province = null
+                    it.city = null
+                    it.bankCode = null
+                    it.bankName = null
+                    it.subBankName = null
+                    it.subBankCode = null
+                    viewModel.ocrPBankVisibilityU.value = 1
+                }
+
 
             } catch (e: Exception) {
 
@@ -315,21 +380,30 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
 
     //更新所属银行信息
-    override fun updateCompanyBank(name: String, code: String) {
-        viewModel.companyAccount.value?.also {
-            it.bankName = name
-            it.bankCode = code
+    override fun updateCompanyBank(name: String?, code: String?) {
+        if (name != null && code != null) {
+            //获取数据，更新数据
+            viewModel.companyAccount.value?.also {
+                it.bankName = name
+                it.bankCode = code
+            }
         }
+        //根据数据获取情况更新页面
         viewModel.ocrCBankVisibilityU.value = 1
 
     }
 
     //更新所属银行信息
-    override fun updatePersonalBank(name: String, code: String) {
-        viewModel.personalAccount.value?.also {
-            it.bankName = name
-            it.bankCode = code
+    override fun updatePersonalBank(name: String?, code: String?) {
+
+        if (name != null && code != null) {
+            //获取数据，更新数据
+            viewModel.personalAccount.value?.also {
+                it.bankName = name
+                it.bankCode = code
+            }
         }
+        //根据数据获取情况更新页面
         viewModel.ocrPBankVisibilityU.value = 1
     }
 
@@ -337,6 +411,21 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     //申请失败后成功获取已上传数据
     override fun onShopInfoSuccess(applyShopInfo: ApplyShopInfo) {
         viewModel.onShopInfoSuccess(applyShopInfo)
+        try {
+            val list = viewModel.applyShopInfo.value?.other_certificates_imgs?.split("'")
+            list?.also {
+                if (it.size == 1) {
+                    viewModel.applyShopInfo.value?.other_Pic_One = list[0]
+                }
+                if (it.size == 2) {
+                    viewModel.applyShopInfo.value?.other_Pic_One = list[0]
+                    viewModel.applyShopInfo.value?.other_Pic_Two = list[1]
+                }
+            }
+        } catch (e: Exception) {
+
+        }
+
     }
 
     //申请失败后未获取已上传数据
@@ -345,17 +434,38 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     }
 
 
-    override fun updateBankList(company: BindBankCardDTO?, personal: BindBankCardDTO?) {
+    override fun updateBankList(
+        company: BindBankCardDTO?,
+        personal: BindBankCardDTO?
+    ) {
         company?.also {
             viewModel.companyAccount.value = it
+            // 1表示为结算账户
+            if (it.isDefault == 1) {
+                viewModel.whichAccountToUse.value = 0
+            }
         }
         personal?.also {
             viewModel.personalAccount.value = it
+            // 1表示为结算账户
+            if (it.isDefault == 1) {
+                viewModel.whichAccountToUse.value = 1
+            }
         }
     }
 
     class ApplyShopInfoViewModel : ViewModel() {
 
+        //          / ￣￣￣＼　
+        //          |　ー　ー \　
+        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
+        //          \ 　 ▱　 / ∠    店铺是否处于开启中
+        //          ＼      イ   \
+        //          ／　     ＼   \______________
+        //         /　|　　  \ \　
+        //        |　|　　　 | |
+
+        var shopOpenOrNot: Boolean = false
 
         //          / ￣￣￣＼　
         //          |　ー　ー \　
@@ -515,12 +625,17 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //          ／　     ＼   \______________
         //         /　|　　  \ \　
         //        |　|　　　 | |
+        //获取对公账户的信息
         val ocrCBankVisibility: MutableLiveData<Int> = MutableLiveData()
 
+        //获取对私账户的信息
         val ocrPBankVisibility: MutableLiveData<Int> = MutableLiveData()
 
+
+        //更新银行卡号后更新对公UI
         val ocrCBankVisibilityU: MutableLiveData<Int> = MutableLiveData()
 
+        //更新银行卡号后更新对私UI
         val ocrPBankVisibilityU: MutableLiveData<Int> = MutableLiveData()
 
 
@@ -556,6 +671,18 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //         /　|　　  \ \　
         //        |　|　　　 | |
         val go: MutableLiveData<Int> = MutableLiveData()
+
+        //          / ￣￣￣＼　
+        //          |　ー　ー \　
+        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
+        //          \ 　 ▱　 / ∠    当法人和负责人发生变化时，判断是否相等
+        //          ＼      イ   \
+        //          ／　     ＼   \______________
+        //         /　|　　  \ \　
+        //        |　|　　　 | |
+        val nameOfShopPerson: MutableLiveData<Int> = MutableLiveData<Int>().also {
+            it.value =1
+        }
 
     }
 

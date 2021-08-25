@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,642 +9,624 @@
     android:paddingRight="14dp"
     tools:ignore="HardcodedText,ContentDescription">
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="78dp">
 
-        <androidx.core.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="78dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <com.james.common.view.ILinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
 
-                <com.james.common.view.ILinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/shopType"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="企业"
+                    android:textColor="#ff333333"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/shopTypeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="（对公账户必须填写）"
+                    android:textColor="@color/red"
+                    android:textSize="11sp" />
+
+            </com.james.common.view.ILinearLayout>
+
+
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/accountCompany"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
 
                     <TextView
-                        android:id="@+id/shopType"
+                        android:id="@+id/accountCompanyTVP"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="企业"
+                        android:layout_centerVertical="true"
+                        android:text="对公账户"
                         android:textColor="#ff333333"
-                        android:textSize="15sp" />
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
+                        app:layout_constraintStart_toStartOf="@+id/accountCompany"
+                        app:layout_constraintTop_toTopOf="@+id/accountCompany"
+                        tools:visibility="gone" />
 
                     <TextView
-                        android:id="@+id/shopTypeTextView"
+                        android:id="@+id/accountCompanyTVC"
+                        style="@style/goods_spce_item_left_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="（对公账户必须填写）"
-                        android:textColor="@color/red"
-                        android:textSize="11sp" />
+                        android:layout_centerVertical="true"
+                        android:text="对公账户"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
+                        app:layout_constraintStart_toStartOf="@+id/accountCompany"
+                        app:layout_constraintTop_toTopOf="@+id/accountCompany" />
 
-                </com.james.common.view.ILinearLayout>
+                    <ImageView
+                        android:id="@+id/accountCompanyIV"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:src="@drawable/selector_item"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
+                        app:layout_constraintStart_toStartOf="@+id/accountCompany"
+                        app:layout_constraintTop_toTopOf="@+id/accountCompany" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.james.common.view.ILinearLayout>
 
 
-                <com.james.common.view.ILinearLayout
+            <View style="@style/DivideLineHorizontal" />
+
+            <com.james.common.view.ILinearLayout
+                android:id="@+id/companyModule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
+
+                <RelativeLayout
+                    android:id="@+id/bankaccountnameC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
+                    android:layout_height="50dp">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/accountCompany"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="账户名称"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
 
-                        <TextView
-                            android:id="@+id/accountCompanyTVP"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="对公账户"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
-                            app:layout_constraintStart_toStartOf="@+id/accountCompany"
-                            app:layout_constraintTop_toTopOf="@+id/accountCompany"
-                            tools:visibility="gone" />
+                    <TextView
+                        android:id="@+id/bankaccountnameCtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请填写账户名称"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
 
-                        <TextView
-                            android:id="@+id/accountCompanyTVC"
-                            style="@style/goods_spce_item_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="对公账户"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
-                            app:layout_constraintStart_toStartOf="@+id/accountCompany"
-                            app:layout_constraintTop_toTopOf="@+id/accountCompany" />
 
-                        <ImageView
-                            android:id="@+id/accountCompanyIV"
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:src="@drawable/selector_item"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountCompany"
-                            app:layout_constraintStart_toStartOf="@+id/accountCompany"
-                            app:layout_constraintTop_toTopOf="@+id/accountCompany" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.james.common.view.ILinearLayout>
-
+                </RelativeLayout>
 
                 <View style="@style/DivideLineHorizontal" />
 
-                <com.james.common.view.ILinearLayout
-                    android:id="@+id/companyModule"
+                <RelativeLayout
+                    android:id="@+id/bankUrlC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
-
-                    <RelativeLayout
-                        android:id="@+id/bankaccountnameC"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="账户名称"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/bankaccountnameCtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请填写账户名称"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/bankUrlC"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="开户许可证照片(可使用银行回单)"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/bankUrlCTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请上传"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/banknumberC"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="账户号"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/banknumberCtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请填写账户号"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/bankC"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="所属银行"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/bankCtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请选择所属银行"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/subBankC"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="所属支行"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/subBankCTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请选择所属支行"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                </com.james.common.view.ILinearLayout>
-
-                <com.james.common.view.ILinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/accountPersonal"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:id="@+id/accountPersonalTVForCompany"
-                            style="@style/goods_spce_item_left_mark"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="结算账户"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
-                            app:layout_constraintStart_toStartOf="@+id/accountPersonal"
-                            app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
-
-
-                        <ImageView
-                            android:id="@+id/accountPersonalIV"
-                            android:layout_width="100dp"
-                            android:layout_height="20dp"
-                            android:layout_centerInParent="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:src="@drawable/selector_item"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
-                            app:layout_constraintStart_toStartOf="@+id/accountPersonalTVForCompany"
-                            app:layout_constraintTop_toTopOf="@+id/accountPersonal"
-                            app:layout_constraintVertical_bias="0.466" />
-
-                        <TextView
-                            android:id="@+id/account1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_marginEnd="16dp"
-                            android:drawableEnd="@drawable/selector_login_service"
-                            android:ellipsize="end"
-                            android:gravity="center"
-                            android:singleLine="true"
-                            android:text="对公    "
-                            android:textColor="#ff999999"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
-                            app:layout_constraintEnd_toStartOf="@+id/account2"
-                            app:layout_constraintTop_toTopOf="@+id/accountPersonal"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <TextView
-                            android:id="@+id/account2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:drawableEnd="@drawable/selector_login_service"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="对私    "
-                            android:textColor="#ff999999"
-                            android:textSize="12sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
-                            app:layout_constraintEnd_toEndOf="@+id/accountPersonal"
-                            app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_height="50dp">
 
                     <TextView
-                        android:id="@+id/accountPersonalTV"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:text="（请绑定法人本人的银行卡）"
-                        android:textColor="@color/red"
-                        android:textSize="11sp" />
+                        android:layout_centerVertical="true"
+                        android:text="开户许可证照片(可使用银行回单)"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
 
-                </com.james.common.view.ILinearLayout>
+                    <TextView
+                        android:id="@+id/bankUrlCTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请上传"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
 
                 <View style="@style/DivideLineHorizontal" />
 
-                <com.james.common.view.ILinearLayout
-                    android:id="@+id/personalModule"
+                <RelativeLayout
+                    android:id="@+id/banknumberC"
                     android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="账户号"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/banknumberCtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请填写账户号"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/bankC"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="所属银行"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/bankCtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请选择所属银行"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/subBankC"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="所属支行"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/subBankCTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请选择所属支行"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
+
+            </com.james.common.view.ILinearLayout>
+
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/accountPersonal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:id="@+id/accountPersonalTVForCompany"
+                        style="@style/goods_spce_item_left_mark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="结算账户"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
+                        app:layout_constraintStart_toStartOf="@+id/accountPersonal"
+                        app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
+
+
+                    <ImageView
+                        android:id="@+id/accountPersonalIV"
+                        android:layout_width="100dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:src="@drawable/selector_item"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
+                        app:layout_constraintStart_toStartOf="@+id/accountPersonalTVForCompany"
+                        app:layout_constraintTop_toTopOf="@+id/accountPersonal"
+                        app:layout_constraintVertical_bias="0.466" />
+
+                    <TextView
+                        android:id="@+id/account1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="16dp"
+                        android:drawableEnd="@drawable/selector_login_service"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="对公    "
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
+                        app:layout_constraintEnd_toStartOf="@+id/account2"
+                        app:layout_constraintTop_toTopOf="@+id/accountPersonal"
+                        app:layout_constraintVertical_bias="0.0" />
+
+                    <TextView
+                        android:id="@+id/account2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableEnd="@drawable/selector_login_service"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:singleLine="true"
+                        android:text="对私    "
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/accountPersonal"
+                        app:layout_constraintEnd_toEndOf="@+id/accountPersonal"
+                        app:layout_constraintTop_toTopOf="@+id/accountPersonal" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/accountPersonalTV"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
+                    android:layout_marginBottom="10dp"
+                    android:text="（请绑定法人本人的银行卡）"
+                    android:textColor="@color/red"
+                    android:textSize="11sp" />
 
-                    <RelativeLayout
-                        android:id="@+id/bankaccountnameP"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
+            </com.james.common.view.ILinearLayout>
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="持卡人"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
+            <View style="@style/DivideLineHorizontal" />
 
-                        <TextView
-                            android:id="@+id/bankaccountnamePtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="持卡人"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
+            <com.james.common.view.ILinearLayout
+                android:id="@+id/personalModule"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                app:ivBgColor="@color/white"
+                app:ivRadius="5dp">
 
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/bankaccountnameP"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
 
-                    <View style="@style/DivideLineHorizontal" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="持卡人"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
 
-                    <RelativeLayout
-                        android:id="@+id/bankUrlP"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="银行卡正面照"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/bankUrlPTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请上传"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/banknumberP"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="卡号"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/banknumberPtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请输入卡号"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="卡折类型"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="银行卡"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/bankP"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="所属银行"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/bankPtv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请选择所属银行"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
-
-                    <View style="@style/DivideLineHorizontal" />
-
-                    <RelativeLayout
-                        android:id="@+id/subBankP"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:text="所属支行"
-                            android:textColor="#ff333333"
-                            android:textSize="13sp" />
-
-                        <TextView
-                            android:id="@+id/subBankPTV"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="100dp"
-                            android:layout_marginEnd="16dp"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="请选择所属支行"
-                            android:textColor="#ff999999"
-                            android:textSize="12sp" />
-
-                        <ImageView
-                            android:layout_width="6dp"
-                            android:layout_height="11dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@mipmap/me_arrow_right" />
-                    </RelativeLayout>
+                    <TextView
+                        android:id="@+id/bankaccountnamePtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="持卡人"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
 
 
-                </com.james.common.view.ILinearLayout>
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/bankUrlP"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="银行卡正面照"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/bankUrlPTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请上传"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/banknumberP"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="卡号"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/banknumberPtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请输入卡号"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="卡折类型"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="银行卡"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/bankP"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="所属银行"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/bankPtv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请选择所属银行"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/subBankP"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="所属支行"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/subBankPTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="请选择所属支行"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
 
 
-            </LinearLayout>
+            </com.james.common.view.ILinearLayout>
 
-        </androidx.core.widget.NestedScrollView>
 
-        <com.james.common.view.ITextView
-            android:id="@+id/tvApplyShopInfoNext"
-            android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:gravity="center"
-            android:text="提交"
-            android:textColor="#fff"
-            android:textSize="13sp"
-            app:ivBgColor="#3870EA"
-            app:ivRadius="19dp" />
+        </LinearLayout>
 
-    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 
-    <include layout="@layout/include_empty" />
+    <com.james.common.view.ITextView
+        android:id="@+id/tvApplyShopInfoNext"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="提交"
+        android:textColor="#fff"
+        android:textSize="13sp"
+        app:ivBgColor="#3870EA"
+        app:ivRadius="19dp" />
 
-</FrameLayout>
+</RelativeLayout>

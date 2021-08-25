@@ -299,6 +299,4 @@
     </RelativeLayout>
 
 
-    <include layout="@layout/include_empty" />
-
 </FrameLayout>

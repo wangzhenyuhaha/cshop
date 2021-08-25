@@ -1,10 +1,10 @@
 package com.lingmiao.shop.business.goods.fragment
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
-import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -26,7 +26,6 @@ import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_activity_spec_setting.view.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
-import kotlinx.android.synthetic.main.goods_fragment_goods_list.navigateView
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -52,7 +51,9 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     private var goodsStatus: Int? = null
+    //置顶菜单
     private var groupPath: String? = ""
+    //分类
     private var catePath: String? = ""
     private var isSales: Int? = null
 
@@ -62,166 +63,189 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.goods_fragment_goods_list;
+        return R.layout.goods_fragment_goods_list
     }
 
     override fun useEventBus(): Boolean {
         return true
     }
 
+    @SuppressLint("RtlHardcoded")
     override fun initOthers(rootView: View) {
+
+        //
         mSmartRefreshLayout.setBackgroundResource(R.color.color_ffffff)
 
         // 搜索
         goodsSearchLayout.singleClick {
-            GoodsSearchActivity.openActivity(context!!)
+            GoodsSearchActivity.openActivity(requireContext())
         }
-        //  筛选
+        //筛选
         goodsFilterTv.singleClick {
             drawerC.openDrawer(Gravity.RIGHT)
         }
 
-        val headview: View = navigateView.inflateHeaderView(R.layout.goods_view_menu_header)
+        val headView: View = navigateView.inflateHeaderView(R.layout.goods_view_menu_header)
 
-        val rgSalesEnable : RadioGroup = headview.findViewById(R.id.rgSalesEnable);
-        // 置顶
-        val topMenuTv  = headview.findViewById<TextView>(R.id.topMenuTv);
-        // 重置置顶
-        val topGroupStatusResetTv = headview.findViewById<TextView>(R.id.topGroupStatusResetTv);
-        // 常用
-        val usedMenuTv = headview.findViewById<TextView>(R.id.usedMenuTv);
-        // 重置常用
-        val usedGroupStatusResetTv = headview.findViewById<TextView>(R.id.usedGroupStatusResetTv);
+        //商品信息栏
+        val rgSalesEnable: RadioGroup = headView.findViewById(R.id.rgSalesEnable)
 
-        // 置顶
+        //点击选择置顶菜单
+        val topMenuTv = headView.findViewById<TextView>(R.id.topMenuTv)
+
+        //不显示的重置
+        val topGroupStatusResetTv = headView.findViewById<TextView>(R.id.topGroupStatusResetTv)
+
+        //点击选择分类
+        val usedMenuTv = headView.findViewById<TextView>(R.id.usedMenuTv)
+
+        //又一个不显示的重置
+        val usedGroupStatusResetTv = headView.findViewById<TextView>(R.id.usedGroupStatusResetTv)
+
+        //点击选择置顶菜单
+        //菜单
         topMenuTv.singleClick {
             mPresenter?.clickGroup { group, groupName ->
-                groupPath = group?.catPath;
-                topMenuTv.isSelected = true;
-                topMenuTv.setText(groupName);
+                //此时获取的时置顶菜单的相关信息
+                //获取分组路径
+                groupPath = group?.catPath
+                topMenuTv.isSelected = true
+                //获取分组名
+                topMenuTv.text = groupName
             }
         }
 
-        // 置顶清除
+        //不显示的重置
         topGroupStatusResetTv.singleClick {}
 
-        // 常用
+        //点击选择分类
         usedMenuTv.singleClick {
             mPresenter?.clickCategory { cate, cateName ->
+                //
                 catePath = cate?.categoryPath
-                usedMenuTv.isSelected = true;
-                usedMenuTv.setText(cateName);
+                usedMenuTv.isSelected = true
+                //
+                usedMenuTv.text = cateName
             }
         }
-        // 常用清除
+        //又一个不显示的重置
         usedGroupStatusResetTv.singleClick {}
+
+
+
         // 商品销售
         rgSalesEnable.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.normalGoodsIv) {
-                isSales = 0;
-            }
-            else if(checkedId == R.id.goodsDiscountIv) {
-                isSales = 1;
+                isSales = 0
+            } else if (checkedId == R.id.goodsDiscountIv) {
+                isSales = 1
             }
         }
 
         // 确定
-        headview.findViewById<ITextView>(R.id.tvGoodsFilterFinish).singleClick {
-            drawerC.closeDrawers();
+        headView.findViewById<ITextView>(R.id.tvGoodsFilterFinish).singleClick {
+            drawerC.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
         // 全部清除
-        headview.findViewById<ITextView>(R.id.tvGoodsFilterReset).singleClick {
-            topMenuTv.setText("点击选择置顶菜单");
-            usedMenuTv.setText("点击选择常用菜单");
-            rgSalesEnable.clearCheck();
-            isSales = null;
-            groupPath = "";
-            catePath = "";
-            usedMenuTv.isSelected = false;
-            topMenuTv.isSelected = false;
-            drawerC.closeDrawers();
+        headView.findViewById<ITextView>(R.id.tvGoodsFilterReset).singleClick {
+            topMenuTv.text = "点击选择置顶菜单"
+            usedMenuTv.text = "点击选择常用菜单"
+            rgSalesEnable.clearCheck()
+            isSales = null
+            groupPath = ""
+            catePath = ""
+            usedMenuTv.isSelected = false
+            topMenuTv.isSelected = false
+            drawerC.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
         cb_goods_list_check_all.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
-                goodsVO.isChecked = isChecked;
+                goodsVO.isChecked = isChecked
             }
-            mAdapter?.notifyDataSetChanged();
-        };
+            mAdapter?.notifyDataSetChanged()
+        }
         tv_goods_off.setOnClickListener {
             mPresenter?.clickOffLine(mAdapter?.data) {
-                offLineSuccess();
+                offLineSuccess()
             }
         }
         tv_goods_on.setOnClickListener {
             mPresenter?.clickOnLine(mAdapter?.data) {
-                onLineSuccess();
+                onLineSuccess()
             }
         }
         tv_goods_rebate.setOnClickListener {
             mPresenter?.clickOnBatchRebate(mAdapter?.data) {
-                onBatchRebateSuccess();
+                onBatchRebateSuccess()
             }
         }
         tv_goods_delete.singleClick {
             mPresenter?.clickDelete(mAdapter?.data, {
-                var item : GoodsVO? = null;
+                var item: GoodsVO? = null
                 val it_b: MutableIterator<GoodsVO> = mAdapter?.data?.iterator()
-                while(it_b.hasNext()) {
-                    item = it_b.next();
-                    if(item != null && item.goodsId != null) {
-                        if(it?.indexOf(item.goodsId!!) > -1) {
-                            it_b.remove();
+                while (it_b.hasNext()) {
+                    item = it_b.next()
+                    if (item != null && item.goodsId != null) {
+                        if (it?.indexOf(item.goodsId!!) > -1) {
+                            it_b.remove()
                         }
                     }
                 }
                 mAdapter?.notifyDataSetChanged()
-            });
+            })
         }
         tv_goods_batch.singleClick {
-            (mAdapter as GoodsAdapter)?.setBatchEditModel(true);
-            rl_goods_option.gone();
-            rl_goods_check.visiable();
+            (mAdapter as GoodsAdapter)?.setBatchEditModel(true)
+            rl_goods_option.gone()
+            rl_goods_check.visiable()
         }
-        tv_goods_cancel_batch.setOnClickListener{
-            rl_goods_option.visiable();
-            rl_goods_check.gone();
-            cb_goods_list_check_all.isChecked = false;
-            var list = mAdapter?.data?.filter { it?.isChecked == true };
-            if(list?.size > 0) {
+        tv_goods_cancel_batch.setOnClickListener {
+            rl_goods_option.visiable()
+            rl_goods_check.gone()
+            cb_goods_list_check_all.isChecked = false
+            var list = mAdapter?.data?.filter { it?.isChecked == true }
+            if (list?.size > 0) {
                 list?.forEachIndexed { index, goodsVO ->
-                    goodsVO.isChecked = false;
+                    goodsVO.isChecked = false
                 }
             }
-            (mAdapter as GoodsAdapter)?.setBatchEditModel(false);
+            (mAdapter as GoodsAdapter)?.setBatchEditModel(false)
+        }
+
+        //
+
+
+        goodsSalesCountTv.setOnClickListener {
+            // mPresenter.
         }
 
         when (goodsStatus) {
             GoodsNewFragment.GOODS_STATUS_ENABLE -> {
-                tv_goods_off.visibility = View.VISIBLE;
-                tv_goods_delete.visibility = View.GONE;
+                tv_goods_off.visibility = View.VISIBLE
+                tv_goods_delete.visibility = View.GONE
             }
             GoodsNewFragment.GOODS_STATUS_WAITING,
             GoodsNewFragment.GOODS_STATUS_DISABLE -> {
-                tv_goods_on.visibility = View.VISIBLE;
-                tv_goods_delete.visibility = View.VISIBLE;
+                tv_goods_on.visibility = View.VISIBLE
+                tv_goods_delete.visibility = View.VISIBLE
             }
             GoodsNewFragment.GOODS_STATUS_SOLD_OUT -> {
-                tv_goods_delete.visibility = View.VISIBLE;
+                tv_goods_delete.visibility = View.VISIBLE
             }
             GoodsNewFragment.GOODS_STATUE_WARNING -> {
-                rl_goods_option.gone();
-                rl_goods_check.gone();
-                searchLayout.gone();
-                filterLayout.gone();
+                rl_goods_option.gone()
+                rl_goods_check.gone()
+                searchLayout.gone()
+                filterLayout.gone()
             }
             GoodsNewFragment.GOODS_STATUS_ALL -> {
-                tv_goods_batch.gone();
-                rl_goods_check.gone();
+                tv_goods_batch.gone()
+                rl_goods_check.gone()
             }
             else -> {
-                tv_goods_delete.visibility = View.GONE;
+                tv_goods_delete.visibility = View.GONE
             }
         }
     }
@@ -229,29 +253,31 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     override fun initAdapter(): GoodsAdapter {
         return GoodsAdapter(goodsStatus!!).apply {
             setOnItemChildClickListener { adapter, view, position ->
-                var item = mAdapter.getItem(position) as GoodsVO;
+                var item = mAdapter.getItem(position) as GoodsVO
                 if (view.id == R.id.menuIv) {
                     mPresenter?.clickMenuView(mAdapter.getItem(position), position, view)
-                } else if(view.id == R.id.goodsIv) {
-                    if(item?.goodsGalleryList?.size ?:0 > 0) {
-                        PhotoHelper.previewAlbum(context as Activity, 0, item?.goodsGalleryList);
+                } else if (view.id == R.id.goodsIv) {
+                    if (item?.goodsGalleryList?.size ?: 0 > 0) {
+                        PhotoHelper.previewAlbum(context as Activity, 0, item?.goodsGalleryList)
                     } else {
-                        PhotoHelper.previewImage(context as Activity, item?.thumbnail);
+                        PhotoHelper.previewImage(context as Activity, item?.thumbnail)
                     }
                 }
             }
             setOnItemClickListener { adapter, view, position ->
-                shiftChecked(position);
-               // tvGoodsSelectCount.setText(String.format("已选择%s件商品", mPresenter?.getCheckedCount(mAdapter.data)))
+                shiftChecked(position)
+                // tvGoodsSelectCount.setText(String.format("已选择%s件商品", mPresenter?.getCheckedCount(mAdapter.data)))
 //                mPresenter?.clickItemView(mAdapter.getItem(position), position)
             }
-            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
-                if(rl_goods_check.visibility != View.VISIBLE) {
-                    rl_goods_check.visibility = View.VISIBLE;
+            onItemLongClickListener =
+                BaseQuickAdapter.OnItemLongClickListener { adapter, view, position ->
+                    Boolean
+                    if (rl_goods_check.visibility != View.VISIBLE) {
+                        rl_goods_check.visibility = View.VISIBLE
+                    }
+                    setBatchEditModel(true)
+                    return@OnItemLongClickListener true
                 }
-                setBatchEditModel(true);
-                return@OnItemLongClickListener true;
-            }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.color_ffffff)
             }
@@ -273,7 +299,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     override fun onLoadMoreSuccess(list: List<GoodsVO>?, hasMore: Boolean) {
         super.onLoadMoreSuccess(list, hasMore)
         list?.forEachIndexed { index, goodsVO ->
-            goodsVO?.isChecked = cb_goods_list_check_all.isChecked;
+            goodsVO?.isChecked = cb_goods_list_check_all.isChecked
         }
     }
 
@@ -292,7 +318,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun onGoodsQuantity(quantity: String?, position: Int) {
-         (mAdapter as GoodsAdapter).updateQuantity(quantity, position)
+        (mAdapter as GoodsAdapter).updateQuantity(quantity, position)
     }
 
     override fun onGoodsDelete(goodsId: String?, position: Int) {
@@ -301,7 +327,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun onSetTotalCount(count: Int?) {
-        tvGoodsCount.setText(String.format("商品共%s件", count?:0))
+        tvGoodsCount.setText(String.format("商品共%s件", count ?: 0))
     }
 
     override fun onLineSuccess() {
@@ -330,10 +356,10 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
-    @Subscribe(threadMode =  ThreadMode.MAIN)
-    fun onBatchSuccess(event : BatchStatusEvent) {
-        if(event?.isRefresh(goodsStatus)) {
-            cb_goods_list_check_all.isChecked = false;
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onBatchSuccess(event: BatchStatusEvent) {
+        if (event?.isRefresh(goodsStatus)) {
+            cb_goods_list_check_all.isChecked = false
         }
     }
 

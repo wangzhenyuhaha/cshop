@@ -9,14 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.StringUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
@@ -129,35 +126,6 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             model.whichAccountToUse.value = 1
         }
 
-        //账户名称
-        binding.bankaccountnameC.setOnClickListener {
-            DialogUtils.showInputDialogEmpty(
-                requireActivity(),
-                "账户名称",
-                "",
-                "请输入",
-                model.companyAccount.value?.openAccountName,
-                "取消",
-                "保存",
-                null
-            ) {
-                if (it.isEmpty()) {
-                    //增加可删除改账户名称
-                    binding.bankaccountnameCtv.text = "请填写账户名称"
-                    model.companyAccount.value?.openAccountName = null
-                } else {
-                    if (RegexUtils.isZh(it))
-                    {
-                        binding.bankaccountnameCtv.text = it
-                        model.companyAccount.value?.openAccountName = it
-                    }else{
-                        ToastUtils.showShort("请输入正确的账户名称")
-                    }
-
-                }
-            }
-        }
-
         //开户许可证照片
         binding.bankUrlC.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT)
@@ -181,41 +149,26 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             ) {
                 if (it.isEmpty()) {
                     binding.banknumberCtv.text = "请填写账户号"
-                    model.companyAccount.value?.cardNo = null
-                } else {
-                    binding.banknumberCtv.text = it
-                    model.companyAccount.value?.cardNo = it
-                }
-                model.ocrCBankVisibility.value = 1
-            }
-        }
-
-        //持卡人
-        binding.bankaccountnameP.setOnClickListener {
-            DialogUtils.showInputDialogEmpty(
-                requireActivity(),
-                "持卡人",
-                "",
-                "请输入",
-                model.personalAccount.value?.openAccountName,
-                "取消",
-                "保存",
-                null
-            ) {
-                if (it.isEmpty()) {
-                    binding.bankaccountnamePtv.text = "持卡人"
-                    model.personalAccount.value?.openAccountName= null
-                } else {
-                    if (RegexUtils.isZh(it))
-                    {binding.bankaccountnamePtv.text = it
-                        model.personalAccount.value?.openAccountName = it
-
-                    }else{
-                        ToastUtils.showShort("请输入正确的持卡人姓名")
+                    model.companyAccount.value?.also { bank ->
+                        bank.cardNo = null
+                        bank.province = null
+                        bank.city = null
+                        bank.bankCode = null
+                        bank.bankName = null
+                        bank.subBankName = null
+                        bank.subBankCode = null
                     }
-
+                    model.ocrCBankVisibilityU.value = 1
+                } else {
+                    //获取到新的银行卡号时，先与之前的卡号进行对比，
+                    //如果一样不做任何处理，不一样则主动调取银行卡所属银行名以及号码
+                    if (model.companyAccount.value?.cardNo != it) {
+                        //不一样，开始处理
+                        binding.banknumberCtv.text = it
+                        model.companyAccount.value?.cardNo = it
+                        model.ocrCBankVisibility.value = 1
+                    }
                 }
-
             }
         }
 
@@ -242,12 +195,24 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             ) {
                 if (it.isEmpty()) {
                     binding.banknumberPtv.text = "请输入卡号"
-                    model.personalAccount.value?.cardNo = null
+                    model.personalAccount.value?.also { bank ->
+                        bank.cardNo = null
+                        bank.province = null
+                        bank.city = null
+                        bank.bankCode = null
+                        bank.bankName = null
+                        bank.subBankName = null
+                        bank.subBankCode = null
+                    }
+                    model.ocrPBankVisibilityU.value = 1
                 } else {
-                    binding.banknumberPtv.text = it
-                    model.personalAccount.value?.cardNo = it
+                    if (model.personalAccount.value?.cardNo != it) {
+                        binding.banknumberPtv.text = it
+                        model.personalAccount.value?.cardNo = it
+                        model.ocrPBankVisibility.value = 0
+                    }
                 }
-                model.ocrPBankVisibility.value = 0
+
             }
         }
 
@@ -298,7 +263,7 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             }
         }
 
-
+        //申请店铺
         binding.tvApplyShopInfoNext.singleClick {
 
 
@@ -314,16 +279,17 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 model.personalAccount.value?.memberId = it
             }
 
-
             //将其他营业资质照片上传
             model.applyShopInfo.value?.also {
                 it.other_certificates_imgs = null
-                it.other_certificates_imgs = it.other_Pic_One + "'" + it.other_Pic_Two
+                it.other_certificates_imgs = it.other_Pic_One + "," + it.other_Pic_Two
             }
 
-            //检查资料是否齐全,并且绑定银行卡
+            //检查资料是否齐全,并且绑定银行卡   绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
             if (model.applyShopInfo.value?.shopType == 1) {
                 //企业
+
+
                 if (model.whichAccountToUse.value == 0) {
                     //对公账户结算
                     model.companyAccount.value?.isDefault = 1
@@ -361,6 +327,7 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                     model.bindBandCard.value = 2
                 }
             } else {
+
                 //个体户
                 if (model.whichAccountToUse.value == 0) {
                     //对公账户结算
@@ -389,17 +356,14 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                         ToastUtils.showShort("请将对私账户填写完整")
                         return@singleClick
                     }
-
                     model.personalAccount.value?.also {
                         isCopy(model.applyShopInfo.value, it)
                     }
-
                     if (isAccountReady(model.companyAccount.value)) {
                         model.bindBandCard.value = 2
                     } else {
                         model.bindBandCard.value = 1
                     }
-
                 }
             }
 
@@ -507,36 +471,31 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
         })
 
         model.ocrCBankVisibilityU.observe(this, Observer {
+            //更新了卡号，支行信息肯定没了,需要重新选择支行信息
+            binding.subBankCTV.text = "请选择所属支行"
+            //确定所属银行信息
             if (!model.companyAccount.value?.bankName.isNullOrEmpty()) {
-                if (binding.bankCtv.getViewText() != model.companyAccount.value?.bankName) {
-                    binding.bankCtv.text = model.companyAccount.value?.bankName
-                    binding.subBankCTV.text = "请选择所属支行"
-                    model.companyAccount.value?.also {
-                        it.province = null
-                        it.city = null
-                        it.subBankName = null
-                        it.subBankCode = null
-                    }
-                }
-
+                binding.bankCtv.text = model.companyAccount.value?.bankName
+            } else {
+                binding.bankCtv.text = "请选择所属银行"
             }
         })
 
         model.ocrPBankVisibilityU.observe(this, Observer {
 
-            if (!model.personalAccount.value?.bankName.isNullOrEmpty()) {
-                if (binding.bankPtv.getViewText() != model.personalAccount.value?.bankName) {
-                    binding.bankPtv.text = model.personalAccount.value?.bankName
-                    binding.banknumberPtv.text = model.personalAccount.value?.cardNo
-                    binding.subBankPTV.text = "请选择所属支行"
-                    model.personalAccount.value?.also {
-                        it.province = null
-                        it.city = null
-                        it.subBankName = null
-                        it.subBankCode = null
-                    }
-                }
+            if (model.personalAccount.value?.cardNo != null) {
+                binding.banknumberPtv.text = model.personalAccount.value?.cardNo
+            } else {
+                binding.banknumberPtv.text = "请输入卡号"
+            }
 
+            //更新了卡号，支行信息肯定没了,需要重新选择支行信息
+            binding.subBankPTV.text = "请选择所属支行"
+            //确定所属银行信息
+            if (!model.personalAccount.value?.bankName.isNullOrEmpty()) {
+                binding.bankPtv.text = model.personalAccount.value?.bankName
+            } else {
+                binding.bankPtv.text = "请选择所属银行"
             }
 
         })

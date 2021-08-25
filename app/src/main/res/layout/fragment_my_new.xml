@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
-    tools:ignore="HardcodedText,ContentDescription"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
@@ -17,6 +17,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -144,8 +145,8 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/dimen_15"
-                    android:visibility="gone"
-                    android:src="@mipmap/my_setting" />
+                    android:src="@mipmap/my_setting"
+                    android:visibility="gone" />
 
             </com.james.common.view.IRelativeLayout>
 
@@ -172,8 +173,7 @@
                     android:layout_margin="@dimen/dimen_15"
                     android:src="@mipmap/ic_try_logo"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tvTryHint"
@@ -326,17 +326,8 @@
 
                     <TextView
                         style="@style/my_part_item"
-                        android:layout_width="wrap_content"
-                        android:paddingRight="@dimen/dimen_5"
-                        android:text="可提现金额" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="(次日自动到账)"
-                        android:textColor="@color/color_999999"
-                        android:textSize="@dimen/dimen_12" />
+                        android:text="可提现金额（次日自动到账）" />
 
                     <TextView
                         android:id="@+id/tvBalance"
@@ -365,14 +356,6 @@
                 app:ivRadius="4dp">
 
                 <TextView
-                    android:id="@+id/tvManagerSetting"
-                    style="@style/my_part_item"
-                    android:drawableStart="@mipmap/my_setting"
-                    android:text="设置" />
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <TextView
                     android:id="@+id/tvShopQRCode"
                     style="@style/my_part_item"
                     android:layout_height="58dp"
@@ -386,6 +369,7 @@
                     style="@style/my_part_item"
                     android:drawableStart="@mipmap/my_share"
                     android:text="分享店铺" />
+
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
@@ -403,7 +387,6 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/dimen_15"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="@dimen/dimen_15"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:ivBgColor="#fff"
@@ -425,14 +408,6 @@
 
                 <View style="@style/DivideLineHorizontal" />
 
-                <TextView
-                    android:id="@+id/tvWeChatApprove"
-                    style="@style/my_part_item"
-                    android:drawableStart="@drawable/ic_code_blue"
-                    android:text="微信认证" />
-
-                <View
-                    style="@style/DivideLineHorizontal" />
 
                 <TextView
                     android:id="@+id/rlMyFeedback"
@@ -441,7 +416,45 @@
                     android:text="建议反馈" />
 
             </com.james.common.view.ILinearLayout>
-            <!--帮助文档-->
+
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:ivBgColor="#fff"
+                app:ivRadius="4dp">
+
+
+                <TextView
+                    android:id="@+id/tvApplyShopInfo"
+                    style="@style/my_part_item"
+                    android:drawableStart="@drawable/ic_apply_data"
+                    android:text="修改进件资料" />
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <TextView
+                    android:id="@+id/tvWeChatApprove"
+                    style="@style/my_part_item"
+                    android:drawableStart="@drawable/ic_code_blue"
+                    android:text="微信认证" />
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <TextView
+                    android:id="@+id/tvManagerSetting"
+                    style="@style/my_part_item"
+                    android:drawableStart="@mipmap/my_setting"
+                    android:text="设置" />
+
+
+            </com.james.common.view.ILinearLayout>
+
 
         </LinearLayout>
 

@@ -70,11 +70,11 @@ data class ApplyShopInfo(
     @SerializedName("storeinnerpic")
     var shopPhotoInside: String? = null,
 
-    //  人像
+    //  人像 (这个其实应该传的时国徽)
     @SerializedName("legal_back_img")
     var legalBackImg: String? = null,
 
-    //  国徽
+    //  国徽 (这个其实应该传的时人像)
     @SerializedName("legal_img")
     var legalImg: String? = null,
 

@@ -175,6 +175,7 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             ) {
                 binding.companyNameTV.text = it
                 model.applyShopInfo.value?.companyName = it
+                model.companyAccount.value?.openAccountName= it
             }
         }
 

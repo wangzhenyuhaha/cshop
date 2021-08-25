@@ -12,6 +12,7 @@ import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.login.bean.LoginInfo
+import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.me.*
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
@@ -74,6 +75,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         rlMyFeedback.setOnClickListener(this)
         rlMyContactService.setOnClickListener(this)
         rlHelpDoc.setOnClickListener(this)
+        tvApplyShopInfo.setOnClickListener(this)
 //        rlMySetting.setOnClickListener(this)
         mPresenter?.onCreate()
 
@@ -105,7 +107,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 OtherUtils.goToDialApp(activity, IConstant.SERVICE_PHONE)
             }
             R.id.tvShareManager -> {
-                if(isAudited()) {
+                if (isAudited()) {
                     my?.shopId?.apply {
                         mPresenter?.getShareInfo(this)
                     }
@@ -126,7 +128,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             }
             R.id.tvShopQRCode -> {
                 // 二维码
-                if(isAudited()) {
+                if (isAudited()) {
                     val context = ActivityUtils.getTopActivity()
                     val intent = Intent(context, ShopQRCodeActivity::class.java)
                     intent.putExtra("SHOP_ID", my?.shopId)
@@ -141,10 +143,13 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             R.id.rlHelpDoc -> {
                 ActivityUtils.startActivity(HelpDocActivity::class.java)
             }
+            R.id.tvApplyShopInfo -> {
+                ActivityUtils.startActivity(ApplyShopInfoActivity::class.java)
+            }
         }
     }
 
-    fun isAudited() : Boolean {
+    fun isAudited(): Boolean {
         return UserManager.getLoginInfo()?.shopStatus == ShopStatusConstants.FINAL_OPEN;
     }
 

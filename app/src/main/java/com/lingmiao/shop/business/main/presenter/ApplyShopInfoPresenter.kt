@@ -7,7 +7,7 @@ import com.lingmiao.shop.business.main.bean.*
 interface ApplyShopInfoPresenter : BasePresenter {
 
     fun requestShopInfoData()
-    fun requestApplyShopInfoData(applyShopInfo: ApplyShopInfo)
+    fun requestApplyShopInfoData(openOrNot: Boolean, applyShopInfo: ApplyShopInfo)
 
     fun searchOCR(type: Int, url: String)
 
@@ -15,7 +15,7 @@ interface ApplyShopInfoPresenter : BasePresenter {
 
     fun searchBankList(memberId: Int)
 
-    fun searchBankName(type:Int,cardID:String)
+    fun searchBankName(type: Int, cardID: String)
 
     interface View : BaseView {
 
@@ -48,9 +48,9 @@ interface ApplyShopInfoPresenter : BasePresenter {
 
 
         //对公银行卡信息更新
-        fun updateCompanyBank(name:String,code:String)
+        fun updateCompanyBank(name: String?, code: String?)
 
         //对私银行卡信息更新
-        fun updatePersonalBank(name:String,code:String)
+        fun updatePersonalBank(name: String?, code: String?)
     }
 }

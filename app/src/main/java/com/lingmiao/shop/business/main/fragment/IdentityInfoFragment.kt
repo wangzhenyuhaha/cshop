@@ -75,8 +75,9 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
                 if (RegexUtils.isZh(it)) {
                     binding.legalNameTextView.text = it
                     model.applyShopInfo.value?.legalName = it
+                    model.personalAccount.value?.openAccountName = it
                 } else {
-                    ToastUtils.showShort("请输入正确姓名")
+                    ToastUtils.showShort("请输入正确的姓名")
                 }
             }
         }

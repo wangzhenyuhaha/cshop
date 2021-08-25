@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
 import com.blankj.utilcode.util.*
@@ -23,6 +25,7 @@ import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.*
+import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.ApplyShopHintActivity
@@ -46,6 +49,8 @@ import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -55,6 +60,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     // 店铺状态及信息
     private var shopStatus: ShopStatus? = null;
+
     // 首页订单统计数据
     private var mainInfo: MainInfoVo? = null
     private var loginInfo: LoginInfo? = null;
@@ -62,6 +68,22 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
 
+    init {
+//        lifecycleScope.launch(Dispatchers.Main)
+//        {
+//            val resp = GoodsRepository.loadUserCategory("0",  String.format("%s", UserManager.getLoginInfo()?.shopId))
+//            if (resp.isSuccess) {
+//                for (i in resp.data)
+//                {
+//                    Log.d("WZYTTT",i.categoryPath)
+//                    Log.d("WZYTTT",i.name)
+//                    Log.d("WZYTTT",i.children?.size.toString()?:"ss")
+//                }
+//
+//            }
+//        }
+
+    }
 
     companion object {
         fun newInstance(): NewMainFragment {
@@ -400,11 +422,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 商品管理
         tvGoodsManager.setOnClickListener {
-            if(shopStatus?.templateId?:0 <= 0 && shopStatus?.haveCategory == false) {
+            if (shopStatus?.templateId ?: 0 <= 0 && shopStatus?.haveCategory == false) {
                 ToastUtils.showLong("请先完善店铺管理设置与分类设置，否则店铺不能进行正常营业与商品上传")
-            } else if(shopStatus?.templateId?:0 <= 0) {
+            } else if (shopStatus?.templateId ?: 0 <= 0) {
                 ToastUtils.showLong("请先完善店铺管理设置，否则店铺不能进行正常营业与商品上传")
-            } else if(shopStatus?.haveCategory == false) {
+            } else if (shopStatus?.haveCategory == false) {
                 ToastUtils.showLong("请先完善分类设置，否则店铺不能进行正常营业与商品上传")
             }
             GoodsListActivity.openActivity(context!!);

@@ -1,13 +1,11 @@
 package com.lingmiao.shop.business.goods.api
 
 import StatsSalesVo
+import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
-import com.lingmiao.shop.business.goods.api.request.QuantityRequest
-import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
-import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
-import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
+import com.lingmiao.shop.business.goods.api.request.QuantityRequest
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import retrofit2.Call
 import retrofit2.http.*
@@ -24,14 +22,14 @@ interface GoodsApiService {
      */
     @GET("seller/statistics/dashboard/shop")
     @WithHiResponse
-    fun getDashboardData() : Call<DashboardDataVo>;
+    fun getDashboardData() : Call<DashboardDataVo>
 
     /**
      * 查询预警商品
      */
     @GET("/seller/goods/getQuantityWarnGoods")
     @WithHiResponse
-    fun getGoodsWarningData() : Call<GoodsVO>;
+    fun getGoodsWarningData() : Call<GoodsVO>
 
     /**
      * 查询商品列表
@@ -96,7 +94,7 @@ interface GoodsApiService {
      * 活动库存与价格
      */
     @POST("seller/goods/{goods_id}/quantityAndPrice")
-    fun updateGoodsQuantityAndPrice(@Path(value = "goods_id") goodsId: String, @Body list :PriceAndQuantity) : Call<Unit>;
+    fun updateGoodsQuantityAndPrice(@Path(value = "goods_id") goodsId: String, @Body list :PriceAndQuantity) : Call<Unit>
     /**
      * 批量佣金
      * http://t-api.seller.fisheagle.cn:7003/seller/distribution/batchEditGoods/{goods_id}
@@ -211,6 +209,9 @@ interface GoodsApiService {
     /**
      * 商品分组
      */
+
+
+    //isTop=1  获取置顶菜单       isTop=0  获取常用菜单
     @WithHiResponse
     @GET("seller/shops/cats")
     fun loadLv1ShopGroup(@Query("is_top") isTop: Int): Call<List<ShopGroupVO>>
@@ -342,5 +343,5 @@ interface GoodsApiService {
 
     @WithHiResponse
     @GET("seller/statistics/reports/sales_count")
-    fun salesCount(@Query("cycle_type") type: String, @Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<StatsSalesVo>;
+    fun salesCount(@Query("cycle_type") type: String, @Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<StatsSalesVo>
 }

@@ -382,6 +382,7 @@ object GoodsRepository {
     /**
      * 获取店铺商品第一级分组(一级分组内包含了二级分组)
      */
+    //isTop=1  获取置顶菜单       isTop=0  获取常用菜单
     suspend fun loadLv1ShopGroup(isTop: Int): HiResponse<List<ShopGroupVO>> {
         return apiService.loadLv1ShopGroup(isTop).awaitHiResponse()
     }
