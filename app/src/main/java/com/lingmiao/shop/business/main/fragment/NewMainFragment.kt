@@ -240,6 +240,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 ShopStatusConstants.ALLINPAY_APPROVED,
                 ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED,
                 ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED,
+                ShopStatusConstants.ALLINPAY_ELECTSIGN_ING,
                 ShopStatusConstants.WEIXIN_AUTHEN_APPLYING,
                 ShopStatusConstants.FINAL_OPEN -> {
                     if (fromMain != true && ActivityUtils.getTopActivity() !is MainActivity) {
