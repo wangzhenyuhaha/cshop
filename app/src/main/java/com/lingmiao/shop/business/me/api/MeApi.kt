@@ -70,6 +70,12 @@ interface MeApi {
     @WithHiResponse
     suspend fun getQRCode(): Response<ResponseBody>
 
+
+    // 获取店铺海报二维码
+    @GET("seller/shops/getPosterQRCode")
+    @WithHiResponse
+    suspend fun getNewQRCode(): Response<ResponseBody>
+
     //获取Banner图
     @GET("seller/shops/shopBanner")
     @WithHiResponse

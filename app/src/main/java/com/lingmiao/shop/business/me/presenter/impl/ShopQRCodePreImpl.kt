@@ -32,7 +32,7 @@ class ShopQRCodePreImpl(val context: Context, private var view: IShopQRCodePre.V
     override fun getQRCode() {
         mCoroutine.launch {
             view.showDialogLoading()
-            val resp = MeRepository.apiService.getQRCode();
+            val resp = MeRepository.apiService.getNewQRCode();
             if(resp.isSuccessful) {
                 resp.body()?.string()?.let { view.onSetQRCode(it) }
             } else {
