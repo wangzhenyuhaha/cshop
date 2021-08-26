@@ -54,9 +54,9 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
         menuCateL1Tv.text = mItem?.shopCatName
 
         // 暂时不切换
-//        menuCateL1Tv.singleClick {
-//            mPresenter?.showGroupPop(mItem?.isTop!!)
-//        }
+        menuCateL1Tv.singleClick {
+            mPresenter?.showGroupPop(mItem?.isTop!!, catPath)
+        }
         menuCateL2Tv.singleClick {
 
         }

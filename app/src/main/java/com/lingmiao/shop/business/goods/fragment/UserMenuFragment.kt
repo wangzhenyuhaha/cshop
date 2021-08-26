@@ -67,10 +67,10 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
                         handleSort(position, item);
                     }
                     R.id.menuEditTv -> {
-                        UserMenuEditActivity.openActivity(activity!!, mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
+                        UserMenuEditActivity.openActivity(requireActivity(), mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
                     }
                     R.id.menuEditGoodsTv -> {
-                        GoodsOfMenuActivity.openActivity(activity!!, item);
+                        GoodsOfMenuActivity.openActivity(requireActivity(), item);
                     }
                     R.id.menuVisibleCb -> {
                         item.disable = if(item.disable == 1) 0 else 1;

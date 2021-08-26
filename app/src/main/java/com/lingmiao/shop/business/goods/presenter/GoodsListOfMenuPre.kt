@@ -16,7 +16,7 @@ interface GoodsListOfMenuPre : BasePresenter {
 
     fun loadListData(path : String?, page: IPage, list: List<*>)
 
-    fun showGroupPop(isTop : Int);
+    fun showGroupPop(isTop : Int, path : String?);
 
     fun clickMenuView(isTop : Int, item: GoodsVO?, position: Int, target: android.view.View);
 
