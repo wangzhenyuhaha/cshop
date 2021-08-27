@@ -25,13 +25,13 @@ class GoodsAuthWaitingPreImpl(override val context: Context,override  val view: 
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>) {
+    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>,order:String?,isDesc:Int?) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
 
-            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), "", GoodsVO.getWaitAuth(), groupPath, catePath, isEvent)
+            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), "", GoodsVO.getWaitAuth(), groupPath, catePath, isEvent,order,isDesc)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onSetTotalCount(resp.data.dataTotal);

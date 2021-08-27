@@ -21,24 +21,28 @@ import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.*
 /**
  * Desc   : 菜单 - 编辑常用菜单
  */
-class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.GroupEditView {
+class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.GroupEditView {
 
-    var mChildrenAdapter : UserChildrenAdapter? = null;
-    var mChildrenList : MutableList<ShopGroupVO>? = null;
+    var mChildrenAdapter: UserChildrenAdapter? = null
+    var mChildrenList: MutableList<ShopGroupVO>? = null
+    private var isTop: Int = 1
 
     companion object {
         const val KEY_LEVEL = "KEY_LEVEL"
         const val KEY_PARENT_GROUP_ID = "KEY_PARENT_GROUP_ID"
         const val KEY_GROUP = "KEY_GROUP"
+        const val KEY_IS_TOP = "KEY_IS_TOP"
+
         /**
          * @param groupLevel 分组的级别(一级、二级)
          * @param groupId 父分级的ID(一级分组的groupId默认为null、二级分组的groupId为一级分组ID)
          * @param groupVO 编辑分组场景下使用
          */
-        fun openActivity(context: Context, groupId: String?, groupVO: ShopGroupVO?) {
+        fun openActivity(context: Context, groupId: String?, groupVO: ShopGroupVO?, isTop: Int) {
             val intent = Intent(context, UserMenuEditActivity::class.java)
             intent.putExtra(KEY_PARENT_GROUP_ID, groupId)
             intent.putExtra(KEY_GROUP, groupVO)
+            intent.putExtra(KEY_IS_TOP, isTop)
             context.startActivity(intent)
         }
     }
@@ -46,7 +50,8 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
     /**
      * 编辑模式 = true
      */
-    private var isEditMode  = false
+    private var isEditMode = false
+
     /**
      * 分组的父分组ID
      */
@@ -56,6 +61,7 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
     override fun initBundles() {
         parentGroupId = intent.getStringExtra(KEY_PARENT_GROUP_ID)
         val group = intent.getSerializableExtra(KEY_GROUP) as? ShopGroupVO
+        isTop = intent.getIntExtra(KEY_IS_TOP, 1)
         isEditMode = group != null
         groupVO = ShopGroupVO.convert(group)
     }
@@ -69,23 +75,27 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
     }
 
     override fun createPresenter(): UserMenuEditPre {
-        return UserMenuEditPreImpl(this,this)
+        return UserMenuEditPreImpl(this, this)
     }
 
     override fun initView() {
         window.setBackgroundDrawable(null)
-        if(isEditMode){
+        if (isEditMode) {
             mToolBarDelegate.setMidTitle("编辑常用菜单")
             menuChildrenLayout.visiable()
-        }else{
+        } else {
             mToolBarDelegate.setMidTitle("添加常用菜单")
             menuChildrenLayout.gone();
+        }
+        if (isTop == 0) {
+            switchBtn.isClickable = false
+            //常用菜单，禁止使用活动价
         }
 
         initAdapter();
 
         addChildrenTv.singleClick {
-            DialogUtils.showInputDialog(context, "菜单名称", "", "请输入","取消", "保存",null) {
+            DialogUtils.showInputDialog(context, "菜单名称", "", "请输入", "取消", "保存", null) {
                 mPresenter?.addGroup(it, groupVO.shopCatId!!);
             }
         }
@@ -97,7 +107,9 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
                 shopCatDesc = ""
                 sort = 0;
                 isTop = 0
-                isEvent = if(switchBtn.isChecked) 1 else 0
+                isEvent = if (switchBtn.isChecked) 1 else 0
+
+
             }
             if (isEditMode) {
                 mPresenter.modifyGroup(groupVO)
@@ -106,7 +118,7 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
             }
         }
 
-        if(groupVO?.shopCatId?.length?:0 > 0) {
+        if (groupVO?.shopCatId?.length ?: 0 > 0) {
             mPresenter.getShopGroupAndChildren(groupVO?.shopCatId!!);
         } else {
             restoreUI()
@@ -118,7 +130,7 @@ class UserMenuEditActivity: BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gro
         mChildrenAdapter = UserChildrenAdapter(mChildrenList).apply {
             setOnItemChildClickListener { adapter, view, position ->
                 val item = mChildrenAdapter?.getItem(position)
-                if(view.id == R.id.cateChildrenMoreIv) {
+                if (view.id == R.id.cateChildrenMoreIv) {
                     mPresenter?.clickMenuView(item, position, view);
                 }
             }

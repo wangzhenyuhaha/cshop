@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 //import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import android.content.Context
 import android.view.View
+import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.isNotEmpty
 import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
@@ -22,13 +23,13 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>) {
+    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>,order:String?,isDesc:Int?) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
             val resp =
-                GoodsRepository.loadAllGoodsList(page.getPageIndex(), groupPath, catePath, isEvent)
+                GoodsRepository.loadAllGoodsList(page.getPageIndex(), groupPath, catePath, isEvent,order,isDesc)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onSetTotalCount(resp.data.dataTotal);

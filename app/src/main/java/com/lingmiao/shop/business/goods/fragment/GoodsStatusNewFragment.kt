@@ -3,10 +3,14 @@ package com.lingmiao.shop.business.goods.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
@@ -24,6 +28,7 @@ import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.lingmiao.shop.business.goods.presenter.impl.*
 import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.widget.EmptyView
+import kotlinx.android.synthetic.main.fragment_shop_info.*
 import kotlinx.android.synthetic.main.goods_activity_spec_setting.view.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
 import org.greenrobot.eventbus.EventBus
@@ -50,12 +55,27 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
+    //当前加载商品的种类
     private var goodsStatus: Int? = null
+
     //置顶菜单
     private var groupPath: String? = ""
+
     //分类
     private var catePath: String? = ""
+
+    //是否是活动商品　　１是０否
     private var isSales: Int? = null
+
+    //排序方式 （库存，价格，时间）enable_quantity price create_time
+    private var orderColumn: String? = null
+
+    // 1 库存  2 价格  3时间
+    private val selectLiveData: MutableLiveData<Int> = MutableLiveData()
+
+    //是否倒序  1倒序，0否
+    private var isDESC: Int? = 0
+
 
     override fun initBundles() {
         //获取当前加载种类
@@ -73,18 +93,19 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     @SuppressLint("RtlHardcoded")
     override fun initOthers(rootView: View) {
 
-        //
         mSmartRefreshLayout.setBackgroundResource(R.color.color_ffffff)
 
         // 搜索
         goodsSearchLayout.singleClick {
             GoodsSearchActivity.openActivity(requireContext())
         }
+
         //筛选
         goodsFilterTv.singleClick {
             drawerC.openDrawer(Gravity.RIGHT)
         }
 
+        //抽屉布局中Layout
         val headView: View = navigateView.inflateHeaderView(R.layout.goods_view_menu_header)
 
         //商品信息栏
@@ -105,7 +126,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         //点击选择置顶菜单
         //菜单
         topMenuTv.singleClick {
-            mPresenter?.clickGroup { group, groupName ->
+            mPresenter?.clickAllGroup { group, groupName ->
                 //此时获取的时置顶菜单的相关信息
                 //获取分组路径
                 groupPath = group?.catPath
@@ -132,19 +153,21 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         usedGroupStatusResetTv.singleClick {}
 
 
-
-        // 商品销售
-        rgSalesEnable.setOnCheckedChangeListener { group, checkedId ->
+        //选择商品信息(是不是活动商品)
+        rgSalesEnable.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.normalGoodsIv) {
+                //不是活动商品
                 isSales = 0
             } else if (checkedId == R.id.goodsDiscountIv) {
+                //是活动商品
                 isSales = 1
             }
         }
 
-        // 确定
+        //确定
         headView.findViewById<ITextView>(R.id.tvGoodsFilterFinish).singleClick {
             drawerC.closeDrawers()
+            //重新调用接口
             mLoadMoreDelegate?.refresh()
         }
         // 全部清除
@@ -160,27 +183,55 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             drawerC.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
+
+
+        //排序
+        //库存
+        goodsStoreCountTv.setOnClickListener {
+            selectLiveData.value = 1
+        }
+
+        //价格
+        goodsPriceTv.setOnClickListener {
+            selectLiveData.value = 2
+        }
+
+        //时间
+        goodsTimeTv.setOnClickListener {
+            selectLiveData.value = 3
+        }
+
+
+        //全选
         cb_goods_list_check_all.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
                 goodsVO.isChecked = isChecked
             }
             mAdapter?.notifyDataSetChanged()
         }
+
+        //批量下架
         tv_goods_off.setOnClickListener {
             mPresenter?.clickOffLine(mAdapter?.data) {
                 offLineSuccess()
             }
         }
+
+        //批量上架
         tv_goods_on.setOnClickListener {
             mPresenter?.clickOnLine(mAdapter?.data) {
                 onLineSuccess()
             }
         }
+
+        //设置佣金
         tv_goods_rebate.setOnClickListener {
             mPresenter?.clickOnBatchRebate(mAdapter?.data) {
                 onBatchRebateSuccess()
             }
         }
+
+        //批量删除
         tv_goods_delete.singleClick {
             mPresenter?.clickDelete(mAdapter?.data, {
                 var item: GoodsVO? = null
@@ -196,11 +247,15 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
                 mAdapter?.notifyDataSetChanged()
             })
         }
+
+        //批量操作
         tv_goods_batch.singleClick {
             (mAdapter as GoodsAdapter)?.setBatchEditModel(true)
             rl_goods_option.gone()
             rl_goods_check.visiable()
         }
+
+        //完成操作
         tv_goods_cancel_batch.setOnClickListener {
             rl_goods_option.visiable()
             rl_goods_check.gone()
@@ -214,13 +269,12 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             (mAdapter as GoodsAdapter)?.setBatchEditModel(false)
         }
 
-        //
-
-
+        //don't know
         goodsSalesCountTv.setOnClickListener {
             // mPresenter.
         }
 
+        //不同商品状态下控件的显示
         when (goodsStatus) {
             GoodsNewFragment.GOODS_STATUS_ENABLE -> {
                 tv_goods_off.visibility = View.VISIBLE
@@ -248,6 +302,85 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
                 tv_goods_delete.visibility = View.GONE
             }
         }
+
+        selectLiveData.observe(this, Observer {
+            when (it) {
+                //1 库存  2 价格  3时间  enable_quantity price create_time
+                1 -> {
+                    goodsStoreCountTv.isSelected = goodsStoreCountTv.isSelected != true
+                    goodsPriceTv.isSelected = false
+                    goodsTimeTv.isSelected = false
+                    goodsStoreCountTv.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.primary
+                        )
+                    )
+                    goodsPriceTv.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.color_666666
+                        )
+                    )
+                    goodsTimeTv.setTextColor(ContextCompat.getColor(mContext, R.color.color_666666))
+
+                    //排序方式
+                    orderColumn = "enable_quantity"
+                    isDESC = if (goodsStoreCountTv.isSelected) {
+                        0
+                    } else {
+                        1
+                    }
+                }
+                2 -> {
+                    goodsStoreCountTv.isSelected = false
+                    goodsPriceTv.isSelected = goodsPriceTv.isSelected != true
+                    goodsTimeTv.isSelected = false
+                    goodsStoreCountTv.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.color_666666
+                        )
+                    )
+                    goodsPriceTv.setTextColor(ContextCompat.getColor(mContext, R.color.primary))
+                    goodsTimeTv.setTextColor(ContextCompat.getColor(mContext, R.color.color_666666))
+
+                    orderColumn = "price"
+                    isDESC = if (goodsPriceTv.isSelected) {
+                        0
+                    } else {
+                        1
+                    }
+
+                }
+                3 -> {
+                    goodsStoreCountTv.isSelected = false
+                    goodsPriceTv.isSelected = false
+                    goodsTimeTv.isSelected = goodsTimeTv.isSelected != true
+                    goodsStoreCountTv.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.color_666666
+                        )
+                    )
+                    goodsPriceTv.setTextColor(
+                        ContextCompat.getColor(
+                            mContext,
+                            R.color.color_666666
+                        )
+                    )
+                    goodsTimeTv.setTextColor(ContextCompat.getColor(mContext, R.color.primary))
+
+                    orderColumn = "create_time"
+                    isDESC = if (goodsTimeTv.isSelected) {
+                        0
+                    } else {
+                        1
+                    }
+                }
+            }
+            mLoadMoreDelegate?.refresh()
+        })
     }
 
     override fun initAdapter(): GoodsAdapter {
@@ -284,6 +417,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
+    //mPresenter赋值
     override fun createPresenter(): GoodsStatusPre? {
         return when (goodsStatus) {
             GoodsNewFragment.GOODS_STATUS_ALL -> GoodsAllPreImpl(mContext, this)
@@ -298,13 +432,13 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
     override fun onLoadMoreSuccess(list: List<GoodsVO>?, hasMore: Boolean) {
         super.onLoadMoreSuccess(list, hasMore)
-        list?.forEachIndexed { index, goodsVO ->
-            goodsVO?.isChecked = cb_goods_list_check_all.isChecked
+        list?.forEachIndexed { _, goodsVO ->
+            goodsVO.isChecked = cb_goods_list_check_all.isChecked
         }
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, groupPath, catePath, isSales, mAdapter.data)
+        mPresenter?.loadListData(page, groupPath, catePath, isSales, mAdapter.data,orderColumn,isDESC)
     }
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {

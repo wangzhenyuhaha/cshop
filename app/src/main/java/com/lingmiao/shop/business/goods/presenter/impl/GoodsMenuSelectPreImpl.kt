@@ -25,7 +25,7 @@ class GoodsMenuSelectPreImpl(val context: Context, val view: GoodsMenuSelectPre.
             if (oldDatas.isEmpty()) {
                 view.showPageLoading()
             }
-            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), "1,2", "", "", null);
+            val resp = GoodsRepository.loadGoodsList(page.getPageIndex(), GoodsVO.MARKET_STATUS_ENABLE.toString(), "1,2", "", "", null,null,null);
                 //GoodsRepository.loadGoodsListByCId(page.getPageIndex(), "")
             if (resp.isSuccess) {
                 val goodsList = resp.data.data

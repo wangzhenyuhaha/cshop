@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import androidx.viewbinding.ViewBinding
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.james.common.R
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
 import com.james.common.base.loadmore.BaseLoadMoreView
@@ -15,8 +14,7 @@ import com.james.common.base.loadmore.core.DefaultLayoutFactory
 import com.james.common.base.loadmore.core.IRefreshLoadMoreDelegate
 import com.james.common.base.loadmore.core.IRequestCommand
 import com.james.common.base.loadmore.core.LoadMoreConfig
-import com.james.common.databinding.ActivityBaseListBinding
-import com.james.common.databinding.FragmentBaseLoadMoreBinding
+import com.james.common.databinding.FragmentBaseLoadMatchBinding
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 /**
@@ -30,7 +28,7 @@ Desc        :
     protected lateinit var mAdapter: BaseQuickAdapter<T, BaseViewHolder>
     protected lateinit var mLoadMoreRv: RecyclerView
     protected lateinit var mSmartRefreshLayout: SmartRefreshLayout
-    protected lateinit var mLoadMoreLayout: FragmentBaseLoadMoreBinding
+    protected lateinit var mLoadMoreLayout: FragmentBaseLoadMatchBinding
     /**
      * 分页加载数据的辅助类
      */
@@ -86,9 +84,9 @@ Desc        :
 
     protected open fun initBaseViews() {
         if(useBaseLayout()) {
-            mLoadMoreLayout = FragmentBaseLoadMoreBinding.bind(mRootBinding.root);
+            mLoadMoreLayout = FragmentBaseLoadMatchBinding.bind(mRootBinding.root)
         } else {
-            mLoadMoreLayout = FragmentBaseLoadMoreBinding.bind(mBinding.root);
+            mLoadMoreLayout = FragmentBaseLoadMatchBinding.bind(mBinding.root)
         }
         mLoadMoreRv = mLoadMoreLayout.loadMoreRv;
         mSmartRefreshLayout = mLoadMoreLayout.smartRefreshLayout;

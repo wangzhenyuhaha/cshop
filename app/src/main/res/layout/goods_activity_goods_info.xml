@@ -43,18 +43,17 @@
                     app:layout_constraintTop_toTopOf="@+id/goods_activity_goods_info_container" />
 
                 <ImageButton
-                    android:padding="10dp"
                     android:id="@+id/goods_activity_goods_info_pictureButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:src="@mipmap/ic_tips"
                     android:layout_toEndOf="@+id/infoNameTv"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:src="@mipmap/ic_tips"
                     app:layout_constraintBottom_toBottomOf="@+id/infoNameTv"
                     app:layout_constraintStart_toEndOf="@+id/infoNameTv"
-                    app:layout_constraintTop_toTopOf="@+id/infoNameTv"
-                     />
+                    app:layout_constraintTop_toTopOf="@+id/infoNameTv" />
 
                 <TextView
                     android:id="@+id/addInfoTv"

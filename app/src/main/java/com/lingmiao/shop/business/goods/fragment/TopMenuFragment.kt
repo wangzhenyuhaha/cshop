@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -69,10 +70,10 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
                         handleSort(position, item);
                     }
                     R.id.menuEditTv -> {
-                        MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
+                        MenuEditActivity.openActivity(requireActivity(),ShopGroupVO.LEVEL_1, mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
                     }
                     R.id.menuEditGoodsTv -> {
-                        GoodsOfMenuActivity.openActivity(activity!!, item);
+                        GoodsOfMenuActivity.openActivity(requireActivity(), item)
                     }
                     R.id.menuVisibleCb -> {
                         item.disable = if(item.disable == 1) 0 else 1;
@@ -170,7 +171,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
 
     override fun initOthers(rootView: View) {
         menuAddLayout.setOnClickListener {
-            MenuEditActivity.openActivity(activity!!,ShopGroupVO.LEVEL_1, null, null);
+            MenuEditActivity.openActivity(requireActivity(),ShopGroupVO.LEVEL_1, null, null);
         }
 
         menuAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->

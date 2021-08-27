@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView

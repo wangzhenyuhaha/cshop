@@ -52,8 +52,16 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
         return shopId
     }
 
+
+
     override fun clickGroup(callback: (ShopGroupVO?, String?) -> Unit) {
         mGroupPreImpl.showTopGoodsGroupPop(context) { group, groupNames ->
+            callback.invoke(group, groupNames)
+        }
+    }
+
+    override fun clickAllGroup(callback: (ShopGroupVO?, String?) -> Unit) {
+        mGroupPreImpl.showAllGoodsGroupPop(context) { group, groupNames ->
             callback.invoke(group, groupNames)
         }
     }

@@ -147,7 +147,12 @@
                         android:text="请填写账户名称"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
-
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
 
                 </RelativeLayout>
 
@@ -426,7 +431,12 @@
                         android:text="持卡人"
                         android:textColor="#ff999999"
                         android:textSize="12sp" />
-
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
 
                 </RelativeLayout>
 

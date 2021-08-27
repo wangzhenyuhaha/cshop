@@ -10,7 +10,9 @@ import com.lingmiao.shop.business.me.bean.ShareVo
 
 interface GoodsBatchPre : BasePresenter {
 
-    fun clickGroup(callback: (ShopGroupVO?, String?) -> Unit);
+    fun clickGroup(callback: (ShopGroupVO?, String?) -> Unit)
+
+    fun clickAllGroup(callback: (ShopGroupVO?, String?) -> Unit)
 
     fun clickCategory(callback: (CategoryVO?, String?) -> Unit);
 

@@ -30,9 +30,10 @@ class ShopWeChatApproveActivity :
     override fun onBackPressed() {
         DialogUtils.showDialog(context!!, "商户认证", "认证成功后才能正常结算，确认微信商户认证成功？",
             "取消", "确认已认证", View.OnClickListener {
-                super.onBackPressed();
+                super.onBackPressed()
             }, View.OnClickListener {
-                mPresenter?.approve();
+                mPresenter?.approve()
+                super.onBackPressed()
             });
     }
 

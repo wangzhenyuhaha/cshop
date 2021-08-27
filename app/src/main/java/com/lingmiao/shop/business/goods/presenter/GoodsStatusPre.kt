@@ -13,7 +13,7 @@ import com.lingmiao.shop.business.goods.api.bean.GoodsVO
  */
 interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
 
-    fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, list: List<*>)
+    fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, list: List<*>,order:String?,isDesc:Int?)
 
     fun clickMenuView(item: GoodsVO?, position: Int, view: View)
 

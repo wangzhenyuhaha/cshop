@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ImageUtils
 import com.blankj.utilcode.util.LogUtils
@@ -230,6 +231,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
     private fun showSingleQuantityPop(goodsId: String, skuVO: GoodsSkuVOWrapper, callback: (String) -> Unit) {
         val singleQuantityPop = GoodsQuantityPop(context)
         singleQuantityPop.setQuantity(skuVO.quantity)
+
         singleQuantityPop.setConfirmListener {
             if (it.isNullOrBlank()) {
                  view.showToast("请输入库存数量")

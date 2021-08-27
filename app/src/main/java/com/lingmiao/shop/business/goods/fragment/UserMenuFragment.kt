@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -34,10 +35,11 @@ Create Date : 2021/3/101:00 AM
 Auther      : Fox
 Desc        : 常用菜单列表
  **/
-class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), CateManagerPre.GroupManagerView {
+class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
+    CateManagerPre.GroupManagerView {
 
     companion object {
-        fun newInstance(isTop : Int): UserMenuFragment {
+        fun newInstance(isTop: Int): UserMenuFragment {
             return UserMenuFragment().apply {
                 arguments = Bundle().apply {
                     putInt("isTop", isTop)
@@ -49,32 +51,37 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
     private var isTop: Int? = null
 
     override fun initBundles() {
-        isTop = arguments?.getInt("isTop", 0);
+        isTop = arguments?.getInt("isTop", 0)
     }
 
     override fun getLayoutId(): Int? {
-        return R.layout.goods_fragment_goods_top_menu;
+        return R.layout.goods_fragment_goods_top_menu
     }
 
-    var mSelectPosition: Int? = null;
-    var mCheckedItem : ShopGroupVO? = null;
+    var mSelectPosition: Int? = null
+    var mCheckedItem: ShopGroupVO? = null
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
         val dadapter = MenuOfUserAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
-                var item = adapter.getItem(position) as ShopGroupVO;
+                var item = adapter.getItem(position) as ShopGroupVO
                 when (view.id) {
                     R.id.menuTopTv -> {
-                        handleSort(position, item);
+                        handleSort(position, item)
                     }
                     R.id.menuEditTv -> {
-                        UserMenuEditActivity.openActivity(requireActivity(), mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position));
+                        UserMenuEditActivity.openActivity(
+                            requireActivity(),
+                            mAdapter.getItem(position)?.shopCatPid,
+                            mAdapter.getItem(position),
+                            isTop ?: 0
+                        )
                     }
                     R.id.menuEditGoodsTv -> {
-                        GoodsOfMenuActivity.openActivity(requireActivity(), item);
+                        GoodsOfMenuActivity.openActivity(requireActivity(), item)
                     }
                     R.id.menuVisibleCb -> {
-                        item.disable = if(item.disable == 1) 0 else 1;
-                        mPresenter?.updateGroup(item, position);
+                        item.disable = if (item.disable == 1) 0 else 1
+                        mPresenter?.updateGroup(item, position)
                     }
                     R.id.menuDeleteTv -> {
                         DialogUtils.showDialog(context as Activity,
@@ -91,12 +98,12 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
             }
         }
 
-        var mStartPoi : Int = -1;
+        var mStartPoi: Int = -1
 
         val listener: OnItemDragListener = object : OnItemDragListener {
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
                 LogUtils.d(" ..start : $pos")
-                mStartPoi = pos;
+                mStartPoi = pos
             }
 
             override fun onItemDragMoving(
@@ -109,27 +116,27 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
             }
 
             override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
-                LogUtils.d(" ..end : $pos");
-                if(pos > 0) {
-                    mSelectPosition = pos;
+                LogUtils.d(" ..end : $pos")
+                if (pos > 0) {
+                    mSelectPosition = pos
 
-                    if(mStartPoi > pos) {
+                    if (mStartPoi > pos) {
                         // 向上
-                        mAdapter.notifyItemRangeChanged(pos, mStartPoi-pos+1);
+                        mAdapter.notifyItemRangeChanged(pos, mStartPoi - pos + 1)
                     } else {
                         // 向上
-                        mAdapter.notifyItemRangeChanged(mStartPoi, pos-mStartPoi+1);
+                        mAdapter.notifyItemRangeChanged(mStartPoi, pos - mStartPoi + 1)
 
                     }
 
-                    val pre = dadapter.data.get(pos-1);
-                    val current = dadapter.data.get(pos);
-                     mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort+1);
+                    val pre = dadapter.data.get(pos - 1)
+                    val current = dadapter.data.get(pos)
+                    mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort + 1)
                 } else {
                     // 移到顶
-                    val item = dadapter.data.get(pos);
-                    mPresenter?.sort(isTop!!, item.shopCatId!!, 0);
-                    handleSort(0, item);
+                    val item = dadapter.data.get(pos)
+                    mPresenter?.sort(isTop!!, item.shopCatId!!, 0)
+                    handleSort(0, item)
                 }
             }
         }
@@ -139,92 +146,97 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
         val mItemTouchHelper: ItemTouchHelper? = ItemTouchHelper(mItemDragAndSwipeCallback)
         mItemTouchHelper!!.attachToRecyclerView(mLoadMoreRv)
 
-        dadapter.setOnItemDragListener(listener);
-        dadapter.enableDragItem(mItemTouchHelper);
-        return dadapter;
+        dadapter.setOnItemDragListener(listener)
+        dadapter.enableDragItem(mItemTouchHelper)
+        return dadapter
     }
 
-    fun handleSort(position: Int, toPosition : Int, item : ShopGroupVO, sortValue : Int) {
-        mSelectPosition = position;
+    fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
+        mSelectPosition = position
         // 移除
-        mAdapter.remove(position);
+        mAdapter.remove(position)
         // 放置顶部
-        mAdapter.addData(toPosition, item);
+        mAdapter.addData(toPosition, item)
         // 更新第二条
-        mAdapter.notifyItemChanged(toPosition+1);
+        mAdapter.notifyItemChanged(toPosition + 1)
         // 滑到顶部
-        mLoadMoreRv.smoothScrollToPosition(toPosition);
+        mLoadMoreRv.smoothScrollToPosition(toPosition)
 
-        mPresenter?.sort(isTop!!, item.shopCatId!!, sortValue);
+        mPresenter?.sort(isTop!!, item.shopCatId!!, sortValue)
     }
 
-    fun handleSort(position: Int, item : ShopGroupVO) {
-        handleSort(position, 0, item, 0);
+    fun handleSort(position: Int, item: ShopGroupVO) {
+        handleSort(position, 0, item, 0)
     }
 
     override fun initOthers(rootView: View) {
+        if (isTop == 0) {
+            menuAddLayoutTV.text = "(不支持使用活动价)"
+        }
+
+
         menuAddLayout.setOnClickListener {
-            UserMenuEditActivity.openActivity(activity!!, "0", null);
+            UserMenuEditActivity.openActivity(requireActivity(), "0", null, isTop ?: 0)
         }
 
         menuAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
-                goodsVO.isChecked = isChecked;
+                goodsVO.isChecked = isChecked
             }
-            mAdapter?.notifyDataSetChanged();
+            mAdapter?.notifyDataSetChanged()
         }
 
         // 取消操作
         menuCancelTv.setOnClickListener {
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-            menuCancelTv.gone();
-            menuDeleteTv.gone();
-            menuBottom.gone();
-            addMenuLayout.visiable();
+            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false)
+            menuCancelTv.gone()
+            menuDeleteTv.gone()
+            menuBottom.gone()
+            addMenuLayout.visiable()
         }
         // 操作完成
         menuDeleteTv.setOnClickListener {
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-            menuDeleteTv.gone();
-            menuBottom.gone();
-            addMenuLayout.visiable();
+            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false)
+            menuDeleteTv.gone()
+            menuBottom.gone()
+            addMenuLayout.visiable()
         }
         // 排序
         menuSortTv.singleClick {
-            addMenuLayout.gone();
-            menuBottom.visiable();
-            menuDeleteTv.visiable();
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true);
+            addMenuLayout.gone()
+            menuBottom.visiable()
+            menuDeleteTv.visiable()
+            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true)
         }
 
-        mSmartRefreshLayout?.setEnableRefresh(false);
-        mSmartRefreshLayout?.setEnableLoadMore(false);
+        mSmartRefreshLayout?.setEnableRefresh(false)
+        mSmartRefreshLayout?.setEnableLoadMore(false)
     }
 
     override fun createPresenter(): CateManagerPre? {
-        return UserMenuPreImpl(this);
+        return UserMenuPreImpl(this)
     }
 
     override fun onDeleteGroupSuccess(position: Int) {
-        if(position < mAdapter.data.size) {
-            mAdapter.data.removeAt(position);
-            mAdapter.notifyDataSetChanged();
+        if (position < mAdapter.data.size) {
+            mAdapter.data.removeAt(position)
+            mAdapter.notifyDataSetChanged()
         }
     }
 
     override fun onGroupUpdated(position: Int) {
-        mAdapter?.notifyItemChanged(position);
+        mAdapter?.notifyItemChanged(position)
     }
 
-    fun isBatchModel() : Boolean {
-        return (mAdapter as MenuOfUserAdapter)?.getBatchEdit();
+    fun isBatchModel(): Boolean {
+        return (mAdapter as MenuOfUserAdapter)?.getBatchEdit()
     }
 
     fun setFinishSort() {
-        (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false);
-        menuDeleteTv.gone();
-        menuBottom.gone();
-        addMenuLayout.visiable();
+        (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false)
+        menuDeleteTv.gone()
+        menuBottom.gone()
+        addMenuLayout.visiable()
     }
 
     override fun onSortSuccess() {
@@ -232,7 +244,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Ca
     }
 
     override fun useEventBus(): Boolean {
-        return true;
+        return true
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -90,6 +90,11 @@ interface MeApi {
     // 内容列表
     @POST("/seller/app/content/queryContentList")
     @WithHiResponse
-    fun queryContentList(@Body body : HelpDocReq): Call<PageRecordVo<HelpDocItemVo>>;
+    fun queryContentList(@Body body: HelpDocReq): Call<PageRecordVo<HelpDocItemVo>>
+
+    //
+    @GET("/seller/shops/finalOpenShop")
+    @WithHiResponse
+    fun queryFinalOpenShop(): Call<Unit>
 
 }

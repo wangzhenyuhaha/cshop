@@ -20,7 +20,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
  * Date   : 2020/7/12
  * Desc   : 分页加载
  */
-abstract class BaseLoadMoreActivity<T, P : BasePresenter> : BaseActivity<P>(),
+abstract class LoadMoreMatchActivity<T, P : BasePresenter> : BaseActivity<P>(),
     IRequestCommand, BaseLoadMoreView<T> {
 
     protected lateinit var mAdapter: BaseQuickAdapter<T, BaseViewHolder>
@@ -33,7 +33,7 @@ abstract class BaseLoadMoreActivity<T, P : BasePresenter> : BaseActivity<P>(),
     protected var mLoadMoreDelegate: IRefreshLoadMoreDelegate? = null
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_base_load_more
+        return R.layout.fragment_base_load_match
     }
 
     override fun initView() {
@@ -95,9 +95,9 @@ abstract class BaseLoadMoreActivity<T, P : BasePresenter> : BaseActivity<P>(),
 
     protected open fun initLoadMoreConfig(): LoadMoreConfig {
         return LoadMoreConfig().apply {
-            tag = this@BaseLoadMoreActivity::class.java.simpleName
+            tag = this@LoadMoreMatchActivity::class.java.simpleName
             // 加载数据的接口
-            requestCommand = this@BaseLoadMoreActivity
+            requestCommand = this@LoadMoreMatchActivity
             layoutFactory = DefaultLayoutFactory(mSmartRefreshLayout)
         }
     }

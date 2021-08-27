@@ -1,14 +1,16 @@
 package com.lingmiao.shop.business.goods.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import com.amap.api.mapcore.util.it
+import androidx.fragment.app.activityViewModels
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.goods.GoodsOfMenuActivity
 import com.lingmiao.shop.business.goods.adapter.GoodsSelectAdapter
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
@@ -17,26 +19,26 @@ import com.lingmiao.shop.business.goods.presenter.GoodsListToMenuPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsListToMenuPreImpl
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.goods_fragment_goods_to_menu.*
-import kotlinx.android.synthetic.main.goods_fragment_goods_to_menu.menuCateL1Tv
-import kotlinx.android.synthetic.main.goods_fragment_goods_to_menu.menuCateL2Tv
 
 /**
 Create Date : 2021/6/110:46 AM
 Auther      : Fox
-Desc        : 常用菜单-商品管理-订单列表
+Desc        : 常用菜单-商品管理-订单列表  新增
  **/
-class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre>(), GoodsListToMenuPre.View {
+class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre>(),
+    GoodsListToMenuPre.View {
 
-    var mItem : ShopGroupVO? = null;
+    var mItem: ShopGroupVO? = null
 
-    var catPath : String ? = null;
+    var catPath: String? = null
 
-    var catId : String ? = null;
+
+    private val model by activityViewModels<GoodsOfMenuActivity.GoodsOfMenuViewModel>()
 
     companion object {
         const val KEY_ITEM = "KEY_ITEM"
 
-        fun newInstance(item : ShopGroupVO): GoodsListToMenuFragment {
+        fun newInstance(item: ShopGroupVO): GoodsListToMenuFragment {
             return GoodsListToMenuFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable(KEY_ITEM, item)
@@ -46,19 +48,18 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
     }
 
     override fun initBundles() {
-        mItem = arguments?.getSerializable(KEY_ITEM) as ShopGroupVO?;
-        catId = mItem?.shopCatId;
-//        catPath = mItem?.catPath;
+        mItem = arguments?.getSerializable(KEY_ITEM) as ShopGroupVO?
+
     }
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
         return GoodsSelectAdapter().apply {
             //menuIv
             setOnItemChildClickListener { adapter, view, position ->
-                var item = mAdapter.getItem(position) as GoodsVO;
+                val item = mAdapter.getItem(position) as GoodsVO
                 if (view.id == R.id.menuIv) {
-                    item?.isChecked = !(item?.isChecked?:false);
-                    setCheckedCount(getCheckedCount());
+                    item?.isChecked = !(item?.isChecked ?: false)
+                    setCheckedCount(getCheckedCount())
 //                    shiftChecked(position);
                 }
 //                if(view.id == R.id.menuIv) {
@@ -66,7 +67,7 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
 //                }
             }
             setOnItemClickListener { adapter, view, position ->
-                var item = mAdapter.getItem(position) as GoodsVO;
+                var item = mAdapter.getItem(position) as GoodsVO
             }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.common_bg)
@@ -74,42 +75,46 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
         }
     }
 
-    override fun getLayoutId(): Int? {
-        return R.layout.goods_fragment_goods_to_menu;
+    override fun getLayoutId(): Int {
+        return R.layout.goods_fragment_goods_to_menu
     }
 
     override fun createPresenter(): GoodsListToMenuPre {
-        return GoodsListToMenuPreImpl(mContext, this);
+        return GoodsListToMenuPreImpl(mContext, this)
     }
 
     override fun initOthers(rootView: View) {
         menuCateL1Tv.singleClick {
-            mPresenter?.showCategoryPop("0",it);
+            mPresenter?.showCategoryPop("0", it)
         }
         menuCateL2Tv.singleClick {
 
         }
         goodsCheckSave.singleClick {
-            val list = mAdapter.data?.filter { it?.isChecked == true };
-            if(list == null || list.size == 0) {
-                return@singleClick;
+            val list = mAdapter.data.filter { it?.isChecked == true }
+            if (list.isEmpty()) {
+                return@singleClick
             }
-            val li = list?.map { it?.goodsId?.toInt() };
+            val li = list.map { it?.goodsId?.toInt() }
 
-            mPresenter?.bindGoods(li!!, mItem?.shopCatId!!);
+            model.shopCatIdLiveData.value?.also { id ->
+                mPresenter?.bindGoods(li, id)
+            }
+
         }
+
     }
 
-    var mCateList: List<CategoryVO>? = null;
+    var mCateList: List<CategoryVO>? = null
 
-    override fun onUpdatedCategory(list: List<CategoryVO>?, name : String?) {
-        mCateList = list;
+    override fun onUpdatedCategory(list: List<CategoryVO>?, name: String?) {
+        mCateList = list
         menuCateL1Tv.setText(name)
 
-        if(mCateList?.size?:0 > 0) {
+        if (mCateList?.size ?: 0 > 0) {
             val item = mCateList?.get(mCateList?.size!! - 1)
 //            catId = item?.categoryId;
-            catPath = item?.categoryPath;
+            catPath = item?.categoryPath
             mLoadMoreDelegate?.refresh()
         }
     }
@@ -118,20 +123,20 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
      * 执行分页请求
      */
     override fun executePageRequest(page: IPage) {
-        setCheckedCount(0);
-        mPresenter?.loadListData(catId, catPath, page, mAdapter.data)
+        setCheckedCount(0)
+        mPresenter?.loadListData(model.shopCatIdLiveData.value, catPath, page, mAdapter.data)
     }
 
-    override fun setGoodsCount(count : Int) {
-        goodsCountTv.text = String.format("共%s件商品，", count);
+    override fun setGoodsCount(count: Int) {
+        goodsCountTv.text = String.format("共%s件商品，", count)
     }
 
     fun setCheckedCount(count: Int) {
-        goodsCheckedCountTv.text = String.format("已选择%s件商品", count);
+        goodsCheckedCountTv.text = String.format("已选择%s件商品", count)
     }
 
     fun getCheckedCount(): Int {
-        return mAdapter?.data?.filter { it?.isChecked == true }?.size;
+        return mAdapter?.data?.filter { it?.isChecked == true }?.size
     }
 
 }

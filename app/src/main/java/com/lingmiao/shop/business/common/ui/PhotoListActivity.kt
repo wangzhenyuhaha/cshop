@@ -5,7 +5,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
 import com.lingmiao.shop.databinding.ActivityPhotoListBinding
-import java.util.ArrayList
+import java.util.*
 
 class PhotoListActivity : BaseVBActivity<ActivityPhotoListBinding, BasePresenter>() {
 
@@ -16,8 +16,8 @@ class PhotoListActivity : BaseVBActivity<ActivityPhotoListBinding, BasePresenter
     override fun initBundles() {
         val bundle = intent.getBundleExtra("Photo")
 
-        temp = bundle.getStringArrayList("list") ?: ArrayList()
-        position = bundle.getInt("position")
+        temp = bundle?.getStringArrayList("list") ?: ArrayList()
+        position = bundle?.getInt("position") ?: 0
 
 
     }
@@ -49,7 +49,7 @@ class PhotoListActivity : BaseVBActivity<ActivityPhotoListBinding, BasePresenter
     }
 
     override fun createPresenter(): BasePresenter {
-        return BasePreImpl();
+        return BasePreImpl()
     }
 
 

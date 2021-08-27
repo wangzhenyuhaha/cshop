@@ -28,7 +28,7 @@ class GoodsMarketEnablePreImpl(override var context: Context,override var view: 
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>) {
+    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>,order:String?,isDesc:Int?) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
@@ -37,7 +37,7 @@ class GoodsMarketEnablePreImpl(override var context: Context,override var view: 
                 GoodsRepository.loadGoodsList(page.getPageIndex(),
                     GoodsVO.MARKET_STATUS_ENABLE.toString(),
                     GoodsVO.getEnableAuth(),
-                    groupPath, catePath, isEvent)
+                    groupPath, catePath, isEvent,order,isDesc)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onSetTotalCount(resp.data.dataTotal);

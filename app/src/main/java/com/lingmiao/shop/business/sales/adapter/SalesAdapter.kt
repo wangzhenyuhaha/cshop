@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.sales.adapter
 
+import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
@@ -16,7 +17,6 @@ class SalesAdapter() : BaseQuickAdapter<SalesVo, BaseViewHolder>(R.layout.sales_
 
     override fun convert(helper: BaseViewHolder, item: SalesVo?) {
         item?.apply {
-
             helper.setText(R.id.salesNameTv, title);
             helper.setText(R.id.salesStatusTv, statusText);
             helper.getView<SalesActivityRvLayout>(R.id.salesActivityC).addOneItem(SalesActivityItemVo.convert(item));

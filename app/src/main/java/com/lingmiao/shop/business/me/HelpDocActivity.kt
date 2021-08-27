@@ -1,12 +1,10 @@
 package com.lingmiao.shop.business.me
 
-import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.list.BaseVBListActivity
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.main.ElectricSignActivity
 import com.lingmiao.shop.business.me.adapter.HelpDocAdapter
 import com.lingmiao.shop.business.me.bean.HelpDocItemVo
 import com.lingmiao.shop.business.me.presenter.HelpDocPresenter
@@ -30,11 +28,11 @@ class HelpDocActivity : BaseVBListActivity<HelpDocItemVo, MeActivityHelpDocBindi
     }
 
     override fun useBaseLayout(): Boolean {
-        return true;
+        return true
     }
 
     override fun useLightMode(): Boolean {
-        return false;
+        return false
     }
 
     override fun initOthers() {

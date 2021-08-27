@@ -30,6 +30,18 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
         }
     }
 
+
+    //通过popWindow显示所有菜单，并传入点击操作
+    fun showAllGoodsGroupPop(context: Context, callback: (ShopGroupVO?, String?) -> Unit) {
+        mCoroutine.launch {
+            //获取置顶菜单
+            val resp = GoodsRepository.loadLv1ShopGroup()
+            if (resp.isSuccess) {
+                showPopWindow(context, resp.data, callback)
+            }
+        }
+    }
+
     fun showGoodsGroupPop(context: Context, callback: (ShopGroupVO?, String?) -> Unit) {
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv1ShopGroup()

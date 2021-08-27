@@ -68,22 +68,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
 
-    init {
-//        lifecycleScope.launch(Dispatchers.Main)
-//        {
-//            val resp = GoodsRepository.loadUserCategory("0",  String.format("%s", UserManager.getLoginInfo()?.shopId))
-//            if (resp.isSuccess) {
-//                for (i in resp.data)
-//                {
-//                    Log.d("WZYTTT",i.categoryPath)
-//                    Log.d("WZYTTT",i.name)
-//                    Log.d("WZYTTT",i.children?.size.toString()?:"ss")
-//                }
-//
-//            }
-//        }
-
-    }
 
     companion object {
         fun newInstance(): NewMainFragment {

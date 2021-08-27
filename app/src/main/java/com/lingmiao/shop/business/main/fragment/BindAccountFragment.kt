@@ -172,6 +172,45 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             }
         }
 
+        //账户名称
+        binding.bankaccountnameC.setOnClickListener {
+
+            DialogUtils.showInputDialogEmpty(
+                requireActivity(),
+                "账户名称",
+                "",
+                "请输入",
+                model.companyAccount.value?.openAccountName,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.bankaccountnameCtv.text = it
+                model.companyAccount.value?.openAccountName = it
+            }
+
+        }
+
+        //持卡人
+        binding.bankaccountnameP.setOnClickListener {
+
+            DialogUtils.showInputDialogEmpty(
+                requireActivity(),
+                "持卡人",
+                "",
+                "请输入",
+                model.personalAccount.value?.openAccountName,
+                "取消",
+                "保存",
+                null
+            ) {
+                binding.bankaccountnamePtv.text = it
+                model.personalAccount.value?.openAccountName = it
+            }
+
+        }
+
+
         //银行卡正面照
         binding.bankUrlP.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT)
@@ -282,7 +321,17 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             //将其他营业资质照片上传
             model.applyShopInfo.value?.also {
                 it.other_certificates_imgs = null
-                it.other_certificates_imgs = it.other_Pic_One + "," + it.other_Pic_Two
+                if (it.other_Pic_One != null && it.other_Pic_Two != null) {
+                    it.other_certificates_imgs = it.other_Pic_One + "," + it.other_Pic_Two
+                }
+                if (it.other_Pic_One != null && it.other_Pic_Two == null) {
+                    it.other_certificates_imgs = it.other_Pic_One
+                }
+                if (it.other_Pic_One == null && it.other_Pic_Two != null) {
+                    it.other_certificates_imgs = it.other_Pic_Two
+                }
+
+
             }
 
             //检查资料是否齐全,并且绑定银行卡   绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户

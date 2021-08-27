@@ -235,14 +235,20 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
     }
 
+
     override fun onPause() {
         super.onPause()
         if (model.firstApplyShop) {
             model.applyShopInfo.value?.also {
                 UserManager.setApplyShopInfo(it)
             }
+            model.companyAccount.value?.also {
+                UserManager.setCompanyAccount(it)
+            }
+            model.personalAccount.value?.also {
+                UserManager.setPersonalAccount(it)
+            }
         }
-
     }
 
 }

@@ -2,9 +2,11 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseFragment
+import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
@@ -211,6 +213,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
     }
 
     override fun onSetVipInfo(item: IdentityVo?) {
+
         this.identity = item
         tvTryHint.text = item?.shopTitle
         if (item?.isVip() == true) {

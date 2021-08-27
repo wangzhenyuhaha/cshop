@@ -35,7 +35,7 @@
             android:lines="1"
             android:paddingHorizontal="@dimen/dimen_10"
             android:paddingVertical="@dimen/dimen_5"
-            android:text="点击选择置顶菜单"
+            android:text="点击选择菜单"
             android:textColor="@color/selector_primary_to_99"
             android:textSize="@dimen/sp_11" />
 
