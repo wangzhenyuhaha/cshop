@@ -9,6 +9,7 @@ import com.james.common.base.BaseActivity
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.me.HelpDocActivity
 import com.lingmiao.shop.util.OtherUtils
 
 /**
@@ -34,6 +35,9 @@ class ShopWaitApplyActivity : BaseActivity<BasePresenter>() {
 
     override fun initView() {
         mToolBarDelegate.setBackIcon(R.mipmap.main_shop_logo_default)
+        mToolBarDelegate.setRightText("帮助中心",View.OnClickListener{
+            ActivityUtils.startActivity(HelpDocActivity::class.java)
+        });
 //        mToolBarDelegate.setRightIcon(R.mipmap.main_message, View.OnClickListener {
 //            ActivityUtils.startActivity(MessageCenterActivity::class.java)
 //        });

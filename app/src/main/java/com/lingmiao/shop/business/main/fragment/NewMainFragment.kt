@@ -33,6 +33,7 @@ import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
 import com.lingmiao.shop.business.me.ApplyVipActivity
+import com.lingmiao.shop.business.me.HelpDocActivity
 import com.lingmiao.shop.business.me.ManagerSettingActivity
 import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
@@ -490,6 +491,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 失效
         layoutTodayInvalid.setOnClickListener {
             EventBus.getDefault().post(TabChangeEvent(4))
+        }
+        tvHelpDoc.setOnClickListener {
+            ActivityUtils.startActivity(HelpDocActivity::class.java)
         }
     }
 

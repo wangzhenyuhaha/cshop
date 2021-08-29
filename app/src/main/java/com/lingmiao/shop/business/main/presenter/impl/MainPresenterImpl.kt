@@ -22,6 +22,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                     loginInfo.shopStatus = shopStatusResp.data.shopStatus
                     loginInfo.statusReason = shopStatusResp.data.statusReason
                     loginInfo.openStatus = shopStatusResp.data.openStatus == 1
+                    loginInfo.showButton == shopStatusResp.data.showButton;
                     UserManager.setLoginInfo(loginInfo)
                 }
                 if (ShopStatusConstants.isAuthed(shopStatusResp.data.shopStatus)) {

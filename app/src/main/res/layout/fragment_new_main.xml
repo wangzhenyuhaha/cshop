@@ -498,6 +498,30 @@
 
                             </LinearLayout>
                             <!--第3行end-->
+
+                            <!--第4行start-->
+                            <LinearLayout
+                                style="@style/main_tool_layout"
+                                android:layout_marginTop="0dp">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvHelpDoc"
+                                    style="@style/main_tools"
+                                    android:drawableTop="@mipmap/main_ic_shop_manager"
+                                    android:text="帮助中心" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/main_tools"
+                                    android:drawableTop="@drawable/ic_more"
+                                    android:text="更多功能" />
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    style="@style/main_tools"
+                                    android:drawableTop="@drawable/ic_more"
+                                    android:text="敬请期待.."/>
+
+                            </LinearLayout>
+                            <!--第4行end-->
                         </com.james.common.view.ILinearLayout>
                         <!--常用工具end-->
 

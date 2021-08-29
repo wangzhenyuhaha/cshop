@@ -15,5 +15,9 @@ data class ShopStatus(
     var templateId: Int? = 0,
     // 店铺是否配置分类, true表示已经配置了分类
     @SerializedName("have_category")
-    var haveCategory: Boolean? = false
+    var haveCategory: Boolean? = false,
+    // 是否显示提现
+    @SerializedName("show_button")
+    var showButton: Int? = 0
+
 )
