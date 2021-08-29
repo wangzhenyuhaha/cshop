@@ -55,13 +55,13 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
 
         if(useBaseLayout()) {
             mRootBinding = FragmentBaseBinding.inflate(layoutInflater, container, false);
-            if(getBinding(inflater, container!!) != null) {
+            if(getBinding(inflater, container) != null) {
                 binding = getBinding(inflater, container);
                 mRootBinding.containerView.addView(binding.root);
             }
             return mRootBinding.root;
         } else {
-            if(getBinding(inflater, container!!) == null) {
+            if(getBinding(inflater, container) == null) {
                 throw NullPointerException("the method of getViewBinding is not null");
             }
             binding = getBinding(inflater, container);

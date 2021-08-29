@@ -11,6 +11,7 @@ Desc        :
 interface IShopQRCodePre : BasePresenter {
 
     fun getQRCode()
+    fun getStickyQRCode()
     fun getShareInfo(shopId: Int)
 
     interface View : BaseView {
@@ -18,6 +19,10 @@ interface IShopQRCodePre : BasePresenter {
         fun onSetQRCode(url: String);
 
         fun onGetQRCodeFail();
+
+        fun onSetStickyQRCode(url: String);
+
+        fun onGetStickyQRCodeFail();
 
     }
 }

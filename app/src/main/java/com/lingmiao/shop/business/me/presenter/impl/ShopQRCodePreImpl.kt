@@ -12,6 +12,7 @@ import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.IWXConstant
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.bean.ShareVo
@@ -32,7 +33,7 @@ class ShopQRCodePreImpl(val context: Context, private var view: IShopQRCodePre.V
     override fun getQRCode() {
         mCoroutine.launch {
             view.showDialogLoading()
-            val resp = MeRepository.apiService.getNewQRCode();
+            val resp = MeRepository.apiService.getQRCode();
             if(resp.isSuccessful) {
                 resp.body()?.string()?.let { view.onSetQRCode(it) }
             } else {
@@ -40,6 +41,20 @@ class ShopQRCodePreImpl(val context: Context, private var view: IShopQRCodePre.V
                 view.onGetQRCodeFail();
             }
             view.hideDialogLoading()
+        }
+    }
+
+    override fun getStickyQRCode() {
+        mCoroutine.launch {
+//            view.showDialogLoading()
+            val resp = MeRepository.apiService.getNewQRCode();
+            if(resp.isSuccessful) {
+                resp.body()?.string()?.let { view.onSetStickyQRCode(it) }
+            } else {
+                view.showToast("获取失败");
+                view.onGetStickyQRCodeFail();
+            }
+//            view.hideDialogLoading()
         }
     }
 

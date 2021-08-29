@@ -2,12 +2,10 @@ package com.lingmiao.shop.business.sales
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
-import com.james.common.base.loadmore.LoadMoreMatchActivity
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
@@ -22,7 +20,7 @@ Create Date : 2021/3/101:08 AM
 Auther      : Fox
 Desc        :
  **/
-class SalesSettingActivity : LoadMoreMatchActivity<SalesVo, ISalesSettingPresenter>(),
+class SalesSettingActivity : BaseLoadMoreActivity<SalesVo, ISalesSettingPresenter>(),
     ISalesSettingPresenter.PubView {
 
     companion object {
