@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.goods.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.RadioGroup

@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import com.amap.api.mapcore.util.it
 import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.base.CommonRepository
@@ -41,13 +42,13 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     private val mGoodsDeliveryPreImpl: GoodsDeliveryPopPreImpl by lazy { GoodsDeliveryPopPreImpl(view) }
     private val mGoodsUnitPreImpl : GoodsUnitPopPreImpl by lazy { GoodsUnitPopPreImpl(view) }
 
-    var shopId : Int? = null;
+    var shopId : Int? = null
 
     fun getSellerId() : Int? {
         if(shopId == null) {
-            shopId = UserManager.getLoginInfo()?.shopId;
+            shopId = UserManager.getLoginInfo()?.shopId
         }
-        return shopId;
+        return shopId
     }
 
 
@@ -57,7 +58,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      */
     override fun showDeliveryTypePop(str: String?) {
         mGoodsDeliveryPreImpl?.showTypePop(context, str) { name, it ->
-            view?.onUpdateSpeed(it?.value, name);
+            view?.onUpdateSpeed(it?.value, name)
         }
     }
 
@@ -66,7 +67,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      */
     override fun showDeliveryModelPop(str: String?) {
         mGoodsDeliveryPreImpl?.showModelPop(context, str) { name, it ->
-            view?.onUpdateModel(it?.value, name);
+            view?.onUpdateModel(it?.value, name)
         }
     }
 
@@ -75,7 +76,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      */
     override fun showGoodsWeightPop(id: String?) {
         mGoodsUnitPreImpl?.showWeightPop(context, id) { name, it ->
-            view?.onUpdateGoodsWeight(it?.value, name);
+            view?.onUpdateGoodsWeight(it?.value, name)
         }
     }
 
@@ -84,7 +85,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      */
     override fun showGoodsUnitPop(id: String?) {
         mGoodsUnitPreImpl?.showUnitPop(context, id) { name, it ->
-            view?.onUpdateGoodsUnit(it?.value, name);
+            view?.onUpdateGoodsUnit(it?.value, name)
         }
     }
 
@@ -152,12 +153,12 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 uploadImages(goodsVO, fail = {
                     view.showToast("图片上传失败，请重试")
                     view.hideDialogLoading()
-                    return@uploadImages;
+                    return@uploadImages
                 }) {
                     uploadThumbnailImage(goodsVO, fail = {
                         view.showToast("商品缩略图片上传失败，请重试")
                         view.hideDialogLoading()
-                        return@uploadThumbnailImage;
+                        return@uploadThumbnailImage
                     }) {
                         if(goodsVO?.intro.isNotBlank()) {
                             uploadDesImages(goodsVO, fail = {
@@ -212,7 +213,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     override fun showGoodsType(str: Boolean) {
         mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(str)) { item ->
-            view?.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value));
+            view?.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value))
         }
     }
 
@@ -282,8 +283,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     private fun uploadThumbnailImage(goodsVO: GoodsVOWrapper, fail: () -> Unit, success: () -> Unit) {
         if(goodsVO.thumbnail.isNetUrl()) {
-            success.invoke();
-            return;
+            success.invoke()
+            return
         }
         mCoroutine.launch {
             val resp = CommonRepository.uploadFile(
@@ -292,7 +293,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 CommonRepository.SCENE_GOODS
             )
             if(resp.isSuccess) {
-                goodsVO.thumbnail = resp.data.url;
+                goodsVO.thumbnail = resp.data.url
                 success.invoke()
             } else {
                 fail.invoke()
@@ -318,8 +319,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 requestList.add(request)
             }
             if(requestList.size == 0) {
-                success.invoke();
-                return@launch;
+                success.invoke()
+                return@launch
             }
             // 多个接口相互等待
             val respList = requestList.awaitAll()
@@ -327,9 +328,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
             var isAllSuccess: Boolean = respList?.filter { !it.isSuccess }?.size == 0
 
             if (isAllSuccess) {
-                val urls = respList.map{it -> it.data.url}.joinToString(separator = ",");
+                val urls = respList.map{it -> it.data.url}.joinToString(separator = ",")
 
-                goodsVO.intro = urls;
+                goodsVO.intro = urls
                 success.invoke()
             } else {
                 fail.invoke()

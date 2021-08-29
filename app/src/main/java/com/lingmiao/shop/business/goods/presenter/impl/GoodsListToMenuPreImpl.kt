@@ -41,7 +41,8 @@ class GoodsListToMenuPreImpl(val context: Context, val view : GoodsListToMenuPre
         mCoroutine.launch {
             val resp = GoodsRepository.bindGoods(ids, id)
             handleResponse(resp) {
-                view?.showToast("添加成功")
+                view.showToast("添加成功")
+                view.refresh()
             }
         }
     }

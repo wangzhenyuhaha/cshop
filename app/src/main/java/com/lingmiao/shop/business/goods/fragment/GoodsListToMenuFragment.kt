@@ -131,6 +131,10 @@ class GoodsListToMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListToMenuPre
         goodsCountTv.text = String.format("共%s件商品，", count)
     }
 
+    override fun refresh() {
+        mLoadMoreDelegate?.refresh()
+    }
+
     fun setCheckedCount(count: Int) {
         goodsCheckedCountTv.text = String.format("已选择%s件商品", count)
     }

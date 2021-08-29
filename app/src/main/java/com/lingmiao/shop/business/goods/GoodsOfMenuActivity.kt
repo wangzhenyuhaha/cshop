@@ -31,7 +31,7 @@ class GoodsOfMenuActivity : BaseActivity<GoodsOfMenuPre>(), GoodsOfMenuPre.View 
         fun openActivity(context: Context, item: ShopGroupVO) {
             val intent = Intent(context, GoodsOfMenuActivity::class.java)
             intent.putExtra(KEY_PARAM_ITEM, item)
-            intent.putExtra(KEY_PARAM_ID, item?.shopCatId)
+            intent.putExtra(KEY_PARAM_ID, item.shopCatId)
             context.startActivity(intent)
         }
     }
@@ -42,7 +42,6 @@ class GoodsOfMenuActivity : BaseActivity<GoodsOfMenuPre>(), GoodsOfMenuPre.View 
     private var groupId: String? = ""
     private var item: ShopGroupVO? = null
 
-    private val viewModel by viewModels<GoodsOfMenuViewModel>()
 
     override fun initBundles() {
         groupId = intent.getStringExtra(KEY_PARAM_ID)

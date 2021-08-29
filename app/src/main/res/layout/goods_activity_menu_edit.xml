@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_EDEDED"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <!--  模块一  -->
     <com.james.common.view.ILinearLayout
@@ -24,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_7"
+                android:layout_marginEnd="@dimen/dimen_7"
                 android:src="@mipmap/common_must_input" />
 
             <TextView
@@ -34,7 +36,8 @@
             <EditText
                 android:id="@+id/menuNameEdt"
                 style="@style/goods_group_edit_right"
-                android:hint="菜单名称，建议4个字以内" />
+                android:hint="菜单名称，建议4个字以内"
+                android:inputType="none" />
         </LinearLayout>
 
         <View style="@style/common_divider" />
@@ -47,24 +50,25 @@
 
             <TextView
                 style="@style/goods_group_edit_left"
-                android:text="使用活动价格"
+                android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_width="0dp" />
+                android:text="使用活动价格" />
 
             <EditText
-                android:visibility="gone"
                 android:id="@+id/groupDescEdt"
                 style="@style/goods_group_edit_right"
-                android:hint="分组名称，建议4个字以内" />
+                android:hint="分组名称，建议4个字以内"
+                android:inputType="none"
+                android:visibility="gone" />
 
             <com.kyleduo.switchbutton.SwitchButton
                 android:id="@+id/switchBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center_vertical"
-                android:layout_marginLeft="@dimen/dimen_20"
-                app:kswTintColor="@color/white"
-                app:kswBackDrawable="@drawable/flyme_back_drawable" />
+                android:layout_marginStart="@dimen/dimen_20"
+                app:kswBackDrawable="@drawable/flyme_back_drawable"
+                app:kswTintColor="@color/white" />
 
         </LinearLayout>
 
@@ -81,7 +85,7 @@
                 style="@style/goods_group_edit_left"
                 android:text="分组图标" />
 
-            <Space
+            <androidx.legacy.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
@@ -95,14 +99,15 @@
 
         </LinearLayout>
 
-        <View style="@style/common_divider"
-            android:visibility="gone"/>
+        <View
+            style="@style/common_divider"
+            android:visibility="gone" />
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 style="@style/goods_group_edit_left"
@@ -122,6 +127,7 @@
                     android:button="@drawable/selector_goods_group_checkbox"
                     android:checked="true"
                     android:paddingStart="@dimen/dimen_5"
+                    android:paddingEnd="0dp"
                     android:text="显示" />
 
                 <RadioButton
@@ -130,11 +136,13 @@
                     android:layout_height="match_parent"
                     android:button="@drawable/selector_goods_group_checkbox"
                     android:paddingStart="@dimen/dimen_5"
+                    android:paddingEnd="0dp"
                     android:text="不显示" />
             </RadioGroup>
         </LinearLayout>
 
-        <View style="@style/common_divider"
+        <View
+            style="@style/common_divider"
             android:visibility="gone" />
 
         <!--   分组名称     -->
@@ -148,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/dimen_7"
+                android:layout_marginEnd="@dimen/dimen_7"
                 android:src="@mipmap/common_must_input" />
 
             <TextView
@@ -156,17 +164,18 @@
                 android:text="商品管理" />
 
             <TextView
-                android:drawablePadding="@dimen/dimen_10"
-                android:drawableRight="@mipmap/common_arrow_right"
                 android:id="@+id/goodsListTv"
                 style="@style/goods_group_edit_right"
+                android:drawableEnd="@mipmap/common_arrow_right"
+                android:drawablePadding="@dimen/dimen_10"
                 android:hint="请选择参与活动的商品" />
 
         </LinearLayout>
 
     </com.james.common.view.ILinearLayout>
 
-    <Space
+
+    <androidx.legacy.widget.Space
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="1" />
@@ -180,6 +189,6 @@
         android:gravity="center"
         android:text="保存"
         android:textColor="@color/color_ffffff"
-        android:textSize="@dimen/dimen_14" />
+        android:textSize="@dimen/sp_14" />
 
 </LinearLayout>

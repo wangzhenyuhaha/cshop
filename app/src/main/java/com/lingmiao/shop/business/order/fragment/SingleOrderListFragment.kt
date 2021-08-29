@@ -155,12 +155,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-    }
-
-    fun initDate() {
+    private fun initDate() {
         // 系统当前时间
         val selectedDate: Calendar = Calendar.getInstance()
         val startDate: Calendar = Calendar.getInstance()
@@ -411,4 +406,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }

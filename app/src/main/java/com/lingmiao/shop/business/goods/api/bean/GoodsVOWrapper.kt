@@ -20,7 +20,7 @@ class GoodsVOWrapper : Serializable {
     var mktprice: String? = null //市场价格
 
     @SerializedName("package_price")
-    var packagePrice : String? = "" // 打包费
+    var packagePrice : Double? = 0.00 // 打包费
 
     @SerializedName("price")
     var price: String? = null //商品价格
@@ -222,6 +222,6 @@ class GoodsVOWrapper : Serializable {
     }
 
     fun isVirtualGoods() : Boolean {
-        return GoodsConfig.GOODS_TYPE_VIRTUAL == goodsType;
+        return GoodsConfig.GOODS_TYPE_VIRTUAL == goodsType
     }
 }

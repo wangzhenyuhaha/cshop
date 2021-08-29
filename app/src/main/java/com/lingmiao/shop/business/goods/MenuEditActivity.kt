@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GroupManagerEditPre
@@ -26,7 +27,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         const val KEY_GROUP = "KEY_GROUP"
         /**
          * @param groupLevel 分组的级别(一级、二级)
-         * @param groupId 父分级的ID(一级分组的groupId默认为null、二级分组的groupId为一级分组ID)
+         * @param groupId 父分级的ID(一级分组的groupId默认为0、二级分组的groupId为一级分组ID)
          * @param groupVO 编辑分组场景下使用
          */
         fun openActivity(context: Context, groupLevel: Int, groupId: String?, groupVO: ShopGroupVO?) {
@@ -39,16 +40,20 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
 
     }
 
-
+    //分组级别
     private var groupLevel: Int? = null
+
     /**
      * 编辑模式 = true
      */
     private var isEditMode  = false
+
     /**
      * 分组的父分组ID
      */
     private var parentGroupId: String? = ""
+
+    //分组的数据
     private lateinit var groupVO: ShopGroupVO
 
     override fun initBundles() {
@@ -56,11 +61,13 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         parentGroupId = intent.getStringExtra(KEY_PARENT_GROUP_ID)
         val group = intent.getSerializableExtra(KEY_GROUP) as? ShopGroupVO
         isEditMode = group != null
+        Log.d("WZYABC","AADD")
+        Log.d("WZYABC",group?.shopCatName.toString())
         groupVO = ShopGroupVO.convert(group)
     }
 
     override fun useLightMode(): Boolean {
-        return false;
+        return false
     }
 
     override fun getLayoutId(): Int {
@@ -91,7 +98,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
         }
         // 选择商品
         goodsListTv.setOnClickListener {
-            GoodsMenuSelectActivity.menu(this, parentGroupId);
+            GoodsMenuSelectActivity.menu(this, parentGroupId)
         }
         // 提交编辑/添加的按钮
         submitTv.setOnClickListener {
@@ -101,7 +108,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
                 isEvent = if(switchBtn.isChecked) 1 else 0
                 shopCatName = menuNameEdt.getViewText()
                 shopCatDesc = ""//groupDescEdt.getViewText()
-                sort = 0;//groupOrderEdt.getViewText().parseString()
+                sort = 0//groupOrderEdt.getViewText().parseString()
                 isTop = 1
                 setDisable(showRadio.isChecked)
             }
@@ -119,7 +126,7 @@ class MenuEditActivity: BaseActivity<GroupManagerEditPre>(), GroupManagerEditPre
     private fun restoreUI() {
         if (isEditMode) {
             groupVO.apply {
-                switchBtn;
+                switchBtn
                 menuNameEdt.setText(this.shopCatName)
 //                groupDescEdt.setText(this.shopCatDesc)
 //                groupOrderEdt.setText("${this.sort}")

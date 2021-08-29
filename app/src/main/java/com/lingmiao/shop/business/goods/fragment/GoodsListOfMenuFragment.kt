@@ -156,4 +156,9 @@ class GoodsListOfMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsListOfMenuPre
         goodsCountTv.text = String.format("共%s件商品", count)
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }
