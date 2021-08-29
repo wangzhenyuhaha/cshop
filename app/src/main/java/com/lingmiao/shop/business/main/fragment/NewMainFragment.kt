@@ -28,10 +28,7 @@ import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
-import com.lingmiao.shop.business.main.ApplyShopHintActivity
-import com.lingmiao.shop.business.main.ElectricSignActivity
-import com.lingmiao.shop.business.main.MainActivity
-import com.lingmiao.shop.business.main.MessageCenterActivity
+import com.lingmiao.shop.business.main.*
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
@@ -238,6 +235,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 ShopStatusConstants.OVERDUE,
                 ShopStatusConstants.ALLINPAY_APPLYING,
                 ShopStatusConstants.ALLINPAY_APPROVED,
+                ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED,
                 ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED,
                 ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED,
                 ShopStatusConstants.ALLINPAY_ELECTSIGN_ING,
@@ -277,6 +275,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         authLayout.visiable();
                         shopAuthStatus.text = "签约已提交，等待通过";
                         shopAuthHint.gone();
+                    } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
+                        // 进见补充资料
+                        authLayout.visiable();
+                        shopAuthStatus.text = "店铺信息不完善，请补充资料";
+                        shopAuthHint.visiable();
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                         // 微信认证中
                         authLayout.visiable();
@@ -379,14 +382,15 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         onShopStatusEdited();
         // 申请状态点击
         authLayout.setOnClickListener {
-            if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
-                || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
-            ) {
+            if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
+                // 进见补填
+                ActivityUtils.startActivity(ApplySupplementActivity::class.java)
+            } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
+                || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
                 // 电子签约
                 ActivityUtils.startActivity(ElectricSignActivity::class.java)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED
-                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING
-            ) {
+                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
                 // 微信认证
                 ActivityUtils.startActivity(ShopWeChatApproveActivity::class.java)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.OVERDUE) {

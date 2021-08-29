@@ -44,6 +44,10 @@ object ShopStatusConstants {
     const val ALLINPAY_REFUSED = "ALLINPAY_REFUSED";
 
     /**
+     * 通联支付-人工审核失败
+     */
+    const val ALLINPAY_COMPLIANCE_REFUSED = "ALLINPAY_COMPLIANCE_REFUSED";
+    /**
      * 通联签约审核中
      */
     const val ALLINPAY_ELECTSIGN_ING = "ALLINPAY_ELECTSIGN_ING";
@@ -82,6 +86,7 @@ object ShopStatusConstants {
                 ||status == OVERDUE
                 ||status == ALLINPAY_APPLYING
                 ||status == ALLINPAY_APPROVED
+                ||status == ALLINPAY_COMPLIANCE_REFUSED
                 ||status == ALLINPAY_ELECTSIGN_ING
                 ||status == ALLINPAY_ELECTSIGN_REFUSED
                 ||status == ALLINPAY_ELECTSIGN_APPROVED

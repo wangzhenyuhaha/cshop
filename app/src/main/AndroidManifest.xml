@@ -78,6 +78,8 @@
             android:screenOrientation="portrait" />
         <activity android:name=".business.main.ElectricSignActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".business.main.ApplySupplementActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".business.login.SplashActivity"
             android:screenOrientation="portrait">
