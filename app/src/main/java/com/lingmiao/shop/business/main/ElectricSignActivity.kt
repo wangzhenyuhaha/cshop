@@ -82,6 +82,11 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         finish();
     }
 
+    override fun onSigning() {
+        showToast("签约已提交，请稍后刷新...")
+        finish();
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         if(mBinding.wvView.canGoBack()) {
             return false;

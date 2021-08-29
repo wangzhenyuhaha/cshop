@@ -8,7 +8,6 @@ import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.main.api.MemberRepository
 import com.lingmiao.shop.business.main.presenter.IElectricSignPresenter
-import com.lingmiao.shop.business.main.presenter.IShopAddressPresenter
 import kotlinx.coroutines.launch
 
 /**
@@ -24,7 +23,17 @@ class ElectricSignPresenterImpl(context: Context, private var view: IElectricSig
             view.showDialogLoading()
             val resp = MemberRepository.apiService.electricSign("${UserManager.getLoginInfo()?.shopId}").awaitHiResponse()
             if (resp.isSuccess) {
-                view.setUrl(resp.data.sybsignurl)
+                val electSignStatus = resp.data.electSignStatus;
+                if("0".equals(electSignStatus)) {
+                    view.onSignSuccess();
+                } else if("1".equals(electSignStatus) || "10".equals(electSignStatus)) {
+                    if("1".equals(electSignStatus)) {
+                        view.showToast("审核失败，请重新签约")
+                    }
+                    view.setUrl(resp.data.sybsignurl)
+                } else if("2".equals(electSignStatus)) {
+                    view.onSigning();
+                }
             } else{
                 view.getSignUrlFailed();
             }

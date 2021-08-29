@@ -19,5 +19,6 @@ interface IElectricSignPresenter : BasePresenter {
         fun setUrl(url :String?);
         fun getSignUrlFailed();
         fun onSignSuccess();
+        fun onSigning();
     }
 }

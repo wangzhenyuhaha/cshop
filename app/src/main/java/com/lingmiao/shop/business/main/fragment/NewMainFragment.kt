@@ -259,7 +259,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         // 签约审核中
                         authLayout.visiable();
                         shopAuthStatus.text = "签约已提交，等待通过";
-                        shopAuthHint.gone();
+                        shopAuthHint.visiable();
                     } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
                         // 进见补充资料
                         authLayout.visiable();
@@ -371,6 +371,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 // 进见补填
                 ActivityUtils.startActivity(ApplySupplementActivity::class.java)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
+                || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING
                 || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
                 // 电子签约
                 ActivityUtils.startActivity(ElectricSignActivity::class.java)
