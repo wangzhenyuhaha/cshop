@@ -35,4 +35,9 @@ interface MemberApi {
     @GET("seller/shops/allinpay/electSign/{shop_id}")
     @WithHiResponse
     fun electricSign(@Path("shop_id") shop_id : String) : Call<ElectricSign>
+
+    @GET("/seller/shops/allinpay/repaircusrgcUrl/{shop_id}")
+    @WithHiResponse
+    fun applySupplementUrl(@Path("shop_id") shop_id : String) : Call<ElectricSign>
+
 }
