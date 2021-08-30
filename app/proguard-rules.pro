@@ -369,3 +369,12 @@ public void *(android.view.View);
 -keep class com.bumptech.glide.** { *; }
 
 -keep class xyz.doikki.dkplayer.bean.** { *; }
+
+#android x
+-keep class com.google.android.material.** {*;}
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
