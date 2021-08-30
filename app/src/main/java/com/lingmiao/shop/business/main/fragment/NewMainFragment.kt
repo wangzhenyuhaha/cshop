@@ -580,10 +580,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         val loginInfo = UserManager.getLoginInfo()
         loginInfo?.let {
             tvMainShopName.text = loginInfo.shopName
-            if (!TextUtils.isEmpty(loginInfo.shopLogo)) GlideUtils.setImageUrl(
-                civMainShopHead,
-                loginInfo.shopLogo
-            )
+            if (!TextUtils.isEmpty(loginInfo.shopLogo)) {
+                GlideUtils.setImageUrl(civMainShopHead, loginInfo.shopLogo)
+            }
         }
     }
 
