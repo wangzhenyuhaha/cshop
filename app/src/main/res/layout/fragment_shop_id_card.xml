@@ -92,6 +92,5 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <include layout="@layout/include_empty" />
 
 </FrameLayout>

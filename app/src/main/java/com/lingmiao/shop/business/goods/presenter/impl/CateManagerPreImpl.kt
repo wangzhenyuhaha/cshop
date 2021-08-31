@@ -2,9 +2,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
-import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
 import com.james.common.base.BasePreImpl
-import com.james.common.utils.exts.isNotEmpty
 import com.lingmiao.shop.business.goods.presenter.CateManagerPre
 import kotlinx.coroutines.launch
 

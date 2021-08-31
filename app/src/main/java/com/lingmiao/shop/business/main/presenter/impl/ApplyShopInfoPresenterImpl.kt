@@ -119,7 +119,6 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                     view.hideDialogLoading()
                     view.bindAccountNO()
                 }
-                Log.d("ABCGiao", personal.toString())
             } else if (personal == null && company != null) {
                 //只绑定对私账户
                 val resp2 =
@@ -130,7 +129,6 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                     view.hideDialogLoading()
                     view.bindAccountNO()
                 }
-                Log.d("ABCGiao", company.toString())
             } else if (company != null && personal != null) {
                 //都需要绑定
                 val resp3 =
@@ -142,8 +140,6 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                     view.hideDialogLoading()
                     view.bindAccountNO()
                 }
-                Log.d("ABCGiao", personal.toString())
-                Log.d("ABCGiao", company.toString())
             }
 
 
@@ -256,7 +252,7 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                     }
                 }
             }
-
+            view.hideDialogLoading()
         }
 
 

@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.main
 
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.KeyboardUtils
 import com.blankj.utilcode.util.ToastUtils

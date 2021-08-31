@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.goods.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -54,7 +53,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
         isTop = arguments?.getInt("isTop", 0)
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int{
         return R.layout.goods_fragment_goods_top_menu
     }
 

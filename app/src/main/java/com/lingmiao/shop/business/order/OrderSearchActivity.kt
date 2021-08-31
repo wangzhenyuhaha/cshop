@@ -4,15 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.MotionEvent
 import androidx.core.content.ContextCompat
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.adapter.GoodsSearchAdapter
-import com.lingmiao.shop.business.goods.adapter.GoodsStatusAdapter
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
-import com.lingmiao.shop.business.goods.presenter.GoodsSearchPre
-import com.lingmiao.shop.business.goods.presenter.impl.GoodsSearchPreImpl
 import com.lingmiao.shop.widget.EmptyView
 
 import com.james.common.base.delegate.DefaultPageLoadingDelegate

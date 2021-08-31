@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -304,7 +305,6 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
 
         //申请店铺
         binding.tvApplyShopInfoNext.singleClick {
-
 
             //检查资料是否填写完整
             if (!binding.account1.isSelected && !binding.account2.isSelected) {

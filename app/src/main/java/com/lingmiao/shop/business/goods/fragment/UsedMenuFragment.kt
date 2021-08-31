@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.goods.fragment
 
-import android.os.Bundle
 import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -12,17 +11,11 @@ import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.GoodsManagerActivity
-import com.lingmiao.shop.business.goods.GroupManagerEditActivity
-import com.lingmiao.shop.business.goods.MenuEditActivity
 import com.lingmiao.shop.business.goods.adapter.UsedMenuAdapter
-import com.lingmiao.shop.business.goods.api.bean.MenuVo
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.event.MenuEvent
-import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
 import com.lingmiao.shop.business.goods.presenter.UsedMenuPre
-import com.lingmiao.shop.business.goods.presenter.impl.GroupManagerPreImpl
 import com.lingmiao.shop.business.goods.presenter.impl.UsedMenuPreImpl
-import com.lingmiao.shop.business.me.bean.ShopManageRequest
 import kotlinx.android.synthetic.main.goods_fragment_goods_top_menu.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_used_menu.menuAddTv

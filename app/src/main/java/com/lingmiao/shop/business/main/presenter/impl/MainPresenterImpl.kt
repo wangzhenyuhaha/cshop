@@ -1,14 +1,14 @@
 package com.lingmiao.shop.business.main.presenter.impl
 
 import android.content.Context
-import com.lingmiao.shop.BuildConfig
-import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.main.api.MainRepository
-import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.BuildConfig
 import com.lingmiao.shop.base.ShopStatusConstants
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.main.api.MainRepository
+import com.lingmiao.shop.business.main.presenter.MainPresenter
 import kotlinx.coroutines.launch
 
 class MainPresenterImpl(context: Context, private var view: MainPresenter.View) : BasePreImpl(view),
@@ -22,7 +22,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                     loginInfo.shopStatus = shopStatusResp.data.shopStatus
                     loginInfo.statusReason = shopStatusResp.data.statusReason
                     loginInfo.openStatus = shopStatusResp.data.openStatus == 1
-                    loginInfo.showButton == shopStatusResp.data.showButton;
+                    loginInfo.showButton = shopStatusResp.data.showButton;
                     UserManager.setLoginInfo(loginInfo)
                 }
                 if (ShopStatusConstants.isAuthed(shopStatusResp.data.shopStatus)) {

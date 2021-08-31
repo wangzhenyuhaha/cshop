@@ -4,15 +4,12 @@ import android.content.Context
 import android.view.View
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
-import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import com.lingmiao.shop.business.goods.pop.GoodsMenuPop
 import com.lingmiao.shop.business.goods.presenter.GoodsStatusPre
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
-import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.EventBus
 
 /**
  * Author : Elson

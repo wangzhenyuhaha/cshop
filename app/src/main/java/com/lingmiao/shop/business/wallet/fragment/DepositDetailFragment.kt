@@ -2,16 +2,16 @@ package com.lingmiao.shop.business.wallet.fragment
 
 import android.view.View
 import com.blankj.utilcode.util.SPUtils
+import com.james.common.base.loadmore.BaseLoadMoreFragment
+import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.wallet.adapter.DepositAdapter
 import com.lingmiao.shop.business.wallet.api.WalletConstants
-import com.lingmiao.shop.business.wallet.presenter.TradeListPresenter
 import com.lingmiao.shop.business.wallet.bean.DepositVo
 import com.lingmiao.shop.business.wallet.event.RefreshListEvent
+import com.lingmiao.shop.business.wallet.presenter.TradeListPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.TradeListPresenterImpl
 import com.lingmiao.shop.widget.EmptyView
-import com.james.common.base.loadmore.BaseLoadMoreFragment
-import com.james.common.base.loadmore.core.IPage
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 

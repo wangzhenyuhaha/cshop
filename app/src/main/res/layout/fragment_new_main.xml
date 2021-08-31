@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     android:background="#EDEDED"
     android:orientation="vertical"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,ContentDescription">
 
+    <!--    头部-->
     <LinearLayout
         android:id="@+id/llHeader"
         android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         android:background="@color/primary"
         android:orientation="vertical">
 
+        <!--        第一条，有头像-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="42dp"
@@ -33,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 tools:text="月亮不睡的店" />
@@ -42,12 +44,13 @@
                 android:id="@+id/ivMainMessage"
                 android:layout_width="17dp"
                 android:layout_height="17dp"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@mipmap/main_message" />
 
         </RelativeLayout>
 
+        <!--        签约-->
         <LinearLayout
             android:id="@+id/authLayout"
             android:layout_width="match_parent"
@@ -68,16 +71,16 @@
                 android:id="@+id/shopAuthHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:background="@color/color_FD8424"
-                android:drawableRight="@mipmap/arrow_right_white"
-                android:gravity="right"
+                android:drawableEnd="@mipmap/arrow_right_white"
+                android:gravity="end"
                 android:padding="15dp"
                 android:text="查看"
                 android:textColor="@color/white" />
 
         </LinearLayout>
 
+        <!--        店铺状态,是否开店-->
         <RelativeLayout
             android:id="@+id/shopStatusLayout"
             android:layout_width="match_parent"
@@ -92,16 +95,17 @@
                 android:layout_centerVertical="true"
                 android:text="店铺状态"
                 android:textColor="@color/white"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                tools:ignore="HardcodedText" />
 
             <com.kyleduo.switchbutton.SwitchButton
                 android:id="@+id/switchStatusBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="end|center_vertical"
-                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginStart="@dimen/dimen_20"
                 app:kswBackDrawable="@drawable/flyme_back_drawable"
                 app:kswTintColor="@color/white" />
 
@@ -111,657 +115,679 @@
 
     <View style="@style/DivideLineHorizontal" />
 
+    <!--    下拉刷新模块 -->
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smartRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srlEnableLastTime="false" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <!--            店铺申请成功后显示-->
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                tools:visibility="gone">
+
+                <LinearLayout
+                    android:id="@+id/llMainShopOpen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:visibility="visible">
+
+                    <!--今日营业情况start-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shape_primary_bg"
+                        android:orientation="vertical"
+                        tools:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/main_parts_hint"
+                                android:layout_weight="1"
+                                android:paddingTop="15dp"
+                                android:text="订单流转"
+                                android:textColor="@color/white" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dimen_15"
+                                android:src="@mipmap/ic_refresh" />
+                        </LinearLayout>
+
+                        <!--总信息start-->
+                        <LinearLayout style="@style/main_data_layout">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/llTodayUnTakeOrderCount"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayUnTakeOrderCount"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="待接单" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <View style="@style/dash_v_line" />
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/llMainWaitTakeGoods"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayTakenOrderCount"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="待配送" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <View style="@style/dash_v_line" />
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/llMainWaitSendGoods"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayDistributeOrderCount"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="配送中" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </LinearLayout>
+                        <!--总信息end-->
+
+                        <View
+                            style="@style/dash_line"
+                            android:layout_marginLeft="@dimen/dimen_30"
+                            android:layout_marginRight="@dimen/dimen_30" />
+
+                        <!--退款、完成、失效-->
+                        <LinearLayout style="@style/main_data_layout">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@id/llMainWaitRefund"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayRefund"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="待退款" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <View style="@style/dash_v_line" />
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/layoutTodayFinish"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayFinish"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="已完成" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <View style="@style/dash_v_line" />
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/layoutTodayInvalid"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayInvalid"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="失效订单" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+                        </LinearLayout>
+                        <!--团长end-->
+
+
+                    </LinearLayout>
+                    <!--今日营业情况end-->
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/shape_primary_bg"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                style="@style/main_parts_hint"
+                                android:layout_weight="1"
+                                android:paddingTop="15dp"
+                                android:text="今日数据"
+                                android:textColor="@color/white" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="@dimen/dimen_15"
+                                android:src="@mipmap/ic_refresh" />
+                        </LinearLayout>
+
+                        <!--总信息start-->
+                        <LinearLayout style="@style/main_data_layout">
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/storeDataOfTodayTv"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayOrderCount"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="订单总量" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <View style="@style/dash_v_line" />
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/salesDataOfTodayTv"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodaySales"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:paddingTop="@dimen/dimen_5"
+                                    android:text="销售额"
+                                    android:textColor="@color/white"
+                                    android:textSize="14sp" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                            <View style="@style/dash_v_line" />
+
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/userDataOfTodayTv"
+                                style="@style/main_data_layout_item">
+
+                                <TextView
+                                    android:id="@+id/tvTodayNewUser"
+                                    style="@style/today_data_value"
+                                    tools:text="2123" />
+
+                                <TextView
+                                    style="@style/today_data_hint"
+                                    android:text="新用户数" />
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        </LinearLayout>
+                        <!--总信息end-->
+
+                    </LinearLayout>
+
+                    <!--常用工具-->
+                    <com.james.common.view.ILinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/dimen_15"
+                        android:layout_marginBottom="20dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingTop="15dp"
+                        app:ivBgColor="#fff"
+                        app:ivRadius="4dp">
+
+                        <TextView
+                            style="@style/main_parts_hint"
+                            android:text="常用工具" />
+
+                        <!--第一行start-->
+                        <LinearLayout
+                            style="@style/main_tool_layout"
+                            android:layout_marginTop="0dp">
+
+                            <TextView
+                                android:id="@+id/tvManagerSetting"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_shop_manager"
+                                android:text="管理设置" />
+
+                            <TextView
+                                android:id="@+id/tvGoodsManager"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_goods_group"
+                                android:text="商品管理" />
+
+                            <TextView
+                                android:id="@+id/tvCategoryManager"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_goods_group"
+                                android:text="分类管理" />
+
+                        </LinearLayout>
+                        <!--第一行end-->
+
+                        <!--第二行start-->
+                        <LinearLayout
+                            style="@style/main_tool_layout"
+                            android:layout_marginTop="0dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvMenuManager"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_logistic_manager"
+                                android:text="菜单管理" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvSaleSetting"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_tuan_register"
+                                android:text="营销设置" />
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1">
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvComeSoon"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:drawableTop="@drawable/main_ic_stock_warning"
+                                    android:drawablePadding="@dimen/dp_10"
+                                    android:gravity="center"
+                                    android:padding="@dimen/dimen_15"
+                                    android:text="库存预警"
+                                    android:textColor="@color/black"
+                                    android:textSize="@dimen/sp_12" />
+
+                                <com.james.common.view.CircleTextView
+                                    android:id="@+id/tvComeSoon_number"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:layout_marginEnd="30dp"
+                                    android:alpha="0.8"
+                                    android:gravity="center"
+                                    android:padding="@dimen/dp_4"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"
+                                    app:circleTint="@color/red"
+                                    tools:text="GGG"
+                                    tools:visibility="visible" />
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+                        <!--第二行end-->
+
+                        <!--第3行start-->
+                        <LinearLayout
+                            style="@style/main_tool_layout"
+                            android:layout_marginTop="0dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvUserManager"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_tuan_manager"
+                                android:text="用户管理" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDataAnalysis"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_comming_soon"
+                                android:text="数据统计" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvWalletAccount"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_wallet_account"
+                                android:text="钱包账户" />
+
+                        </LinearLayout>
+                        <!--第3行end-->
+
+                        <!--第4行start-->
+                        <LinearLayout
+                            style="@style/main_tool_layout"
+                            android:layout_marginTop="0dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvHelpDoc"
+                                style="@style/main_tools"
+                                android:drawableTop="@drawable/ic_help_center"
+                                android:text="帮助中心" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/main_tools"
+                                android:drawableTop="@drawable/ic_more"
+                                android:text="敬请期待..." />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/main_tools"
+                                android:drawableTop="@drawable/ic_more"
+                                android:text="敬请期待.."
+                                android:visibility="invisible" />
+
+                        </LinearLayout>
+                        <!--第4行end-->
+                    </com.james.common.view.ILinearLayout>
+                    <!--常用工具end-->
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <!--            店铺申请失败或未申请时显示-->
+
+
+            <RelativeLayout
+                android:id="@+id/llMainShopOther"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:id="@+id/llMainShopOpen"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        tools:visibility="visible">
-
-                        <!--今日营业情况start-->
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/shape_primary_bg"
-                            android:orientation="vertical"
-                            tools:visibility="visible">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    style="@style/main_parts_hint"
-                                    android:layout_weight="1"
-                                    android:paddingTop="15dp"
-                                    android:text="订单流转"
-                                    android:textColor="@color/white" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:padding="@dimen/dimen_15"
-                                    android:src="@mipmap/ic_refresh" />
-                            </LinearLayout>
-
-                            <!--总信息start-->
-                            <LinearLayout style="@style/main_data_layout">
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/llTodayUnTakeOrderCount"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayUnTakeOrderCount"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="待接单" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/llMainWaitTakeGoods"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayTakenOrderCount"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="待配送" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/llMainWaitSendGoods"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayDistributeOrderCount"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="配送中" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                            </LinearLayout>
-                            <!--总信息end-->
-
-                            <View
-                                style="@style/dash_line"
-                                android:layout_marginLeft="@dimen/dimen_30"
-                                android:layout_marginRight="@dimen/dimen_30" />
-
-                            <!--退款、完成、失效-->
-                            <LinearLayout style="@style/main_data_layout">
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@id/llMainWaitRefund"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayRefund"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="待退款" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/layoutTodayFinish"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayFinish"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="已完成" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/layoutTodayInvalid"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayInvalid"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="失效订单" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-                            </LinearLayout>
-                            <!--团长end-->
-
-
-                        </LinearLayout>
-                        <!--今日营业情况end-->
+                        android:orientation="vertical">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:background="@drawable/shape_primary_bg"
+                            android:layout_marginTop="120dp"
                             android:orientation="vertical">
 
+                            <TextView
+                                android:id="@+id/tvMainShopHint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginLeft="40dp"
+                                android:layout_marginRight="40dp"
+                                android:text="你还有没有开通店铺"
+                                android:textColor="#ff000000"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/tvMainShopReason"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginLeft="40dp"
+                                android:layout_marginRight="40dp"
+                                android:textColor="@color/color_fc0000"
+                                android:textSize="13sp"
+                                android:visibility="gone"
+                                tools:text="xxxxx" />
+                        </LinearLayout>
+
+                        <com.james.common.view.ITextView
+                            android:id="@+id/tvMainShopNext"
+                            android:layout_width="200dp"
+                            android:layout_height="38dp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="18dp"
+                            android:gravity="center"
+                            android:text="申请开店 >>"
+                            android:textColor="#ff3870ea"
+                            android:textSize="13sp"
+                            app:ivBgColor="@color/white"
+                            app:ivBorderColor="#ff3870ea"
+                            app:ivBorderWidth="1px"
+                            app:ivRadius="19dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="@dimen/dimen_20">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="@dimen/dimen_10"
+                                android:text="推广码"
+                                android:textColor="#ff000000"
+                                android:textSize="@dimen/sp_14" />
+
+                            <TextView
+                                android:id="@+id/promoCode"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:background="@drawable/text_view_frame"
+                                android:padding="@dimen/dimen_5"
+                                android:text="请输入推广码（选填）"
+                                android:textColor="#ff909090"
+                                android:textSize="@dimen/sp_14" />
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="3dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="120dp"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/divide_line_horizontal_xu"
+                            android:layerType="software" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical"
+                            android:padding="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:orientation="horizontal">
+
+                                <View
+                                    style="@style/DivideLineHorizontalDuan"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginEnd="15dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="C店资质"
+                                    android:textColor="#ff000000"
+                                    android:textSize="@dimen/sp_18" />
+
+                                <View
+                                    style="@style/DivideLineHorizontalDuan"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="15dp" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginTop="@dimen/dimen_20"
+                                android:text="运营资质"
+                                android:textColor="#ff000000"
+                                android:textSize="@dimen/sp_14" />
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_5"
                                 android:orientation="horizontal">
 
                                 <TextView
-                                    style="@style/main_parts_hint"
-                                    android:layout_weight="1"
-                                    android:paddingTop="15dp"
-                                    android:text="今日数据"
-                                    android:textColor="@color/white" />
-
-                                <ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:padding="@dimen/dimen_15"
-                                    android:src="@mipmap/ic_refresh" />
+                                    android:text="增值电信业务经营许可证"
+                                    android:textColor="#ff909090"
+                                    android:textSize="@dimen/sp_14" />
+
+                                <TextView
+                                    android:id="@+id/readApplyShop"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="(点击查看)"
+                                    android:textColor="#3870EA"
+                                    android:textSize="@dimen/sp_14" />
                             </LinearLayout>
 
-                            <!--总信息start-->
-                            <LinearLayout style="@style/main_data_layout">
 
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/storeDataOfTodayTv"
-                                    style="@style/main_data_layout_item">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginTop="@dimen/dimen_20"
+                                android:text="支付资质"
+                                android:textColor="#ff000000"
+                                android:textSize="@dimen/sp_14" />
 
-                                    <TextView
-                                        android:id="@+id/tvTodayOrderCount"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:text="由正规持牌支付机构提供T+1交易服务：通联支付"
+                                android:textColor="#ff909090"
+                                android:textSize="@dimen/sp_14" />
 
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="订单总量" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:orientation="horizontal">
 
-                                </androidx.appcompat.widget.LinearLayoutCompat>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="5dp"
+                                    android:text="微信支付服务商"
+                                    android:textColor="#ff909090"
+                                    android:textSize="@dimen/sp_14" />
 
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/salesDataOfTodayTv"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodaySales"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:text="销售额"
-                                        android:paddingTop="@dimen/dimen_5"
-                                        android:textColor="@color/white"
-                                        android:textSize="14sp" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                                <View style="@style/dash_v_line" />
-
-                                <androidx.appcompat.widget.LinearLayoutCompat
-                                    android:id="@+id/userDataOfTodayTv"
-                                    style="@style/main_data_layout_item">
-
-                                    <TextView
-                                        android:id="@+id/tvTodayNewUser"
-                                        style="@style/today_data_value"
-                                        tools:text="2123" />
-
-                                    <TextView
-                                        style="@style/today_data_hint"
-                                        android:text="新用户数" />
-
-                                </androidx.appcompat.widget.LinearLayoutCompat>
-
+                                <TextView
+                                    android:id="@+id/readWXPay"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="(点击查看)"
+                                    android:textColor="#3870EA"
+                                    android:textSize="@dimen/sp_14" />
                             </LinearLayout>
-                            <!--总信息end-->
 
                         </LinearLayout>
 
-                        <!--常用工具-->
-                        <com.james.common.view.ILinearLayout
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/dimen_15"
-                            android:layout_marginBottom="20dp"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:paddingTop="15dp"
-                            app:ivBgColor="#fff"
-                            app:ivRadius="4dp">
+                            android:layout_height="3dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginRight="15dp"
+                            android:background="@drawable/divide_line_horizontal_xu"
+                            android:layerType="software" />
 
-                            <TextView
-                                style="@style/main_parts_hint"
-                                android:text="常用工具" />
-
-                            <!--第一行start-->
-                            <LinearLayout
-                                style="@style/main_tool_layout"
-                                android:layout_marginTop="0dp">
-
-                                <TextView
-                                    android:id="@+id/tvManagerSetting"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_shop_manager"
-                                    android:text="管理设置" />
-
-                                <TextView
-                                    android:id="@+id/tvGoodsManager"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_goods_group"
-                                    android:text="商品管理" />
-
-                                <TextView
-                                    android:id="@+id/tvCategoryManager"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_goods_group"
-                                    android:text="分类管理" />
-
-                            </LinearLayout>
-                            <!--第一行end-->
-
-                            <!--第二行start-->
-                            <LinearLayout
-                                style="@style/main_tool_layout"
-                                android:layout_marginTop="0dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvMenuManager"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_logistic_manager"
-                                    android:text="菜单管理" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvSaleSetting"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_tuan_register"
-                                    android:text="营销设置" />
-
-                                <FrameLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1">
-
-                                    <androidx.appcompat.widget.AppCompatTextView
-                                        android:id="@+id/tvComeSoon"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:drawableTop="@drawable/main_ic_stock_warning"
-                                        android:drawablePadding="@dimen/dp_10"
-                                        android:gravity="center"
-                                        android:padding="@dimen/dimen_15"
-                                        android:text="库存预警"
-                                        android:textColor="@color/black"
-                                        android:textSize="@dimen/sp_12" />
-
-                                    <com.james.common.view.CircleTextView
-                                        android:id="@+id/tvComeSoon_number"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="end"
-                                        android:layout_marginEnd="30dp"
-                                        android:alpha="0.8"
-                                        android:gravity="center"
-                                        android:padding="@dimen/dp_4"
-                                        android:textColor="@color/white"
-                                        android:visibility="gone"
-                                        app:circleTint="@color/red"
-                                        tools:text="GGG"
-                                        tools:visibility="visible" />
-
-                                </FrameLayout>
-
-                            </LinearLayout>
-                            <!--第二行end-->
-
-                            <!--第3行start-->
-                            <LinearLayout
-                                style="@style/main_tool_layout"
-                                android:layout_marginTop="0dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvUserManager"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_tuan_manager"
-                                    android:text="用户管理" />
-
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvDataAnalysis"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_comming_soon"
-                                    android:text="数据统计" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvWalletAccount"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@mipmap/main_ic_wallet_account"
-                                    android:text="钱包账户" />
-
-                            </LinearLayout>
-                            <!--第3行end-->
-
-                            <!--第4行start-->
-                            <LinearLayout
-                                style="@style/main_tool_layout"
-                                android:layout_marginTop="0dp">
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    android:id="@+id/tvHelpDoc"
-                                    style="@style/main_tools"
-                                    android:drawableTop="@drawable/ic_help_center"
-                                    android:text="帮助中心" />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/main_tools"
-                                    android:drawableTop="@drawable/ic_more"
-                                    android:text="敬请期待..." />
-
-                                <androidx.appcompat.widget.AppCompatTextView
-                                    style="@style/main_tools"
-                                    android:drawableTop="@drawable/ic_more"
-                                    android:visibility="invisible"
-                                    android:text="敬请期待.."/>
-
-                            </LinearLayout>
-                            <!--第4行end-->
-                        </com.james.common.view.ILinearLayout>
-                        <!--常用工具end-->
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
                 </androidx.core.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:id="@+id/llMainShopOther"
+                <com.james.common.view.ITextView
+                    android:id="@+id/tvMainLoginOut"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/white"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:layout_height="38dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:text="退出登录"
+                    android:textColor="#FF340B"
+                    android:visibility="visible"
+                    app:ivBgColor="@color/white"
+                    app:ivBorderColor="#FF340B"
+                    app:ivBorderWidth="1px"
+                    app:ivRadius="19dp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="120dp"
-                        android:orientation="vertical">
+            </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/tvMainShopHint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginRight="40dp"
-                            android:text="你还有没有开通店铺"
-                            android:textColor="#ff000000"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/tvMainShopReason"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginRight="40dp"
-                            android:textColor="@color/color_fc0000"
-                            android:textSize="13sp"
-                            android:visibility="gone"
-                            tools:text="xxxxx" />
-                    </LinearLayout>
-
-                    <com.james.common.view.ITextView
-                        android:id="@+id/tvMainShopNext"
-                        android:layout_width="200dp"
-                        android:layout_height="38dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="18dp"
-                        android:gravity="center"
-                        android:text="申请开店 >>"
-                        android:textColor="#ff3870ea"
-                        android:textSize="13sp"
-                        app:ivBgColor="@color/white"
-                        app:ivBorderColor="#ff3870ea"
-                        app:ivBorderWidth="1px"
-                        app:ivRadius="19dp" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/dimen_20">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginEnd="@dimen/dimen_10"
-                            android:text="推广码"
-                            android:textColor="#ff000000"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:id="@+id/promoCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:background="@drawable/text_view_frame"
-                            android:padding="@dimen/dimen_5"
-                            android:text="请输入推广码（选填）"
-                            android:textColor="#ff909090"
-                            android:textSize="@dimen/sp_14" />
-                    </LinearLayout>
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="120dp"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/divide_line_horizontal_xu"
-                        android:layerType="software" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:padding="20dp">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="@dimen/dimen_5"
-                            android:orientation="horizontal">
-
-                            <View
-                                style="@style/DivideLineHorizontalDuan"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginEnd="15dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="C店资质"
-                                android:textColor="#ff000000"
-                                android:textSize="@dimen/sp_18" />
-
-                            <View
-                                style="@style/DivideLineHorizontalDuan"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="15dp" />
-
-                        </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginTop="@dimen/dimen_20"
-                            android:text="运营资质"
-                            android:textColor="#ff000000"
-                            android:textSize="@dimen/sp_14" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_5"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="增值电信业务经营许可证"
-                                android:textColor="#ff909090"
-                                android:textSize="@dimen/sp_14" />
-
-                            <TextView
-                                android:id="@+id/readApplyShop"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="(点击查看)"
-                                android:textColor="#3870EA"
-                                android:textSize="@dimen/sp_14" />
-                        </LinearLayout>
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginTop="@dimen/dimen_20"
-                            android:text="支付资质"
-                            android:textColor="#ff000000"
-                            android:textSize="@dimen/sp_14" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="start"
-                            android:layout_marginTop="@dimen/dimen_5"
-                            android:text="由正规持牌支付机构提供T+1交易服务：通联支付"
-                            android:textColor="#ff909090"
-                            android:textSize="@dimen/sp_14" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/dimen_5"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginEnd="5dp"
-                                android:text="微信支付服务商"
-                                android:textColor="#ff909090"
-                                android:textSize="@dimen/sp_14" />
-
-                            <TextView
-                                android:id="@+id/readWXPay"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="(点击查看)"
-                                android:textColor="#3870EA"
-                                android:textSize="@dimen/sp_14" />
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:layout_marginRight="15dp"
-                        android:background="@drawable/divide_line_horizontal_xu"
-                        android:layerType="software" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1" />
-
-                    <com.james.common.view.ITextView
-                        android:id="@+id/tvMainLoginOut"
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp"
-                        android:layout_marginLeft="7dp"
-                        android:layout_marginRight="7dp"
-                        android:layout_marginBottom="12dp"
-                        android:gravity="center"
-                        android:text="退出登录"
-                        android:textColor="#FF340B"
-                        android:visibility="visible"
-                        app:ivBgColor="@color/white"
-                        app:ivBorderColor="#FF340B"
-                        app:ivBorderWidth="1px"
-                        app:ivRadius="19dp" />
-
-                </LinearLayout>
-            </LinearLayout>
 
         </LinearLayout>
 
+
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
 </LinearLayout>

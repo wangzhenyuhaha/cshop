@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -235,6 +236,7 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
         //下一步
         binding.tvApplyShopInfoNext.setOnClickListener {
             try {
+                Log.d("WZYAAB",model.applyShopInfo.value?.promoCode.toString())
                 checkNotBlack(model.applyShopInfo.value?.shopName) {
                     "请输入店铺名称"
                 }

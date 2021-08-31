@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -124,6 +125,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         //下一步
         binding.nextTextView.setOnClickListener {
+            Log.d("WZYAAA",model.applyShopInfo.value?.promoCode.toString())
             try {
                 checkBoolean(model.applyShopInfo.value?.shopType != null) {
                     "请选择店铺类型"

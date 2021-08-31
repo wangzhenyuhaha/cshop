@@ -1,10 +1,8 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.DeliveryTempVO
 import com.lingmiao.shop.business.goods.presenter.DeliveryTempPre
 import com.james.common.base.BasePreImpl
-import com.james.common.utils.exts.isNotBlank
 import com.james.common.utils.exts.isNotEmpty
 import kotlinx.coroutines.launch
 

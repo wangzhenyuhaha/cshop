@@ -51,7 +51,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         const val FOOD_ALLOW = 8
     }
 
-
     private val viewModel by viewModels<ApplyShopInfoViewModel>()
 
     override fun getLayoutId(): Int {
@@ -66,7 +65,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         return false
     }
 
-
     override fun initView() {
 
         //观察调用
@@ -77,34 +75,38 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //若店铺为开店中，则允许修改进件资料
         loginInfo?.also { it ->
             if (it.shopStatus == "OPEN") {
+                //默认值为false
                 viewModel.shopOpenOrNot = true
             }
         }
 
         loginInfo?.also { it ->
             if (it.shopStatus != null && it.shopStatus != "UN_APPLY") {
+
                 //已申请过店铺
                 viewModel.firstApplyShop = false
-                //加载上次上传的信息
+
+                //加载上次上传的信息,同时获取保存的邀请码
                 mPresenter.requestShopInfoData()
+
                 //获取已绑定的银行卡,
                 it.uid?.also { uid -> mPresenter.searchBankList(uid) }
+                
             } else {
+
                 //第一次申请店铺
                 viewModel.firstApplyShop = true
+
                 //从本地获取数据
+                //从SP中获取ApplyShopInfo
+                UserManager.getApplyShopInfo()?.also { info ->
+                    viewModel.onShopInfoSuccess(info)
+                }
 
                 //获取推广码
                 viewModel.applyShopInfo.value?.promoCode =
                     if (UserManager.getPromCode().isEmpty()) null
                     else UserManager.getPromCode()
-
-
-                //获取ApplyShopInfo
-                UserManager.getApplyShopInfo()?.also { info ->
-                    viewModel.onShopInfoSuccess(info)
-                }
-
 
                 //获取对公账户信息
                 UserManager.getCompanyAccount()?.also { account ->
@@ -128,12 +130,12 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
 
         //修改页面title
-        viewModel.title.observe(this, Observer {
+        viewModel.title.observe(this, Observer{
             mToolBarDelegate.setMidTitle(it)
         })
 
         //OCR识别
-        viewModel.getOCR.observe(this, Observer {
+        viewModel.getOCR.observe(this, Observer{
             // 1身份证人像面   2身份证国徽面   6银行卡     8 营业执照
             val url: String? = when (it) {
                 8 -> {
@@ -374,8 +376,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     //申请店铺失败
     override fun onApplyShopInfoError(code: Int) {
-        showToast("请填写正确的邀请码并重新填写数据")
-        hideDialogLoading()
+        //查询已绑定的银行卡
+        UserManager.getLoginInfo()?.uid?.also { uid -> mPresenter.searchBankList(uid) }
+        showToast("抱歉，店铺申请失败！请检查邀请码或其他资料")
     }
 
 
@@ -410,9 +413,17 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     //申请失败后成功获取已上传数据
     override fun onShopInfoSuccess(applyShopInfo: ApplyShopInfo) {
+        //把ApplyShopInfo保存在ViewModel中
         viewModel.onShopInfoSuccess(applyShopInfo)
+
+        //获取邀请码
+        viewModel.applyShopInfo.value?.promoCode =
+            if (UserManager.getPromCode().isEmpty()) null
+            else UserManager.getPromCode()
+
+        //获取其他资质图片
         try {
-            val list = viewModel.applyShopInfo.value?.other_certificates_imgs?.split("'")
+            val list = viewModel.applyShopInfo.value?.other_certificates_imgs?.split(",")
             list?.also {
                 if (it.size == 1) {
                     viewModel.applyShopInfo.value?.other_Pic_One = list[0]
@@ -456,25 +467,11 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     class ApplyShopInfoViewModel : ViewModel() {
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    店铺是否处于开启中
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
-
+        // 店铺是否处于开启中,用于修改进件资料
         var shopOpenOrNot: Boolean = false
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    店铺信息
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+
+        //店铺信息
         private val _applyShopInfo = MutableLiveData<ApplyShopInfo>().also {
             it.value = ApplyShopInfo()
         }
@@ -490,17 +487,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //初次申请店铺  true表示为第一次申请店铺
         var firstApplyShop: Boolean = true
 
-
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    保存的对公对私账户
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
-        //
-
+        //保存的对公对私账户
         //对公账户
         val companyAccount: MutableLiveData<BindBankCardDTO> =
             MutableLiveData<BindBankCardDTO>().also {
@@ -518,16 +505,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    页面的标题
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
-        //
 
+
+        //页面的标题
         private val _title: MutableLiveData<String> = MutableLiveData()
 
         val title: LiveData<String>
@@ -539,29 +519,15 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         }
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    OCR识别的调用
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+        //OCR识别的调用
         //调用OCR识别
         //1身份证人像面   2身份证国徽面   6银行卡      8 营业执照
         //不能给初始值
         val getOCR: MutableLiveData<Int> = MutableLiveData()
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    店铺经营类型
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
-        //
+
+        //店铺经营类型
         private val _selectedCategoryListLiveData: MutableLiveData<List<ApplyShopCategory>> =
             MutableLiveData()
 
@@ -573,14 +539,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             _selectedCategoryListLiveData.value = list
         }
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    店铺地址
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+
+        //店铺地址
         private val _adInfo: MutableLiveData<AddressData> = MutableLiveData()
 
         val adInfo: LiveData<AddressData>
@@ -592,14 +552,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         }
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    绑定银行卡页面模块的可见性以及结算账户
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+
+        //绑定银行卡页面模块的可见性以及结算账户
         //对公账户
         val companyModule: MutableLiveData<Int> = MutableLiveData<Int>().also {
             it.value = View.VISIBLE
@@ -617,14 +571,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         }
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    根据需求获得银行卡号所代表的银行
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+        //根据需求获得银行卡号所代表的银行
         //获取对公账户的信息
         val ocrCBankVisibility: MutableLiveData<Int> = MutableLiveData()
 
@@ -639,49 +586,24 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         val ocrPBankVisibilityU: MutableLiveData<Int> = MutableLiveData()
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    绑定银行卡
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+
+        //绑定银行卡
         //0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
         val bindBandCard: MutableLiveData<Int> = MutableLiveData()
 
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    绑定银行卡结果
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+
+        //绑定银行卡结果
         // 0 绑定失败  1 绑定成功
         val bindResult: MutableLiveData<Int> = MutableLiveData()
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    申请店铺
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+
+        //申请店铺
         val go: MutableLiveData<Int> = MutableLiveData()
 
-        //          / ￣￣￣＼　
-        //          |　ー　ー \　
-        //          |　 ◉　◉ |   / ￣￣￣￣￣￣
-        //          \ 　 ▱　 / ∠    当法人和负责人发生变化时，判断是否相等
-        //          ＼      イ   \
-        //          ／　     ＼   \______________
-        //         /　|　　  \ \　
-        //        |　|　　　 | |
+        //当法人和负责人发生变化时，判断是否相等
         val nameOfShopPerson: MutableLiveData<Int> = MutableLiveData<Int>().also {
-            it.value =1
+            it.value = 1
         }
 
     }

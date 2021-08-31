@@ -24,13 +24,13 @@ class SubBranchPreImpl(var context: Context, var view: SubBranchPre.StatusView) 
     }
 
     override fun loadListData(page: IPage, oldDatas: List<*>, searchText: String?) {
-        Log.d("WZYTest", "ccc")
+
 
         mCoroutine.launch {
             if (oldDatas.isEmpty()) {
                 view.showPageLoading()
             }
-            Log.d("WZY", "aaaaaa")
+
             val body = ApplyBank()
             body.pageNum = page.getPageIndex()
             body.pageSize = 30
@@ -42,7 +42,7 @@ class SubBranchPreImpl(var context: Context, var view: SubBranchPre.StatusView) 
                 .awaitHiResponse()
 
 
-            Log.d("WZY", "123")
+
             if (response.isSuccess) {
 
                 val goodsList = response.data.records

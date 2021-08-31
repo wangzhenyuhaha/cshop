@@ -22,13 +22,13 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
     val tabName = listOf("基础", "运营")
 
     override fun getViewBinding(): ActivityViewpagerBinding {
-        return ActivityViewpagerBinding.inflate(layoutInflater);
+        return ActivityViewpagerBinding.inflate(layoutInflater)
     }
 
     override fun initView() {
         mToolBarDelegate?.setMidTitle(getString(R.string.manager_setting_title))
 
-        mPresenter?.loadShopInfo();
+        mPresenter?.loadShopInfo()
     }
 
 
@@ -37,7 +37,7 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
     }
 
     override fun createPresenter(): ManagerSettingPresenter {
-        return ManagerSettingPresenterImpl(this);
+        return ManagerSettingPresenterImpl(this)
     }
 
     override fun onLoadedShopInfo(data: ApplyShopInfo) {

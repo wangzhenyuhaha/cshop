@@ -1,13 +1,9 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import com.amap.api.mapcore.util.it
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
-import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO

@@ -1,19 +1,18 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.lifecycleScope
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.SpanUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.gone
@@ -24,8 +23,9 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.*
-import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.goods.GoodsCategoryActivity
+import com.lingmiao.shop.business.goods.GoodsListActivity
+import com.lingmiao.shop.business.goods.MenuManagerActivity
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.*
@@ -47,8 +47,6 @@ import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -57,11 +55,11 @@ import org.greenrobot.eventbus.ThreadMode
 class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     // 店铺状态及信息
-    private var shopStatus: ShopStatus? = null;
+    private var shopStatus: ShopStatus? = null
 
     // 首页订单统计数据
     private var mainInfo: MainInfoVo? = null
-    private var loginInfo: LoginInfo? = null;
+    private var loginInfo: LoginInfo? = null
     private var fromMain: Boolean? = null
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
@@ -81,11 +79,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.fragment_new_main
     }
 
-    override fun createPresenter(): MainPresenter? {
+    override fun createPresenter(): MainPresenter {
         return MainPresenterImpl(context!!, this)
     }
 
@@ -100,7 +98,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
-            refreshPageData();
+            refreshPageData()
         }
         ivMainMessage.setOnClickListener {
             if (UserManager.isLogin()) {
@@ -171,8 +169,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
-        this.loginInfo = loginInfo;
-
+        this.loginInfo = loginInfo
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
         tvMainShopReason.visibility = View.GONE
@@ -233,62 +230,62 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         return
                     }
                     llHeader.visibility = View.VISIBLE
-                    llHeader.setBackgroundColor(ContextCompat.getColor(context!!, R.color.primary));
+                    llHeader.setBackgroundColor(ContextCompat.getColor(context!!, R.color.primary))
                     llMainShopOpen.visibility = View.VISIBLE
                     llMainShopOther.visibility = View.GONE
                     ivMainMessage.visibility = View.VISIBLE
 
                     // 认证中
-                    authLayout.gone();
-                    shopAuthHint.gone();
-                    shopStatusLayout.gone();
+                    authLayout.gone()
+                    shopAuthHint.gone()
+                    shopStatusLayout.gone()
 
                     if (loginInfo.shopStatus == ShopStatusConstants.OPEN ||
                         loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPLYING
                     ) {
                         // 开启中，显示审核中
-                        authLayout.visiable();
-                        shopAuthStatus.text = "店铺审核中";
-                        shopAuthHint.gone();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "店铺审核中"
+                        shopAuthHint.gone()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED) {
                         // 进见通过，显示电子签约
-                        authLayout.visiable();
-                        shopAuthStatus.text = "审核通过,请进行电子签约";
-                        shopAuthHint.visiable();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "审核通过,请进行电子签约"
+                        shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING) {
                         // 签约审核中
-                        authLayout.visiable();
-                        shopAuthStatus.text = "签约已提交，等待通过";
-                        shopAuthHint.visiable();
-                    } else if(loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
+                        authLayout.visiable()
+                        shopAuthStatus.text = "签约已提交，等待通过"
+                        shopAuthHint.visiable()
+                    } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
                         // 进见补充资料
-                        authLayout.visiable();
-                        shopAuthStatus.text = "店铺信息不完善，请补充资料";
-                        shopAuthHint.visiable();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "店铺信息不完善，请补充资料"
+                        shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                         // 微信认证中
-                        authLayout.visiable();
-                        shopAuthStatus.text = "店铺签约成功,请进行商户认证";
-                        shopAuthHint.visiable();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "店铺签约成功,请进行商户认证"
+                        shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                         // 微信认证中
-                        authLayout.visiable();
-                        shopAuthStatus.text = "店铺签约成功,请进行商户认证";
-                        shopAuthHint.visiable();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "店铺签约成功,请进行商户认证"
+                        shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
                         // 微信认证中
-                        authLayout.visiable();
-                        shopAuthStatus.text = "店铺签约成功,请进行商户认证";
-                        shopAuthHint.visiable();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "店铺签约成功,请进行商户认证"
+                        shopAuthHint.visiable()
                         //DialogUtils.showImageDialog(activity!!, R.mipmap.wechat_account, "店铺签约成功，请使用微信扫码进行商户认证，认证成功后才进行正常结算");
                     } else if (loginInfo.shopStatus == ShopStatusConstants.OVERDUE) {
                         // 过期
-                        authLayout.visiable();
-                        shopAuthStatus.text = "会员已过期,请继续购买";
-                        shopAuthHint.visiable();
+                        authLayout.visiable()
+                        shopAuthStatus.text = "会员已过期,请继续购买"
+                        shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.FINAL_OPEN) {
                         // 最终状态，显示店铺状态
-                        shopStatusLayout.visiable();
+                        shopStatusLayout.visiable()
                         mPresenter?.getWaringNumber()
                         switchStatusBtn.setCheckedNoEvent(loginInfo?.openStatus ?: false)
                     }
@@ -349,7 +346,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onMainDataSuccess(bean: MainInfoVo?, status: ShopStatus?) {
         hidePageLoading()
-        shopStatus = status;
+        shopStatus = status
         mainInfo = bean
         smartRefreshLayout.finishRefresh()
         initShopStatus(UserManager.getLoginInfo())
@@ -357,14 +354,14 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     private fun initOpeningShopView() {
         if (mainInfo == null) {
-            return;
+            return
         }
-        setShop();
+        setShop()
 
         switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
-            mPresenter?.editShopStatus(if (isChecked) 1 else 0);
+            mPresenter?.editShopStatus(if (isChecked) 1 else 0)
         }
-        onShopStatusEdited();
+        onShopStatusEdited()
         // 申请状态点击
         authLayout.setOnClickListener {
             if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
@@ -372,40 +369,42 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 ActivityUtils.startActivity(ApplySupplementActivity::class.java)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
                 || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING
-                || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED) {
+                || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
+            ) {
                 // 电子签约
                 ActivityUtils.startActivity(ElectricSignActivity::class.java)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED
-                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING) {
+                || loginInfo?.shopStatus == ShopStatusConstants.WEIXIN_AUTHEN_APPLYING
+            ) {
                 // 微信认证
                 ActivityUtils.startActivity(ShopWeChatApproveActivity::class.java)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.OVERDUE) {
                 // 过期续费
-                ActivityUtils.startActivity(ApplyVipActivity::class.java);
+                ActivityUtils.startActivity(ApplyVipActivity::class.java)
             }
         }
 
         // 总信息
         // 未接订单
-        tvTodayUnTakeOrderCount.text = String.format("%s", mainInfo?.waitAcceptNum);
+        tvTodayUnTakeOrderCount.text = String.format("%s", mainInfo?.waitAcceptNum)
         // 已接订单
-        tvTodayTakenOrderCount.text = String.format("%s", mainInfo?.alreadyAcceptNum);
+        tvTodayTakenOrderCount.text = String.format("%s", mainInfo?.alreadyAcceptNum)
         // 待配送
-        tvTodayDistributeOrderCount.text = String.format("%s", mainInfo?.waitRogNum);
+        tvTodayDistributeOrderCount.text = String.format("%s", mainInfo?.waitRogNum)
 
         // 待退款
-        tvTodayRefund.text = String.format("%s", mainInfo?.refundNum);
+        tvTodayRefund.text = String.format("%s", mainInfo?.refundNum)
         // 已完成
-        tvTodayFinish.text = String.format("%s", mainInfo?.completeNum);
+        tvTodayFinish.text = String.format("%s", mainInfo?.completeNum)
         // 失效订单
-        tvTodayInvalid.text = String.format("%s", mainInfo?.cancelNum);
+        tvTodayInvalid.text = String.format("%s", mainInfo?.cancelNum)
 
         //销售额
-        tvTodaySales.text = String.format("%s", mainInfo?.tradeAmount);
+        tvTodaySales.text = String.format("%s", mainInfo?.tradeAmount)
         // 新用户数
-        tvTodayNewUser.text = String.format("%s", mainInfo?.newMemberNum);
+        tvTodayNewUser.text = String.format("%s", mainInfo?.newMemberNum)
         // 订单量
-        tvTodayOrderCount.text = String.format("%s", mainInfo?.allNum);
+        tvTodayOrderCount.text = String.format("%s", mainInfo?.allNum)
 
         // 管理设置
         tvManagerSetting.setOnClickListener {
@@ -420,11 +419,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             } else if (shopStatus?.haveCategory == false) {
                 ToastUtils.showLong("请先完善分类设置，否则店铺不能进行正常营业与商品上传")
             }
-            GoodsListActivity.openActivity(context!!);
+            GoodsListActivity.openActivity(context!!)
         }
         // 商品分类
         tvCategoryManager.setOnClickListener {
-            GoodsCategoryActivity.openActivity(context!!);
+            GoodsCategoryActivity.openActivity(context!!)
         }
         // 菜单管理
         tvMenuManager.setOnClickListener {
@@ -438,11 +437,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 钱包账户
         tvWalletAccount.setOnClickListener {
-            ActivityUtils.startActivity(MyWalletActivity::class.java);
+            ActivityUtils.startActivity(MyWalletActivity::class.java)
         }
         // 用户管理
         tvUserManager.setOnClickListener {
-            UserManagerActivity.allUser(context!!);
+            UserManagerActivity.allUser(context!!)
         }
         // 数据统计
         tvDataAnalysis.setOnClickListener {
@@ -465,13 +464,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 用户数据
         userDataOfTodayTv.singleClick {
-            UserManagerActivity.newUser(context!!);
+            UserManagerActivity.newUser(context!!)
         }
 
 
         // 未接订单
         llTodayUnTakeOrderCount.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(0));
+            EventBus.getDefault().post(TabChangeEvent(0))
         }
         // 已接订单
         llMainWaitTakeGoods.setOnClickListener {
@@ -536,7 +535,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     override fun onShopStatusEdited() {
-        shopStatusTv.text = if (switchStatusBtn.isChecked) "开店中" else "休息中";
+        shopStatusTv.text = if (switchStatusBtn.isChecked) "开店中" else "休息中"
     }
 
     @SuppressLint("SetTextI18n")
@@ -565,7 +564,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateLogo(event: LoginInfo) {
         event?.apply {
-            setShop();
+            setShop()
         }
     }
 
@@ -588,7 +587,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onResume() {
         super.onResume()
-        refreshPageData();
+        refreshPageData()
     }
 
     private fun refreshPageData() {

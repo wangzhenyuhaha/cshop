@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.MotionEvent
 import androidx.core.content.ContextCompat
-import com.blankj.utilcode.util.BarUtils
 import com.blankj.utilcode.util.KeyboardUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsSearchAdapter

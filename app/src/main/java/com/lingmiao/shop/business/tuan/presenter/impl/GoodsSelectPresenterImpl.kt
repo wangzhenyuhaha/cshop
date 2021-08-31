@@ -3,8 +3,6 @@ package com.lingmiao.shop.business.tuan.presenter.impl
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.tuan.presenter.GoodsSelectPresenter
 import com.james.common.base.BasePreImpl
-import com.james.common.base.delegate.DefaultPageLoadingDelegate
-import com.james.common.base.delegate.PageLoadingDelegate
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.isNotEmpty
 import kotlinx.coroutines.launch

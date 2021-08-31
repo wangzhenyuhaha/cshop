@@ -1,24 +1,18 @@
 package com.lingmiao.shop.business.tuan
 
-import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.BarUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.GroupManagerEditActivity
-import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
-import com.lingmiao.shop.business.tools.EditFreightModelActivity
 import com.lingmiao.shop.business.tuan.adapter.GoodsAdapter
 import com.lingmiao.shop.business.tuan.bean.GoodsVo
 import com.lingmiao.shop.business.tuan.presenter.GoodsSubmitPresenter
 import com.lingmiao.shop.business.tuan.presenter.impl.GoodsSubmitPresenterImpl
-import com.james.common.base.BaseActivity
 import com.james.common.base.delegate.DefaultPageLoadingDelegate
 import com.james.common.base.delegate.PageLoadingDelegate
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
-import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import kotlinx.android.synthetic.main.goods_activity_group_manager.*
 import kotlinx.android.synthetic.main.goods_activity_group_manager.toolbarView

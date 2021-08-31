@@ -4,7 +4,9 @@ import com.lingmiao.shop.business.wallet.bean.*
 import com.lingmiao.shop.net.Fetch
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.order.bean.OrderList
+import retrofit2.Call
 
 /**
  * Author : Elson
@@ -50,6 +52,14 @@ object WalletRepository {
         req.pageSize = IConstant.PAGE_SIZE;
         req.body = body;
         return apiService.queryTradeRecordList(req).awaitHiResponse()
+    }
+
+    /**
+     *
+    查询会员订单列表
+     */
+    suspend fun getOrderList(pageNo: Int): HiResponse<PageVO<OrderList>> {
+        return apiService.queryTradeOrdersList(pageNo,10).awaitHiResponse()
     }
 
     /**

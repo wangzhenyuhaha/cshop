@@ -38,9 +38,10 @@ class ShopOperateSettingPresenterImpl (val context: Context,var view : ShopOpera
     }
 
     override fun setSetting(data: ApplyShopInfo,gallery : List<GoodsGalleryVO>?) {
-        if(gallery?.isEmpty() == true) {
-            return;
-        }
+        //Banner图可以为空
+//        if(gallery?.isEmpty() == true) {
+//            return;
+//        }
         mCoroutine.launch {
             view?.showDialogLoading()
             uploadImages(gallery, fail = {

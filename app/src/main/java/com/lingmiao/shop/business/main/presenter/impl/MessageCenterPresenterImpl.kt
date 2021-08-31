@@ -1,10 +1,6 @@
 package com.lingmiao.shop.business.main.presenter.impl
-import com.james.common.base.BasePresenter
-import com.james.common.base.BaseView
-import com.lingmiao.shop.business.main.bean.MessageCenter
 
 import android.content.Context
-import com.lingmiao.shop.business.goods.api.GoodsRepository
 import  com.lingmiao.shop.business.main.presenter.MessageCenterPresenter
 import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.main.api.MainRepository
