@@ -103,12 +103,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                     viewModel.onShopInfoSuccess(info)
                 }
 
-
-                //获取ApplyShopInfo
-                UserManager.getApplyShopInfo()?.also { info ->
-                    viewModel.onShopInfoSuccess(info)
-                }
-
                 //获取推广码
                 viewModel.applyShopInfo.value?.promoCode =
                     if (UserManager.getPromCode().isEmpty()) null

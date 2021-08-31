@@ -169,7 +169,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
-        this.loginInfo = loginInfo;
         this.loginInfo = loginInfo
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
