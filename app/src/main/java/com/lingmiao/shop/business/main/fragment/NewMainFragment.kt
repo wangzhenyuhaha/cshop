@@ -169,6 +169,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     private fun initShopStatus(loginInfo: LoginInfo?) {
+        this.loginInfo = loginInfo;
         this.loginInfo = loginInfo
         llMainShopOpen.visibility = View.GONE
         llMainShopOther.visibility = View.VISIBLE
@@ -254,9 +255,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING) {
                         // 签约审核中
-                        authLayout.visiable()
-                        shopAuthStatus.text = "签约已提交，等待通过"
-                        shopAuthHint.visiable()
+                        authLayout.visiable();
+                        shopAuthStatus.text = "签约已提交，等待通过";
+                        shopAuthHint.visiable();
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
                         // 进见补充资料
                         authLayout.visiable()
