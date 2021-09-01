@@ -22,9 +22,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
     private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
 
-    override fun createPresenter(): BasePresenter {
-        return BasePreImpl(this)
-    }
+    override fun createPresenter() = BasePreImpl(this)
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -35,7 +33,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
     override fun initViewsAndData(rootView: View) {
 
         model.setTitle("资料提交")
-
         //处理点击事件
         initListener()
         //处理数据的显示
@@ -125,7 +122,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         //下一步
         binding.nextTextView.setOnClickListener {
-            Log.d("WZYAAA",model.applyShopInfo.value?.promoCode.toString())
+            Log.d("WZYAAA", model.applyShopInfo.value?.promoCode.toString())
             try {
                 checkBoolean(model.applyShopInfo.value?.shopType != null) {
                     "请选择店铺类型"

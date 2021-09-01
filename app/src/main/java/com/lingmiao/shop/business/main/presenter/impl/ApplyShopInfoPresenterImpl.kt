@@ -113,7 +113,6 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                 val resp1 =
                     MainRepository.apiService.bindTestBankCard(arrayOf(personal)).awaitHiResponse()
                 if (resp1.isSuccess) {
-                    view.hideDialogLoading()
                     view.bindAccountYes()
                 } else {
                     view.hideDialogLoading()
@@ -151,10 +150,7 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
 
         if (openOrNot) {
             //修改进件资料
-
             Log.d("WZYTesy", "没有接口")
-
-
         } else {
             //申请店铺或者重新提交资料
             mCoroutine.launch {
@@ -171,7 +167,11 @@ class ApplyShopInfoPresenterImpl(context: Context, private var view: ApplyShopIn
                     OtherUtils.setJpushAlias()
                     view.onApplyShopInfoSuccess()
                 } else {
-                    view.onApplyShopInfoError(resp.code)
+                    //失败，hideDialogLoading()，并显示失败原因,hideDialogLoading()在查询银行卡结束后才调用
+                    //查询银行卡，以便重新提交
+                    UserManager.getLoginInfo()?.uid?.also { uid -> searchBankList(uid) }
+                    //显示错误原因
+                    view.onApplyShopInfoError(resp.msg)
                 }
             }
         }
