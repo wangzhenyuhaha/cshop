@@ -20,7 +20,6 @@ import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
@@ -129,6 +128,8 @@ class MainActivity : AppCompatActivity() {
         LogUtils.d("jpushType:$jpushType")
         if (jpushType == IConstant.MESSAGE_ORDER_PAY_SUCCESS) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+        } else if(jpushType == IConstant.MESSAGE_ORDER_CANCEL) {
+            changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
         }
     }
 
