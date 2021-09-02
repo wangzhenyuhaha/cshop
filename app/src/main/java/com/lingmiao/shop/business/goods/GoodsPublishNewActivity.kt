@@ -53,7 +53,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             context.startActivity(intent)
         }
 
-
         //处理新增商品
         fun newPublish(context: Context, type: Int?) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
@@ -73,21 +72,11 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
+    override fun useLightMode() = false
 
     //private val binding:GoodsActivityPublishNewBinding
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
-    }
-
-
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_publish_new
-    }
+    override fun getLayoutId() = R.layout.goods_activity_publish_new
 
     override fun initBundles() {
         //编辑已有商品时获得此数据
@@ -493,7 +482,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             //
             packagePrice = try {
                 goodsPackageFeeEdt.getViewText().toDouble()
-            }catch (e:Exception) {
+            } catch (e: Exception) {
                 0.00
             }
 
