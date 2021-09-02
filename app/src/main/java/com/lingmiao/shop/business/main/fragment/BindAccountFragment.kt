@@ -16,6 +16,7 @@ import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
@@ -84,7 +85,6 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
         super.initBundles()
         //跳转到银行选择界面
         intent = Intent(requireActivity(), SubBranchActivity::class.java)
-
     }
 
     override fun initViewsAndData(rootView: View) {
@@ -221,6 +221,15 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             )
         }
 
+        //商户签字授权书
+        binding.authorpic.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.AUTHOR_PIC)
+            findNavController().navigate(
+                R.id.action_bindAccountFragment_to_shopPhotoFragment,
+                bundle
+            )
+        }
+
         //卡号
         binding.banknumberP.setOnClickListener {
             DialogUtils.showInputDialogEmptyNumber(
@@ -310,6 +319,14 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             if (!binding.account1.isSelected && !binding.account2.isSelected) {
                 ToastUtils.showShort("请选择结算账户")
                 return@singleClick
+            }
+
+            //企业选择对私结算时上传授权承诺书
+            if(model.applyShopInfo.value?.shopType==1 && binding.account2.isSelected){
+                if (model.applyShopInfo.value?.authorpic.isNullOrEmpty()){
+                    ToastUtils.showShort("请选择签约承诺函")
+                    return@singleClick
+                }
             }
 
             //给memberId赋值
@@ -437,6 +454,9 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 binding.accountCompanyTVP.visibility = View.VISIBLE
             }
 
+            if (!info.authorpic.isNullOrEmpty()){
+                binding.authorpicTV.text = "已上传"
+            }
 
         })
 
@@ -456,6 +476,9 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                     //企业
                     model.companyModule.value = View.VISIBLE
                     model.personalModule.value = View.VISIBLE
+                    //需要上传承诺函
+                    binding.authorpicView.visiable()
+                    binding.authorpic.visiable()
                 } else {
                     //个体户
                     model.personalModule.value = View.VISIBLE

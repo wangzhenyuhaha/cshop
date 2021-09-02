@@ -223,6 +223,10 @@ data class ApplyShopInfo(
     @SerializedName("bank_card")
     var bankCard: BindBankCardDTO? = null,
 
+    //签约承诺函
+    @SerializedName("authorpic")
+    var authorpic: String? = null,
+
 //推广码(非必填，申请店铺时如果邀请码填错，无法申请店铺)
     @SerializedName("promo_code")
     var promoCode: String? = null,

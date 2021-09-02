@@ -53,6 +53,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //食品卫生许可证照片
         const val FOOD_ALLOW = 8
+
+        //商户签约承诺函
+        const val AUTHOR_PIC = 9
     }
 
     private val viewModel by viewModels<ApplyShopInfoViewModel>()

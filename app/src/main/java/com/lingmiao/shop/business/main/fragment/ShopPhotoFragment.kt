@@ -123,6 +123,14 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.setTitle("上传银行卡正面照")
             }
+            ApplyShopInfoActivity.AUTHOR_PIC -> {
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.applyShopInfo.value?.authorpic?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
+                }
+                model.setTitle("上传商户签约承诺函")
+            }
             else -> {
 
             }
@@ -299,6 +307,12 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             model.getOCR.value = 6
                         }
 
+                    }
+                    ApplyShopInfoActivity.AUTHOR_PIC->{
+                        model.applyShopInfo.value?.authorpic = uploadFile.data.url
+                        uploadFile.data.url?.also{
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
+                        }
                     }
                 }
                 showToast("上传成功")
