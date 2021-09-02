@@ -13,7 +13,7 @@ object IConstant {
     //1申请开店审核成功;  2买家订单支付成功;  3:其它  ,4店铺审核不通过
     const val MESSAGE_APPLY_SHOP_SUCCESS = "1"
     const val MESSAGE_ORDER_PAY_SUCCESS = "2"
-    const val MESSAGE_OTHER = "3"
+    const val MESSAGE_ORDER_CANCEL = "3"
     const val MESSAGE_APPLY_SHOP_REFUSE = "4"
 
     const val TAB_WAIT_SEND_GOODS = 0
