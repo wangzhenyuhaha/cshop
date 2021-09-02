@@ -25,7 +25,7 @@ class ApplySupplementPresenterImpl(context: Context, private var view: IApplySup
             view.showDialogLoading()
             val resp = MemberRepository.apiService.applySupplementUrl("${UserManager.getLoginInfo()?.shopId}").awaitHiResponse()
             if (resp.isSuccess) {
-                view.setUrl(resp.data.sybsignurl)
+                view.setUrl(resp.data.url)
             } else{
                 view.getSupplementUrlFailed();
             }

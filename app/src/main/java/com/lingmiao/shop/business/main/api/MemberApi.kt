@@ -4,6 +4,7 @@ import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.main.bean.ElectricSign
 import com.lingmiao.shop.business.main.bean.MemberOrderBean
+import com.lingmiao.shop.business.main.bean.SupplementSign
 import com.lingmiao.shop.business.sales.bean.UserVo
 import retrofit2.Call
 import retrofit2.http.GET
@@ -38,6 +39,6 @@ interface MemberApi {
 
     @GET("/seller/shops/allinpay/repaircusrgcUrl/{shop_id}")
     @WithHiResponse
-    fun applySupplementUrl(@Path("shop_id") shop_id : String) : Call<ElectricSign>
+    fun applySupplementUrl(@Path("shop_id") shop_id : String) : Call<SupplementSign>
 
 }
