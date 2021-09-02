@@ -23,7 +23,7 @@ interface ApplyShopInfoPresenter : BasePresenter {
         fun onShopInfoError(code: Int)
 
         fun onApplyShopInfoSuccess()
-        fun onApplyShopInfoError(code: Int)
+        fun onApplyShopInfoError(code: String?)
 
         //更新银行卡信息
         fun onBankCard(data: BankCard)
