@@ -330,15 +330,11 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 if (it.other_Pic_One == null && it.other_Pic_Two != null) {
                     it.other_certificates_imgs = it.other_Pic_Two
                 }
-
-
             }
 
             //检查资料是否齐全,并且绑定银行卡   绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
             if (model.applyShopInfo.value?.shopType == 1) {
                 //企业
-
-
                 if (model.whichAccountToUse.value == 0) {
                     //对公账户结算
                     model.companyAccount.value?.isDefault = 1

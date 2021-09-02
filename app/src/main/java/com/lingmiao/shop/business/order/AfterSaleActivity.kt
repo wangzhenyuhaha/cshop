@@ -86,7 +86,6 @@ class AfterSaleActivity : BaseActivity<AfterSalePresenter>(), AfterSalePresenter
 
     override fun createPresenter(): AfterSalePresenter {
         return AfterSalePresenterImpl(this, this)
-        return AfterSalePresenterImpl(this, this)
     }
 
     override fun onAfterSaleSuccess(bean: AfterSale) {

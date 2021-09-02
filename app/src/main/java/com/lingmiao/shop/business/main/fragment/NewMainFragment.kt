@@ -64,7 +64,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
 
-
     companion object {
         fun newInstance(): NewMainFragment {
             return NewMainFragment()
