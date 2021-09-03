@@ -1,12 +1,16 @@
 package com.lingmiao.shop.business.main
 
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.blankj.utilcode.util.GsonUtils
 import com.james.common.base.BaseActivity
+import com.james.common.net.BaseResponse
+import com.james.common.utils.exts.check
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.*
@@ -53,17 +57,11 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     private val viewModel by viewModels<ApplyShopInfoViewModel>()
 
-    override fun getLayoutId(): Int {
-        return R.layout.main_activity_apply_shop_info
-    }
+    override fun getLayoutId() = R.layout.main_activity_apply_shop_info
 
-    override fun createPresenter(): ApplyShopInfoPresenter {
-        return ApplyShopInfoPresenterImpl(this, this)
-    }
+    override fun createPresenter() = ApplyShopInfoPresenterImpl(this, this)
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
+    override fun useLightMode() = false
 
     override fun initView() {
 
@@ -89,9 +87,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 //加载上次上传的信息,同时获取保存的邀请码
                 mPresenter.requestShopInfoData()
 
-                //获取已绑定的银行卡,
+                //获取已绑定的银行卡
                 it.uid?.also { uid -> mPresenter.searchBankList(uid) }
-                
+
             } else {
 
                 //第一次申请店铺
@@ -118,6 +116,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                     viewModel.personalAccount.value = account
                 }
 
+                //考虑到极端情况，此处也许获取已绑定的银行卡
+                it.uid?.also { uid -> mPresenter.searchBankList(uid) }
+
 
             }
 
@@ -128,14 +129,13 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     private fun initObserver() {
 
-
         //修改页面title
-        viewModel.title.observe(this, Observer{
+        viewModel.title.observe(this, Observer {
             mToolBarDelegate.setMidTitle(it)
         })
 
         //OCR识别
-        viewModel.getOCR.observe(this, Observer{
+        viewModel.getOCR.observe(this, Observer {
             // 1身份证人像面   2身份证国徽面   6银行卡     8 营业执照
             val url: String? = when (it) {
                 8 -> {
@@ -375,10 +375,19 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
     }
 
     //申请店铺失败
-    override fun onApplyShopInfoError(code: Int) {
-        //查询已绑定的银行卡
-        UserManager.getLoginInfo()?.uid?.also { uid -> mPresenter.searchBankList(uid) }
-        showToast("抱歉，店铺申请失败！请检查邀请码或其他资料")
+    override fun onApplyShopInfoError(code: String?) {
+        code?.also {
+            if (it.isNotBlank()) {
+                try {
+                    val errorResp = GsonUtils.fromJson(it, BaseResponse::class.java)
+                    if (errorResp != null) {
+                        showToast(errorResp.message.check())
+                    }
+                } catch (e: Exception) {
+                    // 防止部分接口返回 非常规格式 的字符串，如html
+                }
+            }
+        }
     }
 
 
@@ -416,7 +425,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //把ApplyShopInfo保存在ViewModel中
         viewModel.onShopInfoSuccess(applyShopInfo)
 
-        //获取邀请码
+        //获取邀请码,以首页填写的为准
         viewModel.applyShopInfo.value?.promoCode =
             if (UserManager.getPromCode().isEmpty()) null
             else UserManager.getPromCode()
@@ -470,7 +479,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         // 店铺是否处于开启中,用于修改进件资料
         var shopOpenOrNot: Boolean = false
 
-
         //店铺信息
         private val _applyShopInfo = MutableLiveData<ApplyShopInfo>().also {
             it.value = ApplyShopInfo()
@@ -486,6 +494,18 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //初次申请店铺  true表示为第一次申请店铺
         var firstApplyShop: Boolean = true
+
+        //页面的标题
+        private val _title: MutableLiveData<String> = MutableLiveData()
+
+        val title: LiveData<String>
+            get() = _title
+
+        //更改Title
+        fun setTitle(title: String) {
+            _title.value = title
+        }
+
 
         //保存的对公对私账户
         //对公账户
@@ -505,26 +525,11 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
 
 
-
-
-        //页面的标题
-        private val _title: MutableLiveData<String> = MutableLiveData()
-
-        val title: LiveData<String>
-            get() = _title
-
-        //更改Title
-        fun setTitle(title: String) {
-            _title.value = title
-        }
-
-
         //OCR识别的调用
         //调用OCR识别
         //1身份证人像面   2身份证国徽面   6银行卡      8 营业执照
         //不能给初始值
         val getOCR: MutableLiveData<Int> = MutableLiveData()
-
 
 
         //店铺经营类型
@@ -550,7 +555,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         fun setAddress(data: AddressData) {
             _adInfo.value = data
         }
-
 
 
         //绑定银行卡页面模块的可见性以及结算账户
@@ -586,11 +590,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         val ocrPBankVisibilityU: MutableLiveData<Int> = MutableLiveData()
 
 
-
         //绑定银行卡
         //0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
         val bindBandCard: MutableLiveData<Int> = MutableLiveData()
-
 
 
         //绑定银行卡结果
