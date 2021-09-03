@@ -20,6 +20,7 @@ import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.business.main.SubBranchActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.BankDetail
@@ -32,7 +33,7 @@ import org.greenrobot.eventbus.ThreadMode
 class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePresenter>() {
 
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     companion object {
 

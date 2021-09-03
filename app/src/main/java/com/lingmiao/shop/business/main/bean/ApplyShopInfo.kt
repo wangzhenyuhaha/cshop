@@ -119,6 +119,15 @@ data class ApplyShopInfo(
     @SerializedName("category_names")
     var categoryNames: String? = null,
 
+    //所属行业id（通联）
+    @SerializedName("mccid")
+    var mccid: Int? = null,
+
+    //所属行业名（通联
+    @SerializedName("mcc_name")
+    var mcc_name: String? = null,
+
+
     //店铺所在省
     @SerializedName("shop_province")
     var shopProvince: String? = null,

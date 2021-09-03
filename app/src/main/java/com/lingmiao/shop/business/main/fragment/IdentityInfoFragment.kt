@@ -18,6 +18,7 @@ import com.james.common.utils.exts.getViewText
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.FragmentIdentityInfoBinding
 import com.lingmiao.shop.util.DATE_FORMAT
@@ -28,7 +29,7 @@ import java.util.*
 
 class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePresenter>() {
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     //弹出的东西
     private var pop: ApplyInfoPop? = null
