@@ -9,7 +9,7 @@ interface ReplenishInfoPresenter : BasePresenter {
 
     fun searchCategory()
 
-    fun search2Category()
+    fun search2Category(id:String)
 
     fun showCategoryPop(context: Context, callback: (CategoryItem?, CategoryItem?) -> Unit)
 

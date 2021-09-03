@@ -127,7 +127,6 @@ data class ApplyShopInfo(
     @SerializedName("mcc_name")
     var mcc_name: String? = null,
 
-
     //店铺所在省
     @SerializedName("shop_province")
     var shopProvince: String? = null,

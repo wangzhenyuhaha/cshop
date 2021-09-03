@@ -73,38 +73,31 @@ class ReplenishInfoFragment :
     }
 
 
-    private fun showWorkCategoryPop(target: android.view.View) {
+    private fun showWorkCategoryPop() {
         mPresenter?.showCategoryPop(
             requireContext()
         ) { item1: CategoryItem?, item2: CategoryItem? ->
-            onUpdateWorkTime(item1, item2)
+            onUpdateCategory(item1, item2)
         }
     }
 
-    var shopReq: ApplyShopInfo = ApplyShopInfo()
 
-    fun onUpdateWorkTime(item1: CategoryItem?, item2: CategoryItem?) {
-        shopReq.openStartTime = item1?.itemName
-        // 处理【第二天】文字，服务端不需要返回
-        shopReq.openEndTime = item2?.itemName?.replace("第二天", "")
-        shopReq.openTimeType = item2?.getFullDayType()
-        setOperateTime()
-    }
+    private fun onUpdateCategory(item1: CategoryItem?, item2: CategoryItem?) {
+        val name = item1?.name + "/" + item2?.name
+        binding.goodsManagementCategoryTextView.text = name
 
-    fun setOperateTime() {
-        tvShopOperateTime.setText(
-            String.format(
-                "%s%s%s%s",
-                shopReq.openStartTime ?: "",
-                if (shopReq.openStartTime?.isEmpty() == true) "" else "-",
-                if (WorkTimeVo.isSecondDay(
-                        shopReq.openStartTime,
-                        shopReq.openEndTime
-                    )
-                ) "" else "第二天",
-                shopReq.openEndTime ?: ""
-            )
-        )
+
+        model.applyShopInfo.value?.also {
+            it.goodsManagementCategory = item1?.id
+            it.categoryNames = item1?.name
+            try {
+                it.mccid = item2?.id?.toInt()
+            } catch (e: Exception) {
+            }
+            it.mcc_name = item2?.name
+        }
+
+
     }
 
 
@@ -128,14 +121,7 @@ class ReplenishInfoFragment :
 
         //主营类目
         binding.goodsManagementCategory.setOnClickListener {
-//            val intent = Intent(requireActivity(), ApplyShopCategoryActivity::class.java)
-//            intent.putExtra(
-//                "goodsManagementCategory",
-//                model.applyShopInfo.value?.goodsManagementCategory
-//            )
-//            startActivity(intent)
-
-            showWorkCategoryPop(it)
+            showWorkCategoryPop()
         }
 
         //店铺地址
@@ -284,6 +270,12 @@ class ReplenishInfoFragment :
                 checkNotBlack(model.applyShopInfo.value?.goodsManagementCategory) {
                     "请选择主营类目"
                 }
+                checkNotBlack(model.applyShopInfo.value?.categoryNames) {
+                    "请选择主营类目"
+                }
+                checkNotBlack(model.applyShopInfo.value?.mcc_name) {
+                    "请选择主营类目"
+                }
                 checkNotBlack(model.applyShopInfo.value?.shopAdd) {
                     "请输入店铺地址"
                 }
@@ -350,8 +342,8 @@ class ReplenishInfoFragment :
 
             //店铺经营类目
             if (!info.categoryNames.isNullOrEmpty()) {
-                binding.goodsManagementCategoryTextView.text =
-                    info.categoryNames?.replace(" ", "/")
+                val temp = info.categoryNames + "/" + info.mcc_name
+                binding.goodsManagementCategoryTextView.text = temp
             }
 
             //店铺地址
@@ -418,7 +410,6 @@ class ReplenishInfoFragment :
             }
         }
     }
-
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)

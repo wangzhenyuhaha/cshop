@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.main.pop
 
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
@@ -95,7 +94,6 @@ abstract class DoubleItemPop<T : ItemData>(context: Context) :
                 lv1Adapter.getItem(position)?.apply {
                     //data1为当前点击的Item
                     data1 = this
-                    Log.d("WZYBB", data1!!.getIName())
                     //额外操作，获知点击的Item为哪一个，且将选中的Item变蓝
                     lv1Callback?.invoke(this)
                     //更新RecyclerView1
@@ -126,7 +124,6 @@ abstract class DoubleItemPop<T : ItemData>(context: Context) :
     //设置RecyclerView1数据
     fun setLv1Data(lv1List: List<T>) {
         lv1Adapter.replaceData(lv1List)
-        Log.d("WZYAAA",lv1List.size.toString())
     }
 
     //设置RecyclerView2数据

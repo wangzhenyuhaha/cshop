@@ -11,6 +11,7 @@ import com.lingmiao.shop.business.main.bean.CategoryItem
 import com.lingmiao.shop.business.main.pop.DoubleItemPop
 import com.lingmiao.shop.business.main.presenter.ReplenishInfoPresenter
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class ReplenishInfoPresenterImpl(private var view: ReplenishInfoPresenter.View) :
     BasePreImpl(view), ReplenishInfoPresenter {
@@ -34,21 +35,21 @@ class ReplenishInfoPresenterImpl(private var view: ReplenishInfoPresenter.View) 
             override fun getFirstAdapter() = mL1Adapter
             override fun getSecondAdapter() = mL2Adapter
         }.apply {
+            //点击第一个RecyclerView的item
             lv1Callback = {
                 l1Data = it
                 mL1Adapter.setSelectedItem(it.id)
-                Log.d("WZYAAA","A")
+                search2Category(it.id)
             }
             lv2Callback = {
-             //   l2Data = it
+                //获取到相关信息
                 callback.invoke(l1Data, it)
             }
         }
         mTwoItemPop?.setPopTitle("请选择主营类目")
         //为第一个RecyclerView赋值
-
         searchCategory()
-       // search2Category()
+        mTwoItemPop?.showPopupWindow()
 
     }
 
@@ -63,41 +64,36 @@ class ReplenishInfoPresenterImpl(private var view: ReplenishInfoPresenter.View) 
             val resp = GoodsRepository.loadCategory()
             if (resp.isSuccess) {
                 val temp = mutableListOf<CategoryItem>()
-
                 for (i in resp.data) {
                     val data = CategoryItem()
                     data.id = i.categoryId
                     data.name = i.name
                     temp.add(data)
                 }
-
                 mTwoItemPop?.setLv1Data(temp)
-                mTwoItemPop?.showPopupWindow()
-//            						view.onApplyShopCategorySuccess(resp.data)
             }
         }
     }
 
-    override fun search2Category() {
+    override fun search2Category(id: String) {
 
-        //666为例子
         mCoroutine.launch {
-            val resp = GoodsRepository.loadCategory2(670)
-           // Log.d("WZYAAA", resp.data.size.toString() )
-            if (resp.isSuccess)
-            {
+            try {
+                val resp = GoodsRepository.loadCategory2(id.toInt())
+                if (resp.isSuccess) {
+                    val temp = mutableListOf<CategoryItem>()
+                    for (i in resp.data) {
+                        val data = CategoryItem()
+                        data.id = i.mccid.toString()
+                        data.name = i.mcc_name
+                        temp.add(data)
+                    }
+                    mTwoItemPop?.setLv2Data(temp)
+                }
+            } catch (e: Exception) {
 
-                Log.d("WZYAAA", "哈哈哈" )
-                Log.d("WZYAAA", resp.data[0].mcc_name )
-//                for (i in resp.data)
-//                {
-//                    Log.d("WZYAAA", i. )
-//                }
-            }else{
-                Log.d("WZYAAA", "失败了" )
             }
         }
     }
-
 
 }

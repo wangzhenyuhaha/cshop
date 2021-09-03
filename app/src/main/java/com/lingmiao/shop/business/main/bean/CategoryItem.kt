@@ -14,20 +14,8 @@ class CategoryItem : ItemData {
     var id: String = ""
     var name: String = ""
 
-    //店铺经营类目    ids
-    var goodsManagementCategory: String = ""
 
-    //店铺经营类目 返回文本
-    var categoryNames: String = ""
-
-    //所属行业id（通联）
-    var mccid: String = ""
-
-    //所属行业名（通联
-    var mcc_name: String = ""
-
-
-    override fun getIValue(): String? {
+    override fun getIValue(): String {
         return id
     }
 
