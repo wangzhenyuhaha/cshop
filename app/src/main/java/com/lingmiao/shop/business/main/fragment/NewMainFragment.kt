@@ -64,7 +64,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
 
-
     companion object {
         fun newInstance(): NewMainFragment {
             return NewMainFragment()
@@ -504,10 +503,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onAccountSettingSuccess(bean: AccountSetting) {
         accountSetting = bean
-//        if(BuildConfig.DEBUG){
-//            bean.castUpdate = true
-//            bean.needUpgrade = true
-//        }
         if (!bean.needUpgrade) return
         versionUpdateDialog = DialogUtils.showVersionUpdateDialog(
             activity!!, "版本更新", bean.upgradeContent ?: "", null,
