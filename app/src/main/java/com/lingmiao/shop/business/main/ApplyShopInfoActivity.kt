@@ -57,7 +57,7 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     override fun getLayoutId() = R.layout.main_activity_apply_shop_info
 
-    override fun createPresenter() = ApplyShopInfoPreseShnterImpl(this, this)
+    override fun createPresenter() = ApplyShopInfoPresenterImpl(this, this)
 
     override fun useLightMode() = false
 
