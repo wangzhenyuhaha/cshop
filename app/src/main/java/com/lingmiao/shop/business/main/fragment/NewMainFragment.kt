@@ -15,10 +15,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.gone
-import com.james.common.utils.exts.show
-import com.james.common.utils.exts.singleClick
-import com.james.common.utils.exts.visiable
+import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.ShopStatusConstants
@@ -45,6 +42,8 @@ import com.lingmiao.shop.business.sales.UserManagerActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
+import com.lingmiao.shop.util.WebCameraUtil
+import com.lingmiao.shop.util.WebCameraUtil.CallBack
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_new_main.*
 import org.greenrobot.eventbus.EventBus
@@ -365,7 +364,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         authLayout.setOnClickListener {
             if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
                 // 进见补填
-                ActivityUtils.startActivity(ApplySupplementActivity::class.java)
+                WebCameraUtil.permissionHandle(activity, callBack)
             } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
                 || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING
                 || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
@@ -494,6 +493,29 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)
         }
+    }
+
+    // 进见/资料补充引发拍照权限
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(WebCameraUtil.isPermissionGranted(this)) {
+            callBack.call();
+        }
+    }
+
+    var callBack = CallBack {
+        if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
+            // 进见补填
+            toApplySupplement();
+        }
+    }
+
+    fun toApplySupplement() {
+        ActivityUtils.startActivity(ApplySupplementActivity::class.java)
     }
 
     override fun onMainInfoError(code: Int) {
