@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.bean
 
-import android.util.Log
 import com.lingmiao.shop.business.commonpop.bean.ItemData
 
 
@@ -12,6 +11,8 @@ class CategoryItem : ItemData {
 
     var itemValue: String? = ""
 
+    var id: String = ""
+    var name: String = ""
 
     //店铺经营类目    ids
     var goodsManagementCategory: String = ""
@@ -20,22 +21,18 @@ class CategoryItem : ItemData {
     var categoryNames: String = ""
 
     //所属行业id（通联）
-    var mccid: Int = 0
+    var mccid: String = ""
 
     //所属行业名（通联
     var mcc_name: String = ""
 
 
     override fun getIValue(): String? {
-        return itemValue
+        return id
     }
 
-    override fun getIName(): String? {
-        return if (categoryNames.isEmpty()) {
-            mcc_name
-        } else {
-            categoryNames
-        }
+    override fun getIName(): String {
+        return name
     }
 
     override fun getIHint(): String? {
