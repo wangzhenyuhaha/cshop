@@ -57,6 +57,10 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(), ApplyShopH
         return false
     }
 
+    //https://www.jianshu.com/p/d7ea4f0493e1
+    //https://www.cnblogs.com/rustfisher/p/11704563.html
+    //https://blog.csdn.net/cunchi4221/article/details/107475770
+    //https://mp.weixin.qq.com/s/i088pd4y61gPRnnofjpJAA
     private fun downloadImage(callback: (result: File?) -> Unit) {
         ThreadUtils.executeBySingle(object : ThreadUtils.SimpleTask<File?>() {
             override fun doInBackground(): File? {

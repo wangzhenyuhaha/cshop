@@ -7,7 +7,7 @@ import java.io.Serializable
 //-----以上非注明皆为必填
 data class ApplyShopInfo(
 
-    //店铺类型:1,企业     3,个体户
+    //店铺类型:1,企业     3,个体户   4,个人店铺
     @SerializedName("shop_type")
     var shopType: Int? = null,
 

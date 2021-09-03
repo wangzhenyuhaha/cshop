@@ -90,6 +90,32 @@
 
                 </RelativeLayout>
 
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/shopInfoPersonal"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="@dimen/dimen_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="个人"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/shopInfoPersonalImageView"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/selector_login_service" />
+
+                </RelativeLayout>
+
 
             </com.james.common.view.ILinearLayout>
 
