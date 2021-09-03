@@ -105,10 +105,6 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
         tvMidTitle?.text = midTitle ?: ""
     }
 
-    fun getMidTitle() : TextView? {
-        return tvMidTitle;
-    }
-
     fun hideArrow() {
         (context as? AppCompatActivity)?.getSupportActionBar()?.setDisplayHomeAsUpEnabled(false)
     }
