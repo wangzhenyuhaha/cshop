@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.main
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -11,6 +12,7 @@ import com.lingmiao.shop.business.main.presenter.IElectricSignPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ElectricSignPresenterImpl
 import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
 import com.lingmiao.shop.databinding.MainActivityElectricSignBinding
+import com.lingmiao.shop.widget.PaxWebChromeClient
 
 /**
 Create Date : 2021/8/144:50 下午
@@ -18,6 +20,8 @@ Auther      : Fox
 Desc        :
  **/
 class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IElectricSignPresenter>(), IElectricSignPresenter.View {
+
+    lateinit var chromeClient : PaxWebChromeClient;
 
     override fun createPresenter(): IElectricSignPresenter {
         return ElectricSignPresenterImpl(this, this);
@@ -65,6 +69,9 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
         }
         mBinding.wvView.settings.javaScriptEnabled = true
         mBinding.wvView.addJavascriptInterface(this, "android")
+        //辅助WebView处理图片上传操作
+        chromeClient = PaxWebChromeClient(this, mToolBarDelegate?.getMidTitle());
+        mBinding.wvView.setWebChromeClient(chromeClient);
     }
 
     override fun setUrl(url: String?) {
@@ -92,6 +99,20 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
             return false;
         }
         return super.onSupportNavigateUp();
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        chromeClient.onActivityResult(requestCode,resultCode,data)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        chromeClient.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
 }
