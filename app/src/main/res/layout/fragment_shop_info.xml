@@ -90,13 +90,18 @@
 
                 </RelativeLayout>
 
-                <View style="@style/DivideLineHorizontal" />
+                <View
+                    style="@style/DivideLineHorizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/shopInfoPersonal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="@dimen/dimen_8">
+                    android:layout_marginEnd="@dimen/dimen_8"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -139,6 +144,45 @@
                     android:textSize="13sp" />
 
                 <View style="@style/DivideLineHorizontal" />
+
+                <!--                店铺租聘合同-->
+                <RelativeLayout
+                    android:id="@+id/hire"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        style="@style/goods_spce_item_left_mark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="店铺租聘合同"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/hireTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="100dp"
+                        android:layout_marginEnd="16dp"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="店铺租聘合同"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp" />
+
+                    <ImageView
+                        android:layout_width="6dp"
+                        android:layout_height="11dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/me_arrow_right" />
+                </RelativeLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/thrcertflag"
