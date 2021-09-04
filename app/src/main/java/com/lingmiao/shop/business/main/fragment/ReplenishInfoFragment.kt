@@ -1,7 +1,5 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.content.Intent
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.RegexUtils
 import com.blankj.utilcode.util.ToastUtils
-import com.james.common.base.BasePreImpl
-import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.checkBoolean
@@ -20,19 +16,26 @@ import com.james.common.utils.exts.checkNotBlack
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
-import com.lingmiao.shop.business.main.ApplyShopCategoryActivity
-import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.business.main.ShopAddressActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopCategory
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
+import com.lingmiao.shop.business.main.bean.CategoryItem
+import com.lingmiao.shop.business.main.presenter.ReplenishInfoPresenter
+import com.lingmiao.shop.business.main.presenter.impl.ReplenishInfoPresenterImpl
 import com.lingmiao.shop.databinding.FragmentReplenishInfoBinding
+import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
-class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BasePresenter>() {
+class ReplenishInfoFragment :
+    BaseVBFragment<FragmentReplenishInfoBinding, ReplenishInfoPresenter>(),
+    ReplenishInfoPresenter.View {
 
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     //判断身份证信息是否完整
     private fun isIDCardReady(): Boolean {
@@ -69,6 +72,35 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
         return true
     }
 
+
+    private fun showWorkCategoryPop() {
+        mPresenter?.showCategoryPop(
+            requireContext()
+        ) { item1: CategoryItem?, item2: CategoryItem? ->
+            onUpdateCategory(item1, item2)
+        }
+    }
+
+
+    private fun onUpdateCategory(item1: CategoryItem?, item2: CategoryItem?) {
+        val name = item1?.name + "/" + item2?.name
+        binding.goodsManagementCategoryTextView.text = name
+
+
+        model.applyShopInfo.value?.also {
+            it.goodsManagementCategory = item1?.id
+            it.categoryNames = item1?.name
+            try {
+                it.mccid = item2?.id?.toInt()
+            } catch (e: Exception) {
+            }
+            it.mcc_name = item2?.name
+        }
+
+
+    }
+
+
     private fun initListener() {
         //店铺名称
         binding.shopName.setOnClickListener {
@@ -89,12 +121,7 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
         //主营类目
         binding.goodsManagementCategory.setOnClickListener {
-            val intent = Intent(requireActivity(), ApplyShopCategoryActivity::class.java)
-            intent.putExtra(
-                "goodsManagementCategory",
-                model.applyShopInfo.value?.goodsManagementCategory
-            )
-            startActivity(intent)
+            showWorkCategoryPop()
         }
 
         //店铺地址
@@ -236,11 +263,17 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
         //下一步
         binding.tvApplyShopInfoNext.setOnClickListener {
             try {
-                Log.d("WZYAAB",model.applyShopInfo.value?.promoCode.toString())
+                Log.d("WZYAAB", model.applyShopInfo.value?.promoCode.toString())
                 checkNotBlack(model.applyShopInfo.value?.shopName) {
                     "请输入店铺名称"
                 }
                 checkNotBlack(model.applyShopInfo.value?.goodsManagementCategory) {
+                    "请选择主营类目"
+                }
+                checkNotBlack(model.applyShopInfo.value?.categoryNames) {
+                    "请选择主营类目"
+                }
+                checkNotBlack(model.applyShopInfo.value?.mcc_name) {
                     "请选择主营类目"
                 }
                 checkNotBlack(model.applyShopInfo.value?.shopAdd) {
@@ -309,8 +342,8 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
             //店铺经营类目
             if (!info.categoryNames.isNullOrEmpty()) {
-                binding.goodsManagementCategoryTextView.text =
-                    info.categoryNames?.replace(" ", "/")
+                val temp = info.categoryNames + "/" + info.mcc_name
+                binding.goodsManagementCategoryTextView.text = temp
             }
 
             //店铺地址
@@ -363,8 +396,6 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 
     }
 
-
-
     override fun onPause() {
         super.onPause()
         if (model.firstApplyShop) {
@@ -377,34 +408,6 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
             model.personalAccount.value?.also {
                 UserManager.setPersonalAccount(it)
             }
-        }
-    }
-
-    // 单选
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateShopCategory(applyShopCategory: CategoryVO) {
-        val categoryIdSB = StringBuilder()
-        val categoryNameSB = StringBuilder()
-        categoryIdSB.append(applyShopCategory.categoryId)
-        categoryNameSB.append(applyShopCategory.name)
-        model.applyShopInfo.value?.goodsManagementCategory = categoryIdSB.toString()
-        model.applyShopInfo.value?.categoryNames = categoryNameSB.toString()
-        binding.goodsManagementCategoryTextView.text = categoryNameSB.toString()
-    }
-
-    // 多选
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun updateShopCategory(event: List<ApplyShopCategory>) {
-        model.setCategory(event)
-        val categoryIdSB = StringBuilder()
-        val categoryNameSB = StringBuilder()
-        model.selectedCategoryListLiveData.value?.forEachIndexed { _, applyShopCategory ->
-            categoryIdSB.append(applyShopCategory.categoryId)
-            categoryNameSB.append(applyShopCategory.name)
-//            if (index < (selectedCategoryList?.size ?: 0) - 1) {
-//                categoryIdSB.append(",")
-//                categoryNameSB.append("/")
-//            }
         }
     }
 
@@ -443,20 +446,14 @@ class ReplenishInfoFragment : BaseVBFragment<FragmentReplenishInfoBinding, BaseP
 //    }
 
 
-    override fun createPresenter(): BasePresenter {
-        return BasePreImpl(this)
-    }
+    override fun createPresenter() = ReplenishInfoPresenterImpl(this)
 
     override fun getBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ) = FragmentReplenishInfoBinding.inflate(inflater, container, false)
 
-
-    override fun useEventBus(): Boolean {
-        return true
-    }
-
+    override fun useEventBus() = true
 
     override fun initViewsAndData(rootView: View) {
         model.setTitle("补充资料")
