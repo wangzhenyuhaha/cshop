@@ -13,6 +13,7 @@ import com.james.common.base.BaseVBFragment
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.business.photo.GlideEngine
 import com.lingmiao.shop.databinding.FragmentShopIdCardBinding
 import com.lingmiao.shop.util.OtherUtils
@@ -25,7 +26,7 @@ import kotlinx.coroutines.launch
 
 class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresenter>() {
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     private var type: Int = 0
 

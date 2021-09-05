@@ -7,7 +7,7 @@ import java.io.Serializable
 //-----以上非注明皆为必填
 data class ApplyShopInfo(
 
-    //店铺类型:1,企业     3,个体户
+    //店铺类型:1,企业     3,个体户   4,个人店铺
     @SerializedName("shop_type")
     var shopType: Int? = null,
 
@@ -119,6 +119,14 @@ data class ApplyShopInfo(
     @SerializedName("category_names")
     var categoryNames: String? = null,
 
+    //所属行业id（通联）
+    @SerializedName("mccid")
+    var mccid: Int? = null,
+
+    //所属行业名（通联
+    @SerializedName("mcc_name")
+    var mcc_name: String? = null,
+
     //店铺所在省
     @SerializedName("shop_province")
     var shopProvince: String? = null,
@@ -222,6 +230,10 @@ data class ApplyShopInfo(
 //店铺绑定的银行卡
     @SerializedName("bank_card")
     var bankCard: BindBankCardDTO? = null,
+
+    //签约承诺函
+    @SerializedName("authorpic")
+    var authorpic: String? = null,
 
 //推广码(非必填，申请店铺时如果邀请码填错，无法申请店铺)
     @SerializedName("promo_code")

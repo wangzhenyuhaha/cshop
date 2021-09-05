@@ -6,6 +6,8 @@ import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
+import com.lingmiao.shop.business.main.bean.TlMccListVO
+import com.lingmiao.shop.business.main.bean.TlMccListVOItem
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import retrofit2.Call
 import retrofit2.http.*
@@ -22,14 +24,14 @@ interface GoodsApiService {
      */
     @GET("seller/statistics/dashboard/shop")
     @WithHiResponse
-    fun getDashboardData() : Call<DashboardDataVo>
+    fun getDashboardData(): Call<DashboardDataVo>
 
     /**
      * 查询预警商品
      */
     @GET("/seller/goods/getQuantityWarnGoods")
     @WithHiResponse
-    fun getGoodsWarningData() : Call<GoodsVO>
+    fun getGoodsWarningData(): Call<GoodsVO>
 
     /**
      * 查询商品列表
@@ -50,14 +52,17 @@ interface GoodsApiService {
      */
     @POST("seller/goods")
     @WithHiResponse
-    fun submitGoods(@Body goods : GoodsVOWrapper): Call<GoodsVOWrapper>
+    fun submitGoods(@Body goods: GoodsVOWrapper): Call<GoodsVOWrapper>
 
     /**
      * 编辑商品
      */
     @PUT("seller/goods/{id}")
     @WithHiResponse
-    fun modifyGoods(@Path(value = "id") goodsId: String, @Body goods : GoodsVOWrapper): Call<GoodsVOWrapper>
+    fun modifyGoods(
+        @Path(value = "id") goodsId: String,
+        @Body goods: GoodsVOWrapper
+    ): Call<GoodsVOWrapper>
 
     /**
      * 查询商品
@@ -88,13 +93,20 @@ interface GoodsApiService {
      */
     @PUT("seller/goods/{goods_id}/quantity")
     @WithHiResponse
-    fun updateGoodsQuantity(@Path(value = "goods_id") goodsId: String, @Body skuList: List<QuantityRequest>): Call<GoodsVO>
+    fun updateGoodsQuantity(
+        @Path(value = "goods_id") goodsId: String,
+        @Body skuList: List<QuantityRequest>
+    ): Call<GoodsVO>
 
     /**
      * 活动库存与价格
      */
     @POST("seller/goods/{goods_id}/quantityAndPrice")
-    fun updateGoodsQuantityAndPrice(@Path(value = "goods_id") goodsId: String, @Body list :PriceAndQuantity) : Call<Unit>
+    fun updateGoodsQuantityAndPrice(
+        @Path(value = "goods_id") goodsId: String,
+        @Body list: PriceAndQuantity
+    ): Call<Unit>
+
     /**
      * 批量佣金
      * http://t-api.seller.fisheagle.cn:7003/seller/distribution/batchEditGoods/{goods_id}
@@ -102,7 +114,10 @@ interface GoodsApiService {
     @FormUrlEncoded
     @PUT("seller/distribution/batchEditGoods/{goods_id}")//?grade1Rebate={grade1Rebate}&grade2Rebate={grade2Rebate}&inviterRate={inviterRate}
     @WithHiResponse
-    fun batchRebate(@Path(value = "goods_id") goodsId: String, @FieldMap map: MutableMap<String, Any>) : Call<Boolean>
+    fun batchRebate(
+        @Path(value = "goods_id") goodsId: String,
+        @FieldMap map: MutableMap<String, Any>
+    ): Call<Boolean>
 
     /**
      * 佣金
@@ -111,7 +126,7 @@ interface GoodsApiService {
     @FormUrlEncoded
     @PUT("seller/distribution/goods")
     @WithHiResponse
-    fun rebate(@FieldMap map: MutableMap<String, Any>) : Call<Unit>
+    fun rebate(@FieldMap map: MutableMap<String, Any>): Call<Unit>
 
     /**
      * http://t-api.seller.fisheagle.cn:7003/seller/distribution/goods/{id}
@@ -141,7 +156,18 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @GET("seller/goods/category/app/{category_id}/children")
-    fun loadUserCategory(@Path("category_id") categoryId: String?, @Query(value = "seller_id") id: String?=null): Call<List<CategoryVO>>
+    fun loadUserCategory(
+        @Path("category_id") categoryId: String?,
+        @Query(value = "seller_id") id: String? = null
+    ): Call<List<CategoryVO>>
+
+
+    /**
+     * 通联分类
+     */
+    @WithHiResponse
+    @GET("seller/shops/allinpay/queryTlMccList/{category_id}")
+    fun loadCategoryMccList(@Path("category_id") categoryId: Int?): Call<List<TlMccListVOItem>>
 
 
     /**
@@ -153,7 +179,10 @@ interface GoodsApiService {
 
     @WithHiResponse
     @PUT("seller/goods/category/update/{id}")
-    fun updateCategory(@Path(value = "id") id: String, @QueryMap data : MutableMap<String, Any>): Call<CategoryVO>
+    fun updateCategory(
+        @Path(value = "id") id: String,
+        @QueryMap data: MutableMap<String, Any>
+    ): Call<CategoryVO>
 
     /**
      * 删除商品
@@ -175,14 +204,20 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @POST("seller/goods/categories/{category_id}/specs")
-    fun submitSpceKey(@Path("category_id") categoryId: String, @Query("spec_name") specName: String): Call<SpecKeyVO>
+    fun submitSpceKey(
+        @Path("category_id") categoryId: String,
+        @Query("spec_name") specName: String
+    ): Call<SpecKeyVO>
 
     /**
      * 添加自定义的规格值
      */
     @WithHiResponse
     @POST("seller/goods/specs/{spec_id}/batch/values")
-    fun submitSpceValues(@Path("spec_id") specKeyId: String, @Query("value_name") valueNames: String): Call<List<SpecValueVO>>
+    fun submitSpceValues(
+        @Path("spec_id") specKeyId: String,
+        @Query("value_name") valueNames: String
+    ): Call<List<SpecValueVO>>
 
     /**
      * 商品分类
@@ -219,7 +254,10 @@ interface GoodsApiService {
     //isTop=1  获取置顶菜单       isTop=0  获取常用菜单
     @WithHiResponse
     @GET("seller/shops/cats")
-    fun loadLv1ShopGroup(@Query("is_top") isTop: Int,@Query("cat_path") catPath: String?): Call<List<ShopGroupVO>>
+    fun loadLv1ShopGroup(
+        @Query("is_top") isTop: Int,
+        @Query("cat_path") catPath: String?
+    ): Call<List<ShopGroupVO>>
 
     @WithHiResponse
     @GET("seller/shops/cats/{cat_pid}/children")
@@ -227,7 +265,10 @@ interface GoodsApiService {
 
     @WithHiResponse
     @GET("seller/shops/cats/{cat_pid}/children")
-    fun load2LvShopGroup(@Path(value = "cat_pid") groupId: String, @Query("is_top") isTop: Int): Call<List<ShopGroupVO>>
+    fun load2LvShopGroup(
+        @Path(value = "cat_pid") groupId: String,
+        @Query("is_top") isTop: Int
+    ): Call<List<ShopGroupVO>>
 
     /**
      * 添加店铺分组
@@ -246,11 +287,18 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @PUT("seller/shops/cats/{id}")
-    fun updateShopGroup(@Path(value = "id") groupId: String, @QueryMap map: MutableMap<String, Any>): Call<ShopGroupVO>
+    fun updateShopGroup(
+        @Path(value = "id") groupId: String,
+        @QueryMap map: MutableMap<String, Any>
+    ): Call<ShopGroupVO>
 
     @WithHiResponse
     @GET("seller/shops/cats/adjust_sort")
-    fun sort(@Query("is_top") isTop: Int, @Query("shop_cat_id") shopCatId : String, @Query("sort") sort : Int) : Call<Unit>
+    fun sort(
+        @Query("is_top") isTop: Int,
+        @Query("shop_cat_id") shopCatId: String,
+        @Query("sort") sort: Int
+    ): Call<Unit>
 
     @WithHiResponse
     @DELETE("seller/shops/cats/{id}")
@@ -268,7 +316,10 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @POST("seller/shops/cats/bindGoods")
-    fun bindGoods(@Query("goods_ids") ids: List<Int?>? ,@Query("shop_cat_id") id : String?) : Call<Unit>
+    fun bindGoods(
+        @Query("goods_ids") ids: List<Int?>?,
+        @Query("shop_cat_id") id: String?
+    ): Call<Unit>
     /***************************中心库****************************************************/
     /**
      * 中心库商品
@@ -297,13 +348,15 @@ interface GoodsApiService {
     fun addInfo(@Body body: GoodsParamVo): Call<GoodsParamVo>
 
 
-
     /**
      * 获取商品信息列表
      */
     @WithHiResponse
     @GET("seller/goods/parameters/getByCategoryAndSeller")
-    fun getInfoListOfCategory(@Query("category_ids") categoryIds: String, @Query(value = "seller_id") id: Int?=null): Call<List<GoodsParamVo>>
+    fun getInfoListOfCategory(
+        @Query("category_ids") categoryIds: String,
+        @Query(value = "seller_id") id: Int? = null
+    ): Call<List<GoodsParamVo>>
 
     /**
      * 商品信息删除
@@ -325,7 +378,10 @@ interface GoodsApiService {
      */
     @WithHiResponse
     @POST("seller/goods/categories/{c_id}/specs")
-    fun addSpec(@Path(value = "c_id") cid: String, @Query("spec_name") name: String): Call<GoodsSpecVo>
+    fun addSpec(
+        @Path(value = "c_id") cid: String,
+        @Query("spec_name") name: String
+    ): Call<GoodsSpecVo>
 
     @WithHiResponse
     @DELETE("seller/goods/specs/{ids}")
@@ -344,9 +400,16 @@ interface GoodsApiService {
 
     @WithHiResponse
     @GET("seller/statistics/goods/goodsSales")
-    fun goodsSales(@Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<GoodsSalesRespBean>
+    fun goodsSales(
+        @Query("start_time") startTime: Long,
+        @Query("end_time") endTime: Long
+    ): Call<GoodsSalesRespBean>
 
     @WithHiResponse
     @GET("seller/statistics/reports/sales_count")
-    fun salesCount(@Query("cycle_type") type: String, @Query("start_time")startTime : Long, @Query("end_time") endTime : Long) : Call<StatsSalesVo>
+    fun salesCount(
+        @Query("cycle_type") type: String,
+        @Query("start_time") startTime: Long,
+        @Query("end_time") endTime: Long
+    ): Call<StatsSalesVo>
 }
