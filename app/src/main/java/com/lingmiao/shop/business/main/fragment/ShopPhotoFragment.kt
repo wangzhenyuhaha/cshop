@@ -14,6 +14,7 @@ import com.james.common.base.BaseVBFragment
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.business.photo.GlideEngine
 import com.lingmiao.shop.databinding.FragmentShopPhotoBinding
 import com.lingmiao.shop.util.OtherUtils
@@ -26,7 +27,7 @@ import kotlinx.coroutines.launch
 
 class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter>() {
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     private var type: Int = 0
 
@@ -122,6 +123,14 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                     Glide.with(requireActivity()).load(it).into(binding.imageView)
                 }
                 model.setTitle("上传银行卡正面照")
+            }
+            ApplyShopInfoActivity.AUTHOR_PIC -> {
+                binding.linearLayout.visibility = View.GONE
+                binding.imageView.visibility = View.VISIBLE
+                model.applyShopInfo.value?.authorpic?.also {
+                    Glide.with(requireActivity()).load(it).into(binding.imageView)
+                }
+                model.setTitle("上传商户签约承诺函")
             }
             else -> {
 
@@ -299,6 +308,12 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                             model.getOCR.value = 6
                         }
 
+                    }
+                    ApplyShopInfoActivity.AUTHOR_PIC->{
+                        model.applyShopInfo.value?.authorpic = uploadFile.data.url
+                        uploadFile.data.url?.also{
+                            Glide.with(requireActivity()).load(it).into(binding.imageView)
+                        }
                     }
                 }
                 showToast("上传成功")

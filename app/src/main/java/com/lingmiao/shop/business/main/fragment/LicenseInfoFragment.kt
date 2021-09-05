@@ -12,6 +12,7 @@ import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.databinding.FragmentLicenseInfoBinding
 import com.lingmiao.shop.util.DATE_FORMAT
 import com.lingmiao.shop.util.dateTime2Date
@@ -22,7 +23,7 @@ import java.util.*
 class LicenseInfoFragment : BaseVBFragment<FragmentLicenseInfoBinding, BasePresenter>() {
 
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     //时间选择器
     private var pvCustomTime: TimePickerView? = null

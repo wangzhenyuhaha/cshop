@@ -273,7 +273,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="负责人"
+                            android:text="负责人（实际运营人员）"
                             android:textColor="#ff333333"
                             android:textSize="13sp" />
 
@@ -476,8 +476,6 @@
 
 
                 </com.james.common.view.ILinearLayout>
-
-
 
 
             </LinearLayout>

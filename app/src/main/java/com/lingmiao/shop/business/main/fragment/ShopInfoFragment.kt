@@ -16,11 +16,12 @@ import com.james.common.utils.exts.checkNotBlack
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
+import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.databinding.FragmentShopInfoBinding
 
 class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>() {
 
-    private val model by activityViewModels<ApplyShopInfoActivity.ApplyShopInfoViewModel>()
+    private val model by activityViewModels<ApplyShopInfoViewModel>()
 
     override fun createPresenter() = BasePreImpl(this)
 
