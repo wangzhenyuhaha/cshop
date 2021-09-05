@@ -22,10 +22,10 @@ object VoiceUtils {
     }
 
     fun playVoice(context: Context?, resId: Int) {
-        if (soundPool == null) {
-            soundPool = SoundPool.Builder().setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_ALARM).build()).setMaxStreams(1).build();
-            soundID = soundPool!!.load(context, resId, 1)
+        if(soundPool == null) {
+            soundPool = SoundPool.Builder().setAudioAttributes(AudioAttributes.Builder().setLegacyStreamType(AudioManager.STREAM_MUSIC).build()).setMaxStreams(1).build();
         }
+        soundID = soundPool!!.load(context, resId, 1)
         MainScope().launch {
             delay(200)//load音频需要时间,没有load完则会没有声音
             soundPool?.play(soundID, 1f, 1f, 0, 0, 1f)
