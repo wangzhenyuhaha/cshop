@@ -90,13 +90,16 @@
 
                 </RelativeLayout>
 
-                <View style="@style/DivideLineHorizontal" />
+                <View
+                    style="@style/DivideLineHorizontal"
+                    android:visibility="gone" />
 
                 <RelativeLayout
                     android:id="@+id/shopInfoPersonal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="@dimen/dimen_8">
+                    android:layout_marginEnd="@dimen/dimen_8"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -253,7 +256,8 @@
                         android:layout_centerVertical="true"
                         android:text="营业执照照片"
                         android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:visibility="gone" />
 
 
                     <TextView
