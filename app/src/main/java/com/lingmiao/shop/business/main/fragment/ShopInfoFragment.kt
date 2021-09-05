@@ -47,6 +47,7 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
         binding.shopInfoSelf.setOnClickListener {
             binding.shopInfoSelfImageView.isSelected = true
             binding.shopInfoCompanyImageView.isSelected = false
+            binding.shopInfoPersonalImageView.isSelected = false
             model.applyShopInfo.value?.shopType = 3
         }
 
@@ -54,7 +55,17 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
         binding.shopInfoCompany.setOnClickListener {
             binding.shopInfoSelfImageView.isSelected = false
             binding.shopInfoCompanyImageView.isSelected = true
+            binding.shopInfoPersonalImageView.isSelected = false
             model.applyShopInfo.value?.shopType = 1
+        }
+
+        //个人
+        binding.shopInfoPersonal.setOnClickListener {
+            binding.shopInfoSelfImageView.isSelected = false
+            binding.shopInfoCompanyImageView.isSelected = false
+            binding.shopInfoPersonalImageView.isSelected = true
+            model.applyShopInfo.value?.shopType = 4
+
         }
 
         //是否三证合一
