@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,8 @@ import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.exts.checkBoolean
 import com.james.common.utils.exts.checkNotBlack
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
@@ -45,27 +46,20 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         //个体户
         binding.shopInfoSelf.setOnClickListener {
-            binding.shopInfoSelfImageView.isSelected = true
-            binding.shopInfoCompanyImageView.isSelected = false
-            binding.shopInfoPersonalImageView.isSelected = false
             model.applyShopInfo.value?.shopType = 3
+            model.shopType.value = 3
         }
 
         //企业
         binding.shopInfoCompany.setOnClickListener {
-            binding.shopInfoSelfImageView.isSelected = false
-            binding.shopInfoCompanyImageView.isSelected = true
-            binding.shopInfoPersonalImageView.isSelected = false
             model.applyShopInfo.value?.shopType = 1
+            model.shopType.value = 1
         }
 
         //个人
         binding.shopInfoPersonal.setOnClickListener {
-            binding.shopInfoSelfImageView.isSelected = false
-            binding.shopInfoCompanyImageView.isSelected = false
-            binding.shopInfoPersonalImageView.isSelected = true
             model.applyShopInfo.value?.shopType = 4
-
+            model.shopType.value = 4
         }
 
         //是否三证合一
@@ -134,7 +128,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         //下一步
         binding.nextTextView.setOnClickListener {
-            Log.d("WZYAAA", model.applyShopInfo.value?.promoCode.toString())
             try {
                 checkBoolean(model.applyShopInfo.value?.shopType != null) {
                     "请选择店铺类型"
@@ -178,20 +171,68 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
     private fun initObserver() {
 
-        model.applyShopInfo.observe(this, Observer {
 
-            //店铺类型
-            if (it.shopType != null) {
-                if (it.shopType == 3) {
-                    //企业
-                    binding.shopInfoSelfImageView.isSelected = true
-                    binding.shopInfoCompanyImageView.isSelected = false
-                } else {
-                    //个体户
+        model.shopType.observe(this, Observer {
+            // 1,企业     3,个体户   4,个人店铺
+            when (it) {
+                1 -> {
                     binding.shopInfoSelfImageView.isSelected = false
                     binding.shopInfoCompanyImageView.isSelected = true
+                    binding.shopInfoPersonalImageView.isSelected = false
+
+                    //设置模块可见性
+                    binding.hire.gone()
+                    binding.thrcertflag.visiable()
+                    binding.license1.visiable()
+                    binding.license2.gone()
+
+                }
+                3 -> {
+                    binding.shopInfoSelfImageView.isSelected = true
+                    binding.shopInfoCompanyImageView.isSelected = false
+                    binding.shopInfoPersonalImageView.isSelected = false
+
+                    //设置模块可见性
+                    binding.hire.gone()
+                    binding.thrcertflag.visiable()
+                    binding.license1.visiable()
+                    binding.license2.gone()
+
+
+                }
+                4 -> {
+                    binding.shopInfoSelfImageView.isSelected = false
+                    binding.shopInfoCompanyImageView.isSelected = false
+                    binding.shopInfoPersonalImageView.isSelected = true
+
+                    //设置模块可见性
+                    binding.hire.visiable()
+                    binding.thrcertflag.gone()
+                    binding.license1.gone()
+                    binding.license2.visiable()
+
+
                 }
             }
+
+
+        })
+
+
+        model.thrcertflag.observe(this, Observer {
+            when (it) {
+                1 -> {
+
+                }
+                0 -> {
+
+                }
+            }
+        })
+
+
+
+        model.applyShopInfo.observe(this, Observer {
 
             //是否三证合一
             if (it.thrcertflag == null) {
