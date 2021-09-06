@@ -488,7 +488,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 失效
         layoutTodayInvalid.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(4))
+            EventBus.getDefault().post(TabChangeEvent(4, "CANCELLED"))
         }
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)

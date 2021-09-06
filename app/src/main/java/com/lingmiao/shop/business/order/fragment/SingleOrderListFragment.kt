@@ -10,6 +10,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.bigkoo.pickerview.view.TimePickerView
+import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
@@ -19,6 +20,7 @@ import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.james.common.view.ITextView
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.order.*
 import com.lingmiao.shop.business.order.adapter.OrderListAdapter
 import com.lingmiao.shop.business.order.bean.OrderList
@@ -29,6 +31,8 @@ import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 private const val STATUS = "param1"
@@ -77,9 +81,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         return R.layout.order_fragment_single_order
     }
 
+    override fun useEventBus(): Boolean {
+        return true;
+    }
+
     var rbContinue: RadioButton? = null
     var rbComplete: RadioButton? = null
     var rbCancel: RadioButton? = null
+    var rgAll: RadioGroup? = null;
 
     override fun initOthers(rootView: View) {
         super.initOthers(rootView)
@@ -129,8 +138,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
 
         val headview: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
-        val rgAll: RadioGroup = headview.findViewById<RadioGroup>(R.id.rgAll)
-        rgAll.setOnCheckedChangeListener { group, checkedId ->
+        rgAll = headview.findViewById<RadioGroup>(R.id.rgAll)
+        rgAll?.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.rbContinue) {
                 mCStatus = "PROCESSING"
             } else if (checkedId == R.id.rbComplete) {
@@ -140,9 +149,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
         }
         headview.findViewById<TextView>(R.id.tvReset).singleClick {
-            rgAll.clearCheck()
-            drawerO.closeDrawers()
             mCStatus = null
+            rgAll?.clearCheck()
+            drawerO.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
         rbContinue = headview.findViewById(R.id.rbContinue)
@@ -403,6 +412,16 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             mLoadMoreDelegate?.refresh()
             EventBus.getDefault().post(OrderNumberEvent())
+        }
+    }
+
+    // 失效订单
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun changeTabPosition(event: TabChangeEvent) {
+        LogUtils.d("changeTabPosition:" + event)
+        if("ALL".equals(orderType) && event.type == 4 && "CANCELLED".equals(event.status)) {
+            mCStatus = event.status;
+            rbCancel?.isChecked = true;
         }
     }
 
