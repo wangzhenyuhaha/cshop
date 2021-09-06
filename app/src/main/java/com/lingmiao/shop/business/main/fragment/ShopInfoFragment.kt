@@ -31,11 +31,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
         container: ViewGroup?
     ) = FragmentShopInfoBinding.inflate(inflater, container, false)
 
-    override fun initBundles() {
-        super.initBundles()
-        model.thrcertflag.value = model.applyShopInfo.value?.thrcertflag
-        model.shopType.value = model.applyShopInfo.value?.shopType
-    }
 
     override fun initViewsAndData(rootView: View) {
 
@@ -48,7 +43,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
     }
 
     private fun initListener() {
-
         //个体户
         binding.shopInfoSelf.setOnClickListener {
             model.applyShopInfo.value?.shopType = 3
@@ -80,6 +74,12 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             model.thrcertflag.value = 0
         }
 
+        //店铺租聘合同
+        binding.hire.setOnClickListener {
+            val bundle = bundleOf("type" to ApplyShopInfoActivity.HIRE)
+            findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
+        }
+
         //营业执照
         binding.license.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.LICENSE)
@@ -106,8 +106,21 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         //店铺照片
         binding.shopPhoto.setOnClickListener {
-            val bundle = bundleOf("type" to ApplyShopInfoActivity.SHOP_FRONT)
-            findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
+            if (model.applyShopInfo.value?.shopType == 4) {
+                //个人申请
+                val bundle = bundleOf("type" to ApplyShopInfoActivity.PERSONAL_SHOP)
+                findNavController().navigate(
+                    R.id.action_shopInfoFragment_to_shopIDCardFragment,
+                    bundle
+                )
+            } else {
+                val bundle = bundleOf("type" to ApplyShopInfoActivity.SHOP_FRONT)
+                findNavController().navigate(
+                    R.id.action_shopInfoFragment_to_shopPhotoFragment,
+                    bundle
+                )
+            }
+
         }
 
         //法人身份证照片
@@ -127,34 +140,62 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                 checkBoolean(model.applyShopInfo.value?.shopType != null) {
                     "请选择店铺类型"
                 }
-                checkNotBlack(model.applyShopInfo.value?.licenceImg) {
-                    "请上传营业执照"
-                }
-                if (model.applyShopInfo.value?.thrcertflag == 0) {
-                    checkNotBlack(model.applyShopInfo.value?.taxes_certificate_img) {
-                        "请上传税务登记证书"
+                if (model.applyShopInfo.value?.shopType == 4) {
+                    //个人
+                    checkNotBlack(model.applyShopInfo.value?.bizplacepic) {
+                        "请上传店铺租聘合同"
                     }
-                    checkNotBlack(model.applyShopInfo.value?.orgcodepic) {
-                        "请上传组织机构代码证照片"
+                    checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
+                        "请上传店铺门头照片"
                     }
-                }
-                checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
-                    "请上传店铺门头照片"
-                }
-                checkNotBlack(model.applyShopInfo.value?.shopPhotoInside) {
-                    "请上传店铺内景照片"
-                }
-                checkNotBlack(model.applyShopInfo.value?.legalImg) {
-                    "请上传身份证国徽面照片"
-                }
-                checkNotBlack(model.applyShopInfo.value?.legalBackImg) {
-                    "请上传身份证人像面照片"
-                }
-                checkNotBlack(model.applyShopInfo.value?.holdImg) {
-                    "请上传手持身份证照片"
-                }
-                findNavController().navigate(R.id.action_shopInfoFragment_to_replenishInfoFragment)
+                    checkNotBlack(model.applyShopInfo.value?.shopPhotoInside) {
+                        "请上传店铺内景照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.peasonheadpic) {
+                        "请上传经营者和店铺门头合照"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legalImg) {
+                        "请上传身份证国徽面照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legalBackImg) {
+                        "请上传身份证人像面照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.holdImg) {
+                        "请上传手持身份证照片"
+                    }
+                    findNavController().navigate(R.id.action_shopInfoFragment_to_replenishInfoFragment)
 
+
+                } else {
+                    //个体户，企业
+                    checkNotBlack(model.applyShopInfo.value?.licenceImg) {
+                        "请上传营业执照"
+                    }
+                    if (model.applyShopInfo.value?.thrcertflag == 0) {
+                        checkNotBlack(model.applyShopInfo.value?.taxes_certificate_img) {
+                            "请上传税务登记证书"
+                        }
+                        checkNotBlack(model.applyShopInfo.value?.orgcodepic) {
+                            "请上传组织机构代码证照片"
+                        }
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
+                        "请上传店铺门头照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.shopPhotoInside) {
+                        "请上传店铺内景照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legalImg) {
+                        "请上传身份证国徽面照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legalBackImg) {
+                        "请上传身份证人像面照片"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.holdImg) {
+                        "请上传手持身份证照片"
+                    }
+                    findNavController().navigate(R.id.action_shopInfoFragment_to_replenishInfoFragment)
+                }
             } catch (e: IllegalStateException) {
                 e.printStackTrace()
                 showToast(e.message ?: "")
@@ -231,60 +272,39 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             }
         })
 
-
         model.thrcertflag.observe(this, Observer {
-            when (it) {
-                1 -> {
-                    //三证合一
-                    binding.thrcertflagYes.isSelected = true
-                    binding.thrcertflagNO.isSelected = false
-                    binding.taxes.gone()
-                    binding.organ.gone()
-                    binding.view1.gone()
-                    binding.view2.gone()
-                }
-                0 -> {
-                    //非三证合一
-                    binding.thrcertflagYes.isSelected = false
-                    binding.thrcertflagNO.isSelected = true
-                    binding.taxes.visiable()
-                    binding.organ.visiable()
-                    binding.view1.visiable()
-                    binding.view2.visiable()
+            if (model.applyShopInfo.value?.shopType == 4) {
+                binding.taxes.gone()
+                binding.organ.gone()
+                binding.view1.gone()
+                binding.view2.gone()
+            } else {
+                when (it) {
+                    1 -> {
+                        //三证合一
+                        binding.thrcertflagYes.isSelected = true
+                        binding.thrcertflagNO.isSelected = false
+                        binding.taxes.gone()
+                        binding.organ.gone()
+                        binding.view1.gone()
+                        binding.view2.gone()
+                    }
+                    0 -> {
+                        //非三证合一
+                        binding.thrcertflagYes.isSelected = false
+                        binding.thrcertflagNO.isSelected = true
+                        binding.taxes.visiable()
+                        binding.organ.visiable()
+                        binding.view1.visiable()
+                        binding.view2.visiable()
+                    }
                 }
             }
         })
 
-
-
         model.applyShopInfo.observe(this, Observer {
 
-//            //是否三证合一
-//            if (it.thrcertflag == null) {
-//                it.thrcertflag = 1
-//                binding.thrcertflagYes.isSelected = true
-//                binding.thrcertflagNO.isSelected = false
-//                binding.taxes.visibility = View.GONE
-//                binding.organ.visibility = View.GONE
-//                binding.view1.visibility = View.GONE
-//                binding.view2.visibility = View.GONE
-//            } else {
-//                if (it.thrcertflag == 1) {
-//                    binding.thrcertflagYes.isSelected = true
-//                    binding.thrcertflagNO.isSelected = false
-//                    binding.taxes.visibility = View.GONE
-//                    binding.organ.visibility = View.GONE
-//                    binding.view1.visibility = View.GONE
-//                    binding.view2.visibility = View.GONE
-//                } else {
-//                    binding.thrcertflagYes.isSelected = false
-//                    binding.thrcertflagNO.isSelected = true
-//                    binding.taxes.visibility = View.VISIBLE
-//                    binding.organ.visibility = View.VISIBLE
-//                    binding.view1.visibility = View.VISIBLE
-//                    binding.view2.visibility = View.VISIBLE
-//                }
-//            }
+            if (!it.bizplacepic.isNullOrEmpty()) binding.hireTV.text = "已上传"
 
             //店铺营业执照是否已经上传
             if (!it.licenceImg.isNullOrEmpty()) binding.licenseTV.text = "已上传"
@@ -298,8 +318,14 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
             //食品经营许可证照片
             if (!it.foodAllow.isNullOrEmpty()) binding.foodAllowTV.text = "已上传"
 
-            if (!(it.shopPhotoFront.isNullOrEmpty() || it.shopPhotoInside.isNullOrEmpty())) binding.tvShopPhoto.text =
-                "已上传"
+            if (it.shopType == 4) {
+                if (!(it.shopPhotoFront.isNullOrEmpty() || it.shopPhotoInside.isNullOrEmpty() || it.peasonheadpic.isNullOrEmpty())) binding.tvShopPhoto.text =
+                    "已上传"
+            } else {
+                if (!(it.shopPhotoFront.isNullOrEmpty() || it.shopPhotoInside.isNullOrEmpty())) binding.tvShopPhoto.text =
+                    "已上传"
+            }
+
             if (!(it.legalImg.isNullOrEmpty() || it.legalBackImg.isNullOrEmpty() || it.holdImg.isNullOrEmpty())) binding.IDCardTV.text =
                 "已上传"
             if (!it.other_Pic_One.isNullOrEmpty()) {

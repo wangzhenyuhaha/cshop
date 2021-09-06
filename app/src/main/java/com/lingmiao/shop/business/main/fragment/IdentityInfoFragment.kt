@@ -38,9 +38,8 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
     private var pvCustomTime: TimePickerView? = null
     private var timeCanUse: Long? = null
 
-    override fun createPresenter(): BasePresenter {
-        return BasePreImpl(this)
-    }
+    override fun createPresenter() = BasePreImpl(this)
+
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -55,7 +54,9 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
     override fun initViewsAndData(rootView: View) {
 
         model.setTitle("添加身份信息")
-
+        if (model.applyShopInfo.value?.shopType == 4) {
+            binding.name.text = "请填写经营者身份证信息"
+        }
         initListener()
         initObserver()
     }
@@ -109,7 +110,7 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
                 if (RegexUtils.isIDCard18(it) || RegexUtils.isIDCard15(it)) {
                     binding.legalIdTextView.text = it
                     model.applyShopInfo.value?.legalId = it
-                }else {
+                } else {
                     ToastUtils.showShort("请输入正确身份证号码")
                 }
             }

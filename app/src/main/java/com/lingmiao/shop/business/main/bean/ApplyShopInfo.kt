@@ -17,6 +17,10 @@ data class ApplyShopInfo(
     @SerializedName("thrcertflag")
     var thrcertflag: Int? = 1,
 
+    //店铺租聘合同
+    @SerializedName("bizplacepic")
+    var bizplacepic: String? = null,
+
     //营业执照名称
     @SerializedName("company_name")
     var companyName: String? = null,
@@ -69,6 +73,10 @@ data class ApplyShopInfo(
     //店铺内景照片
     @SerializedName("storeinnerpic")
     var shopPhotoInside: String? = null,
+
+    //经营者与店铺门口合照
+    @SerializedName("peasonheadpic")
+    var peasonheadpic: String? = null,
 
     //  人像 (这个其实应该传的时国徽)
     @SerializedName("legal_back_img")

@@ -52,6 +52,7 @@
 
 
             <com.james.common.view.ILinearLayout
+                android:id="@+id/companyTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10"
@@ -109,7 +110,9 @@
             </com.james.common.view.ILinearLayout>
 
 
-            <View style="@style/DivideLineHorizontal" />
+            <View
+                android:id="@+id/view1" style="@style/DivideLineHorizontal" />
+
 
             <com.james.common.view.ILinearLayout
                 android:id="@+id/companyModule"
@@ -308,6 +311,7 @@
             </com.james.common.view.ILinearLayout>
 
             <com.james.common.view.ILinearLayout
+                android:id="@+id/personalTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10"
@@ -394,7 +398,9 @@
 
             </com.james.common.view.ILinearLayout>
 
-            <View style="@style/DivideLineHorizontal" />
+            <View
+                android:id="@+id/view2"
+                style="@style/DivideLineHorizontal" />
 
             <com.james.common.view.ILinearLayout
                 android:id="@+id/personalModule"
@@ -664,7 +670,6 @@
 
 
             </com.james.common.view.ILinearLayout>
-
 
         </LinearLayout>
 

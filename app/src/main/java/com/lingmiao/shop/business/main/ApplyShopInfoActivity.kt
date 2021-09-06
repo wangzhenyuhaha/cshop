@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main
 
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.blankj.utilcode.util.GsonUtils
@@ -51,6 +52,12 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //商户签约承诺函
         const val AUTHOR_PIC = 9
+
+        //店铺租聘合同
+        const val HIRE = 10
+
+        //个人申请时店铺照片
+        const val PERSONAL_SHOP = 11
     }
 
     private val viewModel by viewModels<ApplyShopInfoViewModel>()
@@ -97,12 +104,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 //从SP中获取ApplyShopInfo
                 UserManager.getApplyShopInfo()?.also { info ->
                     viewModel.onShopInfoSuccess(info)
+                    setOtherDate()
                 }
-
-                //获取推广码
-                viewModel.applyShopInfo.value?.promoCode =
-                    if (UserManager.getPromCode().isEmpty()) null
-                    else UserManager.getPromCode()
 
                 //获取对公账户信息
                 UserManager.getCompanyAccount()?.also { account ->
@@ -120,6 +123,19 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         }
 
+    }
+
+
+    private fun setOtherDate() {
+
+        //获取推广码
+        viewModel.applyShopInfo.value?.promoCode =
+            if (UserManager.getPromCode().isEmpty()) null
+            else UserManager.getPromCode()
+
+        //获取店铺类型，三证合一状态
+        viewModel.thrcertflag.value = viewModel.applyShopInfo.value?.thrcertflag
+        viewModel.shopType.value = viewModel.applyShopInfo.value?.shopType
     }
 
 
@@ -425,6 +441,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         viewModel.applyShopInfo.value?.promoCode =
             if (UserManager.getPromCode().isEmpty()) null
             else UserManager.getPromCode()
+
+        viewModel.thrcertflag.value = viewModel.applyShopInfo.value?.thrcertflag
+        viewModel.shopType.value = viewModel.applyShopInfo.value?.shopType
 
         //获取其他资质图片
         try {
