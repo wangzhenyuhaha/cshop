@@ -415,6 +415,7 @@
                     android:layout_height="50dp">
 
                     <TextView
+                        android:id="@+id/IDCardName"
                         style="@style/goods_spce_item_left_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

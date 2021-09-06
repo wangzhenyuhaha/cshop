@@ -15,7 +15,7 @@ data class ApplyShopInfo(
     //必填
     //是否三证合一 1：是 0：否
     @SerializedName("thrcertflag")
-    var thrcertflag: Int? = null,
+    var thrcertflag: Int? = 1,
 
     //营业执照名称
     @SerializedName("company_name")

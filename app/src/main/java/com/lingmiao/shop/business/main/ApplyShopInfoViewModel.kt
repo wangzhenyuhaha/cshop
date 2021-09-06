@@ -95,9 +95,7 @@ class ApplyShopInfoViewModel : ViewModel() {
     val shopType: MutableLiveData<Int> = MutableLiveData()
 
     //是否三证合一 1：是 0：否
-    val thrcertflag: MutableLiveData<Int> = MutableLiveData<Int>().also {
-        it.value = 1
-    }
+    val thrcertflag: MutableLiveData<Int> = MutableLiveData()
 
     //绑定银行卡页面模块的可见性以及结算账户
     //对公账户

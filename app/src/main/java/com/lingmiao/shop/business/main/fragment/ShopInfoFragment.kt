@@ -31,6 +31,11 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
         container: ViewGroup?
     ) = FragmentShopInfoBinding.inflate(inflater, container, false)
 
+    override fun initBundles() {
+        super.initBundles()
+        model.thrcertflag.value = model.applyShopInfo.value?.thrcertflag
+        model.shopType.value = model.applyShopInfo.value?.shopType
+    }
 
     override fun initViewsAndData(rootView: View) {
 
@@ -66,23 +71,13 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
         //Yes
         binding.thrcertflagYes.setOnClickListener {
             model.applyShopInfo.value?.thrcertflag = 1
-            binding.thrcertflagYes.isSelected = true
-            binding.thrcertflagNO.isSelected = false
-            binding.taxes.visibility = View.GONE
-            binding.organ.visibility = View.GONE
-            binding.view1.visibility = View.GONE
-            binding.view2.visibility = View.GONE
+            model.thrcertflag.value = 1
         }
 
         //No
         binding.thrcertflagNO.setOnClickListener {
             model.applyShopInfo.value?.thrcertflag = 0
-            binding.thrcertflagYes.isSelected = false
-            binding.thrcertflagNO.isSelected = true
-            binding.taxes.visibility = View.VISIBLE
-            binding.organ.visibility = View.VISIBLE
-            binding.view1.visibility = View.VISIBLE
-            binding.view2.visibility = View.VISIBLE
+            model.thrcertflag.value = 0
         }
 
         //营业执照
@@ -171,7 +166,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
     private fun initObserver() {
 
-
         model.shopType.observe(this, Observer {
             // 1,企业     3,个体户   4,个人店铺
             when (it) {
@@ -185,9 +179,18 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     binding.thrcertflag.visiable()
                     binding.license1.visiable()
                     binding.license2.gone()
+                    //根据三证合一显示模块
+                    if (model.applyShopInfo.value?.thrcertflag == 1) {
+                        model.thrcertflag.value = 1
+                    } else {
+                        model.thrcertflag.value = 0
+                    }
+
+                    binding.IDCardName.text = "法人身份证照片"
 
                 }
                 3 -> {
+                    //个体户
                     binding.shopInfoSelfImageView.isSelected = true
                     binding.shopInfoCompanyImageView.isSelected = false
                     binding.shopInfoPersonalImageView.isSelected = false
@@ -198,7 +201,14 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     binding.license1.visiable()
                     binding.license2.gone()
 
+                    //根据三证合一显示模块
+                    if (model.applyShopInfo.value?.thrcertflag == 1) {
+                        model.thrcertflag.value = 1
+                    } else {
+                        model.thrcertflag.value = 0
+                    }
 
+                    binding.IDCardName.text = "法人身份证照片"
                 }
                 4 -> {
                     binding.shopInfoSelfImageView.isSelected = false
@@ -211,21 +221,36 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     binding.license1.gone()
                     binding.license2.visiable()
 
+                    binding.taxes.gone()
+                    binding.organ.gone()
+                    binding.view1.gone()
+                    binding.view2.gone()
 
+                    binding.IDCardName.text = "负责人身份证照片"
                 }
             }
-
-
         })
 
 
         model.thrcertflag.observe(this, Observer {
             when (it) {
                 1 -> {
-
+                    //三证合一
+                    binding.thrcertflagYes.isSelected = true
+                    binding.thrcertflagNO.isSelected = false
+                    binding.taxes.gone()
+                    binding.organ.gone()
+                    binding.view1.gone()
+                    binding.view2.gone()
                 }
                 0 -> {
-
+                    //非三证合一
+                    binding.thrcertflagYes.isSelected = false
+                    binding.thrcertflagNO.isSelected = true
+                    binding.taxes.visiable()
+                    binding.organ.visiable()
+                    binding.view1.visiable()
+                    binding.view2.visiable()
                 }
             }
         })
@@ -234,32 +259,32 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         model.applyShopInfo.observe(this, Observer {
 
-            //是否三证合一
-            if (it.thrcertflag == null) {
-                it.thrcertflag = 1
-                binding.thrcertflagYes.isSelected = true
-                binding.thrcertflagNO.isSelected = false
-                binding.taxes.visibility = View.GONE
-                binding.organ.visibility = View.GONE
-                binding.view1.visibility = View.GONE
-                binding.view2.visibility = View.GONE
-            } else {
-                if (it.thrcertflag == 1) {
-                    binding.thrcertflagYes.isSelected = true
-                    binding.thrcertflagNO.isSelected = false
-                    binding.taxes.visibility = View.GONE
-                    binding.organ.visibility = View.GONE
-                    binding.view1.visibility = View.GONE
-                    binding.view2.visibility = View.GONE
-                } else {
-                    binding.thrcertflagYes.isSelected = false
-                    binding.thrcertflagNO.isSelected = true
-                    binding.taxes.visibility = View.VISIBLE
-                    binding.organ.visibility = View.VISIBLE
-                    binding.view1.visibility = View.VISIBLE
-                    binding.view2.visibility = View.VISIBLE
-                }
-            }
+//            //是否三证合一
+//            if (it.thrcertflag == null) {
+//                it.thrcertflag = 1
+//                binding.thrcertflagYes.isSelected = true
+//                binding.thrcertflagNO.isSelected = false
+//                binding.taxes.visibility = View.GONE
+//                binding.organ.visibility = View.GONE
+//                binding.view1.visibility = View.GONE
+//                binding.view2.visibility = View.GONE
+//            } else {
+//                if (it.thrcertflag == 1) {
+//                    binding.thrcertflagYes.isSelected = true
+//                    binding.thrcertflagNO.isSelected = false
+//                    binding.taxes.visibility = View.GONE
+//                    binding.organ.visibility = View.GONE
+//                    binding.view1.visibility = View.GONE
+//                    binding.view2.visibility = View.GONE
+//                } else {
+//                    binding.thrcertflagYes.isSelected = false
+//                    binding.thrcertflagNO.isSelected = true
+//                    binding.taxes.visibility = View.VISIBLE
+//                    binding.organ.visibility = View.VISIBLE
+//                    binding.view1.visibility = View.VISIBLE
+//                    binding.view2.visibility = View.VISIBLE
+//                }
+//            }
 
             //店铺营业执照是否已经上传
             if (!it.licenceImg.isNullOrEmpty()) binding.licenseTV.text = "已上传"
