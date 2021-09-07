@@ -10,6 +10,7 @@ import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
@@ -105,7 +106,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 return@setOnClickListener
             }
 
-            if (linkTelEt.text.toString().isEmpty()){
+            if (linkTelEt.text.toString().isEmpty()) {
                 showToast("请输入正确的手机号码")
                 return@setOnClickListener
             }
@@ -122,13 +123,8 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
-        if (shopReq != null) {
-            onLoadedShopSetting(shopReq!!)
-            mPresenter?.loadTemplate()
-        } else {
-            mPresenter?.loadShopSetting()
-            mPresenter?.loadTemplate()
-        }
+        onLoadedShopSetting(shopReq)
+        mPresenter?.loadTemplate()
 
         if (IConstant.official) {
             cb_model_rider.gone()
@@ -206,7 +202,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun onLoadedShopSetting(vo: ApplyShopInfo) {
-        vo?.apply {
+        vo.apply {
             orderSetting?.apply {
                 autoOrderSb.isChecked = autoAccept == 1
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
@@ -218,13 +214,31 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
             cb_model_rider.isChecked = shopTemplateType == FreightVoItem.TYPE_QISHOU
             cb_model_shop.isChecked = shopTemplateType == FreightVoItem.TYPE_LOCAL
+
+            if (shopReq.accept_carriage == 0) {
+                //隐藏棋手
+                cb_model_rider.gone()
+                tvRiderStatus.gone()
+            }
         }
 
     }
 
     // 处理显示【第二天】文字，服务端不保存,客户端计算
     fun setOperateTime() {
-        tvShopOperateTime.setText(String.format("%s%s%s%s", shopReq.openStartTime ?:"", if(shopReq.openStartTime?.isEmpty() == true) "" else "-" , if(WorkTimeVo.isSecondDay(shopReq.openStartTime, shopReq.openEndTime)) "" else "第二天", shopReq.openEndTime ?:""))
+        tvShopOperateTime.setText(
+            String.format(
+                "%s%s%s%s",
+                shopReq.openStartTime ?: "",
+                if (shopReq.openStartTime?.isEmpty() == true) "" else "-",
+                if (WorkTimeVo.isSecondDay(
+                        shopReq.openStartTime,
+                        shopReq.openEndTime
+                    )
+                ) "" else "第二天",
+                shopReq.openEndTime ?: ""
+            )
+        )
     }
 
 }

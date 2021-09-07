@@ -309,25 +309,29 @@ class ReplenishInfoFragment :
 
         model.applyShopInfo.observe(this, Observer { info ->
 
-            //注册资本
-            if (info.regMoney == null) {
-                info.regMoney = 1
+
+            if (info.shopType != 4) {
+                //注册资本
+                if (info.regMoney == null) {
+                    info.regMoney = 1
+                }
+
+                //员工人数
+                if (info.employeeNum == null) {
+                    info.employeeNum = 1
+                }
+
+                //经营区域
+                if (info.operateLimit == null) {
+                    info.operateLimit = 1
+                }
+
+                //经营地段
+                if (info.inspect == null) {
+                    info.inspect = 3
+                }
             }
 
-            //员工人数
-            if (info.employeeNum == null) {
-                info.employeeNum = 1
-            }
-
-            //经营区域
-            if (info.operateLimit == null) {
-                info.operateLimit = 1
-            }
-
-            //经营地段
-            if (info.inspect == null) {
-                info.inspect = 3
-            }
 
             //店铺名字
             info.shopName?.also {

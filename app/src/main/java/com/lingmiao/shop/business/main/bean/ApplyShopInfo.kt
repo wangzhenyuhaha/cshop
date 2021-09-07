@@ -261,6 +261,12 @@ data class ApplyShopInfo(
 
 
 //店铺logo
+
+    //是否显示棋手配送
+    @SerializedName("accept_carriage")
+    var accept_carriage: Int  = 1,
+
+
     @SerializedName("shop_logo")
     var shopLogo: String? = null,
 
