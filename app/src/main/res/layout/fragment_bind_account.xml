@@ -111,7 +111,8 @@
 
 
             <View
-                android:id="@+id/view1" style="@style/DivideLineHorizontal" />
+                android:id="@+id/view1"
+                style="@style/DivideLineHorizontal" />
 
 
             <com.james.common.view.ILinearLayout
@@ -388,13 +389,13 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                    android:id="@+id/accountPersonalTV"
-                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/applyShopHintTV"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:text="（请绑定法人本人的银行卡）"
-                    android:textColor="@color/red"
-                    android:textSize="11sp" />
+                    android:text="若企业结算账户为对私，需下载《签约承诺函》并盖章，然后上传图片。点击可下载" />
 
             </com.james.common.view.ILinearLayout>
 
@@ -417,13 +418,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="持卡人"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="持卡人"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/accountPersonalTV"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="（请绑定法人本人的银行卡）"
+                            android:textColor="@color/red"
+                            android:textSize="11sp" />
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/bankaccountnamePtv"
@@ -667,7 +682,6 @@
                         android:layout_centerVertical="true"
                         android:src="@mipmap/me_arrow_right" />
                 </RelativeLayout>
-
 
             </com.james.common.view.ILinearLayout>
 

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.main.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
@@ -315,8 +316,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     //店铺审核未通过，重新提交页面
                     tvMainShopName.text = "店铺审核未通过"
                     tvMainShopNext.text = "重新提交"
-                    remark.visiable()
-                    remark.text= shopStatus?.remark
+
+                    if (!shopStatus?.remark.isNullOrEmpty()) {
+                        remark.visiable()
+                        remark.text = shopStatus?.remark
+                    }
                     SpanUtils.with(tvMainShopHint)
                         .append("店铺申请资料").setForegroundColor(
                             ContextCompat.getColor(
@@ -503,7 +507,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if(WebCameraUtil.isPermissionGranted(this)) {
+        if (WebCameraUtil.isPermissionGranted(this)) {
             callBack.call();
         }
     }

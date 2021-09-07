@@ -1,18 +1,32 @@
 package com.lingmiao.shop.business.main
 
-import android.util.Log
+import android.os.Environment
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BaseActivity
 import com.james.common.net.BaseResponse
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.check
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.lingmiao.shop.util.dateTime3Date
+import kotlinx.android.synthetic.main.fragment_bind_account.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -258,6 +272,83 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
         })
 
+        //下载承诺函
+        viewModel.authorpic.observe(this, Observer {
+
+                DialogUtils.showDialog(context, "承诺函下载", "是否确认下载承诺函？", "取消", "下载", null,
+                    View.OnClickListener {
+                        lifecycleScope.launch(Dispatchers.IO)
+                        {
+                            withContext(Dispatchers.Main) {
+                                showDialogLoading()
+                            }
+
+                            //获取InputStream
+                            val call =
+                                CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
+
+                            //目标文件
+                            var externalFileRootDir: File? = getExternalFilesDir(null)
+                            do {
+                                externalFileRootDir =
+                                    Objects.requireNonNull(externalFileRootDir)?.parentFile
+                            } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                    "/Android"
+                                ) == true
+                            )
+                            val saveDir: String?=
+                                Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                            val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+
+                            val destinationFile = File(savePath, "签约承诺函.doc")
+
+                            var inputStream: InputStream? = null
+                            var outputStream: OutputStream? = null
+
+                            val data = ByteArray(2048)
+                            var count: Int?
+
+
+                            count = inputStream?.read(data)
+
+                            try {
+                                inputStream = call?.body()?.byteStream()
+                                outputStream = FileOutputStream(destinationFile)
+
+                                while (count != -1) {
+                                    if (count != null) {
+                                        outputStream.write(data, 0, count)
+                                    }
+                                    count = inputStream?.read(data)
+                                }
+
+                                outputStream.flush()
+
+
+                            } catch (e: Exception) {
+
+                                withContext(Dispatchers.Main)
+                                {
+                                    hideDialogLoading()
+                                    ToastUtils.showShort("下载失败")
+                                }
+                            } finally {
+                                inputStream?.close()
+                                outputStream?.close()
+                                withContext(Dispatchers.Main)
+                                {
+                                    hideDialogLoading()
+                                    ToastUtils.showShort("下载成功：${destinationFile.absolutePath}")
+                                }
+                            }
+
+
+                        }
+                    }
+                )
+
+
+        })
 
     }
 

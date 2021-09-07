@@ -148,4 +148,7 @@ class ApplyShopInfoViewModel : ViewModel() {
         it.value = 1
     }
 
+    //下载承诺函
+    val authorpic: MutableLiveData<Int> = MutableLiveData()
+
 }

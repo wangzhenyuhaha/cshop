@@ -1,12 +1,18 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
+import android.graphics.Color
+import android.os.Environment
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -18,6 +24,7 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
@@ -27,8 +34,16 @@ import com.lingmiao.shop.business.main.bean.BankDetail
 import com.lingmiao.shop.business.main.bean.BindBankCardDTO
 import com.lingmiao.shop.databinding.FragmentBindAccountBinding
 import kotlinx.android.synthetic.main.fragment_bind_account.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.*
 
 class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePresenter>() {
 
@@ -455,6 +470,10 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
 
         }
 
+        //点击下载DOC文件
+        applyShopHintTV.setOnClickListener {
+            model.authorpic.value = 1
+        }
 
     }
 
@@ -470,6 +489,14 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                     binding.shopTypeTextView.text = "对公账户必须填写"
                     binding.accountCompanyTVC.visibility = View.VISIBLE
                     binding.accountCompanyTVP.visibility = View.GONE
+
+                    binding.applyShopHintTV.visiable()
+                    //设置文字下载承诺函
+                    val content = "若企业结算账户为对私，需下载《签约承诺函》并盖章，然后上传图片。点击可下载"
+                    val builder = SpannableStringBuilder(content)
+                    val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
+                    builder.setSpan(blueSpan, 32, 37, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    applyShopHintTV.text = builder
                 }
                 3 -> {
                     //个体户
@@ -477,16 +504,22 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                     binding.shopTypeTextView.text = "（结算账户必须填写）"
                     binding.accountCompanyTVC.visibility = View.GONE
                     binding.accountCompanyTVP.visibility = View.VISIBLE
+                    binding.applyShopHintTV.gone()
                 }
                 4 -> {
                     //结算账户
                     binding.shopType.text = "结算账户"
-                    binding.shopTypeTextView.text = "（请绑定经营者本人的银行卡）"
+                    binding.shopTypeTextView.gone()
+                    binding.accountPersonalTV.text = "（请绑定负责人本人的银行卡）"
                     binding.companyTitle.gone()
                     binding.view1.gone()
                     binding.companyModule.gone()
                     binding.personalTitle.gone()
                     binding.view2.gone()
+
+                    binding.applyShopHintTV.gone()
+
+
                 }
             }
 
