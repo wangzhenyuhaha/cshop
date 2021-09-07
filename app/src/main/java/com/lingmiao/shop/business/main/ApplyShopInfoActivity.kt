@@ -1,10 +1,13 @@
 package com.lingmiao.shop.business.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Environment
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BaseActivity
@@ -275,77 +278,125 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //下载承诺函
         viewModel.authorpic.observe(this, Observer {
 
-                DialogUtils.showDialog(context, "承诺函下载", "是否确认下载承诺函？", "取消", "下载", null,
-                    View.OnClickListener {
-                        lifecycleScope.launch(Dispatchers.IO)
-                        {
-                            withContext(Dispatchers.Main) {
-                                showDialogLoading()
-                            }
-
-                            //获取InputStream
-                            val call =
-                                CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
-
-                            //目标文件
-                            var externalFileRootDir: File? = getExternalFilesDir(null)
-                            do {
-                                externalFileRootDir =
-                                    Objects.requireNonNull(externalFileRootDir)?.parentFile
-                            } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
-                                    "/Android"
-                                ) == true
-                            )
-                            val saveDir: String?=
-                                Objects.requireNonNull(externalFileRootDir)?.absolutePath
-                            val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
-
-                            val destinationFile = File(savePath, "签约承诺函.doc")
-
-                            var inputStream: InputStream? = null
-                            var outputStream: OutputStream? = null
-
-                            val data = ByteArray(2048)
-                            var count: Int?
-
-
-                            count = inputStream?.read(data)
-
-                            try {
-                                inputStream = call?.body()?.byteStream()
-                                outputStream = FileOutputStream(destinationFile)
-
-                                while (count != -1) {
-                                    if (count != null) {
-                                        outputStream.write(data, 0, count)
-                                    }
-                                    count = inputStream?.read(data)
-                                }
-
-                                outputStream.flush()
-
-
-                            } catch (e: Exception) {
-
-                                withContext(Dispatchers.Main)
-                                {
-                                    hideDialogLoading()
-                                    ToastUtils.showShort("下载失败")
-                                }
-                            } finally {
-                                inputStream?.close()
-                                outputStream?.close()
-                                withContext(Dispatchers.Main)
-                                {
-                                    hideDialogLoading()
-                                    ToastUtils.showShort("下载成功：${destinationFile.absolutePath}")
-                                }
-                            }
-
-
+            DialogUtils.showDialog(context, "承诺函下载", "是否确认下载承诺函？", "取消", "下载", null,
+                View.OnClickListener {
+                    lifecycleScope.launch(Dispatchers.IO)
+                    {
+                        withContext(Dispatchers.Main) {
+                            showDialogLoading()
                         }
+
+                        //获取InputStream
+                        val call =
+                            CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
+
+                        //目标文件
+                        var externalFileRootDir: File? = getExternalFilesDir(null)
+                        do {
+                            externalFileRootDir =
+                                Objects.requireNonNull(externalFileRootDir)?.parentFile
+                        } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                "/Android"
+                            ) == true
+                        )
+                        val saveDir: String? =
+                            Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                        val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+
+                        val destinationFile = File(savePath, "签约承诺函.doc")
+
+                        var inputStream: InputStream? = null
+                        var outputStream: OutputStream? = null
+
+                        val data = ByteArray(2048)
+                        var count: Int?
+
+
+                        count = inputStream?.read(data)
+
+                        try {
+                            inputStream = call?.body()?.byteStream()
+                            outputStream = FileOutputStream(destinationFile)
+
+                            while (count != -1) {
+                                if (count != null) {
+                                    outputStream.write(data, 0, count)
+                                }
+                                count = inputStream?.read(data)
+                            }
+
+                            outputStream.flush()
+
+
+                        } catch (e: Exception) {
+
+                            withContext(Dispatchers.Main)
+                            {
+                                hideDialogLoading()
+                                ToastUtils.showShort("下载失败")
+                            }
+                        } finally {
+                            inputStream?.close()
+                            outputStream?.close()
+                            withContext(Dispatchers.Main)
+                            {
+                                hideDialogLoading()
+                                DialogUtils.showDialog(
+                                    context,
+                                    "下载成功",
+                                    "是否在文件夹中查看承诺函?",
+                                    "取消",
+                                    "查看",
+                                    null,
+                                    View.OnClickListener {
+
+                                        //查看承诺函
+                                        // ToastUtils.showShort("下载成功：${destinationFile.absolutePath}")
+
+
+                                        //        File file = new File(path);
+                                        //        if(null==file || !file.exists()){
+                                        //            return;
+                                        //        }
+                                        //        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                        //        intent.addCategory(Intent.CATEGORY_DEFAULT);
+                                        //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        //        intent.setDataAndType(Uri.fromFile(file), "file/*");
+                                        //        startActivity(intent);
+
+//                                        val file = File(destinationFile.absolutePath, "签约承诺函.doc")
+//
+//                                        val intent = Intent(Intent.ACTION_GET_CONTENT)
+//                                        intent.addCategory(Intent.CATEGORY_DEFAULT)
+//                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                                        intent.data = Uri.fromFile(file)
+//                                        startActivity(intent)
+
+                                        val  intent =   Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                        intent.type = "*/*";//无类型限制
+//        有类型限制是这样的:
+//        intent.setType(“image/*”);//选择图片
+//        intent.setType(“audio/*”); //选择音频
+//        intent.setType(“video/*”); //选择视频 （mp4 3gp 是android支持的视频格式）
+//        intent.setType(“video/*;image/*”);//同时选择视频和图片
+
+                                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                                        startActivity(intent)
+//                                        val intent = Intent(Intent.ACTION_VIEW).also {
+//                                            //图片列表
+//                                            it.type = "vnd.android.cursor.dir/image"
+//                                        }
+//                                        val context = ActivityUtils.getTopActivity()
+//                                        context.startActivity(intent)
+
+                                    })
+                            }
+                        }
+
+
                     }
-                )
+                }
+            )
 
 
         })

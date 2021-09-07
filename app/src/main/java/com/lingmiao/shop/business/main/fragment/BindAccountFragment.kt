@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
 import android.graphics.Color
-import android.os.Environment
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -12,7 +11,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -24,7 +22,6 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
-import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
 import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
@@ -34,15 +31,8 @@ import com.lingmiao.shop.business.main.bean.BankDetail
 import com.lingmiao.shop.business.main.bean.BindBankCardDTO
 import com.lingmiao.shop.databinding.FragmentBindAccountBinding
 import kotlinx.android.synthetic.main.fragment_bind_account.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 import java.util.*
 
 class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePresenter>() {
