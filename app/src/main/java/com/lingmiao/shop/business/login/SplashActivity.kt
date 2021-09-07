@@ -29,7 +29,7 @@ class SplashActivity : BaseActivity<BasePresenter>() {
     }
 
     override fun useBaseLayout(): Boolean {
-        return false;
+        return false
     }
 
     override fun initView() {
