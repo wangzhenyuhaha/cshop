@@ -315,6 +315,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     //店铺审核未通过，重新提交页面
                     tvMainShopName.text = "店铺审核未通过"
                     tvMainShopNext.text = "重新提交"
+                    remark.visiable()
                     remark.text= shopStatus?.remark
                     SpanUtils.with(tvMainShopHint)
                         .append("店铺申请资料").setForegroundColor(
