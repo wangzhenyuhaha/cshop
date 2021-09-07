@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -512,18 +511,31 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             if (it == 1) {
                 binding.account1.isSelected = false
                 binding.account2.isSelected = true
-                if (model.applyShopInfo.value?.shopType == 1) {
-                    //企业
-                    model.companyModule.value = View.VISIBLE
-                    model.personalModule.value = View.VISIBLE
-                    //需要上传承诺函
-                    binding.authorpicView.visiable()
-                    binding.authorpic.visiable()
-                } else {
-                    //个体户
-                    model.personalModule.value = View.VISIBLE
-                    binding.authorpicView.gone()
-                    binding.authorpic.gone()
+
+                when(model.applyShopInfo.value?.shopType)
+                {
+                    1->{
+                        //企业
+                        model.companyModule.value = View.VISIBLE
+                        model.personalModule.value = View.VISIBLE
+                        //需要上传承诺函
+                        binding.authorpicView.visiable()
+                        binding.authorpic.visiable()
+                    }
+                    3->{
+                        //个体户
+                        model.personalModule.value = View.VISIBLE
+                        binding.authorpicView.gone()
+                        binding.authorpic.gone()
+                    }
+                    4->{
+                        //个人店铺
+                        model.companyModule.value = View.GONE
+                        model.personalModule.value = View.VISIBLE
+                        binding.authorpicView.gone()
+                        binding.authorpic.gone()
+
+                    }
                 }
             }
         })
