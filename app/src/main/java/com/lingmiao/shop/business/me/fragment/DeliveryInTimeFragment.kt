@@ -88,6 +88,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     showToast("请输入起送价");
                     return@singleClick;
                 }
+                if(et_model_time_km.getViewText() == null ||  et_model_time_minute.getViewText().isEmpty()||  et_model_time_km_out.getViewText().isEmpty()||  et_model_time_minute_more.getViewText().isEmpty()) {
+                    showToast("请填完配送时效");
+                    return@singleClick;
+                }
                 val readyTime = deliveryThingEt.getViewText().toInt();
 //                if(readyTime > 10) {
 //                    showToast("配货时间不大于10分钟");
@@ -202,7 +206,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     mRangeList.remove(item);
                     mRangeAdapter.replaceData(mRangeList);
                 } else if(view.id == R.id.et_model_range_start) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         run {
                             item?.peekTimeStart = it?.name;
@@ -213,7 +217,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     pop.shiftStartTime(item?.endTimeCount ?: TimeValue.getLastTimeCount());
                     pop.showPopupWindow()
                 } else if(view.id == R.id.et_model_range_end) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         run {
                             item?.peekTimeEnd = it?.name;
@@ -257,7 +261,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     mTimeList.remove(item);
                     mTimeAdapter.replaceData(mTimeList);
                 } else if(view.id == R.id.et_model_km_start) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         run {
                             item?.shipTime = it?.name;
@@ -268,7 +272,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     pop.shiftStartTime(item?.arriveTimeCount ?: TimeValue.getLastTimeCount());
                     pop.showPopupWindow()
                 } else if(view.id == R.id.et_model_km_end) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         item?.arriveTime = it?.name;
                         item?.arriveTimeCount = it?.value;
@@ -279,7 +283,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     pop.shiftEndTime(if(item?.isToday()) item?.shipTimeCount ?: -1 else -1);
                     pop.showPopupWindow()
                 } else if(view.id == R.id.tv_model_time_type) {
-                    val pop = DayPop(context!!, mDayTypeList)
+                    val pop = DayPop(requireContext(), mDayTypeList)
                     pop.setOnClickListener { it, position ->
 
                         run {
