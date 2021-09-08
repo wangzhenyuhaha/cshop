@@ -5,12 +5,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.RegexUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
-import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
@@ -56,11 +54,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         shopReq = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.me_fragment_shop_operate_setting
     }
 
-    override fun createPresenter(): ShopOperateSettingPresenter? {
+    override fun createPresenter(): ShopOperateSettingPresenter {
         return ShopOperateSettingPresenterImpl(requireContext(), this)
     }
 

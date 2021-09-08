@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -465,10 +464,18 @@ class ReplenishInfoFragment :
                 binding.companyInfoTitle.text = "企业信息（个体户）"
             }
             4 -> {
-                binding.view1.gone()
-                binding.legalName.gone()
-                binding.view2.gone()
-                binding.legalPhone.gone()
+                binding. legalName1.text = "负责人"
+                binding.legalNameSync.text = "设为联系人"
+                binding.legalNameTV.text = "请输负责人名称"
+                binding.legalPhoneTV1.text ="负责人电话"
+                binding.legalPhoneTV.text="请输入负责人电话"
+
+                binding.linkName1.text="联系人"
+                binding.linkNameTextView.text="请输入联系人名称"
+                binding.linkPhoneText1 .text="联系人电话"
+                binding.linkPhoneTextView .text="请输入联系人电话"
+
+                //经营内容
                 binding.view3.gone()
                 binding.scope.gone()
                 binding.legalInfoName.text = "经营者身份证信息"
