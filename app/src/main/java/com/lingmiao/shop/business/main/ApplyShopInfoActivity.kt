@@ -1,13 +1,11 @@
 package com.lingmiao.shop.business.main
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Environment
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BaseActivity
@@ -21,7 +19,6 @@ import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.lingmiao.shop.util.dateTime3Date
-import kotlinx.android.synthetic.main.fragment_bind_account.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -349,46 +346,11 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                                     "查看",
                                     null,
                                     View.OnClickListener {
-
                                         //查看承诺函
-                                        // ToastUtils.showShort("下载成功：${destinationFile.absolutePath}")
-
-
-                                        //        File file = new File(path);
-                                        //        if(null==file || !file.exists()){
-                                        //            return;
-                                        //        }
-                                        //        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                        //        intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                        //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        //        intent.setDataAndType(Uri.fromFile(file), "file/*");
-                                        //        startActivity(intent);
-
-//                                        val file = File(destinationFile.absolutePath, "签约承诺函.doc")
-//
-//                                        val intent = Intent(Intent.ACTION_GET_CONTENT)
-//                                        intent.addCategory(Intent.CATEGORY_DEFAULT)
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                                        intent.data = Uri.fromFile(file)
-//                                        startActivity(intent)
-
-                                        val  intent =   Intent(Intent.ACTION_OPEN_DOCUMENT);
-                                        intent.type = "*/*";//无类型限制
-//        有类型限制是这样的:
-//        intent.setType(“image/*”);//选择图片
-//        intent.setType(“audio/*”); //选择音频
-//        intent.setType(“video/*”); //选择视频 （mp4 3gp 是android支持的视频格式）
-//        intent.setType(“video/*;image/*”);//同时选择视频和图片
-
-                                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                                        intent.type = "application/msword"
+                                        intent.addCategory(Intent.CATEGORY_OPENABLE)
                                         startActivity(intent)
-//                                        val intent = Intent(Intent.ACTION_VIEW).also {
-//                                            //图片列表
-//                                            it.type = "vnd.android.cursor.dir/image"
-//                                        }
-//                                        val context = ActivityUtils.getTopActivity()
-//                                        context.startActivity(intent)
-
                                     })
                             }
                         }
