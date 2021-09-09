@@ -317,7 +317,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     tvMainShopName.text = "店铺审核未通过"
                     tvMainShopNext.text = "重新提交"
 
-                    Log.d("WZYABC",remark.toString())
                     if (!shopStatus?.remark.isNullOrEmpty()) {
                         remark.visiable()
                         remark.text = shopStatus?.remark

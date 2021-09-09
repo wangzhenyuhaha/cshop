@@ -230,7 +230,7 @@ class ReplenishInfoFragment :
                 requireActivity(),
                 "经营内容",
                 "",
-                "请输入",
+                "请输入（建议50字内）",
                 model.applyShopInfo.value?.scope,
                 "取消",
                 "保存",
@@ -271,11 +271,18 @@ class ReplenishInfoFragment :
                     "请输入店铺地址"
                 }
                 if (model.applyShopInfo.value?.shopType != 4) {
+                    //企业  个体户
                     checkNotBlack(model.applyShopInfo.value?.legalName) {
                         "请输入法人姓名"
                     }
                     checkNotBlack(model.applyShopInfo.value?.legal_phone) {
                         "请输入法人号码"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkName) {
+                        "请输入负责人姓名"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkPhone) {
+                        "请输入负责人号码"
                     }
                     checkNotBlack(model.applyShopInfo.value?.scope) {
                         "请输入主营内容"
@@ -283,12 +290,23 @@ class ReplenishInfoFragment :
                     checkBoolean(isCompanyInfoReady()) {
                         "请输入完整的企业信息"
                     }
-                }
-                checkNotBlack(model.applyShopInfo.value?.linkName) {
-                    "请输入负责人姓名"
-                }
-                checkNotBlack(model.applyShopInfo.value?.linkPhone) {
-                    "请输入负责人号码"
+                }else{
+                    //个人
+                    checkNotBlack(model.applyShopInfo.value?.legalName) {
+                        "请输入负责人姓名"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legal_phone) {
+                        "请输入负责人号码"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkName) {
+                        "请输入联系人姓名"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkPhone) {
+                        "请输入联系人号码"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.scope) {
+                        "请输入主营内容"
+                    }
                 }
                 checkBoolean(isIDCardReady()) {
                     "请输入完整的身份证资料"
@@ -476,8 +494,6 @@ class ReplenishInfoFragment :
                 binding.linkPhoneTextView .text="请输入联系人电话"
 
                 //经营内容
-                binding.view3.gone()
-                binding.scope.gone()
                 binding.legalInfoName.text = "经营者身份证信息"
                 binding.view4.gone()
                 binding.companyInfo.gone()
