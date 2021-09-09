@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.main.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
@@ -35,6 +34,8 @@ import com.lingmiao.shop.business.me.HelpDocActivity
 import com.lingmiao.shop.business.me.ManagerSettingActivity
 import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
+import com.lingmiao.shop.business.me.bean.IdentityVo
+import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.event.ApplyVipEvent
 import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
 import com.lingmiao.shop.business.sales.SalesSettingActivity
@@ -78,13 +79,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_new_main
-    }
+    override fun getLayoutId() = R.layout.fragment_new_main
 
-    override fun createPresenter(): MainPresenter {
-        return MainPresenterImpl(context!!, this)
-    }
+
+    override fun createPresenter() = MainPresenterImpl(context!!, this)
+
 
     fun setFromMain(fromType: Boolean) {
         fromMain = fromType
@@ -361,7 +360,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         setShop()
 
-        switchStatusBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+        switchStatusBtn.setOnCheckedChangeListener { _, isChecked ->
             mPresenter?.editShopStatus(if (isChecked) 1 else 0)
         }
         onShopStatusEdited()
@@ -561,7 +560,19 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     override fun onShopStatusEdited() {
+        switchStatusBtn.isChecked = UserManager.getLoginInfo()?.openStatus == true
         shopStatusTv.text = if (switchStatusBtn.isChecked) "开店中" else "休息中"
+    }
+
+    override fun applyVIP(message: String) {
+        DialogUtils.showDialog(requireActivity(), "店铺到期", message, "取消", "续约", null,
+            View.OnClickListener {
+                mPresenter?.searchData()
+            })
+    }
+
+    override fun applyVI2(my : My?, identity : IdentityVo?) {
+        ApplyVipActivity.openActivity(requireActivity(), my, identity)
     }
 
     @SuppressLint("SetTextI18n")
