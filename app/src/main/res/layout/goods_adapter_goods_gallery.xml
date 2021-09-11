@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:background="@color/color_FD8424">
+    tools:background="@color/color_FD8424"
+    tools:ignore="ContentDescription">
 
     <ImageView
         android:id="@+id/imageView"
@@ -17,6 +18,7 @@
         android:layout_height="@dimen/dimen_30"
         android:layout_gravity="end"
         android:paddingStart="@dimen/dimen_10"
+        android:paddingEnd="0dp"
         android:paddingBottom="@dimen/dimen_10"
         android:src="@mipmap/goods_spec_delete" />
 </FrameLayout>
