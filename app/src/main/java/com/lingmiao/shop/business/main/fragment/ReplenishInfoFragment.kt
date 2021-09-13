@@ -125,7 +125,7 @@ class ReplenishInfoFragment :
         binding.legalNameTV.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "法人姓名",
+                if (model.applyShopInfo.value?.shopType == 4) "老板姓名" else "法人姓名"  ,
                 "",
                 "请输入",
                 model.applyShopInfo.value?.legalName,
@@ -148,7 +148,7 @@ class ReplenishInfoFragment :
         binding.legalPhone.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "法人电话",
+                if (model.applyShopInfo.value?.shopType == 4) "老板电话" else "法人电话",
                 "",
                 "请输入",
                 model.applyShopInfo.value?.legal_phone,
@@ -293,16 +293,16 @@ class ReplenishInfoFragment :
                 }else{
                     //个人
                     checkNotBlack(model.applyShopInfo.value?.legalName) {
-                        "请输入负责人姓名"
+                        "请输入老板名称"
                     }
                     checkNotBlack(model.applyShopInfo.value?.legal_phone) {
-                        "请输入负责人号码"
+                        "请输入老板电话"
                     }
                     checkNotBlack(model.applyShopInfo.value?.linkName) {
-                        "请输入联系人姓名"
+                        "请输入负责人姓名"
                     }
                     checkNotBlack(model.applyShopInfo.value?.linkPhone) {
-                        "请输入联系人号码"
+                        "请输入负责人号码"
                     }
                     checkNotBlack(model.applyShopInfo.value?.scope) {
                         "请输入主营内容"
@@ -482,16 +482,17 @@ class ReplenishInfoFragment :
                 binding.companyInfoTitle.text = "企业信息（个体户）"
             }
             4 -> {
-                binding. legalName1.text = "负责人"
-                binding.legalNameSync.text = "设为联系人"
-                binding.legalNameTV.text = "请输负责人名称"
-                binding.legalPhoneTV1.text ="负责人电话"
-                binding.legalPhoneTV.text="请输入负责人电话"
+                //个人
+                binding.legalName1.text = "老板名称"
+                binding.legalNameSync.text = "设为负责人"
+                binding.legalNameTV.text = "请输入老板名称"
+                binding.legalPhoneTV1.text ="老板电话"
+                binding.legalPhoneTV.text="请输入老板电话"
 
-                binding.linkName1.text="联系人"
-                binding.linkNameTextView.text="请输入联系人名称"
-                binding.linkPhoneText1 .text="联系人电话"
-                binding.linkPhoneTextView .text="请输入联系人电话"
+                binding.linkName1.text="负责人"
+                binding.linkNameTextView.text="请输入负责人名称"
+                binding.linkPhoneText1 .text="负责人电话"
+                binding.linkPhoneTextView .text="请输入负责人电话"
 
                 //经营内容
                 binding.legalInfoName.text = "经营者身份证信息"
