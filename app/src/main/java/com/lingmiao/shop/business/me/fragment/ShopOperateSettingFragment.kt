@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
@@ -184,9 +185,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             }
         }
         tvShopStatus.singleClick {
-            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem)
+            //shopReq.accept_carriage决定是否显示骑手配送
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem,shopReq.accept_carriage)
         }
         tvRiderStatus.singleClick {
+            //默认使用骑手配送
             DeliveryManagerActivity.rider(mContext as Activity, mRiderItem)
         }
     }

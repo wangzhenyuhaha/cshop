@@ -49,7 +49,6 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
     //裁剪的宽
     private var y: Int? = null
 
-
     init {
         //dp 转 px
         mItemDecoration = ConvertUtils.dp2px(3f)
@@ -165,7 +164,40 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
             cancel: (() -> Unit)?,
             success: ((List<LocalMedia>) -> Unit)?
         ) {
-            openAlbum(activity, maxCount, cancel, true, x, y, 500, success)
+            if (x != null && y != null) {
+                //裁剪
+                openAlbum(activity, maxCount, cancel, true, x, y, 500, success)
+            } else {
+                //不裁剪
+                openAlbum(activity, maxCount, cancel, false, 500, success)
+            }
+        }
+
+        @JvmStatic
+        fun openAlbum(
+            activity: Activity,
+            maxCount: Int,
+            cancel: (() -> Unit)?,
+            crop: Boolean?,
+            size: Int,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
+            PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .maxSelectNum(maxCount)
+                .isCompress(true)
+                .isEnableCrop(crop ?: false)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
+
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
         }
 
         /**
@@ -177,47 +209,28 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
             maxCount: Int,
             cancel: (() -> Unit)?,
             crop: Boolean?,
-            x: Int?,
-            y: Int?,
+            x: Int,
+            y: Int,
             size: Int,
             success: ((List<LocalMedia>) -> Unit)?
         ) {
-            if (x != null && y != null) {
-                PictureSelector.create(activity)
-                    .openGallery(PictureMimeType.ofImage())
-                    .maxSelectNum(maxCount)
-                    .isCompress(true)
-                    .isEnableCrop(crop ?: false)
-                    .withAspectRatio(x, y)
-                    .minimumCompressSize(size)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .forResult(object : OnResultCallbackListener<LocalMedia> {
-                        override fun onResult(result: List<LocalMedia>) { // 结果回调
-                            success?.invoke(result)
-                        }
+            PictureSelector.create(activity)
+                .openGallery(PictureMimeType.ofImage())
+                .maxSelectNum(maxCount)
+                .isCompress(true)
+                .isEnableCrop(crop ?: false)
+                .withAspectRatio(x, y)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
 
-                        override fun onCancel() { // 取消
-                            cancel?.invoke()
-                        }
-                    })
-            } else {
-                PictureSelector.create(activity)
-                    .openGallery(PictureMimeType.ofImage())
-                    .maxSelectNum(maxCount)
-                    .isCompress(true)
-                    .isEnableCrop(crop ?: false)
-                    .minimumCompressSize(size)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .forResult(object : OnResultCallbackListener<LocalMedia> {
-                        override fun onResult(result: List<LocalMedia>) { // 结果回调
-                            success?.invoke(result)
-                        }
-
-                        override fun onCancel() { // 取消
-                            cancel?.invoke()
-                        }
-                    })
-            }
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
         }
 
 
@@ -232,7 +245,36 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
             cancel: (() -> Unit)?,
             success: ((List<LocalMedia>) -> Unit)?
         ) {
-            openCamera(activity, cancel, true, x, y, 500, success)
+            if (x != null && y != null) {
+                openCamera(activity, cancel, true, x, y, 500, success)
+            } else {
+                openCamera(activity, cancel, false, 500, success)
+            }
+        }
+
+        @JvmStatic
+        fun openCamera(
+            activity: Activity,
+            cancel: (() -> Unit)?,
+            crop: Boolean? = false,
+            size: Int,
+            success: ((List<LocalMedia>) -> Unit)?
+        ) {
+            PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .isCompress(true)
+                .isEnableCrop(crop ?: false)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
+
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
         }
 
         /**
@@ -243,46 +285,27 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
             activity: Activity,
             cancel: (() -> Unit)?,
             crop: Boolean? = false,
-            x: Int?,
-            y: Int?,
+            x: Int,
+            y: Int,
             size: Int,
             success: ((List<LocalMedia>) -> Unit)?
         ) {
-            if (x != null && y != null) {
-                PictureSelector.create(activity)
-                    .openCamera(PictureMimeType.ofImage())
-                    .isCompress(crop ?: false)
-                    .isEnableCrop(true)
-                    .withAspectRatio(x, y)
-                    .minimumCompressSize(size)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .forResult(object : OnResultCallbackListener<LocalMedia> {
-                        override fun onResult(result: List<LocalMedia>) { // 结果回调
-                            success?.invoke(result)
-                        }
+            PictureSelector.create(activity)
+                .openCamera(PictureMimeType.ofImage())
+                .isCompress(true)
+                .isEnableCrop(crop ?: false)
+                .withAspectRatio(x, y)
+                .minimumCompressSize(size)
+                .imageEngine(GlideEngine.createGlideEngine())
+                .forResult(object : OnResultCallbackListener<LocalMedia> {
+                    override fun onResult(result: List<LocalMedia>) { // 结果回调
+                        success?.invoke(result)
+                    }
 
-                        override fun onCancel() { // 取消
-                            cancel?.invoke()
-                        }
-                    })
-            } else {
-                PictureSelector.create(activity)
-                    .openCamera(PictureMimeType.ofImage())
-                    .isCompress(crop ?: false)
-                    .isEnableCrop(true)
-                    .minimumCompressSize(size)
-                    .imageEngine(GlideEngine.createGlideEngine())
-                    .forResult(object : OnResultCallbackListener<LocalMedia> {
-                        override fun onResult(result: List<LocalMedia>) { // 结果回调
-                            success?.invoke(result)
-                        }
-
-                        override fun onCancel() { // 取消
-                            cancel?.invoke()
-                        }
-                    })
-            }
-
+                    override fun onCancel() { // 取消
+                        cancel?.invoke()
+                    }
+                })
         }
 
     }

@@ -262,7 +262,7 @@ data class ApplyShopInfo(
 
 //店铺logo
 
-    //是否显示棋手配送
+    //是否显示棋手配送   0   不显示棋手配送   1   显示
     @SerializedName("accept_carriage")
     var accept_carriage: Int  = 1,
 

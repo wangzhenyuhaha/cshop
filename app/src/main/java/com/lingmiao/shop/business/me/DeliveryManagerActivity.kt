@@ -34,7 +34,11 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     //  1   2
     var mViewType: Int? = 0
 
-    var mItem: FreightVoItem? = null;
+    // 0 不显示棋手配送   1显示
+    //默认显示骑手配送
+    var type: Int = 1
+
+    var mItem: FreightVoItem? = null
 
     companion object {
 
@@ -42,10 +46,14 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
 
         const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
 
-        fun shop(context: Activity, item: FreightVoItem?) {
+        const val KEY_TYPE = "KEY_TYPE"
+
+        fun shop(context: Activity, item: FreightVoItem?, type: Int) {
             val intent = Intent(context, DeliveryManagerActivity::class.java)
             intent.putExtra(KEY_ITEM, item)
             intent.putExtra(KEY_VIEW_TYPE, 1)
+            intent.putExtra(KEY_TYPE, type)
+
             context.startActivity(intent)
         }
 
@@ -60,6 +68,9 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     override fun initBundles() {
         mItem = intent?.getSerializableExtra(KEY_ITEM) as FreightVoItem?
         mViewType = intent?.getIntExtra(KEY_VIEW_TYPE, 1)
+        if (mViewType == 1) {
+            type = intent?.getIntExtra(KEY_TYPE, 1) ?: 1
+        }
     }
 
     override fun getLayoutId() = R.layout.sales_activity_stats
@@ -68,7 +79,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     override fun useLightMode() = false
 
 
-    override fun createPresenter()= ManagerSettingPresenterImpl(this)
+    override fun createPresenter() = ManagerSettingPresenterImpl(this)
 
 
     override fun initView() {
@@ -101,14 +112,15 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
-        if (!IConstant.official) {
+        if (type == 1) {
             fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
         }
+
 
         val fragmentAdapter = GoodsHomePageAdapter(
             supportFragmentManager,
             fragments,
-            if (IConstant.official) mTabTitles2 else mTabTitles
+            if (type != 1) mTabTitles2 else mTabTitles
         )
         viewPager.adapter = fragmentAdapter
         tabLayout.setViewPager(viewPager)
