@@ -232,7 +232,7 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
             cancel: (() -> Unit)?,
             success: ((List<LocalMedia>) -> Unit)?
         ) {
-            openCamera(activity, cancel, true, x, y, 500, success);
+            openCamera(activity, cancel, true, x, y, 500, success)
         }
 
         /**

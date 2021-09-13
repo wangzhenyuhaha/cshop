@@ -32,12 +32,8 @@ interface MeApi {
     ): Response<ResponseBody>
 
     //    建议反馈
-    @POST("seller/shops/feedBack")
+    @POST("seller/app/feedback/addFeedback")
     suspend fun feedback(@Body request: Feedback): Response<ResponseBody>
-
-    //    新的建议反馈
-    @POST("seller/shops/feedBack")
-    suspend fun feedback2(@Body request: Feedback): Response<ResponseBody>
 
     //    发送手机号码
     @POST("/seller/shops/clerks/smscode/edit/{mobile}")

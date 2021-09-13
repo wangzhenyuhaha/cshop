@@ -25,9 +25,9 @@
 
 
                 <LinearLayout
-                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -90,12 +90,11 @@
                     </LinearLayout>
                 </LinearLayout>
 
-
                 <LinearLayout
-                    android:baselineAligned="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="14dp"
+                    android:baselineAligned="false"
                     android:orientation="horizontal">
 
                     <LinearLayout
@@ -156,15 +155,8 @@
                             android:layout_marginStart="9dp"
                             android:src="@drawable/selector_me_feedback_yes" />
                     </LinearLayout>
+
                 </LinearLayout>
-
-                <com.lingmiao.shop.business.me.view.CommonGalleryRecyclerView
-                    android:id="@+id/galleryRv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
-                    android:nestedScrollingEnabled="true" />
-
 
                 <com.james.common.view.IRelativeLayout
                     android:layout_width="match_parent"
@@ -181,12 +173,82 @@
                         android:background="@null"
                         android:gravity="top"
                         android:hint="请输入要反馈的内容，500个字以内，必填"
+                        android:inputType="none"
                         android:maxLength="500"
                         android:textColor="#333"
                         android:textColorHint="#999999"
-                        android:textSize="12sp"
-                        android:inputType="none" />
+                        android:textSize="12sp" />
                 </com.james.common.view.IRelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dimen_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="增加图片帮助描述" />
+
+                </LinearLayout>
+
+                <com.lingmiao.shop.business.me.view.CommonGalleryRecyclerView
+                    android:id="@+id/galleryRv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:background="@color/white"
+                    android:nestedScrollingEnabled="true"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="@dimen/dimen_5" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/dimen_15">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="直接联系我们" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_14"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="客服微信:" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="1223212" />
+
+                    <ImageView
+                        android:id="@+id/feedback_wechat"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_5"
+                        android:layout_marginBottom="@dimen/dimen_5"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:src="@mipmap/goods_selected_img" />
+                </LinearLayout>
 
 
             </LinearLayout>
