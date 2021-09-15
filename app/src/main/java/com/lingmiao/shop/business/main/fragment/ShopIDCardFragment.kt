@@ -51,20 +51,20 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
 
                 model.setTitle("上传身份证照片")
                 //  人像
-                if (model.applyShopInfo.value?.legalBackImg == null) {
+                if (model.applyShopInfo.value?.legalImg == null) {
                     Glide.with(requireActivity()).load(R.mipmap.main_shop_hint_2)
                         .into(binding.legalBackImgImageView)
                 } else {
-                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.legalBackImg)
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.legalImg)
                         .into(binding.legalBackImgImageView)
                 }
 
                 //国徽
-                if (model.applyShopInfo.value?.legalImg == null) {
+                if (model.applyShopInfo.value?.legalBackImg == null) {
                     Glide.with(requireActivity()).load(R.mipmap.main_shop_hint_1)
                         .into(binding.legalImgImageView)
                 } else {
-                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.legalImg)
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.legalBackImg)
                         .into(binding.legalImgImageView)
                 }
 
@@ -213,7 +213,7 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                         when (number) {
                             2 -> {
                                 //国徽
-                                model.applyShopInfo.value?.legalImg = uploadFile.data.url
+                                model.applyShopInfo.value?.legalBackImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
                                     Glide.with(requireActivity()).load(it)
                                         .into(binding.legalImgImageView)
@@ -224,7 +224,7 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                             }
                             1 -> {
                                 //人像
-                                model.applyShopInfo.value?.legalBackImg = uploadFile.data.url
+                                model.applyShopInfo.value?.legalImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
                                     Glide.with(requireActivity()).load(it)
                                         .into(binding.legalBackImgImageView)

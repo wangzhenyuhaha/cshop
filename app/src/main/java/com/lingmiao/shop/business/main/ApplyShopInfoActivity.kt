@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.main
 
 import android.content.Intent
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -258,11 +259,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //注册店铺或者修改进件资料
         viewModel.go.observe(this, Observer {
             try {
-                //身份证照片弄反了，国徽人像互换
-                val temp = viewModel.applyShopInfo.value?.legalBackImg
-                viewModel.applyShopInfo.value?.legalBackImg =
-                    viewModel.applyShopInfo.value?.legalImg
-                viewModel.applyShopInfo.value?.legalImg = temp
                 mPresenter?.requestApplyShopInfoData(
                     viewModel.shopOpenOrNot,
                     viewModel.applyShopInfo.value!!

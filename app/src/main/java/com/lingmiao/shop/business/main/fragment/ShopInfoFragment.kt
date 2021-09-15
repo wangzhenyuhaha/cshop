@@ -165,7 +165,6 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                     }
                     findNavController().navigate(R.id.action_shopInfoFragment_to_replenishInfoFragment)
 
-
                 } else {
                     //个体户，企业
                     checkNotBlack(model.applyShopInfo.value?.licenceImg) {
@@ -186,10 +185,10 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                         "请上传店铺内景照片"
                     }
                     checkNotBlack(model.applyShopInfo.value?.legalImg) {
-                        "请上传身份证国徽面照片"
+                        "请上传身份证人像面照片"
                     }
                     checkNotBlack(model.applyShopInfo.value?.legalBackImg) {
-                        "请上传身份证人像面照片"
+                        "请上传身份证国徽面照片"
                     }
                     checkNotBlack(model.applyShopInfo.value?.holdImg) {
                         "请上传手持身份证照片"

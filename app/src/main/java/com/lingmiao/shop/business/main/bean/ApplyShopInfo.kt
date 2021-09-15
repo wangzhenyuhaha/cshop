@@ -78,11 +78,11 @@ data class ApplyShopInfo(
     @SerializedName("peasonheadpic")
     var peasonheadpic: String? = null,
 
-    //  人像 (这个其实应该传的时国徽)
+    //  这个其实应该传的时国徽
     @SerializedName("legal_back_img")
     var legalBackImg: String? = null,
 
-    //  国徽 (这个其实应该传的时人像)
+    //  这个其实应该传的时人像
     @SerializedName("legal_img")
     var legalImg: String? = null,
 

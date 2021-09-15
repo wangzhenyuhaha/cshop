@@ -588,6 +588,7 @@
                                     android:layout_marginRight="40dp"
                                     android:textColor="@color/color_fc0000"
                                     android:textSize="13sp"
+                                    tools:visibility="visible"
                                     android:visibility="gone"
                                     tools:text="xxxxx" />
                             </LinearLayout>
