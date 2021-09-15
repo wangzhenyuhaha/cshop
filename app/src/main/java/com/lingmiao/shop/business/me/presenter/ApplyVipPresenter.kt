@@ -15,10 +15,13 @@ interface ApplyVipPresenter : BasePresenter, MyWalletPresenter {
     fun getIdentity();
     fun apply(id : String);
     fun depositApply(mWallet : WalletVo?);
+    fun ensureRefund(id : String);
     interface View : BaseView, MyWalletPresenter.View {
         fun onSetVipPriceList(list : List<VipType>?);
         fun onSetVipInfo(item : IdentityVo?);
         fun onApplySuccess(value : WxPayReqVo?);
         fun onDepositApplied(value : WxPayReqVo?);
+        fun onRefundEnsured();
+        fun onRefundEnsureFail();
     }
 }

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.me.presenter.impl
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.main.api.MainRepository
+import com.lingmiao.shop.business.main.bean.IdBean
 import com.lingmiao.shop.business.me.bean.RechargeReqVo
 import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.wallet.bean.WalletVo
@@ -55,6 +56,22 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
             val resp = MainRepository.apiService.recharge(recharge).awaitHiResponse()
             handleResponse(resp) {
                 view?.onDepositApplied(resp?.data?.data)
+            }
+            view?.hideDialogLoading()
+        }
+    }
+
+    override fun ensureRefund(id: String) {
+        mCoroutine.launch {
+            view?.showDialogLoading()
+            val item = IdBean();
+            item.id = id;
+            val identity = MainRepository.apiService.ensureRefund(item).awaitHiResponse()
+            view.showToast(identity?.msg);
+            if(identity.isSuccess) {
+                view?.onRefundEnsured()
+            } else {
+                view?.onRefundEnsureFail()
             }
             view?.hideDialogLoading()
         }

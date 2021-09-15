@@ -103,14 +103,14 @@ class ApplySupplementActivity : BaseVBActivity<MainActivityElectricSignBinding, 
         chromeClient.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        //如果按下的是回退键且历史记录里确实还有页面
-        if (keyCode == KeyEvent.KEYCODE_BACK && mBinding.wvView.canGoBack()) {
-            mBinding.wvView.goBack()
-            return true
-        }
-        return super.onKeyDown(keyCode, event)
-    }
+//    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+//        //如果按下的是回退键且历史记录里确实还有页面
+//        if (keyCode == KeyEvent.KEYCODE_BACK && mBinding.wvView.canGoBack()) {
+//            mBinding.wvView.goBack()
+//            return true
+//        }
+//        return super.onKeyDown(keyCode, event)
+//    }
 
 }
 
