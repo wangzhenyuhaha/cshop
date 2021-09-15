@@ -74,6 +74,11 @@ interface MainApi {
     @WithHiResponse
     fun getShopDeposit(): Call<DataVO<IdentityVo>>;
 
+    // 保障金退款
+    @POST("seller/shops/identity/ensureRefund")
+    @WithHiResponse
+    fun ensureRefund(@Body body: IdBean): Call<DataVO<IdentityVo>>;
+
     // vip充值列表
     @GET("seller/shops/identity/querySaleProductList")
     @WithHiResponse
