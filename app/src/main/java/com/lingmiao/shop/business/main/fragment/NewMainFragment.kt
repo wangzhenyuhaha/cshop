@@ -187,7 +187,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 ShopStatusConstants.UN_APPLY -> {
                     tvMainShopHint.text = "你还有没有开通店铺"
                     tvMainShopNext.text = "申请开店 >>"
-                    tvMainShopReason.gone()
+                    remark.gone()
                 }
                 ShopStatusConstants.APPLY,
                 ShopStatusConstants.APPLYING -> {
@@ -213,7 +213,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                             )
                         )
                         .create()
-                    tvMainShopReason.gone()
+                    remark.gone()
                 }
                 ShopStatusConstants.OPEN,
                 ShopStatusConstants.OVERDUE,
@@ -298,7 +298,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     }
                     //                    tvMainShopName.text=loginInfo?.nickname
                     initOpeningShopView()
-                    tvMainShopReason.gone()
+                    remark.gone()
                 }
 
                 ShopStatusConstants.CLOSED -> {
@@ -318,8 +318,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                             )
                         )
                         .create()
-
-                    tvMainShopReason.gone()
+                    remark.gone()
                 }
                 ShopStatusConstants.REFUSED,
                 ShopStatusConstants.ALLINPAY_REFUSED -> {
@@ -345,8 +344,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                             )
                         )
                         .create()
-                    tvMainShopReason.text = loginInfo.statusReason
-                    tvMainShopReason.visiable()
+//                    tvMainShopReason.text = loginInfo.statusReason
+//                    tvMainShopReason.visiable()
                 }
             }
         }

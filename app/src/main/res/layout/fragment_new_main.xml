@@ -602,6 +602,7 @@
                                 android:visibility="gone"
                                 android:textColor="@color/color_666666"
                                 android:textSize="@dimen/sp_12"
+                                tools:visibility="visible"
                                 tools:text="审核失败原因" />
 
                             <com.james.common.view.ITextView
