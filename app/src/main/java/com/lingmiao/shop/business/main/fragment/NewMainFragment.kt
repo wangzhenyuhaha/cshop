@@ -426,10 +426,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         tvGoodsManager.setOnClickListener {
             if (shopStatus?.templateId ?: 0 <= 0 && shopStatus?.haveCategory == false) {
                 ToastUtils.showLong("请先完善店铺管理设置与分类设置，否则店铺不能进行正常营业与商品上传")
+                return@setOnClickListener
             } else if (shopStatus?.templateId ?: 0 <= 0) {
                 ToastUtils.showLong("请先完善店铺管理设置，否则店铺不能进行正常营业与商品上传")
+                return@setOnClickListener
             } else if (shopStatus?.haveCategory == false) {
                 ToastUtils.showLong("请先完善分类设置，否则店铺不能进行正常营业与商品上传")
+                return@setOnClickListener
             }
             GoodsListActivity.openActivity(requireContext())
         }
