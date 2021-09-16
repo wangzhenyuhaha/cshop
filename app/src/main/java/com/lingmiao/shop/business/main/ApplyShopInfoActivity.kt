@@ -1,17 +1,33 @@
 package com.lingmiao.shop.business.main
 
+import android.content.Intent
+import android.os.Environment
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BaseActivity
 import com.james.common.net.BaseResponse
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.check
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
 import com.lingmiao.shop.util.dateTime3Date
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -51,6 +67,12 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //商户签约承诺函
         const val AUTHOR_PIC = 9
+
+        //店铺租聘合同
+        const val HIRE = 10
+
+        //个人申请时店铺照片
+        const val PERSONAL_SHOP = 11
     }
 
     private val viewModel by viewModels<ApplyShopInfoViewModel>()
@@ -97,12 +119,8 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 //从SP中获取ApplyShopInfo
                 UserManager.getApplyShopInfo()?.also { info ->
                     viewModel.onShopInfoSuccess(info)
+                    setOtherDate()
                 }
-
-                //获取推广码
-                viewModel.applyShopInfo.value?.promoCode =
-                    if (UserManager.getPromCode().isEmpty()) null
-                    else UserManager.getPromCode()
 
                 //获取对公账户信息
                 UserManager.getCompanyAccount()?.also { account ->
@@ -120,6 +138,19 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         }
 
+    }
+
+
+    private fun setOtherDate() {
+
+        //获取推广码
+        viewModel.applyShopInfo.value?.promoCode =
+            if (UserManager.getPromCode().isEmpty()) null
+            else UserManager.getPromCode()
+
+        //获取店铺类型，三证合一状态
+        viewModel.thrcertflag.value = viewModel.applyShopInfo.value?.thrcertflag
+        viewModel.shopType.value = viewModel.applyShopInfo.value?.shopType
     }
 
 
@@ -228,11 +259,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         //注册店铺或者修改进件资料
         viewModel.go.observe(this, Observer {
             try {
-                //身份证照片弄反了，国徽人像互换
-                val temp = viewModel.applyShopInfo.value?.legalBackImg
-                viewModel.applyShopInfo.value?.legalBackImg =
-                    viewModel.applyShopInfo.value?.legalImg
-                viewModel.applyShopInfo.value?.legalImg = temp
                 mPresenter?.requestApplyShopInfoData(
                     viewModel.shopOpenOrNot,
                     viewModel.applyShopInfo.value!!
@@ -242,6 +268,96 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
             }
         })
 
+        //下载承诺函
+        viewModel.authorpic.observe(this, Observer {
+
+            DialogUtils.showDialog(context, "承诺函下载", "是否确认下载承诺函？", "取消", "下载", null,
+                View.OnClickListener {
+                    lifecycleScope.launch(Dispatchers.IO)
+                    {
+                        withContext(Dispatchers.Main) {
+                            showDialogLoading()
+                        }
+
+                        //获取InputStream
+                        val call =
+                            CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
+
+                        //目标文件
+                        var externalFileRootDir: File? = getExternalFilesDir(null)
+                        do {
+                            externalFileRootDir =
+                                Objects.requireNonNull(externalFileRootDir)?.parentFile
+                        } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                "/Android"
+                            ) == true
+                        )
+                        val saveDir: String? =
+                            Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                        val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+
+                        val destinationFile = File(savePath, "签约承诺函.doc")
+
+                        var inputStream: InputStream? = null
+                        var outputStream: OutputStream? = null
+
+                        val data = ByteArray(2048)
+                        var count: Int?
+
+
+                        count = inputStream?.read(data)
+
+                        try {
+                            inputStream = call?.body()?.byteStream()
+                            outputStream = FileOutputStream(destinationFile)
+
+                            while (count != -1) {
+                                if (count != null) {
+                                    outputStream.write(data, 0, count)
+                                }
+                                count = inputStream?.read(data)
+                            }
+
+                            outputStream.flush()
+
+
+                        } catch (e: Exception) {
+
+                            withContext(Dispatchers.Main)
+                            {
+                                hideDialogLoading()
+                                ToastUtils.showShort("下载失败")
+                            }
+                        } finally {
+                            inputStream?.close()
+                            outputStream?.close()
+                            withContext(Dispatchers.Main)
+                            {
+                                hideDialogLoading()
+                                DialogUtils.showDialog(
+                                    context,
+                                    "下载成功",
+                                    "是否在文件夹中查看承诺函?",
+                                    "取消",
+                                    "查看",
+                                    null,
+                                    View.OnClickListener {
+                                        //查看承诺函
+                                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                                        intent.type = "application/msword"
+                                        intent.addCategory(Intent.CATEGORY_OPENABLE)
+                                        startActivity(intent)
+                                    })
+                            }
+                        }
+
+
+                    }
+                }
+            )
+
+
+        })
 
     }
 
@@ -425,6 +541,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         viewModel.applyShopInfo.value?.promoCode =
             if (UserManager.getPromCode().isEmpty()) null
             else UserManager.getPromCode()
+
+        viewModel.thrcertflag.value = viewModel.applyShopInfo.value?.thrcertflag
+        viewModel.shopType.value = viewModel.applyShopInfo.value?.shopType
 
         //获取其他资质图片
         try {

@@ -44,8 +44,20 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:layout_marginEnd="30dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/main_shop_hint_2" />
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_marginEnd="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:visibility="gone"
+                    android:textColor="#ff999999"
+                    android:textSize="15sp" />
 
                 <!--        国徽-->
                 <ImageView
@@ -55,8 +67,21 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:layout_marginEnd="30dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/main_shop_hint_1" />
+                    android:scaleType="fitCenter" />
+
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_marginEnd="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:visibility="gone"
+                    android:textColor="#ff999999"
+                    android:textSize="15sp" />
 
                 <!--        手持-->
                 <ImageView
@@ -66,8 +91,20 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:layout_marginEnd="30dp"
-                    android:scaleType="fitCenter"
-                    android:src="@mipmap/main_shop_hint_3" />
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_marginEnd="@dimen/dimen_40"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:visibility="gone"
+                    android:textColor="#ff999999"
+                    android:textSize="15sp" />
 
 
             </LinearLayout>

@@ -2,17 +2,13 @@ package com.lingmiao.shop.business.photo
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.common.ui.PhotoListActivity
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
-import com.luck.picture.lib.config.PictureSelectionConfig
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 
@@ -222,35 +218,20 @@ class PhotoHelper {
         }
 
         fun previewAlbum(activity: Activity, position: Int, list: List<GoodsGalleryVO>?) {
-            val newList = mutableListOf<LocalMedia>()
-            list?.forEach {
-                newList.add(it.convert2LocalMedia())
-            }
-            if (newList.isNullOrEmpty()) {
+            if (list.isNullOrEmpty()) {
                 return
             }
-
-
-            val context = ActivityUtils.getTopActivity()
-
             val new: ArrayList<String> = ArrayList()
-            for (i in list!!) {
+            for (i in list) {
                 new.add(i.original!!)
             }
-
             val bundle = Bundle().apply {
                 putStringArrayList("list", new)
                 putInt("position", position)
             }
-            val intent = Intent(context, PhotoListActivity::class.java)
+            val intent = Intent(activity, PhotoListActivity::class.java)
             intent.putExtra("Photo", bundle)
-            context.startActivity(intent)
-            //no
-//            PictureSelectionConfig.imageEngine = GlideEngine.createGlideEngine()
-//            PictureSelectionConfig.getInstance().requestedOrientation =
-//                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-//            PictureSelector.create(activity)
-//                .externalPicturePreview(position, newList, 0)
+            activity.startActivity(intent)
         }
 
         fun previewImage(activity: Activity, imageUrl: String?) {

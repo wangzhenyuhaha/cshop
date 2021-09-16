@@ -1,170 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
     android:orientation="vertical"
-    android:padding="14dp">
+    android:padding="14dp"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/llFeedbackSoftQuestion"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_me_feedback_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@drawable/selector_me_feedback_soft_question" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="软件问题"
-                android:textColor="@drawable/color_feedback"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="12dp"
-                android:layout_marginLeft="9dp"
-                android:src="@drawable/selector_me_feedback_yes" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llFeedbackFeedback"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="14dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_me_feedback_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@drawable/selector_me_feedback_feedback" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="需求建议"
-                android:textColor="@drawable/color_feedback"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="12dp"
-                android:layout_marginLeft="9dp"
-                android:src="@drawable/selector_me_feedback_yes" />
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:id="@+id/llFeedbackBusiness"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_me_feedback_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@drawable/selector_me_feedback_business" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="业务问题"
-                android:textColor="@drawable/color_feedback"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="12dp"
-                android:layout_marginLeft="9dp"
-                android:src="@drawable/selector_me_feedback_yes" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llFeedbackOther"
-            android:layout_width="0dp"
-            android:layout_height="38dp"
-            android:layout_marginLeft="14dp"
-            android:layout_weight="1"
-            android:background="@drawable/selector_me_feedback_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@drawable/selector_me_feedback_other" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:text="其他问题"
-                android:textColor="@drawable/color_feedback"
-                android:textSize="13sp" />
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="12dp"
-                android:layout_marginLeft="9dp"
-                android:src="@drawable/selector_me_feedback_yes" />
-        </LinearLayout>
-    </LinearLayout>
-
-
-    <com.james.common.view.IRelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="14dp"
-        android:padding="14dp"
-        app:ivBgColor="@color/white"
-        app:ivRadius="5dp">
-
-        <EditText
-            android:id="@+id/etFeedbackContent"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="top"
-            android:hint="请输入要反馈的内容，500个字以内，必填"
-            android:maxLength="500"
-            android:textColor="#333"
-            android:textSize="12sp"
-            android:textColorHint="#999999" />
-    </com.james.common.view.IRelativeLayout>
-
-    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/llFeedbackSoftQuestion"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_me_feedback_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/selector_me_feedback_soft_question" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="软件问题"
+                            android:textColor="@drawable/color_feedback"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="9dp"
+                            android:src="@drawable/selector_me_feedback_yes" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFeedbackFeedback"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_me_feedback_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/selector_me_feedback_feedback" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="需求建议"
+                            android:textColor="@drawable/color_feedback"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="9dp"
+                            android:src="@drawable/selector_me_feedback_yes" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/llFeedbackBusiness"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_me_feedback_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/selector_me_feedback_business" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="业务问题"
+                            android:textColor="@drawable/color_feedback"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="9dp"
+                            android:src="@drawable/selector_me_feedback_yes" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/llFeedbackOther"
+                        android:layout_width="0dp"
+                        android:layout_height="38dp"
+                        android:layout_marginStart="14dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/selector_me_feedback_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@drawable/selector_me_feedback_other" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="其他问题"
+                            android:textColor="@drawable/color_feedback"
+                            android:textSize="13sp" />
+
+                        <ImageView
+                            android:layout_width="14dp"
+                            android:layout_height="12dp"
+                            android:layout_marginStart="9dp"
+                            android:src="@drawable/selector_me_feedback_yes" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <com.james.common.view.ILinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:orientation="vertical"
+                    android:padding="14dp"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <EditText
+                        android:id="@+id/etFeedbackContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="@null"
+                        android:gravity="top"
+                        android:hint="请输入要反馈的内容，500个字以内，必填"
+                        android:inputType="none"
+                        android:maxLength="500"
+                        android:textColor="#333"
+                        android:textColorHint="#999999"
+                        android:textSize="12sp" />
+
+                    <com.lingmiao.shop.business.me.view.CommonGalleryRecyclerView
+                        android:id="@+id/galleryRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_10"
+                        android:background="@color/white"
+                        android:nestedScrollingEnabled="true"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="@dimen/dimen_5" />
+                </com.james.common.view.ILinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_14"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="客服微信" />
+
+
+                    <ImageView
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:id="@+id/feedback_wechat"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
     <com.james.common.view.ITextView
         android:id="@+id/tvFeedbackSubmit"
@@ -178,4 +235,5 @@
         android:textColor="@color/white"
         app:ivBgColor="@color/color_3870EA"
         app:ivRadius="19dp" />
+
 </LinearLayout>

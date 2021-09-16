@@ -40,12 +40,6 @@ data class IdentityVo(
 
     fun get_DueHint(): Int {
 
-        val end = (dateTime2Date(dueDate)?.time ?: 0)
-        val start = (dateTime2Date(TimeUtils.getNowString())?.time ?: 0)
-        val time = (end - start) / (60 * 60 * 24 * 1000)
-
-
-
         return TimeUtils.getTimeSpan(dueDate, TimeUtils.getNowString(), TimeConstants.DAY).toInt();
     }
 

@@ -24,15 +24,21 @@ Create Date : 2021/3/24:05 PM
 Auther      : Fox
 Desc        :
  **/
-class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), ManagerSettingPresenter.View  {
+class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
+    ManagerSettingPresenter.View {
 
     private var mTabTitles = arrayOf("商家配送", "骑手配送")
 
     private var mTabTitles2 = arrayOf("商家配送")
 
-    var mViewType : Int? = 0
+    //  1   2
+    var mViewType: Int? = 0
 
-    var mItem : FreightVoItem? = null;
+    // 0 不显示棋手配送   1显示
+    //默认显示骑手配送
+    var type: Int = 1
+
+    var mItem: FreightVoItem? = null
 
     companion object {
 
@@ -40,10 +46,14 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
 
         const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
 
-        fun shop(context: Activity, item: FreightVoItem?) {
+        const val KEY_TYPE = "KEY_TYPE"
+
+        fun shop(context: Activity, item: FreightVoItem?, type: Int) {
             val intent = Intent(context, DeliveryManagerActivity::class.java)
             intent.putExtra(KEY_ITEM, item)
             intent.putExtra(KEY_VIEW_TYPE, 1)
+            intent.putExtra(KEY_TYPE, type)
+
             context.startActivity(intent)
         }
 
@@ -56,27 +66,27 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     }
 
     override fun initBundles() {
-        mItem = intent?.getSerializableExtra(KEY_ITEM) as FreightVoItem?;
-        mViewType = intent?.getIntExtra(KEY_VIEW_TYPE, 1);
+        mItem = intent?.getSerializableExtra(KEY_ITEM) as FreightVoItem?
+        mViewType = intent?.getIntExtra(KEY_VIEW_TYPE, 1)
+        if (mViewType == 1) {
+            type = intent?.getIntExtra(KEY_TYPE, 1) ?: 1
+        }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.sales_activity_stats;
-    }
+    override fun getLayoutId() = R.layout.sales_activity_stats
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
 
-    override fun createPresenter(): ManagerSettingPresenter {
-        return ManagerSettingPresenterImpl(this)
-    }
+    override fun useLightMode() = false
+
+
+    override fun createPresenter() = ManagerSettingPresenterImpl(this)
+
 
     override fun initView() {
 
-        initTitle();
+        initTitle()
 
-        initTabLayout();
+        initTabLayout()
 
     }
 
@@ -87,7 +97,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             // 当键盘未关闭时先拦截事件
-            if(KeyboardUtils.isSoftInputVisible(context)) {
+            if (KeyboardUtils.isSoftInputVisible(context)) {
                 KeyboardUtils.hideSoftInput(context);
                 return true;
             }
@@ -102,20 +112,25 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(), Manager
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
-        if(!IConstant.official) {
+        if (type == 1) {
             fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
         }
 
-        val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, if(IConstant.official) mTabTitles2 else mTabTitles)
-        viewPager.setAdapter(fragmentAdapter)
+
+        val fragmentAdapter = GoodsHomePageAdapter(
+            supportFragmentManager,
+            fragments,
+            if (type != 1) mTabTitles2 else mTabTitles
+        )
+        viewPager.adapter = fragmentAdapter
         tabLayout.setViewPager(viewPager)
 
-        when(mViewType) {
+        when (mViewType) {
             2 -> {
-                viewPager.currentItem = 1;
+                viewPager.currentItem = 1
             }
             else -> {
-                viewPager.currentItem = 0;
+                viewPager.currentItem = 0
             }
         }
     }

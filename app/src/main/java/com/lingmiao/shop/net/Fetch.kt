@@ -2,16 +2,16 @@ package com.lingmiao.shop.net
 
 import android.text.TextUtils
 import com.blankj.utilcode.util.*
+import com.google.gson.Gson
+import com.james.common.BaseApplication
+import com.james.common.net.BaseResponse
+import com.james.common.net.RetrofitUtil
 import com.lingmiao.shop.BuildConfig
 import com.lingmiao.shop.base.ApiService
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.api.LoginRepository
-import com.google.gson.Gson
-import com.james.common.BaseApplication
-import com.james.common.net.BaseResponse
-import com.james.common.net.RetrofitUtil
 import okhttp3.Interceptor
 import okhttp3.Response
 import okio.Buffer
@@ -41,7 +41,7 @@ object Fetch {
         return RetrofitUtil.getInstance().retrofit.create(clazz)
     }
 
-    fun <T> createOtherService(clazz: Class<T>) : T {
+    fun <T> createOtherService(clazz: Class<T>): T {
         return RetrofitUtil.getInstance().otherRetrofit.create(clazz);
     }
 
@@ -59,16 +59,18 @@ object Fetch {
                 if (UserManager.isLogin() && loginInfo != null) {
                     builder.addHeader("Authorization", loginInfo.accessToken)
 //                  带pro的正式服地址,已登录的则需要进行参数加密
-                    if(IConstant.official){
+                    if (IConstant.official) {
                         val uid = loginInfo.uid?.toString()
                         val nonce = UUID.randomUUID().toString().replace("-", "").substring(0, 6)
                         val timestamp = (System.currentTimeMillis() / 1000).toString()
-                        val sign = EncryptUtils.encryptMD5ToString(uid + nonce + timestamp + loginInfo.accessToken).toLowerCase(Locale.ROOT)
+                        val sign =
+                            EncryptUtils.encryptMD5ToString(uid + nonce + timestamp + loginInfo.accessToken)
+                                .toLowerCase(Locale.ROOT)
                         val httpUrl = chain.request().url().newBuilder()
                             .addQueryParameter("uid", uid)
-                            .addQueryParameter("nonce",nonce)
-                            .addQueryParameter("timestamp",timestamp)
-                            .addQueryParameter("sign",sign)
+                            .addQueryParameter("nonce", nonce)
+                            .addQueryParameter("timestamp", timestamp)
+                            .addQueryParameter("sign", sign)
                             .build()
                         builder.url(httpUrl)
                     }
@@ -121,11 +123,12 @@ object Fetch {
                                 val loginInfo = UserManager.getLoginInfo()
 //                                var tempToken = "eyJhbGciOiJIUzUxMiJ9.eyJ1aWQiOjEwOSwic3ViIjoiQlVZRVIiLCJyb2xlcyI6WyJCVVlFUiJdLCJleHAiOjE1OTU5NTIzNDUsInV1aWQiOm51bGwsInVzZXJuYW1lIjoiYTEzMzkyNDI5NDU5In0.VWJSW6cuhxxK22WifEyTkQxB1FNUMICCT4JG-FK3Wr-V87CqBQCGgAXXX9rZVLKCAMhLk_EmHbeIsl2pfDFyNg"
                                 if (loginInfo?.refreshToken == null) {
-                                    UserManager.loginOut();
+                                    UserManager.loginOut()
                                     goToLoginActivity()
                                 } else {
                                     val response =
-                                        LoginRepository.apiService.refreshToken(loginInfo.refreshToken!!).execute()
+                                        LoginRepository.apiService.refreshToken(loginInfo.refreshToken!!)
+                                            .execute()
                                     if (response.isSuccessful) {
                                         loginInfo.accessToken = response.body()?.accessToken
                                         loginInfo.refreshToken = response.body()?.refreshToken

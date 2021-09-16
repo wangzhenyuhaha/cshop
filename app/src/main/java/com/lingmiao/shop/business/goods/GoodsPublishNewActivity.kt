@@ -102,7 +102,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         initSection4View()
         initSection5678View()
         initBottomView()
-        Log.d("WZYAAA", "Null Or Empty")
         mPresenter.loadGoodsInfo(goodsId)
     }
 

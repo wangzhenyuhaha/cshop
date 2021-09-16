@@ -2,10 +2,10 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.RegexUtils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
@@ -55,11 +55,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         shopReq = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.me_fragment_shop_operate_setting
     }
 
-    override fun createPresenter(): ShopOperateSettingPresenter? {
+    override fun createPresenter(): ShopOperateSettingPresenter {
         return ShopOperateSettingPresenterImpl(requireContext(), this)
     }
 
@@ -105,7 +105,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 return@setOnClickListener
             }
 
-            if (linkTelEt.text.toString().isEmpty()){
+            if (linkTelEt.text.toString().isEmpty()) {
                 showToast("请输入正确的手机号码")
                 return@setOnClickListener
             }
@@ -122,13 +122,8 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
-        if (shopReq != null) {
-            onLoadedShopSetting(shopReq!!)
-            mPresenter?.loadTemplate()
-        } else {
-            mPresenter?.loadShopSetting()
-            mPresenter?.loadTemplate()
-        }
+        onLoadedShopSetting(shopReq)
+        mPresenter?.loadTemplate()
 
         if (IConstant.official) {
             cb_model_rider.gone()
@@ -190,9 +185,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             }
         }
         tvShopStatus.singleClick {
-            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem)
+            //shopReq.accept_carriage决定是否显示骑手配送
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem,shopReq.accept_carriage)
         }
         tvRiderStatus.singleClick {
+            //默认使用骑手配送
             DeliveryManagerActivity.rider(mContext as Activity, mRiderItem)
         }
     }
@@ -206,7 +203,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun onLoadedShopSetting(vo: ApplyShopInfo) {
-        vo?.apply {
+        vo.apply {
             orderSetting?.apply {
                 autoOrderSb.isChecked = autoAccept == 1
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
@@ -218,13 +215,31 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
             cb_model_rider.isChecked = shopTemplateType == FreightVoItem.TYPE_QISHOU
             cb_model_shop.isChecked = shopTemplateType == FreightVoItem.TYPE_LOCAL
+
+            if (shopReq.accept_carriage == 0) {
+                //隐藏棋手
+                cb_model_rider.gone()
+                tvRiderStatus.gone()
+            }
         }
 
     }
 
     // 处理显示【第二天】文字，服务端不保存,客户端计算
     fun setOperateTime() {
-        tvShopOperateTime.setText(String.format("%s%s%s%s", shopReq.openStartTime ?:"", if(shopReq.openStartTime?.isEmpty() == true) "" else "-" , if(WorkTimeVo.isSecondDay(shopReq.openStartTime, shopReq.openEndTime)) "" else "第二天", shopReq.openEndTime ?:""))
+        tvShopOperateTime.setText(
+            String.format(
+                "%s%s%s%s",
+                shopReq.openStartTime ?: "",
+                if (shopReq.openStartTime?.isEmpty() == true) "" else "-",
+                if (WorkTimeVo.isSecondDay(
+                        shopReq.openStartTime,
+                        shopReq.openEndTime
+                    )
+                ) "" else "第二天",
+                shopReq.openEndTime ?: ""
+            )
+        )
     }
 
 }
