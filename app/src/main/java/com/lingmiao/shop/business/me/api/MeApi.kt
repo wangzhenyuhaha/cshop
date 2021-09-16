@@ -35,6 +35,11 @@ interface MeApi {
     @POST("seller/app/feedback/addFeedback")
     suspend fun feedback(@Body request: Feedback): Response<ResponseBody>
 
+    //获取企业微信二维码
+    @GET("seller/app/feedback/getContactWay")
+    @WithHiResponse
+    suspend  fun getCompanyWeChat():  Response<String>
+
     //    发送手机号码
     @POST("/seller/shops/clerks/smscode/edit/{mobile}")
     @Headers("Content-type:application/json;charset=UTF-8")

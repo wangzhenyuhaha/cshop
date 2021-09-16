@@ -7,9 +7,13 @@ import com.lingmiao.shop.business.me.bean.Feedback
 interface FeedbackPresenter: BasePresenter{
  
 	fun requestFeedbackData(type: Int, content: String,gallery : List<GoodsGalleryVO>?)
+
+	fun getCompanyWeChat()
 	
 	interface View : BaseView {
         fun onFeedbackSuccess()
         fun onFeedbackError()
+
+        fun onSuccessWeChat()
     }
 }

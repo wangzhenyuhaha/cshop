@@ -1,8 +1,10 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.HiResponse
+import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.isNetUrl
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
@@ -46,6 +48,18 @@ class FeedbackPresenterImpl(context: Context, private var view: FeedbackPresente
                 }
             })
 
+        }
+    }
+
+    override fun getCompanyWeChat() {
+        mCoroutine.launch {
+          //   val resp = MeRepository.apiService.getCompanyWeChat()
+
+        //    Log.d("WZUU",    resp.body())
+
+//            if (resp.isSuccess) {
+//                Log.d("WZUU",resp.data)
+//            }
         }
     }
 

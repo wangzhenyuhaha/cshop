@@ -109,7 +109,6 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
             val resp2 = async {
                 MeRepository.apiService.getMyData().awaitHiResponse()
             }
-            Log.d("WZTAAA", "1111")
             if (resp1.await().isSuccess && resp2.await().isSuccess) {
                 view.applyVI2(resp2.await().data, resp1.await().data.data)
             }

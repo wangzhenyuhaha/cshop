@@ -37,8 +37,11 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
 
     override fun useLightMode() = false
 
+    private var nowWeChat: String? = null
+
 
     override fun initView() {
+
         //标题
         mToolBarDelegate.setMidTitle("建议反馈")
         //默认选中软件问题
@@ -57,7 +60,7 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
         llFeedbackOther.setOnClickListener(this)
 
         //查看二维码
-        feedback_wechat.setOnClickListener(this)
+        //   feedback_wechat.setOnClickListener(this)
 
         //提交反馈
         tvFeedbackSubmit.setOnClickListener(this)
@@ -65,6 +68,8 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
         //设置最大图片数量
         galleryRv.setCountLimit(1, 8)
 
+        //获取企业微信
+        mPresenter.getCompanyWeChat()
     }
 
 
@@ -80,6 +85,10 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
     override fun onFeedbackError() {
         hideDialogLoading()
         showToast("反馈失败")
+    }
+
+    override fun onSuccessWeChat() {
+
     }
 
     override fun onClick(v: View?) {
@@ -101,9 +110,9 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
                 changeSelectedType(OTHERS)
             }
             //查看二维码
-            R.id.feedback_wechat -> {
-                DialogUtils.showDialog(context, R.mipmap.goods_selected_img)
-            }
+//            R.id.feedback_wechat -> {
+//                DialogUtils.showDialog(context, R.mipmap.goods_selected_img)
+//            }
             R.id.tvFeedbackSubmit -> {
                 if (etFeedbackContent.text.toString().isEmpty()) {
                     showToast("请输入要反馈的内容")
