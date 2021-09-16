@@ -1,8 +1,12 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
 import android.text.TextUtils
+import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
@@ -47,6 +51,7 @@ import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.WebCameraUtil
 import com.lingmiao.shop.util.WebCameraUtil.CallBack
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
+import kotlinx.android.synthetic.main.fragment_bind_account.*
 import kotlinx.android.synthetic.main.fragment_new_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -93,6 +98,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //        fromMain = arguments?.getBoolean("fromMain", false)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 
+        //设置查看通联支付时字体颜色
+        val content = "由正规持牌支付机构提供T+1交易服务：通联支付(点击查看)"
+        val builder = SpannableStringBuilder(content)
+        val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
+        builder.setSpan(blueSpan, 23, 29, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        readTongLian.text = builder
+
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
             refreshPageData()
@@ -131,7 +143,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
 
         readWXPay.singleClick {
-            DialogUtils.showDialogSameBig(requireActivity(), R.mipmap.wechat_pay)
+            DialogUtils.showDiaLogBySelf(requireActivity(), R.mipmap.wechat_pay,750,1000)
+        }
+
+        readTongLian.singleClick {
+            DialogUtils.showDiaLogBySelf(requireActivity(), R.mipmap.tonglian,800,550)
         }
 
         tvMainShopNext.setOnClickListener {

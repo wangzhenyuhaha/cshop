@@ -4,9 +4,11 @@ import android.app.Activity
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.R
 import com.james.common.utils.exts.getViewText
@@ -412,17 +414,25 @@ class DialogUtils {
         }
 
 
-        //固定大小的图片显示
-        fun showDialogSameBig(
+        fun showDiaLogBySelf(
             context: Activity,
-            imageInt: Int
+            imageInt: Int,
+            width: Int,
+            height: Int
         ) {
+            //获取View
             val dialog = AppCompatDialog(context, R.style.TransparentDialog)
             val defaultView =
                 View.inflate(context, R.layout.dialog_image_same, null)
+
+            val screenWidth = ScreenUtils.getScreenWidth()
+
+            val w = (screenWidth)*8/10
+            val h = w * height / width
+            defaultView.layoutParams = FrameLayout.LayoutParams(w, h)
             dialog.setContentView(defaultView)
             val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
-            image?.setImageResource(imageInt);
+            image?.setImageResource(imageInt)
             dialog.show()
         }
 

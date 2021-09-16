@@ -732,11 +732,12 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
+                                    android:id="@+id/readTongLian"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start"
                                     android:layout_marginTop="@dimen/dimen_5"
-                                    android:text="由正规持牌支付机构提供T+1交易服务：通联支付"
+                                    android:text="由正规持牌支付机构提供T+1交易服务：通联支付(点击查看)"
                                     android:textColor="#ff909090"
                                     android:textSize="@dimen/sp_14" />
 
