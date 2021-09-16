@@ -12,6 +12,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_40"
+            android:gravity="center"
+            android:text="照片请上传原件照片，若为复印件/扫描件，请加盖公章"
+            android:textColor="#ff999999"
+            android:textSize="15sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
