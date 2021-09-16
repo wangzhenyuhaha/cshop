@@ -208,7 +208,6 @@
                 app:ivRadius="18dp"/>
 
             <com.james.common.view.ITextView
-                android:visibility="gone"
                 tools:visibility="visible"
                 android:id="@+id/tvRefund"
                 android:layout_width="wrap_content"
