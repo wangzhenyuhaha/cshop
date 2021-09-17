@@ -9,6 +9,7 @@ import com.james.common.utils.exts.isNetUrl
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
+import com.lingmiao.shop.business.main.api.MainRepository
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.bean.Feedback
 import com.lingmiao.shop.business.me.presenter.FeedbackPresenter
@@ -53,13 +54,10 @@ class FeedbackPresenterImpl(context: Context, private var view: FeedbackPresente
 
     override fun getCompanyWeChat() {
         mCoroutine.launch {
-          //   val resp = MeRepository.apiService.getCompanyWeChat()
-
-        //    Log.d("WZUU",    resp.body())
-
-//            if (resp.isSuccess) {
-//                Log.d("WZUU",resp.data)
-//            }
+            val resp = MeRepository.apiService.getCompanyWeChat().awaitHiResponse()
+            if (resp.isSuccess) {
+                view.onSuccessWeChat(resp.data.data.toString())
+            }
         }
     }
 

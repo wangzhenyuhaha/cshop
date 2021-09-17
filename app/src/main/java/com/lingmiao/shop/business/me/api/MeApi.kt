@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.me.api
 
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.common.bean.FileResp
 import com.lingmiao.shop.business.login.bean.CaptchaAli
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.bean.*
@@ -38,7 +39,7 @@ interface MeApi {
     //获取企业微信二维码
     @GET("seller/app/feedback/getContactWay")
     @WithHiResponse
-    suspend  fun getCompanyWeChat():  Response<String>
+       fun getCompanyWeChat() :Call<FileResp<String>>
 
     //    发送手机号码
     @POST("/seller/shops/clerks/smscode/edit/{mobile}")

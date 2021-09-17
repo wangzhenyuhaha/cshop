@@ -14,6 +14,6 @@ interface FeedbackPresenter: BasePresenter{
         fun onFeedbackSuccess()
         fun onFeedbackError()
 
-        fun onSuccessWeChat()
+        fun onSuccessWeChat(data:String)
     }
 }
