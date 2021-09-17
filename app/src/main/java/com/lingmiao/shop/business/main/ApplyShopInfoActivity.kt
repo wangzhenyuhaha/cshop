@@ -169,10 +169,10 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                     viewModel.applyShopInfo.value?.licenceImg
                 }
                 1 -> {
-                    viewModel.applyShopInfo.value?.legalBackImg
+                    viewModel.applyShopInfo.value?.legalImg
                 }
                 2 -> {
-                    viewModel.applyShopInfo.value?.legalImg
+                    viewModel.applyShopInfo.value?.legalBackImg
                 }
                 6 -> {
                     //识别银行卡

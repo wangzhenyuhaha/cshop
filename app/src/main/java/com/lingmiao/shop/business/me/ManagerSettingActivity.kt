@@ -17,7 +17,8 @@ Create Date : 2021/3/24:05 PM
 Author      : Fox
 Desc        :
  **/
-class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerSettingPresenter>(), ManagerSettingPresenter.View {
+class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerSettingPresenter>(),
+    ManagerSettingPresenter.View {
 
     val tabName = listOf("基础", "运营")
 
@@ -32,13 +33,11 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
     }
 
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
+    override fun useLightMode() = false
 
-    override fun createPresenter(): ManagerSettingPresenter {
-        return ManagerSettingPresenterImpl(this)
-    }
+
+    override fun createPresenter()=ManagerSettingPresenterImpl(this)
+
 
     override fun onLoadedShopInfo(data: ApplyShopInfo) {
         mBinding.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {

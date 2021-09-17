@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils

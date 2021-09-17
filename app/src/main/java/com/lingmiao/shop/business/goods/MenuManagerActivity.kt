@@ -20,17 +20,14 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
 
     private var mTabTitles = arrayOf("置顶菜单", "常用菜单")
 
-    override fun getLayoutId(): Int {
-        return R.layout.sales_activity_stats
-    }
+    override fun getLayoutId() = R.layout.sales_activity_stats
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
 
-    override fun createPresenter(): BasePresenter {
-        return BasePreImpl(this)
-    }
+    override fun useLightMode() = false
+
+
+    override fun createPresenter() = BasePreImpl(this)
+
 
     override fun initView() {
 
@@ -43,8 +40,8 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_menu_title))
     }
 
-    lateinit var topMenu : TopMenuFragment
-    lateinit var usedMenu : UserMenuFragment
+    lateinit var topMenu: TopMenuFragment
+    lateinit var usedMenu: UserMenuFragment
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         topMenu = TopMenuFragment.newInstance(1)
@@ -59,13 +56,13 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
     }
 
     override fun onBackPressed() {
-        if(viewPager.currentItem == 0) {
-            if(topMenu.isBatchModel()) {
+        if (viewPager.currentItem == 0) {
+            if (topMenu.isBatchModel()) {
                 topMenu.setFinishSort()
                 return
             }
         } else {
-            if(usedMenu.isBatchModel()) {
+            if (usedMenu.isBatchModel()) {
                 usedMenu.setFinishSort()
                 return
             }
