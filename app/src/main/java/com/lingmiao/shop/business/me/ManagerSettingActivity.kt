@@ -36,7 +36,7 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
     override fun useLightMode() = false
 
 
-    override fun createPresenter()=ManagerSettingPresenterImpl(this)
+    override fun createPresenter() = ManagerSettingPresenterImpl(this)
 
 
     override fun onLoadedShopInfo(data: ApplyShopInfo) {

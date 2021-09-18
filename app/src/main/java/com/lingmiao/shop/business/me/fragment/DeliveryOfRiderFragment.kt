@@ -165,7 +165,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     mRangeList.remove(item);
                     mRangeAdapter.replaceData(mRangeList);
                 } else if(view.id == R.id.et_model_range_start) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         run {
                             item?.peekTimeStart = it?.name;
@@ -176,7 +176,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     pop.shiftStartTime(item?.endTimeCount ?: TimeValue.getLastTimeCount());
                     pop.showPopupWindow()
                 } else if(view.id == R.id.et_model_range_end) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         run {
                             item?.peekTimeEnd = it?.name;
@@ -220,7 +220,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     mTimeList.remove(item);
                     mTimeAdapter.replaceData(mTimeList);
                 } else if(view.id == R.id.et_model_km_start) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         run {
                             item?.shipTime = it?.name;
@@ -231,7 +231,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     pop.shiftStartTime(item?.arriveTimeCount ?: TimeValue.getLastTimeCount());
                     pop.showPopupWindow()
                 } else if(view.id == R.id.et_model_km_end) {
-                    val pop = TimeListPop(context!!, mTimeValueList)
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it->
                         item?.arriveTime = it?.name;
                         item?.arriveTimeCount = it?.value;
@@ -242,7 +242,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     pop.shiftEndTime(if(item?.isToday()) item?.shipTimeCount ?: -1 else -1);
                     pop.showPopupWindow()
                 } else if(view.id == R.id.tv_model_time_type) {
-                    val pop = DayPop(context!!, mDayTypeList)
+                    val pop = DayPop(requireContext(), mDayTypeList)
                     pop.setOnClickListener { it, position ->
 
                         run {
