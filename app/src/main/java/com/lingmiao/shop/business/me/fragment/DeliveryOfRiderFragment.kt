@@ -320,20 +320,11 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             mRangeList = mFeeSetting?.peekTimes ?: arrayListOf();
             mRangeAdapter.replaceData(mRangeList);
 
-            if(isDistanceType()) {
-                // 按公里数计费
-                cb_model_pay_km_num.isChecked = true;
-                et_model_price_km.setText(String.format("%s", mFeeSetting?.baseDistance));
-                et_model_price_price.setText(String.format("%s", mFeeSetting?.basePrice));
-                et_model_price_km_out.setText(String.format("%s", mFeeSetting?.unitDistance));
-                et_model_price_minute_more.setText(String.format("%s", mFeeSetting?.unitPrice));
-            } else {
-                // 按公里段计费
-                cb_model_pay_km_section.isChecked = true;
-                mPriceList = mFeeSetting?.distanceSections ?: arrayListOf();
-                mPriceAdapter.replaceData(mPriceList);
-            }
-
+            cb_model_pay_km_num.isChecked = true;
+            et_model_price_km.setText(String.format("%s", mFeeSetting?.baseDistance));
+            et_model_price_price.setText(String.format("%s", mFeeSetting?.basePrice));
+            et_model_price_km_out.setText(String.format("%s", mFeeSetting?.unitDistance));
+            et_model_price_minute_more.setText(String.format("%s", mFeeSetting?.unitPrice));
         }
 
         mTimeSetting?.apply {
