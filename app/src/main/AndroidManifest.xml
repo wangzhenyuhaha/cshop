@@ -199,7 +199,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".business.goods.UserMenuEditActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
         <activity
             android:name=".business.goods.GoodsOfMenuActivity"
             android:screenOrientation="portrait" /> <!-- ======================= 商品模块  END ========================= -->

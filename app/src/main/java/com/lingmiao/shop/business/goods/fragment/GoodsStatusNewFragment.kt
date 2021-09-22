@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -81,15 +82,12 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         goodsStatus = arguments?.getInt(KEY_GOODS_STATUS)
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_fragment_goods_list
-    }
+    override fun getLayoutId() = R.layout.goods_fragment_goods_list
 
-    override fun useEventBus(): Boolean {
-        return true
-    }
 
-    @SuppressLint("RtlHardcoded")
+    override fun useEventBus() = true
+
+
     override fun initOthers(rootView: View) {
 
         mSmartRefreshLayout.setBackgroundResource(R.color.color_ffffff)
@@ -101,7 +99,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
         //筛选
         goodsFilterTv.singleClick {
-            drawerC.openDrawer(Gravity.RIGHT)
+            drawerC.openDrawer(GravityCompat.END)
         }
 
         //抽屉布局中Layout
@@ -183,7 +181,6 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             mLoadMoreDelegate?.refresh()
         }
 
-
         //排序
         //库存
         goodsStoreCountTv.setOnClickListener {
@@ -203,7 +200,7 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
 
         //全选
         cb_goods_list_check_all.setOnCheckedChangeListener { buttonView, isChecked ->
-            mAdapter?.data?.forEachIndexed { index, goodsVO ->
+            mAdapter.data.forEachIndexed { index, goodsVO ->
                 goodsVO.isChecked = isChecked
             }
             mAdapter?.notifyDataSetChanged()
@@ -437,7 +434,15 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, groupPath, catePath, isSales, mAdapter.data,orderColumn,isDESC)
+        mPresenter?.loadListData(
+            page,
+            groupPath,
+            catePath,
+            isSales,
+            mAdapter.data,
+            orderColumn,
+            isDESC
+        )
     }
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {

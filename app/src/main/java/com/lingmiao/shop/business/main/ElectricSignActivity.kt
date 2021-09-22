@@ -58,7 +58,7 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
                     || url.startsWith("http://www.c-dian.cn/")
                     || url.indexOf("/signSuccess?signType=allinpay") > -1) {
                     mPresenter?.getShopStatus();
-                    return false;
+                    return true;
                 }
                 view.loadUrl(url)
                 return true
@@ -86,13 +86,6 @@ class ElectricSignActivity : BaseVBActivity<MainActivityElectricSignBinding, IEl
     override fun onSigning() {
         showToast("签约已提交，请稍后刷新...")
         finish();
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        if(mBinding.wvView.canGoBack()) {
-            return false;
-        }
-        return super.onSupportNavigateUp();
     }
 
 }
