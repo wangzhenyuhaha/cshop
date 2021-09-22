@@ -193,6 +193,7 @@
 
 
                 <LinearLayout
+                    android:padding="@dimen/dimen_14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_14"

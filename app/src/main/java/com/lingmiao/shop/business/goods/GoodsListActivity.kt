@@ -3,19 +3,16 @@ package com.lingmiao.shop.business.goods
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.view.Gravity
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
-import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.goods.api.bean.DashboardDataVo
 import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
-import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.fragment.GoodsNewFragment
 import com.lingmiao.shop.business.goods.fragment.GoodsStatusNewFragment
@@ -26,7 +23,7 @@ import kotlinx.android.synthetic.main.goods_activity_goods_list.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.ArrayList
+import java.util.*
 
 /**
 Create Date : 2021/3/99:40 AM
@@ -59,15 +56,15 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     }
 
     override fun createPresenter(): GoodsTabNumberPre {
-        return GoodsTabNumberPreImpl(this);
+        return GoodsTabNumberPreImpl(this)
     }
 
     private var mTabTitles = arrayOf("全部", "已上架", "待上架", "已下架", "已售罄")
 
-    private val tvTabList: ArrayList<IGoodsTabView> = ArrayList();
+    private val tvTabList: ArrayList<IGoodsTabView> = ArrayList()
 
     override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_list;
+        return R.layout.goods_activity_goods_list
     }
 
     override fun useLightMode(): Boolean {
@@ -79,41 +76,41 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
 //    }
 
     override fun useEventBus(): Boolean {
-        return true;
+        return true
     }
 
     override fun initView() {
-        initTitle();
-        initTabLayout();
-        mPresenter?.loadNumbers();
+        initTitle()
+        initTabLayout()
+        mPresenter?.loadNumbers()
     }
 
     private fun initTitle() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_manager_title))
         mToolBarDelegate.setRightText("新增", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
             ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
-        });
+        })
     }
 
     private fun initTabLayout() {
         tvTabAll.setOnClickListener {
-            viewPager.currentItem = 0;
+            viewPager.currentItem = 0
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ALL))
         }
         tvTabSelling.setOnClickListener {
-            viewPager.currentItem = 1;
+            viewPager.currentItem = 1
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ENABLE))
         }
         tvTabWaiting.setOnClickListener {
-            viewPager.currentItem = 2;
+            viewPager.currentItem = 2
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
         }
         tvTabOffLine.setOnClickListener {
-            viewPager.currentItem = 3;
+            viewPager.currentItem = 3
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ENABLE))
         }
         tvTabSoldOut.setOnClickListener {
-            viewPager.currentItem = 4;
+            viewPager.currentItem = 4
             EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT))
         }
 
@@ -131,8 +128,8 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         fragments.add(GoodsStatusNewFragment.newInstance(GoodsNewFragment.GOODS_STATUS_SOLD_OUT))
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.setAdapter(fragmentAdapter)
-        viewPager.addOnPageChangeListener(this);
-        viewPager.offscreenPageLimit = 1;
+        viewPager.addOnPageChangeListener(this)
+        viewPager.offscreenPageLimit = 1
 
     }
 
@@ -146,9 +143,9 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     }
 
     override fun onPageSelected(position: Int) {
-        setTabStatus(position);
+        setTabStatus(position)
 
-        refreshListData();
+        refreshListData()
     }
 
     private fun setTabStatus(tabIndex: Int) {
@@ -157,7 +154,7 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         tvTabWaiting.setTabSelected(false)
         tvTabOffLine.setTabSelected(false)
         tvTabSoldOut.setTabSelected(false)
-        viewPager.currentItem = tabIndex;
+        viewPager.currentItem = tabIndex
         tvTabList[tabIndex].setTabSelected(true)
     }
 
@@ -169,7 +166,7 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
     fun onTabChangeEvent(event: GoodsHomeTabEvent) {
         viewPager.setCurrentItem(event.getNewTabIndex(), false)
 
-        refreshListData();
+        refreshListData()
     }
 
 //    @Subscribe(threadMode = ThreadMode.MAIN)

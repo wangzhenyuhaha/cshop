@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main
 
+import android.Manifest
 import android.content.Intent
 import android.os.Environment
 import android.util.Log
@@ -8,11 +9,13 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BaseActivity
 import com.james.common.net.BaseResponse
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.check
+import com.james.common.utils.permissionX.CheckPermission
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
@@ -169,10 +172,10 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                     viewModel.applyShopInfo.value?.licenceImg
                 }
                 1 -> {
-                    viewModel.applyShopInfo.value?.legalBackImg
+                    viewModel.applyShopInfo.value?.legalImg
                 }
                 2 -> {
-                    viewModel.applyShopInfo.value?.legalImg
+                    viewModel.applyShopInfo.value?.legalBackImg
                 }
                 6 -> {
                     //识别银行卡
@@ -273,86 +276,99 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
             DialogUtils.showDialog(context, "承诺函下载", "是否确认下载承诺函？", "取消", "下载", null,
                 View.OnClickListener {
-                    lifecycleScope.launch(Dispatchers.IO)
-                    {
-                        withContext(Dispatchers.Main) {
-                            showDialogLoading()
-                        }
 
-                        //获取InputStream
-                        val call =
-                            CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
-
-                        //目标文件
-                        var externalFileRootDir: File? = getExternalFilesDir(null)
-                        do {
-                            externalFileRootDir =
-                                Objects.requireNonNull(externalFileRootDir)?.parentFile
-                        } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
-                                "/Android"
-                            ) == true
-                        )
-                        val saveDir: String? =
-                            Objects.requireNonNull(externalFileRootDir)?.absolutePath
-                        val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
-
-                        val destinationFile = File(savePath, "签约承诺函.doc")
-
-                        var inputStream: InputStream? = null
-                        var outputStream: OutputStream? = null
-
-                        val data = ByteArray(2048)
-                        var count: Int?
-
-
-                        count = inputStream?.read(data)
-
-                        try {
-                            inputStream = call?.body()?.byteStream()
-                            outputStream = FileOutputStream(destinationFile)
-
-                            while (count != -1) {
-                                if (count != null) {
-                                    outputStream.write(data, 0, count)
+                    //请求权限
+                    CheckPermission.request(
+                        context,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) { allGranted, _ ->
+                        if (allGranted) {
+                            lifecycleScope.launch(Dispatchers.IO)
+                            {
+                                withContext(Dispatchers.Main) {
+                                    showDialogLoading()
                                 }
+
+                                //获取InputStream
+                                val call =
+                                    CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
+
+                                //目标文件
+                                var externalFileRootDir: File? = getExternalFilesDir(null)
+                                do {
+                                    externalFileRootDir =
+                                        Objects.requireNonNull(externalFileRootDir)?.parentFile
+                                } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                        "/Android"
+                                    ) == true
+                                )
+                                val saveDir: String? =
+                                    Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                                val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+
+                                val destinationFile = File(savePath, "签约承诺函.doc")
+
+                                var inputStream: InputStream? = null
+                                var outputStream: OutputStream? = null
+
+                                val data = ByteArray(2048)
+                                var count: Int?
+
+
                                 count = inputStream?.read(data)
-                            }
 
-                            outputStream.flush()
+                                try {
+                                    inputStream = call?.body()?.byteStream()
+                                    outputStream = FileOutputStream(destinationFile)
+
+                                    while (count != -1) {
+                                        if (count != null) {
+                                            outputStream.write(data, 0, count)
+                                        }
+                                        count = inputStream?.read(data)
+                                    }
+
+                                    outputStream.flush()
+
+                                    withContext(Dispatchers.Main)
+                                    {
+                                        hideDialogLoading()
+                                        DialogUtils.showDialog(
+                                            context,
+                                            "下载成功",
+                                            "是否在文件夹中查看承诺函?",
+                                            "取消",
+                                            "查看",
+                                            null,
+                                            View.OnClickListener {
+                                                //查看承诺函
+                                                val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+                                                intent.type = "application/msword"
+                                                intent.addCategory(Intent.CATEGORY_OPENABLE)
+                                                startActivity(intent)
+                                            })
+                                    }
 
 
-                        } catch (e: Exception) {
+                                } catch (e: Exception) {
 
-                            withContext(Dispatchers.Main)
-                            {
-                                hideDialogLoading()
-                                ToastUtils.showShort("下载失败")
-                            }
-                        } finally {
-                            inputStream?.close()
-                            outputStream?.close()
-                            withContext(Dispatchers.Main)
-                            {
-                                hideDialogLoading()
-                                DialogUtils.showDialog(
-                                    context,
-                                    "下载成功",
-                                    "是否在文件夹中查看承诺函?",
-                                    "取消",
-                                    "查看",
-                                    null,
-                                    View.OnClickListener {
-                                        //查看承诺函
-                                        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-                                        intent.type = "application/msword"
-                                        intent.addCategory(Intent.CATEGORY_OPENABLE)
-                                        startActivity(intent)
-                                    })
+                                    withContext(Dispatchers.Main)
+                                    {
+                                        hideDialogLoading()
+                                        ToastUtils.showShort("下载失败")
+                                    }
+                                } finally {
+                                    inputStream?.close()
+                                    outputStream?.close()
+                                }
+
+
                             }
                         }
-
-
                     }
+
+
                 }
             )
 

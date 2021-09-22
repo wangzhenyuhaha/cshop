@@ -1,11 +1,15 @@
 package com.lingmiao.shop.business.me
 
+import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import com.james.common.base.BaseActivity
 import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.common.ui.PhotoListActivity
 import com.lingmiao.shop.business.me.presenter.FeedbackPresenter
 import com.lingmiao.shop.business.me.presenter.impl.FeedbackPresenterImpl
+import com.lingmiao.shop.util.GlideUtils
 import kotlinx.android.synthetic.main.me_activity_feedback.*
 
 /**
@@ -60,7 +64,7 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
         llFeedbackOther.setOnClickListener(this)
 
         //查看二维码
-        //   feedback_wechat.setOnClickListener(this)
+        feedback_wechat.setOnClickListener(this)
 
         //提交反馈
         tvFeedbackSubmit.setOnClickListener(this)
@@ -87,8 +91,9 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
         showToast("反馈失败")
     }
 
-    override fun onSuccessWeChat() {
-
+    override fun onSuccessWeChat(data: String) {
+        nowWeChat = data
+        GlideUtils.setImageUrl(feedback_wechat, data)
     }
 
     override fun onClick(v: View?) {
@@ -110,9 +115,23 @@ class FeedbackActivity : BaseActivity<FeedbackPresenter>(), FeedbackPresenter.Vi
                 changeSelectedType(OTHERS)
             }
             //查看二维码
-//            R.id.feedback_wechat -> {
-//                DialogUtils.showDialog(context, R.mipmap.goods_selected_img)
-//            }
+            R.id.feedback_wechat -> {
+
+                nowWeChat?.also {
+                    val new: ArrayList<String> = ArrayList()
+                    new.add(it)
+                    val bundle = Bundle().apply {
+                        putStringArrayList("list", new)
+                        putInt("position", 0)
+                    }
+
+                    val intent = Intent(context, PhotoListActivity::class.java)
+                    intent.putExtra("Photo", bundle)
+                    context.startActivity(intent)
+
+                }
+            }
+
             R.id.tvFeedbackSubmit -> {
                 if (etFeedbackContent.text.toString().isEmpty()) {
                     showToast("请输入要反馈的内容")

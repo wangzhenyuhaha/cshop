@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
@@ -45,6 +46,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
         when (type) {
 
             ApplyShopInfoActivity.HIRE -> {
+                binding.textView.visiable()
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.bizplacepic?.also {
@@ -54,6 +56,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
             }
 
             ApplyShopInfoActivity.LICENSE -> {
+                binding.textView.visiable()
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.licenceImg?.also {
@@ -63,6 +66,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
             }
 
             ApplyShopInfoActivity.TAXES -> {
+                binding.textView.visiable()
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.taxes_certificate_img?.also {
@@ -72,6 +76,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
             }
 
             ApplyShopInfoActivity.ORGAN -> {
+                binding.textView.visiable()
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.orgcodepic?.also {
@@ -93,6 +98,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
             }
 
             ApplyShopInfoActivity.OTHER_PIC -> {
+                binding.textView.visiable()
                 binding.linearLayout.visibility = View.VISIBLE
                 binding.imageView.visibility = View.GONE
                 model.applyShopInfo.value?.other_Pic_One?.also {
@@ -107,6 +113,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
             }
 
             ApplyShopInfoActivity.FOOD_ALLOW -> {
+                binding.textView.visiable()
                 binding.linearLayout.visibility = View.GONE
                 binding.imageView.visibility = View.VISIBLE
                 model.applyShopInfo.value?.foodAllow?.also {

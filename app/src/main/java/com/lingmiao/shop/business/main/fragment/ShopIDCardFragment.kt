@@ -121,8 +121,6 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
             }
         }
 
-
-
         initListener()
     }
 
@@ -135,7 +133,7 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
             setOnClickForPhoto(type, 2)
         }
 
-        //门头
+        //门头，人像
         binding.legalBackImgImageView.setOnClickListener {
             setOnClickForPhoto(type, 1)
         }
