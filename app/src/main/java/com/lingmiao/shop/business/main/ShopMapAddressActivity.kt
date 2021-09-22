@@ -266,7 +266,7 @@ class ShopMapAddressActivity : BaseVBActivity<MainActivityShopMapAddressBinding,
                 zoom = cameraPosition.zoom
                 // 变更经纬度
                 latlng = cameraPosition.target;
-//                startJumpAnimation()
+                startJumpAnimation()
             }
         })
         // 定位源
