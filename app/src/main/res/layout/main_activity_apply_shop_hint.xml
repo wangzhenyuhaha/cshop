@@ -103,18 +103,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/applyShopHintTV"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_20"
-                    android:background="@color/gray_bg_click"
-                    android:paddingStart="@dimen/dimen_5"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="@dimen/dimen_5"
-                    android:paddingBottom="10dp"
-                    android:text="若企业结算账户为对私，需下载《签约承诺函》并盖章，然后上传图片。点击可下载" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"

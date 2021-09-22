@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <com.james.common.view.ILinearLayout
         android:id="@+id/addMenuLayout"
@@ -33,11 +35,11 @@
 
             <TextView
                 android:id="@+id/menuAddLayoutTV"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:drawableRight="@mipmap/goods_spec_blue_plus"
+                android:drawableEnd="@mipmap/goods_spec_blue_plus"
                 android:text="(可以使用活动价)"
                 android:textColor="@color/red"
                 android:textSize="@dimen/sp_12" />
@@ -49,13 +51,13 @@
             android:layout_width="100dp"
             android:layout_height="@dimen/dimen_38"
             android:layout_gravity="center_vertical"
-            android:drawableLeft="@mipmap/ic_sort_up"
+            android:drawableStart="@mipmap/ic_sort_up"
             android:gravity="center"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingRight="@dimen/dimen_10"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="@dimen/dimen_10"
             android:text="菜单排序"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/dimen_14" />
+            android:textSize="@dimen/sp_14" />
 
     </com.james.common.view.ILinearLayout>
 
@@ -88,10 +90,10 @@
             android:layout_height="match_parent"
             android:button="@drawable/selector_goods_spce_checkbox"
             android:paddingStart="@dimen/dimen_5"
-            android:paddingRight="@dimen/dimen_15"
+            android:paddingEnd="@dimen/dimen_15"
             android:text="全选"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/dimen_13"
+            android:textSize="@dimen/sp_13"
             android:visibility="gone" />
 
         <TextView
@@ -103,7 +105,7 @@
             android:gravity="center"
             android:text="取消操作"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/dimen_14"
+            android:textSize="@dimen/sp_14"
             android:visibility="gone" />
 
         <TextView
@@ -115,7 +117,7 @@
             android:gravity="center"
             android:text="完成操作"
             android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dimen_14"
+            android:textSize="@dimen/sp_14"
             android:visibility="gone" />
 
 

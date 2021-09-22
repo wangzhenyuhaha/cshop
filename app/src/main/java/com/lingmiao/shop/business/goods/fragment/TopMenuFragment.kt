@@ -34,10 +34,11 @@ Create Date : 2021/3/101:00 AM
 Auther      : Fox
 Desc        :
  **/
-class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), CateManagerPre.GroupManagerView {
+class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
+    CateManagerPre.GroupManagerView {
 
     companion object {
-        fun newInstance(isTop : Int): TopMenuFragment {
+        fun newInstance(isTop: Int): TopMenuFragment {
             return TopMenuFragment().apply {
                 arguments = Bundle().apply {
                     putInt("isTop", isTop)
@@ -52,12 +53,10 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
         isTop = arguments?.getInt("isTop", 0)
     }
 
-    override fun getLayoutId(): Int? {
-        return R.layout.goods_fragment_goods_top_menu
-    }
+    override fun getLayoutId() = R.layout.goods_fragment_goods_top_menu
 
     var mSelectPosition: Int? = null
-    var mCheckedItem : ShopGroupVO? = null
+    var mCheckedItem: ShopGroupVO? = null
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
         val dadapter = MenuAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
@@ -69,13 +68,18 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
                         handleSort(position, item)
                     }
                     R.id.menuEditTv -> {
-                        MenuEditActivity.openActivity(requireActivity(),ShopGroupVO.LEVEL_1, mAdapter.getItem(position)?.shopCatPid, mAdapter.getItem(position))
+                        MenuEditActivity.openActivity(
+                            requireActivity(),
+                            ShopGroupVO.LEVEL_1,
+                            mAdapter.getItem(position)?.shopCatPid,
+                            mAdapter.getItem(position)
+                        )
                     }
                     R.id.menuEditGoodsTv -> {
                         GoodsOfMenuActivity.openActivity(requireActivity(), item)
                     }
                     R.id.menuVisibleCb -> {
-                        item.disable = if(item.disable == 1) 0 else 1
+                        item.disable = if (item.disable == 1) 0 else 1
                         mPresenter?.updateGroup(item, position)
                     }
                     R.id.menuDeleteTv -> {
@@ -93,7 +97,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
             }
         }
 
-        var mStartPoi : Int = -1
+        var mStartPoi: Int = -1
 
         val listener: OnItemDragListener = object : OnItemDragListener {
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder, pos: Int) {
@@ -114,21 +118,21 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
 
             override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder, pos: Int) {
                 LogUtils.d(" ..end : $pos")
-                if(pos > 0) {
+                if (pos > 0) {
                     mSelectPosition = pos
 
-                    if(mStartPoi > pos) {
+                    if (mStartPoi > pos) {
                         // 向上
-                        mAdapter.notifyItemRangeChanged(pos, mStartPoi-pos+1)
+                        mAdapter.notifyItemRangeChanged(pos, mStartPoi - pos + 1)
                     } else {
                         // 向上
-                        mAdapter.notifyItemRangeChanged(mStartPoi, pos-mStartPoi+1)
+                        mAdapter.notifyItemRangeChanged(mStartPoi, pos - mStartPoi + 1)
 
                     }
 
-                    val pre = dadapter.data.get(pos-1)
+                    val pre = dadapter.data.get(pos - 1)
                     val current = dadapter.data.get(pos)
-                    mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort+1)
+                    mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort + 1)
                 } else {
                     // 移到顶
                     val item = dadapter.data.get(pos)
@@ -150,27 +154,27 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
         return dadapter
     }
 
-    fun handleSort(position: Int, toPosition : Int, item : ShopGroupVO, sortValue : Int) {
+    fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
         mSelectPosition = position
         // 移除
         mAdapter.remove(position)
         // 放置顶部
         mAdapter.addData(toPosition, item)
         // 更新第二条
-        mAdapter.notifyItemChanged(toPosition+1)
+        mAdapter.notifyItemChanged(toPosition + 1)
         // 滑到顶部
         mLoadMoreRv.smoothScrollToPosition(toPosition)
 
         mPresenter?.sort(isTop!!, item.shopCatId!!, sortValue)
     }
 
-    fun handleSort(position: Int, item : ShopGroupVO) {
+    fun handleSort(position: Int, item: ShopGroupVO) {
         handleSort(position, 0, item, 0)
     }
 
     override fun initOthers(rootView: View) {
         menuAddLayout.setOnClickListener {
-            MenuEditActivity.openActivity(requireActivity(),ShopGroupVO.LEVEL_1, null, null)
+            MenuEditActivity.openActivity(requireActivity(), ShopGroupVO.LEVEL_1, null, null)
         }
 
         menuAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -207,7 +211,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
         mSmartRefreshLayout?.setEnableLoadMore(false);
     }
 
-    fun isBatchModel() : Boolean {
+    fun isBatchModel(): Boolean {
         return (mAdapter as MenuAdapter)?.getBatchEdit()
     }
 
@@ -223,7 +227,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(), Cat
     }
 
     override fun onDeleteGroupSuccess(position: Int) {
-        if(position < mAdapter.data.size) {
+        if (position < mAdapter.data.size) {
             mAdapter.data.removeAt(position)
             mAdapter.notifyDataSetChanged()
         }

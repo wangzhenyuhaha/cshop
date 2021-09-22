@@ -18,6 +18,9 @@ data class ShopStatus(
     var haveCategory: Boolean? = false,
     // 是否显示提现
     @SerializedName("show_button")
-    var showButton: Int? = 0
+    var showButton: Int? = 0,
+    // 审核失败原因
+    @SerializedName("remark")
+    var remark: String = ""
 
 )

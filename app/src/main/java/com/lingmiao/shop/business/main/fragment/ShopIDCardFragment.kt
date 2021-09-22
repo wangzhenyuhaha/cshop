@@ -10,6 +10,9 @@ import com.bumptech.glide.Glide
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
@@ -30,9 +33,8 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
 
     private var type: Int = 0
 
-    override fun createPresenter(): BasePresenter {
-        return BasePreImpl(this)
-    }
+    override fun createPresenter() = BasePreImpl(this)
+
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -42,22 +44,81 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
 
     override fun initViewsAndData(rootView: View) {
 
-        model.setTitle("上传身份证照片")
         type = arguments?.getInt("type") ?: 0
 
-        //  人像
-        model.applyShopInfo.value?.legalBackImg?.also {
-            Glide.with(requireActivity()).load(it).into(binding.legalBackImgImageView)
-        }
+        when (type) {
+            ApplyShopInfoActivity.ID_CARD_FRONT -> {
 
-        //  国徽
-        model.applyShopInfo.value?.legalImg?.also {
-            Glide.with(requireActivity()).load(it).into(binding.legalImgImageView)
-        }
+                model.setTitle("上传身份证照片")
+                //  人像
+                if (model.applyShopInfo.value?.legalImg == null) {
+                    Glide.with(requireActivity()).load(R.mipmap.main_shop_hint_2)
+                        .into(binding.legalBackImgImageView)
+                } else {
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.legalImg)
+                        .into(binding.legalBackImgImageView)
+                }
 
-        //法人手持身份证照片
-        model.applyShopInfo.value?.holdImg?.also {
-            Glide.with(requireActivity()).load(it).into(binding.holdImgImageView)
+                //国徽
+                if (model.applyShopInfo.value?.legalBackImg == null) {
+                    Glide.with(requireActivity()).load(R.mipmap.main_shop_hint_1)
+                        .into(binding.legalImgImageView)
+                } else {
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.legalBackImg)
+                        .into(binding.legalImgImageView)
+                }
+
+                //法人手持身份证照片
+                if (model.applyShopInfo.value?.holdImg == null) {
+                    Glide.with(requireActivity()).load(R.mipmap.main_shop_hint_3)
+                        .into(binding.holdImgImageView)
+                } else {
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.holdImg)
+                        .into(binding.holdImgImageView)
+                }
+            }
+            ApplyShopInfoActivity.PERSONAL_SHOP -> {
+                model.setTitle("上传店铺照片")
+                binding.textView.gone()
+
+
+                //店铺门头照片
+                if (model.applyShopInfo.value?.shopPhotoFront == null) {
+                    Glide.with(requireActivity()).load(R.mipmap.main_shop_image_upload)
+                        .into(binding.legalBackImgImageView)
+                } else {
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.shopPhotoFront)
+                        .into(binding.legalBackImgImageView)
+                }
+
+                binding.textView1.text = "店铺门头照片"
+                binding.textView1.visiable()
+
+                //经营内景照片
+                if (model.applyShopInfo.value?.shopPhotoInside == null) {
+                    Glide.with(requireActivity()).load(R.mipmap.main_shop_image_upload)
+                        .into(binding.legalImgImageView)
+                } else {
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.shopPhotoInside)
+                        .into(binding.legalImgImageView)
+                }
+
+                binding.textView2.text = "经营内景照片"
+                binding.textView2.visiable()
+
+                //经营者和店铺门头合照
+                if (model.applyShopInfo.value?.peasonheadpic == null) {
+                    Glide.with(requireActivity()).load(R.mipmap.main_shop_image_upload)
+                        .into(binding.holdImgImageView)
+                } else {
+                    Glide.with(requireActivity()).load(model.applyShopInfo.value?.peasonheadpic)
+                        .into(binding.holdImgImageView)
+                }
+
+                binding.textView3.text = "经营者和店铺门头合照"
+                binding.textView3.visiable()
+
+            }
         }
 
         initListener()
@@ -67,17 +128,17 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
     private fun initListener() {
 
 
-        //国徽
+        //内景,国徽
         binding.legalImgImageView.setOnClickListener {
-            setOnClickForPhoto(type, 1)
-        }
-
-        //人像
-        binding.legalBackImgImageView.setOnClickListener {
             setOnClickForPhoto(type, 2)
         }
 
-        //手持身份证
+        //门头，人像
+        binding.legalBackImgImageView.setOnClickListener {
+            setOnClickForPhoto(type, 1)
+        }
+
+        //合照，手持
         binding.holdImgImageView.setOnClickListener {
             setOnClickForPhoto(type, 3)
         }
@@ -148,9 +209,9 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                 when (type) {
                     ApplyShopInfoActivity.ID_CARD_FRONT -> {
                         when (number) {
-                            1 -> {
+                            2 -> {
                                 //国徽
-                                model.applyShopInfo.value?.legalImg = uploadFile.data.url
+                                model.applyShopInfo.value?.legalBackImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
                                     Glide.with(requireActivity()).load(it)
                                         .into(binding.legalImgImageView)
@@ -159,9 +220,9 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                 //启用OCR识别
                                 model.getOCR.value = 2
                             }
-                            2 -> {
+                            1 -> {
                                 //人像
-                                model.applyShopInfo.value?.legalBackImg = uploadFile.data.url
+                                model.applyShopInfo.value?.legalImg = uploadFile.data.url
                                 uploadFile.data.url?.also {
                                     Glide.with(requireActivity()).load(it)
                                         .into(binding.legalBackImgImageView)
@@ -186,7 +247,39 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                             }
                         }
                     }
+                    ApplyShopInfoActivity.PERSONAL_SHOP ->{
+                        when(number){
+                            1->{
+                                //门头
+                                model.applyShopInfo.value?.shopPhotoFront = uploadFile.data.url
+                                uploadFile.data.url?.also {
+                                    Glide.with(requireActivity()).load(it)
+                                        .into(binding.legalBackImgImageView)
+                                }
+
+                            }
+                            2->{
+                                //内景
+                                model.applyShopInfo.value?.shopPhotoInside = uploadFile.data.url
+                                uploadFile.data.url?.also {
+                                    Glide.with(requireActivity()).load(it)
+                                        .into(binding.legalImgImageView)
+                                }
+
+                            }
+                            3->{
+                                //合照
+                                model.applyShopInfo.value?.peasonheadpic = uploadFile.data.url
+                                uploadFile.data.url?.also {
+                                    Glide.with(requireActivity()).load(it)
+                                        .into(binding.holdImgImageView)
+                                }
+
+                            }
+                        }
+                    }
                 }
+
                 showToast("上传成功")
             }
         }

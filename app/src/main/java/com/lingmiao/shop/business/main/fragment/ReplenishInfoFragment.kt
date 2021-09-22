@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,20 +12,16 @@ import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.checkBoolean
 import com.james.common.utils.exts.checkNotBlack
+import com.james.common.utils.exts.gone
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.api.bean.CategoryVO
-import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.ApplyShopInfoViewModel
 import com.lingmiao.shop.business.main.ShopAddressActivity
-import com.lingmiao.shop.business.main.bean.ApplyShopCategory
-import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
 import com.lingmiao.shop.business.main.bean.CategoryItem
 import com.lingmiao.shop.business.main.presenter.ReplenishInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ReplenishInfoPresenterImpl
 import com.lingmiao.shop.databinding.FragmentReplenishInfoBinding
-import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 
@@ -86,7 +81,6 @@ class ReplenishInfoFragment :
         val name = item1?.name + "/" + item2?.name
         binding.goodsManagementCategoryTextView.text = name
 
-
         model.applyShopInfo.value?.also {
             it.goodsManagementCategory = item1?.id
             it.categoryNames = item1?.name
@@ -96,8 +90,6 @@ class ReplenishInfoFragment :
             }
             it.mcc_name = item2?.name
         }
-
-
     }
 
 
@@ -133,7 +125,7 @@ class ReplenishInfoFragment :
         binding.legalNameTV.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "法人姓名",
+                if (model.applyShopInfo.value?.shopType == 4) "老板姓名" else "法人姓名"  ,
                 "",
                 "请输入",
                 model.applyShopInfo.value?.legalName,
@@ -156,7 +148,7 @@ class ReplenishInfoFragment :
         binding.legalPhone.setOnClickListener {
             DialogUtils.showInputDialog(
                 requireActivity(),
-                "法人电话",
+                if (model.applyShopInfo.value?.shopType == 4) "老板电话" else "法人电话",
                 "",
                 "请输入",
                 model.applyShopInfo.value?.legal_phone,
@@ -190,7 +182,7 @@ class ReplenishInfoFragment :
                     model.applyShopInfo.value?.linkName = it
                     model.nameOfShopPerson.value = 1
                 } else {
-                    ToastUtils.showShort("请输入正确的负责人电话")
+                    ToastUtils.showShort("请输入正确的负责人姓名")
                 }
             }
         }
@@ -238,7 +230,7 @@ class ReplenishInfoFragment :
                 requireActivity(),
                 "经营内容",
                 "",
-                "请输入",
+                "请输入（建议50字内）",
                 model.applyShopInfo.value?.scope,
                 "取消",
                 "保存",
@@ -250,7 +242,7 @@ class ReplenishInfoFragment :
 
         }
 
-        //法人身份证信息
+        //法人身份证信息   或者   经营者身份证信息
         binding.legalInfo.setOnClickListener {
             findNavController().navigate(R.id.action_replenishInfoFragment_to_identityInfoFragment)
         }
@@ -263,7 +255,6 @@ class ReplenishInfoFragment :
         //下一步
         binding.tvApplyShopInfoNext.setOnClickListener {
             try {
-                Log.d("WZYAAB", model.applyShopInfo.value?.promoCode.toString())
                 checkNotBlack(model.applyShopInfo.value?.shopName) {
                     "请输入店铺名称"
                 }
@@ -279,26 +270,46 @@ class ReplenishInfoFragment :
                 checkNotBlack(model.applyShopInfo.value?.shopAdd) {
                     "请输入店铺地址"
                 }
-                checkNotBlack(model.applyShopInfo.value?.legalName) {
-                    "请输入法人姓名"
-                }
-                checkNotBlack(model.applyShopInfo.value?.legal_phone) {
-                    "请输入法人号码"
-                }
-                checkNotBlack(model.applyShopInfo.value?.linkName) {
-                    "请输入负责人姓名"
-                }
-                checkNotBlack(model.applyShopInfo.value?.linkPhone) {
-                    "请输入负责人号码"
-                }
-                checkNotBlack(model.applyShopInfo.value?.scope) {
-                    "请输入主营内容"
+                if (model.applyShopInfo.value?.shopType != 4) {
+                    //企业  个体户
+                    checkNotBlack(model.applyShopInfo.value?.legalName) {
+                        "请输入法人姓名"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legal_phone) {
+                        "请输入法人号码"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkName) {
+                        "请输入负责人姓名"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkPhone) {
+                        "请输入负责人号码"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.scope) {
+                        "请输入主营内容"
+                    }
+                    checkBoolean(isCompanyInfoReady()) {
+                        "请输入完整的企业信息"
+                    }
+                }else{
+                    //个人
+                    checkNotBlack(model.applyShopInfo.value?.legalName) {
+                        "请输入老板名称"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.legal_phone) {
+                        "请输入老板电话"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkName) {
+                        "请输入负责人姓名"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.linkPhone) {
+                        "请输入负责人号码"
+                    }
+                    checkNotBlack(model.applyShopInfo.value?.scope) {
+                        "请输入主营内容"
+                    }
                 }
                 checkBoolean(isIDCardReady()) {
                     "请输入完整的身份证资料"
-                }
-                checkBoolean(isCompanyInfoReady()) {
-                    "请输入完整的企业信息"
                 }
                 findNavController().navigate(R.id.action_replenishInfoFragment_to_bindAccountFragment)
 
@@ -315,25 +326,29 @@ class ReplenishInfoFragment :
 
         model.applyShopInfo.observe(this, Observer { info ->
 
-            //注册资本
-            if (info.regMoney == null) {
-                info.regMoney = 1
+
+            if (info.shopType != 4) {
+                //注册资本
+                if (info.regMoney == null) {
+                    info.regMoney = 1
+                }
+
+                //员工人数
+                if (info.employeeNum == null) {
+                    info.employeeNum = 1
+                }
+
+                //经营区域
+                if (info.operateLimit == null) {
+                    info.operateLimit = 1
+                }
+
+                //经营地段
+                if (info.inspect == null) {
+                    info.inspect = 3
+                }
             }
 
-            //员工人数
-            if (info.employeeNum == null) {
-                info.employeeNum = 1
-            }
-
-            //经营区域
-            if (info.operateLimit == null) {
-                info.operateLimit = 1
-            }
-
-            //经营地段
-            if (info.inspect == null) {
-                info.inspect = 3
-            }
 
             //店铺名字
             info.shopName?.also {
@@ -457,12 +472,33 @@ class ReplenishInfoFragment :
 
     override fun initViewsAndData(rootView: View) {
         model.setTitle("补充资料")
-        if (model.applyShopInfo.value?.shopType == 1) {
-            //企业
-            binding.companyInfoTitle.text = "企业信息"
-        } else {
-            //个体户
-            binding.companyInfoTitle.text = "企业信息（个体户）"
+        when (model.applyShopInfo.value?.shopType) {
+            1 -> {
+                //企业
+                binding.companyInfoTitle.text = "企业信息"
+            }
+            3 -> {
+                //个体户
+                binding.companyInfoTitle.text = "企业信息（个体户）"
+            }
+            4 -> {
+                //个人
+                binding.legalName1.text = "老板名称"
+                binding.legalNameSync.text = "设为负责人"
+                binding.legalNameTV.text = "请输入老板名称"
+                binding.legalPhoneTV1.text ="老板电话"
+                binding.legalPhoneTV.text="请输入老板电话"
+
+                binding.linkName1.text="负责人"
+                binding.linkNameTextView.text="请输入负责人名称"
+                binding.linkPhoneText1 .text="负责人电话"
+                binding.linkPhoneTextView .text="请输入负责人电话"
+
+                //经营内容
+                binding.legalInfoName.text = "经营者身份证信息"
+                binding.view4.gone()
+                binding.companyInfo.gone()
+            }
         }
         initListener()
         initObserver()

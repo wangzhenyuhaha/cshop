@@ -32,6 +32,8 @@ import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.show
 import com.lingmiao.shop.business.main.bean.*
+import com.lingmiao.shop.business.me.bean.IdentityVo
+import com.lingmiao.shop.business.me.bean.My
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import kotlinx.android.synthetic.main.fragment_main.*
 import org.greenrobot.eventbus.EventBus
@@ -393,6 +395,14 @@ class MainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun onShopStatusEdited() {
 
+    }
+
+    override fun applyVIP(message: String) {
+        //nothing
+    }
+
+    override fun applyVI2(my: My?, identity: IdentityVo?) {
+        //nothing
     }
 
     override fun onWarningNumber(data: Int) {

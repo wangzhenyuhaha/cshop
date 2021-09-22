@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.main.api
 
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.common.bean.FileResp
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.me.bean.*
@@ -35,7 +36,7 @@ interface MainApi {
 
     @POST("seller/shops/editShopOpenStatus/{openStatus}")
     @WithHiResponse
-    fun editShopStatus(@Path("openStatus") openStatus: Int): Call<Unit>
+    fun editShopStatus(@Path("openStatus") openStatus: Int): Call<FileResp<Any>>
 
     //开店 经营类目列表
     @GET("seller/goods/category/0/children")

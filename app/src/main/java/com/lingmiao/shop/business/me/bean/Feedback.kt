@@ -3,8 +3,10 @@ import com.google.gson.annotations.SerializedName
 
 
 data class Feedback(
-    @SerializedName("advice_type")
-    var adviceType: Int?,
-    @SerializedName("content")
-    var content: String?
+    @SerializedName("feedback_type")
+    var feedback_type: Int?,
+    @SerializedName("feedback_info")
+    var feedback_info: String?,
+    @SerializedName("feedback_img")
+    var feedback_img: String?
 )

@@ -41,103 +41,11 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(), ApplyShopH
 
     override fun useLightMode() = false
 
-    fun test() {
-
-    }
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun initView() {
         mToolBarDelegate.setMidTitle("申请开店")
 
-        //设置文字下载承诺函
-        val content = "若企业结算账户为对私，需下载《签约承诺函》并盖章，然后上传图片。点击可下载"
-        val builder = SpannableStringBuilder(content)
-        val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder.setSpan(blueSpan, 32, 37, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        applyShopHintTV.text = builder
-
-        //点击下载DOC文件
-        applyShopHintTV.setOnClickListener {
-
-
-            DialogUtils.showDialog(context, "承诺函下载", "是否确认下载承诺函？", "取消", "下载", null,
-                View.OnClickListener {
-
-                    lifecycleScope.launch(Dispatchers.IO)
-                    {
-
-                        withContext(Dispatchers.Main) {
-                            showDialogLoading()
-                        }
-
-                        //获取InputStream
-                        val call =
-                            CommonRepository.download("https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/%E7%AD%BE%E7%BA%A6%E6%89%BF%E8%AF%BA%E5%87%BD.doc")
-
-                        //目标文件
-                        var externalFileRootDir:File? = getExternalFilesDir(null)
-                        do {
-                            externalFileRootDir =
-                                Objects.requireNonNull(externalFileRootDir)?.parentFile
-                        } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
-                                "/Android"
-                            ) == true
-                        )
-                        val saveDir: String?=
-                            Objects.requireNonNull(externalFileRootDir)?.absolutePath
-                        val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
-
-                        val destinationFile = File(savePath, "签约承诺函.doc")
-
-                        var inputStream: InputStream? = null
-                        var outputStream: OutputStream? = null
-
-                        val data = ByteArray(2048)
-                        var count: Int?
-
-
-                        count = inputStream?.read(data)
-
-                        try {
-                            inputStream = call?.body()?.byteStream()
-                            outputStream = FileOutputStream(destinationFile)
-
-                            while (count != -1) {
-                                if (count != null) {
-                                    outputStream.write(data, 0, count)
-                                }
-                                count = inputStream?.read(data)
-                            }
-
-                            outputStream.flush()
-
-
-                        } catch (e: Exception) {
-
-                            withContext(Dispatchers.Main)
-                            {
-                                hideDialogLoading()
-                                ToastUtils.showShort("下载失败")
-                            }
-                        } finally {
-                            inputStream?.close()
-                            outputStream?.close()
-                            withContext(Dispatchers.Main)
-                            {
-                                hideDialogLoading()
-                                ToastUtils.showShort("下载成功：${destinationFile.absolutePath}")
-                            }
-                        }
-
-
-                    }
-
-
-                }
-            )
-
-
-        }
 
         //showPageLoading()
         //mPresenter.requestApplyShopHintData()

@@ -1,7 +1,10 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.content.Intent
-import android.util.Log
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +18,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
@@ -29,6 +33,7 @@ import com.lingmiao.shop.databinding.FragmentBindAccountBinding
 import kotlinx.android.synthetic.main.fragment_bind_account.*
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.*
 
 class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePresenter>() {
 
@@ -91,6 +96,12 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
     override fun initViewsAndData(rootView: View) {
 
         model.setTitle("结算账户绑定")
+
+        if (model.applyShopInfo.value?.shopType == 4) {
+            //个人
+            binding.personalModule.visiable()
+            model.whichAccountToUse.value = 1
+        }
 
         initListener()
         initObserver()
@@ -323,8 +334,8 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             }
 
             //企业选择对私结算时上传授权承诺书
-            if(model.applyShopInfo.value?.shopType==1 && binding.account2.isSelected){
-                if (model.applyShopInfo.value?.authorpic.isNullOrEmpty()){
+            if (model.applyShopInfo.value?.shopType == 1 && binding.account2.isSelected) {
+                if (model.applyShopInfo.value?.authorpic.isNullOrEmpty()) {
                     ToastUtils.showShort("请选择签约承诺函")
                     return@singleClick
                 }
@@ -351,69 +362,88 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             }
 
             //检查资料是否齐全,并且绑定银行卡   绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
-            if (model.applyShopInfo.value?.shopType == 1) {
-                //企业
-                if (model.whichAccountToUse.value == 0) {
-                    //对公账户结算
-                    model.companyAccount.value?.isDefault = 1
-                    model.personalAccount.value?.isDefault = 0
+            when (model.applyShopInfo.value?.shopType) {
+                1 -> {
+                    //企业
+                    if (model.whichAccountToUse.value == 0) {
+                        //对公账户结算
+                        model.companyAccount.value?.isDefault = 1
+                        model.personalAccount.value?.isDefault = 0
 
-                    if (!isAccountReady(model.companyAccount.value)) {
-                        ToastUtils.showShort("请将对公账户填写完整")
-                        return@singleClick
-                    }
-                    model.companyAccount.value?.also {
-                        isCopy(model.applyShopInfo.value, it)
-                    }
-                    if (isAccountReady(model.personalAccount.value)) {
-                        model.bindBandCard.value = 2
+                        if (!isAccountReady(model.companyAccount.value)) {
+                            ToastUtils.showShort("请将对公账户填写完整")
+                            return@singleClick
+                        }
+                        model.companyAccount.value?.also {
+                            isCopy(model.applyShopInfo.value, it)
+                        }
+                        if (isAccountReady(model.personalAccount.value)) {
+                            model.bindBandCard.value = 2
+                        } else {
+                            model.bindBandCard.value = 0
+                        }
+
                     } else {
-                        model.bindBandCard.value = 0
-                    }
+                        //对私账户结算
+                        model.personalAccount.value?.isDefault = 1
+                        model.companyAccount.value?.isDefault = 0
 
-                } else {
-                    //对私账户结算
-                    model.personalAccount.value?.isDefault = 1
-                    model.companyAccount.value?.isDefault = 0
-
-                    if (!isAccountReady(model.companyAccount.value)) {
-                        ToastUtils.showShort("请将对公账户填写完整")
-                        return@singleClick
+                        if (!isAccountReady(model.companyAccount.value)) {
+                            ToastUtils.showShort("请将对公账户填写完整")
+                            return@singleClick
+                        }
+                        if (!isAccountReady(model.personalAccount.value)) {
+                            ToastUtils.showShort("请将对私账户填写完整")
+                            return@singleClick
+                        }
+                        model.personalAccount.value?.also {
+                            isCopy(model.applyShopInfo.value, it)
+                        }
+                        model.bindBandCard.value = 2
                     }
-                    if (!isAccountReady(model.personalAccount.value)) {
-                        ToastUtils.showShort("请将对私账户填写完整")
-                        return@singleClick
-                    }
-                    model.personalAccount.value?.also {
-                        isCopy(model.applyShopInfo.value, it)
-                    }
-                    model.bindBandCard.value = 2
                 }
-            } else {
+                3 -> {
+                    //个体户
+                    if (model.whichAccountToUse.value == 0) {
+                        //对公账户结算
+                        model.companyAccount.value?.isDefault = 1
+                        model.personalAccount.value?.isDefault = 0
 
-                //个体户
-                if (model.whichAccountToUse.value == 0) {
-                    //对公账户结算
-                    model.companyAccount.value?.isDefault = 1
-                    model.personalAccount.value?.isDefault = 0
+                        if (!isAccountReady(model.companyAccount.value)) {
+                            ToastUtils.showShort("请将对公账户填写完整")
+                            return@singleClick
+                        }
+                        model.companyAccount.value?.also {
+                            isCopy(model.applyShopInfo.value, it)
+                        }
+                        if (isAccountReady(model.personalAccount.value)) {
+                            model.bindBandCard.value = 2
+                        } else {
+                            model.bindBandCard.value = 0
+                        }
 
-                    if (!isAccountReady(model.companyAccount.value)) {
-                        ToastUtils.showShort("请将对公账户填写完整")
-                        return@singleClick
-                    }
-                    model.companyAccount.value?.also {
-                        isCopy(model.applyShopInfo.value, it)
-                    }
-                    if (isAccountReady(model.personalAccount.value)) {
-                        model.bindBandCard.value = 2
                     } else {
-                        model.bindBandCard.value = 0
-                    }
+                        //对私账户结算
+                        model.personalAccount.value?.isDefault = 1
+                        model.companyAccount.value?.isDefault = 0
 
-                } else {
-                    //对私账户结算
+                        if (!isAccountReady(model.personalAccount.value)) {
+                            ToastUtils.showShort("请将对私账户填写完整")
+                            return@singleClick
+                        }
+                        model.personalAccount.value?.also {
+                            isCopy(model.applyShopInfo.value, it)
+                        }
+                        if (isAccountReady(model.companyAccount.value)) {
+                            model.bindBandCard.value = 2
+                        } else {
+                            model.bindBandCard.value = 1
+                        }
+                    }
+                }
+                4 -> {
+                    //个人只有对私账户
                     model.personalAccount.value?.isDefault = 1
-                    model.companyAccount.value?.isDefault = 0
 
                     if (!isAccountReady(model.personalAccount.value)) {
                         ToastUtils.showShort("请将对私账户填写完整")
@@ -422,16 +452,18 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                     model.personalAccount.value?.also {
                         isCopy(model.applyShopInfo.value, it)
                     }
-                    if (isAccountReady(model.companyAccount.value)) {
-                        model.bindBandCard.value = 2
-                    } else {
-                        model.bindBandCard.value = 1
-                    }
+
+                    model.bindBandCard.value = 1
+
                 }
             }
 
         }
 
+        //点击下载DOC文件
+        applyShopHintTV.setOnClickListener {
+            model.authorpic.value = 1
+        }
 
     }
 
@@ -440,22 +472,49 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
 
         //重建View以后根据当前状态绘制UI
         model.applyShopInfo.observe(this, Observer { info ->
-            if (info.shopType == 1) {
-                //企业
-                binding.shopType.text = "企业"
-                binding.shopTypeTextView.text = "对公账户必须填写"
-                binding.accountCompanyTVC.visibility = View.VISIBLE
-                binding.accountCompanyTVP.visibility = View.GONE
+            when (info.shopType) {
+                1 -> {
+                    //企业
+                    binding.shopType.text = "企业"
+                    binding.shopTypeTextView.text = "对公账户必须填写"
+                    binding.accountCompanyTVC.visibility = View.VISIBLE
+                    binding.accountCompanyTVP.visibility = View.GONE
 
-            } else {
-                //个体户
-                binding.shopType.text = "个体户"
-                binding.shopTypeTextView.text = "（结算账户必须填写）"
-                binding.accountCompanyTVC.visibility = View.GONE
-                binding.accountCompanyTVP.visibility = View.VISIBLE
+                    binding.applyShopHintTV.visiable()
+                    //设置文字下载承诺函
+                    val content = "若企业结算账户为对私，需下载《签约承诺函》并盖章，然后上传图片。点击可下载"
+                    val builder = SpannableStringBuilder(content)
+                    val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
+                    builder.setSpan(blueSpan, 32, 37, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    applyShopHintTV.text = builder
+                }
+                3 -> {
+                    //个体户
+                    binding.shopType.text = "个体户"
+                    binding.shopTypeTextView.text = "（结算账户必须填写）"
+                    binding.accountCompanyTVC.visibility = View.GONE
+                    binding.accountCompanyTVP.visibility = View.VISIBLE
+                    binding.applyShopHintTV.gone()
+                }
+                4 -> {
+                    //结算账户
+                    binding.shopType.text = "结算账户"
+                    binding.shopTypeTextView.gone()
+                    binding.accountPersonalTV.text = "（请绑定负责人本人的银行卡）"
+                    binding.companyTitle.gone()
+                    binding.view1.gone()
+                    binding.companyModule.gone()
+                    binding.personalTitle.gone()
+                    binding.view2.gone()
+
+                    binding.applyShopHintTV.gone()
+
+
+                }
             }
 
-            if (!info.authorpic.isNullOrEmpty()){
+
+            if (!info.authorpic.isNullOrEmpty()) {
                 binding.authorpicTV.text = "已上传"
             }
 
@@ -468,21 +527,38 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 binding.account1.isSelected = true
                 binding.account2.isSelected = false
                 model.companyModule.value = View.VISIBLE
+                binding.authorpicView.gone()
+                binding.authorpic.gone()
             }
             //对私账户作为结算账户
             if (it == 1) {
                 binding.account1.isSelected = false
                 binding.account2.isSelected = true
-                if (model.applyShopInfo.value?.shopType == 1) {
-                    //企业
-                    model.companyModule.value = View.VISIBLE
-                    model.personalModule.value = View.VISIBLE
-                    //需要上传承诺函
-                    binding.authorpicView.visiable()
-                    binding.authorpic.visiable()
-                } else {
-                    //个体户
-                    model.personalModule.value = View.VISIBLE
+
+                when(model.applyShopInfo.value?.shopType)
+                {
+                    1->{
+                        //企业
+                        model.companyModule.value = View.VISIBLE
+                        model.personalModule.value = View.VISIBLE
+                        //需要上传承诺函
+                        binding.authorpicView.visiable()
+                        binding.authorpic.visiable()
+                    }
+                    3->{
+                        //个体户
+                        model.personalModule.value = View.VISIBLE
+                        binding.authorpicView.gone()
+                        binding.authorpic.gone()
+                    }
+                    4->{
+                        //个人店铺
+                        model.companyModule.value = View.GONE
+                        model.personalModule.value = View.VISIBLE
+                        binding.authorpicView.gone()
+                        binding.authorpic.gone()
+
+                    }
                 }
             }
         })
@@ -637,9 +713,7 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
     }
 
 
-    override fun createPresenter(): BasePresenter {
-        return BasePreImpl(this)
-    }
+    override fun createPresenter() = BasePreImpl(this)
 
     override fun getBinding(
         inflater: LayoutInflater,
@@ -647,9 +721,7 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
     ) = FragmentBindAccountBinding.inflate(inflater, container, false)
 
 
-    override fun useEventBus(): Boolean {
-        return true
-    }
+    override fun useEventBus() = true
 
 
 }

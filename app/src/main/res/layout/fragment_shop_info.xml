@@ -90,16 +90,13 @@
 
                 </RelativeLayout>
 
-                <View
-                    style="@style/DivideLineHorizontal"
-                    android:visibility="gone" />
+                <View style="@style/DivideLineHorizontal" />
 
                 <RelativeLayout
                     android:id="@+id/shopInfoPersonal"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="@dimen/dimen_8"
-                    android:visibility="gone">
+                    android:layout_marginEnd="@dimen/dimen_8">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -283,10 +280,14 @@
                 </RelativeLayout>
 
                 <View
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/view1"
                     style="@style/DivideLineHorizontal" />
 
                 <RelativeLayout
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/taxes"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
@@ -323,10 +324,14 @@
                 </RelativeLayout>
 
                 <View
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/view2"
                     style="@style/DivideLineHorizontal" />
 
                 <RelativeLayout
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     android:id="@+id/organ"
                     android:layout_width="match_parent"
                     android:layout_height="50dp">
@@ -410,6 +415,7 @@
                     android:layout_height="50dp">
 
                     <TextView
+                        android:id="@+id/IDCardName"
                         style="@style/goods_spce_item_left_mark"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

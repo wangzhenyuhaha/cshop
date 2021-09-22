@@ -15,7 +15,11 @@ data class ApplyShopInfo(
     //必填
     //是否三证合一 1：是 0：否
     @SerializedName("thrcertflag")
-    var thrcertflag: Int? = null,
+    var thrcertflag: Int? = 1,
+
+    //店铺租聘合同
+    @SerializedName("bizplacepic")
+    var bizplacepic: String? = null,
 
     //营业执照名称
     @SerializedName("company_name")
@@ -70,11 +74,15 @@ data class ApplyShopInfo(
     @SerializedName("storeinnerpic")
     var shopPhotoInside: String? = null,
 
-    //  人像 (这个其实应该传的时国徽)
+    //经营者与店铺门口合照
+    @SerializedName("peasonheadpic")
+    var peasonheadpic: String? = null,
+
+    //  这个其实应该传的时国徽
     @SerializedName("legal_back_img")
     var legalBackImg: String? = null,
 
-    //  国徽 (这个其实应该传的时人像)
+    //  这个其实应该传的时人像
     @SerializedName("legal_img")
     var legalImg: String? = null,
 
@@ -253,6 +261,12 @@ data class ApplyShopInfo(
 
 
 //店铺logo
+
+    //是否显示棋手配送   0   不显示棋手配送   1   显示
+    @SerializedName("accept_carriage")
+    var accept_carriage: Int  = 1,
+
+
     @SerializedName("shop_logo")
     var shopLogo: String? = null,
 
