@@ -19,9 +19,23 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
 
     private var lv1Cache: MutableList<ShopGroupVO> = mutableListOf()
 
+    //通过popWindow显示置顶菜单，并传入点击操作
     fun showTopGoodsGroupPop(context: Context, callback: (ShopGroupVO?, String?) -> Unit) {
         mCoroutine.launch {
+            //获取置顶菜单
             val resp = GoodsRepository.loadLv1ShopGroup(1)
+            if (resp.isSuccess) {
+                showPopWindow(context, resp.data, callback)
+            }
+        }
+    }
+
+
+    //通过popWindow显示所有菜单，并传入点击操作
+    fun showAllGoodsGroupPop(context: Context, callback: (ShopGroupVO?, String?) -> Unit) {
+        mCoroutine.launch {
+            //获取置顶菜单
+            val resp = GoodsRepository.loadLv1ShopGroup()
             if (resp.isSuccess) {
                 showPopWindow(context, resp.data, callback)
             }
@@ -37,6 +51,7 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
         }
     }
 
+    //显示菜单
     private fun showPopWindow(
         context: Context,
         list: List<ShopGroupVO>,
@@ -44,8 +59,8 @@ class PopGroupPreImpl(view: BaseView) : BasePreImpl(view) {
     ) {
         goodsGroupPop = GoodsGroupPop(context).apply {
             lv1Callback = { groupVO, groupName ->
-                if(groupVO != null && groupVO?.size > 0) {
-                    val it  = groupVO?.get(groupVO?.size -1)
+                if(groupVO.isNotEmpty()) {
+                    val it  = groupVO[groupVO.size -1]
                     callback.invoke(it, groupName)
                 }
             }

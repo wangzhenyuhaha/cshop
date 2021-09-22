@@ -3,20 +3,15 @@ package com.lingmiao.shop.sdk
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import cn.jpush.android.api.*
 import cn.jpush.android.service.JPushMessageReceiver
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
 import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.login.SplashActivity
 import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.ShopWaitApplyActivity
 import com.lingmiao.shop.util.VoiceUtils
-import org.json.JSONException
-import org.json.JSONObject
 
 class MyJPushReceiver: JPushMessageReceiver() {
     private val TAG = "PushMessageReceiver"
@@ -89,7 +84,9 @@ class MyJPushReceiver: JPushMessageReceiver() {
             jpushExtra?.let {
 //                LogUtils.i(TAG, "jpushExtra:$jpushExtra")
                 if(IConstant.MESSAGE_ORDER_PAY_SUCCESS == jpushExtra.type){
-                    VoiceUtils.playVoice(Utils.getApp())
+                    VoiceUtils.playVoiceOfNewOrder(Utils.getApp())
+                } else if(IConstant.MESSAGE_ORDER_CANCEL == jpushExtra.type) {
+                    VoiceUtils.playVoiceOfOrderCancel(Utils.getApp())
                 }
             }
         }catch (e:Exception){

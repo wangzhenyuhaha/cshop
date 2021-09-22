@@ -1,8 +1,8 @@
 package com.lingmiao.shop.business.wallet.presenter.impl
 
+import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.wallet.api.WalletRepository
 import com.lingmiao.shop.business.wallet.presenter.MyWalletPresenter
-import com.james.common.base.BasePreImpl
 import kotlinx.coroutines.launch
 
 class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
@@ -13,16 +13,16 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
 
             //view.showDialogLoading()
 //            view.showPageLoading();
-            val resp = WalletRepository.getWalletIndexInfo();
+            val resp = WalletRepository.getWalletIndexInfo()
             val wechatData = WalletRepository.getWithdrawAccountInfo()
 
-            if(resp.isSuccess()) {
-                view.onLoadWalletDataSuccess(resp?.data?.data);
+            if(resp.isSuccess) {
+                view.onLoadWalletDataSuccess(resp.data?.data)
             } else {
-                view.onLoadWalletDataError(resp.code);
+                view.onLoadWalletDataError(resp.code)
             }
-            if(wechatData.isSuccess()) {
-                view?.onLoadedAccount(wechatData?.data);
+            if(wechatData.isSuccess) {
+                view.onLoadedAccount(wechatData.data)
             }
 //                view.hidePageLoading();
             //view.hideDialogLoading()

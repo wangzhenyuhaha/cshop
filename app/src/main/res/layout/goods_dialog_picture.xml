@@ -24,6 +24,7 @@
         android:id="@+id/goods_dialog_picture_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
         android:layout_marginBottom="@dimen/dimen_5"
         android:text="1 / 2"
         app:layout_constraintBottom_toTopOf="@+id/goods_dialog_picture_button"
@@ -31,11 +32,13 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:textColor="@color/white"
         android:id="@+id/goods_dialog_picture_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:text="❌"
+        android:text="X"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

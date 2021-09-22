@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.goods_include_publish_section4_new.*
 import kotlinx.android.synthetic.main.goods_include_publish_section5.*
 import kotlinx.android.synthetic.main.goods_include_publish_section6.*
 import kotlinx.android.synthetic.main.goods_include_publish_section8.*
+import kotlinx.android.synthetic.main.goods_include_publish_section_package.*
 import kotlinx.android.synthetic.main.goods_include_publish_section_v_time.*
 
 /**
@@ -51,7 +53,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             context.startActivity(intent)
         }
 
-
         //处理新增商品
         fun newPublish(context: Context, type: Int?) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
@@ -71,21 +72,11 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
+    override fun useLightMode() = false
 
     //private val binding:GoodsActivityPublishNewBinding
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
-    }
-
-
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_publish_new
-    }
+    override fun getLayoutId() = R.layout.goods_activity_publish_new
 
     override fun initBundles() {
         //编辑已有商品时获得此数据
@@ -102,7 +93,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
         //点击操作
         initSection1View()
-
 
 
         initSection2View()
@@ -156,7 +146,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 val infoList =
                     data.getSerializableExtra(GoodsDetailActivity.KEY_ITEM) as? List<GoodsParamVo>
                 val des = data.getStringExtra(GoodsDetailActivity.KEY_DESC)
-                val images = data.getStringExtra(GoodsDetailActivity.KEY_IMAGES);
+                val images = data.getStringExtra(GoodsDetailActivity.KEY_IMAGES)
                 goodsVO.apply {
                     this.goodsParamsList = infoList
                     this.metaDescription = des
@@ -251,6 +241,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             }
             // 商品卖点
             goodsSellingDescEdt.setText(selling)
+            // 打包费
+            goodsPackageFeeEdt.setText(packagePrice.toString())
         }
     }
 
@@ -305,7 +297,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
         // 时效
         goodsDeliveryTimeTv.singleClick {
-            mPresenter?.showDeliveryTypePop(goodsVO?.goodsDeliveryType);
+            mPresenter?.showDeliveryTypePop(goodsVO?.goodsDeliveryType)
         }
     }
 
@@ -320,10 +312,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     }
 
     override fun onUpdateUseTime(items: List<MultiPickerItemBean>?) {
-        var values = items?.map { it?.value }?.joinToString(separator = ",");
-        var names = items?.map { it?.name }?.joinToString(separator = ",");
-        goodsVO.availableDate = values;
-        goodsVirtualUseTimeTv.text = if (names.isNotBlank()) names else "请设置";
+        var values = items?.map { it?.value }?.joinToString(separator = ",")
+        var names = items?.map { it?.name }?.joinToString(separator = ",")
+        goodsVO.availableDate = values
+        goodsVirtualUseTimeTv.text = if (names.isNotBlank()) names else "请设置"
     }
 
     fun setVirtualGoodsView() {
@@ -336,16 +328,16 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         if (isVirtualGoods) {
             showSection45WithStatus(false, isExpand)
         } else {
-            section4Row6Ll.show(true);
-            section4RowVirtualSpecLl.show(true);
+            section4Row6Ll.show(true)
+            section4RowVirtualSpecLl.show(true)
         }
     }
 
     private fun initSection2View() {
         galleryRv.setCountLimit(1, 20)
-        deleteIv.gone();
+        deleteIv.gone()
         imageView.singleClick {
-            openGallery();
+            openGallery()
         }
     }
 
@@ -355,18 +347,18 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             setOnClickListener { type ->
                 when (type) {
                     MediaMenuPop.TYPE_SELECT_PHOTO -> {
-                        PhotoHelper.openAlbum(context as Activity, 1, null, true, 32) {
+                        PhotoHelper.openCropAlbum(context as Activity, 1, null, true, 32) {
 //                            addDataList(convert2GalleryVO(it))
-                            val item = convert2GalleryVO(it)[0];
+                            val item = convert2GalleryVO(it)[0]
                             GlideUtils.setImageUrl1(imageView, item?.original)
-                            goodsVO.thumbnail = item?.original;
+                            goodsVO.thumbnail = item?.original
                         }
                     }
                     MediaMenuPop.TYPE_PLAY_PHOTO -> {
-                        PhotoHelper.openCamera(context as Activity, null, true, 32) {
-                            val item = convert2GalleryVO(it)[0];
+                        PhotoHelper.openCropCamera(context as Activity, null, true, 32) {
+                            val item = convert2GalleryVO(it)[0]
                             GlideUtils.setImageUrl1(imageView, item?.original)
-                            goodsVO.thumbnail = item?.original;
+                            goodsVO.thumbnail = item?.original
                         }
                     }
                 }
@@ -385,13 +377,13 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     private fun initSection3View() {
         goodsDeliveryTv.singleClick {
 //            DeliverySettingActivity.openActivity(this, REQUEST_CODE_DELIVERY, DeliveryRequest.convert(goodsVO))
-            mPresenter?.showDeliveryModelPop(goodsVO.goodsDeliveryModel);
+            mPresenter?.showDeliveryModelPop(goodsVO.goodsDeliveryModel)
         }
     }
 
     override fun onUpdateModel(id: String?, name: String?) {
-        goodsVO.goodsDeliveryModel = id;
-        goodsDeliveryTv.text = name;
+        goodsVO.goodsDeliveryModel = id
+        goodsDeliveryTv.text = name
     }
 
     private fun initSection4View() {
@@ -420,7 +412,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         goodsDetailTv.singleClick {
             if (goodsVO.categoryId.isNotBlank()) {
 //            GoodsDescH5Activity.openActivity(this, REQUEST_CODE_DESC, goodsVO.intro)
-                GoodsDetailActivity.openActivity(this, REQUEST_CODE_INFO, goodsVO);
+                GoodsDetailActivity.openActivity(this, REQUEST_CODE_INFO, goodsVO)
             } else {
                 showToast("请先选择商品分类")
             }
@@ -442,7 +434,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             goodsName = goodsNameEdt.getViewText()
             selling = goodsSellingDescEdt.getViewText()
             goodsGalleryList = galleryRv.getSelectPhotos()
-
             goodsType = GoodsTypeVO.getValue(isVirtualGoods)
             if (isVirtualGoods) {
                 // 虚拟
@@ -486,6 +477,14 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     skuList = null
                 }
             }
+            // 打包费
+            //
+            packagePrice = try {
+                goodsPackageFeeEdt.getViewText().toDouble()
+            } catch (e: Exception) {
+                0.00
+            }
+
             // 默认
 //            if (this.shopCatId == null) {
 //                this.shopCatId = categoryId
@@ -505,7 +504,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             section4RowVirtualSpecLl.show(true)
         } else {
 
-            section4Row6Ll.show(true);
+            section4Row6Ll.show(true)
             section4Row1Ll.show(!isChecked)
             section4RowVirtualSpecLl.show(isChecked)
         }
@@ -516,12 +515,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     }
 
     override fun onUpdateGoodsWeight(id: String?, name: String?) {
-        goodsVO.goodsWeight = id;
+        goodsVO.goodsWeight = id
 //        goodsWeightTv.text = name;
     }
 
     override fun onUpdateGoodsUnit(id: String?, name: String?) {
-        goodsVO.goodsUnit = id;
+        goodsVO.goodsUnit = id
 //        goodsUnitTv.text = name;
     }
 

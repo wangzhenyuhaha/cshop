@@ -6,34 +6,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.blankj.utilcode.util.LogUtils
-import com.lingmiao.shop.BuildConfig
+import com.james.common.netcore.coroutine.CoroutineSupport
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.main.bean.TabChangeEvent
+import com.lingmiao.shop.business.order.OrderSearchActivity
 import com.lingmiao.shop.business.order.ScanOrderActivity
-import com.lingmiao.shop.business.order.api.OrderRepository
-import com.lingmiao.shop.business.order.bean.OrderNumber
 import com.lingmiao.shop.business.order.bean.OrderNumberEvent
 import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
 import com.lingmiao.shop.business.order.bean.OrderTabNumberEvent
 import com.lingmiao.shop.widget.IOrderTabView
-import com.james.common.netcore.coroutine.CoroutineSupport
-import com.james.common.netcore.networking.http.core.awaitHiResponse
-import com.james.common.utils.exts.singleClick
-import com.lingmiao.shop.business.order.OrderSearchActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_order.*
-import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
-import java.util.ArrayList
+import java.util.*
 
 class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
 
@@ -52,9 +43,8 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_order, container, false)
-        return view
+    ): View {
+        return inflater.inflate(R.layout.fragment_order, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -95,12 +85,12 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
 
         LogUtils.d("initView:")
         tv_order_scan.setOnClickListener {
-            val intent = Intent(context, ScanOrderActivity::class.java);
-            startActivity(intent);
+            val intent = Intent(context, ScanOrderActivity::class.java)
+            startActivity(intent)
         }
         tv_order_search.singleClick {
-            val intent = Intent(context, OrderSearchActivity::class.java);
-            startActivity(intent);
+            val intent = Intent(context, OrderSearchActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -174,7 +164,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeTabPosition(event: OrderTabChangeEvent) {
         LogUtils.d("changeTabPosition:" + event.type)
-        vpContent.currentItem = event.type;
+        vpContent.currentItem = event.type
 //        if (event.type == IConstant.TAB_WAIT_SEND_GOODS) {
 //            vpContent.currentItem = 2
 //        } else {

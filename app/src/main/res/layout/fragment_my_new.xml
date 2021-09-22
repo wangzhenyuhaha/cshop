@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <com.scwang.smartrefresh.layout.header.ClassicsHeader
         android:layout_width="match_parent"
@@ -16,6 +17,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,13 +39,13 @@
                     android:layout_width="52dp"
                     android:layout_height="52dp"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="23dp"
+                    android:layout_marginEnd="23dp"
                     android:src="@mipmap/me_head" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/ivMyHead"
+                    android:layout_toEndOf="@id/ivMyHead"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -65,7 +67,7 @@
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:src="@mipmap/ic_vip_period"
                             tools:visibility="visible" />
 
@@ -74,7 +76,7 @@
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:src="@mipmap/me_shop_auth"
                             android:visibility="gone"
                             tools:visibility="visible" />
@@ -101,7 +103,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginStart="10dp"
                             android:textColor="#ff3870ea"
                             android:textSize="10sp"
                             android:visibility="gone"
@@ -140,11 +142,11 @@
                     android:id="@+id/tvSetting"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/dimen_15"
-                    android:visibility="gone"
-                    android:src="@mipmap/my_setting" />
+                    android:src="@mipmap/my_setting"
+                    android:visibility="gone" />
 
             </com.james.common.view.IRelativeLayout>
 
@@ -153,7 +155,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-                android:background="@mipmap/bg_round_primary"></View>
+                android:background="@mipmap/bg_round_primary" />
 
             <!--试用-->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -177,25 +179,27 @@
                     android:id="@+id/tvTryHint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingStart="@dimen/dimen_15"
                     android:text="试用门店"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_12"
                     app:layout_constraintLeft_toRightOf="@id/ivTryLogo"
-                    app:layout_constraintTop_toTopOf="@id/ivTryLogo" />
+                    app:layout_constraintTop_toTopOf="@id/ivTryLogo"
+                    tools:ignore="RtlSymmetry" />
 
 
                 <TextView
                     android:id="@+id/tvOwnerSystem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingStart="@dimen/dimen_15"
                     android:paddingTop="@dimen/dimen_5"
                     android:text="拥有完全自己的网店体系"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_15"
                     app:layout_constraintLeft_toRightOf="@id/ivTryLogo"
-                    app:layout_constraintTop_toBottomOf="@id/tvTryHint" />
+                    app:layout_constraintTop_toBottomOf="@id/tvTryHint"
+                    tools:ignore="RtlSymmetry" />
 
 
                 <com.james.common.view.ITextView
@@ -203,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
                     android:layout_marginTop="@dimen/dimen_2"
-                    android:layout_marginRight="@dimen/dimen_15"
+                    android:layout_marginEnd="@dimen/dimen_15"
                     android:gravity="center"
                     android:paddingLeft="@dimen/dimen_15"
                     android:paddingRight="@dimen/dimen_15"
@@ -311,7 +315,7 @@
                 <TextView
                     android:id="@+id/tvMyWallet"
                     style="@style/my_part_item"
-                    android:drawableRight="@mipmap/common_arrow_right"
+                    android:drawableEnd="@mipmap/common_arrow_right"
                     android:text="我的钱包" />
 
                 <View style="@style/DivideLineHorizontal" />
@@ -324,7 +328,7 @@
                     <TextView
                         style="@style/my_part_item"
                         android:layout_weight="1"
-                        android:text="余额" />
+                        android:text="可提现金额（次日自动到账）" />
 
                     <TextView
                         android:id="@+id/tvBalance"
@@ -347,25 +351,16 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="@dimen/dimen_15"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:orientation="vertical"
                 app:ivBgColor="#fff"
                 app:ivRadius="4dp">
 
                 <TextView
-                    android:id="@+id/tvManagerSetting"
-                    style="@style/my_part_item"
-                    android:drawableLeft="@mipmap/my_setting"
-                    android:text="设置" />
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <TextView
                     android:id="@+id/tvShopQRCode"
                     style="@style/my_part_item"
                     android:layout_height="58dp"
-                    android:drawableLeft="@mipmap/my_code"
+                    android:drawableStart="@mipmap/my_code"
                     android:text="我的二维码" />
 
                 <View style="@style/DivideLineHorizontal" />
@@ -373,35 +368,96 @@
                 <TextView
                     android:id="@+id/tvShareManager"
                     style="@style/my_part_item"
-                    android:drawableLeft="@mipmap/my_share"
+                    android:drawableStart="@mipmap/my_share"
                     android:text="分享店铺" />
-
 
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
-                    android:id="@+id/rlMyFeedback"
                     style="@style/my_part_item"
-                    android:drawableLeft="@mipmap/my_feedback"
-                    android:text="建议反馈" />
+                    android:drawableStart="@mipmap/main_ic_comming_soon"
+                    android:visibility="gone" />
+
+            </com.james.common.view.ILinearLayout>
+            <!--常用工具end-->
+
+            <!--帮助文档-->
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginRight="15dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:ivBgColor="#fff"
+                app:ivRadius="4dp">
+
+                <TextView
+                    android:id="@+id/rlHelpDoc"
+                    style="@style/my_part_item"
+                    android:drawableStart="@mipmap/my_help"
+                    android:text="帮助中心" />
 
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
                     android:id="@+id/rlMyContactService"
                     style="@style/my_part_item"
-                    android:drawableLeft="@mipmap/my_custom_service"
+                    android:drawableStart="@mipmap/my_custom_service"
                     android:text="联系客服" />
 
                 <View style="@style/DivideLineHorizontal" />
 
+
                 <TextView
+                    android:id="@+id/rlMyFeedback"
                     style="@style/my_part_item"
-                    android:drawableLeft="@mipmap/main_ic_comming_soon"
-                    android:visibility="gone" />
+                    android:drawableStart="@mipmap/my_feedback"
+                    android:text="建议反馈" />
 
             </com.james.common.view.ILinearLayout>
-            <!--常用工具end-->
+
+            <com.james.common.view.ILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:ivBgColor="#fff"
+                app:ivRadius="4dp">
+
+
+                <TextView
+                    android:id="@+id/tvApplyShopInfo"
+                    style="@style/my_part_item"
+                    android:drawableStart="@drawable/ic_apply_data"
+                    android:text="修改进件资料"
+                    android:visibility="gone" />
+
+                <View
+                    style="@style/DivideLineHorizontal"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvWeChatApprove"
+                    style="@style/my_part_item"
+                    android:drawableStart="@drawable/ic_code_blue"
+                    android:text="微信认证" />
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <TextView
+                    android:id="@+id/tvManagerSetting"
+                    style="@style/my_part_item"
+                    android:drawableStart="@mipmap/my_setting"
+                    android:text="设置" />
+
+
+            </com.james.common.view.ILinearLayout>
 
 
         </LinearLayout>

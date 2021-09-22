@@ -23,6 +23,7 @@
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_12" />
 
+<!--        android:drawableEnd="@mipmap/ic_shift"-->
         <TextView
             android:id="@+id/menuCateL1Tv"
             android:layout_width="wrap_content"

@@ -32,15 +32,15 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
 
     fun getSellerId() : String? {
         if(shopId == null) {
-            shopId = UserManager.getLoginInfo()?.shopId;
+            shopId = UserManager.getLoginInfo()?.shopId
         }
-        return String.format("%s", shopId);
+        return String.format("%s", shopId)
     }
 
     fun showCategoryPop(context: Context, id : Int, callback: (CategoryVO?, String?) -> Unit) {
         mCoroutine.launch {
             // 一级类目 categoryId=0
-            val resp = GoodsRepository.loadUserCategory("0", getSellerId());
+            val resp = GoodsRepository.loadUserCategory("0", getSellerId())
                 //GoodsRepository.loadUserCategory(LV1_CATEGORY_ID, String.format("%s", id))
             if (resp.isSuccess) {
                 showPopWindow(context, resp.data, callback)

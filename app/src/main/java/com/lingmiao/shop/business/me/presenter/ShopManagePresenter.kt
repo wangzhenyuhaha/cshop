@@ -13,7 +13,7 @@ interface ShopManagePresenter: BasePresenter{
         fun onShopManageSuccess(bean: ApplyShopInfo)
         fun onShopManageError(code: Int)
 
-        fun onUpdateShopSuccess()
+        fun onUpdateShopSuccess(bean: ApplyShopInfo)
         fun onUpdateShopError(code: Int)
     }
 }

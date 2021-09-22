@@ -16,6 +16,7 @@ import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
+import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.ShopWaitApplyActivity
@@ -64,13 +65,12 @@ object OtherUtils {
     }
 
     fun goToMainActivity() {
-        val loginInfo = UserManager.getLoginInfo()
-        if (loginInfo != null && loginInfo.shopStatus != "OPEN") {
-            ActivityUtils.startActivity(ShopWaitApplyActivity::class.java)
-        } else {
+        val loginInfo = UserManager.getLoginInfo() ?: return
+        if(ShopStatusConstants.isAuthed(loginInfo.shopStatus)) {
             ActivityUtils.startActivity(MainActivity::class.java)
+        } else {
+            ActivityUtils.startActivity(ShopWaitApplyActivity::class.java)
         }
-
     }
 
     fun setJpushAlias() {

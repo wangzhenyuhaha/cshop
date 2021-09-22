@@ -49,56 +49,64 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
         if(shopId == null) {
             shopId = UserManager.getLoginInfo()?.shopId;
         }
-        return shopId;
+        return shopId
     }
+
+
 
     override fun clickGroup(callback: (ShopGroupVO?, String?) -> Unit) {
         mGroupPreImpl.showTopGoodsGroupPop(context) { group, groupNames ->
-            callback?.invoke(group, groupNames);
+            callback.invoke(group, groupNames)
+        }
+    }
+
+    override fun clickAllGroup(callback: (ShopGroupVO?, String?) -> Unit) {
+        mGroupPreImpl.showAllGoodsGroupPop(context) { group, groupNames ->
+            callback.invoke(group, groupNames)
         }
     }
 
     override fun clickCategory(callback: (CategoryVO?, String?) -> Unit) {
         mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { cate, names  ->
-            callback?.invoke(cate, names);
+            callback.invoke(cate, names)
         }
     }
 
     override fun clickOnLine(oldList: List<GoodsVO>, callback: () -> Unit) {
-        var list = oldList.filter { it?.isChecked == true };
+        var list = oldList.filter { it?.isChecked == true }
         if(list?.size == 0) {
-            view?.showToast("请选择需要上架的商品!");
+            view?.showToast("请选择需要上架的商品!")
             return;
         }
         if(list?.filter { it?.marketEnable == 1 }?.size > 0) {
-            view?.showToast("你选择的商品中存在已上架商品，已上架的商品不能进行批量上架操作！");
+            view?.showToast("你选择的商品中存在已上架商品，已上架的商品不能进行批量上架操作！")
             return;
         }
-        var text = String.format("已选中%s个商品，确定要上架吗？", list?.size);
-        var goodsIds = list?.map { it?.goodsId }.joinToString(separator = ",");
+        var text = String.format("已选中%s个商品，确定要上架吗？", list?.size)
+        var goodsIds = list?.map { it?.goodsId }.joinToString(separator = ",")
         DialogUtils.showDialog(
             context as Activity, "批量上架提示", text,
             "取消", "确定上架", View.OnClickListener {
 
             }, View.OnClickListener {
-                onLine(goodsIds, callback);
+                onLine(goodsIds, callback)
             })
     }
 
     override fun clickOnBatchRebate(oldList: List<GoodsVO>, callback: () -> Unit) {
-        var list = oldList.filter { it?.isChecked == true };
+        var list = oldList.filter { it?.isChecked == true }
         if(list?.size == 0) {
-            view?.showToast("请选择需要设置佣金的商品!");
+            view?.showToast("请选择需要设置佣金的商品!")
             return;
         }
-        var str = list?.map { it?.goodsId }.joinToString(separator = ",");
+        var str = list?.map { it?.goodsId }.joinToString(separator = ",")
 
-        showRebatePop(str, list?.size, callback);
+        showRebatePop(str, list?.size, callback)
     }
 
     override fun clickOnRebate(goodsId: String?, callback: () -> Unit) {
         if(goodsId.isNullOrEmpty()) {
-            return;
+            return
         }
         getRebateById(goodsId) {
             val rebatePop = GoodsRebatePop(context!!)

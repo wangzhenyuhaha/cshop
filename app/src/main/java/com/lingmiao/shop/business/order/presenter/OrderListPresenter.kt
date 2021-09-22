@@ -31,6 +31,8 @@ interface OrderListPresenter: BasePresenter {
 
     fun verifyOrder(verifyCode: String)
 
+    fun prepareOrder(sn: String)
+
     interface StatusView: BaseView, BaseLoadMoreView<OrderList>{
 
         fun onTakeSuccess();
@@ -38,6 +40,10 @@ interface OrderListPresenter: BasePresenter {
         fun onRefuseSuccess();
 
         fun onDeleteOrderSuccess()
+
+        fun onPreparedOrder();
+
+        fun onPrepareOrderFail();
 
         fun onShipped();
 

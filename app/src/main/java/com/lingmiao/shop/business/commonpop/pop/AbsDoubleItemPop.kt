@@ -56,13 +56,15 @@ abstract class AbsDoubleItemPop<T : ItemData>(context: Context) :
         level1Rv = contentView.findViewById<RecyclerView>(R.id.firstListRv)
         level2Rv = contentView.findViewById<RecyclerView>(R.id.secondListRv)
 
-        lv1Adapter = getFirstAdapter();
-        lv2Adapter = getSecondAdapter();
+        lv1Adapter = getFirstAdapter()
+        lv2Adapter = getSecondAdapter()
 
+        //初始化RecyclerView
         initRecyclerView(level1Rv, lv1Adapter)
         initRecyclerView(level2Rv, lv2Adapter)
 
-        initL2AdapterClick();
+        //初始化RecyclerView的点击
+        initL2AdapterClick()
 
         // confirm
         popConfirmTv = contentView.findViewById<TextView>(R.id.doubleListConfirmTv);
@@ -88,10 +90,10 @@ abstract class AbsDoubleItemPop<T : ItemData>(context: Context) :
     abstract fun getFirstAdapter() : BaseQuickAdapter<T, BaseViewHolder>;
     abstract fun getSecondAdapter() : BaseQuickAdapter<T, BaseViewHolder>;
 
-    var data1 : T ?= null;
-    var data2 : T ?= null;
+    var data1 : T ?= null
+    var data2 : T ?= null
 
-    abstract fun getData2(data1 : T) : List<T>;
+    abstract fun getData2(data1 : T) : List<T>
 
     var lv1Callback: ((T) -> Unit)? = null
     var lv2Callback: ((T) -> Unit)? = null
@@ -100,36 +102,45 @@ abstract class AbsDoubleItemPop<T : ItemData>(context: Context) :
         lv1Adapter.setOnItemClickListener { adapter, view, position ->
             run {
                 lv1Adapter.getItem(position)?.apply {
-                    data1 = this;
-                    setLv2Data(getData2(this));
+                    //data1为当前点击的Item
+                    data1 = this
+                    //RecyclerView2设置为对应数据
+                    setLv2Data(getData2(this))
+
+                    //额外操作
                     lv1Callback?.invoke(this)
 
 //                lv1Adapter.setSelectedItem(this.getValue())
+                    //更新RecyclerView1
                     lv1Adapter.notifyDataSetChanged()
 
-                    data2 = null;
+                    //清空data2数据
+                    data2 = null
                 }
             }
         }
+
         lv2Adapter.setOnItemClickListener { adapter, view, position ->
             run {
                 lv2Adapter.getItem(position)?.apply {
-                    data2 = this;
+                    data2 = this
                     lv2Callback?.invoke(this)
-                    dismiss();
+                    dismiss()
                 }
             }
         }
     }
 
+    //设置菜单
     fun setPopTitle(title: String?) {
         popTitleTv?.text = title;
     }
 
+    //设置RecyclerView1数据
     fun setLv1Data(lv1List: List<T>) {
         lv1Adapter?.replaceData(lv1List)
     }
-
+    //设置RecyclerView2数据
     fun setLv2Data(lv2List: List<T>) {
         lv2Adapter?.replaceData(lv2List)
     }

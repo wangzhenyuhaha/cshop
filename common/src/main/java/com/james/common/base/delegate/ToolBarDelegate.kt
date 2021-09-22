@@ -97,8 +97,16 @@ class ToolBarDelegate(var context: Context, val toolbar: Toolbar?, var lightMode
         toolbar?.visibility = View.GONE
     }
 
+    fun showToolBar() {
+        toolbar?.visibility = View.VISIBLE
+    }
+
     fun setMidTitle(midTitle: String?) {
         tvMidTitle?.text = midTitle ?: ""
+    }
+
+    fun getMidTitle() : TextView? {
+        return tvMidTitle;
     }
 
     fun hideArrow() {

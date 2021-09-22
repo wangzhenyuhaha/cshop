@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.view.View
-import com.amap.api.mapcore.util.it
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.goods.api.GoodsRepository
@@ -29,12 +28,22 @@ class GoodsListOfMenuPreImpl(val context: Context, val view : GoodsListOfMenuPre
         mGroupPreImpl.showGoodsGroupPop(context, isTop, callback);
     }
 
-    override fun showGroupPop(isTop : Int) {
-        showGroup(isTop) { groups, groupName ->
-            view.onUpdateGroup(groups, groupName);
-        }
+    // 常用菜单只展示自己及子类
+    fun showGroup(isTop : Int, path: String?, callback: (List<ShopGroupVO>?, String?) -> Unit) {
+        mGroupPreImpl.showGoodsGroupPop(context, isTop, path, callback);
     }
 
+    override fun showGroupPop(isTop : Int, path : String?) {
+        if(isTop == 1) {
+            showGroup(isTop) { groups, groupName ->
+                view.onUpdateGroup(groups, groupName);
+            }
+        } else {
+            showGroup(isTop, path) { groups, groupName ->
+                view.onUpdateGroup(groups, groupName);
+            }
+        }
+    }
 
     override fun clickMenuView(isTop : Int, item: GoodsVO?, position: Int, target: View) {
         if (item?.goodsId == null) {
@@ -43,9 +52,12 @@ class GoodsListOfMenuPreImpl(val context: Context, val view : GoodsListOfMenuPre
         menuPopPre.showMenuPop(ChildrenGoodsMenuPop.TYPE_PRICE or ChildrenGoodsMenuPop.TYPE_EDIT_CATE, target) { menuType ->
             when (menuType) {
                 ChildrenGoodsMenuPop.TYPE_PRICE -> {
-                    quantityPopPre.clickQuantityGoods(item?.goodsId) {
+
+                    //弹出下拉菜单,输入商品ID
+                    quantityPopPre.clickQuantityGoods(item.goodsId) {
 
                     }
+
                 }
                 ChildrenGoodsMenuPop.TYPE_EDIT_CATE -> {
                     showGroup(isTop) { groups, groupName ->

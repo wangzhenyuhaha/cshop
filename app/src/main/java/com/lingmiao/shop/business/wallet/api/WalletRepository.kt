@@ -4,6 +4,9 @@ import com.lingmiao.shop.business.wallet.bean.*
 import com.lingmiao.shop.net.Fetch
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.order.bean.OrderList
+import retrofit2.Call
 
 /**
  * Author : Elson
@@ -52,6 +55,21 @@ object WalletRepository {
     }
 
     /**
+     *
+    查询会员订单列表
+     */
+    suspend fun getOrderList(pageNo: Int): HiResponse<PageVO<OrderList>> {
+        return apiService.queryTradeOrdersList(pageNo,10).awaitHiResponse()
+    }
+
+    /**
+     * 提现费率
+     */
+    suspend fun queryServiceChargeRate() : HiResponse<RateVo> {
+        return apiService.queryServiceChargeRate().awaitHiResponse()
+    }
+
+    /**
      * 查询账户信息
      */
     suspend fun getWithdrawAccountInfo(): HiResponse<WithdrawAccountVo> {
@@ -76,6 +94,11 @@ object WalletRepository {
      * 绑银行卡
      */
     suspend fun bindBankCard(data: BankCardVo): HiResponse<Unit> {
+        return apiService.bindBankCard(data).awaitHiResponse();
+    }
+
+    //申请店铺时绑卡
+    suspend fun bindBankCardMember(data: BankCardVo): HiResponse<Unit> {
         return apiService.bindBankCard(data).awaitHiResponse();
     }
 
@@ -111,5 +134,10 @@ object WalletRepository {
         map.put("page_size", IConstant.PAGE_SIZE);
         map.put("body", Any());
         return apiService.queryWithdrawList(map).awaitHiResponse();
+    }
+
+    //获取订单详情
+    suspend fun queryOrderDetail(orderNo:String):HiResponse<OrderList>{
+        return apiService.getOrderDetail(orderNo).awaitHiResponse()
     }
 }

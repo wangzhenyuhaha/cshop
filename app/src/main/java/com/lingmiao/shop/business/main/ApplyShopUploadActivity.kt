@@ -1,30 +1,25 @@
 package com.lingmiao.shop.business.main
 
 import com.blankj.utilcode.util.LogUtils
+import com.james.common.base.BaseActivity
+import com.james.common.netcore.coroutine.CoroutineSupport
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.bean.ApplyShopImageEvent
-import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopUpload
 import com.lingmiao.shop.business.main.presenter.ApplyShopUploadPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopUploadPresenterImpl
 import com.lingmiao.shop.business.photo.GlideEngine
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
-import com.james.common.base.BaseActivity
-import com.james.common.netcore.coroutine.CoroutineSupport
 import com.luck.picture.lib.PictureSelector
 import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import kotlinx.android.synthetic.main.main_activity_apply_shop_upload.*
-import kotlinx.android.synthetic.main.main_activity_apply_shop_upload.ivShopUpload
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
-import java.io.File
 
 /**
  *   首页-提交资料-上传图片
@@ -42,7 +37,7 @@ class ApplyShopUploadActivity : BaseActivity<ApplyShopUploadPresenter>(),
     }
 
     override fun useLightMode(): Boolean {
-        return false;
+        return false
     }
 
     override fun initView() {
@@ -58,7 +53,7 @@ class ApplyShopUploadActivity : BaseActivity<ApplyShopUploadPresenter>(),
         tvUploadSubmit.setOnClickListener {
             if(imageUrl?.isNotEmpty() == true) {
                 EventBus.getDefault().post(ApplyShopImageEvent("",imageUrl, type))
-                finish();
+                finish()
             }
         }
 
@@ -110,13 +105,13 @@ class ApplyShopUploadActivity : BaseActivity<ApplyShopUploadPresenter>(),
         }
     }
 
-    private var imageUrl : String ?= "";
+    private var imageUrl : String ?= ""
     private fun showAndUploadImage(localMedia: LocalMedia?) {
         GlideUtils.setImageUrl(ivShopUpload, OtherUtils.getImageFile(localMedia),12f)
         mCoroutine.launch {
             val uploadFile = CommonRepository.uploadFile(OtherUtils.getImageFile(localMedia), true)
             if (uploadFile.isSuccess) {
-                imageUrl = uploadFile.data.url;
+                imageUrl = uploadFile.data.url
                 LogUtils.d(uploadFile.data.url)
 //                showToast("上传成功")
                 // EventBus.getDefault().post(ApplyShopImageEvent("",uploadFile.data.url, type))

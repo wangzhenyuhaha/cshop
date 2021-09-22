@@ -16,17 +16,18 @@ interface GoodsListOfMenuPre : BasePresenter {
 
     fun loadListData(path : String?, page: IPage, list: List<*>)
 
-    fun showGroupPop(isTop : Int);
+    fun showGroupPop(isTop : Int, path : String?)
 
-    fun clickMenuView(isTop : Int, item: GoodsVO?, position: Int, target: android.view.View);
+    fun clickMenuView(isTop : Int, item: GoodsVO?, position: Int, target: android.view.View)
 
     interface View : BaseView, BaseLoadMoreView<GoodsVO> {
 
-        fun onUpdateGroup(groupId : List<ShopGroupVO>?, groupName: String?);
+        fun onUpdateGroup(groupId : List<ShopGroupVO>?, groupName: String?)
 
-        fun setGoodsCount(count : Int);
+        fun setGoodsCount(count : Int)
 
-        fun onUpdatedGoodsGroup();
+        fun onUpdatedGoodsGroup()
+
     }
 
 }

@@ -1,15 +1,10 @@
 package com.lingmiao.shop.business.main.presenter.impl
-import com.james.common.base.BasePresenter
-import com.james.common.base.BaseView
-import com.lingmiao.shop.business.main.bean.ApplyShopCategory
 
 import android.content.Context
-import  com.lingmiao.shop.business.main.presenter.ApplyShopCategoryPresenter
 import com.james.common.base.BasePreImpl
-import com.lingmiao.shop.business.main.api.MainRepository
-import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.presenter.impl.PopCategoryPreImpl
+import com.lingmiao.shop.business.main.presenter.ApplyShopCategoryPresenter
 import kotlinx.coroutines.launch
 
 class ApplyShopCategoryPresenterImpl(context: Context, private var view: ApplyShopCategoryPresenter.View) :

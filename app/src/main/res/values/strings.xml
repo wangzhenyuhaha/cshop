@@ -29,6 +29,9 @@
     <!--  =================== 商品 START ===================  -->
     <string name="goods_home_title" translatable="false">管理商品</string>
     <string name="goods_home_quantity" translatable="false">库存：%s</string>
+    <string name="goods_home_event_quantity" translatable="false">活动库存：%s</string>
+    <string name="goods_home_price" translatable="false">价格：%s</string>
+    <string name="goods_home_event_price" translatable="false">活动价格：%s</string>
     <string name="goods_home_spec" translatable="false">规格：%s</string>
     <string name="goods_home_enable_quantity" translatable="false">可用库存：%s</string>
     <string name="goods_home_sales" translatable="false">销量：%s</string>

@@ -6,14 +6,11 @@ import com.james.common.base.loadmore.core.IPage
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.isNotEmpty
 import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.main.api.MemberRepository
 import com.lingmiao.shop.business.sales.bean.UserVo
 import com.lingmiao.shop.business.sales.fragment.UserStatusFragment
 import com.lingmiao.shop.business.sales.presenter.IUserStatusListPresenter
-import com.lingmiao.shop.business.wallet.bean.DataVO
 import kotlinx.coroutines.launch
-import retrofit2.Call
 
 /**
 Create Date : 2021/3/69:59 AM

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg">
+    android:background="@color/common_bg"
+    tools:ignore="HardcodedText">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -15,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="15dp"
             app:ivBgColor="@color/white"
             app:ivRadius="5dp">
 
@@ -146,8 +147,8 @@
                 android:layout_height="65dp">
 
                 <TextView
-                    style="@style/goods_spce_item_left_mark"
                     android:id="@+id/linkPhontHintTv"
+                    style="@style/goods_spce_item_left_mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/dimen_15"
@@ -167,7 +168,7 @@
                     android:id="@+id/linkTelEt"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="center"
                     android:hint="请输入联系电话"
                     android:inputType="number"
@@ -195,9 +196,9 @@
                     android:id="@+id/tvShopManageLink"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawableEnd="@mipmap/me_arrow_right"
                     android:drawablePadding="@dimen/dimen_10"
                     android:ellipsize="end"
                     android:hint="设置联系方式"
@@ -215,8 +216,8 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/goods_spce_item_left_mark"
                     android:id="@+id/tvDeliver"
+                    style="@style/goods_spce_item_left_mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingVertical="@dimen/dimen_15"
@@ -228,9 +229,9 @@
                     android:id="@+id/tvShopManageDelivery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:drawableRight="@mipmap/me_arrow_right"
+                    android:drawableEnd="@mipmap/me_arrow_right"
                     android:drawablePadding="@dimen/dimen_10"
                     android:ellipsize="end"
                     android:hint="请选择"
@@ -268,7 +269,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvDeliver"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:orientation="vertical">
 
                     <TextView
@@ -276,9 +277,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:drawableEnd="@mipmap/me_arrow_right"
                         android:drawablePadding="@dimen/dimen_15"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:paddingVertical="@dimen/dimen_15"
                         android:text="请设置" />
 
@@ -287,9 +288,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:drawableRight="@mipmap/me_arrow_right"
+                        android:drawableEnd="@mipmap/me_arrow_right"
                         android:drawablePadding="@dimen/dimen_15"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:paddingVertical="@dimen/dimen_15"
                         android:text="请设置" />
 
@@ -333,7 +334,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" (建议尺寸：750X136px)"
+                    android:text=" (建议尺寸：750X176px)"
                     android:textColor="@color/color_999999"
                     android:textSize="9sp" />
 
@@ -350,7 +351,10 @@
         android:layout_width="match_parent"
         android:layout_height="38dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_15"
+        android:layout_marginStart="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginEnd="@dimen/dimen_15"
+        android:layout_marginBottom="11dp"
         android:gravity="center"
         android:text="保存"
         android:textColor="#fff"

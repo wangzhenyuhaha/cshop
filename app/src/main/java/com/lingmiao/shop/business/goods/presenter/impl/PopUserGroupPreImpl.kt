@@ -28,6 +28,15 @@ class PopUserGroupPreImpl(view: BaseView) : BasePreImpl(view) {
         }
     }
 
+    fun showGoodsGroupPop(context: Context,isTop : Int, path: String?, callback: (List<ShopGroupVO>?, String?) -> Unit) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.loadLv1ShopGroup(isTop, path)
+            if (resp.isSuccess) {
+                showPopWindow(context, resp.data.filter { it.catPath.equals(path) }, callback)
+            }
+        }
+    }
+
     private fun showPopWindow(
         context: Context,
         list: List<ShopGroupVO>,

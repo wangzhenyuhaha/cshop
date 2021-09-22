@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_15"
+    android:layout_marginTop="@dimen/dimen_15">
+
+    <TextView
+        android:id="@+id/tvDocTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableEnd="@mipmap/common_arrow_right"
+        android:drawablePadding="10dp"
+        android:gravity="center_vertical"
+        android:singleLine="true"
+        android:textColor="@color/color_333333"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="测试" />
+
+
+    <LinearLayout
+        android:id="@+id/layoutDocContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvDocTitle">
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <TextView
+            android:id="@+id/tvDocContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/color_666666"
+            android:textSize="12sp"
+            tools:text="测试" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

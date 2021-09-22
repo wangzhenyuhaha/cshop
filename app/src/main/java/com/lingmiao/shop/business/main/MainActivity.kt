@@ -20,7 +20,6 @@ import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.permission.interceptor.StorageInterceptor
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
-import com.lingmiao.shop.business.main.bean.ApplyShopInfoEvent
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
@@ -74,9 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         val titleList = ArrayList<String>()
         titleList.add("工作台")
-//        titleList.add("商品")
         titleList.add("订单")
-//        titleList.add("RM")
         titleList.add("我的")
         val tabIconList = ArrayList<Int>()
         tabIconList.add(R.drawable.selector_tab_1)
@@ -107,9 +104,9 @@ class MainActivity : AppCompatActivity() {
         vpMain.offscreenPageLimit = 1
         tbMain.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                if(tab.position == 0) {
-                    EventBus.getDefault().post(ApplyShopInfoEvent());
-                }
+//                if(tab.position == 0) {
+//                    EventBus.getDefault().post(ApplyShopInfoEvent());
+//                }
 //                if(tab.position==2){
 ////                    BarUtils.setStatusBarLightMode(this@MainActivity, false)
 //                    viStatusBar.setBackgroundColor(ContextCompat.getColor(this@MainActivity,R.color.color_secondary))
@@ -131,6 +128,8 @@ class MainActivity : AppCompatActivity() {
         LogUtils.d("jpushType:$jpushType")
         if (jpushType == IConstant.MESSAGE_ORDER_PAY_SUCCESS) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
+        } else if(jpushType == IConstant.MESSAGE_ORDER_CANCEL) {
+            changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
         }
     }
 
@@ -158,6 +157,10 @@ class MainActivity : AppCompatActivity() {
     private var mExitTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if(vpMain.currentItem > 0) {
+                vpMain.currentItem = 0;
+                return true
+            }
             if(System.currentTimeMillis() - mExitTime > 2000) {
                 ToastUtils.showLong("再按一次返回桌面")
                 mExitTime = System.currentTimeMillis()

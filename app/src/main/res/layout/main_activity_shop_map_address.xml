@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mapLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="420dp">
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/mvShopAddress"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="#33000000">
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvShopAddressConfirm"
+                android:layout_width="58dp"
+                android:layout_height="29dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#ffffffff"
+                android:textSize="14sp"
+                app:ivBgColor="#06C25F"
+                app:ivRadius="14dp" />
+
+            <TextView
+                android:id="@+id/tvShopAddressCancel"
+                android:layout_alignBaseline="@id/tvShopAddressConfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="取消"
+                android:textColor="#ffffffff"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:layout_marginBottom="@dimen/dimen_15"
+            app:ivBgColor="#55000000"
+            app:ivRadius="5dp">
+
+            <ImageView
+                android:id="@+id/ivLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_10"
+                android:src="@mipmap/ic_red_location" />
+
+        </com.james.common.view.ILinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_toolbar_height"
+        android:background="@color/color_ffffff"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dimen_15">
+
+        <com.james.common.view.ILinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:ivBgColor="#EEEEED"
+            app:ivRadius="10dp">
+
+            <EditText
+                android:id="@+id/etShopAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="19dp"
+                android:layout_marginRight="19dp"
+                android:background="@null"
+                android:drawableLeft="@mipmap/main_address_search"
+                android:drawablePadding="5dp"
+                android:hint="搜索地点"
+                android:singleLine="true"
+                android:textColor="#ff6f6f6f"
+                android:textSize="14sp" />
+
+        </com.james.common.view.ILinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvAddress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+</LinearLayout>

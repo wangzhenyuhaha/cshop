@@ -1,84 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:orientation="vertical">
+    android:background="@color/color_EEEEEE"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:text="请准备好如下资料"
-        android:textColor="#ff000000"
-        android:textSize="19sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:drawableTop="@mipmap/main_shop_hint_1"
-            android:drawablePadding="@dimen/dimen_5"
-            android:gravity="center"
-            android:text="身份证正面"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_14" />
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="19dp"
-            android:drawableTop="@mipmap/main_shop_hint_2"
-            android:drawablePadding="@dimen/dimen_5"
-            android:gravity="center"
-            android:text="身份证反面"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_14" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="19dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:drawableTop="@mipmap/main_shop_hint_3"
-            android:drawablePadding="@dimen/dimen_5"
-            android:gravity="center"
-            android:text="手持身份证照片"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_14" />
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="19dp"
-            android:drawableTop="@mipmap/main_shop_hint_4"
-            android:drawablePadding="@dimen/dimen_5"
-            android:gravity="center"
-            android:text="公司营业执照"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_14" />
-
-    </LinearLayout>
-
-    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:background="@color/common_bg"
+        android:paddingStart="@dimen/dimen_15"
+        android:paddingEnd="@dimen/dimen_15">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_35"
+                    android:text="请准备好如下资料"
+                    android:textColor="#ff000000"
+                    android:textSize="19sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    android:background="@color/gray_bg_click"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/main_shop_hint_1"
+                        android:drawablePadding="@dimen/dimen_5"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dimen_10"
+                        android:text="身份证正面"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:drawableTop="@mipmap/main_shop_hint_2"
+                        android:drawablePadding="@dimen/dimen_5"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="身份证反面"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/gray_bg_click"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableTop="@mipmap/main_shop_hint_3"
+                        android:drawablePadding="@dimen/dimen_5"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="手持身份证照片"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="19dp"
+                        android:drawableTop="@mipmap/main_shop_hint_4"
+                        android:drawablePadding="@dimen/dimen_5"
+                        android:gravity="center"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="公司营业执照"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/sp_14" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -98,7 +134,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:text="我已阅读并同意"
             android:textColor="#ff666666"
             android:textSize="11sp" />
@@ -113,7 +149,6 @@
             android:textSize="11sp" />
     </LinearLayout>
 
-
     <com.james.common.view.ITextView
         android:id="@+id/tvApplyShopHintNext"
         android:layout_width="match_parent"
@@ -126,4 +161,5 @@
         android:textSize="13sp"
         app:ivBgColor="#3870EA"
         app:ivRadius="19dp" />
+
 </LinearLayout>

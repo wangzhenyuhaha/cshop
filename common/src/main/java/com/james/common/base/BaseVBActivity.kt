@@ -3,9 +3,8 @@ package com.james.common.base
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
-import android.view.LayoutInflater
+import android.widget.FrameLayout
 import android.widget.RelativeLayout
-import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.viewbinding.ViewBinding
@@ -33,21 +32,24 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
 
     //ViewBinding
     protected lateinit var mBinding: VB
+    protected lateinit var mRootBinding: ActivityBaseBinding
     protected var mPresenter: P? = null
     protected var savedInstanceState: Bundle? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.savedInstanceState = savedInstanceState
         initBundles()
+
         if (useBaseLayout()) {
-            mBinding = ActivityBaseBinding.inflate(layoutInflater) as VB;
-            setContentView(mBinding.root)
+            mRootBinding = ActivityBaseBinding.inflate(layoutInflater);
+            setContentView(mRootBinding.root)
         } else {
             if (getViewBinding() != null) {
                 mBinding = getViewBinding();
                 setContentView(mBinding.root)
             }
         }
+
         context = this
         mPresenter = createPresenter()
         mPresenter!!.onCreate()
@@ -55,7 +57,7 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
             EventBus.getDefault().register(this)
         }
         initSelf()
-//        addContentView()
+        addContentView()
         initView()
     }
 
@@ -66,11 +68,12 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         mToolBarDelegate = ToolBarDelegate(this, tlBar, useLightMode())
     }
 
-//    fun addContentView() {
-//        if (getLayoutId() != 0 && useBaseLayout()) {
-//            layoutInflater.inflate(getLayoutId(), findViewById(R.id.container), true)
-//        }
-//    }
+    fun addContentView() {
+        if (getViewBinding() != null && useBaseLayout()) {
+            mBinding = getViewBinding();
+            mRootBinding.container.addView(mBinding.root);
+        }
+    }
 
     // ------------------- Override Method start ------------------
     protected open fun initBundles() {}

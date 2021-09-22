@@ -4,7 +4,6 @@ import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.GroupManagerPre
 import com.james.common.base.BasePreImpl
-import com.james.common.utils.exts.isNotEmpty
 import kotlinx.coroutines.launch
 
 /**

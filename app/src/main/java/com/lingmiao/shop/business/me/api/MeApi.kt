@@ -1,12 +1,13 @@
 package com.lingmiao.shop.business.me.api
 
-import com.lingmiao.shop.business.login.bean.CaptchaAli
-import com.lingmiao.shop.business.me.bean.*
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
+import com.lingmiao.shop.business.common.bean.FileResp
+import com.lingmiao.shop.business.login.bean.CaptchaAli
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
+import com.lingmiao.shop.business.me.bean.*
+import com.lingmiao.shop.business.wallet.bean.PageRecordVo
 import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -32,9 +33,13 @@ interface MeApi {
     ): Response<ResponseBody>
 
     //    建议反馈
-    @POST("seller/shops/feedBack")
+    @POST("seller/app/feedback/addFeedback")
     suspend fun feedback(@Body request: Feedback): Response<ResponseBody>
 
+    //获取企业微信二维码
+    @GET("seller/app/feedback/getContactWay")
+    @WithHiResponse
+       fun getCompanyWeChat() :Call<FileResp<String>>
 
     //    发送手机号码
     @POST("/seller/shops/clerks/smscode/edit/{mobile}")
@@ -67,6 +72,12 @@ interface MeApi {
     @WithHiResponse
     suspend fun getQRCode(): Response<ResponseBody>
 
+
+    // 获取店铺海报二维码
+    @GET("seller/shops/getPosterQRCode")
+    @WithHiResponse
+    suspend fun getNewQRCode(): Response<ResponseBody>
+
     //获取Banner图
     @GET("seller/shops/shopBanner")
     @WithHiResponse
@@ -77,4 +88,15 @@ interface MeApi {
     @POST("seller/shops/shopBanner/addShopBanner")
     @WithHiResponse
     fun updateBanner(@Body bean: List<BannerBean>): Call<Unit>
+
+    // 内容列表
+    @POST("/seller/app/content/queryContentList")
+    @WithHiResponse
+    fun queryContentList(@Body body: HelpDocReq): Call<PageRecordVo<HelpDocItemVo>>
+
+    //
+    @GET("/seller/shops/finalOpenShop")
+    @WithHiResponse
+    fun queryFinalOpenShop(): Call<Unit>
+
 }

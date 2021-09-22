@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/common_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:gravity="center"
             android:text="余额（元）"
             android:textColor="@color/color_333333"
-            android:textSize="10sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/tv_wallet_info_value"
@@ -50,14 +51,37 @@
             app:ivBorderWidth="1px"
             app:ivRadius="15dp" />
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/rateLayout"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="提现手续费     0.3%"
-            android:textColor="#757575"
-            android:textSize="@dimen/sp_12" />
+            tools:visibility="visible"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="次日自动到账，提现费率"
+                android:textColor="#757575"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:textSize="@dimen/sp_12" />
+
+            <TextView
+                android:id="@+id/tvRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                tools:text="0.3%"
+                android:drawableEnd="@mipmap/ic_tips"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_12" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

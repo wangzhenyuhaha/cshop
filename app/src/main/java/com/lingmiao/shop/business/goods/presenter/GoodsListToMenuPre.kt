@@ -23,6 +23,7 @@ interface GoodsListToMenuPre : BasePresenter {
     interface View : BaseView, BaseLoadMoreView<GoodsVO> {
         fun onUpdatedCategory(list : List<CategoryVO>?, name : String?)
         fun setGoodsCount(count : Int)
+        fun refresh()
     }
 
 }

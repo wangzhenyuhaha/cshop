@@ -13,7 +13,7 @@ object IConstant {
     //1申请开店审核成功;  2买家订单支付成功;  3:其它  ,4店铺审核不通过
     const val MESSAGE_APPLY_SHOP_SUCCESS = "1"
     const val MESSAGE_ORDER_PAY_SUCCESS = "2"
-    const val MESSAGE_OTHER = "3"
+    const val MESSAGE_ORDER_CANCEL = "3"
     const val MESSAGE_APPLY_SHOP_REFUSE = "4"
 
     const val TAB_WAIT_SEND_GOODS = 0
@@ -26,7 +26,8 @@ object IConstant {
     const val  SHIP_TYPE_LOCAL = "LOCAL"    //同城
     const val  SHIP_TYPE_SELF = "SELF"      //自提
 
-    var official = false;
+    //true 表示生产 false 表示测试
+    var official = false
 
     const val PRO_URL = "https://api.base.c-dian.cn";
     const val TEST_URL = "http://47.117.112.134";

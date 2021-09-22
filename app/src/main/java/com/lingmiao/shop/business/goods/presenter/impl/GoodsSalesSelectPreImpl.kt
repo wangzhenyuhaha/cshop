@@ -3,10 +3,8 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.james.common.utils.exts.isNotEmpty
 import com.james.common.base.loadmore.core.IPage
-import com.lingmiao.shop.business.goods.presenter.GoodsMenuSelectPre
 import com.lingmiao.shop.business.goods.presenter.GoodsSalesSelectPre
 import kotlinx.coroutines.launch
 

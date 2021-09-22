@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.api.bean
 
+import android.util.Log
 import com.james.common.utils.exts.isNotBlank
 
 /**

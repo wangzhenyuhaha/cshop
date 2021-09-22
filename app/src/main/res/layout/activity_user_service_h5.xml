@@ -11,15 +11,17 @@
         android:id="@+id/rlServiceRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/llService"
-        />
+        android:layout_above="@+id/llService" />
+
     <LinearLayout
         android:id="@+id/llService"
         android:layout_width="match_parent"
-        android:orientation="vertical"
+        android:layout_height="76dp"
         android:layout_alignParentBottom="true"
-        android:layout_height="76dp">
-        <View style="@style/DivideLineHorizontal"/>
+        android:orientation="vertical">
+
+        <View style="@style/DivideLineHorizontal" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="33dp"

@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 
 class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreImpl(view),
     OrderListPresenter {
+
+
     override fun loadListData(
         page: IPage,
         status: String,
@@ -54,7 +56,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun takeOrder(tradeSn: String) {
         mCoroutine.launch {
-            val resp = OrderRepository.apiService.takeOrder(tradeSn, 1);
+            val resp = OrderRepository.apiService.takeOrder(tradeSn, 1)
             if(resp.isSuccessful) {
                 view.onTakeSuccess()
             }
@@ -64,7 +66,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun refuseOrder(tradeSn: String) {
         mCoroutine.launch {
-            val resp = OrderRepository.apiService.takeOrder(tradeSn, 0);
+            val resp = OrderRepository.apiService.takeOrder(tradeSn, 0)
             if(resp.isSuccessful) {
                 view.onRefuseSuccess()
             }
@@ -74,7 +76,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun shipOrder(sn: String) {
         mCoroutine.launch {
-            val resp = OrderRepository.apiService.ship(sn);
+            val resp = OrderRepository.apiService.ship(sn)
             if(resp.isSuccessful) {
                 view.onShipped()
             }
@@ -84,7 +86,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun signOrder(sn: String) {
         mCoroutine.launch {
-            val resp = OrderRepository.apiService.sign(sn);
+            val resp = OrderRepository.apiService.sign(sn)
             if(resp.isSuccessful) {
                 view.onSigned()
             }
@@ -94,8 +96,8 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun refuseService(sn: String) {
         mCoroutine.launch {
-            val item = OrderServiceVo();
-            val resp = OrderRepository.apiService.service(sn, item);
+            val item = OrderServiceVo()
+            val resp = OrderRepository.apiService.service(sn, item)
             if(resp.isSuccessful) {
                 view.onRefusedService()
             }
@@ -105,8 +107,8 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun acceptService(sn: String) {
         mCoroutine.launch {
-            val item = OrderServiceVo();
-            val resp = OrderRepository.apiService.service(sn, item);
+            val item = OrderServiceVo()
+            val resp = OrderRepository.apiService.service(sn, item)
             if(resp.isSuccessful) {
                 view.onAcceptService()
             }
@@ -116,7 +118,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
 
     override fun verifyOrder(id: String) {
         mCoroutine.launch {
-            view?.showDialogLoading();
+            view?.showDialogLoading()
             val resp = OrderRepository.apiService.verifyOrderShip(id).awaitHiResponse()
             if (resp.isSuccess && resp?.data?.status == true) {
                 view?.verifySuccess()
@@ -124,7 +126,26 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
             } else {
                 view?.verifyFailed()
             }
-            view?.hideDialogLoading();
+            view?.hideDialogLoading()
+        }
+    }
+
+    override fun prepareOrder(sn: String) {
+        mCoroutine.launch {
+            try {
+                val resp = OrderRepository.apiService.prepare(sn)
+                view.hideDialogLoading()
+                LogUtils.d("lqx","deleteOrder:"+ resp.isSuccessful)
+                if (resp.isSuccessful) {
+                    view.onPreparedOrder()
+                } else {
+                    view.onPrepareOrderFail()
+                }
+            }catch (e:Exception){
+                e.printStackTrace()
+                view.hideDialogLoading()
+            }
+
         }
     }
 

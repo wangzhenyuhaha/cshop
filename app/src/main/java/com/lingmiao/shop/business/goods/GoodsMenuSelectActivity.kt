@@ -12,8 +12,6 @@ import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.adapter.GoodsCheckedAdapter
-import com.lingmiao.shop.business.goods.adapter.GoodsMenuAdapter
 import com.lingmiao.shop.business.goods.adapter.GoodsSelectAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.presenter.GoodsMenuSelectPre

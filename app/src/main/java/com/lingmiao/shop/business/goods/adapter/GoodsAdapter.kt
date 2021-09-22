@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.CompoundButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -46,7 +47,7 @@ open class GoodsAdapter(
             helper.setText(R.id.goodsNameTv, goodsName)
             helper.setText(
                 R.id.goodsQuantityTv,
-                mContext.getString(R.string.goods_home_quantity, eventQuantity+enableQuantity)
+                mContext.getString(R.string.goods_home_quantity, enableQuantity)
             )
             // helper.setText(R.id.goodsSpecTv, "规格：50ml");
 //            helper.setText(R.id.enableGoodsQuantityTv, mContext.getString(R.string.goods_home_enable_quantity, enableQuantity));
@@ -115,8 +116,8 @@ open class GoodsAdapter(
 
     fun updateQuantity(quantity: String?, position: Int) {
         val goods = data[position]
-        goods.quantity = quantity
-        goods.goodsQuantityStatusMix = if (quantity?.toInt() ?: 0 > 0) 1 else 0;
+        goods.enableQuantity = quantity?.toInt() ?: 0;
+        goods.goodsQuantityStatusMix = if (goods.enableQuantity > 0) 0 else 1;
         notifyItemChanged(position)
     }
 

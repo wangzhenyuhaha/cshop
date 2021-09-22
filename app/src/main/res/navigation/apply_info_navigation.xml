@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/apply_info_navagation"
+    app:startDestination="@id/shopInfoFragment">
+
+    <fragment
+        android:id="@+id/shopInfoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.ShopInfoFragment"
+        android:label="ShopInfoFragment" >
+        <action
+            android:id="@+id/action_shopInfoFragment_to_shopPhotoFragment"
+            app:destination="@id/shopPhotoFragment" />
+        <action
+            android:id="@+id/action_shopInfoFragment_to_shopIDCardFragment"
+            app:destination="@id/shopIDCardFragment" />
+        <action
+            android:id="@+id/action_shopInfoFragment_to_replenishInfoFragment"
+            app:destination="@id/replenishInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopPhotoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.ShopPhotoFragment"
+        android:label="ShopPhotoFragment" />
+    <fragment
+        android:id="@+id/shopIDCardFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.ShopIDCardFragment"
+        android:label="ShopIDCardFragment" />
+    <fragment
+        android:id="@+id/replenishInfoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.ReplenishInfoFragment"
+        android:label="ReplenishInfoFragment" >
+        <action
+            android:id="@+id/action_replenishInfoFragment_to_identityInfoFragment"
+            app:destination="@id/identityInfoFragment" />
+        <action
+            android:id="@+id/action_replenishInfoFragment_to_companyInfoFragment"
+            app:destination="@id/companyInfoFragment" />
+        <action
+            android:id="@+id/action_replenishInfoFragment_to_bindAccountFragment"
+            app:destination="@id/bindAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/identityInfoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.IdentityInfoFragment"
+        android:label="IdentityInfoFragment" >
+        <action
+            android:id="@+id/action_identityInfoFragment_to_shopIDCardFragment"
+            app:destination="@id/shopIDCardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companyInfoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.CompanyInfoFragment"
+        android:label="CompanyInfoFragment" >
+        <action
+            android:id="@+id/action_companyInfoFragment_to_shopPhotoFragment"
+            app:destination="@id/shopPhotoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bindAccountFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.BindAccountFragment"
+        android:label="BindAccountFragment" >
+        <action
+            android:id="@+id/action_bindAccountFragment_to_shopPhotoFragment"
+            app:destination="@id/shopPhotoFragment" />
+    </fragment>
+</navigation>

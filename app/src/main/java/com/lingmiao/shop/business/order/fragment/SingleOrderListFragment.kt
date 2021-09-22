@@ -3,12 +3,14 @@ package com.lingmiao.shop.business.order.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import com.bigkoo.pickerview.view.TimePickerView
+import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
@@ -18,6 +20,7 @@ import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.james.common.view.ITextView
 import com.lingmiao.shop.R
+import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.order.*
 import com.lingmiao.shop.business.order.adapter.OrderListAdapter
 import com.lingmiao.shop.business.order.bean.OrderList
@@ -28,6 +31,8 @@ import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import java.util.*
 
 private const val STATUS = "param1"
@@ -37,16 +42,15 @@ private const val STATUS = "param1"
  */
 class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresenter>(),
     OrderListPresenter.StatusView {
-    //    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUND
     private var orderType: String? = "ALL"
 
-    private var mCStatus: String? = null;
+    private var mCStatus: String? = null
 
 
-    var pvCustomTime: TimePickerView? = null;
-    var pvCustomTime2: TimePickerView? = null;
-    var mStart : Long? = null;
-    var mEnd : Long? = null;
+    var pvCustomTime: TimePickerView? = null
+    var pvCustomTime2: TimePickerView? = null
+    var mStart: Long? = null
+    var mEnd: Long? = null
 
     companion object {
 
@@ -73,53 +77,58 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
-    override fun getLayoutId(): Int? {
-        return R.layout.order_fragment_single_order;
+    override fun getLayoutId(): Int {
+        return R.layout.order_fragment_single_order
     }
 
-    var rbContinue : RadioButton? = null;
-    var rbComplete: RadioButton? = null;
-    var rbCancel: RadioButton? = null;
+    override fun useEventBus(): Boolean {
+        return true;
+    }
+
+    var rbContinue: RadioButton? = null
+    var rbComplete: RadioButton? = null
+    var rbCancel: RadioButton? = null
+    var rgAll: RadioGroup? = null;
 
     override fun initOthers(rootView: View) {
         super.initOthers(rootView)
 
-        initDate();
+        initDate()
 
         when (orderType) {
             "PROCESSING" -> {
-                rgEnable.visiable();
+                rgEnable.visiable()
             }
             "COMPLETE" -> {
-                dateLayout.visiable();
-                orderResetTv.visiable();
+                dateLayout.visiable()
+                orderResetTv.visiable()
                 orderFilterTv.gone()
             }
             "ALL" -> {
-                dateLayout.visiable();
-                orderResetTv.visiable();
+                dateLayout.visiable()
+                orderResetTv.visiable()
                 orderFilterTv.visiable()
             }
             else -> {
-                rgEnable.gone();
-                dateLayout.gone();
-                orderResetTv.gone();
+                rgEnable.gone()
+                dateLayout.gone()
+                orderResetTv.gone()
                 orderFilterTv.gone()
             }
         }
 
         orderStatusResetTv.singleClick {
-            rgEnable.clearCheck();
-            mCStatus = null;
+            rgEnable.clearCheck()
+            mCStatus = null
             mLoadMoreDelegate?.refresh()
         }
         rgEnable.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.rbTaking) {
-                mCStatus = "ACCEPT";
+                mCStatus = "ACCEPT"
             } else if (checkedId == R.id.rbShipping) {
-                mCStatus = "SHIPPED";
+                mCStatus = "SHIPPED"
             } else if (checkedId == R.id.rbSign) {
-                mCStatus = "ROG";
+                mCStatus = "ROG"
             }
             mLoadMoreDelegate?.refresh()
         }
@@ -129,33 +138,33 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
 
         val headview: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
-        val rgAll : RadioGroup = headview.findViewById<RadioGroup>(R.id.rgAll);
-        rgAll.setOnCheckedChangeListener { group, checkedId ->
+        rgAll = headview.findViewById<RadioGroup>(R.id.rgAll)
+        rgAll?.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.rbContinue) {
-                mCStatus = "PROCESSING";
+                mCStatus = "PROCESSING"
             } else if (checkedId == R.id.rbComplete) {
-                mCStatus = "COMPLETE";
+                mCStatus = "COMPLETE"
             } else if (checkedId == R.id.rbCancel) {
-                mCStatus = "CANCELLED";
+                mCStatus = "CANCELLED"
             }
         }
         headview.findViewById<TextView>(R.id.tvReset).singleClick {
-            rgAll.clearCheck();
-            drawerO.closeDrawers();
-            mCStatus = null;
+            mCStatus = null
+            rgAll?.clearCheck()
+            drawerO.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
-        rbContinue = headview.findViewById(R.id.rbContinue);
-        rbComplete = headview.findViewById(R.id.rbComplete);
-        rbCancel = headview.findViewById(R.id.rbCancel);
+        rbContinue = headview.findViewById(R.id.rbContinue)
+        rbComplete = headview.findViewById(R.id.rbComplete)
+        rbCancel = headview.findViewById(R.id.rbCancel)
 
         headview.findViewById<ITextView>(R.id.tvFinish).singleClick {
-            drawerO.closeDrawers();
+            drawerO.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
     }
 
-    fun initDate() {
+    private fun initDate() {
         // 系统当前时间
         val selectedDate: Calendar = Calendar.getInstance()
         val startDate: Calendar = Calendar.getInstance()
@@ -168,25 +177,25 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             )
         )
 
-        if(orderType == "COMPLETE" || orderType == "ALL") {
-            startOrderDateTv.text = String.format("%s-%s-%s", selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH)+1, selectedDate.get(
-                Calendar.DATE));
-            endOrderDateTv.text = startOrderDateTv.text;
-            val s = stringToDate(startOrderDateTv.getViewText()+" 00:00:00",DATE_TIME_FORMAT)?.time?:0;
-            mStart = s/1000;
-
-            val e = stringToDate(startOrderDateTv.getViewText()+" 23:59:59",DATE_TIME_FORMAT)?.time?:0;
-            mEnd = e/1000;
+        if (orderType == "COMPLETE" || orderType == "ALL") {
+//            startOrderDateTv.text = String.format("%s-%s-%s", selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH)+1, selectedDate.get(
+//                Calendar.DATE));
+//            endOrderDateTv.text = startOrderDateTv.text;
+//            val s = stringToDate(startOrderDateTv.getViewText()+" 00:00:00",DATE_TIME_FORMAT)?.time?:0;
+//            mStart = s/1000;
+//
+//            val e = stringToDate(startOrderDateTv.getViewText()+" 23:59:59",DATE_TIME_FORMAT)?.time?:0;
+//            mEnd = e/1000;
         }
 
         startOrderDateTv.singleClick {
             pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
                 startOrderDateTv.text = formatString(date, DATE_FORMAT)
 
-                val s = dateTime2Date(startOrderDateTv.getViewText()+" 00:00:00")?.time?:0;
-                mStart = s/1000;
+                val s = dateTime2Date(startOrderDateTv.getViewText() + " 00:00:00")?.time ?: 0
+                mStart = s / 1000
 
-                if(mStart != null && mEnd != null) {
+                if (mStart != null && mEnd != null) {
                     mLoadMoreDelegate?.refresh()
                 }
                 //firstMenuTv.setText(formatDateTime(date))
@@ -195,17 +204,17 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 pvCustomTime?.dismiss()
             }, {
                 pvCustomTime?.dismiss()
-            });
-            pvCustomTime?.show();
+            })
+            pvCustomTime?.show()
         }
         endOrderDateTv.singleClick {
             pvCustomTime2 =
                 getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
                     endOrderDateTv.setText(formatString(date, DATE_FORMAT))
-                    val e = dateTime2Date(endOrderDateTv.getViewText()+" 23:59:59")?.time?:0;
-                    mEnd = e/1000;
+                    val e = dateTime2Date(endOrderDateTv.getViewText() + " 23:59:59")?.time ?: 0
+                    mEnd = e / 1000
 
-                    if(mStart != null && mEnd != null) {
+                    if (mStart != null && mEnd != null) {
                         mLoadMoreDelegate?.refresh()
                     }
                 }, {
@@ -213,19 +222,19 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     pvCustomTime2?.dismiss()
                 }, {
                     pvCustomTime2?.dismiss()
-                });
-            pvCustomTime2?.show();
+                })
+            pvCustomTime2?.show()
         }
         orderResetTv.singleClick {
-            if(orderType == "COMPLETE" || orderType == "ALL") {
-                mStart = null;
-                mEnd = null;
-                mCStatus = null;
-                startOrderDateTv.text = "";
-                endOrderDateTv.text = "";
-                rbContinue?.isChecked = false;
-                rbComplete?.isChecked = false;
-                rbCancel?.isChecked = false;
+            if (orderType == "COMPLETE" || orderType == "ALL") {
+                mStart = null
+                mEnd = null
+                mCStatus = null
+                startOrderDateTv.text = ""
+                endOrderDateTv.text = ""
+                rbContinue?.isChecked = false
+                rbComplete?.isChecked = false
+                rbCancel?.isChecked = false
                 mLoadMoreDelegate?.refresh()
             }
         }
@@ -237,7 +246,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 val orderBean = adapter.data[position] as OrderList
                 when (view.id) {
                     R.id.tvPhoneUser -> {
-                        OtherUtils.goToDialApp(activity, orderBean?.shipMobile);
+                        OtherUtils.goToDialApp(activity, orderBean?.shipMobile)
                     }
                     R.id.tvCancelOrder -> {
                         val intent = Intent(activity, OrderCancelActivity::class.java)
@@ -251,39 +260,28 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         intent.putExtra("orderId", orderBean.sn)
                         startActivityForResult(intent, REQUEST_CODE)
                     }
-                    R.id.tvQuickPay -> {//催付 备注:已取消该功能
-//                        DialogUtils.showDialog(activity!!, "催付提示", "确定要催促用户付款吗？",
-//                            "取消", "确定", View.OnClickListener { }, View.OnClickListener {
-//                            })
-
-                    }
                     R.id.tvShipment -> {
-                        DialogUtils.showDialog(activity!!, "配送提示", "确认开始配送该订单？",
+                        DialogUtils.showDialog(requireActivity(), "配送提示", "确认开始配送该订单？",
                             "取消", "确定配送", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
-                                mPresenter?.shipOrder(orderBean.sn!!);
+                                mPresenter?.shipOrder(orderBean.sn!!)
                             })
-                        //发货
-//                        val intent = Intent(activity, OrderSendGoodsActivity::class.java)
-//                        intent.putExtra("orderId", orderBean.sn)
-//                        intent.putExtra("shippingType", orderBean.shippingType)
-//                        startActivityForResult(intent, REQUEST_CODE)
+                    }
+                    R.id.tvPrepare -> {
+                        DialogUtils.showDialog(requireActivity(), "备货提示", "确认该订单已经备货？",
+                            "取消", "备货完成", View.OnClickListener { }, View.OnClickListener {
+                                showDialogLoading()
+                                mPresenter?.prepareOrder(orderBean.sn!!)
+                            })
                     }
                     R.id.tvSign -> {
-                        DialogUtils.showDialog(activity!!, "送达提示", "确认已经送达该订单？",
+                        DialogUtils.showDialog(requireActivity(), "送达提示", "确认已经送达该订单？",
                             "取消", "确定送达", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
-                                mPresenter?.signOrder(orderBean.sn!!);
+                                mPresenter?.signOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvVerify -> { // 核销
-//                        orderBean.verificationCode?.apply {
-//                            DialogUtils.showDialog(activity!!, "核销提示", "确定要核销该订单吗？",
-//                                "取消", "确定核销", View.OnClickListener { }, View.OnClickListener {
-//                                    showDialogLoading()
-//                                    mPresenter?.verifyOrder(orderBean.verificationCode!!)
-//                                })
-//                        }
                         val intent = Intent(activity, OrderDetailActivity::class.java)
                         intent.putExtra("orderId", orderBean.sn)
                         startActivity(intent)
@@ -304,21 +302,21 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         startActivityForResult(intent, REQUEST_CODE)
                     }
                     R.id.tvDelete -> {
-                        DialogUtils.showDialog(activity!!, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
+                        DialogUtils.showDialog(requireActivity(), "删除提示", "删除后不可恢复，确定要删除该订单吗？",
                             "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.deleteOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvAccept -> {
-                        DialogUtils.showDialog(activity!!, "接单提示", "确认是否接单?",
+                        DialogUtils.showDialog(requireActivity(), "接单提示", "确认是否接单?",
                             "取消", "确定接单", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.takeOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvRefuse -> {
-                        DialogUtils.showDialog(activity!!, "拒绝接单提示", "确认是否拒绝接单?",
+                        DialogUtils.showDialog(requireActivity(), "拒绝接单提示", "确认是否拒绝接单?",
                             "取消", "确定拒绝", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
                                 mPresenter?.refuseOrder(orderBean.sn!!)
@@ -329,11 +327,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             setOnItemClickListener { adapter, view, position ->
                 val orderBean = adapter.data[position] as OrderList
-//                val intent = Intent(activity, OrderDetailActivity::class.java)
-//                intent.putExtra("orderId", orderBean.sn)
-////                intent.putExtra("order",orderBean)
-//                startActivity(intent)
-                OrderShowActivity.open(activity!!, orderBean, 11);
+                OrderShowActivity.open(requireActivity(), orderBean, 11)
             }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.color_ffffff)
@@ -343,9 +337,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
     override fun autoRefresh(): Boolean {
         if (isVisible) {
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
     override fun createPresenter(): OrderListPresenter {
@@ -370,6 +364,14 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         showToast("删除成功")
         mLoadMoreDelegate?.refresh()
         //EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    override fun onPreparedOrder() {
+        mLoadMoreDelegate?.refresh()
+    }
+
+    override fun onPrepareOrderFail() {
+        mLoadMoreDelegate?.refresh()
     }
 
     override fun onShipped() {
@@ -398,7 +400,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     }
 
     override fun verifyFailed() {
-        showToast("核销失败");
+        showToast("核销失败")
     }
 
     override fun executePageRequest(page: IPage) {
@@ -413,4 +415,18 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
+    // 失效订单
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun changeTabPosition(event: TabChangeEvent) {
+        LogUtils.d("changeTabPosition:" + event)
+        if("ALL".equals(orderType) && event.type == 4 && "CANCELLED".equals(event.status)) {
+            mCStatus = event.status;
+            rbCancel?.isChecked = true;
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }

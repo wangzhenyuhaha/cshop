@@ -41,6 +41,17 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
             }
         }
 
+        fun open(
+            context: Context,
+            item : OrderList?
+        ) {
+            if (context is Activity) {
+                val intent = Intent(context, OrderShowActivity::class.java)
+                intent.putExtra("item", item)
+                context.startActivity(intent)
+            }
+        }
+
     }
 
     override fun initBundles() {
@@ -85,6 +96,10 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
         tvTableAware.text = mItem?.getTableAwareHint();
         tableAwareLayout.visibility = if(tvTableAware.text?.isNotEmpty() == true) View.VISIBLE else View.GONE;
+
+        tvPackagePrice.text = String.format("￥%s", mItem?.packagePrice);
+        packagePriceLayout.visibility = if(mItem?.packagePrice?.compareTo(0.0)?:0 > 0) View.VISIBLE else View.GONE;
+        packagePriceLine.visibility = if(mItem?.packagePrice?.compareTo(0.0)?:0 > 0) View.VISIBLE else View.GONE;
 
         orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile);
         orderOwnerTv.singleClick {

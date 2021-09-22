@@ -109,14 +109,7 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         }
         tvBottomRight.setOnClickListener { changeLoginType() }
         tvLoginHint.setOnClickListener { changeLoginRegister() }
-//        ivService.isSelected = true
-//        ivService.setOnCheckedChangeListener { buttonView, isChecked ->
-//            ivService.isSelected = !ivService.isSelected
-//        }
-//        ivService.setOnClickListener { ivService.isSelected = !ivService.isSelected }
         tvService.setOnClickListener {
-//            val intent = Intent(this,UserServiceH5Activity::class.java)
-//            startActivityForResult(intent, REQUEST_CODE_SERVICE)
             UserServiceH5Activity.service(this, REQUEST_CODE_SERVICE);
         }
         tvPrivacy.setOnClickListener {
@@ -213,10 +206,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
         if (loginType == LOGIN_BY_CODE) {
             llPhone.visibility = View.VISIBLE
             llCode.visibility = View.VISIBLE
-//            outAnimation(llAccount)
-//            outAnimation(llPassword)
-//            startAnimation(llPhone)
-//            startAnimation(llCode)
 
             tvForgetPassword.visibility = View.VISIBLE
             tvBottomRight.visibility = View.VISIBLE
@@ -225,10 +214,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
             llAccount.visibility = View.VISIBLE
             llPassword.visibility = View.VISIBLE
 
-//            outAnimation(llPhone)
-//            outAnimation(llCode)
-//            startAnimation(llAccount)
-//            startAnimation(llPassword)
 
             tvForgetPassword.visibility = View.VISIBLE
             tvBottomRight.visibility = View.VISIBLE
@@ -238,11 +223,6 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
             llPhone.visibility = View.VISIBLE
             llCode.visibility = View.VISIBLE
             llPassword.visibility = View.VISIBLE
-
-//            outAnimation(llAccount)
-//            outAnimation(llCode)
-//            startAnimation(llPhone)
-//            startAnimation(llPassword)
 
             tvLoginType.text = getString(R.string.register_by_phone)
             tvLoginHint.text = getString(R.string.has_account_login)
@@ -454,13 +434,4 @@ class LoginActivity : BaseActivity<LoginPresenter>(), LoginPresenter.View {
 
     }
 
-    override fun onResume() {
-        super.onResume()
-//        accountSetting?.let {
-//            if(it.castUpdate && versionUpdateDialog!=null){
-//                versionUpdateDialog?.dismiss()
-//                onAccountSettingSuccess(it)
-//            }
-//        }
-    }
 }

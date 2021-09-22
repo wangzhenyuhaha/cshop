@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +48,7 @@
                 android:id="@+id/tv_wallet_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                android:drawableEnd="@mipmap/goods_group_manager_right_arrow"
                 android:drawablePadding="10dp"
                 android:text=""
                 android:textColor="#999"
@@ -56,19 +57,19 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             style="@style/DivideLineHorizontal"
             android:layout_marginLeft="@dimen/dimen_10"
-            android:layout_marginRight="@dimen/dimen_10" />
+            android:layout_marginRight="@dimen/dimen_10"
+            android:visibility="gone" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_wallet_deposit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_20">
+            android:paddingVertical="@dimen/dimen_20"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -82,7 +83,7 @@
                 android:id="@+id/tv_wallet_deposit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                android:drawableEnd="@mipmap/goods_group_manager_right_arrow"
                 android:drawablePadding="10dp"
                 android:text=""
                 android:textColor="#999"
@@ -95,6 +96,7 @@
 
 
     <TextView
+        android:id="@+id/accountBind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/dimen_15"
@@ -106,6 +108,7 @@
         android:textSize="15sp" />
 
     <com.james.common.view.ILinearLayout
+        android:id="@+id/accountBindWC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_15"
@@ -115,13 +118,13 @@
         app:ivRadius="5dp">
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_wallet_third_part"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_20">
+            android:paddingVertical="@dimen/dimen_20"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -135,7 +138,7 @@
                 android:id="@+id/tv_wallet_zfb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                android:drawableEnd="@mipmap/goods_group_manager_right_arrow"
                 android:drawablePadding="10dp"
                 android:text="点击设置"
                 android:textColor="#999"
@@ -144,10 +147,10 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             style="@style/DivideLineHorizontal"
             android:layout_marginLeft="@dimen/dimen_10"
-            android:layout_marginRight="@dimen/dimen_10" />
+            android:layout_marginRight="@dimen/dimen_10"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_wallet_wechat_part"
@@ -169,7 +172,7 @@
                 android:id="@+id/tv_wallet_wechat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                android:drawableEnd="@mipmap/goods_group_manager_right_arrow"
                 android:drawablePadding="10dp"
                 android:text="点击设置"
                 android:textColor="#999"
@@ -178,19 +181,19 @@
         </LinearLayout>
 
         <View
-            android:visibility="gone"
             style="@style/DivideLineHorizontal"
             android:layout_marginLeft="@dimen/dimen_10"
-            android:layout_marginRight="@dimen/dimen_10" />
+            android:layout_marginRight="@dimen/dimen_10"
+            android:visibility="gone" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/ll_wallet_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_20">
+            android:paddingVertical="@dimen/dimen_20"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="0dp"
@@ -204,7 +207,7 @@
                 android:id="@+id/tv_wallet_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/goods_group_manager_right_arrow"
+                android:drawableEnd="@mipmap/goods_group_manager_right_arrow"
                 android:drawablePadding="10dp"
                 android:text="点击设置"
                 android:textColor="#999"

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
@@ -11,12 +12,15 @@ import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.GoodsListActivity
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
+import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.UserServiceH5Activity
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.bean.VipType
+import com.lingmiao.shop.business.me.event.ApplyVipEvent
 import com.lingmiao.shop.business.me.event.PaySuccessEvent
 import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
@@ -87,16 +91,17 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         }
         // 保障金[退款]
         tvRecharge.singleClick {
-
         }
         // 保障金[充值]
         tvRefund.singleClick {
-            WalletInfoActivity.openDepositActivity(this);
+            mIdentity?.id?.let {
+                    it1 -> mPresenter.ensureRefund(it1);
+            }
         }
         tvApply.singleClick {
             val list = galleryRv.getSelectItems();
             if(list?.size > 0) {
-                val item = list.get(0);
+                val item = galleryRv.getCheckedItem();
                 mPresenter?.apply(item.id!!);
             }
         }
@@ -165,6 +170,15 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
         }
     }
 
+    override fun onRefundEnsured() {
+        showToast("退款成功");
+        ActivityUtils.finishToActivity(MainActivity::class.java,false)
+    }
+
+    override fun onRefundEnsureFail() {
+
+    }
+
     /**
      * 加载成功
      */
@@ -218,6 +232,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
 
     fun refreshUseVipStatus() {
         if(isPayed) {
+            EventBus.getDefault().post(ApplyVipEvent(from = 1));
             EventBus.getDefault().post(PersonInfoRequest())
         }
     }

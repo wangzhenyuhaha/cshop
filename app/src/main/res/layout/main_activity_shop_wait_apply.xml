@@ -7,10 +7,44 @@
     android:orientation="vertical"
     tools:context=".business.main.ShopWaitApplyActivity">
 
+    <View
+        android:id="@+id/viStatusBar"
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingVertical="@dimen/dimen_5"
+        android:paddingRight="0dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civMainShopHead"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/main_shop_logo_default" />
+
+        <TextView
+            android:id="@+id/tvHelpCenter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:padding="@dimen/dimen_10"
+            android:text="帮助中心"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
     <fragment
         android:id="@+id/frShopWaitApply"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:name="com.lingmiao.shop.business.main.fragment.NewMainFragment"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

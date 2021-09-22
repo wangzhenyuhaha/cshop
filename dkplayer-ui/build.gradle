@@ -1,0 +1,23 @@
+apply plugin: 'com.android.library'
+
+android {
+    def android = rootProject.ext.android
+    compileSdkVersion android.compileSdkVersion
+    buildToolsVersion android.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion android.minSdkVersion
+        targetSdkVersion android.targetSdkVersion
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    compileOnly 'androidx.annotation:annotation:1.1.0'
+    api project(':dkplayer-java')
+}
+
+ext {
+    PUBLISH_ARTIFACT_ID = 'dkplayer-ui'
+}
+

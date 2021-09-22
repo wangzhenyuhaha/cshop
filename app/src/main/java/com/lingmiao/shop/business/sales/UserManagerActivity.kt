@@ -27,8 +27,8 @@ class UserManagerActivity : BaseActivity<IUserManagerPresenter>(), IUserManagerP
 
     companion object {
 
-        const val NEW_USER = 1;
-        const val ALL_USER = 1;
+        private const val NEW_USER = 1;
+        private const val ALL_USER = 0;
 
         fun newUser(context: Context) {
             val intent = Intent(context, UserManagerActivity::class.java)
@@ -36,6 +36,11 @@ class UserManagerActivity : BaseActivity<IUserManagerPresenter>(), IUserManagerP
             context.startActivity(intent)
         }
 
+        fun allUser(context: Context) {
+            val intent = Intent(context, UserManagerActivity::class.java)
+            intent.putExtra(IConstant.BUNDLE_KEY_OF_VIEW_TYPE, ALL_USER)
+            context.startActivity(intent)
+        }
     }
 
     override fun getLayoutId(): Int {

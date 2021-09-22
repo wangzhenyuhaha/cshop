@@ -1,70 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <com.james.common.view.ILinearLayout
         android:id="@+id/addMenuLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_14"
         android:layout_marginTop="@dimen/dimen_10"
-        app:ivBgColor="@color/gray_bg_click"
-        app:ivRadius="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_10"
         android:orientation="horizontal"
-        android:layout_marginBottom="@dimen/dimen_10">
+        app:ivBgColor="@color/gray_bg_click"
+        app:ivRadius="@dimen/dimen_5">
 
-        <TextView
-            android:background="@color/white"
-            android:id="@+id/menuAddTv"
-            android:paddingVertical="@dimen/dimen_15"
-            android:paddingHorizontal="@dimen/dimen_15"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/goods_spec_blue_plus"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/menuAddLayout"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="添加菜单"/>
+            android:background="@color/white"
+            android:paddingHorizontal="@dimen/dimen_15">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingVertical="@dimen/dimen_15"
+                android:text="添加菜单"
+                android:textSize="@dimen/sp_14" />
+
+            <TextView
+                android:id="@+id/menuAddLayoutTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:drawableEnd="@mipmap/goods_spec_blue_plus"
+                android:text="(可以使用活动价)"
+                android:textColor="@color/red"
+                android:textSize="@dimen/sp_12" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/menuSortTv"
             android:layout_width="100dp"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingRight="@dimen/dimen_10"
             android:layout_height="@dimen/dimen_38"
+            android:layout_gravity="center_vertical"
+            android:drawableStart="@mipmap/ic_sort_up"
             android:gravity="center"
-            android:drawableLeft="@mipmap/ic_sort_up"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="@dimen/dimen_10"
             android:text="菜单排序"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/dimen_14" />
+            android:textSize="@dimen/sp_14" />
 
     </com.james.common.view.ILinearLayout>
 
     <include
+        layout="@layout/fragment_base_load_more"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        layout="@layout/fragment_base_load_more"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/menuBottom"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_48"
+        android:layout_gravity="bottom"
         android:background="@color/gray_bg_click"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="@dimen/dimen_15"
-        android:layout_gravity="bottom"
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tvMenuSort"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvMenuSort"
-            android:text=""/>
+            android:text="" />
 
         <CheckBox
             android:id="@+id/menuAllCheckCb"
@@ -72,35 +90,35 @@
             android:layout_height="match_parent"
             android:button="@drawable/selector_goods_spce_checkbox"
             android:paddingStart="@dimen/dimen_5"
+            android:paddingEnd="@dimen/dimen_15"
             android:text="全选"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/dimen_13"
-            android:paddingRight="@dimen/dimen_15"
-            android:visibility="gone"/>
+            android:textSize="@dimen/sp_13"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/menuCancelTv"
             android:layout_width="100dp"
-            android:layout_weight="1"
             android:layout_height="@dimen/dimen_38"
+            android:layout_weight="1"
             android:background="@drawable/shape_goods_search_edt"
             android:gravity="center"
             android:text="取消操作"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/dimen_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/menuDeleteTv"
             android:layout_width="100dp"
-            android:layout_weight="1"
             android:layout_height="@dimen/dimen_38"
+            android:layout_weight="1"
             android:background="@drawable/shape_goods_pop_btn"
             android:gravity="center"
             android:text="完成操作"
             android:textColor="@color/color_ffffff"
-            android:textSize="@dimen/dimen_14" />
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
 
 
     </LinearLayout>

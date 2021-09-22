@@ -11,7 +11,11 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
+import com.lingmiao.shop.business.goods.presenter.impl.PopCategoryPreImpl
+import com.lingmiao.shop.business.main.bean.TlMccListVO
+import com.lingmiao.shop.business.main.bean.TlMccListVOItem
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 
 /**
@@ -42,13 +46,22 @@ object GoodsRepository {
     /**
      * 所有
      */
-    suspend fun loadAllGoodsList(pageNo: Int, groupPath : String?, catePath: String?, isEvent : Int?): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadAllGoodsList(
+        pageNo: Int,
+        groupPath: String?,
+        catePath: String?,
+        isEvent: Int?,
+        order: String?,
+        isDesc: Int?
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
-        groupPath?.let { it1 -> map.put("shop_cat_path", it1) };
-        catePath?.let { it1 -> map.put("category_path", it1) };
-        isEvent?.let { it1 -> map.put("is_event", it1) };
+        groupPath?.let { it1 -> map.put("shop_cat_path", it1) }
+        catePath?.let { it1 -> map.put("category_path", it1) }
+        isEvent?.let { it1 -> map.put("is_event", it1) }
+        order?.let { it1 -> map.put("order_column", it1) }
+        isDesc?.let { it1 -> map.put("is_desc", it1) }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -66,14 +79,23 @@ object GoodsRepository {
     /**
      * 售馨商品列表
      */
-    suspend fun loadSellOutGoodsList(pageNo: Int, groupPath : String?, catePath: String?, isEvent : Int?): HiResponse<PageVO<GoodsVO>> {
+    suspend fun loadSellOutGoodsList(
+        pageNo: Int,
+        groupPath: String?,
+        catePath: String?,
+        isEvent: Int?,
+        order: String?,
+        isDesc: Int?
+    ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("enable_quantity", 0);
-        groupPath?.let { it1 -> map.put("shop_cat_path", it1) };
-        catePath?.let { it1 -> map.put("category_path", it1) };
-        isEvent?.let { it1 -> map.put("is_event", it1) };
+        groupPath?.let { it1 -> map.put("shop_cat_path", it1) }
+        catePath?.let { it1 -> map.put("category_path", it1) }
+        isEvent?.let { it1 -> map.put("is_event", it1) }
+        order?.let { it1 -> map.put("order_column", it1) }
+        isDesc?.let { it1 -> map.put("is_desc", it1) }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -84,16 +106,18 @@ object GoodsRepository {
         pageNo: Int,
         marketEnable: String,
         isAuth: String,
-        groupPath : String?, catePath: String?, isEvent : Int?
+        groupPath: String?, catePath: String?, isEvent: Int?, order: String?, isDesc: Int?
     ): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
         map.put("market_enable", marketEnable)
         map.put("is_auth_string", isAuth)
-        groupPath?.let { it1 -> map.put("shop_cat_path", it1) };
-        catePath?.let { it1 -> map.put("category_path", it1) };
-        isEvent?.let { it1 -> map.put("is_event", it1) };
+        groupPath?.let { it1 -> map.put("shop_cat_path", it1) }
+        catePath?.let { it1 -> map.put("category_path", it1) }
+        isEvent?.let { it1 -> map.put("is_event", it1) }
+        order?.let { it1 -> map.put("order_column", it1) }
+        isDesc?.let { it1 -> map.put("is_desc", it1) }
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
@@ -129,7 +153,7 @@ object GoodsRepository {
         if (cid != null) {
             map.put("not_in_cat_id", cid);
         }
-        if(cPath != null) {
+        if (cPath != null) {
             map.put("category_path", cPath);
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
@@ -201,7 +225,10 @@ object GoodsRepository {
     /**
      * 修改活动库存与价格
      */
-    suspend fun updateGoodsQuantityAndPrice(goodsId: String, skuList: List<QuantityPriceRequest>) : HiResponse<Unit> {
+    suspend fun updateGoodsQuantityAndPrice(
+        goodsId: String,
+        skuList: PriceAndQuantity
+    ): HiResponse<Unit> {
         return apiService.updateGoodsQuantityAndPrice(goodsId, skuList).awaitHiResponse();
     }
 
@@ -302,14 +329,14 @@ object GoodsRepository {
     /**
      * 删除规格名
      */
-    suspend fun delSpecName(ids : String) : HiResponse<Unit> {
+    suspend fun delSpecName(ids: String): HiResponse<Unit> {
         return apiService.delSpecName(ids).awaitHiResponse();
     }
 
     /**
      * 删除规格值
      */
-    suspend fun delSpecValue(ids : String) : HiResponse<Unit> {
+    suspend fun delSpecValue(ids: String): HiResponse<Unit> {
         return apiService.delSpecValue(ids).awaitHiResponse();
     }
 
@@ -343,6 +370,19 @@ object GoodsRepository {
         sellerId: String? = null
     ): HiResponse<List<CategoryVO>> {
         return apiService.loadUserCategory(categoryId, sellerId).awaitHiResponse()
+    }
+
+    //获取商品类目
+    suspend fun loadCategory(): HiResponse<List<CategoryVO>> {
+        return apiService.loadUserCategory(PopCategoryPreImpl.LV1_CATEGORY_ID, "0")
+            .awaitHiResponse()
+    }
+
+    //获取通联商品类目
+    suspend fun loadCategory2(
+        categoryId: Int?
+    ): HiResponse<List<TlMccListVOItem>> {
+        return apiService.loadCategoryMccList(categoryId).awaitHiResponse()
     }
 
     suspend fun addCategory(bean: CategoryVO): HiResponse<CategoryVO> {
@@ -381,8 +421,17 @@ object GoodsRepository {
     /**
      * 获取店铺商品第一级分组(一级分组内包含了二级分组)
      */
+    //isTop=1  获取置顶菜单       isTop=0  获取常用菜单
     suspend fun loadLv1ShopGroup(isTop: Int): HiResponse<List<ShopGroupVO>> {
         return apiService.loadLv1ShopGroup(isTop).awaitHiResponse()
+    }
+
+    /**
+     * 获取某分类第一级分组(一级分组内包含了二级分组)
+     */
+    //isTop=1  获取置顶菜单       isTop=0  获取常用菜单
+    suspend fun loadLv1ShopGroup(isTop: Int, path: String?): HiResponse<List<ShopGroupVO>> {
+        return apiService.loadLv1ShopGroup(isTop, path).awaitHiResponse()
     }
 
     /**
@@ -528,11 +577,11 @@ object GoodsRepository {
         return apiService.addSpecAndValue(item).awaitHiResponse();
     }
 
-    suspend fun  goodsSales(startTime : Long, endTime : Long) : HiResponse<GoodsSalesRespBean> {
+    suspend fun goodsSales(startTime: Long, endTime: Long): HiResponse<GoodsSalesRespBean> {
         return apiService.goodsSales(startTime, endTime).awaitHiResponse();
     }
 
-    suspend fun salesCount(type: String, startTime : Long, endTime : Long) : HiResponse<StatsSalesVo> {
+    suspend fun salesCount(type: String, startTime: Long, endTime: Long): HiResponse<StatsSalesVo> {
         return apiService.salesCount(type, startTime, endTime).awaitHiResponse();
     }
 }

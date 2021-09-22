@@ -3,3 +3,7 @@ include ':map'
 include ':common', ':ucrop', ':picture_library',":library"
 include ':app'
 rootProject.name = "cshop"
+include ':dkplayer-players:ijk'
+include ':dkplayer-java'
+include ':dkplayer-videocache'
+include ':dkplayer-ui'

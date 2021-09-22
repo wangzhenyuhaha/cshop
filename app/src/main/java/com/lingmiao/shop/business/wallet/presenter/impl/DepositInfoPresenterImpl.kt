@@ -49,4 +49,8 @@ class DepositInfoPresenterImpl (private var view : WalletInfoPresenter.View) : B
         ActivityUtils.startActivity(ChargeDepositActivity::class.java);
     }
 
+    override fun getRate() {
+
+    }
+
 }

@@ -75,12 +75,12 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
                     }
                     R.id.userOrderDetailTv -> {
                         // 查看订单
-                        UserOrderDetailActivity.open(context!!, item, 100);
+                        UserOrderDetailActivity.open(requireActivity(), item, 100);
                         //ActivityUtils.startActivity(UserOrderDetailActivity::class.java)
                     }
                     R.id.userPortraitTv -> {
                         // 用户画像
-                        DialogUtils.showMultInputDialog(activity!!, "用户画像", "", "请输入用户画像","取消", "确定",null) {
+                        DialogUtils.showMultInputDialog(requireActivity(), "用户画像", "", "请输入用户画像","取消", "确定",null) {
 //                            tvShopManageDesc.text = it
 //                            showDialogLoading()
 //                            val request = ShopManageRequest()
@@ -157,8 +157,8 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
 
     override fun createPresenter(): IUserStatusListPresenter? {
         return  when (status) {
-            TYPE_ALL -> UserListOfAllPreImpl(context!!, this)
-            TYPE_NEW -> UserListOfNewPreImpl(context!!, this)
+            TYPE_ALL -> UserListOfAllPreImpl(requireActivity(), this)
+            TYPE_NEW -> UserListOfNewPreImpl(requireActivity(), this)
             else -> null;
         }
     }

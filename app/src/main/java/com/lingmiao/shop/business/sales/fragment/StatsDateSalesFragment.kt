@@ -13,7 +13,6 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.presenter.IStateSalesDataPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.StatsSalesDataPreImpl
 import com.lingmiao.shop.util.*
-import kotlinx.android.synthetic.main.sales_fragment_stats_pay.*
 import kotlinx.android.synthetic.main.sales_fragment_stats_pay.aaChartView
 import kotlinx.android.synthetic.main.sales_fragment_stats_pay.dateEndTv
 import kotlinx.android.synthetic.main.sales_fragment_stats_pay.dateStartTv

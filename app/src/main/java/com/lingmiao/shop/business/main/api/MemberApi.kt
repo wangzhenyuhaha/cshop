@@ -2,12 +2,13 @@ package com.lingmiao.shop.business.main.api
 
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.main.bean.ElectricSign
 import com.lingmiao.shop.business.main.bean.MemberOrderBean
-import com.lingmiao.shop.business.me.bean.MemberVo
+import com.lingmiao.shop.business.main.bean.SupplementSign
 import com.lingmiao.shop.business.sales.bean.UserVo
-import com.lingmiao.shop.business.wallet.bean.DataVO
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 /**
@@ -31,4 +32,13 @@ interface MemberApi {
     @GET("seller/shops/members/member-buy-count")
     @WithHiResponse
     fun getBuyCountOfMember(@Query("member_id") memberId : String) : Call<MemberOrderBean>;
+
+    @GET("seller/shops/allinpay/electSign/{shop_id}")
+    @WithHiResponse
+    fun electricSign(@Path("shop_id") shop_id : String) : Call<ElectricSign>
+
+    @GET("/seller/shops/allinpay/repaircusrgcUrl/{shop_id}")
+    @WithHiResponse
+    fun applySupplementUrl(@Path("shop_id") shop_id : String) : Call<SupplementSign>
+
 }

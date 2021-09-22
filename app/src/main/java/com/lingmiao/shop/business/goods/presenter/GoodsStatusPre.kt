@@ -1,12 +1,10 @@
 package com.lingmiao.shop.business.goods.presenter
 
 import android.view.View
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.james.common.base.BasePresenter
-import com.james.common.base.BaseView
 import com.james.common.base.loadmore.BaseLoadMoreView
 import com.james.common.base.loadmore.core.IPage
-import java.io.Serializable
+import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 
 /**
  * Author : Elson
@@ -15,7 +13,7 @@ import java.io.Serializable
  */
 interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
 
-    fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, list: List<*>)
+    fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, list: List<*>,order:String?,isDesc:Int?)
 
     fun clickMenuView(item: GoodsVO?, position: Int, view: View)
 
@@ -26,7 +24,7 @@ interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
         fun onGoodsDisable(goodsId: String?, position: Int)
         fun onGoodsQuantity(quantity: String?, position: Int)
         fun onGoodsDelete(goodsId: String?, position: Int)
-        fun onSetTotalCount(count: Int?);
+        fun onSetTotalCount(count: Int?)
     }
 
 }

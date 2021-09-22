@@ -18,14 +18,14 @@ android {
         minSdkVersion android.minSdkVersion
         targetSdkVersion android.targetSdkVersion
         versionCode 1
-        versionName "1.0.7"
+        versionName "0.0.31"
         setProperty("archivesBaseName", "cshop_$versionName" + "_" + "$formattedDate")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-//        ndk {
-//            abiFilters  'armeabi-v7a'
-//        }
+        ndk {
+            abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'//'armeabi-v7a'
+        }
 
         manifestPlaceholders = [
                 JPUSH_PKGNAME: applicationId,
@@ -81,6 +81,10 @@ android {
 
     viewBinding {
         enabled = true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
@@ -140,7 +144,20 @@ dependencies {
 
     api project(':wechat')
 
-    // ViewModel
+
+//    implementation 'com.gitee.nurApplication:NurVideoPlayer:2.1.6'
+
+    //Lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
+    //Navigation
+    def nav_version = "2.3.5"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+
+    implementation project(':dkplayer-java')
+    implementation project(':dkplayer-players:ijk')
+    implementation project(':dkplayer-videocache')
+    implementation project(':dkplayer-ui')
 
 }

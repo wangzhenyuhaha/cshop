@@ -44,7 +44,8 @@
             android:layout_height="12dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/main_address_selected" />
+            android:src="@drawable/selector_goods_delivery_child_checkbox" />
+
     </RelativeLayout>
 
     <View style="@style/DivideLineHorizontal" />

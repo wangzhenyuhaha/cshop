@@ -1,7 +1,10 @@
 package com.lingmiao.shop.business.me.bean
+
+import android.util.Log
 import com.blankj.utilcode.constant.TimeConstants
 import com.blankj.utilcode.util.TimeUtils
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.util.dateTime2Date
 import java.io.Serializable
 
 
@@ -17,6 +20,8 @@ data class IdentityVo(
     var createTime: String? = "",
     @SerializedName("due_date")
     var dueDate: String? = "",
+    @SerializedName("expire_day")
+    var expireDay: String? = "",
     @SerializedName("id")
     var id: String? = "",
     @SerializedName("remarks")
@@ -29,26 +34,27 @@ data class IdentityVo(
     var shopTitle: String? = ""
 ) : Serializable {
 
-    fun get_DueDateStr() : String {
+    fun get_DueDateStr(): String {
         return dueDate?.substring(0, 10).toString();
     }
 
-    fun get_DueHint() : Int {
+    fun get_DueHint(): Int {
+
         return TimeUtils.getTimeSpan(dueDate, TimeUtils.getNowString(), TimeConstants.DAY).toInt();
     }
 
-    fun get_VipHint() : String {
+    fun get_VipHint(): String {
         return String.format("（有效期至%s）", get_DueDateStr());
     }
 
-    fun get_CommonHint() : String {
+    fun get_CommonHint(): String {
         return String.format("（剩余时间%s天）", get_DueHint());
     }
 
     // 正式门店（有效期至2022-02-26）
     // 1试用
     // 2正式
-    fun isVip() : Boolean {
+    fun isVip(): Boolean {
         return shopLevel == 2;
     }
 

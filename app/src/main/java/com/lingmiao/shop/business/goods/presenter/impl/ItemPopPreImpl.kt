@@ -16,32 +16,42 @@ Desc        :
  **/
 class ItemPopPreImpl(view: BaseView) : BasePreImpl(view) {
 
-    private var mTwoItemPop : AbsDoubleItemPop<WorkTimeVo>? = null;
+    private var mTwoItemPop: AbsDoubleItemPop<WorkTimeVo>? = null;
 
-    private var l1Data: WorkTimeVo?= null;
+    private var l1Data: WorkTimeVo? = null;
 
-    private var l2Data: WorkTimeVo?= null;
+    private var l2Data: WorkTimeVo? = null;
 
-    fun showWorkTimePop(context: Context, value : String?, callback: (WorkTimeVo?, WorkTimeVo?) -> Unit) {
+    lateinit var mL1Adapter : DefaultItemAdapter<WorkTimeVo>;
+    lateinit var mL2Adapter : DefaultItemAdapter<WorkTimeVo>;
+
+    fun showWorkTimePop(
+        context: Context,
+        value: String?,
+        callback: (WorkTimeVo?, WorkTimeVo?) -> Unit
+    ) {
+        mL1Adapter = DefaultItemAdapter<WorkTimeVo>().apply {
+
+        };
+        mL2Adapter = DefaultItemAdapter<WorkTimeVo>().apply {
+
+        };
         mTwoItemPop = object : AbsDoubleItemPop<WorkTimeVo>(context) {
             override fun getFirstAdapter(): BaseQuickAdapter<WorkTimeVo, BaseViewHolder> {
-                return DefaultItemAdapter<WorkTimeVo>().apply {
-
-                }
+                return mL1Adapter;
             }
 
             override fun getSecondAdapter(): BaseQuickAdapter<WorkTimeVo, BaseViewHolder> {
-                return DefaultItemAdapter<WorkTimeVo>().apply {
-
-                }
+                return mL2Adapter;
             }
 
             override fun getData2(data1: WorkTimeVo): List<WorkTimeVo> {
-                return WorkTimeVo.getWorkTimeList(data1?.getIValue(), WorkTimeVo.getWorkTimeList())
+                return WorkTimeVo.getWorkTimeList(data1, WorkTimeVo.getWorkTimeList())
             }
         }.apply {
             lv1Callback = {
                 l1Data = it;
+                mL1Adapter.setSelectedItem(it.itemValue);
             }
             lv2Callback = {
                 l2Data = it;

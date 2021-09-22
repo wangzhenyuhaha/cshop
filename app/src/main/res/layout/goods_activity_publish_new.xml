@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -15,14 +16,13 @@
             android:orientation="vertical">
 
             <!--审核不通过原因-->
-            <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/authFailLayout"
                 style="@style/goods_publish_container"
+                android:visibility="gone"
                 app:ivBgColor="@color/color_ffffff"
                 app:ivRadius="@dimen/dimen_5"
-                tools:visibility="visible"
-                android:visibility="gone"
-                android:id="@+id/authFailLayout">
+                tools:visibility="visible">
 
                 <LinearLayout style="@style/goods_publish_sub_container">
 
@@ -32,8 +32,8 @@
 
                     <TextView
                         android:id="@+id/goodsAuthMsgTv"
-                        android:textColor="@color/red"
                         style="@style/goods_publish_right"
+                        android:textColor="@color/red"
                         tools:text="实物商品" />
 
                 </LinearLayout>
@@ -51,8 +51,7 @@
             <!-- 商品规格,虚拟商品的套餐 -->
             <include layout="@layout/goods_include_publish_section4_new" />
 
-            <com.james.common.view.ILinearLayout
-                xmlns:android="http://schemas.android.com/apk/res/android"
+            <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 style="@style/goods_publish_container"
                 android:layout_height="wrap_content"
@@ -107,19 +106,23 @@
                 <include layout="@layout/goods_include_publish_section5" />
 
                 <!-- 商品视频 -->
-                <include layout="@layout/goods_include_publish_section6"
+                <include
+                    layout="@layout/goods_include_publish_section6"
                     android:visibility="gone" />
 
                 <!-- 商品详情 -->
-<!--                <include layout="@layout/goods_include_publish_section7" />-->
+                <!--                <include layout="@layout/goods_include_publish_section7" />-->
 
                 <!-- 商品卖点 -->
-                <include layout="@layout/goods_include_publish_section8"
+                <include
+                    layout="@layout/goods_include_publish_section8"
                     android:visibility="gone" />
+
+                <!--商品打包费-->
+                <include layout="@layout/goods_include_publish_section_package" />
             </LinearLayout>
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/moreTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -131,7 +134,8 @@
                 android:paddingVertical="@dimen/dimen_20"
                 android:text="展开更多信息"
                 android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13" />
+                android:textSize="@dimen/dimen_13"
+                android:visibility="gone" />
 
 
             <LinearLayout
@@ -153,12 +157,11 @@
                     android:background="@drawable/shape_goods_pop_btn"
                     android:gravity="center"
                     android:text="预览"
-                    android:visibility="gone"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/dimen_13"
+                    android:visibility="gone" />
 
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/saveTv"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_38"
@@ -169,7 +172,8 @@
                     android:gravity="center"
                     android:text="保存并上架"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/dimen_13"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/confirmTv"

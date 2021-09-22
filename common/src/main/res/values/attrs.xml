@@ -16,4 +16,7 @@
         <attr name="pwContourColor" format="color"/>
         <attr name="pwContourSize" format="dimension"/>
     </declare-styleable>
+    <declare-styleable name="CircleTextView">
+        <attr name="circleTint" format="color"/>
+    </declare-styleable>
 </resources>

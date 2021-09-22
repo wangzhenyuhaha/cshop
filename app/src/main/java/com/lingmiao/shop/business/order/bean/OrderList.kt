@@ -4,6 +4,9 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class OrderList(
+    // 打包费
+    @SerializedName("package_price")
+    var packagePrice : Double? = 0.0,
     @SerializedName("cancel_left_time")
     var cancelLeftTime: Long?,
     @SerializedName("cancel_reason")
@@ -147,7 +150,10 @@ data class OrderList(
     var replenishRemark : String? = "",
 
     @SerializedName("tableware_type")
-    var tablewareType : Int?
+    var tablewareType : Int?,
+    // 是否备货完成 1是 0否
+    @SerializedName("is_prepare")
+    var isPrepare : Int? = -1
 
 //    @SerializedName("available_date")
 //    var availableDate: String?,
@@ -172,7 +178,6 @@ data class OrderList(
                 shipCounty.orEmpty() +
                 shipTown.orEmpty() + shipAddr.orEmpty();
     }
-
 
     fun getTableAwareHint() : String {
         when(tablewareType) {

@@ -26,13 +26,16 @@ class OrderListAdapter :
         helper.setText(R.id.tvReplenishRemark, item.replenishRemark);
         helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice);
         helper.setGone(R.id.replenishLayout, item?.replenishRemark?.isNotEmpty() == true);
-
         helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
-
-
+        // 地址
         helper.setText(R.id.tvFullAddress, item.getSimpleAddress())
+        // 餐费
         helper.setText(R.id.tvTableAware, item?.getTableAwareHint());
         helper.setGone(R.id.tableAwareLayout, item?.getTableAwareHint()?.isNotEmpty())
+        // 打包费
+        helper.setGone(R.id.packagePriceLayout, item?.packagePrice?.compareTo(0.0)?:0>0);
+        helper.setGone(R.id.packagePriceLine, item?.packagePrice?.compareTo(0.0)?:0>0);
+        helper.setText(R.id.tvPackagePrice, "￥" + item?.packagePrice);
 
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)
         val ivOrderNumberCopy = helper.getView<ImageView>(R.id.ivOrderNumberCopy)
@@ -105,6 +108,7 @@ class OrderListAdapter :
         val tvUpdatePrice = helper.getView<TextView>(R.id.tvUpdatePrice)
         val tvQuickPay = helper.getView<TextView>(R.id.tvQuickPay)
         val tvShipment = helper.getView<TextView>(R.id.tvShipment)
+        val tvPrepare = helper.getView<TextView>(R.id.tvPrepare)
         val tvSign = helper.getView<TextView>(R.id.tvSign)
         val tvVerify = helper.getView<TextView>(R.id.tvVerify);
         val tvLookLogistics = helper.getView<TextView>(R.id.tvLookLogistics)
@@ -122,6 +126,7 @@ class OrderListAdapter :
         tvUpdatePrice.visibility = View.GONE
         tvQuickPay.visibility = View.GONE
         tvShipment.visibility = View.GONE
+        tvPrepare.visibility = View.GONE
         tvSign.visibility = View.GONE
         tvVerify.visibility = View.GONE
         tvLookLogistics.visibility = View.GONE
@@ -135,6 +140,7 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvUpdatePrice)
         helper.addOnClickListener(R.id.tvQuickPay)
         helper.addOnClickListener(R.id.tvShipment)
+        helper.addOnClickListener(R.id.tvPrepare)
         helper.addOnClickListener(R.id.tvVerify)
         helper.addOnClickListener(R.id.tvLookLogistics)
         helper.addOnClickListener(R.id.tvAfterSale)
@@ -171,10 +177,17 @@ class OrderListAdapter :
                 // 已接单,进行中,待送配
                 if(item?.shippingType == IConstant.SHIP_TYPE_GLOBAL) {
                     // 骑手配送
-                    tvShipment.setText("备货完成");
-                    tvPhoneUser.visibility = View.VISIBLE
+//                    tvShipment.setText("备货完成");
+//                    tvPhoneUser.visibility = View.VISIBLE
+                } else {
+                    tvShipment.visiable()
                 }
-                tvShipment.visibility = View.VISIBLE
+                if(item?.isPrepare == 1) {
+                    tvPrepare.gone()
+                } else {
+                    tvPrepare.visiable()
+                }
+
             }
             "SHIPPED" -> {
                 showBottomArea = true;

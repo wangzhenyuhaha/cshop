@@ -83,6 +83,11 @@ interface OrderApi {
     @WithHiResponse
     suspend fun ship(@Path("sn") orderSn: String): Response<ResponseBody>
 
+    // 备货完成
+    @GET("/seller/trade/orders/prepare/{order_sn}")
+    @WithHiResponse
+    suspend fun prepare(@Path("order_sn") orderSn: String) : Response<ResponseBody>;
+
     //  商家订单已送达
     @GET("/seller/trade/orders/sellerApp/confirmRog/{sn}")
     @WithHiResponse

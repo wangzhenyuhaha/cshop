@@ -19,6 +19,7 @@ class BalanceInfoPresenterImpl(private var view: WalletInfoPresenter.View) : Bas
 
             val resp = WalletRepository.getBalanceInfo();
 
+            getRate();
             handleResponse(resp) {
                 if (resp?.isSuccess()) {
                     SPUtils.getInstance().put(WalletConstants.BALANCE_ACCOUNT_ID, resp?.data?.data?.getBalanceAccountId());
@@ -48,6 +49,15 @@ class BalanceInfoPresenterImpl(private var view: WalletInfoPresenter.View) : Bas
 
     override fun onOptionClicked() {
         ActivityUtils.startActivity(WithdrawActivity::class.java);
+    }
+
+    override fun getRate() {
+        mCoroutine.launch {
+            val resp = WalletRepository.queryServiceChargeRate();
+            handleResponse(resp) {
+                view.setRate(resp.data);
+            }
+        }
     }
 
 }

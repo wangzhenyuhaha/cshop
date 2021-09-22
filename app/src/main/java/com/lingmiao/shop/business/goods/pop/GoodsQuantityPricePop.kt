@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.pop
 
 import android.content.Context
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
@@ -21,14 +22,25 @@ import razerdp.basepopup.BasePopupWindow
  * Date   : 2020/8/16
  * Desc   : 商品多规格库存
  */
+
+//弹出的PopWindow
 class GoodsQuantityPricePop(context: Context,val title : String?) : BasePopupWindow(context) {
 
+    //顶端的标题
     private var titleTv: TextView? = null
+    //顶端的取消按钮
     private var closeIv: ImageView? = null
+
+
+    //RecyclerView
     private var recyclerView: RecyclerView? = null
+
+    //定义Adapter
     private var mAdapter: MultiQuantityAndPriceAdapter? = null
+    //确定按钮
     private var confirmTv: TextView? = null
 
+    //注册点击监听
     private var listener: ((List<QuantityPriceRequest>?) -> Unit)? = null
 
     fun setConfirmListener(listener: ((List<QuantityPriceRequest>?) -> Unit)?) {
@@ -36,9 +48,13 @@ class GoodsQuantityPricePop(context: Context,val title : String?) : BasePopupWin
     }
 
     fun setSkuList(list: List<GoodsSkuVOWrapper>) {
+
+        //修改库存的列表，加上活动库存，活动价格
         val tempList = mutableListOf<QuantityPriceRequest>()
         list.forEach {
+           // QuantityName字段获得
             tempList.add(QuantityPriceRequest.convert(it))
+
         }
         mAdapter?.replaceData(tempList)
     }
@@ -48,25 +64,34 @@ class GoodsQuantityPricePop(context: Context,val title : String?) : BasePopupWin
     }
 
     override fun onViewCreated(contentView: View) {
-        setPopupGravity(Gravity.BOTTOM or Gravity.CENTER_VERTICAL)
+        popupGravity = Gravity.BOTTOM or Gravity.CENTER_VERTICAL
         super.onViewCreated(contentView)
+        //标题
         titleTv = contentView.findViewById(R.id.tvTitle)
+        //取消按钮
         closeIv = contentView.findViewById(R.id.closeIv)
         recyclerView = contentView.findViewById(R.id.recyclerView)
+
+        //自定义Adapter
         mAdapter = MultiQuantityAndPriceAdapter()
+
+
         recyclerView?.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mAdapter
         }
+        //确定
         confirmTv = contentView.findViewById(R.id.confirmTv)
+
         confirmTv?.setOnClickListener {
             listener?.invoke(mAdapter?.getUpdateQuantityList())
         }
+
         closeIv?.setOnClickListener {
             dismiss()
         }
         if(title?.isNotEmpty() == true) {
-            titleTv?.setText(title);
+            titleTv?.text = title;
         }
     }
 

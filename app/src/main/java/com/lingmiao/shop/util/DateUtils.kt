@@ -17,6 +17,8 @@ Desc        :
 
 const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
 
+const val DATE_TIME_FORMAT_SECOND = "yyyy.MM.dd HH:mm:ss"
+
 const val MINUTES_TIME_FORMAT = "yyyy-MM-dd HH:mm"
 
 const val DATE_FORMAT = "yyyy-MM-dd"
@@ -67,6 +69,10 @@ fun date2Date(strTime: String?) : Date? {
 
 fun dateTime2Date(strTime: String?) : Date? {
     return stringToDate(strTime, DATE_TIME_FORMAT);
+}
+
+fun dateTime3Date(strTime: String?) : Date? {
+    return stringToDate(strTime, DATE_TIME_FORMAT_SECOND);
 }
 
 fun formatDate(date: Date?) : String?{

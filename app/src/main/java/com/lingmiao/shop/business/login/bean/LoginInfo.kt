@@ -38,6 +38,10 @@ class LoginInfo {
     @SerializedName("open_status")
     var openStatus: Boolean? = null
 
+    // 是否显示提现
+    @SerializedName("show_button")
+    var showButton: Int? = 0
+
     @SerializedName("status_reason")
     var statusReason: String? = null //状态原因（拒绝/未通过）
 }

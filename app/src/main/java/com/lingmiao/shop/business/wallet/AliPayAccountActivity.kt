@@ -13,6 +13,7 @@ import com.lingmiao.shop.business.wallet.pop.ItemListPop
 import com.lingmiao.shop.business.wallet.presenter.ThirdAccountPresenter
 import com.lingmiao.shop.business.wallet.presenter.impl.AliPayAccountPresenterImpl
 import com.james.common.base.BaseActivity
+import com.lingmiao.shop.business.wallet.bean.RateVo
 import com.lingmiao.shop.business.wallet.presenter.impl.WechatAccountPresenterImpl
 import kotlinx.android.synthetic.main.wallet_activity_set_third_account.*
 
@@ -135,6 +136,10 @@ class AliPayAccountActivity : BaseActivity<ThirdAccountPresenter>(),
     override fun getWithdrawAccountSuccess(account: WithdrawAccountVo) {
         aLiAccount = account?.wechatWithdrawAccount ?: null;
         setUiData(aLiAccount);
+    }
+
+    override fun setRate(rate: RateVo?) {
+
     }
 
     fun setUiData(aLiAccount : ThirdPayAccountVo?) {

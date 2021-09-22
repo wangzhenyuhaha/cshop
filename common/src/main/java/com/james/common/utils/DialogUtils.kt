@@ -4,9 +4,11 @@ import android.app.Activity
 import android.text.TextUtils
 import android.view.View
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialog
+import com.blankj.utilcode.util.ScreenUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.R
 import com.james.common.utils.exts.getViewText
@@ -109,7 +111,7 @@ class DialogUtils {
         }
 
         fun showInputDialog(
-            value : String?,
+            value: String?,
             context: Activity, title: String,
             leftContent: String, edtHint: String?,
             edtText: String?,
@@ -192,6 +194,94 @@ class DialogUtils {
             dialog.show()
         }
 
+
+        fun showInputDialogEmpty(
+            context: Activity, title: String,
+            leftContent: String, edtHint: String?,
+            edtText: String?,
+            left: String, right: String,
+            leftClick: (() -> Unit)?,
+            rightClick: ((String) -> Unit)?
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_common_input, null)
+            dialog.setContentView(defaultView)
+            val tvTitle = defaultView.findViewById<TextView>(R.id.tvTitle)
+            val tvLeftContent = defaultView.findViewById<TextView>(R.id.tvLeftContent)
+            val etRightContent = defaultView.findViewById<EditText>(R.id.etRightContent)
+            val tvLeft = defaultView.findViewById<TextView>(R.id.tvLeft)
+            val tvRight = defaultView.findViewById<TextView>(R.id.tvRight)
+            tvTitle.text = title
+            tvLeftContent.show(leftContent.isNotBlank())
+            tvLeftContent.text = leftContent
+
+            etRightContent.hint = edtHint
+            if (edtText != null) etRightContent.setText(edtText)
+            tvLeft.text = left
+            tvRight.text = right
+            tvLeft.setOnClickListener { v ->
+                dialog.dismiss()
+                leftClick?.invoke()
+            }
+            tvRight.setOnClickListener { v ->
+                if (TextUtils.isEmpty(etRightContent.getViewText())) {
+                    //内容为空时
+                    dialog.dismiss()
+                    v.tag = ""
+                    rightClick?.invoke(etRightContent.getViewText())
+                }
+                dialog.dismiss()
+                v.tag = etRightContent.text.toString()
+                rightClick?.invoke(etRightContent.getViewText())
+            }
+            dialog.show()
+        }
+
+
+        fun showInputDialogEmptyNumber(
+            context: Activity, title: String,
+            leftContent: String, edtHint: String?,
+            edtText: String?,
+            left: String, right: String,
+            leftClick: (() -> Unit)?,
+            rightClick: ((String) -> Unit)?
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_common_input_number, null)
+            dialog.setContentView(defaultView)
+            val tvTitle = defaultView.findViewById<TextView>(R.id.tvTitle)
+            val tvLeftContent = defaultView.findViewById<TextView>(R.id.tvLeftContent)
+            val etRightContent = defaultView.findViewById<EditText>(R.id.etRightContent)
+            val tvLeft = defaultView.findViewById<TextView>(R.id.tvLeft)
+            val tvRight = defaultView.findViewById<TextView>(R.id.tvRight)
+            tvTitle.text = title
+            tvLeftContent.show(leftContent.isNotBlank())
+            tvLeftContent.text = leftContent
+
+            etRightContent.hint = edtHint
+            if (edtText != null) etRightContent.setText(edtText)
+            tvLeft.text = left
+            tvRight.text = right
+            tvLeft.setOnClickListener { v ->
+                dialog.dismiss()
+                leftClick?.invoke()
+            }
+            tvRight.setOnClickListener { v ->
+                if (TextUtils.isEmpty(etRightContent.getViewText())) {
+                    //内容为空时
+                    dialog.dismiss()
+                    v.tag = ""
+                    rightClick?.invoke(etRightContent.getViewText())
+                }
+                dialog.dismiss()
+                v.tag = etRightContent.text.toString()
+                rightClick?.invoke(etRightContent.getViewText())
+            }
+            dialog.show()
+        }
+
         fun showMultInputDialog(
             context: Activity, title: String,
             leftContent: String, edtHint: String?,
@@ -229,13 +319,55 @@ class DialogUtils {
             dialog.show()
         }
 
+
+        fun showMultInputDialog(
+            context: Activity, title: String,
+            leftContent: String, edtHint: String?,
+            edtText: String?,
+            left: String, right: String,
+            leftClick: (() -> Unit)?,
+            rightClick: ((String) -> Unit)?
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_common_mult_input, null)
+            dialog.setContentView(defaultView)
+            val tvTitle = defaultView.findViewById<TextView>(R.id.tvTitle)
+            val tvLeftContent = defaultView.findViewById<TextView>(R.id.tvLeftContent)
+            val etRightContent = defaultView.findViewById<EditText>(R.id.etRightContent)
+            val tvLeft = defaultView.findViewById<TextView>(R.id.tvLeft)
+            val tvRight = defaultView.findViewById<TextView>(R.id.tvRight)
+            tvTitle.text = title
+
+            tvLeftContent?.show(leftContent.isNotBlank())
+            tvLeftContent?.text = leftContent
+            if (edtText != null) etRightContent.setText(edtText)
+            etRightContent.hint = edtHint
+            tvLeft.text = left
+            tvRight.text = right
+            tvLeft.setOnClickListener { v ->
+                dialog.dismiss()
+                leftClick?.invoke()
+            }
+            tvRight.setOnClickListener { v ->
+                if (TextUtils.isEmpty(etRightContent.text.toString())) {
+                    ToastUtils.showShort("内容不能为空")
+                    return@setOnClickListener
+                }
+                dialog.dismiss()
+                v.tag = etRightContent.text.toString()
+                rightClick?.invoke(etRightContent.text.toString())
+            }
+            dialog.show()
+        }
+
         fun showVersionUpdateDialog(
             context: Activity,
             title: String,
             content: String,
             leftClick: View.OnClickListener?,
             rightClick: View.OnClickListener?,
-            force:Boolean = false
+            force: Boolean = false
         ): AppCompatDialog {
             val dialog = AppCompatDialog(context, R.style.TransparentDialog)
             val defaultView =
@@ -250,7 +382,7 @@ class DialogUtils {
             tvContent.text = content
             tvLeft.text = "取消"
             dialog.setCanceledOnTouchOutside(false)
-            if(force){
+            if (force) {
                 tvLeft.gone()
                 viBottomLine.gone()
             }
@@ -270,7 +402,7 @@ class DialogUtils {
 
         fun showDialog(
             context: Activity,
-            imageInt : Int
+            imageInt: Int
         ) {
             val dialog = AppCompatDialog(context, R.style.TransparentDialog)
             val defaultView =
@@ -278,6 +410,49 @@ class DialogUtils {
             dialog.setContentView(defaultView)
             val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
             image?.setImageResource(imageInt);
+            dialog.show()
+        }
+
+
+        fun showDiaLogBySelf(
+            context: Activity,
+            imageInt: Int,
+            width: Int,
+            height: Int
+        ) {
+            //获取View
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_image_same, null)
+
+            val screenWidth = ScreenUtils.getScreenWidth()
+
+            val w = (screenWidth)*8/10
+            val h = w * height / width
+            defaultView.layoutParams = FrameLayout.LayoutParams(w, h)
+            dialog.setContentView(defaultView)
+            val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
+            image?.setImageResource(imageInt)
+            dialog.show()
+        }
+
+
+        fun showImageDialog(
+            context: Activity,
+            imageInt: Int,
+            hint: String
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_image_hint, null)
+            dialog.setContentView(defaultView)
+            val image = defaultView.findViewById<ImageView>(R.id.ivTipsImage)
+            image?.setImageResource(imageInt);
+            image.setOnClickListener {
+
+            }
+            val tvTipsHint = defaultView.findViewById<TextView>(R.id.tvTipsHint);
+            tvTipsHint.text = hint;
             dialog.show()
         }
 

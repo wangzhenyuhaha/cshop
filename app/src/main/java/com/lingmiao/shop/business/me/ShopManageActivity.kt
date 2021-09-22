@@ -86,7 +86,7 @@ class ShopManageActivity : BaseActivity<ShopManagePresenter>(),ShopManagePresent
         hidePageLoading()
     }
 
-    override fun onUpdateShopSuccess() {
+    override fun onUpdateShopSuccess(bean: ApplyShopInfo) {
         hideDialogLoading()
         showToast("修改成功")
     }

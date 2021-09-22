@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.api.request
 
+import android.util.Log
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuVOWrapper
 import com.google.gson.annotations.SerializedName
 
@@ -14,9 +15,15 @@ class QuantityPriceRequest {
     var skuId: String? = null
 
     @SerializedName("price")
-    var eventPrice: String? = null //活动价格
+    var price: String? = null //价格
 
     @SerializedName("quantity_count")
+    var quantity: String? = null //库存
+
+    @SerializedName("event_price")
+    var eventPrice: String? = null //活动价格
+
+    @SerializedName("event_quantity")
     var eventQuantity: String? = null //活动库存
 
     // 业务字段
@@ -25,9 +32,12 @@ class QuantityPriceRequest {
 
     companion object {
         fun convert(skuVO: GoodsSkuVOWrapper): QuantityPriceRequest {
+            //处理规格值
             skuVO.addSpecList(skuVO.specList)
             return QuantityPriceRequest().apply {
                 quantitiyName = skuVO.skuNameDesc
+                price = skuVO.price
+                quantity = skuVO.quantity
                 eventPrice = skuVO.eventPrice
                 eventQuantity = skuVO.eventQuantity
                 skuId = skuVO.skuId

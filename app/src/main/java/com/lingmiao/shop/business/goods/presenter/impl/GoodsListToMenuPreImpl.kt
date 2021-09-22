@@ -39,9 +39,10 @@ class GoodsListToMenuPreImpl(val context: Context, val view : GoodsListToMenuPre
 
     override fun bindGoods(ids: List<Int?>?, id: String) {
         mCoroutine.launch {
-            val resp = GoodsRepository.bindGoods(ids, id);
+            val resp = GoodsRepository.bindGoods(ids, id)
             handleResponse(resp) {
-                view?.showToast("添加成功");
+                view.showToast("添加成功")
+                view.refresh()
             }
         }
     }

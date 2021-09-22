@@ -347,3 +347,34 @@ public void *(android.view.View);
 
  -keep class com.github.aachartmodel.** { *; }
  -keep class com.github.aachartmodel.aainfographics.** { *; }
+
+
+
+
+-keep class tv.danmaku.ijk.** { *; }
+-dontwarn tv.danmaku.ijk.**
+-keep class xyz.doikki.videoplayer.** { *; }
+-dontwarn xyz.doikki.videoplayer.**
+
+-keep class com.google.android.exoplayer2.** { *; }
+-dontwarn com.google.android.exoplayer2.**
+
+-keep class com.aplayer.** { *; }
+-dontwarn com.aplayer.**
+
+-dontwarn com.yanzhenjie.permission.**
+
+-keep class android.support.** { *; }
+
+-keep class com.bumptech.glide.** { *; }
+
+-keep class xyz.doikki.dkplayer.bean.** { *; }
+
+#android x
+-keep class com.google.android.material.** {*;}
+-keep class androidx.** {*;}
+-keep public class * extends androidx.**
+-keep interface androidx.** {*;}
+-dontwarn com.google.android.material.**
+-dontnote com.google.android.material.**
+-dontwarn androidx.**
