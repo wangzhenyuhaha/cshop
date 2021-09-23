@@ -39,7 +39,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     companion object {
 
-
         const val TAG = "ShopOperateSetting"
 
         fun newInstance(item: ApplyShopInfo?): ShopOperateSettingFragment {
@@ -55,9 +54,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         shopReq = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.me_fragment_shop_operate_setting
-    }
+    override fun getLayoutId() = R.layout.me_fragment_shop_operate_setting
 
     override fun createPresenter(): ShopOperateSettingPresenter {
         return ShopOperateSettingPresenterImpl(requireContext(), this)
@@ -186,7 +183,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         }
         tvShopStatus.singleClick {
             //shopReq.accept_carriage决定是否显示骑手配送
-            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem,shopReq.accept_carriage)
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.accept_carriage)
         }
         tvRiderStatus.singleClick {
             //默认使用骑手配送
