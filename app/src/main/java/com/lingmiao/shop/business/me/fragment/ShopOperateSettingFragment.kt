@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
@@ -56,46 +55,35 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     override fun getLayoutId() = R.layout.me_fragment_shop_operate_setting
 
-    override fun createPresenter(): ShopOperateSettingPresenter {
-        return ShopOperateSettingPresenterImpl(requireContext(), this)
-    }
+    override fun createPresenter() = ShopOperateSettingPresenterImpl(requireContext(), this)
+
 
     override fun initViewsAndData(rootView: View) {
-        initSection2View()
+
+        //设置Banner图上传
+        //设置最多上传五张图
+        galleryRv.setCountLimit(1, 5)
+        //设置上传banner图的长宽比
+        galleryRv.setAspectRatio(750, 176)
+
 
         // 营业时间
         tvShopOperateTime.setOnClickListener {
             mPresenter?.showWorkTimePop(it)
         }
 
-        // 未接订单自动取消时间
-//        addTextChangeListener(tvShopManageNumber, "") {
-//            if(it?.toInt() > 15) {
-//                showToast("不能大于15分钟");
-//                return@addTextChangeListener;
-//            }
-//        }
-
-        rlShopManageNumber.setOnClickListener {
-
-        }
-        // 联系设置
-//        tvShopManageLink.setOnClickListener {
-//            ActivityUtils.startActivity(LinkInSettingActivity::class.java)
-//        }
-
-        // 配送设置
+        // 配送设置  已隐藏
         tvShopManageDelivery.setOnClickListener {
             ActivityUtils.startActivity(DeliveryManagerActivity::class.java)
         }
 
-
         // 保存
         tvShopOperateSubmit.setOnClickListener {
-            if (tvShopManageNumber.getViewText()?.isEmpty()) {
+            if (tvShopManageNumber.getViewText().isEmpty()) {
                 showToast("请输入未接订单自动取消时间")
                 return@setOnClickListener
             }
+
             val cancelOrderTime = tvShopManageNumber.text?.toString()?.toInt() ?: 0
             if (cancelOrderTime > 5) {
                 showToast("未接订单自动取消时间不能大于5分钟")
@@ -107,11 +95,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 return@setOnClickListener
             }
 
-            //店铺广告图可以为空
-//            if(galleryRv.getSelectPhotos().isEmpty()) {
-//                showToast("请上传店铺广告图")
-//                return@setOnClickListener
-//            }
+            //自动接单
             shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
             shopReq.cancelOrderTime = cancelOrderTime
             shopReq.companyPhone = linkTelEt.text.toString()
@@ -130,20 +114,17 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     fun getTemplate(): String {
-        if (cb_model_shop.isChecked) {
-            return FreightVoItem.TYPE_LOCAL
+        return if (cb_model_shop.isChecked) {
+            FreightVoItem.TYPE_LOCAL
         } else if (cb_model_rider.isChecked) {
-            return FreightVoItem.TYPE_QISHOU
+            FreightVoItem.TYPE_QISHOU
         } else {
-            return ""
+            ""
         }
     }
 
 
-    private fun initSection2View() {
-        galleryRv.setCountLimit(1, 5)
-        galleryRv.setAspectRatio(750, 176)
-    }
+
 
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
         shopReq.openStartTime = item1?.itemName

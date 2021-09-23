@@ -23,8 +23,8 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
         mCoroutine.launch {
             val resp = MainRepository.apiService.getVipList().awaitHiResponse()
             handleResponse(resp) {
-                view.onSetVipPriceList(resp?.data?.data?.shopProductList)
-                mDepositMoney = resp?.data?.data?.depositMoney?:0.0
+                view.onSetVipPriceList(resp.data?.data?.shopProductList)
+                mDepositMoney = resp.data?.data?.depositMoney?:0.0
             }
         }
     }
@@ -33,47 +33,47 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
         mCoroutine.launch {
             val identity = MainRepository.apiService.getShopIdentity().awaitHiResponse()
             handleResponse(identity) {
-                view.onSetVipInfo(identity?.data?.data);
+                view.onSetVipInfo(identity.data?.data)
             }
         }
     }
 
     override fun apply(id: String) {
         mCoroutine.launch {
-            view?.showDialogLoading()
+            view.showDialogLoading()
             val identity = MainRepository.apiService.getPayInfo(id).awaitHiResponse()
             handleResponse(identity) {
-                view?.onApplySuccess(identity?.data)
+                view.onApplySuccess(identity.data)
             }
-            view?.hideDialogLoading()
+            view.hideDialogLoading()
         }
     }
 
     override fun depositApply(mWallet: WalletVo?) {
         mCoroutine.launch {
-            view?.showDialogLoading()
-            val recharge = RechargeReqVo(mWallet?.depositAccount?.id, mDepositMoney, RechargeReqVo.PAY_TRADE_CHANNEL_OF_WECHAT);
+            view.showDialogLoading()
+            val recharge = RechargeReqVo(mWallet?.depositAccount?.id, mDepositMoney, RechargeReqVo.PAY_TRADE_CHANNEL_OF_WECHAT)
             val resp = MainRepository.apiService.recharge(recharge).awaitHiResponse()
             handleResponse(resp) {
-                view?.onDepositApplied(resp?.data?.data)
+                view.onDepositApplied(resp.data?.data)
             }
-            view?.hideDialogLoading()
+            view.hideDialogLoading()
         }
     }
 
     override fun ensureRefund(id: String) {
         mCoroutine.launch {
-            view?.showDialogLoading()
-            val item = IdBean();
-            item.id = id;
+            view.showDialogLoading()
+            val item = IdBean()
+            item.id = id
             val identity = MainRepository.apiService.ensureRefund(item).awaitHiResponse()
-            view.showToast(identity?.msg);
+            view.showToast(identity.msg)
             if(identity.isSuccess) {
-                view?.onRefundEnsured()
+                view.onRefundEnsured()
             } else {
-                view?.onRefundEnsureFail()
+                view.onRefundEnsureFail()
             }
-            view?.hideDialogLoading()
+            view.hideDialogLoading()
         }
     }
 
@@ -81,7 +81,8 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
      * 加载钱包数据
      */
     override fun loadWalletData() {
-        mWallet.loadWalletData();
+        view.showDialogLoading()
+        mWallet.loadWalletData()
     }
 
 }

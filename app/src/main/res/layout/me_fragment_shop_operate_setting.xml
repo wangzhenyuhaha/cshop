@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,RelativeOverlap">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -89,10 +89,10 @@
                     android:id="@+id/autoOrderSb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginStart="@dimen/dimen_20"
                     app:kswBackDrawable="@drawable/flyme_back_drawable"
                     app:kswTintColor="@color/white" />
 
@@ -107,9 +107,8 @@
 
                 <TextView
                     style="@style/goods_spce_item_left_mark"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:text="未接订单自动取消时间"
                     android:textColor="#ff333333"
@@ -119,11 +118,11 @@
                     android:id="@+id/tvShopManageNumber"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
                     android:gravity="center"
                     android:hint="5分钟以内"
                     android:inputType="number"
-                    android:paddingRight="@dimen/dimen_5"
+                    android:paddingEnd="@dimen/dimen_5"
+                    android:paddingStart="0dp"
                     android:textColor="#ff999999"
                     android:textSize="12sp"
                     tools:text="10" />
@@ -131,12 +130,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:paddingTop="@dimen/dimen_15"
                     android:paddingBottom="@dimen/dimen_15"
                     android:text="分钟"
                     android:textColor="@color/color_333333"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/sp_13" />
 
             </LinearLayout>
 
@@ -322,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:text=" (最少1张，最多5张)"
                         android:textColor="@color/color_999999"
-                        android:textSize="9sp" />
+                        android:textSize="11sp" />
                 </LinearLayout>
 
                 <com.lingmiao.shop.business.me.view.OtherGalleryRecyclerView
@@ -337,10 +336,9 @@
                     android:layout_height="wrap_content"
                     android:text=" (建议尺寸：750X176px)"
                     android:textColor="@color/color_999999"
-                    android:textSize="9sp" />
+                    android:textSize="11sp" />
 
             </LinearLayout>
-
 
         </com.james.common.view.ILinearLayout>
 
