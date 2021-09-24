@@ -1,11 +1,11 @@
 package com.lingmiao.shop.business.order.presenter.impl
 
 import android.content.Context
-import com.lingmiao.shop.business.order.api.OrderRepository
-import  com.lingmiao.shop.business.order.presenter.AfterSalePresenter
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
+import com.lingmiao.shop.business.order.api.OrderRepository
 import com.lingmiao.shop.business.order.bean.RefoundReqVo
+import com.lingmiao.shop.business.order.presenter.AfterSalePresenter
 import kotlinx.coroutines.launch
 
 class AfterSalePresenterImpl(context: Context, private var view: AfterSalePresenter.View) :
@@ -31,7 +31,7 @@ class AfterSalePresenterImpl(context: Context, private var view: AfterSalePresen
                 } else {
                     view.onAfterSaleStockError(-1)
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 view.onAfterSaleActionError(-1)
             }
@@ -60,7 +60,7 @@ class AfterSalePresenterImpl(context: Context, private var view: AfterSalePresen
                 } else {
                     view.onAfterSaleActionError(-1)
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 e.printStackTrace()
                 view.onAfterSaleActionError(-1)
             }

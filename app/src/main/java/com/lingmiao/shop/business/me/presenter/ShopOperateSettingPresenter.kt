@@ -36,6 +36,6 @@ interface ShopOperateSettingPresenter : BasePresenter {
 
         fun onLoadedTemplate(tcItem : FreightVoItem?, qsItem : FreightVoItem?);
 
-        fun onSetBanner(list : List<BannerBean>?);
+        fun onSetBanner(bannerList : List<BannerBean>?);
     }
 }
