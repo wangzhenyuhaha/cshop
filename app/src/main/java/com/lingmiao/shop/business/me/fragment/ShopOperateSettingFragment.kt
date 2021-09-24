@@ -99,7 +99,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
             shopReq.cancelOrderTime = cancelOrderTime
             shopReq.companyPhone = linkTelEt.text.toString()
+            //获取是商家配送或者骑手配送
             shopReq.shopTemplateType = getTemplate()
+            //提交设置数据
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
