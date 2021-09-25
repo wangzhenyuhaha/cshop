@@ -48,7 +48,11 @@ data class IdentityVo(
     }
 
     fun get_CommonHint(): String {
-        return String.format("（剩余时间%s天）", get_DueHint());
+        return if (get_DueHint() < 0) {
+            ""
+        } else {
+            String.format("（剩余时间%s天）", get_DueHint())
+        }
     }
 
     // 正式门店（有效期至2022-02-26）

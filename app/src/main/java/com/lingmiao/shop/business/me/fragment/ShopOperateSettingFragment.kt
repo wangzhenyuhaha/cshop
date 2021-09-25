@@ -110,6 +110,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         //加载已有运营信息
         onLoadedShopSetting(shopReq)
 
+        //
         mPresenter?.loadTemplate()
 
         //加载Banner图
