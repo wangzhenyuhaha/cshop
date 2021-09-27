@@ -589,9 +589,9 @@
                                     android:layout_marginRight="40dp"
                                     android:textColor="@color/color_fc0000"
                                     android:textSize="13sp"
-                                    tools:visibility="visible"
                                     android:visibility="gone"
-                                    tools:text="xxxxx" />
+                                    tools:text="xxxxx"
+                                    tools:visibility="visible" />
                             </LinearLayout>
 
                             <TextView
@@ -600,11 +600,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:visibility="gone"
                                 android:textColor="@color/color_666666"
                                 android:textSize="@dimen/sp_12"
-                                tools:visibility="visible"
-                                tools:text="审核失败原因" />
+                                android:visibility="gone"
+                                tools:text="审核失败原因"
+                                tools:visibility="visible" />
 
                             <com.james.common.view.ITextView
                                 android:id="@+id/tvMainShopNext"
@@ -703,7 +703,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/dimen_5"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -712,13 +712,13 @@
                                         android:textColor="#ff909090"
                                         android:textSize="@dimen/sp_14" />
 
-                                    <TextView
-                                        android:id="@+id/readApplyShop"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="(点击查看)"
-                                        android:textColor="#3870EA"
-                                        android:textSize="@dimen/sp_14" />
+                                    <ImageView
+                                        android:id="@+id/readApplyShopIV"
+                                        android:layout_width="150dp"
+                                        android:layout_height="200dp"
+                                        android:src="@mipmap/apply_shop_hint" />
+
+
                                 </LinearLayout>
 
 
@@ -732,20 +732,26 @@
                                     android:textSize="@dimen/sp_14" />
 
                                 <TextView
-                                    android:id="@+id/readTongLian"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="start"
                                     android:layout_marginTop="@dimen/dimen_5"
-                                    android:text="由正规持牌支付机构提供T+1交易服务：通联支付(点击查看)"
+                                    android:text="由正规持牌支付机构提供T+1交易服务：通联支付"
                                     android:textColor="#ff909090"
                                     android:textSize="@dimen/sp_14" />
+
+                                <ImageView
+                                    android:id="@+id/readTongLian"
+                                    android:layout_width="160dp"
+                                    android:layout_height="110dp"
+                                    android:layout_gravity="start"
+                                    android:src="@mipmap/tonglian" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/dimen_5"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -755,13 +761,11 @@
                                         android:textColor="#ff909090"
                                         android:textSize="@dimen/sp_14" />
 
-                                    <TextView
+                                    <ImageView
                                         android:id="@+id/readWXPay"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="(点击查看)"
-                                        android:textColor="#3870EA"
-                                        android:textSize="@dimen/sp_14" />
+                                        android:layout_width="150dp"
+                                        android:layout_height="200dp"
+                                        android:src="@mipmap/wechat_pay" />
                                 </LinearLayout>
 
                             </LinearLayout>
