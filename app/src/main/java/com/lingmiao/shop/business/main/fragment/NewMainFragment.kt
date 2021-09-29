@@ -109,11 +109,20 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             }
         }
 
-        //设置首页图片的显示
 
-        //获取View
-        val screenWidth = ScreenUtils.getScreenWidth()
-        val w = (screenWidth) / 4
+
+
+
+
+        //设置刷新按钮
+        refreshOne.setOnClickListener {
+          showDialogLoading("加载中...")
+            refreshPageData()
+        }
+        refreshTwo.setOnClickListener {
+            showDialogLoading("加载中...")
+            refreshPageData()
+        }
 
         readApplyShopIV.singleClick {
             DialogUtils.showDialog(requireActivity(), R.mipmap.apply_shop_hint)
@@ -631,6 +640,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 tvComeSoon_number.visibility = View.GONE
             }
         }
+        hideDialogLoading()
     }
 
 
