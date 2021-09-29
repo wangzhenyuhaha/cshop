@@ -78,16 +78,12 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
         //余额
         mToolBarDelegate.setMidTitle(mPresenter.getTitleHint())
 
-        //
         tv_wallet_info_type.text = mPresenter?.getTypeHint()
 
-        //
         tv_wallet_info_detail_type.text = mPresenter.getDetailHint()
 
-        //
         tv_wallet_info_option_type.text = mPresenter?.getOptionHint()
 
-        //
         tv_wallet_info_option_type.setOnClickListener {
             mPresenter?.onOptionClicked()
         }
@@ -105,7 +101,7 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
         // set fragment
         FragmentUtils.add(
             supportFragmentManager,
-            if (isBalanceView()) BalanceDetailFragment.newInstance() else DepositDetailFragment.newInstance(),
+            if (viewType == VALUE_BALANCE) BalanceDetailFragment.newInstance() else DepositDetailFragment.newInstance(),
             R.id.f_wallet_info
         )
 
@@ -127,7 +123,7 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
     }
 
     private fun isBalanceView(): Boolean {
-        return viewType === VALUE_BALANCE && UserManager.getLoginInfo()?.showButton == 1
+        return viewType == VALUE_BALANCE && UserManager.getLoginInfo()?.showButton == 1
     }
 
 }
