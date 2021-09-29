@@ -32,7 +32,7 @@ class BalanceInfoPresenterImpl(private var view: WalletInfoPresenter.View) : Bas
     }
 
     override fun getTypeHint(): String {
-        return MyApp.getInstance().getString(R.string.wallet_deposit_balance);
+        return MyApp.getInstance().getString(R.string.wallet_deposit_balance)
     }
 
     override fun getOptionHint(): String {
