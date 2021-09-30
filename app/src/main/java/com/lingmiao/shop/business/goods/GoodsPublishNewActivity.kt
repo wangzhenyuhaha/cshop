@@ -159,6 +159,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 data.getStringExtra(GoodsDescH5Activity.KEY_DESC)?.apply {
                     goodsVO.intro = this
                     goodsDetailTv.text = if (goodsVO.intro.isNotBlank()) "已添加" else "未添加"
+                    if (goodsVO.goodsParamsList?.size ?: 0 > 0) goodsDetailTv.text = "已添加"
+                    if (!goodsVO.metaDescription.isNullOrEmpty()) goodsDetailTv.text = "已添加"
                 }
             }
         }
@@ -237,6 +239,14 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 //                goodsDetailTv.text = "已添加"
 //            }
             if (goodsParamsList?.size ?: 0 > 0) {
+                goodsDetailTv.text = "已添加"
+            }
+            //metaDescription = des
+            //                    this.intro
+            if (!metaDescription.isNullOrEmpty()) {
+                goodsDetailTv.text = "已添加"
+            }
+            if (!intro.isNullOrEmpty()) {
                 goodsDetailTv.text = "已添加"
             }
             // 商品卖点
