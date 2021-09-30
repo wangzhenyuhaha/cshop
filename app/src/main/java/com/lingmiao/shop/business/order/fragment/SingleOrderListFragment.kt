@@ -145,9 +145,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
         }
         headview.findViewById<TextView>(R.id.tvReset).singleClick {
-            mCStatus = null
             rgAll?.clearCheck()
             drawerO.closeDrawers()
+            mCStatus = null
             mLoadMoreDelegate?.refresh()
         }
         rbContinue = headview.findViewById(R.id.rbContinue)
