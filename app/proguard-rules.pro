@@ -378,3 +378,7 @@ public void *(android.view.View);
 -dontwarn com.google.android.material.**
 -dontnote com.google.android.material.**
 -dontwarn androidx.**
+
+#打印
+-keep class net.posprinter.** { *; }
+-dontwarn net.posprinter.**

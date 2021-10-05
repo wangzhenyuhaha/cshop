@@ -117,6 +117,7 @@ class OrderListAdapter :
         val tvRefuseService = helper.getView<TextView>(R.id.tvRefuseService)
         val tvAcceptService = helper.getView<TextView>(R.id.tvAcceptService)
         val tvPhoneUser = helper.getView<TextView>(R.id.tvPhoneUser)
+        val tvPrint = helper.getView<TextView>(R.id.tvPrint)
 
         tvAccept.visibility = View.GONE
         tvRefuse.visibility = View.GONE
@@ -133,6 +134,7 @@ class OrderListAdapter :
         tvAfterSale.visibility = View.GONE
         tvDelete.visibility = View.GONE
         tvPhoneUser.visibility = View.GONE
+        tvPrint.gone()
 
         helper.addOnClickListener(R.id.tvAccept)
         helper.addOnClickListener(R.id.tvRefuse)
@@ -149,7 +151,7 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvRefuseService)
         helper.addOnClickListener(R.id.tvSign)
         helper.addOnClickListener(R.id.tvPhoneUser)
-
+        helper.addOnClickListener(R.id.tvPrint)
 //        订单类型是否如下:
 //        全部ALL
 //        待付款WAIT_PAY
@@ -187,7 +189,7 @@ class OrderListAdapter :
                 } else {
                     tvPrepare.visiable()
                 }
-
+                tvPrint.visiable()
             }
             "SHIPPED" -> {
                 showBottomArea = true;

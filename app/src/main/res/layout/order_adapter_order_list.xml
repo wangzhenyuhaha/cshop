@@ -288,11 +288,13 @@
             android:textColor="#ffa5a5a5"
             android:textSize="12sp" />
     </RelativeLayout>
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:layout_marginTop="14dp">
 
         <TextView
             android:layout_width="80dp"
@@ -377,6 +379,21 @@
             android:textColor="#ff3870ea"
             android:textSize="12sp"
             app:ivBgColor="#fff"
+            app:ivRadius="15dp"
+            android:gravity="center"
+            app:ivBorderWidth="1px"
+            app:ivBorderColor="#ff3870ea"
+            />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvPrint"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:text="打印"
+            android:layout_marginLeft="10dp"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            app:ivBgColor="#ff3870ea"
             app:ivRadius="15dp"
             android:gravity="center"
             app:ivBorderWidth="1px"

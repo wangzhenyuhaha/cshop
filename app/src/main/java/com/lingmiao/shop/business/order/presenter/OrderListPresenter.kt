@@ -17,7 +17,7 @@ interface OrderListPresenter: BasePresenter {
 
     fun deleteOrder(tradeSn: String)
 
-    fun takeOrder(tradeSn: String)
+    fun takeOrder(trade: OrderList)
 
     fun refuseOrder(tradeSn: String)
 
@@ -35,7 +35,7 @@ interface OrderListPresenter: BasePresenter {
 
     interface StatusView: BaseView, BaseLoadMoreView<OrderList>{
 
-        fun onTakeSuccess();
+        fun onTakeSuccess(trade: OrderList);
 
         fun onRefuseSuccess();
 

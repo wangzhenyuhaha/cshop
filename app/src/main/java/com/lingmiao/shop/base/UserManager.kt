@@ -13,6 +13,7 @@ import com.lingmiao.shop.business.main.bean.BindBankCardDTO
 class UserManager {
     companion object {
         private var hasLogin = false
+        private var isAutoPrint = false
         private var loginInfo: LoginInfo? = null
         private var applyShopInfo: ApplyShopInfo? = null
 
@@ -125,6 +126,15 @@ class UserManager {
         fun setLoginInfo(info: String) {
             SPUtils.getInstance().put("login", info)
             SPUtils.getInstance().put("isLogin", true)
+        }
+
+        fun isAutoPrint(): Boolean {
+            return SPUtils.getInstance().getBoolean("isAutoPrint", false)
+        }
+
+        fun setAutoPrint(isAutoPrint: Boolean) {
+            this.isAutoPrint = isAutoPrint
+            SPUtils.getInstance().put("isAutoPrint", isAutoPrint)
         }
 
         fun loginOut() {
