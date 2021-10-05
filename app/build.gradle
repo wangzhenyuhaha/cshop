@@ -18,7 +18,7 @@ android {
         minSdkVersion android.minSdkVersion
         targetSdkVersion android.targetSdkVersion
         versionCode 1
-        versionName "0.0.31"
+        versionName "0.0.131"
         setProperty("archivesBaseName", "cshop_$versionName" + "_" + "$formattedDate")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -144,9 +144,6 @@ dependencies {
 
     api project(':wechat')
 
-
-//    implementation 'com.gitee.nurApplication:NurVideoPlayer:2.1.6'
-
     //Lifecycle
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
     //Navigation
@@ -154,10 +151,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
-
+    // 视频
     implementation project(':dkplayer-java')
     implementation project(':dkplayer-players:ijk')
     implementation project(':dkplayer-videocache')
     implementation project(':dkplayer-ui')
 
+    // 打印
+    implementation files('libs/PosPrinterSDK.jar')
 }

@@ -20,6 +20,7 @@ import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.james.common.view.ITextView
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.order.*
 import com.lingmiao.shop.business.order.adapter.OrderListAdapter
@@ -27,6 +28,7 @@ import com.lingmiao.shop.business.order.bean.OrderList
 import com.lingmiao.shop.business.order.bean.OrderNumberEvent
 import com.lingmiao.shop.business.order.presenter.OrderListPresenter
 import com.lingmiao.shop.business.order.presenter.impl.OrderListPresenterImpl
+import com.lingmiao.shop.printer.PrinterModule
 import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
@@ -312,7 +314,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         DialogUtils.showDialog(requireActivity(), "接单提示", "确认是否接单?",
                             "取消", "确定接单", View.OnClickListener { }, View.OnClickListener {
                                 showDialogLoading()
-                                mPresenter?.takeOrder(orderBean.sn!!)
+                                mPresenter?.takeOrder(orderBean)
                             })
                     }
                     R.id.tvRefuse -> {
@@ -321,6 +323,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                                 showDialogLoading()
                                 mPresenter?.refuseOrder(orderBean.sn!!)
                             })
+                    }
+                    R.id.tvPrint -> {
+                        printer(orderBean)
                     }
                 }
 
@@ -348,10 +353,17 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         )
     }
 
-    override fun onTakeSuccess() {
+    override fun onTakeSuccess(trade: OrderList) {
         showToast("接单成功")
         mLoadMoreDelegate?.refresh()
+        if(UserManager.isAutoPrint()) {
+            printer(trade);
+        }
         //EventBus.getDefault().post(OrderNumberEvent())
+    }
+
+    fun printer(trade: OrderList) {
+        PrinterModule.printer(requireActivity(), trade)
     }
 
     override fun onRefuseSuccess() {

@@ -54,11 +54,11 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
         }
     }
 
-    override fun takeOrder(tradeSn: String) {
+    override fun takeOrder(trade: OrderList) {
         mCoroutine.launch {
-            val resp = OrderRepository.apiService.takeOrder(tradeSn, 1)
+            val resp = OrderRepository.apiService.takeOrder(trade.sn!!, 1)
             if(resp.isSuccessful) {
-                view.onTakeSuccess()
+                view.onTakeSuccess(trade)
             }
             view.hideDialogLoading()
         }

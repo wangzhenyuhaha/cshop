@@ -73,17 +73,17 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
     }
 
     override fun clickOnLine(oldList: List<GoodsVO>, callback: () -> Unit) {
-        var list = oldList.filter { it?.isChecked == true }
+        var list = oldList.filter { it.isChecked == true }
         if(list?.size == 0) {
             view?.showToast("请选择需要上架的商品!")
             return;
         }
-        if(list?.filter { it?.marketEnable == 1 }?.size > 0) {
+        if(list?.filter { it.marketEnable == 1 }?.size > 0) {
             view?.showToast("你选择的商品中存在已上架商品，已上架的商品不能进行批量上架操作！")
             return;
         }
         var text = String.format("已选中%s个商品，确定要上架吗？", list?.size)
-        var goodsIds = list?.map { it?.goodsId }.joinToString(separator = ",")
+        var goodsIds = list?.map { it.goodsId }.joinToString(separator = ",")
         DialogUtils.showDialog(
             context as Activity, "批量上架提示", text,
             "取消", "确定上架", View.OnClickListener {
@@ -94,14 +94,14 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
     }
 
     override fun clickOnBatchRebate(oldList: List<GoodsVO>, callback: () -> Unit) {
-        var list = oldList.filter { it?.isChecked == true }
-        if(list?.size == 0) {
-            view?.showToast("请选择需要设置佣金的商品!")
+        var list = oldList.filter { it.isChecked == true }
+        if(list.size == 0) {
+            view.showToast("请选择需要设置佣金的商品!")
             return;
         }
-        var str = list?.map { it?.goodsId }.joinToString(separator = ",")
+        var str = list.map { it.goodsId }.joinToString(separator = ",")
 
-        showRebatePop(str, list?.size, callback)
+        showRebatePop(str, list.size, callback)
     }
 
     override fun clickOnRebate(goodsId: String?, callback: () -> Unit) {
@@ -115,15 +115,15 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
             rebatePop.setInviteRebate(it?.inviterRate ?: "");
             rebatePop.setConfirmListener { first, second, invite ->
                 if (first.isNullOrBlank()) {
-                    view?.showToast("请输入一级级分销佣金")
+                    view.showToast("请输入一级级分销佣金")
                     return@setConfirmListener
                 }
                 if (second.isNullOrBlank()) {
-                    view?.showToast("请输入二级级分销佣金")
+                    view.showToast("请输入二级级分销佣金")
                     return@setConfirmListener
                 }
                 if (invite.isNullOrBlank()) {
-                    view?.showToast("请输入会员邀请佣金")
+                    view.showToast("请输入会员邀请佣金")
                     return@setConfirmListener
                 }
                 var rebate = RebateVo(first, second, invite);
@@ -139,11 +139,11 @@ open class GoodsBatchPreImpl(open val context: Context,open val view: GoodsBatch
     override fun clickDelete(oldList: List<GoodsVO>?, callback: (ids:String) -> Unit) {
         var list = oldList?.filter { it?.isChecked == true };
         if(list?.size == 0) {
-            view?.showToast("请选择需要删除的商品!");
+            view.showToast("请选择需要删除的商品!");
             return;
         }
 
-        val ids = list?.map { it?.goodsId }?.joinToString(separator = ",");
+        val ids = list?.map { it.goodsId }?.joinToString(separator = ",");
         DialogUtils.showDialog(context as Activity,
             "删除提示", "删除后不可恢复，确定要删除该商品吗？",
             "取消", "确定删除",

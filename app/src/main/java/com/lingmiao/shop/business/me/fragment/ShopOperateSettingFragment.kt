@@ -12,6 +12,7 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
@@ -69,6 +70,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         // 营业时间
         tvShopOperateTime.setOnClickListener {
             mPresenter?.showWorkTimePop(it)
+        }
+
+        autoPrinterSb.isChecked = UserManager.isAutoPrint();
+        autoPrinterSb.setOnCheckedChangeListener { _, isChecked ->
+            UserManager.setAutoPrint(isChecked)
         }
 
         // 未接订单自动取消时间
