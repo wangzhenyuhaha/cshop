@@ -99,6 +99,27 @@ public class Printer {
             list.add(DataForSendToPrinterPos58.printAndFeedLine());
             list.add(DataForSendToPrinterPos58.printAndFeedLine());
         }
+        // 配送费
+        if(orderList.getShippingAmount() != null && orderList.getShippingAmount() > 0) {
+            list.add(DataForSendToPrinterPos58.initializePrinter());
+            list.add(DataForSendToPrinterPos58.setAbsolutePrintPosition(0,00));
+            list.add(StringUtils.strTobytes("配送费"));
+            list.add(DataForSendToPrinterPos58.setAbsolutePrintPosition(250,00));
+            list.add(StringUtils.strTobytes(String.format("%s", orderList.getShippingAmount())));
+            list.add(DataForSendToPrinterPos58.printAndFeedLine());
+            list.add(DataForSendToPrinterPos58.printAndFeedLine());
+        }
+        // 优惠满减金额
+        if(orderList.getDiscountPrice() != null && orderList.getDiscountPrice() > 0) {
+            list.add(DataForSendToPrinterPos58.initializePrinter());
+            list.add(DataForSendToPrinterPos58.setAbsolutePrintPosition(0,00));
+            list.add(StringUtils.strTobytes("优惠满减金额"));
+            list.add(DataForSendToPrinterPos58.setAbsolutePrintPosition(250,00));
+            list.add(StringUtils.strTobytes(String.format("%s", orderList.getDiscountPrice())));
+            list.add(DataForSendToPrinterPos58.printAndFeedLine());
+            list.add(DataForSendToPrinterPos58.printAndFeedLine());
+        }
+
 
         // 总计
         list.add(DataForSendToPrinterPos58.initializePrinter());
