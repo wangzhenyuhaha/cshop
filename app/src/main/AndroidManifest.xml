@@ -35,6 +35,9 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于 log 日志 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!--打印-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <queries>
 
@@ -433,6 +436,9 @@
         <meta-data
             android:name="notch.config"
             android:value="landscape" />
+        <!--打印-->
+        <service android:name="net.posprinter.service.PosprinterService" />
+
     </application>
 
 </manifest>

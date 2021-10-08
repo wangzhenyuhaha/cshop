@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
@@ -11,6 +12,7 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
@@ -38,6 +40,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     companion object {
 
+
         const val TAG = "ShopOperateSetting"
 
         fun newInstance(item: ApplyShopInfo?): ShopOperateSettingFragment {
@@ -50,41 +53,59 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun initBundles() {
-        //获取店铺信息
         shopReq = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
-    override fun getLayoutId() = R.layout.me_fragment_shop_operate_setting
+    override fun getLayoutId(): Int {
+        return R.layout.me_fragment_shop_operate_setting
+    }
 
-    override fun createPresenter() = ShopOperateSettingPresenterImpl(requireContext(), this)
+    override fun createPresenter(): ShopOperateSettingPresenter {
+        return ShopOperateSettingPresenterImpl(requireContext(), this)
+    }
 
     override fun initViewsAndData(rootView: View) {
-
-        //设置Banner图上传
-        //设置最多上传五张图
-        galleryRv.setCountLimit(1, 5)
-        //设置上传banner图的长宽比
-        galleryRv.setAspectRatio(750, 176)
+        initSection2View()
 
         // 营业时间
         tvShopOperateTime.setOnClickListener {
             mPresenter?.showWorkTimePop(it)
         }
 
-        // 配送设置  已隐藏
+        autoPrinterSb.isChecked = UserManager.isAutoPrint();
+        autoPrinterSb.setOnCheckedChangeListener { _, isChecked ->
+            UserManager.setAutoPrint(isChecked)
+        }
+
+        // 未接订单自动取消时间
+//        addTextChangeListener(tvShopManageNumber, "") {
+//            if(it?.toInt() > 15) {
+//                showToast("不能大于15分钟");
+//                return@addTextChangeListener;
+//            }
+//        }
+
+        rlShopManageNumber.setOnClickListener {
+
+        }
+        // 联系设置
+//        tvShopManageLink.setOnClickListener {
+//            ActivityUtils.startActivity(LinkInSettingActivity::class.java)
+//        }
+
+        // 配送设置
         tvShopManageDelivery.setOnClickListener {
             ActivityUtils.startActivity(DeliveryManagerActivity::class.java)
         }
 
+
         // 保存
         tvShopOperateSubmit.setOnClickListener {
-            if (tvShopManageNumber.getViewText().isEmpty()) {
+            if (tvShopManageNumber.getViewText()?.isEmpty()) {
                 showToast("请输入未接订单自动取消时间")
                 return@setOnClickListener
             }
-
             val cancelOrderTime = tvShopManageNumber.text?.toString()?.toInt() ?: 0
-
             if (cancelOrderTime > 5) {
                 showToast("未接订单自动取消时间不能大于5分钟")
                 return@setOnClickListener
@@ -95,44 +116,49 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 return@setOnClickListener
             }
 
-            //自动接单
+            //店铺广告图可以为空
+//            if(galleryRv.getSelectPhotos().isEmpty()) {
+//                showToast("请上传店铺广告图")
+//                return@setOnClickListener
+//            }
             shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
-            //自动取消时间
             shopReq.cancelOrderTime = cancelOrderTime
-            //获取联系电话
             shopReq.companyPhone = linkTelEt.text.toString()
-            //获取是商家配送或者骑手配送
             shopReq.shopTemplateType = getTemplate()
-            //提交设置数据
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
-        //加载已有运营信息
         onLoadedShopSetting(shopReq)
-
-        //
         mPresenter?.loadTemplate()
 
-        //加载Banner图
+        if (IConstant.official) {
+            cb_model_rider.gone()
+            tvRiderStatus.gone()
+        }
         mPresenter?.getBanner()
     }
 
     fun getTemplate(): String {
-        return if (cb_model_shop.isChecked) {
-            FreightVoItem.TYPE_LOCAL
+        if (cb_model_shop.isChecked) {
+            return FreightVoItem.TYPE_LOCAL
         } else if (cb_model_rider.isChecked) {
-            FreightVoItem.TYPE_QISHOU
+            return FreightVoItem.TYPE_QISHOU
         } else {
-            ""
+            return ""
         }
     }
 
 
-    override fun onUpdateWorkTime(workTimeVo1: WorkTimeVo?, workTimeVo2: WorkTimeVo?) {
-        shopReq.openStartTime = workTimeVo1?.itemName
+    private fun initSection2View() {
+        galleryRv.setCountLimit(1, 5)
+        galleryRv.setAspectRatio(750, 176)
+    }
+
+    override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
+        shopReq.openStartTime = item1?.itemName
         // 处理【第二天】文字，服务端不需要返回
-        shopReq.openEndTime = workTimeVo2?.itemName?.replace("第二天", "")
-        shopReq.openTimeType = workTimeVo2?.getFullDayType()
+        shopReq.openEndTime = item2?.itemName?.replace("第二天", "")
+        shopReq.openTimeType = item2?.getFullDayType()
         setOperateTime()
     }
 
@@ -166,7 +192,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         }
         tvShopStatus.singleClick {
             //shopReq.accept_carriage决定是否显示骑手配送
-            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.accept_carriage)
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem,shopReq.accept_carriage)
         }
         tvRiderStatus.singleClick {
             //默认使用骑手配送
@@ -185,26 +211,17 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     override fun onLoadedShopSetting(vo: ApplyShopInfo) {
         vo.apply {
             orderSetting?.apply {
-                //是否自动接单
                 autoOrderSb.isChecked = autoAccept == 1
-                //未接订单自动取消时间
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
             }
-            //获取营业时间
             shopReq.openStartTime = vo.openStartTime
             shopReq.openEndTime = vo.openEndTime
-
             setOperateTime()
-
-            //设置电话号码
             linkTelEt.setText(companyPhone)
 
-            //是否使用骑手配送
             cb_model_rider.isChecked = shopTemplateType == FreightVoItem.TYPE_QISHOU
-            //是否使用商家配送
             cb_model_shop.isChecked = shopTemplateType == FreightVoItem.TYPE_LOCAL
 
-            //是否使用了骑手配送
             if (shopReq.accept_carriage == 0) {
                 //隐藏棋手
                 cb_model_rider.gone()
@@ -215,17 +232,19 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     // 处理显示【第二天】文字，服务端不保存,客户端计算
-    private fun setOperateTime() {
-        tvShopOperateTime.text = String.format(
-            "%s%s%s%s",
-            shopReq.openStartTime ?: "",
-            if (shopReq.openStartTime?.isEmpty() == true) "" else "-",
-            if (WorkTimeVo.isSecondDay(
-                    shopReq.openStartTime,
-                    shopReq.openEndTime
-                )
-            ) "" else "第二天",
-            shopReq.openEndTime ?: ""
+    fun setOperateTime() {
+        tvShopOperateTime.setText(
+            String.format(
+                "%s%s%s%s",
+                shopReq.openStartTime ?: "",
+                if (shopReq.openStartTime?.isEmpty() == true) "" else "-",
+                if (WorkTimeVo.isSecondDay(
+                        shopReq.openStartTime,
+                        shopReq.openEndTime
+                    )
+                ) "" else "第二天",
+                shopReq.openEndTime ?: ""
+            )
         )
     }
 

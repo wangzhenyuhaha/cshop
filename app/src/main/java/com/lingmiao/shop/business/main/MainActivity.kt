@@ -1,6 +1,8 @@
 package com.lingmiao.shop.business.main
 
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.KeyEvent
@@ -25,6 +27,9 @@ import com.lingmiao.shop.business.main.fragment.NewMainFragment
 import com.lingmiao.shop.business.me.fragment.NewMyFragment
 import com.lingmiao.shop.business.order.bean.OrderTabChangeEvent
 import com.lingmiao.shop.business.order.fragment.OrderTabFragment
+import com.lingmiao.shop.printer.BlueToothModule
+import com.lingmiao.shop.printer.PrinterListener
+import com.lingmiao.shop.printer.PrinterModule
 import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.VoiceUtils
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,8 +50,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         initView()
         initData()
+        initPrintSetting();
     }
-
 
     private fun initData() {
         EventBus.getDefault().register(this)
@@ -130,6 +135,53 @@ class MainActivity : AppCompatActivity() {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
         } else if(jpushType == IConstant.MESSAGE_ORDER_CANCEL) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
+        }
+    }
+
+    private fun initPrintSetting() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(!BlueToothModule.isBluetoothPermissionGranted(this)) {
+                BlueToothModule.askForBluetoothPermissions(this)
+            } else {
+                handPrintSetting()
+            }
+        } else {
+            handPrintSetting()
+        }
+    }
+
+    private fun handPrintSetting() {
+        // 蓝牙
+        if(BlueToothModule.isBluetoothEnable()) {
+            PrinterModule.bind(this)
+        } else {
+            BlueToothModule.checkBluetoothEnable(this);
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == RESULT_OK && requestCode == BlueToothModule.PERMISSION_ASK) {
+            handPrintSetting()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            BlueToothModule.PERMISSION_ASK -> if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                // all requested permissions were granted
+                // perform your task here
+                handPrintSetting()
+            } else {
+                // permissions not granted
+                // DO NOT PERFORM THE TASK, it will fail/crash
+            }
+            else -> super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         }
     }
 

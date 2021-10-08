@@ -99,6 +99,32 @@
             </RelativeLayout>
 
             <View style="@style/DivideLineHorizontal" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="是否自动打印(选否为手动打印)"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/autoPrinterSb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    app:kswBackDrawable="@drawable/flyme_back_drawable"
+                    app:kswTintColor="@color/white" />
+
+            </RelativeLayout>
+
+            <View style="@style/DivideLineHorizontal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
