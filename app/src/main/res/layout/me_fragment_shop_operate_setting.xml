@@ -115,10 +115,10 @@
                     android:id="@+id/autoPrinterSb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="end|center_vertical"
-                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginStart="@dimen/dimen_20"
                     app:kswBackDrawable="@drawable/flyme_back_drawable"
                     app:kswTintColor="@color/white" />
 
