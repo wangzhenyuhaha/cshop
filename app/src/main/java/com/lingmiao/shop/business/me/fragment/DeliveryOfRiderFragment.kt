@@ -63,11 +63,11 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
     }
 
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.me_fragment_delivery_of_rider;
     }
 
-    override fun createPresenter(): DeliveryOfRiderPresenter? {
+    override fun createPresenter(): DeliveryOfRiderPresenter {
         return DeliveryInOfRiderPresenterImpl(this);
     }
 

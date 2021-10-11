@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.wallet
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.FragmentUtils
 import com.blankj.utilcode.util.ToastUtils
@@ -30,10 +31,13 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
 
     companion object {
 
+        //余额
         const val VALUE_BALANCE = 1
 
+        //押金
         const val VALUE_DEPOSIT = 0
 
+        //Deposit押金
         fun openDepositActivity(context: Context) {
             if (context is Activity) {
                 val intent = Intent(context, WalletInfoActivity::class.java)
@@ -42,6 +46,7 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
             }
         }
 
+        //Balance余额
         fun openBalanceActivity(context: Context) {
             if (context is Activity) {
                 val intent = Intent(context, WalletInfoActivity::class.java)
@@ -52,36 +57,39 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
     }
 
     override fun initBundles() {
+        //默认余额
         viewType = intent?.getIntExtra(WalletConstants.KEY_VIEW_TYPE, VALUE_BALANCE)
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.wallet_activity_wallet_info
-    }
+    override fun getLayoutId() = R.layout.wallet_activity_wallet_info
 
     override fun createPresenter(): WalletInfoPresenter {
         return when (viewType) {
+            //默认余额
             VALUE_BALANCE -> BalanceInfoPresenterImpl(this)
             else -> DepositInfoPresenterImpl(this)
         }
     }
 
     override fun initView() {
+
         mPresenter.onCreate()
 
-        // set title
+        //余额
         mToolBarDelegate.setMidTitle(mPresenter.getTitleHint())
 
-        // set hint
         tv_wallet_info_type.text = mPresenter?.getTypeHint()
+
         tv_wallet_info_detail_type.text = mPresenter.getDetailHint()
+
         tv_wallet_info_option_type.text = mPresenter?.getOptionHint()
+
         tv_wallet_info_option_type.setOnClickListener {
             mPresenter?.onOptionClicked()
         }
 
         tvRate.setOnClickListener {
-            DialogUtils.showDialog(context,"提醒费率","手续费每单最低收取1分钱",null,null)
+            DialogUtils.showDialog(context, "提醒费率", "手续费每单最低收取1分钱", null, null)
         }
 
         if (!isBalanceView()) {
@@ -90,11 +98,10 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
 
         // load data
         mPresenter.loadInfo()
-
         // set fragment
         FragmentUtils.add(
             supportFragmentManager,
-            if (isBalanceView()) BalanceDetailFragment.newInstance() else DepositDetailFragment.newInstance(),
+            if (viewType == VALUE_BALANCE) BalanceDetailFragment.newInstance() else DepositDetailFragment.newInstance(),
             R.id.f_wallet_info
         )
 
@@ -116,7 +123,7 @@ class WalletInfoActivity : BaseActivity<WalletInfoPresenter>(), WalletInfoPresen
     }
 
     private fun isBalanceView(): Boolean {
-        return viewType === VALUE_BALANCE && UserManager.getLoginInfo()?.showButton == 1
+        return viewType == VALUE_BALANCE && UserManager.getLoginInfo()?.showButton == 1
     }
 
 }

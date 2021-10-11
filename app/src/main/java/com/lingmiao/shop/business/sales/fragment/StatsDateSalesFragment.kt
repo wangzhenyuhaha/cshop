@@ -58,7 +58,7 @@ class StatsDateSalesFragment : BaseFragment<IStateSalesDataPresenter>(), IStateS
     }
 
     override fun createPresenter(): IStateSalesDataPresenter? {
-        return StatsSalesDataPreImpl(context!!, this);
+        return StatsSalesDataPreImpl(requireContext(), this);
     }
 
     override fun initViewsAndData(rootView: View) {

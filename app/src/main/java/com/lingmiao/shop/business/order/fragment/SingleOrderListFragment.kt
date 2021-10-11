@@ -79,13 +79,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.order_fragment_single_order
-    }
+    override fun getLayoutId() = R.layout.order_fragment_single_order
 
-    override fun useEventBus(): Boolean {
-        return true;
-    }
+    override fun useEventBus() = true
 
     var rbContinue: RadioButton? = null
     var rbComplete: RadioButton? = null
@@ -151,9 +147,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
         }
         headview.findViewById<TextView>(R.id.tvReset).singleClick {
-            mCStatus = null
             rgAll?.clearCheck()
             drawerO.closeDrawers()
+            mCStatus = null
             mLoadMoreDelegate?.refresh()
         }
         rbContinue = headview.findViewById(R.id.rbContinue)
@@ -347,11 +343,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         return false
     }
 
-    override fun createPresenter(): OrderListPresenter {
-        return OrderListPresenterImpl(
-            this
-        )
-    }
+    override fun createPresenter() = OrderListPresenterImpl(this)
 
     override fun onTakeSuccess(trade: OrderList) {
         showToast("接单成功")
@@ -431,7 +423,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeTabPosition(event: TabChangeEvent) {
         LogUtils.d("changeTabPosition:" + event)
-        if("ALL".equals(orderType) && event.type == 4 && "CANCELLED".equals(event.status)) {
+        if ("ALL".equals(orderType) && event.type == 4 && "CANCELLED".equals(event.status)) {
             mCStatus = event.status;
             rbCancel?.isChecked = true;
         }

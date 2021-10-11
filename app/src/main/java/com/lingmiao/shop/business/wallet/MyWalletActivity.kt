@@ -75,13 +75,13 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
         }
     }
 
-    override fun onLoadWalletDataSuccess(vo: WalletVo?) {
-        SPUtils.getInstance().put(WalletConstants.BALANCE_ACCOUNT_ID, vo?.getBalanceAccountId())
-        SPUtils.getInstance().put(WalletConstants.DEPOSIT_ACCOUNT_ID, vo?.getDepositAccountId())
+    override fun onLoadWalletDataSuccess(data: WalletVo?) {
+        SPUtils.getInstance().put(WalletConstants.BALANCE_ACCOUNT_ID, data?.getBalanceAccountId())
+        SPUtils.getInstance().put(WalletConstants.DEPOSIT_ACCOUNT_ID, data?.getDepositAccountId())
 
 
-        val balanceVo: AccountVo? = vo?.balanceAccount
-        val depositVo: AccountVo? = vo?.depositAccount
+        val balanceVo: AccountVo? = data?.balanceAccount
+        val depositVo: AccountVo? = data?.depositAccount
 
         val bAmount: Double? = balanceVo?.balanceAmount
         val dAmount: Double? = depositVo?.balanceAmount

@@ -3,9 +3,6 @@ package com.lingmiao.shop.business.goods
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
@@ -143,6 +140,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 }
             }
             REQUEST_CODE_INFO -> {
+                //
                 val infoList =
                     data.getSerializableExtra(GoodsDetailActivity.KEY_ITEM) as? List<GoodsParamVo>
                 val des = data.getStringExtra(GoodsDetailActivity.KEY_DESC)
@@ -153,12 +151,16 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     this.intro = images
                 }
                 goodsDetailTv.text = if (infoList?.size ?: 0 > 0) "已添加" else "未添加"
+                if (!des.isNullOrEmpty()) goodsDetailTv.text = "已添加"
+                if (!images.isNullOrEmpty()) goodsDetailTv.text = "已添加"
             }
             // 商品详情
             REQUEST_CODE_DESC -> {
                 data.getStringExtra(GoodsDescH5Activity.KEY_DESC)?.apply {
                     goodsVO.intro = this
                     goodsDetailTv.text = if (goodsVO.intro.isNotBlank()) "已添加" else "未添加"
+                    if (goodsVO.goodsParamsList?.size ?: 0 > 0) goodsDetailTv.text = "已添加"
+                    if (!goodsVO.metaDescription.isNullOrEmpty()) goodsDetailTv.text = "已添加"
                 }
             }
         }
@@ -237,6 +239,14 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 //                goodsDetailTv.text = "已添加"
 //            }
             if (goodsParamsList?.size ?: 0 > 0) {
+                goodsDetailTv.text = "已添加"
+            }
+            //metaDescription = des
+            //                    this.intro
+            if (!metaDescription.isNullOrEmpty()) {
+                goodsDetailTv.text = "已添加"
+            }
+            if (!intro.isNullOrEmpty()) {
                 goodsDetailTv.text = "已添加"
             }
             // 商品卖点

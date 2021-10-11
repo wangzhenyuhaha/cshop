@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    tools:ignore="ContentDescription,HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,36 +23,36 @@
             app:ivBgColor="@color/primary">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:gravity="center"
                 android:id="@+id/ivMyHead"
                 android:layout_width="48dp"
-                android:padding="1dp"
                 android:layout_height="48dp"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
+                android:gravity="center"
+                android:padding="1dp"
                 android:src="@mipmap/me_head" />
 
-
             <LinearLayout
-                android:layout_toRightOf="@id/ivMyHead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:layout_toEndOf="@id/ivMyHead"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tvMyShopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    tools:text="店铺名称"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="店铺名称" />
 
                 <ImageView
                     android:id="@+id/ivMyShopVipStatus"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:src="@mipmap/ic_vip_period"
                     tools:visibility="visible" />
 
@@ -63,8 +63,7 @@
                     android:id="@+id/ivMyShopStatus"
                     android:layout_width="12dp"
                     android:layout_height="12dp"
-                    android:layout_toRightOf="@id/ivMyShopVipStatus"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:src="@mipmap/me_shop_auth"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -77,10 +76,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvMyShopName"
                 android:layout_alignParentBottom="true"
-                android:layout_toRightOf="@id/ivMyHead"
-                tools:text="2021-06-09到期，购买后有效期将顺延"
+                android:layout_toEndOf="@id/ivMyHead"
                 android:textColor="@color/color_EEEEEE"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_12"
+                tools:text="2021-06-09到期，购买后有效期将顺延" />
 
         </com.james.common.view.IRelativeLayout>
 
@@ -94,9 +93,9 @@
             android:paddingTop="@dimen/dimen_7"
             android:paddingRight="@dimen/dimen_15"
             android:paddingBottom="@dimen/dimen_7"
-            tools:text="试用时间2021-10-19到期,购买后有效期将顺延"
             android:textColor="@color/white"
-            android:textSize="@dimen/sp_11" />
+            android:textSize="@dimen/sp_11"
+            tools:text="试用时间2021-10-19到期,购买后有效期将顺延" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,21 +107,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="服务保障金"
-                android:textStyle="bold"
                 android:textColor="#416785"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
 
             <TextView
-                android:paddingLeft="@dimen/dimen_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="(开通正式门店须支付服务保障金300元)"
+                android:paddingStart="@dimen/dimen_5"
+                android:paddingEnd="0dp"
+                android:text="(开通正式门店须支付服务保障金200元)"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
         </LinearLayout>
 
         <View style="@style/DivideLineHorizontal" />
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,10 +130,10 @@
             android:padding="@dimen/dimen_15">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="保障金"
                 android:layout_weight="1"
+                android:text="保障金"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -142,12 +141,12 @@
                 android:id="@+id/tvBalance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="￥22.00"
                 android:textColor="@color/color_666666"
-                android:textSize="@dimen/sp_12" />
+                android:textSize="@dimen/sp_12"
+                tools:text="￥22.00" />
         </LinearLayout>
-        <View style="@style/DivideLineHorizontal" />
 
+        <View style="@style/DivideLineHorizontal" />
 
         <LinearLayout
             android:id="@+id/securityLayout"
@@ -157,10 +156,10 @@
             android:padding="@dimen/dimen_15">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="服务保障金说明"
                 android:layout_weight="1"
+                android:text="服务保障金说明"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -168,7 +167,7 @@
                 android:id="@+id/securityTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableRight="@mipmap/common_arrow_right"
+                android:drawableEnd="@mipmap/common_arrow_right"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -176,20 +175,20 @@
 
         <View style="@style/DivideLineHorizontal" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingVertical="@dimen/dimen_10">
+            android:paddingVertical="@dimen/dimen_10"
+            android:paddingEnd="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_15">
 
             <TextView
                 android:id="@+id/tvDepositStatus"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/vip_deposit_apply"
                 android:layout_weight="1"
+                android:text="@string/vip_deposit_apply"
                 android:textColor="@color/color_666666"
                 android:textSize="@dimen/sp_12" />
 
@@ -197,43 +196,42 @@
                 android:id="@+id/tvVip"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
+                android:layout_marginEnd="@dimen/dimen_15"
                 android:gravity="center"
                 android:paddingLeft="@dimen/dimen_15"
                 android:paddingRight="@dimen/dimen_15"
                 android:text="缴纳"
                 android:textColor="@color/white"
                 android:textSize="12sp"
-                android:layout_marginRight="@dimen/dimen_15"
                 app:ivBgColor="@color/color_secondary"
-                app:ivRadius="18dp"/>
+                app:ivRadius="18dp" />
 
             <com.james.common.view.ITextView
-                tools:visibility="visible"
                 android:id="@+id/tvRefund"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:gravity="center"
-                android:paddingLeft="@dimen/dimen_15"
-                android:paddingRight="@dimen/dimen_5"
+                android:paddingStart="@dimen/dimen_15"
+                android:paddingEnd="@dimen/dimen_5"
                 android:text="退款"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"
-                app:ivRadius="18dp"/>
-
+                app:ivRadius="18dp"
+                tools:visibility="visible" />
 
             <com.james.common.view.ITextView
-                tools:visibility="visible"
-                android:visibility="gone"
                 android:id="@+id/tvRecharge"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
                 android:gravity="center"
-                android:paddingLeft="@dimen/dimen_5"
-                android:paddingRight="@dimen/dimen_15"
+                android:paddingStart="@dimen/dimen_5"
+                android:paddingEnd="@dimen/dimen_15"
                 android:text="缴纳"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"
-                app:ivRadius="18dp"/>
+                android:visibility="gone"
+                app:ivRadius="18dp"
+                tools:visibility="visible" />
 
         </LinearLayout>
 
@@ -249,9 +247,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="开通会员"
-                android:textStyle="bold"
                 android:textColor="#416785"
-                android:textSize="@dimen/sp_14" />
+                android:textSize="@dimen/sp_14"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -263,17 +261,17 @@
             android:nestedScrollingEnabled="false" />
 
         <CheckBox
-            android:visibility="gone"
             android:id="@+id/ivService"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginStart="@dimen/dimen_15"
             android:button="@drawable/selector_goods_delivery_checkbox"
             android:padding="@dimen/dimen_15"
             android:text="到期自动续期一个月，可随时取消"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_13" />
+            android:textSize="@dimen/sp_13"
+            android:visibility="gone" />
 
 
         <com.james.common.view.ITextView

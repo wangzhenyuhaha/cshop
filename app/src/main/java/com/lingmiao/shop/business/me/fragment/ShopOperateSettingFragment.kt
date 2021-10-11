@@ -40,7 +40,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     companion object {
 
-
         const val TAG = "ShopOperateSetting"
 
         fun newInstance(item: ApplyShopInfo?): ShopOperateSettingFragment {
@@ -65,43 +64,36 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun initViewsAndData(rootView: View) {
-        initSection2View()
 
         // 营业时间
         tvShopOperateTime.setOnClickListener {
             mPresenter?.showWorkTimePop(it)
         }
 
-        autoPrinterSb.isChecked = UserManager.isAutoPrint();
+        //是否自动打印
+        autoPrinterSb.isChecked = UserManager.isAutoPrint()
         autoPrinterSb.setOnCheckedChangeListener { _, isChecked ->
             UserManager.setAutoPrint(isChecked)
         }
-
-        // 未接订单自动取消时间
-//        addTextChangeListener(tvShopManageNumber, "") {
-//            if(it?.toInt() > 15) {
-//                showToast("不能大于15分钟");
-//                return@addTextChangeListener;
-//            }
-//        }
-
-        rlShopManageNumber.setOnClickListener {
-
-        }
-        // 联系设置
-//        tvShopManageLink.setOnClickListener {
-//            ActivityUtils.startActivity(LinkInSettingActivity::class.java)
-//        }
 
         // 配送设置
         tvShopManageDelivery.setOnClickListener {
             ActivityUtils.startActivity(DeliveryManagerActivity::class.java)
         }
 
+        initBanner()
 
         // 保存
         tvShopOperateSubmit.setOnClickListener {
-            if (tvShopManageNumber.getViewText()?.isEmpty()) {
+
+            //增加对营业时间未设置时的判断
+            //未完待续
+
+            //自动接单
+            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
+
+            //未接订单自动取消时间
+            if (tvShopManageNumber.getViewText().isEmpty()) {
                 showToast("请输入未接订单自动取消时间")
                 return@setOnClickListener
             }
@@ -110,46 +102,50 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 showToast("未接订单自动取消时间不能大于5分钟")
                 return@setOnClickListener
             }
+            shopReq.cancelOrderTime = cancelOrderTime
 
+            //联系电话
             if (linkTelEt.text.toString().isEmpty()) {
                 showToast("请输入正确的手机号码")
                 return@setOnClickListener
             }
-
-            //店铺广告图可以为空
-//            if(galleryRv.getSelectPhotos().isEmpty()) {
-//                showToast("请上传店铺广告图")
-//                return@setOnClickListener
-//            }
-            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
-            shopReq.cancelOrderTime = cancelOrderTime
             shopReq.companyPhone = linkTelEt.text.toString()
+
+            //配送设置
             shopReq.shopTemplateType = getTemplate()
+
+            //提交设置
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
         onLoadedShopSetting(shopReq)
+
+        //配送设置
         mPresenter?.loadTemplate()
 
-        if (IConstant.official) {
+
+        //accept_carriage为0时，不显示骑手配送
+        if (shopReq.accept_carriage == 0) {
             cb_model_rider.gone()
             tvRiderStatus.gone()
         }
+
+        //加载Banner图
         mPresenter?.getBanner()
     }
 
     fun getTemplate(): String {
-        if (cb_model_shop.isChecked) {
-            return FreightVoItem.TYPE_LOCAL
+        return if (cb_model_shop.isChecked) {
+            FreightVoItem.TYPE_LOCAL
         } else if (cb_model_rider.isChecked) {
-            return FreightVoItem.TYPE_QISHOU
+            FreightVoItem.TYPE_QISHOU
         } else {
-            return ""
+            ""
         }
     }
 
-
-    private fun initSection2View() {
+    //设置Banner图上传
+    private fun initBanner() {
         galleryRv.setCountLimit(1, 5)
         galleryRv.setAspectRatio(750, 176)
     }
@@ -192,7 +188,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         }
         tvShopStatus.singleClick {
             //shopReq.accept_carriage决定是否显示骑手配送
-            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem,shopReq.accept_carriage)
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.accept_carriage)
         }
         tvRiderStatus.singleClick {
             //默认使用骑手配送

@@ -20,11 +20,10 @@ Desc        :
 class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerSettingPresenter>(),
     ManagerSettingPresenter.View {
 
-    val tabName = listOf("基础", "运营")
+    private val tabName = listOf("基础", "运营")
 
-    override fun getViewBinding(): ActivityViewpagerBinding {
-        return ActivityViewpagerBinding.inflate(layoutInflater)
-    }
+    override fun getViewBinding() = ActivityViewpagerBinding.inflate(layoutInflater)
+
 
     override fun initView() {
         mToolBarDelegate?.setMidTitle(getString(R.string.manager_setting_title))
@@ -39,13 +38,13 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
     override fun createPresenter() = ManagerSettingPresenterImpl(this)
 
 
-    override fun onLoadedShopInfo(data: ApplyShopInfo) {
+    override fun onLoadedShopInfo(bean: ApplyShopInfo) {
         mBinding.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) =
                 when (position) {
-                    0 -> ShopBaseSettingFragment.newInstance(data)
-                    else -> ShopOperateSettingFragment.newInstance(data)
+                    0 -> ShopBaseSettingFragment.newInstance(bean)
+                    else -> ShopOperateSettingFragment.newInstance(bean)
                 }
         }
 

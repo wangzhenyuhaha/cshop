@@ -11,7 +11,7 @@ Desc        :
  **/
 interface ManagerSettingPresenter : BasePresenter {
 
-    fun loadShopInfo();
+    fun loadShopInfo()
 
     interface View : BaseView {
 

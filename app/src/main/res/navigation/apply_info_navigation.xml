@@ -17,6 +17,9 @@
         <action
             android:id="@+id/action_shopInfoFragment_to_replenishInfoFragment"
             app:destination="@id/replenishInfoFragment" />
+        <action
+            android:id="@+id/action_shopInfoFragment_to_multiplePhotoFragment"
+            app:destination="@id/multiplePhotoFragment" />
     </fragment>
     <fragment
         android:id="@+id/shopPhotoFragment"
@@ -64,4 +67,8 @@
             android:id="@+id/action_bindAccountFragment_to_shopPhotoFragment"
             app:destination="@id/shopPhotoFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/multiplePhotoFragment"
+        android:name="com.lingmiao.shop.business.main.fragment.MultiplePhotoFragment"
+        android:label="MultiplePhotoFragment" />
 </navigation>

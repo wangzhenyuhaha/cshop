@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText">
 
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -14,15 +15,17 @@
         <LinearLayout
             android:id="@+id/ll_model_type"
             style="@style/tools_sub_container"
-            android:paddingLeft="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
 
             <RadioGroup
                 android:id="@+id/rg_model_type"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="horizontal"
@@ -34,7 +37,8 @@
                     style="@style/tools_sub_item_radio_box"
                     android:layout_weight="1"
                     android:checked="true"
-                    android:paddingRight="@dimen/dimen_10"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/dimen_10"
                     android:text="商家配送" />
 
                 <RadioButton
@@ -59,7 +63,8 @@
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_model_type">
+            app:layout_constraintTop_toBottomOf="@id/ll_model_type"
+            tools:visibility="visible">
 
             <TextView
                 style="@style/tools_sub_item_left_10"
@@ -67,11 +72,11 @@
 
             <RadioGroup
                 android:id="@+id/rg_model_pay_km"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:layout_weight="1"
-                android:gravity="right"
+                android:gravity="end"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dimen_15"
                 android:paddingBottom="@dimen/dimen_15">
@@ -79,7 +84,8 @@
                 <RadioButton
                     android:id="@+id/cb_model_pay_km_section"
                     style="@style/tools_sub_item_radio_box"
-                    android:paddingRight="@dimen/dimen_10"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/dimen_10"
                     android:text="按公里段计费" />
 
                 <RadioButton
@@ -135,6 +141,7 @@
                 android:text="分钟"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dimen_13" />
+
         </LinearLayout>
 
         <View style="@style/DivideLineHorizontal" />
@@ -284,4 +291,5 @@
             app:ivRadius="18dp" />
 
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>

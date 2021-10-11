@@ -26,18 +26,19 @@ import java.io.File
  * Date   : 2020/7/18
  * Desc   :
  */
-class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupEditView) : BasePreImpl(view),
+class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupEditView) :
+    BasePreImpl(view),
     UserMenuEditPre {
 
     private val menuPopPre: ChildrenMenuPreImpl by lazy { ChildrenMenuPreImpl(context, view) }
 
     private val quantityPopPre: QuantityPricePreImpl by lazy { QuantityPricePreImpl(context, view) }
 
-    override fun getShopId() : String {
-        return UserManager.getLoginInfo()?.shopId?.toString()?:"";
+    override fun getShopId(): String {
+        return UserManager.getLoginInfo()?.shopId?.toString() ?: "";
     }
 
-    override fun getShopGroup(id : String) {
+    override fun getShopGroup(id: String) {
         mCoroutine.launch {
             val resp = GoodsRepository.getShopGroup(id)
             handleResponse(resp) {
@@ -49,7 +50,7 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
     override fun getShopGroupAndChildren(id: String) {
         mCoroutine.launch {
             val resp = GoodsRepository.getShopGroup(id);
-            if(resp.isSuccess) {
+            if (resp.isSuccess) {
                 val item = resp.data;
                 val listResp = GoodsRepository.load2LvShopGroup(id, 0)
                 handleResponse(listResp) {
@@ -60,7 +61,7 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
         }
     }
 
-    override fun addGroup(str: String, pid : String) {
+    override fun addGroup(str: String, pid: String) {
         mCoroutine.launch {
             val groupVO = ShopGroupVO();
             groupVO.shopId = getShopId().toString();
@@ -96,7 +97,7 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
                 view.hideDialogLoading()
             }
         } catch (e: BizException) {
-             view.showToast(e.message)
+            view.showToast(e.message)
         }
     }
 
@@ -148,10 +149,22 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
         if (item == null || item.shopCatId == null) {
             return
         }
-        menuPopPre.showMenuPop(ChildrenMenuPop.TYPE_EDIT or ChildrenMenuPop.TYPE_DELETE, target) { menuType ->
+        menuPopPre.showMenuPop(
+            ChildrenMenuPop.TYPE_EDIT or ChildrenMenuPop.TYPE_DELETE,
+            target
+        ) { menuType ->
             when (menuType) {
                 ChildrenMenuPop.TYPE_EDIT -> {
-                    DialogUtils.showInputDialog(context as Activity, "菜单名称", "", "请输入", item?.shopCatName?:"","取消", "保存",null) {
+                    DialogUtils.showInputDialog(
+                        context as Activity,
+                        "菜单名称",
+                        "",
+                        "请输入",
+                        item?.shopCatName ?: "",
+                        "取消",
+                        "保存",
+                        null
+                    ) {
                         item.shopCatName = it;
                         update(item, {
                             view?.onUpdated(item, position);
@@ -167,7 +180,7 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
                         null, View.OnClickListener {
                             delete(item.shopCatId!!, {
                                 view?.onDeleteGroupSuccess(position);
-                            },{
+                            }, {
 
                             })
                         })
@@ -176,21 +189,22 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
         }
     }
 
-    fun delete(id : String,successCallback : (Unit)->Unit, failedCallback : () -> Unit) {
+    fun delete(id: String, successCallback: (Unit) -> Unit, failedCallback: () -> Unit) {
         mCoroutine.launch {
             val resp = GoodsRepository.deleteShopGroup(id)
-            if(resp.isSuccess) {
-                successCallback.invoke(resp?.data);
-            } else {
-                view?.showToast("删除失败")
-                failedCallback.invoke();
+
+            handleResponse(resp) {
+                successCallback.invoke(resp.data)
             }
+
         }
     }
 
-    fun update(item: ShopGroupVO,
-               successCallback: (ShopGroupVO) -> Unit,
-               failedCallback: () -> Unit) {
+    fun update(
+        item: ShopGroupVO,
+        successCallback: (ShopGroupVO) -> Unit,
+        failedCallback: () -> Unit
+    ) {
         mCoroutine.launch {
             val resp = GoodsRepository.updateShopGroup(item.shopCatId!!, item)
             option(resp, successCallback, failedCallback);
@@ -198,8 +212,12 @@ class UserMenuEditPreImpl(val context: Context, var view: UserMenuEditPre.GroupE
     }
 
 
-    fun option(resp : HiResponse<ShopGroupVO>, successCallback: (ShopGroupVO) -> Unit, failedCallback: () -> Unit) {
-        if(resp?.isSuccess) {
+    fun option(
+        resp: HiResponse<ShopGroupVO>,
+        successCallback: (ShopGroupVO) -> Unit,
+        failedCallback: () -> Unit
+    ) {
+        if (resp?.isSuccess) {
             successCallback.invoke(resp?.data);
         } else {
             failedCallback?.invoke();

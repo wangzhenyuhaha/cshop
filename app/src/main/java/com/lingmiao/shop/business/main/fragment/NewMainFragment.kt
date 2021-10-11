@@ -9,14 +9,14 @@ import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
-import com.blankj.utilcode.util.ActivityUtils
-import com.blankj.utilcode.util.SpanUtils
-import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
+import com.blankj.utilcode.util.*
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.*
@@ -98,12 +98,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //        fromMain = arguments?.getBoolean("fromMain", false)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 
-        //设置查看通联支付时字体颜色
-        val content = "由正规持牌支付机构提供T+1交易服务：通联支付(点击查看)"
-        val builder = SpannableStringBuilder(content)
-        val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder.setSpan(blueSpan, 23, 29, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        readTongLian.text = builder
 
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
@@ -115,9 +109,27 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             }
         }
 
-        readApplyShop.singleClick {
+
+
+
+
+
+        //设置刷新按钮
+        refreshOne.setOnClickListener {
+          showDialogLoading("加载中...")
+            refreshPageData()
+        }
+        refreshTwo.setOnClickListener {
+            showDialogLoading("加载中...")
+            refreshPageData()
+        }
+
+        readApplyShopIV.singleClick {
             DialogUtils.showDialog(requireActivity(), R.mipmap.apply_shop_hint)
         }
+
+// FrameLayout.LayoutParams(w, h)
+
         promoCode.text =
             if (UserManager.getPromCode().isEmpty()) "请输入推广码（选填）" else UserManager.getPromCode()
 
@@ -176,6 +188,15 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     activity?.finish()
                 })
         }
+
+
+        //设置首页的图片
+        //增值电信业务经营许可证
+
+        //通联支付
+
+        //微信支付服务商
+
         showPageLoading()
         mPresenter?.requestMainInfoData()
         mPresenter?.requestAccountSettingData()
@@ -619,6 +640,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 tvComeSoon_number.visibility = View.GONE
             }
         }
+        hideDialogLoading()
     }
 
 

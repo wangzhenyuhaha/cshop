@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +77,12 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         //店铺租聘合同
         binding.hire.setOnClickListener {
+//            val bundle = bundleOf("type" to ApplyShopInfoActivity.HIRE)
+//            findNavController().navigate(
+//                R.id.action_shopInfoFragment_to_multiplePhotoFragment,
+//                bundle
+//            )
+
             val bundle = bundleOf("type" to ApplyShopInfoActivity.HIRE)
             findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
         }
@@ -142,8 +149,27 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                 }
                 if (model.applyShopInfo.value?.shopType == 4) {
                     //个人
-                    checkNotBlack(model.applyShopInfo.value?.bizplacepic) {
-                        "请上传店铺租聘合同"
+                    //检查店铺租聘合同
+
+                    if (model.applyShopInfo.value?.bizplacepic == null) {
+                        showToast("请上传店铺租聘合同")
+                        return@setOnClickListener
+                    }
+
+                    model.applyShopInfo.value?.bizplacepic?.split(",")?.size?.also { size ->
+                        when {
+                            size > 1 -> {
+                                //nothing to do
+                            }
+                            size == 1 -> {
+//                                showToast("请上传完整的店铺租聘合同")
+//                                return@setOnClickListener
+                            }
+                            else -> {
+                                showToast("请上传店铺租聘合同")
+                                return@setOnClickListener
+                            }
+                        }
                     }
                     checkNotBlack(model.applyShopInfo.value?.shopPhotoFront) {
                         "请上传店铺门头照片"
@@ -303,7 +329,24 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
 
         model.applyShopInfo.observe(this, Observer {
 
-            if (!it.bizplacepic.isNullOrEmpty()) binding.hireTV.text = "已上传"
+            //对店铺租聘合同的观察
+            if (it.bizplacepic == null) {
+                binding.hireTV.text = "店铺租聘合同"
+            }
+            it.bizplacepic?.split(",")?.size?.also { size ->
+                when {
+                    size > 1 -> {
+                        binding.hireTV.text = "已上传"
+                    }
+                    size == 1 -> {
+//                        binding.hireTV.text = "请上传完整"
+                        binding.hireTV.text = "已上传"
+                    }
+                    else -> {
+                        binding.hireTV.text = "店铺租聘合同"
+                    }
+                }
+            }
 
             //店铺营业执照是否已经上传
             if (!it.licenceImg.isNullOrEmpty()) binding.licenseTV.text = "已上传"

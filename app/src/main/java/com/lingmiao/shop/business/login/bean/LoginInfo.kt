@@ -38,7 +38,7 @@ class LoginInfo {
     @SerializedName("open_status")
     var openStatus: Boolean? = null
 
-    // 是否显示提现
+    // 是否显示提现  0 不显示体现    1  显示体现
     @SerializedName("show_button")
     var showButton: Int? = 0
 

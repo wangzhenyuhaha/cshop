@@ -76,7 +76,7 @@ class CommonGalleryRecyclerView @JvmOverloads constructor(
         mAdapter?.notifyDataSetChanged()
     }
 
-    private fun addDataList(list: List<GoodsGalleryVO>?) {
+    public fun addDataList(list: List<GoodsGalleryVO>?) {
         if (list.isNullOrEmpty()) {
             return
         }

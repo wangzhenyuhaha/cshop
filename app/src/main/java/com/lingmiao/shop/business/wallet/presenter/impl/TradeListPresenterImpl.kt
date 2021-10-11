@@ -24,6 +24,7 @@ class OrderListPresenterImpl(var view: OrderListPresenter.View) : BasePreImpl(vi
                 view.showPageLoading()
             }
             val resp = WalletRepository.getOrderList(page.getPageIndex())
+            Log.d("WZYAAA","调用了")
             if (resp.isSuccess) {
 
                 val list: List<OrderList> = resp.data?.data ?: arrayListOf()

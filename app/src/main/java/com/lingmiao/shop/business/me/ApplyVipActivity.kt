@@ -3,7 +3,7 @@ package com.lingmiao.shop.business.me
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.text.TextUtils
+import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.gone
@@ -12,7 +12,6 @@ import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.GoodsListActivity
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.UserServiceH5Activity
@@ -24,7 +23,6 @@ import com.lingmiao.shop.business.me.event.ApplyVipEvent
 import com.lingmiao.shop.business.me.event.PaySuccessEvent
 import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
-import com.lingmiao.shop.business.wallet.WalletInfoActivity
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.util.GlideUtils
@@ -38,141 +36,140 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 /**
-*   开通会员
-*/
-class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.View {
+ *   开通会员
+ */
+class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.View {
 
-    var mUserInfo : My? = null;
+    var mUserInfo: My? = null
 
-    var mIdentity : IdentityVo? = null;
+    var mIdentity: IdentityVo? = null
 
-    var mWallet : WalletVo? = null;
+    var mWallet: WalletVo? = null
 
-    var api : IWXAPI? = null;
+    var api: IWXAPI? = null
 
-    var isPayed : Boolean = false;
+    var isPayed: Boolean = false
 
     companion object {
-        fun openActivity(context: Context, my : My?, identity : IdentityVo?) {
+        fun openActivity(context: Context, my: My?, identity: IdentityVo?) {
             if (context is Activity) {
                 val intent = Intent(context, ApplyVipActivity::class.java)
                 intent.putExtra("clerk", my)
-                intent.putExtra("identity", identity);
+                intent.putExtra("identity", identity)
                 context.startActivity(intent)
             }
         }
     }
 
     override fun initBundles() {
-        mUserInfo = intent?.getParcelableExtra<My>("clerk");
-        mIdentity = intent?.getSerializableExtra("identity") as? IdentityVo;
+        mUserInfo = intent?.getParcelableExtra<My>("clerk")
+        mIdentity = intent?.getSerializableExtra("identity") as? IdentityVo
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.me_activity_apply_vip
-    }
+    override fun getLayoutId() = R.layout.me_activity_apply_vip
 
-    override fun createPresenter(): ApplyVipPresenter {
-        return ApplyVipPreImpl(this)
-    }
+    override fun createPresenter() = ApplyVipPreImpl(this)
 
-    override fun useLightMode(): Boolean {
-        return false;
-    }
+    override fun useLightMode() = false
 
     override fun initView() {
-        api = WXAPIFactory.createWXAPI(this, IWXConstant.APP_ID);
-        mToolBarDelegate?.setMidTitle("开通会员")
-        mPresenter?.getVipPriceList();
 
-        // 保障金支付
+        api = WXAPIFactory.createWXAPI(this, IWXConstant.APP_ID)
+        mToolBarDelegate?.setMidTitle("开通会员")
+        mPresenter?.getVipPriceList()
+
+        // 保障金支付   缴纳
         tvVip.singleClick {
-            mPresenter?.depositApply(mWallet);
+            mPresenter?.depositApply(mWallet)
         }
-        // 保障金[退款]
-        tvRecharge.singleClick {
-        }
-        // 保障金[充值]
+
+        // 保障金[退款]   退款
         tvRefund.singleClick {
-            mIdentity?.id?.let {
-                    it1 -> mPresenter.ensureRefund(it1);
+            mIdentity?.id?.let { it1 ->
+                mPresenter.ensureRefund(it1)
             }
         }
+
+        //立即开通
         tvApply.singleClick {
-            val list = galleryRv.getSelectItems();
-            if(list?.size > 0) {
-                val item = galleryRv.getCheckedItem();
-                mPresenter?.apply(item.id!!);
+            val list = galleryRv.getSelectItems()
+            if (list.isNotEmpty()) {
+                val item = galleryRv.getCheckedItem()
+                mPresenter?.apply(item.id!!)
             }
         }
+
         securityLayout.singleClick {
-            UserServiceH5Activity.security(this, 3);
+            UserServiceH5Activity.security(this, 3)
         }
-        setUserInfo();
-        mPresenter?.loadWalletData();
-        if(mIdentity == null) {
-            mPresenter?.getIdentity();
+
+        setUserInfo()
+
+        mPresenter?.loadWalletData()
+
+        if (mIdentity == null) {
+            mPresenter?.getIdentity()
         } else {
-            onSetVipInfo(mIdentity);
+            onSetVipInfo(mIdentity)
         }
     }
 
-    fun setUserInfo() {
+    private fun setUserInfo() {
         val loginInfo = UserManager.getLoginInfo()
         loginInfo?.apply {
             GlideUtils.setImageUrl(ivMyHead, shopLogo)
-            tvMyShopName.setText(shopName)
+            tvMyShopName.text = shopName
         }
-        tvMyName.setText(mUserInfo?.uname)
+        tvMyName.text = mUserInfo?.uname
         //ivMyShopStatus.visibility = if(loginInfo?.shopStatus=="OPEN") View.VISIBLE else View.GONE
     }
 
     override fun onSetVipPriceList(list: List<VipType>?) {
-        galleryRv.setDataList(list);
+        galleryRv.setDataList(list)
     }
 
 
-    override fun onSetVipInfo(item : IdentityVo?) {
-        dueDateTv.setText(String.format("试用时间%s到期,购买后有效期将顺延", item?.get_DueDateStr()));
+    override fun onSetVipInfo(item: IdentityVo?) {
+        dueDateTv.setText(String.format("试用时间%s到期,购买后有效期将顺延", item?.get_DueDateStr()))
 
-        if(item?.isVip() == true) {
-            dueDateTv.setText(String.format("%s%s到期,购买后有效期将顺延", "会员时间", item.get_DueDateStr()));
+        if (item?.isVip() == true) {
+            dueDateTv.setText(String.format("%s%s到期,购买后有效期将顺延", "会员时间", item.get_DueDateStr()))
             tvApply.setText("续费")
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_try_logo)
-            ivMyShopStatus.visiable();
+            ivMyShopStatus.visiable()
         } else {
-            dueDateTv.setText(String.format("%s%s到期,购买后有效期将顺延", "试用时间", item?.get_DueDateStr()));
+            dueDateTv.setText(String.format("%s%s到期,购买后有效期将顺延", "试用时间", item?.get_DueDateStr()))
             tvApply.setText("立即开通")
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_vip_period)
-            ivMyShopStatus.gone();
+            ivMyShopStatus.gone()
         }
     }
 
-    override fun onApplySuccess(item : WxPayReqVo?) {
-        if(api?.isWXAppInstalled ==true) {
-            val payReq = item?.getPayData();
-            if(payReq != null) {
-                api?.sendReq(payReq);
+    override fun onApplySuccess(value: WxPayReqVo?) {
+        if (api?.isWXAppInstalled == true) {
+            val payReq = value?.getPayData()
+            if (payReq != null) {
+                api?.sendReq(payReq)
             }
         } else {
-            showToast("请安装微信支付");
+            showToast("请安装微信支付")
         }
     }
 
-    override fun onDepositApplied(item: WxPayReqVo?) {
-        if(api?.isWXAppInstalled ==true) {
-            val payReq = item?.getPayData();
-            if(payReq != null) {
-                api?.sendReq(payReq);
+    override fun onDepositApplied(value: WxPayReqVo?) {
+        if (api?.isWXAppInstalled == true) {
+            val payReq = value?.getPayData()
+            if (payReq != null) {
+                api?.sendReq(payReq)
             }
         } else {
-            showToast("请安装微信支付");
+            showToast("请安装微信支付")
         }
     }
 
     override fun onRefundEnsured() {
-        showToast("退款成功");
-        ActivityUtils.finishToActivity(MainActivity::class.java,false)
+        showToast("退款成功")
+        ActivityUtils.finishToActivity(MainActivity::class.java, false)
     }
 
     override fun onRefundEnsureFail() {
@@ -183,19 +180,23 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
      * 加载成功
      */
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
-        mWallet = data;
-        tvBalance.setText(getString(R.string.wallet_value, formatDouble(data?.depositAccount?.balanceAmount?:0.0)));
-        if(data?.depositAccount?.balanceAmount?:0.0 > 0.0) {
-            tvVip.gone();
+        mWallet = data
+        tvBalance.text = getString(
+            R.string.wallet_value,
+            formatDouble(data?.depositAccount?.balanceAmount ?: 0.0)
+        )
+        if (data?.depositAccount?.balanceAmount ?: 0.0 > 0.0) {
+            tvVip.gone()
             tvRefund.visiable()
             tvRecharge.visiable()
-            tvDepositStatus.setText(getString(R.string.vip_deposit_applied))
+            tvDepositStatus.text = getString(R.string.vip_deposit_applied)
         } else {
-            tvVip.visiable();
+            tvVip.visiable()
             tvRefund.gone()
             tvRecharge.gone()
-            tvDepositStatus.setText(getString(R.string.vip_deposit_apply))
+            tvDepositStatus.text = getString(R.string.vip_deposit_apply)
         }
+        hideDialogLoading()
     }
 
     override fun onLoadedAccount(data: WithdrawAccountVo?) {
@@ -215,24 +216,24 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(),ApplyVipPresenter.Vie
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onPayed(event: PaySuccessEvent) {
-        isPayed = true;
-        mPresenter?.loadWalletData();
-        mPresenter?.getIdentity();
+        isPayed = true
+        mPresenter?.loadWalletData()
+        mPresenter?.getIdentity()
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        refreshUseVipStatus();
+        refreshUseVipStatus()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        refreshUseVipStatus();
+        refreshUseVipStatus()
     }
 
     fun refreshUseVipStatus() {
-        if(isPayed) {
-            EventBus.getDefault().post(ApplyVipEvent(from = 1));
+        if (isPayed) {
+            EventBus.getDefault().post(ApplyVipEvent(from = 1))
             EventBus.getDefault().post(PersonInfoRequest())
         }
     }
