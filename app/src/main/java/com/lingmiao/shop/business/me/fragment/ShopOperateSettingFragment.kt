@@ -11,7 +11,6 @@ import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
@@ -55,13 +54,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         shopReq = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.me_fragment_shop_operate_setting
-    }
+    override fun getLayoutId() = R.layout.me_fragment_shop_operate_setting
 
-    override fun createPresenter(): ShopOperateSettingPresenter {
-        return ShopOperateSettingPresenterImpl(requireContext(), this)
-    }
+
+    override fun createPresenter() = ShopOperateSettingPresenterImpl(requireContext(), this)
+
 
     override fun initViewsAndData(rootView: View) {
 
@@ -70,7 +67,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             mPresenter?.showWorkTimePop(it)
         }
 
-        //是否自动打印
+        //是否自动打印(暂时保存在本地)
         autoPrinterSb.isChecked = UserManager.isAutoPrint()
         autoPrinterSb.setOnCheckedChangeListener { _, isChecked ->
             UserManager.setAutoPrint(isChecked)
@@ -81,6 +78,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             ActivityUtils.startActivity(DeliveryManagerActivity::class.java)
         }
 
+        //初始化Banner图设置
         initBanner()
 
         // 保存
@@ -114,7 +112,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             //配送设置
             shopReq.shopTemplateType = getTemplate()
 
-            //提交设置
+            //保存设置
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
@@ -122,7 +120,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
         //配送设置
         mPresenter?.loadTemplate()
-
 
         //accept_carriage为0时，不显示骑手配送
         if (shopReq.accept_carriage == 0) {
@@ -159,22 +156,26 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun onSetSetting() {
-
+        //nothing to do
     }
 
+    //商家配送模板
     var mLocalItem: FreightVoItem? = null
 
+    //骑手配送模板
     var mRiderItem: FreightVoItem? = null
 
     override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {
         this.mLocalItem = tcItem
         this.mRiderItem = qsItem
+        //模板不为空，即是已设置
         tcItem?.apply {
             tvShopStatus.text = "已设置"
         }
         qsItem?.apply {
             tvRiderStatus.text = "已设置"
         }
+
         layoutShop.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.cb_model_shop) {
                 if ((mLocalItem == null || mLocalItem?.id == null) && cb_model_shop.isChecked) {
@@ -186,12 +187,14 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 }
             }
         }
+
+        //设置商家配送
         tvShopStatus.singleClick {
-            //shopReq.accept_carriage决定是否显示骑手配送
             DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.accept_carriage)
         }
+
+        //设置骑手配送
         tvRiderStatus.singleClick {
-            //默认使用骑手配送
             DeliveryManagerActivity.rider(mContext as Activity, mRiderItem)
         }
     }

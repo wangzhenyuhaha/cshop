@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
@@ -140,11 +141,13 @@ class ShopOperateSettingPresenterImpl(
 
     override fun loadTemplate() {
         mCoroutine.launch {
+            //商家配送
             val tcsp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_LOCAL)
+            //骑手配送
             val qssp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_QISHOU)
             if (tcsp.isSuccess && qssp.isSuccess) {
-                val tcItem = if (tcsp?.data?.size ?: 0 > 0) tcsp?.data?.get(0) else null
-                val qsItem = if (qssp?.data?.size ?: 0 > 0) qssp?.data?.get(0) else null
+                val tcItem = if (tcsp.data?.size ?: 0 > 0) tcsp.data?.get(0) else null
+                val qsItem = if (qssp.data?.size ?: 0 > 0) qssp.data?.get(0) else null
                 view.onLoadedTemplate(tcItem, qsItem)
             }
         }

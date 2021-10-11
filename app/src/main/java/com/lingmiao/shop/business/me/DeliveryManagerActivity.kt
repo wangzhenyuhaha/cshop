@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.KeyboardUtils
@@ -42,10 +43,13 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
 
     companion object {
 
+        //配送模板
         const val KEY_ITEM = "KEY_ITEM"
 
+        //1商家配送 2骑手配送
         const val KEY_VIEW_TYPE = "KEY_VIEW_TYPE"
 
+        //0不显示棋手配送   1显示骑手配送
         const val KEY_TYPE = "KEY_TYPE"
 
         fun shop(context: Activity, item: FreightVoItem?, type: Int) {
@@ -66,7 +70,9 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     }
 
     override fun initBundles() {
+        //获取模板
         mItem = intent?.getSerializableExtra(KEY_ITEM) as FreightVoItem?
+        //获取模板类型，默认为商家配送
         mViewType = intent?.getIntExtra(KEY_VIEW_TYPE, 1)
         if (mViewType == 1) {
             type = intent?.getIntExtra(KEY_TYPE, 1) ?: 1
@@ -98,8 +104,8 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             // 当键盘未关闭时先拦截事件
             if (KeyboardUtils.isSoftInputVisible(context)) {
-                KeyboardUtils.hideSoftInput(context);
-                return true;
+                KeyboardUtils.hideSoftInput(context)
+                return true
             }
         }
         return super.dispatchTouchEvent(ev)
@@ -112,8 +118,11 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
+        Log.d("WZYKK", mItem.toString())
         if (type == 1) {
             fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
+            Log.d("WZYKK", mItem.toString())
+
         }
 
 
