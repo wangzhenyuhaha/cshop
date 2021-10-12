@@ -68,7 +68,7 @@ object ShopStatusConstants {
     const val WEIXIN_AUTHEN_APPLYING = "WEIXIN_AUTHEN_APPLYING";
 
     /**
-     * 最张状态
+     * 最终状态
      */
     const val FINAL_OPEN = "FINAL_OPEN";
     /**

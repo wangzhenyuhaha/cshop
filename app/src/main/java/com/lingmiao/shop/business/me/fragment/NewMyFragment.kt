@@ -131,12 +131,15 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             R.id.tvShopQRCode -> {
                 // 二维码
                 if (isAudited()) {
+                    //ShopStatusConstants.FINAL_OPEN
                     val context = ActivityUtils.getTopActivity()
                     val intent = Intent(context, ShopQRCodeActivity::class.java)
                     intent.putExtra("SHOP_ID", my?.shopId)
                     context.startActivity(intent)
+                } else if (UserManager.getLoginInfo()?.shopStatus == ShopStatusConstants.OVERDUE) {
+                    showToast(UserManager.getLoginInfo()?.statusReason)
                 } else {
-                    showToast("店铺审核中，审核通过后即可查看二维码");
+                    showToast("店铺审核中，审核通过后即可查看二维码")
                 }
             }
             R.id.tvBalance -> {

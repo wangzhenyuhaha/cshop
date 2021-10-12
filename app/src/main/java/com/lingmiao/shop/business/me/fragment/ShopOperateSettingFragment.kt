@@ -56,9 +56,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     override fun getLayoutId() = R.layout.me_fragment_shop_operate_setting
 
-
     override fun createPresenter() = ShopOperateSettingPresenterImpl(requireContext(), this)
-
 
     override fun initViewsAndData(rootView: View) {
 
