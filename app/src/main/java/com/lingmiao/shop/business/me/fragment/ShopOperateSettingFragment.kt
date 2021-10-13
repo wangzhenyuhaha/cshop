@@ -174,6 +174,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             tvRiderStatus.text = "已设置"
         }
 
+        Log.d("WZYAVV",tcItem.toString())
+        Log.d("WZYAVV",qsItem.toString())
+
         layoutShop.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.cb_model_shop) {
                 if ((mLocalItem == null || mLocalItem?.id == null) && cb_model_shop.isChecked) {

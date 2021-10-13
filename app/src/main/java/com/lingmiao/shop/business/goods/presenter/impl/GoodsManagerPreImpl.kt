@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
@@ -31,10 +32,12 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
 
     override fun loadListData(page: IPage, oldDatas: List<*>, cId: String) {
         mCoroutine.launch {
+            Log.d("WZYUUI","AAA")
             if (oldDatas.isEmpty()) {
                 view.showPageLoading()
             }
             val resp = GoodsRepository.getCenterGoods(page.getPageIndex(), cId)
+            Log.d("WZYUUI",page.getPageIndex().toString())
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
 

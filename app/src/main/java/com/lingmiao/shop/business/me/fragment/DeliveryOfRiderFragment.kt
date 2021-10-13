@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.me.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
@@ -26,43 +27,60 @@ Create Date : 2021/3/53:40 PM
 Auther      : Fox
 Desc        :
  **/
-class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), DeliveryOfRiderPresenter.View {
+class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
+    DeliveryOfRiderPresenter.View {
 
-    private lateinit var mPriceAdapter : PriceAdapter
-    private lateinit var mRangeAdapter : RangeAdapter
-    private lateinit var mTimeAdapter : TimeAdapter
+    private lateinit var mPriceAdapter: PriceAdapter
+    private lateinit var mRangeAdapter: RangeAdapter
+    private lateinit var mTimeAdapter: TimeAdapter
 
-    private lateinit var mTimeList : MutableList<TimeSection>
-    private lateinit var mRangeList : MutableList<PeekTime>
-    private lateinit var mPriceList : MutableList<DistanceSection>
-    private lateinit var mTimeValueList : MutableList<TimeValue>
-    private lateinit var mDayTypeList : MutableList<String>
+    private lateinit var mTimeList: MutableList<TimeSection>
+    private lateinit var mRangeList: MutableList<PeekTime>
+    private lateinit var mPriceList: MutableList<DistanceSection>
+    private lateinit var mTimeValueList: MutableList<TimeValue>
+    private lateinit var mDayTypeList: MutableList<String>
 
     private var mItem: FreightVoItem? = null
 
     private var mShopItem: FreightVoItem? = null
 
-    var mFeeSetting : FeeSettingVo = FeeSettingVo()
+    var mFeeSetting: FeeSettingVo = FeeSettingVo()
 
-    var mTimeSetting : TimeSettingVo = TimeSettingVo()
+    var mTimeSetting: TimeSettingVo = TimeSettingVo()
+
+    //0可以操作  1不可操作
+    private var type = 0
 
     companion object {
-        fun newInstance(item : FreightVoItem?): DeliveryOfRiderFragment {
+        fun newInstance(item: FreightVoItem?): DeliveryOfRiderFragment {
             return DeliveryOfRiderFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("item", item)
+                    putInt("type", 0)
                 }
             }
         }
+
+        fun newInstance(item: FreightVoItem?, type: Int): DeliveryOfRiderFragment {
+            return DeliveryOfRiderFragment().apply {
+                arguments = Bundle().apply {
+                    putSerializable("item", item)
+                    putInt("type", type)
+                }
+            }
+        }
+
     }
 
     override fun initBundles() {
         mItem = arguments?.getSerializable("item") as FreightVoItem?
+        type = arguments?.getInt("type", 0) ?: 0
     }
 
 
     override fun getLayoutId(): Int {
         return R.layout.me_fragment_delivery_of_rider
+
     }
 
     override fun createPresenter(): DeliveryOfRiderPresenter {
@@ -70,23 +88,23 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
     }
 
     override fun initViewsAndData(rootView: View) {
-         initPricePart()
+        initPricePart()
 
-         initRangePart()
+        initRangePart()
 
-         initTimePart()
+        initTimePart()
 
-         updateTimeCheckBox()
+        updateTimeCheckBox()
 
-         updateCityExpressPayTypeCheckBox()
+        updateCityExpressPayTypeCheckBox()
 
         tvShopSettingSubmit.singleClick {
-            if(mShopItem == null || mShopItem?.id == null || mShopItem?.id?.length == 0) {
+            if (mShopItem == null || mShopItem?.id == null || mShopItem?.id?.length == 0) {
                 return@singleClick
             }
             var setting = TimeSettingVo()
             // setting?.readyTime = deliveryThingEt.getViewText().toInt();
-            if(shiftDeliveryCb.isChecked) {
+            if (shiftDeliveryCb.isChecked) {
                 setting.isAllowTransTemp = 1
                 setting.transTempLimitTime = deliveryShiftTimeEt.getViewText().toInt()
             } else {
@@ -94,7 +112,11 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                 setting.transTempLimitTime = 0
             }
 
-            mPresenter?.updateModel(mShopItem?.id!!, setting.isAllowTransTemp!!, setting.transTempLimitTime!!)
+            mPresenter?.updateModel(
+                mShopItem?.id!!,
+                setting.isAllowTransTemp!!,
+                setting.transTempLimitTime!!
+            )
         }
 
 //        shiftDeliveryCb.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -103,7 +125,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
 //            }
 //        }
 
-        if(mItem == null) {
+        if (mItem == null) {
             mPresenter?.getTemplate()
         } else {
             setUi()
@@ -125,11 +147,11 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
      */
     private fun updateTimeCheckBox() {
         rg_model_time.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.cb_model_time_km) {
+            if (checkedId == R.id.cb_model_time_km) {
                 ll_model_km.visibility = View.VISIBLE
                 rv_model_time.visibility = View.GONE
 
-            } else if(checkedId == R.id.cb_model_time_section){
+            } else if (checkedId == R.id.cb_model_time_section) {
                 ll_model_km.visibility = View.GONE
                 rv_model_time.visibility = View.VISIBLE
             }
@@ -141,10 +163,10 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
      */
     private fun updateCityExpressPayTypeCheckBox() {
         rg_model_pay_km.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.cb_model_pay_km_section) {
+            if (checkedId == R.id.cb_model_pay_km_section) {
                 rv_model_price.visibility = View.VISIBLE
                 ll_model_price_section.visibility = View.GONE
-            } else if(checkedId == R.id.cb_model_pay_km_num) {
+            } else if (checkedId == R.id.cb_model_pay_km_num) {
                 rv_model_price.visibility = View.GONE
                 ll_model_price_section.visibility = View.VISIBLE
             }
@@ -162,9 +184,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                 if (view.id == R.id.tv_model_range_delete && position != 0) {
                     mRangeList.remove(item)
                     mRangeAdapter.replaceData(mRangeList)
-                } else if(view.id == R.id.et_model_range_start) {
+                } else if (view.id == R.id.et_model_range_start) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         run {
                             item?.peekTimeStart = it?.name
                             item?.startTimeCount = it?.value
@@ -173,9 +195,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     }
                     pop.shiftStartTime(item?.endTimeCount ?: TimeValue.getLastTimeCount())
                     pop.showPopupWindow()
-                } else if(view.id == R.id.et_model_range_end) {
+                } else if (view.id == R.id.et_model_range_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         run {
                             item?.peekTimeEnd = it?.name
                             item?.endTimeCount = it?.value
@@ -217,9 +239,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                 if (view.id == R.id.tv_model_time_delete && position != 0) {
                     mTimeList.remove(item)
                     mTimeAdapter.replaceData(mTimeList)
-                } else if(view.id == R.id.et_model_km_start) {
+                } else if (view.id == R.id.et_model_km_start) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         run {
                             item?.shipTime = it?.name
                             item?.shipTimeCount = it?.value
@@ -228,25 +250,25 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
                     }
                     pop.shiftStartTime(item?.arriveTimeCount ?: TimeValue.getLastTimeCount())
                     pop.showPopupWindow()
-                } else if(view.id == R.id.et_model_km_end) {
+                } else if (view.id == R.id.et_model_km_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         item?.arriveTime = it?.name
                         item?.arriveTimeCount = it?.value
                         run {
                             mTimeAdapter.notifyDataSetChanged()
                         }
                     }
-                    pop.shiftEndTime(if(item?.isToday()) item?.shipTimeCount ?: -1 else -1);
+                    pop.shiftEndTime(if (item?.isToday()) item?.shipTimeCount ?: -1 else -1);
                     pop.showPopupWindow()
-                } else if(view.id == R.id.tv_model_time_type) {
+                } else if (view.id == R.id.tv_model_time_type) {
                     val pop = DayPop(requireContext(), mDayTypeList)
                     pop.setOnClickListener { it, position ->
 
                         run {
-                            if(position == 0) {
+                            if (position == 0) {
                                 item?.shiftToday()
-                                if(item?.arriveTimeCount ?:0 <= item?.shipTimeCount?:0) {
+                                if (item?.arriveTimeCount ?: 0 <= item?.shipTimeCount ?: 0) {
                                     item?.arriveTime = null
                                     item?.arriveTimeCount = null
                                     mTimeAdapter.notifyDataSetChanged()
@@ -327,7 +349,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
         }
 
         mTimeSetting?.apply {
-            if(isBaseTimeType()) {
+            if (isBaseTimeType()) {
                 cb_model_time_km.isChecked = true
                 et_model_time_km.setText(String.format("%s", mTimeSetting?.baseDistance));
                 et_model_time_minute.setText(String.format("%s", mTimeSetting?.baseTime));
@@ -341,15 +363,16 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(), Delive
             }
         }
     }
+
     override fun setModel(item: FreightVoItem?) {
         mItem = item ?: FreightVoItem()
 
         setUi()
     }
 
-    override fun onSetShopDeliveryStatus(size : Int, item: FreightVoItem?) {
+    override fun onSetShopDeliveryStatus(size: Int, item: FreightVoItem?) {
         shiftDeliveryCb.isChecked = size > 0
-        if(size <= 0) {
+        if (size <= 0) {
             showToast("请先设置商家配置送模板")
         }
         mShopItem = item ?: FreightVoItem()

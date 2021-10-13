@@ -118,11 +118,8 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
-        Log.d("WZYKK", mItem.toString())
         if (type == 1) {
-            fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
-            Log.d("WZYKK", mItem.toString())
-
+            fragments.add(DeliveryOfRiderFragment.newInstance(mItem,1))
         }
 
 

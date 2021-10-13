@@ -63,18 +63,33 @@ data class FreightVoItem(
     @SerializedName("name")
     var name: String? = "",
     /**
-     * 模板通途: KUAIDI TONGCHENG
+     * 模板通途: TONGCHENG   QISHOU
      */
     @SerializedName("template_type")
     var templateType: String? = "",
+
     /**
      * 配送费用
      */
+    //baseDistance 基础距离
+    //basePrice  基础价格
+    //feeType   费用配置类型 1.基础距离配送费计算 2.距离区间配送费计算
+    //unitDistance 单位距离
+    //unitPrice  单位费用
     @SerializedName("fee_setting")
     var feeSetting: String? = "",
+
     /**
      * 配送时间
      */
+    //baseDistance  基础距离
+    //baseTime  基础价格
+    //isAllowTransTemp  是否允许转换配送模版（是否允许骑手转商家）
+    //readyTime  商家准备时间
+    //timeType  时间配置类型
+    //transTempLimitTime  转换模版时间配置
+    //unitDistance  单位距离
+    //unitTime  单位费用
     @SerializedName("time_setting")
     var timeSetting: String? = "",
     /**
@@ -97,13 +112,17 @@ data class FreightVoItem(
      */
     @SerializedName("min_ship_price")
     var minShipPrice: Double? = 0.0,
+
     @SerializedName("items")
     var items: MutableList<Item>? = arrayListOf(),
+
     @SerializedName("local_template")
     var localTemplate: Any? = Any(),
     var tempArea : TempArea ? = null,
+
     @SerializedName("fee_setting_vo")
     var feeSettingVo: FeeSettingReqVo? = FeeSettingReqVo(),
+
     @SerializedName("time_setting_vo")
     var timeSettingVo: TimeSettingReqVo? = TimeSettingReqVo()
 ) : Serializable{
@@ -562,18 +581,25 @@ data class TimeSection(
 }
 
 data class FeeSettingReqVo(
+    //
     @SerializedName("base_distance")
     var baseDistance: String? = "",
+    //
     @SerializedName("base_price")
     var basePrice: String? = "",
+    //
     @SerializedName("unit_distance")
     var unitDistance: String? = "",
+    //
     @SerializedName("unit_price")
     var unitPrice: String? = "",
+    //
     @SerializedName("distance_sections")
     var distanceSections: List<DistanceSectionReq>? = listOf(),
+    //
     @SerializedName("fee_type")
     var feeType: Int? = 0,
+    //
     @SerializedName("peek_times")
     var peekTimes: List<PeekTimeReq>? = listOf()
 ) : Serializable {
