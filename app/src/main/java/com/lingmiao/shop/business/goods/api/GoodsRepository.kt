@@ -521,7 +521,7 @@ object GoodsRepository {
         val map = mutableMapOf<String, Any>()
         map.put("category_path", cId)
         map.put("page_no", pageNo)
-        map.put("page_size", 300)
+        map.put("page_size", 10)
         return apiService.getCenterGoods(map).awaitHiResponse()
     }
 

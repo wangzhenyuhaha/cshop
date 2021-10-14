@@ -52,11 +52,11 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
     }
 
     override fun useLightMode(): Boolean {
-        return false;
+        return false
     }
 
     override fun autoRefresh(): Boolean {
-        return false;
+        return false
     }
 
     override fun initOthers() {
@@ -84,7 +84,7 @@ class GoodsSearchActivity: BaseLoadMoreActivity<GoodsVO, GoodsSearchPre>(),
     }
 
     fun setSearchStatus() {
-        searchStatusTv.setText(if(isGoodsName) "商品名称" else "供应商");
+        searchStatusTv.setText(if(isGoodsName) "商品名称" else "供应商")
     }
 
     override fun initAdapter(): GoodsStatusAdapter {

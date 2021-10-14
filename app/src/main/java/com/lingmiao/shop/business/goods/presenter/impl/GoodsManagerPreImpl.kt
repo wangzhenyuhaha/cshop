@@ -41,12 +41,25 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
 
+                //??
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {
                 view.onLoadMoreFailed()
             }
             view.hidePageLoading()
         }
+
+
+        //
+        //            val resp = GoodsRepository.loadGoodsListByName(page.getPageIndex(), if(isGoodsName) searchText else null, if(isGoodsName) null else searchText)
+        //            if (resp.isSuccess) {
+        //                val goodsList = resp.data.data
+        //                view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
+        //            } else {
+        //                view.onLoadMoreFailed()
+        //            }
+        //            view.hidePageLoading()
+        //        }
     }
 
     override fun add(ids: String) {
