@@ -9,7 +9,7 @@ import java.io.Serializable
 /**
  * @author elson
  * @date 2020/7/18
- * @Desc 店铺分组
+ * @Desc 店铺菜单
  */
 class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Serializable {
 
@@ -37,6 +37,8 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     var isTop: Int = 0
     @SerializedName("sort")
     var sort: Int = 0
+    @SerializedName("goods_num")
+    var goods_num: Int = 0
     /**
      * 是否选中
      */

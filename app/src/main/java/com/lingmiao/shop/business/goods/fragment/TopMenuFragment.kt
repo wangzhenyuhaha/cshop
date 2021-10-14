@@ -57,6 +57,7 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
 
     var mSelectPosition: Int? = null
     var mCheckedItem: ShopGroupVO? = null
+
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
         val dadapter = MenuAdapter().apply {
             setOnItemClickListener { adapter, view, position ->
