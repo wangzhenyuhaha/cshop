@@ -18,7 +18,7 @@
             android:layout_height="@dimen/dimen_30"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="商品类目选择"
+            android:text="商品分类选择"
             android:textColor="@color/color_333333"
             android:textSize="@dimen/dimen_15" />
 
@@ -47,7 +47,7 @@
 
             <TextView
                 style="@style/style_goods_category_title"
-                android:text="一级类目" />
+                android:text="一级分类" />
 
             <ImageView
                 android:id="@+id/level1IndicatorIv"
@@ -64,7 +64,7 @@
 
             <TextView
                 style="@style/style_goods_category_title"
-                android:text="二级类目" />
+                android:text="二级分类" />
 
             <ImageView
                 android:id="@+id/level2IndicatorIv"
@@ -81,7 +81,7 @@
 
             <TextView
                 style="@style/style_goods_category_title"
-                android:text="三级类目" />
+                android:text="三级分类" />
 
             <ImageView
                 android:id="@+id/level3IndicatorIv"

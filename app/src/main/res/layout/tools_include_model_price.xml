@@ -33,9 +33,9 @@
             android:hint="请输入起送价，必填"
             android:inputType="numberDecimal"
             android:orientation="horizontal"
+            android:paddingStart="0dp"
             android:paddingTop="@dimen/dimen_15"
             android:paddingEnd="@dimen/dimen_5"
-            android:paddingStart="0dp"
             android:paddingBottom="@dimen/dimen_15"
             android:singleLine="true"
             android:textColor="@color/color_333333"
@@ -57,7 +57,9 @@
     <View style="@style/DivideLineHorizontal" />
 
     <LinearLayout
+        android:layout_marginTop="@dimen/dimen_5"
         android:layout_width="match_parent"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -70,12 +72,31 @@
                 android:text="*" />
 
             <TextView
+                android:layout_width="wrap_content"
                 android:id="@+id/tv_model_price_hint"
                 style="@style/tools_sub_item_left"
-                android:text="配送费" />
-
+                android:text="配送费 " />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(若免配送费，请把金额设置为0)"
+            android:textColor="@color/color_999999"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:visibility="invisible"
+            style="@style/tools_sub_item_star"
+            android:text="*" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_model_price"
@@ -87,8 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            tools:visibility="visible"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -197,6 +218,11 @@
 
         </LinearLayout>
 
+
+
     </LinearLayout>
+
+
+
 
 </LinearLayout>
