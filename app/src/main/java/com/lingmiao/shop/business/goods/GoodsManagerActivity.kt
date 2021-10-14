@@ -31,12 +31,13 @@ Create Date : 2021/3/69:58 AM
 Auther      : Fox
 Desc        :
  **/
-class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), GoodsManagerPre.View {
+class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
+    GoodsManagerPre.View {
 
 
-    private var mCateVo : CategoryVO? = null
-    private var cId : String =""
-    private var mSourceId : Int? = 0;
+    private var mCateVo: CategoryVO? = null
+    private var cId: String = ""
+    private var mSourceId: Int? = 0;
 
     companion object {
 
@@ -90,9 +91,8 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
         return R.layout.goods_activity_goods_manager;
     }
 
-    override fun createPresenter(): GoodsManagerPre {
-        return GoodsManagerPreImpl(this, this);
-    }
+    override fun createPresenter() = GoodsManagerPreImpl(this, this);
+
 
     override fun initOthers() {
         mToolBarDelegate.setMidTitle("中心库商品管理")
@@ -108,19 +108,19 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
             setCheckedCount(getCheckedCount());
         }
         goodsCheckSubmit.setOnClickListener {
-            if(getCheckedCount() > 0) {
-                if(mSourceId == SOURCE_TYPE) {
+            if (getCheckedCount() > 0) {
+                if (mSourceId == SOURCE_TYPE) {
 
-                    val list =  mAdapter?.data?.filter { it?.isChecked==true };
+                    val list = mAdapter?.data?.filter { it?.isChecked == true };
 
-                    if(list.size > 0) {
+                    if (list.size > 0) {
 
                         var ids = list?.map { it?.goodsId }?.joinToString(separator = ",");
 
                         mPresenter?.add(ids);
                     }
                 } else {
-                    EventBus.getDefault().post(MenuEvent(1,1));
+                    EventBus.getDefault().post(MenuEvent(1, 1));
                     finish();
                 }
             }
@@ -128,17 +128,17 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
 
         // 禁用下拉刷新
         mSmartRefreshLayout.setEnableRefresh(false)
-        mSmartRefreshLayout.setEnableLoadMore(false)
+        mSmartRefreshLayout.setEnableLoadMore(true)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
     }
 
     override fun onAddSuccess() {
 //                EventBus.getDefault().post(TabChangeEvent(2))
         EventBus.getDefault().post(GoodsHomeTabEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
-        ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+        ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
     }
 
-    override fun onUpdateCategory(it : CategoryVO?) {
+    override fun onUpdateCategory(it: CategoryVO?) {
         firstTypeTv.setText(it?.name);
         mCateVo = it;
         cId = it?.categoryPath!!;
@@ -150,7 +150,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
             setOnItemChildClickListener { adapter, view, position ->
                 val bItem = adapter.data[position] as GoodsVO;
                 if (view.id == R.id.menuIv) {
-                    bItem?.isChecked = !(bItem?.isChecked?:false);
+                    bItem?.isChecked = !(bItem?.isChecked ?: false);
                 }
                 setCheckedCount(getCheckedCount());
             }
@@ -163,11 +163,11 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(), G
         }
     }
 
-    fun getCheckedCount() : Int {
+    fun getCheckedCount(): Int {
         return mAdapter?.data?.filter { it?.isChecked == true }?.size;
     }
 
-    fun setCheckedCount(count : Int) {
+    fun setCheckedCount(count: Int) {
         goodsCheckedCountTv.text = String.format("已选择%s件商品", count);
     }
 
