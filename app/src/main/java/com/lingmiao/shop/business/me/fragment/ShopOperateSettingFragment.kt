@@ -38,6 +38,10 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     var shopReq: ApplyShopInfo = ApplyShopInfo()
 
+    var mLocalItem: FreightVoItem? = null
+
+    var mRiderItem: FreightVoItem? = null
+
     companion object {
 
         const val TAG = "ShopOperateSetting"
@@ -64,16 +68,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun initViewsAndData(rootView: View) {
-
         // 营业时间
         tvShopOperateTime.setOnClickListener {
             mPresenter?.showWorkTimePop(it)
-        }
-
-        //是否自动打印
-        autoPrinterSb.isChecked = UserManager.isAutoPrint()
-        autoPrinterSb.setOnCheckedChangeListener { _, isChecked ->
-            UserManager.setAutoPrint(isChecked)
         }
 
         // 配送设置
@@ -83,15 +80,16 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
         initBanner()
 
+        onLoadedShopSetting(shopReq)
+
+        //配送设置
+        mPresenter?.loadTemplate()
+
+        //加载Banner图
+        mPresenter?.getBanner()
+
         // 保存
         tvShopOperateSubmit.setOnClickListener {
-
-            //增加对营业时间未设置时的判断
-            //未完待续
-
-            //自动接单
-            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
-
             //未接订单自动取消时间
             if (tvShopManageNumber.getViewText().isEmpty()) {
                 showToast("请输入未接订单自动取消时间")
@@ -102,36 +100,31 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 showToast("未接订单自动取消时间不能大于5分钟")
                 return@setOnClickListener
             }
-            shopReq.cancelOrderTime = cancelOrderTime
-
-            //联系电话
             if (linkTelEt.text.toString().isEmpty()) {
                 showToast("请输入正确的手机号码")
                 return@setOnClickListener
             }
+            //未完待续:增加对营业时间未设置时的判断
+            //自动接单
+            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
+            // 自动打印
+            shopReq.autoPrint = if(autoPrinterSb.isChecked) 1 else 0
+            // 取消订单
+            shopReq.cancelOrderTime = cancelOrderTime
+            // 联系电话
             shopReq.companyPhone = linkTelEt.text.toString()
-
             //配送设置
             shopReq.shopTemplateType = getTemplate()
-
             //提交设置
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
-        onLoadedShopSetting(shopReq)
+    }
 
-        //配送设置
-        mPresenter?.loadTemplate()
-
-
-        //accept_carriage为0时，不显示骑手配送
-        if (shopReq.accept_carriage == 0) {
-            cb_model_rider.gone()
-            tvRiderStatus.gone()
-        }
-
-        //加载Banner图
-        mPresenter?.getBanner()
+    //设置Banner图上传
+    private fun initBanner() {
+        galleryRv.setCountLimit(1, 5)
+        galleryRv.setAspectRatio(750, 176)
     }
 
     fun getTemplate(): String {
@@ -144,12 +137,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         }
     }
 
-    //设置Banner图上传
-    private fun initBanner() {
-        galleryRv.setCountLimit(1, 5)
-        galleryRv.setAspectRatio(750, 176)
-    }
-
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
         shopReq.openStartTime = item1?.itemName
         // 处理【第二天】文字，服务端不需要返回
@@ -159,12 +146,8 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun onSetSetting() {
-
+        UserManager.setAutoPrint(autoPrinterSb.isChecked);
     }
-
-    var mLocalItem: FreightVoItem? = null
-
-    var mRiderItem: FreightVoItem? = null
 
     override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {
         this.mLocalItem = tcItem
@@ -208,6 +191,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         vo.apply {
             orderSetting?.apply {
                 autoOrderSb.isChecked = autoAccept == 1
+                autoPrinterSb.isChecked = autoPrint == 1
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
             }
             shopReq.openStartTime = vo.openStartTime
