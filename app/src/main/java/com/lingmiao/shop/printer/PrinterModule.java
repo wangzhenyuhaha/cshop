@@ -78,7 +78,7 @@ public class PrinterModule {
     // 初始化连接的蓝牙设备
     public static void initBindDevice(PrinterConnectListener listener) {
         List<String> btList = getEnableBluetoothList();
-        if(myBinder == null || btList == null || btList.get(0) == null || btList.get(0).length() == 0) {
+        if(myBinder == null || btList == null || btList.size() == 0 || btList.get(0) == null || btList.get(0).length() == 0) {
             ToastUtils.showShort("没有蓝牙打印机可连接");
             return;
         }
@@ -92,12 +92,13 @@ public class PrinterModule {
     public static List<String> getEnableBluetoothList() {
         Set<BluetoothDevice> device = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
         List<String> btList = new ArrayList();
-        if (device.size() > 0) {
-            //存在已经配对过的蓝牙设备
-            for (Iterator<BluetoothDevice> it = device.iterator(); it.hasNext(); ) {
-                BluetoothDevice btd = it.next();
-                btList.add(String.format("%s\n%s", btd.getName(), btd.getAddress()));
-            }
+        if(device == null || device.size() == 0) {
+            return btList;
+        }
+        //存在已经配对过的蓝牙设备
+        for (Iterator<BluetoothDevice> it = device.iterator(); it.hasNext(); ) {
+            BluetoothDevice btd = it.next();
+            btList.add(String.format("%s\n%s", btd.getName(), btd.getAddress()));
         }
         return btList;
     }
