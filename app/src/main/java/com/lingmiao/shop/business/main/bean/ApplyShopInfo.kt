@@ -11,6 +11,9 @@ data class ApplyShopInfo(
     @SerializedName("shop_type")
     var shopType: Int? = null,
 
+    // 自动打印
+    @SerializedName("auto_print")
+    var autoPrint: Int? = null,
     //三证合一
     //必填
     //是否三证合一 1：是 0：否

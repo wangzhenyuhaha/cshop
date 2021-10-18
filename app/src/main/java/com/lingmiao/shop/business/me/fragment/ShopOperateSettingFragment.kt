@@ -11,6 +11,7 @@ import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
@@ -37,6 +38,10 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     var shopReq: ApplyShopInfo = ApplyShopInfo()
 
+    var mLocalItem: FreightVoItem? = null
+
+    var mRiderItem: FreightVoItem? = null
+
     companion object {
 
         const val TAG = "ShopOperateSetting"
@@ -54,21 +59,18 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         shopReq = arguments?.getSerializable("item") as ApplyShopInfo
     }
 
-    override fun getLayoutId() = R.layout.me_fragment_shop_operate_setting
+    override fun getLayoutId(): Int {
+        return R.layout.me_fragment_shop_operate_setting
+    }
 
-    override fun createPresenter() = ShopOperateSettingPresenterImpl(requireContext(), this)
+    override fun createPresenter(): ShopOperateSettingPresenter {
+        return ShopOperateSettingPresenterImpl(requireContext(), this)
+    }
 
     override fun initViewsAndData(rootView: View) {
-
         // 营业时间
         tvShopOperateTime.setOnClickListener {
             mPresenter?.showWorkTimePop(it)
-        }
-
-        //是否自动打印(暂时保存在本地)
-        autoPrinterSb.isChecked = UserManager.isAutoPrint()
-        autoPrinterSb.setOnCheckedChangeListener { _, isChecked ->
-            UserManager.setAutoPrint(isChecked)
         }
 
         // 配送设置
@@ -76,18 +78,18 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             ActivityUtils.startActivity(DeliveryManagerActivity::class.java)
         }
 
-        //初始化Banner图设置
         initBanner()
+
+        onLoadedShopSetting(shopReq)
+
+        //配送设置
+        mPresenter?.loadTemplate()
+
+        //加载Banner图
+        mPresenter?.getBanner()
 
         // 保存
         tvShopOperateSubmit.setOnClickListener {
-
-            //增加对营业时间未设置时的判断
-            //未完待续
-
-            //自动接单
-            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
-
             //未接订单自动取消时间
             if (tvShopManageNumber.getViewText().isEmpty()) {
                 showToast("请输入未接订单自动取消时间")
@@ -98,35 +100,31 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 showToast("未接订单自动取消时间不能大于5分钟")
                 return@setOnClickListener
             }
-            shopReq.cancelOrderTime = cancelOrderTime
-
-            //联系电话
             if (linkTelEt.text.toString().isEmpty()) {
                 showToast("请输入正确的手机号码")
                 return@setOnClickListener
             }
+            //未完待续:增加对营业时间未设置时的判断
+            //自动接单
+            shopReq.autoAccept = if (autoOrderSb.isChecked) 1 else 0
+            // 自动打印
+            shopReq.autoPrint = if(autoPrinterSb.isChecked) 1 else 0
+            // 取消订单
+            shopReq.cancelOrderTime = cancelOrderTime
+            // 联系电话
             shopReq.companyPhone = linkTelEt.text.toString()
-
             //配送设置
             shopReq.shopTemplateType = getTemplate()
-
-            //保存设置
+            //提交设置
             mPresenter?.setSetting(shopReq, galleryRv.getSelectPhotos())
         }
 
-        onLoadedShopSetting(shopReq)
+    }
 
-        //配送设置
-        mPresenter?.loadTemplate()
-
-        //accept_carriage为0时，不显示骑手配送
-        if (shopReq.accept_carriage == 0) {
-            cb_model_rider.gone()
-            tvRiderStatus.gone()
-        }
-
-        //加载Banner图
-        mPresenter?.getBanner()
+    //设置Banner图上传
+    private fun initBanner() {
+        galleryRv.setCountLimit(1, 5)
+        galleryRv.setAspectRatio(750, 176)
     }
 
     fun getTemplate(): String {
@@ -139,12 +137,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         }
     }
 
-    //设置Banner图上传
-    private fun initBanner() {
-        galleryRv.setCountLimit(1, 5)
-        galleryRv.setAspectRatio(750, 176)
-    }
-
     override fun onUpdateWorkTime(item1: WorkTimeVo?, item2: WorkTimeVo?) {
         shopReq.openStartTime = item1?.itemName
         // 处理【第二天】文字，服务端不需要返回
@@ -154,29 +146,18 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun onSetSetting() {
-        //nothing to do
+        UserManager.setAutoPrint(autoPrinterSb.isChecked);
     }
-
-    //商家配送模板
-    var mLocalItem: FreightVoItem? = null
-
-    //骑手配送模板
-    var mRiderItem: FreightVoItem? = null
 
     override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {
         this.mLocalItem = tcItem
         this.mRiderItem = qsItem
-        //模板不为空，即是已设置
         tcItem?.apply {
             tvShopStatus.text = "已设置"
         }
         qsItem?.apply {
             tvRiderStatus.text = "已设置"
         }
-
-        Log.d("WZYAVV",tcItem.toString())
-        Log.d("WZYAVV",qsItem.toString())
-
         layoutShop.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.cb_model_shop) {
                 if ((mLocalItem == null || mLocalItem?.id == null) && cb_model_shop.isChecked) {
@@ -188,14 +169,12 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
                 }
             }
         }
-
-        //设置商家配送
         tvShopStatus.singleClick {
+            //shopReq.accept_carriage决定是否显示骑手配送
             DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.accept_carriage)
         }
-
-        //设置骑手配送
         tvRiderStatus.singleClick {
+            //默认使用骑手配送
             DeliveryManagerActivity.rider(mContext as Activity, mRiderItem)
         }
     }
@@ -212,6 +191,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         vo.apply {
             orderSetting?.apply {
                 autoOrderSb.isChecked = autoAccept == 1
+                autoPrinterSb.isChecked = autoPrint == 1
                 tvShopManageNumber.setText(cancelOrderDay?.toString())
             }
             shopReq.openStartTime = vo.openStartTime

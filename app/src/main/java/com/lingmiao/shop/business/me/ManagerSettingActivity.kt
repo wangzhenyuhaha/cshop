@@ -5,6 +5,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.james.common.base.BaseVBActivity
 import com.james.common.databinding.IncludeTabBinding
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.fragment.ShopBaseSettingFragment
 import com.lingmiao.shop.business.me.fragment.ShopOperateSettingFragment
@@ -39,6 +40,7 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
 
 
     override fun onLoadedShopInfo(bean: ApplyShopInfo) {
+        UserManager.setAutoPrint(bean.autoPrint == 1);
         mBinding.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) =

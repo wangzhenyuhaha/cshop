@@ -5,7 +5,7 @@ package com.lingmiao.shop.printer;
  * Auther      : Fox
  * Desc        :
  **/
-public interface PrinterListener {
+public interface PrinterConnectListener {
     void onConnect(boolean flag);
     void onDisConnect(boolean flag);
 }
