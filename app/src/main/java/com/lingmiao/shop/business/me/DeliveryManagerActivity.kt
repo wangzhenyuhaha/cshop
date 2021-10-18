@@ -119,7 +119,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
         val fragments = mutableListOf<Fragment>()
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
         if (type == 1) {
-            fragments.add(DeliveryOfRiderFragment.newInstance(mItem,1))
+            fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
         }
 
 
