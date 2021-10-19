@@ -2,21 +2,17 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.MotionEvent
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
 import com.lingmiao.shop.R
-import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.goods.adapter.GoodsHomePageAdapter
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.fragment.DeliveryInTimeFragment
 import com.lingmiao.shop.business.me.fragment.DeliveryOfRiderFragment
 import com.lingmiao.shop.business.me.presenter.ManagerSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ManagerSettingPresenterImpl
-import com.lingmiao.shop.business.sales.SalesActivityEditActivity
-import com.lingmiao.shop.business.sales.bean.SalesVo
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
 import kotlinx.android.synthetic.main.tools_activity_logistics_tool.*
 
@@ -39,6 +35,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     //默认显示骑手配送
     var type: Int = 1
 
+    //配送模板
     var mItem: FreightVoItem? = null
 
     companion object {
@@ -65,18 +62,23 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
             val intent = Intent(context, DeliveryManagerActivity::class.java)
             intent.putExtra(KEY_ITEM, item)
             intent.putExtra(KEY_VIEW_TYPE, 2)
+            intent.putExtra(KEY_TYPE, 1)
+
             context.startActivity(intent)
         }
+
     }
 
     override fun initBundles() {
         //获取模板
         mItem = intent?.getSerializableExtra(KEY_ITEM) as FreightVoItem?
+
         //获取模板类型，默认为商家配送
         mViewType = intent?.getIntExtra(KEY_VIEW_TYPE, 1)
-        if (mViewType == 1) {
-            type = intent?.getIntExtra(KEY_TYPE, 1) ?: 1
-        }
+
+        //是否显示骑手配送
+        type = intent?.getIntExtra(KEY_TYPE, 1) ?: 1
+
     }
 
     override fun getLayoutId() = R.layout.sales_activity_stats
@@ -116,7 +118,10 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     }
 
     private fun initTabLayout() {
+
         val fragments = mutableListOf<Fragment>()
+
+        //使用的是商家配送模板
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
         if (type == 1) {
             fragments.add(DeliveryOfRiderFragment.newInstance(mItem))

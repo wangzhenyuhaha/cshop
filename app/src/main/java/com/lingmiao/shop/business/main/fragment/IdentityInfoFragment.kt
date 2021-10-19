@@ -62,101 +62,102 @@ class IdentityInfoFragment : BaseVBFragment<FragmentIdentityInfoBinding, BasePre
     }
 
     private fun initListener() {
-        //姓名
-        binding.legalName.setOnClickListener {
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                "姓名",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.legalName,
-                "取消",
-                "保存",
-                null
-            ) {
-                if (RegexUtils.isZh(it)) {
-                    binding.legalNameTextView.text = it
-                    model.applyShopInfo.value?.legalName = it
-                    model.personalAccount.value?.openAccountName = it
-                } else {
-                    ToastUtils.showShort("请输入正确的姓名")
+        if (!model.shopOpenOrNot) {
+            //姓名
+            binding.legalName.setOnClickListener {
+                DialogUtils.showInputDialog(
+                    requireActivity(),
+                    "姓名",
+                    "",
+                    "请输入",
+                    model.applyShopInfo.value?.legalName,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    if (RegexUtils.isZh(it)) {
+                        binding.legalNameTextView.text = it
+                        model.applyShopInfo.value?.legalName = it
+                        model.personalAccount.value?.openAccountName = it
+                    } else {
+                        ToastUtils.showShort("请输入正确的姓名")
+                    }
                 }
             }
-        }
 
-        //性别
-        binding.legalSex.setOnClickListener {
+            //性别
+            binding.legalSex.setOnClickListener {
 
-            pop?.apply {
-                setList(listOf("女", "男"))
-                setTitle("性别")
-                showPopupWindow()
-            }
-        }
-
-        //证件号码
-        binding.legalId.setOnClickListener {
-
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                "身份证号码",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.legalId,
-                "取消",
-                "保存",
-                null
-            ) {
-                if (RegexUtils.isIDCard18(it) || RegexUtils.isIDCard15(it)) {
-                    binding.legalIdTextView.text = it
-                    model.applyShopInfo.value?.legalId = it
-                } else {
-                    ToastUtils.showShort("请输入正确身份证号码")
+                pop?.apply {
+                    setList(listOf("女", "男"))
+                    setTitle("性别")
+                    showPopupWindow()
                 }
             }
-        }
 
-        //证件有效期
-        binding.legalIDExpire.setOnClickListener {
+            //证件号码
+            binding.legalId.setOnClickListener {
 
-            //选中的日期
-            val selectedDate: Calendar = Calendar.getInstance()
-            //开始日期
-            val startDate: Calendar = Calendar.getInstance()
-            //结束日期
-            val endDate: Calendar = Calendar.getInstance()
+                DialogUtils.showInputDialog(
+                    requireActivity(),
+                    "身份证号码",
+                    "",
+                    "请输入",
+                    model.applyShopInfo.value?.legalId,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    if (RegexUtils.isIDCard18(it) || RegexUtils.isIDCard15(it)) {
+                        binding.legalIdTextView.text = it
+                        model.applyShopInfo.value?.legalId = it
+                    } else {
+                        ToastUtils.showShort("请输入正确身份证号码")
+                    }
+                }
+            }
 
-            //设定结束日期，假设可以活30年
-            endDate.set(
-                startDate.get(Calendar.YEAR) + 30, startDate.get(Calendar.MONTH), startDate.get(
-                    Calendar.DATE
+            //证件有效期
+            binding.legalIDExpire.setOnClickListener {
+
+                //选中的日期
+                val selectedDate: Calendar = Calendar.getInstance()
+                //开始日期
+                val startDate: Calendar = Calendar.getInstance()
+                //结束日期
+                val endDate: Calendar = Calendar.getInstance()
+
+                //设定结束日期，假设可以活30年
+                endDate.set(
+                    startDate.get(Calendar.YEAR) + 30, startDate.get(Calendar.MONTH), startDate.get(
+                        Calendar.DATE
+                    )
                 )
-            )
 
 
-            pvCustomTime =
-                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+                pvCustomTime =
+                    getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
 
-                    //在界面上显示时间
-                    binding.legalIDExpireTextView.text = formatString(date, DATE_FORMAT)
+                        //在界面上显示时间
+                        binding.legalIDExpireTextView.text = formatString(date, DATE_FORMAT)
 
-                    //获取当前精确时间
-                    val s =
-                        dateTime2Date(binding.legalIDExpireTextView.getViewText() + " 00:00:00")?.time
-                            ?: 0
-                    timeCanUse = s / 1000
+                        //获取当前精确时间
+                        val s =
+                            dateTime2Date(binding.legalIDExpireTextView.getViewText() + " 00:00:00")?.time
+                                ?: 0
+                        timeCanUse = s / 1000
 
-                    model.applyShopInfo.value?.legalIDExpire = timeCanUse
-                }, {
-                    pvCustomTime?.returnData()
-                    pvCustomTime?.dismiss()
-                }, {
-                    pvCustomTime?.dismiss()
-                })
-            pvCustomTime?.show()
+                        model.applyShopInfo.value?.legalIDExpire = timeCanUse
+                    }, {
+                        pvCustomTime?.returnData()
+                        pvCustomTime?.dismiss()
+                    }, {
+                        pvCustomTime?.dismiss()
+                    })
+                pvCustomTime?.show()
 
+            }
         }
-
         //身份证照片
         binding.legalPhoto.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.ID_CARD_FRONT)

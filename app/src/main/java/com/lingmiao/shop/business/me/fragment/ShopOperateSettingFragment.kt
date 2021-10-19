@@ -98,6 +98,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             }
             val cancelOrderTime = tvShopManageNumber.text?.toString()?.toInt() ?: 0
 
+            //输入手机号码
             if (linkTelEt.text.toString().isEmpty()) {
                 showToast("请输入正确的手机号码")
                 return@setOnClickListener
@@ -144,7 +145,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     }
 
     override fun onSetSetting() {
-        UserManager.setAutoPrint(autoPrinterSb.isChecked);
+        UserManager.setAutoPrint(autoPrinterSb.isChecked)
     }
 
     override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {

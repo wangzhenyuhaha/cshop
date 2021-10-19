@@ -44,45 +44,41 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
     }
 
     private fun initListener() {
-        //个体户
-        binding.shopInfoSelf.setOnClickListener {
-            model.applyShopInfo.value?.shopType = 3
-            model.shopType.value = 3
-        }
 
-        //企业
-        binding.shopInfoCompany.setOnClickListener {
-            model.applyShopInfo.value?.shopType = 1
-            model.shopType.value = 1
-        }
+        if (!model.shopOpenOrNot) {//个体户
+            binding.shopInfoSelf.setOnClickListener {
+                model.applyShopInfo.value?.shopType = 3
+                model.shopType.value = 3
+            }
 
-        //个人
-        binding.shopInfoPersonal.setOnClickListener {
-            model.applyShopInfo.value?.shopType = 4
-            model.shopType.value = 4
-        }
+            //企业
+            binding.shopInfoCompany.setOnClickListener {
+                model.applyShopInfo.value?.shopType = 1
+                model.shopType.value = 1
+            }
 
-        //是否三证合一
-        //Yes
-        binding.thrcertflagYes.setOnClickListener {
-            model.applyShopInfo.value?.thrcertflag = 1
-            model.thrcertflag.value = 1
-        }
+            //个人
+            binding.shopInfoPersonal.setOnClickListener {
+                model.applyShopInfo.value?.shopType = 4
+                model.shopType.value = 4
+            }
 
-        //No
-        binding.thrcertflagNO.setOnClickListener {
-            model.applyShopInfo.value?.thrcertflag = 0
-            model.thrcertflag.value = 0
+            //是否三证合一
+            //Yes
+            binding.thrcertflagYes.setOnClickListener {
+                model.applyShopInfo.value?.thrcertflag = 1
+                model.thrcertflag.value = 1
+            }
+
+            //No
+            binding.thrcertflagNO.setOnClickListener {
+                model.applyShopInfo.value?.thrcertflag = 0
+                model.thrcertflag.value = 0
+            }
         }
 
         //店铺租聘合同
         binding.hire.setOnClickListener {
-//            val bundle = bundleOf("type" to ApplyShopInfoActivity.HIRE)
-//            findNavController().navigate(
-//                R.id.action_shopInfoFragment_to_multiplePhotoFragment,
-//                bundle
-//            )
-
             val bundle = bundleOf("type" to ApplyShopInfoActivity.HIRE)
             findNavController().navigate(R.id.action_shopInfoFragment_to_shopPhotoFragment, bundle)
         }

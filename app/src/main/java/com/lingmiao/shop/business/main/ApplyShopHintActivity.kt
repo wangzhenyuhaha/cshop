@@ -62,7 +62,7 @@ class ApplyShopHintActivity : BaseActivity<ApplyShopHintPresenter>(), ApplyShopH
                 showToast("请先同意商城入驻协议")
                 return@setOnClickListener
             }
-            ActivityUtils.startActivity(ApplyShopInfoActivity::class.java)
+            ApplyShopInfoActivity.openActivity(this, false)
             finish()
         }
 

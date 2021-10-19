@@ -149,7 +149,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 ActivityUtils.startActivity(HelpDocActivity::class.java)
             }
             R.id.tvApplyShopInfo -> {
-                ActivityUtils.startActivity(ApplyShopInfoActivity::class.java)
+                ApplyShopInfoActivity.openActivity(requireActivity(), true)
             }
         }
     }
