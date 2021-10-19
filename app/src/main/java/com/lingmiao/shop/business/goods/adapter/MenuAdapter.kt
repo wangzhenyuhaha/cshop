@@ -42,7 +42,7 @@ class MenuAdapter() :
 
             helper.setChecked(R.id.menuVisibleCb, disable == 1);
             helper.setText(R.id.menuVisibleCb, if(disable == 1) "显示" else "不显示")
-            helper.setText(R.id.menuDescTv,if (goods_num>0) goods_num.toString()  else "0")
+          //  helper.setText(R.id.menuDescTv,if (goods_num>0) goods_num.toString()  else "0")
             helper.setGone(R.id.menuVisibleCb, !isBatchEditModel);
             helper.addOnClickListener(R.id.menuVisibleCb);
             setOnCheckedChangeListener(helper.getView(R.id.menuCheckCb), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
