@@ -242,6 +242,8 @@ class ReplenishInfoFragment :
                 }
 
             }
+        } else {
+            binding.tvApplyShopInfoNext.text = "下一页"
         }
 
         //法人身份证信息   或者   经营者身份证信息

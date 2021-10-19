@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.main.fragment
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +74,8 @@ class ShopInfoFragment : BaseVBFragment<FragmentShopInfoBinding, BasePresenter>(
                 model.applyShopInfo.value?.thrcertflag = 0
                 model.thrcertflag.value = 0
             }
+        } else {
+            binding.nextTextView.text = "下一页"
         }
 
         //店铺租聘合同

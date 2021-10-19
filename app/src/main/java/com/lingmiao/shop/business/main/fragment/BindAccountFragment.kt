@@ -327,6 +327,8 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 )
             }
 
+        } else {
+            binding.tvApplyShopInfoNext.text = "返回首页"
         }
         //申请店铺
         binding.tvApplyShopInfoNext.singleClick {
