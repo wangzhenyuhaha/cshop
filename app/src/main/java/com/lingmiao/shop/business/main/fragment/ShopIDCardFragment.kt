@@ -127,20 +127,21 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
 
     private fun initListener() {
 
+        if (!model.shopOpenOrNot) {
+            //内景,国徽
+            binding.legalImgImageView.setOnClickListener {
+                setOnClickForPhoto(type, 2)
+            }
 
-        //内景,国徽
-        binding.legalImgImageView.setOnClickListener {
-            setOnClickForPhoto(type, 2)
-        }
+            //门头，人像
+            binding.legalBackImgImageView.setOnClickListener {
+                setOnClickForPhoto(type, 1)
+            }
 
-        //门头，人像
-        binding.legalBackImgImageView.setOnClickListener {
-            setOnClickForPhoto(type, 1)
-        }
-
-        //合照，手持
-        binding.holdImgImageView.setOnClickListener {
-            setOnClickForPhoto(type, 3)
+            //合照，手持
+            binding.holdImgImageView.setOnClickListener {
+                setOnClickForPhoto(type, 3)
+            }
         }
 
         binding.backTextView.setOnClickListener {
@@ -247,9 +248,9 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                             }
                         }
                     }
-                    ApplyShopInfoActivity.PERSONAL_SHOP ->{
-                        when(number){
-                            1->{
+                    ApplyShopInfoActivity.PERSONAL_SHOP -> {
+                        when (number) {
+                            1 -> {
                                 //门头
                                 model.applyShopInfo.value?.shopPhotoFront = uploadFile.data.url
                                 uploadFile.data.url?.also {
@@ -258,7 +259,7 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                 }
 
                             }
-                            2->{
+                            2 -> {
                                 //内景
                                 model.applyShopInfo.value?.shopPhotoInside = uploadFile.data.url
                                 uploadFile.data.url?.also {
@@ -267,7 +268,7 @@ class ShopIDCardFragment : BaseVBFragment<FragmentShopIdCardBinding, BasePresent
                                 }
 
                             }
-                            3->{
+                            3 -> {
                                 //合照
                                 model.applyShopInfo.value?.peasonheadpic = uploadFile.data.url
                                 uploadFile.data.url?.also {

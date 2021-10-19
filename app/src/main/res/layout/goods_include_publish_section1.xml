@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/goods_publish_container"
     app:ivBgColor="@color/color_ffffff"
-    app:ivRadius="@dimen/dimen_5">
+    app:ivRadius="@dimen/dimen_5"
+    tools:ignore="HardcodedText">
 
     <LinearLayout style="@style/goods_publish_sub_container">
 
@@ -23,11 +25,11 @@
 
         <TextView
             style="@style/goods_publish_left_mark"
-            android:text="商品类目" />
+            android:text="商品分类" />
 
         <TextView
             android:id="@+id/goodsCategoryTv"
             style="@style/goods_publish_right_arrow"
-            android:hint="请选择商品类目" />
+            android:hint="请选择商品分类" />
     </LinearLayout>
 </com.james.common.view.ILinearLayout>

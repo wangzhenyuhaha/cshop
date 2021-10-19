@@ -39,7 +39,7 @@
                 </LinearLayout>
             </com.james.common.view.ILinearLayout>
 
-            <!-- 类型、类目 -->
+            <!-- 类型、分类 -->
             <include layout="@layout/goods_include_publish_section1" />
 
             <!-- 名称、图片 -->
@@ -51,8 +51,7 @@
             <!-- 商品规格,虚拟商品的套餐 -->
             <include layout="@layout/goods_include_publish_section4_new" />
 
-            <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 style="@style/goods_publish_container"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -102,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- 商品分组 -->
+                <!-- 菜单管理 -->
                 <include layout="@layout/goods_include_publish_section5" />
 
                 <!-- 商品视频 -->

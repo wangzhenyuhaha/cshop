@@ -122,78 +122,229 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
     private fun initListener() {
 
-        //注册资本
-        binding.regMoney.setOnClickListener {
-            pop?.apply {
-                setList(regMoneyList)
-                setTitle("注册资本")
-                setType(REG_MONEY)
-                showPopupWindow()
+        if (!model.shopOpenOrNot) {
+            //注册资本
+            binding.regMoney.setOnClickListener {
+                pop?.apply {
+                    setList(regMoneyList)
+                    setTitle("注册资本")
+                    setType(REG_MONEY)
+                    showPopupWindow()
+                }
             }
-        }
 
-        //员工人数
-        binding.employeeNum.setOnClickListener {
-            pop?.apply {
-                setList(employeeNumList)
-                setTitle("员工人数")
-                setType(EMPLOYEE_NUM)
-                showPopupWindow()
+            //员工人数
+            binding.employeeNum.setOnClickListener {
+                pop?.apply {
+                    setList(employeeNumList)
+                    setTitle("员工人数")
+                    setType(EMPLOYEE_NUM)
+                    showPopupWindow()
+                }
             }
-        }
 
-        //经营区域
-        binding.operateLimit.setOnClickListener {
-            pop?.apply {
-                setList(operateLimitList)
-                setTitle("经营区域")
-                setType(OPERATE_LIMIT)
-                showPopupWindow()
+            //经营区域
+            binding.operateLimit.setOnClickListener {
+                pop?.apply {
+                    setList(operateLimitList)
+                    setTitle("经营区域")
+                    setType(OPERATE_LIMIT)
+                    showPopupWindow()
+                }
             }
-        }
 
-        //经营地段
-        binding.inspect.setOnClickListener {
-            pop?.apply {
-                setList(inspectList)
-                setTitle("经营地段")
-                setType(INSPECT)
-                showPopupWindow()
+            //经营地段
+            binding.inspect.setOnClickListener {
+                pop?.apply {
+                    setList(inspectList)
+                    setTitle("经营地段")
+                    setType(INSPECT)
+                    showPopupWindow()
+                }
             }
-        }
 
-        //营业执照名称
-        binding.companyName.setOnClickListener {
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                "营业执照名称",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.companyName,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.companyNameTV.text = it
-                model.applyShopInfo.value?.companyName = it
-                model.companyAccount.value?.openAccountName= it
+            //营业执照名称
+            binding.companyName.setOnClickListener {
+                DialogUtils.showInputDialog(
+                    requireActivity(),
+                    "营业执照名称",
+                    "",
+                    "请输入",
+                    model.applyShopInfo.value?.companyName,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    binding.companyNameTV.text = it
+                    model.applyShopInfo.value?.companyName = it
+                    model.companyAccount.value?.openAccountName = it
+                }
             }
-        }
 
-        //统一社会信用代码证(三证合一为否时传入的是营业执照的编号)（营业执照编号）
-        binding.licenseNum.setOnClickListener {
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                title1,
-                "",
-                "请输入",
-                model.applyShopInfo.value?.licenseNum,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.licenseNumTV.text = it
-                model.applyShopInfo.value?.licenseNum = it
+            //统一社会信用代码证(三证合一为否时传入的是营业执照的编号)（营业执照编号）
+            binding.licenseNum.setOnClickListener {
+                DialogUtils.showInputDialog(
+                    requireActivity(),
+                    title1,
+                    "",
+                    "请输入",
+                    model.applyShopInfo.value?.licenseNum,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    binding.licenseNumTV.text = it
+                    model.applyShopInfo.value?.licenseNum = it
+                }
+            }
+
+            //社会信用代码证有效期（营业执照有效期）
+            binding.licenceEnd.setOnClickListener {
+                //选中的日期
+                val selectedDate: Calendar = Calendar.getInstance()
+                //开始日期
+                val startDate: Calendar = Calendar.getInstance()
+                //结束日期
+                val endDate: Calendar = Calendar.getInstance()
+
+                //设定结束日期，假设可以活30年
+                endDate.set(
+                    startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
+                        Calendar.DATE
+                    )
+                )
+                pvCustomTime =
+                    getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+
+                        //在界面上显示时间
+                        binding.licenceEndTV.text = formatString(date, DATE_FORMAT)
+
+                        //获取当前精确时间
+                        val s =
+                            dateTime2Date(binding.licenceEndTV.getViewText() + " 00:00:00")?.time
+                                ?: 0
+                        timeCanUse = s / 1000
+
+                        model.applyShopInfo.value?.licenceEnd = timeCanUse
+                    }, {
+                        pvCustomTime?.returnData()
+                        pvCustomTime?.dismiss()
+                    }, {
+                        pvCustomTime?.dismiss()
+                    })
+                pvCustomTime?.show()
+
+            }
+
+            //三证合一为否时再传入以下字段
+            //税务登记证号
+            binding.taxesNum.setOnClickListener {
+                DialogUtils.showInputDialog(
+                    requireActivity(),
+                    "税务登记证号",
+                    "",
+                    "请输入",
+                    model.applyShopInfo.value?.taxes_certificate_num,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    binding.taxesNumTV.text = it
+                    model.applyShopInfo.value?.taxes_certificate_num = it
+                }
+            }
+
+            //税务登记证有效期
+            binding.taxesExpire.setOnClickListener {
+
+                //选中的日期
+                val selectedDate: Calendar = Calendar.getInstance()
+                //开始日期
+                val startDate: Calendar = Calendar.getInstance()
+                //结束日期
+                val endDate: Calendar = Calendar.getInstance()
+
+                //设定结束日期，假设可以活30年
+                endDate.set(
+                    startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
+                        Calendar.DATE
+                    )
+                )
+                pvCustomTime =
+                    getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+
+                        //在界面上显示时间
+                        binding.taxesExpireTV.text = formatString(date, DATE_FORMAT)
+
+                        //获取当前精确时间
+                        val s =
+                            dateTime2Date(binding.taxesExpireTV.getViewText() + " 00:00:00")?.time
+                                ?: 0
+                        timeCanUse = s / 1000
+
+                        model.applyShopInfo.value?.taxes_distinguish_expire = timeCanUse
+                    }, {
+                        pvCustomTime?.returnData()
+                        pvCustomTime?.dismiss()
+                    }, {
+                        pvCustomTime?.dismiss()
+                    })
+                pvCustomTime?.show()
+            }
+
+            //组织机构代码证号
+            binding.organcode.setOnClickListener {
+                DialogUtils.showInputDialog(
+                    requireActivity(),
+                    "组织机构代码证号",
+                    "",
+                    "请输入",
+                    model.applyShopInfo.value?.organcode,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    binding.organcodeTV.text = it
+                    model.applyShopInfo.value?.organcode = it
+                }
+            }
+
+            //组织机构代码证有效期
+            binding.organexpire.setOnClickListener {
+
+                //选中的日期
+                val selectedDate: Calendar = Calendar.getInstance()
+                //开始日期
+                val startDate: Calendar = Calendar.getInstance()
+                //结束日期
+                val endDate: Calendar = Calendar.getInstance()
+
+                //设定结束日期，假设可以活30年
+                endDate.set(
+                    startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
+                        Calendar.DATE
+                    )
+                )
+                pvCustomTime =
+                    getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+
+                        //在界面上显示时间
+                        binding.organexpireTV.text = formatString(date, DATE_FORMAT)
+
+                        //获取当前精确时间
+                        val s =
+                            dateTime2Date(binding.organexpireTV.getViewText() + " 00:00:00")?.time
+                                ?: 0
+                        timeCanUse = s / 1000
+
+                        model.applyShopInfo.value?.organexpire = timeCanUse
+                    }, {
+                        pvCustomTime?.returnData()
+                        pvCustomTime?.dismiss()
+                    }, {
+                        pvCustomTime?.dismiss()
+                    })
+                pvCustomTime?.show()
             }
         }
 
@@ -206,62 +357,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             )
         }
 
-        //社会信用代码证有效期（营业执照有效期）
-        binding.licenceEnd.setOnClickListener {
-            //选中的日期
-            val selectedDate: Calendar = Calendar.getInstance()
-            //开始日期
-            val startDate: Calendar = Calendar.getInstance()
-            //结束日期
-            val endDate: Calendar = Calendar.getInstance()
-
-            //设定结束日期，假设可以活30年
-            endDate.set(
-                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
-                    Calendar.DATE
-                )
-            )
-            pvCustomTime =
-                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
-
-                    //在界面上显示时间
-                    binding.licenceEndTV.text = formatString(date, DATE_FORMAT)
-
-                    //获取当前精确时间
-                    val s =
-                        dateTime2Date(binding.licenceEndTV.getViewText() + " 00:00:00")?.time
-                            ?: 0
-                    timeCanUse = s / 1000
-
-                    model.applyShopInfo.value?.licenceEnd = timeCanUse
-                }, {
-                    pvCustomTime?.returnData()
-                    pvCustomTime?.dismiss()
-                }, {
-                    pvCustomTime?.dismiss()
-                })
-            pvCustomTime?.show()
-
-        }
-
-        //三证合一为否时再传入以下字段
-        //税务登记证号
-        binding.taxesNum.setOnClickListener {
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                "税务登记证号",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.taxes_certificate_num,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.taxesNumTV.text = it
-                model.applyShopInfo.value?.taxes_certificate_num = it
-            }
-        }
-
         //税务登记证照片
         binding.taxesImg.setOnClickListener {
             val bundle = bundleOf("type" to ApplyShopInfoActivity.TAXES)
@@ -269,61 +364,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                 R.id.action_companyInfoFragment_to_shopPhotoFragment,
                 bundle
             )
-        }
-
-        //税务登记证有效期
-        binding.taxesExpire.setOnClickListener {
-
-            //选中的日期
-            val selectedDate: Calendar = Calendar.getInstance()
-            //开始日期
-            val startDate: Calendar = Calendar.getInstance()
-            //结束日期
-            val endDate: Calendar = Calendar.getInstance()
-
-            //设定结束日期，假设可以活30年
-            endDate.set(
-                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
-                    Calendar.DATE
-                )
-            )
-            pvCustomTime =
-                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
-
-                    //在界面上显示时间
-                    binding.taxesExpireTV.text = formatString(date, DATE_FORMAT)
-
-                    //获取当前精确时间
-                    val s =
-                        dateTime2Date(binding.taxesExpireTV.getViewText() + " 00:00:00")?.time
-                            ?: 0
-                    timeCanUse = s / 1000
-
-                    model.applyShopInfo.value?.taxes_distinguish_expire = timeCanUse
-                }, {
-                    pvCustomTime?.returnData()
-                    pvCustomTime?.dismiss()
-                }, {
-                    pvCustomTime?.dismiss()
-                })
-            pvCustomTime?.show()
-        }
-
-        //组织机构代码证号
-        binding.organcode.setOnClickListener {
-            DialogUtils.showInputDialog(
-                requireActivity(),
-                "组织机构代码证号",
-                "",
-                "请输入",
-                model.applyShopInfo.value?.organcode,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.organcodeTV.text = it
-                model.applyShopInfo.value?.organcode = it
-            }
         }
 
         //组织机构代码证照片
@@ -334,45 +374,6 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                 bundle
             )
         }
-
-        //组织机构代码证有效期
-        binding.organexpire.setOnClickListener {
-
-            //选中的日期
-            val selectedDate: Calendar = Calendar.getInstance()
-            //开始日期
-            val startDate: Calendar = Calendar.getInstance()
-            //结束日期
-            val endDate: Calendar = Calendar.getInstance()
-
-            //设定结束日期，假设可以活30年
-            endDate.set(
-                startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
-                    Calendar.DATE
-                )
-            )
-            pvCustomTime =
-                getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
-
-                    //在界面上显示时间
-                    binding.organexpireTV.text = formatString(date, DATE_FORMAT)
-
-                    //获取当前精确时间
-                    val s =
-                        dateTime2Date(binding.organexpireTV.getViewText() + " 00:00:00")?.time
-                            ?: 0
-                    timeCanUse = s / 1000
-
-                    model.applyShopInfo.value?.organexpire = timeCanUse
-                }, {
-                    pvCustomTime?.returnData()
-                    pvCustomTime?.dismiss()
-                }, {
-                    pvCustomTime?.dismiss()
-                })
-            pvCustomTime?.show()
-        }
-
 
         binding.tvApplyShopInfoNext.setOnClickListener {
             findNavController().navigateUp()

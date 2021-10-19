@@ -11,7 +11,7 @@ import com.lingmiao.shop.business.main.bean.BindBankCardDTO
 
 class ApplyShopInfoViewModel : ViewModel() {
 
-    // 店铺是否处于开启中,用于修改进件资料
+    // 店铺是否处于开启中,用于修改进件资料,默认为false，表示正在申请店铺
     var shopOpenOrNot: Boolean = false
 
     //店铺信息

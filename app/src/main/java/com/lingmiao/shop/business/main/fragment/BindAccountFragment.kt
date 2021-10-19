@@ -128,334 +128,345 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
             }
         }
 
-        //结算账户类型
-        binding.account1.setOnClickListener {
-            //对公账户结算
-            model.whichAccountToUse.value = 0
-        }
 
-        binding.account2.setOnClickListener {
-            //对私账户结算
-            model.whichAccountToUse.value = 1
-        }
+        if (!model.shopOpenOrNot) {
 
-        //开户许可证照片
-        binding.bankUrlC.setOnClickListener {
-            val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT)
-            findNavController().navigate(
-                R.id.action_bindAccountFragment_to_shopPhotoFragment,
-                bundle
-            )
-        }
-
-        //账户号
-        binding.banknumberC.setOnClickListener {
-            DialogUtils.showInputDialogEmptyNumber(
-                requireActivity(),
-                "账户号",
-                "",
-                "请输入",
-                model.companyAccount.value?.cardNo,
-                "取消",
-                "保存",
-                null
-            ) {
-                if (it.isEmpty()) {
-                    binding.banknumberCtv.text = "请填写账户号"
-                    model.companyAccount.value?.also { bank ->
-                        bank.cardNo = null
-                        bank.province = null
-                        bank.city = null
-                        bank.bankCode = null
-                        bank.bankName = null
-                        bank.subBankName = null
-                        bank.subBankCode = null
-                    }
-                    model.ocrCBankVisibilityU.value = 1
-                } else {
-                    //获取到新的银行卡号时，先与之前的卡号进行对比，
-                    //如果一样不做任何处理，不一样则主动调取银行卡所属银行名以及号码
-                    if (model.companyAccount.value?.cardNo != it) {
-                        //不一样，开始处理
-                        binding.banknumberCtv.text = it
-                        model.companyAccount.value?.cardNo = it
-                        model.ocrCBankVisibility.value = 1
-                    }
-                }
-            }
-        }
-
-        //账户名称
-        binding.bankaccountnameC.setOnClickListener {
-
-            DialogUtils.showInputDialogEmpty(
-                requireActivity(),
-                "账户名称",
-                "",
-                "请输入",
-                model.companyAccount.value?.openAccountName,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.bankaccountnameCtv.text = it
-                model.companyAccount.value?.openAccountName = it
+            //结算账户类型
+            binding.account1.setOnClickListener {
+                //对公账户结算
+                model.whichAccountToUse.value = 0
             }
 
-        }
-
-        //持卡人
-        binding.bankaccountnameP.setOnClickListener {
-
-            DialogUtils.showInputDialogEmpty(
-                requireActivity(),
-                "持卡人",
-                "",
-                "请输入",
-                model.personalAccount.value?.openAccountName,
-                "取消",
-                "保存",
-                null
-            ) {
-                binding.bankaccountnamePtv.text = it
-                model.personalAccount.value?.openAccountName = it
+            binding.account2.setOnClickListener {
+                //对私账户结算
+                model.whichAccountToUse.value = 1
             }
 
-        }
+            //账户名称
+            binding.bankaccountnameC.setOnClickListener {
 
-
-        //银行卡正面照
-        binding.bankUrlP.setOnClickListener {
-            val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT)
-            findNavController().navigate(
-                R.id.action_bindAccountFragment_to_shopPhotoFragment,
-                bundle
-            )
-        }
-
-        //商户签字授权书
-        binding.authorpic.setOnClickListener {
-            val bundle = bundleOf("type" to ApplyShopInfoActivity.AUTHOR_PIC)
-            findNavController().navigate(
-                R.id.action_bindAccountFragment_to_shopPhotoFragment,
-                bundle
-            )
-        }
-
-        //卡号
-        binding.banknumberP.setOnClickListener {
-            DialogUtils.showInputDialogEmptyNumber(
-                requireActivity(),
-                "卡号",
-                "",
-                "请输入",
-                model.personalAccount.value?.cardNo,
-                "取消",
-                "保存",
-                null
-            ) {
-                if (it.isEmpty()) {
-                    binding.banknumberPtv.text = "请输入卡号"
-                    model.personalAccount.value?.also { bank ->
-                        bank.cardNo = null
-                        bank.province = null
-                        bank.city = null
-                        bank.bankCode = null
-                        bank.bankName = null
-                        bank.subBankName = null
-                        bank.subBankCode = null
-                    }
-                    model.ocrPBankVisibilityU.value = 1
-                } else {
-                    if (model.personalAccount.value?.cardNo != it) {
-                        binding.banknumberPtv.text = it
-                        model.personalAccount.value?.cardNo = it
-                        model.ocrPBankVisibility.value = 0
-                    }
+                DialogUtils.showInputDialogEmpty(
+                    requireActivity(),
+                    "账户名称",
+                    "",
+                    "请输入",
+                    model.companyAccount.value?.openAccountName,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    binding.bankaccountnameCtv.text = it
+                    model.companyAccount.value?.openAccountName = it
                 }
 
             }
+
+            //账户号
+            binding.banknumberC.setOnClickListener {
+                DialogUtils.showInputDialogEmptyNumber(
+                    requireActivity(),
+                    "账户号",
+                    "",
+                    "请输入",
+                    model.companyAccount.value?.cardNo,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    if (it.isEmpty()) {
+                        binding.banknumberCtv.text = "请填写账户号"
+                        model.companyAccount.value?.also { bank ->
+                            bank.cardNo = null
+                            bank.province = null
+                            bank.city = null
+                            bank.bankCode = null
+                            bank.bankName = null
+                            bank.subBankName = null
+                            bank.subBankCode = null
+                        }
+                        model.ocrCBankVisibilityU.value = 1
+                    } else {
+                        //获取到新的银行卡号时，先与之前的卡号进行对比，
+                        //如果一样不做任何处理，不一样则主动调取银行卡所属银行名以及号码
+                        if (model.companyAccount.value?.cardNo != it) {
+                            //不一样，开始处理
+                            binding.banknumberCtv.text = it
+                            model.companyAccount.value?.cardNo = it
+                            model.ocrCBankVisibility.value = 1
+                        }
+                    }
+                }
+            }
+
+            //持卡人
+            binding.bankaccountnameP.setOnClickListener {
+
+                DialogUtils.showInputDialogEmpty(
+                    requireActivity(),
+                    "持卡人",
+                    "",
+                    "请输入",
+                    model.personalAccount.value?.openAccountName,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    binding.bankaccountnamePtv.text = it
+                    model.personalAccount.value?.openAccountName = it
+                }
+
+            }
+
+
+            //商户签字授权书
+            binding.authorpic.setOnClickListener {
+                val bundle = bundleOf("type" to ApplyShopInfoActivity.AUTHOR_PIC)
+                findNavController().navigate(
+                    R.id.action_bindAccountFragment_to_shopPhotoFragment,
+                    bundle
+                )
+            }
+
+            //卡号
+            binding.banknumberP.setOnClickListener {
+                DialogUtils.showInputDialogEmptyNumber(
+                    requireActivity(),
+                    "卡号",
+                    "",
+                    "请输入",
+                    model.personalAccount.value?.cardNo,
+                    "取消",
+                    "保存",
+                    null
+                ) {
+                    if (it.isEmpty()) {
+                        binding.banknumberPtv.text = "请输入卡号"
+                        model.personalAccount.value?.also { bank ->
+                            bank.cardNo = null
+                            bank.province = null
+                            bank.city = null
+                            bank.bankCode = null
+                            bank.bankName = null
+                            bank.subBankName = null
+                            bank.subBankCode = null
+                        }
+                        model.ocrPBankVisibilityU.value = 1
+                    } else {
+                        if (model.personalAccount.value?.cardNo != it) {
+                            binding.banknumberPtv.text = it
+                            model.personalAccount.value?.cardNo = it
+                            model.ocrPBankVisibility.value = 0
+                        }
+                    }
+
+                }
+            }
+
+            //对公，所属银行
+            binding.bankC.setOnClickListener {
+                intent?.apply {
+                    putExtra("type", COMPANY_BANK)
+                    putExtra("bank", "nothing")
+                    ActivityUtils.startActivity(this)
+                }
+            }
+
+            //对公，所属支行
+            binding.subBankC.setOnClickListener {
+
+                if (model.companyAccount.value?.bankCode.isNullOrEmpty()) {
+                    ToastUtils.showShort("请先选择银行")
+                    return@setOnClickListener
+                }
+                intent?.apply {
+                    putExtra("type", COMPANY_SUB)
+                    putExtra("bank", model.companyAccount.value?.bankCode)
+                    ActivityUtils.startActivity(this)
+                }
+            }
+
+            //对私，所属银行
+            binding.bankP.setOnClickListener {
+                intent?.apply {
+                    putExtra("type", PERSONAL_BANK)
+                    putExtra("bank", "nothing")
+                    ActivityUtils.startActivity(this)
+                }
+
+            }
+
+            //对私，所属支行
+            binding.subBankP.setOnClickListener {
+                if (model.personalAccount.value?.bankCode.isNullOrEmpty()) {
+                    ToastUtils.showShort("请先选择银行")
+                    return@setOnClickListener
+                }
+
+                intent?.apply {
+                    putExtra("type", PERSONAL_SUB)
+                    putExtra("bank", model.personalAccount.value?.bankCode)
+                    ActivityUtils.startActivity(this)
+                }
+            }
+
+            //开户许可证照片
+            binding.bankUrlC.setOnClickListener {
+                val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_COMPANY_ACCOUNT)
+                findNavController().navigate(
+                    R.id.action_bindAccountFragment_to_shopPhotoFragment,
+                    bundle
+                )
+            }
+
+            //银行卡正面照
+            binding.bankUrlP.setOnClickListener {
+                val bundle = bundleOf("type" to ApplyShopInfoActivity.PICTURE_PERSONAL_ACCOUNT)
+                findNavController().navigate(
+                    R.id.action_bindAccountFragment_to_shopPhotoFragment,
+                    bundle
+                )
+            }
+
+        } else {
+            binding.tvApplyShopInfoNext.text = "返回首页"
         }
-
-        //对公，所属银行
-        binding.bankC.setOnClickListener {
-            intent?.apply {
-                putExtra("type", COMPANY_BANK)
-                putExtra("bank", "nothing")
-                ActivityUtils.startActivity(this)
-            }
-        }
-
-        //对公，所属支行
-        binding.subBankC.setOnClickListener {
-
-            if (model.companyAccount.value?.bankCode.isNullOrEmpty()) {
-                ToastUtils.showShort("请先选择银行")
-                return@setOnClickListener
-            }
-            intent?.apply {
-                putExtra("type", COMPANY_SUB)
-                putExtra("bank", model.companyAccount.value?.bankCode)
-                ActivityUtils.startActivity(this)
-            }
-        }
-
-        //对私，所属银行
-        binding.bankP.setOnClickListener {
-            intent?.apply {
-                putExtra("type", PERSONAL_BANK)
-                putExtra("bank", "nothing")
-                ActivityUtils.startActivity(this)
-            }
-
-        }
-
-        //对私，所属支行
-        binding.subBankP.setOnClickListener {
-            if (model.personalAccount.value?.bankCode.isNullOrEmpty()) {
-                ToastUtils.showShort("请先选择银行")
-                return@setOnClickListener
-            }
-
-            intent?.apply {
-                putExtra("type", PERSONAL_SUB)
-                putExtra("bank", model.personalAccount.value?.bankCode)
-                ActivityUtils.startActivity(this)
-            }
-        }
-
         //申请店铺
         binding.tvApplyShopInfoNext.singleClick {
 
-            //检查资料是否填写完整
-            if (!binding.account1.isSelected && !binding.account2.isSelected) {
-                ToastUtils.showShort("请选择结算账户")
-                return@singleClick
-            }
+            if (!model.shopOpenOrNot) {
 
-            //企业选择对私结算时上传授权承诺书
-            if (model.applyShopInfo.value?.shopType == 1 && binding.account2.isSelected) {
-                if (model.applyShopInfo.value?.authorpic.isNullOrEmpty()) {
-                    ToastUtils.showShort("请选择签约承诺函")
+                //检查资料是否填写完整
+                if (!binding.account1.isSelected && !binding.account2.isSelected) {
+                    ToastUtils.showShort("请选择结算账户")
                     return@singleClick
                 }
-            }
 
-            //给memberId赋值
-            UserManager.getLoginInfo()?.uid?.also {
-                model.companyAccount.value?.memberId = it
-                model.personalAccount.value?.memberId = it
-            }
-
-            //将其他营业资质照片上传
-            model.applyShopInfo.value?.also {
-                it.other_certificates_imgs = null
-                if (it.other_Pic_One != null && it.other_Pic_Two != null) {
-                    it.other_certificates_imgs = it.other_Pic_One + "," + it.other_Pic_Two
-                }
-                if (it.other_Pic_One != null && it.other_Pic_Two == null) {
-                    it.other_certificates_imgs = it.other_Pic_One
-                }
-                if (it.other_Pic_One == null && it.other_Pic_Two != null) {
-                    it.other_certificates_imgs = it.other_Pic_Two
-                }
-            }
-
-            //检查资料是否齐全,并且绑定银行卡   绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
-            when (model.applyShopInfo.value?.shopType) {
-                1 -> {
-                    //企业
-                    if (model.whichAccountToUse.value == 0) {
-                        //对公账户结算
-                        model.companyAccount.value?.isDefault = 1
-                        model.personalAccount.value?.isDefault = 0
-
-                        if (!isAccountReady(model.companyAccount.value)) {
-                            ToastUtils.showShort("请将对公账户填写完整")
-                            return@singleClick
-                        }
-                        model.companyAccount.value?.also {
-                            isCopy(model.applyShopInfo.value, it)
-                        }
-                        if (isAccountReady(model.personalAccount.value)) {
-                            model.bindBandCard.value = 2
-                        } else {
-                            model.bindBandCard.value = 0
-                        }
-
-                    } else {
-                        //对私账户结算
-                        model.personalAccount.value?.isDefault = 1
-                        model.companyAccount.value?.isDefault = 0
-
-                        if (!isAccountReady(model.companyAccount.value)) {
-                            ToastUtils.showShort("请将对公账户填写完整")
-                            return@singleClick
-                        }
-                        if (!isAccountReady(model.personalAccount.value)) {
-                            ToastUtils.showShort("请将对私账户填写完整")
-                            return@singleClick
-                        }
-                        model.personalAccount.value?.also {
-                            isCopy(model.applyShopInfo.value, it)
-                        }
-                        model.bindBandCard.value = 2
-                    }
-                }
-                3 -> {
-                    //个体户
-                    if (model.whichAccountToUse.value == 0) {
-                        //对公账户结算
-                        model.companyAccount.value?.isDefault = 1
-                        model.personalAccount.value?.isDefault = 0
-
-                        if (!isAccountReady(model.companyAccount.value)) {
-                            ToastUtils.showShort("请将对公账户填写完整")
-                            return@singleClick
-                        }
-                        model.companyAccount.value?.also {
-                            isCopy(model.applyShopInfo.value, it)
-                        }
-                        if (isAccountReady(model.personalAccount.value)) {
-                            model.bindBandCard.value = 2
-                        } else {
-                            model.bindBandCard.value = 0
-                        }
-
-                    } else {
-                        //对私账户结算
-                        model.personalAccount.value?.isDefault = 1
-                        model.companyAccount.value?.isDefault = 0
-
-                        if (!isAccountReady(model.personalAccount.value)) {
-                            ToastUtils.showShort("请将对私账户填写完整")
-                            return@singleClick
-                        }
-                        model.personalAccount.value?.also {
-                            isCopy(model.applyShopInfo.value, it)
-                        }
-                        if (isAccountReady(model.companyAccount.value)) {
-                            model.bindBandCard.value = 2
-                        } else {
-                            model.bindBandCard.value = 1
-                        }
-                    }
-                }
-                4 -> {
-                    //个人只有对私账户
-                    model.personalAccount.value?.isDefault = 1
-
-                    if (!isAccountReady(model.personalAccount.value)) {
-                        ToastUtils.showShort("请将对私账户填写完整")
+                //企业选择对私结算时上传授权承诺书
+                if (model.applyShopInfo.value?.shopType == 1 && binding.account2.isSelected) {
+                    if (model.applyShopInfo.value?.authorpic.isNullOrEmpty()) {
+                        ToastUtils.showShort("请选择签约承诺函")
                         return@singleClick
                     }
-                    model.personalAccount.value?.also {
-                        isCopy(model.applyShopInfo.value, it)
-                    }
-
-                    model.bindBandCard.value = 1
-
                 }
+
+                //给memberId赋值
+                UserManager.getLoginInfo()?.uid?.also {
+                    model.companyAccount.value?.memberId = it
+                    model.personalAccount.value?.memberId = it
+                }
+
+                //将其他营业资质照片上传
+                model.applyShopInfo.value?.also {
+                    it.other_certificates_imgs = null
+                    if (it.other_Pic_One != null && it.other_Pic_Two != null) {
+                        it.other_certificates_imgs = it.other_Pic_One + "," + it.other_Pic_Two
+                    }
+                    if (it.other_Pic_One != null && it.other_Pic_Two == null) {
+                        it.other_certificates_imgs = it.other_Pic_One
+                    }
+                    if (it.other_Pic_One == null && it.other_Pic_Two != null) {
+                        it.other_certificates_imgs = it.other_Pic_Two
+                    }
+                }
+
+                //检查资料是否齐全,并且绑定银行卡   绑定银行卡 0 绑定对公账户， 1，绑定对私账户  2绑定对公和对私账户
+                when (model.applyShopInfo.value?.shopType) {
+                    1 -> {
+                        //企业
+                        if (model.whichAccountToUse.value == 0) {
+                            //对公账户结算
+                            model.companyAccount.value?.isDefault = 1
+                            model.personalAccount.value?.isDefault = 0
+
+                            if (!isAccountReady(model.companyAccount.value)) {
+                                ToastUtils.showShort("请将对公账户填写完整")
+                                return@singleClick
+                            }
+                            model.companyAccount.value?.also {
+                                isCopy(model.applyShopInfo.value, it)
+                            }
+                            if (isAccountReady(model.personalAccount.value)) {
+                                model.bindBandCard.value = 2
+                            } else {
+                                model.bindBandCard.value = 0
+                            }
+
+                        } else {
+                            //对私账户结算
+                            model.personalAccount.value?.isDefault = 1
+                            model.companyAccount.value?.isDefault = 0
+
+                            if (!isAccountReady(model.companyAccount.value)) {
+                                ToastUtils.showShort("请将对公账户填写完整")
+                                return@singleClick
+                            }
+                            if (!isAccountReady(model.personalAccount.value)) {
+                                ToastUtils.showShort("请将对私账户填写完整")
+                                return@singleClick
+                            }
+                            model.personalAccount.value?.also {
+                                isCopy(model.applyShopInfo.value, it)
+                            }
+                            model.bindBandCard.value = 2
+                        }
+                    }
+                    3 -> {
+                        //个体户
+                        if (model.whichAccountToUse.value == 0) {
+                            //对公账户结算
+                            model.companyAccount.value?.isDefault = 1
+                            model.personalAccount.value?.isDefault = 0
+
+                            if (!isAccountReady(model.companyAccount.value)) {
+                                ToastUtils.showShort("请将对公账户填写完整")
+                                return@singleClick
+                            }
+                            model.companyAccount.value?.also {
+                                isCopy(model.applyShopInfo.value, it)
+                            }
+                            if (isAccountReady(model.personalAccount.value)) {
+                                model.bindBandCard.value = 2
+                            } else {
+                                model.bindBandCard.value = 0
+                            }
+
+                        } else {
+                            //对私账户结算
+                            model.personalAccount.value?.isDefault = 1
+                            model.companyAccount.value?.isDefault = 0
+
+                            if (!isAccountReady(model.personalAccount.value)) {
+                                ToastUtils.showShort("请将对私账户填写完整")
+                                return@singleClick
+                            }
+                            model.personalAccount.value?.also {
+                                isCopy(model.applyShopInfo.value, it)
+                            }
+                            if (isAccountReady(model.companyAccount.value)) {
+                                model.bindBandCard.value = 2
+                            } else {
+                                model.bindBandCard.value = 1
+                            }
+                        }
+                    }
+                    4 -> {
+                        //个人只有对私账户
+                        model.personalAccount.value?.isDefault = 1
+
+                        if (!isAccountReady(model.personalAccount.value)) {
+                            ToastUtils.showShort("请将对私账户填写完整")
+                            return@singleClick
+                        }
+                        model.personalAccount.value?.also {
+                            isCopy(model.applyShopInfo.value, it)
+                        }
+
+                        model.bindBandCard.value = 1
+
+                    }
+                }
+            } else {
+                requireActivity().finish()
             }
 
         }
@@ -535,9 +546,8 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                 binding.account1.isSelected = false
                 binding.account2.isSelected = true
 
-                when(model.applyShopInfo.value?.shopType)
-                {
-                    1->{
+                when (model.applyShopInfo.value?.shopType) {
+                    1 -> {
                         //企业
                         model.companyModule.value = View.VISIBLE
                         model.personalModule.value = View.VISIBLE
@@ -545,13 +555,13 @@ class BindAccountFragment : BaseVBFragment<FragmentBindAccountBinding, BasePrese
                         binding.authorpicView.visiable()
                         binding.authorpic.visiable()
                     }
-                    3->{
+                    3 -> {
                         //个体户
                         model.personalModule.value = View.VISIBLE
                         binding.authorpicView.gone()
                         binding.authorpic.gone()
                     }
-                    4->{
+                    4 -> {
                         //个人店铺
                         model.companyModule.value = View.GONE
                         model.personalModule.value = View.VISIBLE

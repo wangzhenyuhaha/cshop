@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/tools_sub_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -18,7 +20,8 @@
             style="@style/tools_sub_item_left"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:paddingRight="@dimen/dimen_10"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingStart="0dp"
             android:text="配送时效" />
 
     </LinearLayout>
@@ -63,7 +66,7 @@
                     android:singleLine="true"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CACACA"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -83,7 +86,7 @@
                     android:singleLine="true"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CACACA"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -118,7 +121,7 @@
                     android:singleLine="true"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CACACA"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/sp_13"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -138,7 +141,7 @@
                     android:singleLine="true"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CACACA"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="@dimen/sp_13"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,10 +149,10 @@
                     android:text="分钟" />
 
             </LinearLayout>
+
         </LinearLayout>
 
-        <View
-            style="@style/DivideLineHorizontal" />
+        <View style="@style/DivideLineHorizontal" />
 
         <RadioButton
             android:id="@+id/cb_model_time_section"
@@ -161,7 +164,7 @@
             android:id="@+id/rv_model_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </RadioGroup>
 
