@@ -4,6 +4,19 @@ import com.google.gson.annotations.SerializedName
 
 
 data class ShopStatus(
+    //true表示已经设置了，false为没有设置
+    //营业时间
+    @SerializedName("have_opentime")
+    var have_opentime: Boolean?,
+
+    //店铺logo
+    @SerializedName("have_shoplogo")
+    var have_shoplogo: Boolean?,
+
+    //联系电话
+    @SerializedName("have_mobile")
+    var have_mobile: Boolean?,
+
     @SerializedName("shop_staus")
     var shopStatus: String?,
     //店铺当前状态对应的原因
