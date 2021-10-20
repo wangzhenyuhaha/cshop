@@ -55,14 +55,14 @@
 
         </LinearLayout>
 
+<!--        隐藏-->
         <LinearLayout
             android:id="@+id/ll_model_name"
             style="@style/tools_sub_container"
             android:visibility="gone"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_model_type"
-            tools:visibility="visible">
+            app:layout_constraintTop_toBottomOf="@id/ll_model_type">
 
             <TextView
                 style="@style/tools_sub_item_left_10"
@@ -177,6 +177,7 @@
 
         </LinearLayout>
 
+<!--        隐藏-->
         <LinearLayout
             style="@style/tools_sub_container"
             android:layout_width="match_parent"
@@ -237,6 +238,7 @@
 
         </LinearLayout>
 
+<!--        隐藏-->
         <LinearLayout
             style="@style/tools_sub_container"
             android:layout_width="match_parent"

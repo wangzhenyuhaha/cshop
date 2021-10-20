@@ -10,27 +10,30 @@ import com.lingmiao.shop.business.tools.bean.DistanceSection
 class PriceAdapter : BaseQuickAdapter<DistanceSection, BaseViewHolder>(R.layout.tools_adapter_price) {
 
     override fun convert(helper: BaseViewHolder, item: DistanceSection?) {
-        helper.addOnClickListener(R.id.tv_model_price_delete);
-        helper.setVisible(R.id.tv_model_price_delete, helper.adapterPosition != 0);
-        helper.setTextColor(R.id.tv_model_price_delete, getColor(helper.adapterPosition));
+        //删除按钮点击
+        helper.addOnClickListener(R.id.tv_model_price_delete)
+        //设置删除按钮可见度和颜色
+        helper.setVisible(R.id.tv_model_price_delete, helper.adapterPosition != 0)
+        helper.setTextColor(R.id.tv_model_price_delete, getColor(helper.adapterPosition))
 
-        helper.setEnabled(R.id.et_model_price_start, helper.adapterPosition != 0);
+        helper.setEnabled(R.id.et_model_price_start, helper.adapterPosition != 0)
+
         if(helper.adapterPosition == 0) {
-            item?.startDistance = "0";
+            item?.startDistance = "0"
         }
 
-        helper.setText(R.id.et_model_price_start, String.format("%s", item?.startDistance));
-        helper.setText(R.id.et_model_price_end, String.format("%s", item?.endDistance));
-        helper.setText(R.id.et_model_price, String.format("%s", item?.shipPrice));
+        helper.setText(R.id.et_model_price_start, String.format("%s", item?.startDistance))
+        helper.setText(R.id.et_model_price_end, String.format("%s", item?.endDistance))
+        helper.setText(R.id.et_model_price, String.format("%s", item?.shipPrice))
 
         addTextChangeListener(helper.getView(R.id.et_model_price_start), item?.startDistance) {
-            item?.startDistance = it;
+            item?.startDistance = it
         }
         addTextChangeListener(helper.getView(R.id.et_model_price_end), item?.endDistance) {
-            item?.endDistance = it;
+            item?.endDistance = it
         }
         addTextChangeListener(helper.getView(R.id.et_model_price), item?.shipPrice) {
-            item?.shipPrice = it;
+            item?.shipPrice = it
         }
     }
 

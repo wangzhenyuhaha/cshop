@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="40dp"
     android:layout_gravity="center_horizontal"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText">
 
     <EditText
         android:id="@+id/et_model_price_start"
@@ -22,7 +24,7 @@
         android:singleLine="true"
         android:textColor="@color/color_333333"
         android:textColorHint="@color/color_CACACA"
-        android:textSize="@dimen/dimen_13" />
+        android:textSize="@dimen/sp_13" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -46,8 +48,7 @@
         android:singleLine="true"
         android:textColor="@color/color_333333"
         android:textColorHint="@color/color_CACACA"
-        android:textSize="@dimen/dimen_13" />
-
+        android:textSize="@dimen/sp_13" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -71,7 +72,7 @@
         android:singleLine="true"
         android:textColor="@color/color_333333"
         android:textColorHint="@color/color_CACACA"
-        android:textSize="@dimen/dimen_13" />
+        android:textSize="@dimen/sp_13" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -80,9 +81,9 @@
 
     <TextView
         android:id="@+id/tv_model_price_delete"
-        android:padding="@dimen/dimen_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="删除"/>
+        android:padding="@dimen/dimen_10"
+        android:text="删除" />
 
 </LinearLayout>

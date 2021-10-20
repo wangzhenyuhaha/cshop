@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_gravity="center_horizontal"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:id="@+id/ll_model_time_date"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:paddingLeft="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingEnd="18dp"
             android:text="当日" />
 
         <TextView
-            android:paddingLeft="@dimen/dimen_5"
-            android:drawableLeft="@mipmap/tools_time"
             android:id="@+id/et_model_km_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@null"
+            android:drawableStart="@mipmap/tools_time"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="center"
             android:hint="请选择"
             android:inputType="numberDecimal"
             android:orientation="horizontal"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/dimen_5"
             android:singleLine="true"
             android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CACACA"
@@ -49,33 +52,33 @@
     </LinearLayout>
 
     <LinearLayout
-        app:layout_constraintTop_toBottomOf="@+id/ll_model_time_date"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
         android:layout_gravity="center_vertical"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/ll_model_time_date">
 
         <TextView
-            android:paddingLeft="@dimen/dimen_5"
-            android:drawableLeft="@mipmap/tools_down"
             android:id="@+id/tv_model_time_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/tools_down"
+            android:paddingLeft="@dimen/dimen_5"
             android:text="当日" />
 
         <TextView
-            android:paddingLeft="@dimen/dimen_5"
-            android:drawableLeft="@mipmap/tools_time"
             android:id="@+id/et_model_km_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
+            android:drawableLeft="@mipmap/tools_time"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="center"
             android:hint="请选择"
             android:inputType="numberDecimal"
             android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_5"
             android:singleLine="true"
             android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CACACA"
@@ -89,17 +92,18 @@
     </LinearLayout>
 
     <TextView
-        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/tv_model_time_delete"
-        android:padding="@dimen/dimen_10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="parent"
+        android:padding="@dimen/dimen_10"
+        android:text="删除"
         app:layout_constraintBottom_toTopOf="parent"
-        android:text="删除"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="parent" />
 
-    <View style="@style/DivideLineHorizontal"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+    <View
+        style="@style/DivideLineHorizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

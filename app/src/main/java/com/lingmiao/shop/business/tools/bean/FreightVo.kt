@@ -433,7 +433,7 @@ data class RegionVo(
         return localName;
     }
 
-    override fun isItemChecked(): Boolean? {
+    override fun isItemChecked(): Boolean {
         return isCheck;
     }
 
@@ -486,10 +486,13 @@ data class DistanceSection(
 data class PeekTime(
     @SerializedName("endTimeCount")
     var endTimeCount: Int? = null,
+    //结束时间
     @SerializedName("peekTimeEnd")
     var peekTimeEnd: String? = "",
+    //加收价格
     @SerializedName("peekTimePrice")
     var peekTimePrice: String? = "",
+    //开始时间
     @SerializedName("peekTimeStart")
     var peekTimeStart: String? = "",
     @SerializedName("startTimeCount")
@@ -581,22 +584,22 @@ data class TimeSection(
 }
 
 data class FeeSettingReqVo(
-    //
+    //基础距离
     @SerializedName("base_distance")
     var baseDistance: String? = "",
-    //
+    //基础价格
     @SerializedName("base_price")
     var basePrice: String? = "",
-    //
+    //单位距离
     @SerializedName("unit_distance")
     var unitDistance: String? = "",
-    //
+    //单位费用
     @SerializedName("unit_price")
     var unitPrice: String? = "",
     //
     @SerializedName("distance_sections")
     var distanceSections: List<DistanceSectionReq>? = listOf(),
-    //
+    //费用配置类型 1.基础距离配送费计算 2.距离区间配送费计算
     @SerializedName("fee_type")
     var feeType: Int? = 0,
     //
@@ -635,24 +638,38 @@ data class FeeSettingReqVo(
 }
 
 data class TimeSettingReqVo(
+
+
+    //baseDistance  基础距离
     @SerializedName("base_distance")
     var baseDistance: String? = "",
+
+    //baseTime  基础价格
     @SerializedName("base_time")
     var baseTime: String? = "",
     @SerializedName("time_sections")
     var timeSections: List<TimeSectionReq>? = listOf(),
+
+    //timeType  时间配置类型
     @SerializedName("time_type")
     var timeType: Int? = 0,
+
+    //unitDistance  单位距离
     @SerializedName("unit_distance")
     var unitDistance: String? = "",
+
+    //unitTime  单位费用
     @SerializedName("unit_time")
     var unitTime: String? = "",
+
+    //readyTime  商家准备时间
     @SerializedName("ready_time")
     var readyTime : Int? = 0,
 
+    //transTempLimitTime  转换模版时间配置
     @SerializedName("trans_temp_limit_time")
     var transTempLimitTime : Int? = 0,
-
+    //isAllowTransTemp  是否允许转换配送模版（是否允许骑手转商家）
     @SerializedName("is_allow_trans_temp")
     var isAllowTransTemp : Int? = 0
     
@@ -737,10 +754,10 @@ data class TimeValue(
 
     companion object {
         fun getTimeList() : MutableList<TimeValue> {
-            var mTimeValueList : MutableList<TimeValue> = mutableListOf();
-            var temp = 0;
-            var tempName = "";
-            var tempValue = 0;
+            val mTimeValueList : MutableList<TimeValue> = mutableListOf();
+            var temp = 0
+            var tempName = ""
+            var tempValue = 0
             for(index in 0..47) {
                 tempName = String.format("%s%s:%s", if(temp < 10) "0" else "", temp, if(index % 2 == 0) "00" else "30");
                 tempValue = tempName.replace(":", "").toInt();

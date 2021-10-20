@@ -124,6 +124,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
         //使用的是商家配送模板
         fragments.add(DeliveryInTimeFragment.newInstance(mItem))
         if (type == 1) {
+            //使用的是骑手配送模板
             fragments.add(DeliveryOfRiderFragment.newInstance(mItem))
         }
 
