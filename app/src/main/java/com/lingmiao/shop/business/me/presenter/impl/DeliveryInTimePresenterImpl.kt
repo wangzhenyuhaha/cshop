@@ -28,13 +28,13 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
 
     override fun addModel(item: FreightVoItem) {
         mCoroutine.launch {
-            view.showDialogLoading();
-            LogUtils.dTag("add model" + item.name);
-            val resp = ToolsRepository.addShipTemplate(item);
+            view.showDialogLoading()
+            LogUtils.dTag("add model" + item.name)
+            val resp = ToolsRepository.addShipTemplate(item)
             handleResponse(resp) {
-                view.updateModelSuccess(true);
+                view.updateModelSuccess(true)
             }
-            view.hideDialogLoading();
+            view.hideDialogLoading()
         }
     }
 

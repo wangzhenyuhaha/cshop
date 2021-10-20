@@ -529,7 +529,7 @@ data class TimeSettingVo(
     companion object {
         // 公里数
         val TIME_TYPE_BASE = 1;
-        // 公里段
+        // 时间段
         val TIME_TYPE_SECTION = 2;
     }
 

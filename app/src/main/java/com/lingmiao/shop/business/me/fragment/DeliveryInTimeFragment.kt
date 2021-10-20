@@ -53,6 +53,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
     var mFeeSetting: FeeSettingVo = FeeSettingVo()
 
+    //配送时效
     var mTimeSetting: TimeSettingVo = TimeSettingVo()
 
     companion object {
@@ -114,6 +115,11 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                     showToast("请填完配送费")
                     return@singleClick
                 }
+                //配送范围
+                if (et_model_out_range_km.getViewText().isEmpty()) {
+                    showToast("请输入配送范围")
+                    return@singleClick
+                }
                 if (cb_model_time_km.isChecked) {
                     //按公里数
                     if (et_model_time_km.getViewText().isEmpty()
@@ -127,21 +133,31 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 }
                 if (cb_model_time_section.isChecked) {
                     //按时间
-
+                    if (mTimeList.size == 0) {
+                        showToast("请填完配送时效")
+                        return@singleClick
+                    } else {
+                        if (mTimeList[0].arriveTime.isNullOrEmpty() || mTimeList[0].shipTime.isNullOrEmpty()) {
+                            showToast("请填完配送时效")
+                            return@singleClick
+                        }
+                    }
                 }
 
-                val readyTime = deliveryThingEt.getViewText().toInt()
                 name = "商家配送"
-                // 基础
+                // 基础（默认）
                 templateType = FreightVoItem.TYPE_LOCAL
                 type =
                     if (cb_model_pay_km_section.isChecked) FreightVoItem.TYPE_KM_SECTION else FreightVoItem.TYPE_KM_COUNT
 
-                // 同城
+                //起送价格
                 baseShipPrice = et_model_km_price.getViewText()
 
+                //配送范围
                 shipRange = et_model_out_range_km.getViewText()
 
+                //配送时效
+                //按公里或者时间
                 val setting = mTimeSetting
                 if (cb_model_time_km.isChecked) {
                     // 按公里数
@@ -155,7 +171,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
                 }
                 if (cb_model_time_section.isChecked) {
-                    // 按时间段段
+                    // 按时间段
                     setting.timeType = TimeSettingVo.TIME_TYPE_SECTION
                     setting.timeSections = mTimeList
                     // 清数据
@@ -164,10 +180,13 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                     setting.unitDistance = null
                     setting.unitTime = null
                 }
+                //配货时间
+                val readyTime = deliveryThingEt.getViewText().toInt()
                 setting.readyTime = readyTime
                 timeSettingVo = TimeSettingReqVo(setting)
                 timeSetting = JsonUtil.instance.toJson(setting)
 
+                //配送费
                 mFeeSetting.feeType = FeeSettingVo.FEE_TYPE_DISTANCE
                 mFeeSetting.baseDistance = et_model_price_km.getViewText()
                 mFeeSetting.basePrice = et_model_price_price.getViewText()
@@ -414,59 +433,50 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
     //设置UI数据和
     private fun setUi() {
-        // 模板名称
-        //cb_model_type_express_city.isChecked = true;
         // 起送价
         et_model_km_price.setText(String.format("%s", mItem?.baseShipPrice))
         // 配送范围
         et_model_out_range_km.setText(String.format("%s", mItem?.shipRange))
 
         mFeeSetting =
-            if (mItem?.feeSetting?.isNullOrEmpty() == true) FeeSettingVo() else mPresenter?.getFeeSetting(
+            if (mItem?.feeSetting?.isEmpty() == true) FeeSettingVo() else mPresenter?.getFeeSetting(
                 mItem
             ) ?: FeeSettingVo()
 
         mTimeSetting =
-            if (mItem?.timeSetting?.isNullOrEmpty() == true) TimeSettingVo() else mPresenter?.getTimeSetting(
+            if (mItem?.timeSetting?.isEmpty() == true) TimeSettingVo() else mPresenter?.getTimeSetting(
                 mItem
             ) ?: TimeSettingVo()
 
-        mFeeSetting?.apply {
-            // 配送范围加收费用
-            mRangeList = mFeeSetting?.peekTimes ?: arrayListOf()
+        mFeeSetting.apply {
+            // 加收费用
+            mRangeList = mFeeSetting.peekTimes ?: arrayListOf()
             mRangeAdapter.replaceData(mRangeList)
 
-            // 按公里数计费
+            //配送费
             cb_model_pay_km_num.isChecked = true
-            et_model_price_km.setText(String.format("%s", mFeeSetting?.baseDistance))
-            et_model_price_price.setText(String.format("%s", mFeeSetting?.basePrice))
-            et_model_price_km_out.setText(String.format("%s", mFeeSetting?.unitDistance))
-            et_model_price_minute_more.setText(String.format("%s", mFeeSetting?.unitPrice))
-//            if(isDistanceType()) {
-//
-//            } else {
-//                // 按公里段计费
-//                cb_model_pay_km_section.isChecked = true;
-//                mPriceList = mFeeSetting?.distanceSections ?: arrayListOf();
-//                mPriceAdapter.replaceData(mPriceList);
-//            }
-
+            et_model_price_km.setText(String.format("%s", mFeeSetting.baseDistance))
+            et_model_price_price.setText(String.format("%s", mFeeSetting.basePrice))
+            et_model_price_km_out.setText(String.format("%s", mFeeSetting.unitDistance))
+            et_model_price_minute_more.setText(String.format("%s", mFeeSetting.unitPrice))
         }
 
-        mTimeSetting?.apply {
-            cb_model_time_km.isChecked = true
-            et_model_time_km.setText(String.format("%s", mTimeSetting?.baseDistance))
-            et_model_time_minute.setText(String.format("%s", mTimeSetting?.baseTime))
-            et_model_time_km_out.setText(String.format("%s", mTimeSetting?.unitDistance))
-            et_model_time_minute_more.setText(String.format("%s", mTimeSetting?.unitTime))
-            deliveryThingEt.setText(String.format("%s", mTimeSetting?.readyTime))
-//            if(isBaseTimeType()) {
-//
-//            } else {
-//                cb_model_time_section.isChecked = true;
-//                mTimeList = mTimeSetting?.timeSections ?: arrayListOf();
-//                mTimeAdapter.replaceData(mTimeList);
-//            }
+        mTimeSetting.apply {
+
+            if (timeType == TimeSettingVo.TIME_TYPE_BASE) {
+                //按公里数
+                cb_model_time_km.isChecked = true
+                et_model_time_km.setText(String.format("%s", mTimeSetting.baseDistance))
+                et_model_time_minute.setText(String.format("%s", mTimeSetting.baseTime))
+                et_model_time_km_out.setText(String.format("%s", mTimeSetting.unitDistance))
+                et_model_time_minute_more.setText(String.format("%s", mTimeSetting.unitTime))
+                deliveryThingEt.setText(String.format("%s", mTimeSetting.readyTime))
+            } else {
+                //按时间段
+                cb_model_time_section.isChecked = true
+                mTimeList = mTimeSetting.timeSections ?: arrayListOf()
+                mTimeAdapter.replaceData(mTimeList)
+            }
         }
     }
 
