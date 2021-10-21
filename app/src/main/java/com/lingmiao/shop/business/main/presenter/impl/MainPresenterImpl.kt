@@ -29,6 +29,7 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                     loginInfo.openStatus = shopStatusResp.data.openStatus == 1
                     loginInfo.showButton = shopStatusResp.data.showButton
                     UserManager.setLoginInfo(loginInfo)
+                    UserManager.setAutoPrint(shopStatusResp.data.autoPrint == 1);
                 }
                 if (ShopStatusConstants.isAuthed(shopStatusResp.data.shopStatus)) {
                     val resp = MainRepository.apiService.getMainData().awaitHiResponse()

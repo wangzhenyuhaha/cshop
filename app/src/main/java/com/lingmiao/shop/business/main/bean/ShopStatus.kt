@@ -21,6 +21,8 @@ data class ShopStatus(
     var showButton: Int? = 0,
     // 审核失败原因
     @SerializedName("remark")
-    var remark: String = ""
+    var remark: String = "",
 
+    @SerializedName("auto_print")
+    var autoPrint: Int? = 0
 )
