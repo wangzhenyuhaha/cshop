@@ -1,4 +1,5 @@
 package com.lingmiao.shop.business.tools.bean
+
 import com.chad.library.adapter.base.entity.AbstractExpandableItem
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.lingmiao.shop.business.tools.adapter.AreasAdapter
@@ -16,17 +17,18 @@ data class TempRegionVo(
     @SerializedName("parent_id")
     var parentId: Int? = 0,
     @SerializedName("selected_all")
-    var selectedAll : Boolean ? = false,
+    var selectedAll: Boolean? = false,
     @SerializedName("children")
     var children: Map<String, Any>? = hashMapOf()
 ) : Serializable {
-    constructor(item : RegionVo) : this() {
+    constructor(item: RegionVo) : this() {
         id = item?.id;
         level = item?.level;
         localName = item?.localName;
         parentId = item?.parentId;
         selectedAll = item?.selectedAll;
-        children = item?.children?.associateBy({it?.id.toString()}, {TempRegionVo(it)})?.toMap();
+        children =
+            item?.children?.associateBy({ it?.id.toString() }, { TempRegionVo(it) })?.toMap();
     }
 }
 
@@ -35,17 +37,17 @@ data class TempArea(
     /**
      * 所有解释的区域
      */
-    var allParsedAreas : MutableList<Map<String, Map<String, Any>>> ?= arrayListOf(),
+    var allParsedAreas: MutableList<Map<String, Map<String, Any>>>? = arrayListOf(),
     /**
      * 所有选中的区域
      */
-    var selectedIds : MutableList<String>
+    var selectedIds: MutableList<String>
 ) : Serializable {
 
     /**
      * 是否存在于所有已选中的区域中
      */
-    fun existId(id : Int?) : Boolean {
+    fun existId(id: Int?): Boolean {
         return selectedIds?.contains(String.format("%s", id));
     }
 }
@@ -107,6 +109,14 @@ data class FreightVoItem(
      */
     @SerializedName("ship_range")
     var shipRange: String? = "",
+
+    //商家转骑手配送
+    @SerializedName("is_rider_to_seller")
+    var is_rider_to_seller: Int? = null,
+
+    //商家转骑手配送时间
+    @SerializedName("rider_to_seller_time")
+    var rider_to_seller_time: Int? = null,
     /**
      * 最低配送价格
      */
@@ -118,14 +128,14 @@ data class FreightVoItem(
 
     @SerializedName("local_template")
     var localTemplate: Any? = Any(),
-    var tempArea : TempArea ? = null,
+    var tempArea: TempArea? = null,
 
     @SerializedName("fee_setting_vo")
     var feeSettingVo: FeeSettingReqVo? = FeeSettingReqVo(),
 
     @SerializedName("time_setting_vo")
     var timeSettingVo: TimeSettingReqVo? = TimeSettingReqVo()
-) : Serializable{
+) : Serializable {
 
     companion object {
         val TYPE_KUAIDI = "KUAIDI";
@@ -141,20 +151,20 @@ data class FreightVoItem(
 
     }
 
-    fun isKuaiDiType() : Boolean {
+    fun isKuaiDiType(): Boolean {
         return TYPE_KUAIDI == templateType;
     }
 
-    fun isLocalTemplateType() : Boolean {
+    fun isLocalTemplateType(): Boolean {
         return TYPE_LOCAL == templateType;
     }
 
-    fun getTemplateTypeName() : String {
-        return if(isLocalTemplateType()) "同城" else "快递";
+    fun getTemplateTypeName(): String {
+        return if (isLocalTemplateType()) "同城" else "快递";
     }
 
-    fun getTypeName() : String {
-        return when(type) {
+    fun getTypeName(): String {
+        return when (type) {
             TYPE_WEIGHT -> "按重量计算";
             TYPE_COUNT -> "按件数计算";
             TYPE_KM_COUNT -> "按公里数计算";
@@ -163,11 +173,11 @@ data class FreightVoItem(
         }
     }
 
-    fun isWeightType() : Boolean {
+    fun isWeightType(): Boolean {
         return type == TYPE_WEIGHT;
     }
 
-    fun existAreaId(id : Int?) : Boolean {
+    fun existAreaId(id: Int?): Boolean {
         return tempArea?.existId(id) ?: false;
     }
 
@@ -209,23 +219,23 @@ data class Item(
     var areaId: String? = "",
     @SerializedName("regions")
     var regions: List<Region>? = listOf(),
-    var parsedArea : Map<String, Map<String, Any>> ? = null,
-    var selectedIds : MutableList<String> ? = arrayListOf()
+    var parsedArea: Map<String, Map<String, Any>>? = null,
+    var selectedIds: MutableList<String>? = arrayListOf()
 ) : Serializable {
 
-    fun getAreaStr() : String {
+    fun getAreaStr(): String {
         val str = StringBuilder();
-        regions?.forEachIndexed { index : Int, it : Region ->
-            if(index > 0 && index < regions?.size ?: 0) {
+        regions?.forEachIndexed { index: Int, it: Region ->
+            if (index > 0 && index < regions?.size ?: 0) {
                 str.append("、")
             }
             str.append(it?.name);
-            it?.children?.forEachIndexed { cIndex : Int, cItem : Region ->
-                if(cIndex == 0 && it?.children?.size ?: 0 > 0) {
+            it?.children?.forEachIndexed { cIndex: Int, cItem: Region ->
+                if (cIndex == 0 && it?.children?.size ?: 0 > 0) {
                     str.append("(");
                 }
                 str.append(cItem?.name);
-                if(it?.children?.size == cIndex +1) {
+                if (it?.children?.size == cIndex + 1) {
                     str.append(")");
                 }
             }
@@ -233,7 +243,7 @@ data class Item(
         return str.toString();
     }
 
-    fun existId(id : Int?) : Boolean {
+    fun existId(id: Int?): Boolean {
         return selectedIds?.contains(String.format("%s", id)) ?: false;
     }
 
@@ -265,7 +275,7 @@ data class TempRegion(
     var selectedAll: Boolean? = false
 ) : Serializable {
 
-    fun isChecked() : Boolean {
+    fun isChecked(): Boolean {
         return selectedAll == true;
     }
 }
@@ -283,25 +293,25 @@ data class RegionVo(
     @SerializedName("parent_id")
     var parentId: Int? = 0,
     @SerializedName("selected_all")
-    var selectedAll : Boolean ? = false,
-    var isCheck : Boolean = false,
-    var pPosition : Int ? = -1,
-    var cPosition : Int ? = -1
+    var selectedAll: Boolean? = false,
+    var isCheck: Boolean = false,
+    var pPosition: Int? = -1,
+    var cPosition: Int? = -1
 ) : AbstractExpandableItem<RegionVo>(), MultiItemEntity, ItemData, Serializable {
 
     override fun getLevel(): Int {
         return (level ?: 1) - 1;
     }
 
-    fun isLastNode() : Boolean {
+    fun isLastNode(): Boolean {
         return getLevel() == AreasAdapter.TYPE_AREA;
     }
 
-    fun isCityLevel() : Boolean {
+    fun isCityLevel(): Boolean {
         return getLevel() == AreasAdapter.TYPE_LEVEL_1;
     }
 
-    fun isProvinceLevel() : Boolean {
+    fun isProvinceLevel(): Boolean {
         return getLevel() == AreasAdapter.TYPE_LEVEL_0;
     }
 
@@ -309,12 +319,12 @@ data class RegionVo(
         return getLevel();
     }
 
-    fun shiftAllCheck(flag : Boolean) {
-        when(getLevel()) {
+    fun shiftAllCheck(flag: Boolean) {
+        when (getLevel()) {
             AreasAdapter.TYPE_LEVEL_0 -> {
                 isCheck = flag;
                 children?.apply {
-                    forEach{ it : RegionVo ->
+                    forEach { it: RegionVo ->
                         it.shiftAllCheck(flag);
                     }
                 }
@@ -322,7 +332,7 @@ data class RegionVo(
             AreasAdapter.TYPE_LEVEL_1 -> {
                 isCheck = flag;
                 children?.apply {
-                    forEach { area : RegionVo ->
+                    forEach { area: RegionVo ->
                         area.shiftAllCheck(flag);
                     }
                 }
@@ -336,14 +346,14 @@ data class RegionVo(
         }
     }
 
-    fun isCheckAll() : Boolean {
+    fun isCheckAll(): Boolean {
         var isCheckAll = true;
-        when(getLevel()) {
+        when (getLevel()) {
             AreasAdapter.TYPE_LEVEL_0 -> {
                 var isCheckAll = true;
                 children?.apply {
                     forEach { c: RegionVo ->
-                        if(!c?.isCheckAll()) {
+                        if (!c?.isCheckAll()) {
                             isCheckAll = false;
                         }
                     }
@@ -352,8 +362,8 @@ data class RegionVo(
             }
             AreasAdapter.TYPE_LEVEL_1 -> {
                 children?.apply {
-                    forEach { a : RegionVo ->
-                        if(!a?.isCheck) {
+                    forEach { a: RegionVo ->
+                        if (!a?.isCheck) {
                             isCheckAll = false;
                         }
                     }
@@ -370,23 +380,23 @@ data class RegionVo(
     }
 
     fun addItem(item: Item?, mTempArea: TempArea?) {
-        if(item?.existId(id) == true) {
+        if (item?.existId(id) == true) {
             shiftAllCheck(true);
         }
-        when(getLevel()) {
+        when (getLevel()) {
             AreasAdapter.TYPE_LEVEL_0 -> {
                 children?.apply {
-                    forEach{ city : RegionVo ->
+                    forEach { city: RegionVo ->
 //                        LogUtils.dTag("addItem " + city?.level + " : " + city?.localName);
 //                        addSubItem(city);
 //                        city?.addItem(item, mTempArea);
-                        if(item?.existId(city?.id) == true) {
+                        if (item?.existId(city?.id) == true) {
                             city?.isCheck = true;
                             city?.shiftAllCheck(true);
                             addSubItem(city);
                             city?.addItem(item, mTempArea);
                         } else {
-                            if(mTempArea?.existId(city?.id) != true) {
+                            if (mTempArea?.existId(city?.id) != true) {
                                 addSubItem(city);
                                 city?.addItem(item, mTempArea);
                             }
@@ -396,15 +406,15 @@ data class RegionVo(
             }
             AreasAdapter.TYPE_LEVEL_1 -> {
                 children?.apply {
-                    forEach { area : RegionVo ->
+                    forEach { area: RegionVo ->
 //                        LogUtils.dTag("addItem " + area?.level + " : " + area?.localName);
-                        if(item?.existId(area?.id) == true) {
+                        if (item?.existId(area?.id) == true) {
                             area?.isCheck = true;
                             area?.shiftAllCheck(true);
                             addSubItem(area);
                             area?.addItem(item, mTempArea);
                         } else {
-                            if(mTempArea?.existId(area?.id) != true) {
+                            if (mTempArea?.existId(area?.id) != true) {
                                 addSubItem(area);
                                 area?.addItem(item, mTempArea);
                             }
@@ -463,11 +473,11 @@ data class FeeSettingVo(
     var unitPrice: String? = ""
 ) : Serializable {
     companion object {
-        val FEE_TYPE_DISTANCE : Int = 1;
-        val FEE_TYPE_SECTION : Int = 2;
+        val FEE_TYPE_DISTANCE: Int = 1;
+        val FEE_TYPE_SECTION: Int = 2;
     }
 
-    fun isDistanceType() : Boolean {
+    fun isDistanceType(): Boolean {
         return feeType == FEE_TYPE_DISTANCE;
     }
 }
@@ -479,7 +489,7 @@ data class DistanceSection(
     var shipPrice: String? = "",
     @SerializedName("endDistance")
     var endDistance: String? = ""
-): Serializable {
+) : Serializable {
 
 }
 
@@ -499,7 +509,7 @@ data class PeekTime(
     var startTimeCount: Int? = -1,
     //加收费用是否可操作(默认可操作)
     var enable: Boolean = true
-): Serializable {
+) : Serializable {
 
 }
 
@@ -521,29 +531,40 @@ data class TimeSettingVo(
     @SerializedName("unitTime")
     var unitTime: String? = "",
     @SerializedName("readyTime")
-    var readyTime : Int? = 0,
+    var readyTime: Int? = 0,
     @SerializedName("transTempLimitTime")
-    var transTempLimitTime : Int? = 0,
+    var transTempLimitTime: Int? = 0,
     @SerializedName("isAllowTransTemp")
-    var isAllowTransTemp : Int? = 0
+    var isAllowTransTemp: Int? = 0
 
 ) : Serializable {
     companion object {
         // 公里数
         val TIME_TYPE_BASE = 1;
+
         // 时间段
         val TIME_TYPE_SECTION = 2;
     }
 
-    fun isBaseTimeType() : Boolean {
+    fun isBaseTimeType(): Boolean {
         return timeType == TIME_TYPE_BASE
     }
 
-    fun convertReqVo() : TimeSettingReqVo {
-        return TimeSettingReqVo(baseDistance, baseTime, convertTimeSection(), timeType,unitDistance,unitTime, readyTime,transTempLimitTime,isAllowTransTemp);
+    fun convertReqVo(): TimeSettingReqVo {
+        return TimeSettingReqVo(
+            baseDistance,
+            baseTime,
+            convertTimeSection(),
+            timeType,
+            unitDistance,
+            unitTime,
+            readyTime,
+            transTempLimitTime,
+            isAllowTransTemp
+        );
     }
 
-    fun convertTimeSection() : MutableList<TimeSectionReq> {
+    fun convertTimeSection(): MutableList<TimeSectionReq> {
         val items: MutableList<TimeSectionReq> = arrayListOf();
         timeSections?.forEachIndexed { index, timeSection ->
             items?.add(timeSection.toReqVo());
@@ -560,8 +581,8 @@ data class TimeSection(
     var shipTime: String? = "",
     @SerializedName("shipTimeType")
     var shipTimeType: Int? = 1,
-    var arriveTimeCount : Int ? = null,
-    var shipTimeCount : Int ? = null
+    var arriveTimeCount: Int? = null,
+    var shipTimeCount: Int? = null
 ) : Serializable {
 
     fun shiftTomorrow() {
@@ -572,15 +593,15 @@ data class TimeSection(
         shipTimeType = 1;
     }
 
-    fun isToday() : Boolean {
+    fun isToday(): Boolean {
         return shipTimeType == 1;
     }
 
-    fun getTimeType() : String {
-        return if(isToday()) "当日" else "次日";
+    fun getTimeType(): String {
+        return if (isToday()) "当日" else "次日";
     }
 
-    fun toReqVo() : TimeSectionReq {
+    fun toReqVo(): TimeSectionReq {
         return TimeSectionReq(arriveTime, shipTime, shipTimeType)
     }
 }
@@ -608,7 +629,7 @@ data class FeeSettingReqVo(
     @SerializedName("peek_times")
     var peekTimes: List<PeekTimeReq>? = listOf()
 ) : Serializable {
-    constructor(item : FeeSettingVo) : this() {
+    constructor(item: FeeSettingVo) : this() {
         baseDistance = item?.baseDistance;
         basePrice = item?.basePrice;
         unitDistance = item?.unitDistance;
@@ -618,20 +639,20 @@ data class FeeSettingReqVo(
         distanceSections = parseDistances(item?.distanceSections);
     }
 
-    fun parsePeekTimes(times : MutableList<PeekTime>?) : MutableList<PeekTimeReq> {
-        var list : MutableList<PeekTimeReq> = arrayListOf();
-        if(times != null) {
-            for(item in times) {
+    fun parsePeekTimes(times: MutableList<PeekTime>?): MutableList<PeekTimeReq> {
+        var list: MutableList<PeekTimeReq> = arrayListOf();
+        if (times != null) {
+            for (item in times) {
                 list.add(PeekTimeReq(item));
             }
         }
         return list;
     }
 
-    fun parseDistances(distances : List<DistanceSection>?) : MutableList<DistanceSectionReq> {
-        var list : MutableList<DistanceSectionReq> = arrayListOf();
-        if(distances != null) {
-            for(item in distances) {
+    fun parseDistances(distances: List<DistanceSection>?): MutableList<DistanceSectionReq> {
+        var list: MutableList<DistanceSectionReq> = arrayListOf();
+        if (distances != null) {
+            for (item in distances) {
                 list.add(DistanceSectionReq(item));
             }
         }
@@ -666,17 +687,17 @@ data class TimeSettingReqVo(
 
     //readyTime  商家准备时间
     @SerializedName("ready_time")
-    var readyTime : Int? = 0,
+    var readyTime: Int? = 0,
 
     //transTempLimitTime  转换模版时间配置
     @SerializedName("trans_temp_limit_time")
-    var transTempLimitTime : Int? = 0,
+    var transTempLimitTime: Int? = 0,
     //isAllowTransTemp  是否允许转换配送模版（是否允许骑手转商家）
     @SerializedName("is_allow_trans_temp")
-    var isAllowTransTemp : Int? = 0
-    
-) : Serializable{
-    constructor(item : TimeSettingVo) : this() {
+    var isAllowTransTemp: Int? = 0
+
+) : Serializable {
+    constructor(item: TimeSettingVo) : this() {
         baseDistance = item?.baseDistance;
         baseTime = item?.baseTime;
         timeSections = parseSections(item?.timeSections);
@@ -686,10 +707,10 @@ data class TimeSettingReqVo(
         readyTime = item?.readyTime
     }
 
-    fun parseSections(sections : List<TimeSection>?) : MutableList<TimeSectionReq> {
-        var list : MutableList<TimeSectionReq> = arrayListOf();
-        if(sections != null) {
-            for(item in sections) {
+    fun parseSections(sections: List<TimeSection>?): MutableList<TimeSectionReq> {
+        var list: MutableList<TimeSectionReq> = arrayListOf();
+        if (sections != null) {
+            for (item in sections) {
                 list.add(TimeSectionReq(item));
             }
         }
@@ -706,7 +727,7 @@ data class DistanceSectionReq(
     @SerializedName("start_distance")
     var startDistance: String? = ""
 ) : Serializable {
-    constructor(item : DistanceSection) : this() {
+    constructor(item: DistanceSection) : this() {
         endDistance = item?.endDistance;
         shipPrice = item?.shipPrice;
         startDistance = item?.startDistance;
@@ -725,7 +746,7 @@ data class PeekTimeReq(
     @SerializedName("start_time_count")
     var startTimeCount: Int? = 0
 ) : Serializable {
-    constructor(item : PeekTime) : this() {
+    constructor(item: PeekTime) : this() {
         endTimeCount = item?.endTimeCount;
         peekTimeEnd = item?.peekTimeEnd;
         peekTimePrice = item?.peekTimePrice;
@@ -742,7 +763,7 @@ data class TimeSectionReq(
     @SerializedName("ship_time_type")
     var shipTimeType: Int? = 0
 ) : Serializable {
-    constructor(item : TimeSection) : this() {
+    constructor(item: TimeSection) : this() {
         arriveTime = item?.arriveTime;
         shipTime = item?.shipTime;
         shipTimeType = item?.shipTimeType;
@@ -755,23 +776,28 @@ data class TimeValue(
 ) {
 
     companion object {
-        fun getTimeList() : MutableList<TimeValue> {
-            val mTimeValueList : MutableList<TimeValue> = mutableListOf();
+        fun getTimeList(): MutableList<TimeValue> {
+            val mTimeValueList: MutableList<TimeValue> = mutableListOf();
             var temp = 0
             var tempName = ""
             var tempValue = 0
-            for(index in 0..47) {
-                tempName = String.format("%s%s:%s", if(temp < 10) "0" else "", temp, if(index % 2 == 0) "00" else "30");
+            for (index in 0..47) {
+                tempName = String.format(
+                    "%s%s:%s",
+                    if (temp < 10) "0" else "",
+                    temp,
+                    if (index % 2 == 0) "00" else "30"
+                );
                 tempValue = tempName.replace(":", "").toInt();
                 mTimeValueList.add(TimeValue(tempName, tempValue));
-                if((index + 1) % 2  == 0) {
+                if ((index + 1) % 2 == 0) {
                     temp += 1;
                 }
             }
             return mTimeValueList;
         }
 
-        fun getLastTimeCount() : Int {
+        fun getLastTimeCount(): Int {
             return 2350;
         }
     }

@@ -13,8 +13,6 @@ import com.lingmiao.shop.business.tools.adapter.PriceAdapter
 import com.lingmiao.shop.business.tools.adapter.RangeAdapter
 import com.lingmiao.shop.business.tools.adapter.TimeAdapter
 import com.lingmiao.shop.business.tools.bean.*
-import com.lingmiao.shop.business.tools.pop.DayPop
-import com.lingmiao.shop.business.tools.pop.TimeListPop
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_of_rider.*
 import kotlinx.android.synthetic.main.tools_adapter_time.*
@@ -40,6 +38,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
     private lateinit var mTimeValueList: MutableList<TimeValue>
     private lateinit var mDayTypeList: MutableList<String>
 
+
+    //qiqi
+    //
     private var mItem: FreightVoItem? = null
 
     private var mShopItem: FreightVoItem? = null
@@ -152,7 +153,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
      * 同城配送的计费方式
      */
     private fun updateCityExpressPayTypeCheckBox() {
-        rg_model_pay_km.setOnCheckedChangeListener { group, checkedId ->
+        rg_model_pay_km.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.cb_model_pay_km_section) {
                 rv_model_price.visibility = View.VISIBLE
                 ll_model_price_section.visibility = View.GONE
@@ -210,7 +211,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
                 mPriceAdapter.replaceData(mPriceList)
             }
             addFooterView(footer)
-        };
+        }
 
         rv_model_price.initAdapter(mPriceAdapter)
 
@@ -244,9 +245,17 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
             et_model_price_price.setText(String.format("%s", mFeeSetting.basePrice))
             et_model_price_km_out.setText(String.format("%s", mFeeSetting.unitDistance))
             et_model_price_minute_more.setText(String.format("%s", mFeeSetting.unitPrice))
-
         }
 
+        if (mItem?.is_rider_to_seller == 1) {
+            shiftDeliveryCb.isChecked = true
+            try {
+                deliveryShiftTimeEt.setText(mItem?.rider_to_seller_time.toString() )
+            } catch (e: Exception) {
+            }
+        } else {
+            shiftDeliveryCb.isChecked = false
+        }
         mTimeSetting.apply {
             if (isBaseTimeType()) {
                 //按公里数

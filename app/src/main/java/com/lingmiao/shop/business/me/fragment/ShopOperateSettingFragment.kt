@@ -157,7 +157,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         tcItem?.apply {
             tvShopStatus.text = "已设置"
         }
-        //  骑手
+        //骑手
         qsItem?.apply {
             tvRiderStatus.text = "已设置"
         }

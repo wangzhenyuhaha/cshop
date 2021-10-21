@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
+import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -42,11 +43,14 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
 
     override fun updateModel(id : String, isToSeller : Int, toRiderTime : Int) {
         mCoroutine.launch {
-            view.showPageLoading();
-            val req = RiderSettingVo();
-            req.toSeller = isToSeller;
-            req.toSellerTime = toRiderTime;
-            val resp = ToolsRepository.updateRiderSetting(id, req);
+            view.showPageLoading()
+            val req = RiderSettingVo()
+            req.toSeller = isToSeller
+            req.toSellerTime = toRiderTime
+            Log.d("WZYJJGB", id.toString())
+            Log.d("WZYJJGB",req.toString())
+            Log.d("WZYJJGB", isToSeller.toString())
+            val resp = ToolsRepository.updateRiderSetting(id, req)
             handleResponse(resp) {
                 view.updateModelSuccess(true);
             }
