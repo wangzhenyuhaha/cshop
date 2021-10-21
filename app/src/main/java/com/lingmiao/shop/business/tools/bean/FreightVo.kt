@@ -536,7 +536,7 @@ data class TimeSettingVo(
     }
 
     fun isBaseTimeType() : Boolean {
-        return timeType == TIME_TYPE_BASE;
+        return timeType == TIME_TYPE_BASE
     }
 
     fun convertReqVo() : TimeSettingReqVo {

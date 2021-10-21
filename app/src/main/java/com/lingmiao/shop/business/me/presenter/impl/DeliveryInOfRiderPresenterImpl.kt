@@ -55,33 +55,30 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
     }
 
     override fun getFeeSetting(item: FreightVoItem?): FeeSettingVo {
-        return json?.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting);
+        return json.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting);
     }
 
     override fun getTimeSetting(item: FreightVoItem?): TimeSettingVo {
-        return json?.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting);
+        return json.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting);
     }
 
     override fun getTemplate() {
-        //shops/ship-templates
         mCoroutine.launch {
-            //view.showDialogLoading();
-            val resp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_QISHOU);
+            val resp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_QISHOU)
             handleResponse(resp) {
-                if(resp.data.size > 0) {
-                    view.setModel(resp?.data?.get(0));
+                if(resp.data.isNotEmpty()) {
+                    view.setModel(resp.data?.get(0))
                 }
             }
-            //view.hideDialogLoading();
         }
     }
 
     override fun getShopTemplate() {
         mCoroutine.launch {
-            val resp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_LOCAL);
+            val resp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_LOCAL)
             handleResponse(resp) {
-                if(resp.data.size > 0) {
-                    view.onSetShopTemplate(resp?.data?.get(0));
+                if(resp.data.isNotEmpty()) {
+                    view.onSetShopTemplate(resp.data?.get(0))
                 }
             }
         }
