@@ -35,8 +35,8 @@ class ShopOperateSettingPresenterImpl(
     private val mItemPreImpl: ItemPopPreImpl by lazy { ItemPopPreImpl(view) }
 
     override fun showWorkTimePop(target: android.view.View) {
-        mItemPreImpl?.showWorkTimePop(context, "") { item1: WorkTimeVo?, item2: WorkTimeVo? ->
-            view?.onUpdateWorkTime(item1, item2);
+        mItemPreImpl.showWorkTimePop(context, "") { item1: WorkTimeVo?, item2: WorkTimeVo? ->
+            view.onUpdateWorkTime(item1, item2)
         }
     }
 
@@ -143,8 +143,8 @@ class ShopOperateSettingPresenterImpl(
             val tcsp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_LOCAL)
             val qssp = ToolsRepository.shipTemplates(FreightVoItem.TYPE_QISHOU)
             if (tcsp.isSuccess && qssp.isSuccess) {
-                val tcItem = if (tcsp?.data?.size ?: 0 > 0) tcsp?.data?.get(0) else null
-                val qsItem = if (qssp?.data?.size ?: 0 > 0) qssp?.data?.get(0) else null
+                val tcItem = if (tcsp.data?.size ?: 0 > 0) tcsp.data?.get(0) else null
+                val qsItem = if (qssp.data?.size ?: 0 > 0) qssp.data?.get(0) else null
                 view.onLoadedTemplate(tcItem, qsItem)
             }
         }
@@ -154,7 +154,7 @@ class ShopOperateSettingPresenterImpl(
         mCoroutine.launch {
             val resp = MeRepository.apiService.getBanner().awaitHiResponse()
             handleResponse(resp) {
-                view.onSetBanner(it);
+                view.onSetBanner(it)
             }
         }
     }

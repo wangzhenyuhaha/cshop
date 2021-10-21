@@ -1,12 +1,8 @@
 package com.lingmiao.shop.business.main.fragment
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableStringBuilder
 import android.text.TextUtils
-import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -110,13 +106,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
 
 
-
-
-
-
         //设置刷新按钮
         refreshOne.setOnClickListener {
-          showDialogLoading("加载中...")
+            showDialogLoading("加载中...")
             refreshPageData()
         }
         refreshTwo.setOnClickListener {
@@ -155,11 +147,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
 
         readWXPay.singleClick {
-            DialogUtils.showDiaLogBySelf(requireActivity(), R.mipmap.wechat_pay,750,1000)
+            DialogUtils.showDiaLogBySelf(requireActivity(), R.mipmap.wechat_pay, 750, 1000)
         }
 
         readTongLian.singleClick {
-            DialogUtils.showDiaLogBySelf(requireActivity(), R.mipmap.tonglian,800,550)
+            DialogUtils.showDiaLogBySelf(requireActivity(), R.mipmap.tonglian, 800, 550)
         }
 
         tvMainShopNext.setOnClickListener {
@@ -469,6 +461,15 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 return@setOnClickListener
             } else if (shopStatus?.haveCategory == false) {
                 ToastUtils.showLong("请先完善分类设置，否则店铺不能进行正常营业与商品上传")
+                return@setOnClickListener
+            } else if (loginInfo?.have_opentime == false) {
+                ToastUtils.showLong("请先设置营业时间，否则店铺不能进行正常营业与商品上传")
+                return@setOnClickListener
+            }else if (loginInfo?.have_shoplogo == false) {
+                ToastUtils.showLong("请先设置店铺logo，否则店铺不能进行正常营业与商品上传")
+                return@setOnClickListener
+            }else if (loginInfo?.have_mobile == false) {
+                ToastUtils.showLong("请先设置联系电话，否则店铺不能进行正常营业与商品上传")
                 return@setOnClickListener
             }
             GoodsListActivity.openActivity(requireContext())

@@ -6,33 +6,44 @@ import com.google.gson.annotations.SerializedName
 class LoginInfo {
     @SerializedName("access_token")
     var accessToken: String? = null
+
     @SerializedName("account_member_id")
     var accountMemberId: String? = null //账户会员id
+
     @SerializedName("face")
     var face: String? = null //会员头像
+
     @SerializedName("founder")
     var founder: Int? = null
+
     @SerializedName("nickname")
     var nickname: String? = null  //真实姓名
+
     @SerializedName("refresh_token")
     var refreshToken: String? = null //刷新token
+
     @SerializedName("role_id")
     var roleId: Int? = null
+
     @SerializedName("goods_management_category")
-    var goodsCateId : String? = null
+    var goodsCateId: String? = null
+
     @SerializedName("shop_status")
     var shopStatus: String? = null  //店铺状态  CLOSED("店铺关闭")  REFUSED("审核拒绝")  APPLY("申请开店")
+
     @SerializedName("uid")
     var uid: Int? = null //会员ID
 
     @SerializedName("shop_name")
     var shopName: String? = null //店铺名称
+
     @SerializedName("shop_logo")
     var shopLogo: String? = null //店铺logo
 
     var clerkId: Int? = null //店员id
     var mobile: String? = null //手机号码
-    @SerializedName(value = "shop_id", alternate = ["sellerId","seller_id"])
+
+    @SerializedName(value = "shop_id", alternate = ["sellerId", "seller_id"])
     var shopId: Int? = null
 
     @SerializedName("open_status")
@@ -44,6 +55,19 @@ class LoginInfo {
 
     @SerializedName("status_reason")
     var statusReason: String? = null //状态原因（拒绝/未通过）
+
+    //true表示已经设置了，false为没有设置
+    //营业时间
+    @SerializedName("have_opentime")
+    var have_opentime: Boolean = true
+
+    //店铺logo
+    @SerializedName("have_shoplogo")
+    var have_shoplogo: Boolean = true
+
+    //联系电话
+    @SerializedName("have_mobile")
+    var have_mobile: Boolean = true
 }
 //  【登录】和【注册】之后按照shop_status进行页面跳转判断
 //APPLY("申请开店")	等待审核结果	等待审核提示页面---联系客服

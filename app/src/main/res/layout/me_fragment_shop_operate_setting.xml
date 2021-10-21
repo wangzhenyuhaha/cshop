@@ -145,7 +145,6 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:hint="5分钟以内"
                     android:inputType="number"
                     android:paddingEnd="@dimen/dimen_5"
                     android:paddingStart="0dp"

@@ -435,12 +435,9 @@
                     android:id="@+id/tvApplyShopInfo"
                     style="@style/my_part_item"
                     android:drawableStart="@drawable/ic_apply_data"
-                    android:text="修改进件资料"
-                    android:visibility="gone" />
+                    android:text="进件资料" />
 
-                <View
-                    style="@style/DivideLineHorizontal"
-                    android:visibility="gone" />
+                <View style="@style/DivideLineHorizontal" />
 
                 <TextView
                     android:id="@+id/tvWeChatApprove"

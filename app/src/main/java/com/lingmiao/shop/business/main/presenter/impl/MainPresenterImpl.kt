@@ -28,6 +28,9 @@ class MainPresenterImpl(context: Context, private var view: MainPresenter.View) 
                     loginInfo.statusReason = shopStatusResp.data.statusReason
                     loginInfo.openStatus = shopStatusResp.data.openStatus == 1
                     loginInfo.showButton = shopStatusResp.data.showButton
+                    loginInfo.have_opentime = shopStatusResp.data.have_opentime == true
+                    loginInfo.have_shoplogo = shopStatusResp.data.have_shoplogo == true
+                    loginInfo.have_mobile = shopStatusResp.data.have_mobile == true
                     UserManager.setLoginInfo(loginInfo)
                     UserManager.setAutoPrint(shopStatusResp.data.autoPrint == 1);
                 }

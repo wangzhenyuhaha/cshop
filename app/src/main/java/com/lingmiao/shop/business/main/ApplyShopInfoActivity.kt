@@ -1,6 +1,8 @@
 package com.lingmiao.shop.business.main
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Environment
 import android.util.Log
@@ -22,6 +24,9 @@ import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
+import com.lingmiao.shop.business.me.ApplyVipActivity
+import com.lingmiao.shop.business.me.bean.IdentityVo
+import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.util.dateTime3Date
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,6 +81,15 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         //个人申请时店铺照片
         const val PERSONAL_SHOP = 11
+
+        fun openActivity(context: Context, type: Boolean) {
+            if (context is Activity) {
+                val intent = Intent(context, ApplyShopInfoActivity::class.java)
+                intent.putExtra("type", type)
+                context.startActivity(intent)
+            }
+        }
+
     }
 
     private val viewModel by viewModels<ApplyShopInfoViewModel>()
@@ -86,6 +100,12 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
     override fun useLightMode() = false
 
+
+    override fun initBundles() {
+        super.initBundles()
+        viewModel.shopOpenOrNot = intent?.getBooleanExtra("type", false) ?: false
+    }
+
     override fun initView() {
 
         //观察调用
@@ -93,13 +113,6 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
 
         val loginInfo = UserManager.getLoginInfo()
 
-        //若店铺为开店中，则允许修改进件资料
-        loginInfo?.also { it ->
-            if (it.shopStatus == "OPEN") {
-                //默认值为false
-                viewModel.shopOpenOrNot = true
-            }
-        }
 
         loginInfo?.also { it ->
             if (it.shopStatus != null && it.shopStatus != "UN_APPLY") {

@@ -159,17 +159,19 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
 
     private fun initListener() {
 
-        binding.shopFront.setOnClickListener {
-            setOnClickForPhoto(type, 1)
-        }
+        if (!model.shopOpenOrNot) {
+            binding.shopFront.setOnClickListener {
+                setOnClickForPhoto(type, 1)
+            }
 
-        binding.shopInside.setOnClickListener {
-            setOnClickForPhoto(type, 2)
-        }
+            binding.shopInside.setOnClickListener {
+                setOnClickForPhoto(type, 2)
+            }
 
-        //只传一张图片时
-        binding.imageView.setOnClickListener {
-            setOnClickForPhoto(type, 1)
+            //只传一张图片时
+            binding.imageView.setOnClickListener {
+                setOnClickForPhoto(type, 1)
+            }
         }
 
         binding.backTextView.setOnClickListener {
@@ -267,7 +269,7 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                     //店铺租聘合同
                     ApplyShopInfoActivity.HIRE -> {
                         model.applyShopInfo.value?.bizplacepic = uploadFile.data.url
-                        uploadFile.data.url?.also{
+                        uploadFile.data.url?.also {
                             Glide.with(requireActivity()).load(it).into(binding.imageView)
                         }
 

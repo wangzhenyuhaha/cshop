@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage

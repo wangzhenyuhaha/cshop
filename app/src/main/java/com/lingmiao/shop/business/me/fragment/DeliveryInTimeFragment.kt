@@ -28,26 +28,27 @@ Create Date : 2021/3/53:40 PM
 Auther      : Fox
 Desc        :
  **/
-class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), DeliveryInTimePresenter.View {
+class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
+    DeliveryInTimePresenter.View {
 
-    private lateinit var mPriceAdapter : PriceAdapter
-    private lateinit var mRangeAdapter : RangeAdapter
-    private lateinit var mTimeAdapter : TimeAdapter
+    private lateinit var mPriceAdapter: PriceAdapter
+    private lateinit var mRangeAdapter: RangeAdapter
+    private lateinit var mTimeAdapter: TimeAdapter
 
-    private lateinit var mTimeList : MutableList<TimeSection>
-    private lateinit var mRangeList : MutableList<PeekTime>
-    private lateinit var mPriceList : MutableList<DistanceSection>
-    private lateinit var mTimeValueList : MutableList<TimeValue>
-    private lateinit var mDayTypeList : MutableList<String>
+    private lateinit var mTimeList: MutableList<TimeSection>
+    private lateinit var mRangeList: MutableList<PeekTime>
+    private lateinit var mPriceList: MutableList<DistanceSection>
+    private lateinit var mTimeValueList: MutableList<TimeValue>
+    private lateinit var mDayTypeList: MutableList<String>
 
     private var mItem: FreightVoItem? = null
 
-    var mFeeSetting : FeeSettingVo = FeeSettingVo()
+    var mFeeSetting: FeeSettingVo = FeeSettingVo()
 
-    var mTimeSetting : TimeSettingVo = TimeSettingVo()
+    var mTimeSetting: TimeSettingVo = TimeSettingVo()
 
     companion object {
-        fun newInstance(item : FreightVoItem?): DeliveryInTimeFragment {
+        fun newInstance(item: FreightVoItem?): DeliveryInTimeFragment {
             return DeliveryInTimeFragment().apply {
                 arguments = Bundle().apply {
                     putSerializable("item", item)
@@ -60,13 +61,9 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
         mItem = arguments?.getSerializable("item") as FreightVoItem?
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.me_fragment_delivery_in_time
-    }
+    override fun getLayoutId() = R.layout.me_fragment_delivery_in_time
 
-    override fun createPresenter(): DeliveryInTimePresenter {
-        return DeliveryInTimePresenterImpl(this)
-    }
+    override fun createPresenter() = DeliveryInTimePresenterImpl(this)
 
     override fun initViewsAndData(rootView: View) {
         initPricePart()
@@ -82,11 +79,16 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
         tvShopSettingSubmit.singleClick {
             mItem?.apply {
 
-                if(et_model_km_price.getViewText() == null || et_model_km_price.getViewText().isEmpty()) {
+                if (et_model_km_price.getViewText() == null || et_model_km_price.getViewText()
+                        .isEmpty()
+                ) {
                     showToast("请输入起送价")
                     return@singleClick
                 }
-                if(et_model_time_km.getViewText() == null ||  et_model_time_minute.getViewText().isEmpty()||  et_model_time_km_out.getViewText().isEmpty()||  et_model_time_minute_more.getViewText().isEmpty()) {
+                if (et_model_time_km.getViewText() == null || et_model_time_minute.getViewText()
+                        .isEmpty() || et_model_time_km_out.getViewText()
+                        .isEmpty() || et_model_time_minute_more.getViewText().isEmpty()
+                ) {
                     showToast("请填完配送时效")
                     return@singleClick
                 }
@@ -98,7 +100,8 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 name = "商家配送"
                 // 基础
                 templateType = FreightVoItem.TYPE_LOCAL
-                type = if(cb_model_pay_km_section.isChecked) FreightVoItem.TYPE_KM_SECTION else FreightVoItem.TYPE_KM_COUNT
+                type =
+                    if (cb_model_pay_km_section.isChecked) FreightVoItem.TYPE_KM_SECTION else FreightVoItem.TYPE_KM_COUNT
 
                 // 同城
                 baseShipPrice = et_model_km_price.getViewText()
@@ -106,7 +109,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 shipRange = et_model_out_range_km.getViewText()
 
                 var setting = mTimeSetting
-                if(cb_model_time_km.isChecked) {
+                if (cb_model_time_km.isChecked) {
                     // 按公里数
                     setting.timeType = TimeSettingVo.TIME_TYPE_BASE
                     setting?.baseDistance = et_model_time_km.getViewText()
@@ -117,7 +120,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                     setting.timeSections = null
 
                 }
-                if(cb_model_time_section.isChecked){
+                if (cb_model_time_section.isChecked) {
                     // 按公里段
                     setting.timeType = TimeSettingVo.TIME_TYPE_SECTION
                     setting.timeSections = mTimeList
@@ -152,10 +155,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
             mPresenter?.addModel(mItem!!)
         }
 
-        if(mItem == null) {
+        if (mItem == null) {
             mPresenter?.getTemplate(FreightVoItem.TYPE_LOCAL)
         } else {
-            setUi();
+            setUi()
             mPresenter?.getTemplate(FreightVoItem.TYPE_LOCAL)
         }
     }
@@ -166,11 +169,11 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
     private fun updateTimeCheckBox() {
 
         rg_model_time.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.cb_model_time_km) {
+            if (checkedId == R.id.cb_model_time_km) {
                 ll_model_km.visibility = View.VISIBLE
                 rv_model_time.visibility = View.GONE
 
-            } else if(checkedId == R.id.cb_model_time_section){
+            } else if (checkedId == R.id.cb_model_time_section) {
                 ll_model_km.visibility = View.GONE
                 rv_model_time.visibility = View.VISIBLE
             }
@@ -182,16 +185,16 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
      */
     private fun updateCityExpressPayTypeCheckBox() {
         rg_model_pay_km.setOnCheckedChangeListener { group, checkedId ->
-            if(checkedId == R.id.cb_model_pay_km_section) {
+            if (checkedId == R.id.cb_model_pay_km_section) {
                 rv_model_price.visibility = View.VISIBLE
                 ll_model_price_section.visibility = View.GONE
-            } else if(checkedId == R.id.cb_model_pay_km_num) {
+            } else if (checkedId == R.id.cb_model_pay_km_num) {
                 rv_model_price.visibility = View.GONE
                 ll_model_price_section.visibility = View.VISIBLE
             }
         }
-        rv_model_price.visibility = View.GONE;
-        ll_model_price_section.visibility = View.VISIBLE;
+        rv_model_price.visibility = View.GONE
+        ll_model_price_section.visibility = View.VISIBLE
     }
 
     private fun initRangePart() {
@@ -199,24 +202,24 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
         mRangeList.add(PeekTime())
         mRangeAdapter = RangeAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
-                val item = adapter.data[position] as PeekTime;
+                val item = adapter.data[position] as PeekTime
                 if (view.id == R.id.tv_model_range_delete && position != 0) {
-                    mRangeList.remove(item);
-                    mRangeAdapter.replaceData(mRangeList);
-                } else if(view.id == R.id.et_model_range_start) {
+                    mRangeList.remove(item)
+                    mRangeAdapter.replaceData(mRangeList)
+                } else if (view.id == R.id.et_model_range_start) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         run {
-                            item?.peekTimeStart = it?.name;
-                            item?.startTimeCount = it?.value;
+                            item?.peekTimeStart = it?.name
+                            item?.startTimeCount = it?.value
                             mRangeAdapter.notifyDataSetChanged()
                         }
                     }
                     pop.shiftStartTime(item?.endTimeCount ?: TimeValue.getLastTimeCount())
                     pop.showPopupWindow()
-                } else if(view.id == R.id.et_model_range_end) {
+                } else if (view.id == R.id.et_model_range_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         run {
                             item?.peekTimeEnd = it?.name
                             item?.endTimeCount = it?.value
@@ -258,36 +261,36 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 if (view.id == R.id.tv_model_time_delete && position != 0) {
                     mTimeList.remove(item)
                     mTimeAdapter.replaceData(mTimeList)
-                } else if(view.id == R.id.et_model_km_start) {
+                } else if (view.id == R.id.et_model_km_start) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         run {
                             item?.shipTime = it?.name
                             item?.shipTimeCount = it?.value
                             mTimeAdapter.notifyDataSetChanged()
                         }
                     }
-                    pop.shiftStartTime(item?.arriveTimeCount ?: TimeValue.getLastTimeCount());
+                    pop.shiftStartTime(item?.arriveTimeCount ?: TimeValue.getLastTimeCount())
                     pop.showPopupWindow()
-                } else if(view.id == R.id.et_model_km_end) {
+                } else if (view.id == R.id.et_model_km_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it->
+                    pop.setOnClickListener { it ->
                         item?.arriveTime = it?.name
                         item?.arriveTimeCount = it?.value
                         run {
                             mTimeAdapter.notifyDataSetChanged()
                         }
                     }
-                    pop.shiftEndTime(if(item?.isToday()) item?.shipTimeCount ?: -1 else -1)
+                    pop.shiftEndTime(if (item?.isToday()) item?.shipTimeCount ?: -1 else -1)
                     pop.showPopupWindow()
-                } else if(view.id == R.id.tv_model_time_type) {
+                } else if (view.id == R.id.tv_model_time_type) {
                     val pop = DayPop(requireContext(), mDayTypeList)
                     pop.setOnClickListener { it, position ->
 
                         run {
-                            if(position == 0) {
+                            if (position == 0) {
                                 item?.shiftToday()
-                                if(item?.arriveTimeCount ?:0 <= item?.shipTimeCount?:0) {
+                                if (item?.arriveTimeCount ?: 0 <= item?.shipTimeCount ?: 0) {
                                     item?.arriveTime = null
                                     item?.arriveTimeCount = null
                                     mTimeAdapter.notifyDataSetChanged()
@@ -307,7 +310,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
                 mTimeAdapter.replaceData(mTimeList)
             }
             addFooterView(footer)
-        };
+        }
 
         rv_model_time.initAdapter(mTimeAdapter)
 
@@ -319,24 +322,24 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
         mPriceList.add(DistanceSection())
         mPriceAdapter = PriceAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
-                val item = adapter.data[position] as DistanceSection;
+                val item = adapter.data[position] as DistanceSection
                 if (view.id == R.id.tv_model_price_delete && position != 0) {
                     mPriceList.remove(item)
                     mPriceAdapter.replaceData(mPriceList)
                 }
             }
 
-            val footer = View.inflate(context, R.layout.tools_footer_model_add, null);
+            val footer = View.inflate(context, R.layout.tools_footer_model_add, null)
             footer.findViewById<View>(R.id.tv_model_add).setOnClickListener {
                 mPriceList.add(DistanceSection())
                 mPriceAdapter.replaceData(mPriceList)
             }
             addFooterView(footer)
-        };
+        }
 
         rv_model_price.initAdapter(mPriceAdapter)
 
-        mPriceAdapter.replaceData(mPriceList);
+        mPriceAdapter.replaceData(mPriceList)
     }
 
     override fun updateModelSuccess(b: Boolean) {
@@ -356,9 +359,15 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(), Delivery
         // 配送范围
         et_model_out_range_km.setText(String.format("%s", mItem?.shipRange))
 
-        mFeeSetting = if(mItem?.feeSetting?.isNullOrEmpty() == true) FeeSettingVo() else mPresenter?.getFeeSetting(mItem) ?: FeeSettingVo()
+        mFeeSetting =
+            if (mItem?.feeSetting?.isNullOrEmpty() == true) FeeSettingVo() else mPresenter?.getFeeSetting(
+                mItem
+            ) ?: FeeSettingVo()
 
-        mTimeSetting = if(mItem?.timeSetting?.isNullOrEmpty() == true) TimeSettingVo() else mPresenter?.getTimeSetting(mItem) ?: TimeSettingVo()
+        mTimeSetting =
+            if (mItem?.timeSetting?.isNullOrEmpty() == true) TimeSettingVo() else mPresenter?.getTimeSetting(
+                mItem
+            ) ?: TimeSettingVo()
 
         mFeeSetting?.apply {
             // 配送范围加收费用
