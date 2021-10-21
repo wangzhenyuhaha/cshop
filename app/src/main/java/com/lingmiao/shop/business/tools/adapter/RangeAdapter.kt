@@ -26,13 +26,17 @@ class RangeAdapter : BaseQuickAdapter<PeekTime, BaseViewHolder>(R.layout.tools_a
         helper.setText(R.id.et_model_range_end, item?.peekTimeEnd)
         //加收价格
         helper.setText(R.id.et_model_range_price, String.format("%s", item?.peekTimePrice))
+        helper.setEnabled(R.id.et_model_range_price, item?.enable ?: true)
         //监控更改的价格
         addTextChangeListener(helper.getView(R.id.et_model_range_price), item?.peekTimePrice) {
             item?.peekTimePrice = it
         }
     }
 
-    fun getColor(position : Int): Int {
-        return ContextCompat.getColor(MyApp.getInstance(), if(position == 0) R.color.color_999999 else R.color.red)
+    fun getColor(position: Int): Int {
+        return ContextCompat.getColor(
+            MyApp.getInstance(),
+            if (position == 0) R.color.color_999999 else R.color.red
+        )
     }
 }

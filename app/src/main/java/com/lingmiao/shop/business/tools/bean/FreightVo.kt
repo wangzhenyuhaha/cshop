@@ -496,7 +496,9 @@ data class PeekTime(
     @SerializedName("peekTimeStart")
     var peekTimeStart: String? = "",
     @SerializedName("startTimeCount")
-    var startTimeCount: Int? = -1
+    var startTimeCount: Int? = -1,
+    //加收费用是否可操作(默认可操作)
+    var enable: Boolean = true
 ): Serializable {
 
 }

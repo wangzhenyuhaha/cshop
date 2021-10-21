@@ -54,7 +54,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     var mFeeSetting: FeeSettingVo = FeeSettingVo()
 
     //配送时效
-    var mTimeSetting: TimeSettingVo = TimeSettingVo()
+    private var mTimeSetting: TimeSettingVo = TimeSettingVo()
 
     companion object {
         fun newInstance(item: FreightVoItem?): DeliveryInTimeFragment {
