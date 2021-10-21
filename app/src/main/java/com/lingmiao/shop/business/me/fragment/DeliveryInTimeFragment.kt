@@ -137,7 +137,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                         showToast("请填完配送时效")
                         return@singleClick
                     } else {
-                        if (mTimeList[0].arriveTime.isNullOrEmpty() || mTimeList[0].shipTime.isNullOrEmpty()) {
+                        if (mTimeList[0].arriveTime.isNullOrEmpty() || mTimeList[0].shipTime.isNullOrEmpty()|| mTimeList[0].arriveStartTime.isNullOrEmpty()) {
                             showToast("请填完配送时效")
                             return@singleClick
                         }
@@ -340,7 +340,20 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                     pop.shiftStartTime(item.arriveTimeCount ?: TimeValue.getLastTimeCount())
                     pop.showPopupWindow()
                 }
-                //送达时间
+                //送达时间上界
+                else if (view.id == R.id.et_model_km_endo) {
+                    val pop = TimeListPop(requireContext(), mTimeValueList)
+                    pop.setOnClickListener { it ->
+                        item.arriveStartTime = it.name
+                        item.arriveTimeCount = it.value
+                        run {
+                            mTimeAdapter.notifyDataSetChanged()
+                        }
+                    }
+                    pop.shiftEndTime(if (item.isToday()) item.shipTimeCount ?: -1 else -1)
+                    pop.showPopupWindow()
+                }
+                //送达时间下界
                 else if (view.id == R.id.et_model_km_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
                     pop.setOnClickListener { it ->

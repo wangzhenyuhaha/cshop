@@ -15,11 +15,19 @@ class TimeAdapter : BaseQuickAdapter<TimeSection, BaseViewHolder>(R.layout.tools
         helper.setTextColor(R.id.tv_model_time_delete, getColor(helper.adapterPosition))
 
         helper.addOnClickListener(R.id.et_model_km_start)
+        //送达上界
+        helper.addOnClickListener(R.id.et_model_km_endo)
+        //送达下届
         helper.addOnClickListener(R.id.et_model_km_end)
         helper.addOnClickListener(R.id.tv_model_time_type)
 
+        //付款时间
         helper.setText(R.id.et_model_km_start, item?.shipTime)
+        //送达时间上界
+        helper.setText(R.id.et_model_km_endo, item?.arriveStartTime)
+        //送达时间下届
         helper.setText(R.id.et_model_km_end, item?.arriveTime)
+        //送达类型
         helper.setText(R.id.tv_model_time_type, item?.getTimeType())
     }
 

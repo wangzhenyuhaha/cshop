@@ -575,12 +575,21 @@ data class TimeSettingVo(
 }
 
 data class TimeSection(
-    @SerializedName("arriveTime")
-    var arriveTime: String? = "",
+
+    //付款时间
     @SerializedName("shipTime")
     var shipTime: String? = "",
+    //送达时间上界
+    @SerializedName("arriveStartTime")
+    var arriveStartTime: String? = "",
+    //送达时间下界
+    @SerializedName("arriveTime")
+    var arriveTime: String? = "",
+
+
     @SerializedName("shipTimeType")
     var shipTimeType: Int? = 1,
+
     var arriveTimeCount: Int? = null,
     var shipTimeCount: Int? = null
 ) : Serializable {
