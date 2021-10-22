@@ -5,6 +5,7 @@ import com.lingmiao.shop.business.common.bean.FileResp
 import com.lingmiao.shop.business.goods.api.bean.WxPayReqVo
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.me.bean.*
+import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
 import com.lingmiao.shop.business.wallet.bean.DataVO
 import retrofit2.Call
 import retrofit2.http.*
@@ -84,6 +85,11 @@ interface MainApi {
     @GET("seller/shops/identity/querySaleProductList")
     @WithHiResponse
     fun getVipList(): Call<DataVO<ShopProductVo>>
+
+    //查询保障金状态
+    @POST("/account/withdraw/queryWithdrawByEnsure")
+    @WithHiResponse
+    fun getPayVipReason(): Call<ApplyVipPreImpl.ApplyVipReason>
 
     // 发起支付
     @GET("seller/shops/identity/{id}")

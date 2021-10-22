@@ -180,8 +180,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingVertical="@dimen/dimen_10"
-            android:paddingEnd="@dimen/dimen_15"
-            android:paddingStart="@dimen/dimen_15">
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="@dimen/dimen_15">
 
             <TextView
                 android:id="@+id/tvDepositStatus"
@@ -210,12 +210,28 @@
                 android:id="@+id/tvRefund"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
+                android:text="退款"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:ivBgColor="@color/color_secondary"
+                app:ivRadius="18dp"
+                tools:visibility="visible" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvRefundStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
                 android:gravity="center"
                 android:paddingStart="@dimen/dimen_15"
                 android:paddingEnd="@dimen/dimen_5"
-                android:text="退款"
+                android:text="退款中"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"
+                android:visibility="gone"
                 app:ivRadius="18dp"
                 tools:visibility="visible" />
 
@@ -223,10 +239,26 @@
                 android:id="@+id/tvRecharge"
                 android:layout_width="wrap_content"
                 android:layout_height="28dp"
+                android:layout_marginEnd="@dimen/dimen_15"
                 android:gravity="center"
-                android:paddingStart="@dimen/dimen_5"
-                android:paddingEnd="@dimen/dimen_15"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15"
                 android:text="缴纳"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="gone"
+                app:ivBgColor="@color/color_secondary"
+                app:ivRadius="18dp"
+                tools:visibility="visible" />
+
+            <com.james.common.view.ITextView
+                android:id="@+id/tvreason"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:gravity="center"
+                android:paddingStart="@dimen/dimen_15"
+                android:paddingEnd="@dimen/dimen_5"
+                android:text="退款中"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp"
                 android:visibility="gone"
