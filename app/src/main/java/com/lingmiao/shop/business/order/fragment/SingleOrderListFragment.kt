@@ -86,11 +86,18 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     var rbContinue: RadioButton? = null
     var rbComplete: RadioButton? = null
     var rbCancel: RadioButton? = null
-    var rgAll: RadioGroup? = null;
+    var rgAll: RadioGroup? = null
+
+    //今日开始时间
+    var startTime: Long? = null
+
+    //今日结束时间
+    var endTime: Long? = null
 
     override fun initOthers(rootView: View) {
         super.initOthers(rootView)
 
+        // 设置对时间的监听
         initDate()
 
         when (orderType) {
@@ -176,14 +183,6 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         )
 
         if (orderType == "COMPLETE" || orderType == "ALL") {
-//            startOrderDateTv.text = String.format("%s-%s-%s", selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH)+1, selectedDate.get(
-//                Calendar.DATE));
-//            endOrderDateTv.text = startOrderDateTv.text;
-//            val s = stringToDate(startOrderDateTv.getViewText()+" 00:00:00",DATE_TIME_FORMAT)?.time?:0;
-//            mStart = s/1000;
-//
-//            val e = stringToDate(startOrderDateTv.getViewText()+" 23:59:59",DATE_TIME_FORMAT)?.time?:0;
-//            mEnd = e/1000;
         }
 
         startOrderDateTv.singleClick {
@@ -348,13 +347,13 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     override fun onTakeSuccess(trade: OrderList) {
         showToast("接单成功")
         mLoadMoreDelegate?.refresh()
-        if(UserManager.isAutoPrint()) {
+        if (UserManager.isAutoPrint()) {
             printer(trade);
         }
         //EventBus.getDefault().post(OrderNumberEvent())
     }
 
-    fun printer(trade: OrderList) {
+    private fun printer(trade: OrderList) {
         PrinterModule.printer(requireActivity(), trade)
     }
 
@@ -422,10 +421,25 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     // 失效订单
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeTabPosition(event: TabChangeEvent) {
-        LogUtils.d("changeTabPosition:" + event)
-        if ("ALL".equals(orderType) && event.type == 4 && "CANCELLED".equals(event.status)) {
+        LogUtils.d("changeTabPosition:$event")
+        if ("ALL" == orderType && event.type == 4 && "CANCELLED" == event.status) {
             mCStatus = event.status;
             rbCancel?.isChecked = true;
+        }
+        if (event.startTime != null && event.endTime != null) {
+
+            startTime = event.startTime
+            endTime = event.endTime
+            Log.d("WZYBUS", startTime.toString())
+            Log.d("WZYBUS", endTime.toString())
+            if (startTime != null && endTime != null) {
+                mStart = startTime
+                mEnd = endTime
+                mLoadMoreDelegate?.refresh()
+            }
+            startOrderDateTv.text =  formatString(Date(event.startTime!! * 1000), DATE_FORMAT)
+            endOrderDateTv.text =  formatString(Date(event.endTime!! * 1000), DATE_FORMAT)
+            // formatString(Date(it * 1000), DATE_FORMAT)
         }
     }
 

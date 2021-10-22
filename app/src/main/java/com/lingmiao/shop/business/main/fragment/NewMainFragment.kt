@@ -5,9 +5,6 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
@@ -64,6 +61,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     private var fromMain: Boolean? = null
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
+
+    //今日开始时间
+    var startTime: Long? = null
+
+    //今日结束时间
+    var endTime: Long? = null
 
     companion object {
         fun newInstance(): NewMainFragment {
@@ -386,6 +389,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     }
 
     override fun onMainDataSuccess(bean: MainInfoVo?, status: ShopStatus?) {
+
+        startTime = bean?.start_time
+        endTime = bean?.end_time
+
         hidePageLoading()
         shopStatus = status
         mainInfo = bean
@@ -465,10 +472,10 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             } else if (loginInfo?.have_opentime == false) {
                 ToastUtils.showLong("请先设置营业时间，否则店铺不能进行正常营业与商品上传")
                 return@setOnClickListener
-            }else if (loginInfo?.have_shoplogo == false) {
+            } else if (loginInfo?.have_shoplogo == false) {
                 ToastUtils.showLong("请先设置店铺logo，否则店铺不能进行正常营业与商品上传")
                 return@setOnClickListener
-            }else if (loginInfo?.have_mobile == false) {
+            } else if (loginInfo?.have_mobile == false) {
                 ToastUtils.showLong("请先设置联系电话，否则店铺不能进行正常营业与商品上传")
                 return@setOnClickListener
             }
@@ -508,7 +515,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 今日数据
         // 订单数量
         storeDataOfTodayTv.singleClick {
-            EventBus.getDefault().post(TabChangeEvent(4))
+            EventBus.getDefault().post(TabChangeEvent(4, startTime = startTime,endTime = endTime))
             //ActivityUtils.startActivity(StatsActivity::class.java)
         }
         // 销售额
@@ -539,11 +546,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 已完成
         layoutTodayFinish.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(3))
+            EventBus.getDefault().post(TabChangeEvent(3, startTime = startTime,endTime = endTime))
         }
         // 失效
         layoutTodayInvalid.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(4, "CANCELLED"))
+            EventBus.getDefault().post(TabChangeEvent(4, "CANCELLED",  startTime = startTime,endTime = endTime))
         }
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)

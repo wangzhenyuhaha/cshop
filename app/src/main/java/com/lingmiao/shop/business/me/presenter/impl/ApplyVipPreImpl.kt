@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
+import android.util.Log
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.main.api.MainRepository
@@ -52,7 +53,8 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
     override fun depositApply(mWallet: WalletVo?) {
         mCoroutine.launch {
             view.showDialogLoading()
-            val recharge = RechargeReqVo(mWallet?.depositAccount?.id, mDepositMoney, RechargeReqVo.PAY_TRADE_CHANNEL_OF_WECHAT)
+           // val recharge = RechargeReqVo(mWallet?.depositAccount?.id, mDepositMoney, RechargeReqVo.PAY_TRADE_CHANNEL_OF_WECHAT)
+            val recharge = RechargeReqVo(mWallet?.depositAccount?.id, 0.01, RechargeReqVo.PAY_TRADE_CHANNEL_OF_WECHAT)
             val resp = MainRepository.apiService.recharge(recharge).awaitHiResponse()
             handleResponse(resp) {
                 view.onDepositApplied(resp.data?.data)
