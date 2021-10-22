@@ -88,6 +88,11 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         //加载Banner图
         mPresenter?.getBanner()
 
+        //图片库
+        photoSelect.singleClick {
+            ActivityUtils.startActivity(BannerActivity::class.java)
+        }
+
         // 保存
         tvShopOperateSubmit.setOnClickListener {
 
