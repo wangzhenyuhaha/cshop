@@ -447,9 +447,4 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             // formatString(Date(it * 1000), DATE_FORMAT)
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        mLoadMoreDelegate?.refresh()
-    }
 }
