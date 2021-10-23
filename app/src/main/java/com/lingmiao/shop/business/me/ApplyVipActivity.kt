@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.me
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.gone
@@ -50,6 +49,12 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
 
     var isPayed: Boolean = false
 
+    //保障金状态
+    var status: Int? = 1
+
+    //原因
+    var inspect_remark: String = ""
+
     companion object {
         fun openActivity(context: Context, my: My?, identity: IdentityVo?) {
             if (context is Activity) {
@@ -78,12 +83,12 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
         mToolBarDelegate?.setMidTitle("开通会员")
         mPresenter?.getVipPriceList()
 
-        // 保障金支付   缴纳
+        // 保障金 缴纳
         tvVip.singleClick {
             mPresenter?.depositApply(mWallet)
         }
 
-        // 保障金[退款]   退款
+        // 保障金 退款
         tvRefund.singleClick {
             mIdentity?.id?.let { it1 ->
                 mPresenter.ensureRefund(it1)
@@ -102,10 +107,11 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
         securityLayout.singleClick {
             UserServiceH5Activity.security(this, 3)
         }
-
         setUserInfo()
 
-        mPresenter?.loadWalletData()
+        //查询提现状态
+        mPresenter.getApplyVipReason()
+
 
         if (mIdentity == null) {
             mPresenter?.getIdentity()
@@ -130,16 +136,16 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
 
 
     override fun onSetVipInfo(item: IdentityVo?) {
-        dueDateTv.setText(String.format("试用时间%s到期,购买后有效期将顺延", item?.get_DueDateStr()))
+        dueDateTv.text = String.format("试用时间%s到期,购买后有效期将顺延", item?.get_DueDateStr())
 
         if (item?.isVip() == true) {
-            dueDateTv.setText(String.format("%s%s到期,购买后有效期将顺延", "会员时间", item.get_DueDateStr()))
-            tvApply.setText("续费")
+            dueDateTv.text = String.format("%s%s到期,购买后有效期将顺延", "会员时间", item.get_DueDateStr())
+            tvApply.text = "续费"
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_try_logo)
             ivMyShopStatus.visiable()
         } else {
-            dueDateTv.setText(String.format("%s%s到期,购买后有效期将顺延", "试用时间", item?.get_DueDateStr()))
-            tvApply.setText("立即开通")
+            dueDateTv.text = String.format("%s%s到期,购买后有效期将顺延", "试用时间", item?.get_DueDateStr())
+            tvApply.text = "立即开通"
             ivMyShopVipStatus.setImageResource(R.mipmap.ic_vip_period)
             ivMyShopStatus.gone()
         }
@@ -168,7 +174,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
     }
 
     override fun onRefundEnsured() {
-        showToast("退款成功")
+        showToast("退款中...")
         ActivityUtils.finishToActivity(MainActivity::class.java, false)
     }
 
@@ -176,26 +182,88 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
 
     }
 
+    override fun onVipReason(data: ApplyVipPreImpl.ApplyVipReason) {
+        status = data.status
+        inspect_remark = data.inspect_remark
+        mPresenter?.loadWalletData()
+    }
+
     /**
      * 加载成功
      */
     override fun onLoadWalletDataSuccess(data: WalletVo?) {
         mWallet = data
+        //已经缴纳的保障金
         tvBalance.text = getString(
             R.string.wallet_value,
             formatDouble(data?.depositAccount?.balanceAmount ?: 0.0)
         )
-        if (data?.depositAccount?.balanceAmount ?: 0.0 > 0.0) {
-            tvVip.gone()
-            tvRefund.visiable()
-            tvRecharge.visiable()
-            tvDepositStatus.text = getString(R.string.vip_deposit_applied)
+        if (status == null) {
+            //从未进行过退款
+            if (data?.depositAccount?.balanceAmount ?: 0.0 > 0.0) {
+                //此时已近成功缴纳保障金
+                tvVip.gone()
+                tvRefund.visiable()
+                tvRecharge.visiable()
+                tvDepositStatus.text = getString(R.string.vip_deposit_applied)
+            } else {
+                //此时未缴纳保障金
+                tvVip.visiable()
+                tvRefund.gone()
+                tvRecharge.gone()
+                tvDepositStatus.text = getString(R.string.vip_deposit_apply)
+            }
         } else {
-            tvVip.visiable()
-            tvRefund.gone()
-            tvRecharge.gone()
-            tvDepositStatus.text = getString(R.string.vip_deposit_apply)
+            //进行过退款
+            //0提现中
+            when (status) {
+                0 -> {
+                    tvVip.gone()
+                    tvRefund.gone()
+                    tvRecharge.gone()
+                    tvRefundStatus.visiable()
+                    tvRefundStatus.text = "退款中"
+                    tvDepositStatus.text = getString(R.string.vip_deposit_apply)
+                }
+                1 -> {
+                    // 1 审核通过
+                    tvVip.gone()
+                    tvRefund.gone()
+                    tvRecharge.gone()
+                    tvRefundStatus.visiable()
+                    tvRefundStatus.text = "退款通过，请等待。。"
+                    tvDepositStatus.text = getString(R.string.vip_deposit_applied)
+                }
+                2 -> {
+                    //2审核拒绝
+                    tvVip.gone()
+                    tvRefund.visiable()
+                    tvRecharge.gone()
+                    tvRefundStatus.visiable()
+                    tvRefundStatus.text = "退款失败"
+                    tvreason.visiable()
+                    tvreason.text = inspect_remark
+                    tvDepositStatus.text = getString(R.string.vip_deposit_apply)
+                }
+                3 -> {
+                    //3提现成功
+                    if (data?.depositAccount?.balanceAmount ?: 0.0 > 0.0) {
+                        //此时已近成功缴纳保障金
+                        tvVip.gone()
+                        tvRefund.visiable()
+                        tvRecharge.visiable()
+                        tvDepositStatus.text = getString(R.string.vip_deposit_applied)
+                    } else {
+                        //此时未缴纳保障金
+                        tvVip.visiable()
+                        tvRefund.gone()
+                        tvRecharge.gone()
+                        tvDepositStatus.text = getString(R.string.vip_deposit_apply)
+                    }
+                }
+            }
         }
+
         hideDialogLoading()
     }
 
@@ -211,7 +279,7 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
     }
 
     override fun useEventBus(): Boolean {
-        return true;
+        return true
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

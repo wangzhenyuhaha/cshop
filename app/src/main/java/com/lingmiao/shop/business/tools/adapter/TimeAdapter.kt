@@ -10,17 +10,25 @@ import com.lingmiao.shop.business.tools.bean.TimeSection
 class TimeAdapter : BaseQuickAdapter<TimeSection, BaseViewHolder>(R.layout.tools_adapter_time) {
 
     override fun convert(helper: BaseViewHolder, item: TimeSection?) {
-        helper.addOnClickListener(R.id.tv_model_time_delete);
-        helper.setTextColor(R.id.tv_model_time_delete, getColor(helper.adapterPosition));
+        //删除按钮点击
+        helper.addOnClickListener(R.id.tv_model_time_delete)
+        helper.setTextColor(R.id.tv_model_time_delete, getColor(helper.adapterPosition))
 
-        helper.addOnClickListener(R.id.et_model_km_start);
-        helper.addOnClickListener(R.id.et_model_km_end);
-        helper.addOnClickListener(R.id.tv_model_time_type);
+        helper.addOnClickListener(R.id.et_model_km_start)
+        //送达上界
+        helper.addOnClickListener(R.id.et_model_km_endo)
+        //送达下届
+        helper.addOnClickListener(R.id.et_model_km_end)
+        helper.addOnClickListener(R.id.tv_model_time_type)
 
-
-        helper.setText(R.id.et_model_km_start, item?.shipTime);
-        helper.setText(R.id.et_model_km_end, item?.arriveTime);
-        helper.setText(R.id.tv_model_time_type, item?.getTimeType());
+        //付款时间
+        helper.setText(R.id.et_model_km_start, item?.shipTime)
+        //送达时间上界
+        helper.setText(R.id.et_model_km_endo, item?.arriveStartTime)
+        //送达时间下届
+        helper.setText(R.id.et_model_km_end, item?.arriveTime)
+        //送达类型
+        helper.setText(R.id.tv_model_time_type, item?.getTimeType())
     }
 
     fun getColor(position : Int): Int {

@@ -11,8 +11,6 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
     override fun loadWalletData() {
         mCoroutine.launch {
 
-            //view.showDialogLoading()
-//            view.showPageLoading();
             val resp = WalletRepository.getWalletIndexInfo()
             val wechatData = WalletRepository.getWithdrawAccountInfo()
 
@@ -21,11 +19,10 @@ class MyWalletPresenterImpl(private var view : MyWalletPresenter.View) :
             } else {
                 view.onLoadWalletDataError(resp.code)
             }
+            //useless
             if(wechatData.isSuccess) {
                 view.onLoadedAccount(wechatData.data)
             }
-//                view.hidePageLoading();
-            //view.hideDialogLoading()
         }
     }
 

@@ -42,4 +42,11 @@ class MainInfoVo : Serializable {
     var waitPayNum: Int? = 0
     @SerializedName("wait_rog_num")
     var waitRogNum: Int? = 0
+
+    //今日开始时间
+    @SerializedName("start_time")
+    var start_time:Long? = null
+    //今日结束时间
+    @SerializedName("end_time")
+    var end_time:Long? = null
 }

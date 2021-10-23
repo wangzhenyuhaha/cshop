@@ -46,8 +46,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingEnd="@dimen/dimen_5"
                         android:paddingStart="0dp"
+                        android:paddingEnd="@dimen/dimen_5"
                         android:text="每天"
                         android:textColor="@color/color_333333"
                         android:textSize="12sp" />
@@ -99,6 +99,7 @@
             </RelativeLayout>
 
             <View style="@style/DivideLineHorizontal" />
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -146,8 +147,8 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:inputType="number"
-                    android:paddingEnd="@dimen/dimen_5"
                     android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/dimen_5"
                     android:textColor="#ff999999"
                     android:textSize="12sp"
                     tools:text="10" />
@@ -344,9 +345,23 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text=" (最少1张，最多5张)"
+                        android:text=" (最多5张)"
                         android:textColor="@color/color_999999"
                         android:textSize="11sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/photoSelect"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:text="图片库"
+                        android:textColor="@color/color_999999"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <com.lingmiao.shop.business.me.view.OtherGalleryRecyclerView
