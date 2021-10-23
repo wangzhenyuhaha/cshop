@@ -224,6 +224,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     pvCustomTime2?.dismiss()
                 })
             pvCustomTime2?.show()
+            Log.d("WZYBUSNO",mStart.toString())
+            Log.d("WZYBUSNO",mEnd.toString())
         }
         orderResetTv.singleClick {
             if (orderType == "COMPLETE" || orderType == "ALL") {
