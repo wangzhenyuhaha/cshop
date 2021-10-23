@@ -44,6 +44,9 @@ private const val STATUS = "param1"
  */
 class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresenter>(),
     OrderListPresenter.StatusView {
+
+
+    //当前页面类型
     private var orderType: String? = "ALL"
 
     private var mCStatus: String? = null
@@ -348,7 +351,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         showToast("接单成功")
         mLoadMoreDelegate?.refresh()
         if (UserManager.isAutoPrint()) {
-            printer(trade);
+            printer(trade)
         }
         //EventBus.getDefault().post(OrderNumberEvent())
     }
@@ -423,8 +426,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     fun changeTabPosition(event: TabChangeEvent) {
         LogUtils.d("changeTabPosition:$event")
         if ("ALL" == orderType && event.type == 4 && "CANCELLED" == event.status) {
-            mCStatus = event.status;
-            rbCancel?.isChecked = true;
+            mCStatus = event.status
+            rbCancel?.isChecked = true
         }
         if (event.startTime != null && event.endTime != null) {
 

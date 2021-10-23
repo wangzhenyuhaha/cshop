@@ -4,24 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:background="@color/color_ffffff"
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="5dp"
-    android:background="@color/color_ffffff"
     tools:ignore="ContentDescription">
 
     <CheckBox
-
         android:id="@+id/bannerCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_10"
+        android:layout_marginStart="@dimen/dimen_20"
         android:button="@drawable/selector_goods_delivery_child_checkbox"
         android:padding="@dimen/dimen_15"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/sp_13" />
 
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
     <ImageView
+        android:layout_marginEnd="20dp"
         android:id="@+id/banner_body"
         android:layout_width="300dp"
         android:layout_height="70dp" />
