@@ -152,6 +152,8 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvSign)
         helper.addOnClickListener(R.id.tvPhoneUser)
         helper.addOnClickListener(R.id.tvPrint)
+        // 导航
+        helper.addOnClickListener(R.id.tvMapNav);
 //        订单类型是否如下:
 //        全部ALL
 //        待付款WAIT_PAY
