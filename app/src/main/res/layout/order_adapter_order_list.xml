@@ -318,6 +318,24 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <com.james.common.view.ITextView
+        android:id="@+id/tvMapNav"
+        android:layout_width="72dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:text="导航"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ff3870ea"
+        android:textSize="12sp"
+        app:ivBgColor="#fff"
+        app:ivRadius="15dp"
+        android:gravity="center"
+        app:ivBorderWidth="1px"
+        app:ivBorderColor="#ff3870ea"
+        android:layout_gravity="right"
+        />
+
     <TextView
         android:id="@+id/tvTotalMoney"
         android:layout_marginLeft="15dp"
