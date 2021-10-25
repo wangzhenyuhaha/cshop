@@ -30,8 +30,8 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
 
     private val tvTabList: ArrayList<IOrderTabView> = ArrayList()
     private lateinit var adapter: OrderFragmentAdapter
-    private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
 
+    //放回Fragment实例
     companion object {
         private val fragmentList: ArrayList<Fragment> = ArrayList()
         fun newInstance(): OrderTabFragment {
@@ -62,7 +62,6 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTabList.add(tvTab3)
         tvTabList.add(tvTab4)
         tvTabList.add(tvTab5)
-//        tvTabList.add(tvTab6)
 
         fragmentList.clear()
         fragmentList.add(SingleOrderListFragment.newInstance("WAIT_ACCEPT"))
@@ -70,9 +69,9 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         fragmentList.add(SingleOrderListFragment.newInstance("REFUND"))
         fragmentList.add(SingleOrderListFragment.newInstance("COMPLETE"))
         fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
-//        fragmentList.add(SingleOrderListFragment.newInstance("ALL"))
         vpContent.adapter = adapter
-//        vpContent.offscreenPageLimit = 1
+
+
         vpContent.addOnPageChangeListener(this)
 
         tvTab1.setOnClickListener { vpContent.currentItem = 0 }
@@ -80,7 +79,6 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTab3.setOnClickListener { vpContent.currentItem = 2 }
         tvTab4.setOnClickListener { vpContent.currentItem = 3 }
         tvTab5.setOnClickListener { vpContent.currentItem = 4 }
-//        tvTab6.setOnClickListener { vpContent.currentItem = 5 }
 
         LogUtils.d("initView:")
         tv_order_scan.setOnClickListener {
@@ -122,21 +120,10 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
         tvTab3.setTabSelected(false)
         tvTab4.setTabSelected(false)
         tvTab5.setTabSelected(false)
-        //tvTab6.setTabSelected(false)
         tvTabList[tabIndex].setTabSelected(true)
     }
 
     private fun initData() {
-//        mCoroutine.launch {
-//            val resp = OrderRepository.apiService.getOrderStatusNumber().awaitHiResponse()
-//            if (resp.isSuccess && activity != null && !activity!!.isFinishing) {
-//                val orderNumber = resp.data
-//                tvTab2.setTabNumber(orderNumber.waitPayNum)
-//                tvTab3.setTabNumber(orderNumber.waitShipNum)
-//                tvTab5.setTabNumber(orderNumber.refundNum)
-//            }
-//
-//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

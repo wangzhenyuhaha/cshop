@@ -328,7 +328,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         printer(orderBean)
                     }
                     R.id.tvMapNav ->{
-                        MapNav.chooseMapDialog(requireContext(), orderBean.getSimpleAddress());
+                        MapNav.chooseMapDialog(requireContext(), orderBean.getSimpleAddress())
                     }
                 }
 
