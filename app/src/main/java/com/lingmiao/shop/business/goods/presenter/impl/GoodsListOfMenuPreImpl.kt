@@ -24,7 +24,7 @@ class GoodsListOfMenuPreImpl(val context: Context, val view : GoodsListOfMenuPre
 
     private val quantityPopPre: QuantityPricePreImpl by lazy { QuantityPricePreImpl(context, view) }
 
-    fun showGroup(isTop : Int, callback: (List<ShopGroupVO>?, String?) -> Unit) {
+    private fun showGroup(isTop : Int, callback: (List<ShopGroupVO>?, String?) -> Unit) {
         mGroupPreImpl.showGoodsGroupPop(context, isTop, callback);
     }
 

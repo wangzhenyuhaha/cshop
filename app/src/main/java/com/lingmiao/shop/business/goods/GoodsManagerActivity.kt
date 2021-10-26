@@ -87,9 +87,8 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
         return false;
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_manager;
-    }
+    override fun getLayoutId() = R.layout.goods_activity_goods_manager
+
 
     override fun createPresenter() = GoodsManagerPreImpl(this, this);
 

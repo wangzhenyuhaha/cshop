@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="ContentDescription,HardcodedText">
 
     <com.james.common.view.IRelativeLayout
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_14"
-        android:paddingLeft="@dimen/dimen_15"
+        android:paddingStart="@dimen/dimen_15"
+        android:paddingEnd="0dp"
         android:paddingTop="@dimen/dimen_11"
         android:paddingBottom="@dimen/dimen_18"
-        app:ivBgColor="@color/color_ffffff">
+        app:ivBgColor="@color/color_ffffff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-<!--        app:ivRadius="@dimen/dimen_5"-->
+        <!--        app:ivRadius="@dimen/dimen_5"-->
 
         <ImageView
             android:id="@+id/menuIconIv"
@@ -37,7 +38,7 @@
             android:maxWidth="150dp"
             android:singleLine="true"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/dimen_13"
+            android:textSize="13sp"
             tools:text="测试1测试1测试1测试1测试1测试1测试1" />
 
         <TextView
@@ -48,10 +49,9 @@
             android:layout_toEndOf="@+id/menuNameTv"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:maxWidth="70dp"
             android:singleLine="true"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/dimen_12"
+            android:textSize="@dimen/sp_12"
             tools:text="测试1测试1" />
 
         <TextView
@@ -66,7 +66,7 @@
             android:gravity="center_vertical"
             android:singleLine="true"
             android:textColor="@color/color_000000"
-            android:textSize="@dimen/dimen_13"
+            android:textSize="@dimen/sp_13"
             android:visibility="gone"
             tools:text="排序：1" />
 
@@ -75,33 +75,36 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
             android:layout_alignParentEnd="true"
-            android:paddingRight="@dimen/dimen_10"
             android:layout_marginStart="@dimen/dimen_10"
             android:button="@drawable/selector_goods_spce_checkbox"
             android:drawablePadding="@dimen/dimen_5"
             android:ellipsize="end"
             android:gravity="center_vertical"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingStart="0dp"
             android:singleLine="true"
             android:textColor="@color/color_000000"
-            android:textSize="@dimen/dimen_13"
+            android:textSize="@dimen/sp_13"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/menuEditGoodsTv"
-            android:paddingRight="@dimen/dimen_10"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dimen_10"
+            android:drawableEnd="@mipmap/common_arrow_right"
             android:drawablePadding="@dimen/dimen_10"
             android:ellipsize="end"
             android:gravity="center_vertical"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingStart="0dp"
             android:singleLine="true"
-            android:drawableRight="@mipmap/common_arrow_right"
+            android:text="商品管理"
             android:textColor="@color/color_000000"
-            android:textSize="@dimen/dimen_13"
-            android:text="商品管理"/>
+            android:textSize="@dimen/sp_13"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/menuTopTv"
@@ -109,17 +112,18 @@
             android:layout_height="@dimen/dimen_29"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="@dimen/dimen_10"
-            android:drawableRight="@mipmap/ic_top"
+            android:drawableEnd="@mipmap/ic_top"
             android:drawablePadding="@dimen/dimen_5"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:paddingRight="@dimen/dimen_10"
+            android:paddingEnd="@dimen/dimen_10"
+            android:paddingStart="0dp"
             android:singleLine="true"
             android:text="排序置顶"
             android:textColor="@color/color_000000"
-            android:textSize="@dimen/dimen_13"
+            android:textSize="@dimen/sp_13"
             android:visibility="gone"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <View
             android:id="@+id/divider"
@@ -132,16 +136,17 @@
 
         <CheckBox
             android:id="@+id/menuVisibleCb"
-            android:layout_below="@+id/divider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_10"
+            android:layout_below="@+id/divider"
             android:button="@drawable/selector_goods_spce_checkbox"
+            android:padding="@dimen/dimen_10"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
             android:singleLine="true"
-            android:paddingLeft="@dimen/dimen_15"
+            android:text="不显示"
             android:textColor="@color/selector_primary_holo"
-            android:textSize="@dimen/dimen_13"
-            android:text="不显示"/>
+            android:textSize="@dimen/sp_13" />
 
 
         <TextView
@@ -149,46 +154,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:padding="@dimen/dimen_10"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:drawableStart="@mipmap/goods_group_manager_edit"
             android:drawablePadding="@dimen/dimen_5"
+            android:padding="@dimen/dimen_10"
             android:text="编辑"
             android:textColor="@color/color_3870EA"
-            android:textSize="@dimen/dimen_13" />
+            android:textSize="@dimen/sp_13" />
 
         <TextView
             android:id="@+id/menuDeleteTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/divider"
-            android:padding="@dimen/dimen_10"
+            android:layout_toStartOf="@id/menuEditTv"
             android:drawableStart="@mipmap/goods_group_manager_delete"
             android:drawablePadding="@dimen/dimen_5"
+            android:padding="@dimen/dimen_10"
             android:text="删除"
-            android:layout_toLeftOf="@id/menuEditTv"
             android:textColor="@color/red"
-            android:textSize="@dimen/dimen_13" />
+            android:textSize="@dimen/sp_13" />
 
     </com.james.common.view.IRelativeLayout>
 
     <View
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/marginView"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_20"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/ivMenuTop"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="@dimen/dimen_14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:src="@mipmap/ic_toped" />
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/dimen_14"
+        android:src="@mipmap/ic_toped"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
