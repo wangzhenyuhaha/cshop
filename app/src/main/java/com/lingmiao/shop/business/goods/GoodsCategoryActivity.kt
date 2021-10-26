@@ -24,9 +24,10 @@ Create Date : 2021/4/263:31 PM
 Auther      : Fox
 Desc        :
  **/
-class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(), CategoryEditPre.PubView {
+class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(),
+    CategoryEditPre.PubView {
 
-    private var mList : MutableList<CategoryVO>? = mutableListOf();
+    private var mList: MutableList<CategoryVO>? = mutableListOf();
 
     companion object {
 
@@ -38,37 +39,34 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         }
     }
 
-    override fun useLightMode(): Boolean {
-        return false;
-    }
+    override fun useLightMode()= false
 
-    override fun createPresenter(): CategoryEditPre {
-        return CategoryEditPreImpl(this, this);
-    }
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_catetory;
-    }
+    override fun createPresenter() = CategoryEditPreImpl(this, this)
+
+
+    override fun getLayoutId() = R.layout.goods_activity_goods_catetory
+
 
     override fun initAdapter(): BaseQuickAdapter<CategoryVO, BaseViewHolder> {
         return CategoryAdapter(mList).apply {
-            setOnItemClickListener { adapter, view, position ->
-                val bItem = adapter.data[position] as CategoryVO;
+            setOnItemClickListener { adapter, _, position ->
+                val bItem = adapter.data[position] as CategoryVO
             }
             setOnItemChildClickListener { adapter, view, position ->
-                val item = getItem(position) as CategoryVO;
+                val item = getItem(position) as CategoryVO
                 when (view.id) {
                     // 加载或者是扩张
                     R.id.cateTitleTv,
                     R.id.cateExpandIv -> {
-                        if(item.isExpanded) {
-                            adapter?.collapse(position, false);
+                        if (item.isExpanded) {
+                            adapter?.collapse(position, false)
                         } else {
                             adapter?.expand(position, false)
                         }
                     }
                     R.id.cateAddIv -> {
-                        mPresenter?.showAddDialog(item.categoryId?.toInt()!!);
+                        mPresenter?.showAddDialog(item.categoryId.toInt())
                     }
                     // 更多
                     R.id.cateMoreIv -> {
@@ -76,9 +74,11 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
                     }
                 }
             }
-            onItemLongClickListener = BaseQuickAdapter.OnItemLongClickListener { adapter, view, position -> Boolean
-                return@OnItemLongClickListener true;
-            }
+            onItemLongClickListener =
+                BaseQuickAdapter.OnItemLongClickListener { adapter, view, position ->
+                    Boolean
+                    return@OnItemLongClickListener true
+                }
         }
     }
 
@@ -88,141 +88,141 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
         mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
 
-        mAdapter.setEmptyView(R.layout.order_empty,mLoadMoreRv)
+        mAdapter.setEmptyView(R.layout.order_empty, mLoadMoreRv)
 
         categoryAddTv.setOnClickListener {
-            mPresenter?.showAddDialog(0);
+            mPresenter?.showAddDialog(0)
         }
         categoryCancelTv.setOnClickListener {
-            categoryBottom.visibility = View.GONE;
-            categoryAllCheckCb.isChecked = false;
+            categoryBottom.visibility = View.GONE
+            categoryAllCheckCb.isChecked = false
             var list = mAdapter?.data?.filter { it?.isChecked == true };
-            if(list?.size > 0) {
+            if (list?.size > 0) {
                 list?.forEachIndexed { index, goodsVO ->
-                    goodsVO.isChecked = false;
+                    goodsVO.isChecked = false
                 }
             }
             (mAdapter as UsedMenuAdapter)?.setBatchEditModel(false);
         }
         categoryAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->
             mAdapter?.data?.forEachIndexed { index, goodsVO ->
-                goodsVO.isChecked = isChecked;
+                goodsVO.isChecked = isChecked
             }
-            mAdapter?.notifyDataSetChanged();
+            mAdapter?.notifyDataSetChanged()
         }
         categoryDeleteTv.setOnClickListener {
             mLoadMoreDelegate?.refresh()
         }
 
-        mSmartRefreshLayout?.setEnableLoadMore(false);
+        mSmartRefreshLayout?.setEnableLoadMore(false)
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter.loadLv1GoodsGroup();
+        mPresenter.loadLv1GoodsGroup()
     }
 
     override fun onLoadedLv2(
         list1: String,
         newList: List<CategoryVO>?
     ) {
-        var i = -1;
+        var i = -1
         mList?.forEachIndexed { index, item ->
-            if(item?.categoryId == list1) {
+            if (item?.categoryId == list1) {
                 // 清除
-                item?.subItems?.clear();
+                item?.subItems?.clear()
                 newList?.forEachIndexed { index, categoryVO ->
                     // 新增
-                    item.addSubItem(categoryVO);
+                    item.addSubItem(categoryVO)
                 }
-                i = index;
+                i = index
             }
         }
-        if(i > -1) {
+        if (i > -1) {
             // 刷新
             mAdapter?.collapse(i)
-            mAdapter?.expand(i);
-            mAdapter?.notifyDataSetChanged();
+            mAdapter?.expand(i)
+            mAdapter?.notifyDataSetChanged()
         }
     }
 
     override fun onDeleted(id: String) {
-        var i = -1;
-        var __i = -1;
+        var i = -1
+        var __i = -1
 
-        var item : CategoryVO? = null;
+        var item: CategoryVO? = null
         val it_b: MutableIterator<CategoryVO>? = mList?.iterator();
-        while(it_b?.hasNext() == true) {
-            item = it_b?.next();
-            if(item?.categoryId == id) {
-                it_b.remove();
+        while (it_b?.hasNext() == true) {
+            item = it_b?.next()
+            if (item?.categoryId == id) {
+                it_b.remove()
             } else {
-                var _i = -1;
+                var _i = -1
                 item?.children?.forEachIndexed { index, it ->
-                    if(it.categoryId == id) {
-                        _i = index;
+                    if (it.categoryId == id) {
+                        _i = index
                     }
                 }
-                if(_i > -1) {
-                    item?.children?.removeAt(_i);
-                    item?.subItems?.clear();
+                if (_i > -1) {
+                    item?.children?.removeAt(_i)
+                    item?.subItems?.clear()
                     item?.children?.forEachIndexed { index, _it ->
                         item?.addSubItem(_it)
                     }
                 }
             }
         }
-        mAdapter?.notifyDataSetChanged();
+        mAdapter?.notifyDataSetChanged()
 
     }
 
-    override fun onAdded(pId : Int, vo: CategoryVO) {
-        if(pId == 0) {
-            mList?.add(vo);
-            mAdapter?.notifyDataSetChanged();
+    override fun onAdded(pId: Int, vo: CategoryVO) {
+        if (pId == 0) {
+            mList?.add(vo)
+            mAdapter?.notifyDataSetChanged()
         } else {
-            var i = -1;
+            var i = -1
             mList?.forEachIndexed { index, item ->
-                if(item?.categoryId == pId.toString()) {
+                if (item?.categoryId == pId.toString()) {
                     // 清除老的
-                    item?.subItems?.clear();
+                    item?.subItems?.clear()
                     // 子类新增
-                    val children = item.children;
-                    children?.add(vo);
+                    val children = item.children
+                    children?.add(vo)
                     children?.forEachIndexed { index, categoryVO ->
-                        categoryVO?.showLevel = 1;
+                        categoryVO?.showLevel = 1
                         // 添加新的
-                        item?.addSubItem(categoryVO);
+                        item?.addSubItem(categoryVO)
                     }
-                    i = index;
+                    i = index
                 }
             }
-            if(i > -1) {
+            if (i > -1) {
                 // 刷新
                 mAdapter?.collapse(i)
-                mAdapter?.expand(i);
-                mAdapter?.notifyDataSetChanged();
+                mAdapter?.expand(i)
+                mAdapter?.notifyDataSetChanged()
             }
         }
     }
 
     override fun onUpdated(vo: CategoryVO) {
-        if(vo.parentId == 0) {
+        if (vo.parentId == 0) {
             mList?.forEachIndexed { index, item ->
-                if(item?.categoryId == vo.categoryId) {
-                    item?.name = vo.name;
+                if (item?.categoryId == vo.categoryId) {
+                    item?.name = vo.name
                 }
             }
         } else {
             mList?.forEachIndexed { index, item ->
                 item.children?.forEachIndexed { i, it ->
-                    if(it?.categoryId == vo.categoryId) {
-                        it.name = vo.name;
+                    if (it?.categoryId == vo.categoryId) {
+                        it.name = vo.name
                     }
                 }
             }
         }
 
-        mAdapter?.notifyDataSetChanged();
+        mAdapter?.notifyDataSetChanged()
     }
 
 }

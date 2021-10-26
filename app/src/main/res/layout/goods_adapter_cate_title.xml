@@ -3,26 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <ImageView
         android:id="@+id/cateExpandIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right|center"
+        android:layout_gravity="end|center"
         android:padding="@dimen/dimen_15"
         android:src="@mipmap/tools_expand" />
 
     <TextView
-        android:layout_weight="1"
         android:id="@+id/cateTitleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dimen_15"
         android:paddingBottom="@dimen/dimen_15"
-        android:text="fdsfadf"
+        android:text="饮料"
         android:textColor="@color/color_333333"
-        android:textSize="@dimen/sp_12" />
+        android:textSize="@dimen/sp_13" />
+
+    <TextView
+        android:id="@+id/cateNumTv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingTop="@dimen/dimen_15"
+        android:paddingBottom="@dimen/dimen_15"
+        android:text="（共6件商品）"
+        android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <ImageView
         android:id="@+id/cateAddIv"
