@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
@@ -23,32 +24,33 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
     private val mCategoryPreImpl: PopCategoryPreImpl by lazy { PopCategoryPreImpl(view) }
 
     override fun showCategoryPop(target: View) {
-        if ( UserManager?.getLoginInfo()?.goodsCateId  == null)
-        {
+        if (UserManager.getLoginInfo()?.goodsCateId == null) {
             mCoroutine.launch {
                 val resp = MeRepository.apiService.getShop().awaitHiResponse()
-                if (resp.isSuccess)
-                {
-                    mCategoryPreImpl?.showCenterCategoryPop(context, resp.data.goodsManagementCategory?:"0") { items, str ->
+                if (resp.isSuccess) {
+                    mCategoryPreImpl.showCenterCategoryPop(
+                        context,
+                        resp.data.goodsManagementCategory ?: "0"
+                    ) { items, str ->
                         if (items?.size ?: 0 > 0) {
-                            val item = items?.get(items?.size!! - 1)
+                            val item = items?.get(items.size - 1)
                             view.onUpdateCategory(item)
                         }
                     }
-                }else{
-                    mCategoryPreImpl?.showCenterCategoryPop(context, "0") { items, str ->
+                } else {
+                    mCategoryPreImpl.showCenterCategoryPop(context, "0") { items, str ->
                         if (items?.size ?: 0 > 0) {
-                            val item = items?.get(items?.size!! - 1)
+                            val item = items?.get(items.size - 1)
                             view.onUpdateCategory(item)
                         }
                     }
                 }
             }
-        }else{
-            val id = UserManager?.getLoginInfo()?.goodsCateId ?: "0"
-            mCategoryPreImpl?.showCenterCategoryPop(context, id) { items, str ->
+        } else {
+            val id = UserManager.getLoginInfo()?.goodsCateId ?: "0"
+            mCategoryPreImpl.showCenterCategoryPop(context, id) { items, _ ->
                 if (items?.size ?: 0 > 0) {
-                    val item = items?.get(items?.size!! - 1)
+                    val item = items?.get(items.size - 1)
                     view.onUpdateCategory(item)
                 }
             }
@@ -84,6 +86,18 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
                 view.onAddSuccess()
             }
             view.hideDialogLoading()
+        }
+    }
+
+
+    //加载goods_management_category
+    override  fun loadCID() {
+        mCoroutine.launch {
+            val resp = MeRepository.apiService.getShop().awaitHiResponse()
+            if (resp.isSuccess) {
+                view.setCid(resp.data.goodsManagementCategory ?: "0")
+            }
+
         }
     }
 
