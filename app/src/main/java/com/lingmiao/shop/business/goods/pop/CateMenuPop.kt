@@ -9,6 +9,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.util.hideXTranslateAnim
 import com.lingmiao.shop.util.showXTranslateAnim
 import com.james.common.utils.exts.show
+import com.james.common.utils.exts.visiable
 import razerdp.basepopup.BaseLazyPopupWindow
 
 
@@ -17,7 +18,7 @@ import razerdp.basepopup.BaseLazyPopupWindow
  * Date   : 2020/7/12
  * Desc   : 分类编辑
  */
-class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
+class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT,var type:Int = 0) :
     BaseLazyPopupWindow(context) {
 
     companion object {
@@ -59,6 +60,7 @@ class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
                 listener?.invoke(TYPE_GOODS_INFO)
                 dismiss()
             }
+            visibility = if (type == 1) View.GONE else View.VISIBLE
         }
         // 规格
         specTv = contentView.findViewById<TextView>(R.id.specTv).apply {
@@ -67,6 +69,7 @@ class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT) :
                 listener?.invoke(TYPE_SPEC)
                 dismiss()
             }
+            visibility = if (type == 1) View.GONE else View.VISIBLE
         }
         // 编辑
         cateEditTv = contentView.findViewById<TextView>(R.id.cateEditTv).apply {
