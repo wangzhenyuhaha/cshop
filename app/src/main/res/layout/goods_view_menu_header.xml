@@ -14,7 +14,7 @@
         android:paddingTop="@dimen/dimen_15"
         android:paddingEnd="0dp"
         android:paddingBottom="@dimen/dimen_15"
-        android:text="菜单管理"
+        android:text="商品筛选"
         android:textColor="@color/color_666666"
         android:textSize="@dimen/sp_14"
         android:textStyle="bold" />
