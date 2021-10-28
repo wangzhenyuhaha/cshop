@@ -22,6 +22,16 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
     GoodsManagerPre {
 
     private val mCategoryPreImpl: PopCategoryPreImpl by lazy { PopCategoryPreImpl(view) }
+    private val mGroupPreImpl: PopGroupPreImpl by lazy { PopGroupPreImpl(view) }
+
+    var shopId : Int? = null
+
+    fun getSellerId() : Int? {
+        if(shopId == null) {
+            shopId = UserManager.getLoginInfo()?.shopId
+        }
+        return shopId
+    }
 
     override fun showCategoryPop(target: View) {
         if (UserManager.getLoginInfo()?.goodsCateId == null) {
@@ -76,11 +86,11 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
         }
     }
 
-    override fun add(ids: String) {
+    override fun add(ids: String,categoryId:String?,shopCatId:String?) {
         mCoroutine.launch {
             view.showDialogLoading()
 
-            val resp = GoodsRepository.addGoodsOfCenter(ids)
+            val resp = GoodsRepository.addGoodsOfCenter(ids,categoryId,shopCatId)
 
             handleResponse(resp) {
                 view.onAddSuccess()
@@ -101,4 +111,15 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
         }
     }
 
+    override fun showCategoryPop() {
+        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { cate, names ->
+            view.onUpdateCategory(cate?.categoryId, names)
+        }
+    }
+
+    override fun showGroupPop() {
+        mGroupPreImpl.showGoodsGroupPop(context) { group, names ->
+            view.onUpdateGroup(group?.shopCatId, names)
+        }
+    }
 }

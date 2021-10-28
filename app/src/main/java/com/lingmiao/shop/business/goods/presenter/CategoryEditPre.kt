@@ -17,7 +17,7 @@ interface CategoryEditPre : BasePresenter {
 
     fun loadLv2GoodsGroup(lv1GroupId: String?)
 
-    fun clickMenuView(item: CategoryVO?, position: Int, view: View)
+    fun clickMenuView(item: CategoryVO?, position: Int, view: View,type:Int)
 
     fun showAddDialog(pId : Int);
 

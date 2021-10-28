@@ -18,9 +18,13 @@ interface GoodsManagerPre : BasePresenter {
 
     fun loadListData(page: IPage, list: List<*>, cId: String)
 
-    fun add(ids: String)
+    fun add(ids: String,categoryId:String?,shopCatId:String?)
 
     fun loadCID()
+
+  fun   showCategoryPop()
+
+    fun showGroupPop()
 
     interface View : BaseView, BaseLoadMoreView<GoodsVO> {
         fun onUpdateCategory(it: CategoryVO?)
@@ -28,5 +32,9 @@ interface GoodsManagerPre : BasePresenter {
         fun onAddSuccess()
 
         fun setCid(id:String)
+
+        fun onUpdateCategory(categoryId: String?, categoryName: String?)
+
+        fun onUpdateGroup(groupId: String?, groupName: String?)
     }
 }

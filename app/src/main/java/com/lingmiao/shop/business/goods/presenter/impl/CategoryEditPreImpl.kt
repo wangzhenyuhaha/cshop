@@ -104,8 +104,8 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
         }
     }
 
-    override fun clickMenuView(item: CategoryVO?, position: Int, target: View) {
-        if (item == null || item.categoryId == null) {
+    override fun clickMenuView(item: CategoryVO?, position: Int, target: View,type:Int) {
+        if (item == null) {
             return
         }
         menuPopPre.showMenuPop(item.getMenuType(), target) { menuType ->

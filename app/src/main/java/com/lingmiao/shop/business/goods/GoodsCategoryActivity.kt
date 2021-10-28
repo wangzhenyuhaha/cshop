@@ -29,17 +29,34 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
 
     private var mList: MutableList<CategoryVO>? = mutableListOf();
 
+    //默认 0  中心库添加商品时添加分类 1
+    var type: Int = 0
+
     companion object {
 
         fun openActivity(context: Context) {
             if (context is Activity) {
                 val intent = Intent(context, GoodsCategoryActivity::class.java)
+                intent.putExtra("type", 0)
+                context.startActivity(intent)
+            }
+        }
+
+        fun openActivity(context: Context, type: Int) {
+            if (context is Activity) {
+                val intent = Intent(context, GoodsCategoryActivity::class.java)
+                intent.putExtra("type", type)
                 context.startActivity(intent)
             }
         }
     }
 
-    override fun useLightMode()= false
+    override fun initBundles() {
+        super.initBundles()
+        type = intent.getIntExtra("type", 0)
+    }
+
+    override fun useLightMode() = false
 
 
     override fun createPresenter() = CategoryEditPreImpl(this, this)
@@ -70,7 +87,7 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
                     }
                     // 更多
                     R.id.cateMoreIv -> {
-                        mPresenter?.clickMenuView(item, position, view)
+                        mPresenter?.clickMenuView(item, position, view,type)
                     }
                 }
             }
@@ -83,7 +100,12 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
     }
 
     override fun initOthers() {
-        mToolBarDelegate.setMidTitle(getString(R.string.goods_category_manager_title))
+        if (type == 0) {
+            mToolBarDelegate.setMidTitle(getString(R.string.goods_category_manager_title))
+        } else {
+            mToolBarDelegate.setMidTitle("添加分类")
+        }
+
         // 禁用上拉加载、下拉刷新
         mSmartRefreshLayout.setEnableLoadMore(false)
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
