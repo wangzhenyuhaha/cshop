@@ -501,4 +501,9 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }
