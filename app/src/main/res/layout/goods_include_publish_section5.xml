@@ -5,6 +5,7 @@
     style="@style/goods_publish_container"
     android:layout_height="@dimen/dimen_50"
     android:orientation="horizontal"
+    android:layout_marginTop="0dp"
     app:ivBgColor="@color/color_ffffff"
     app:ivRadius="@dimen/dimen_5"
     tools:ignore="HardcodedText">

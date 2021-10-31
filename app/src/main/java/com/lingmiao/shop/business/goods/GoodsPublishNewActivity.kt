@@ -95,6 +95,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         initSection2View()
 
 
+        cateAddIv.singleClick {
+            GoodsCategoryActivity.openActivity(this, 1)
+        }
+
         initSection3View()
         initSection4View()
         initSection5678View()

@@ -41,7 +41,8 @@
 
             <!-- 类型、分类 -->
             <include layout="@layout/goods_include_publish_section1" />
-
+            <View style="@style/common_divider" />
+            <include layout="@layout/goods_include_publish_section5" />
             <!-- 名称、图片 -->
             <include layout="@layout/goods_include_publish_section2" />
 
@@ -50,6 +51,9 @@
 
             <!-- 商品规格,虚拟商品的套餐 -->
             <include layout="@layout/goods_include_publish_section4_new" />
+            <View style="@style/common_divider" />
+            <!--商品打包费-->
+            <include layout="@layout/goods_include_publish_section_package" />
 
             <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 style="@style/goods_publish_container"
@@ -104,7 +108,7 @@
                 <!-- 菜单管理 -->
 
                 <!-- 商品视频 -->
-                <include layout="@layout/goods_include_publish_section5" />
+
 
                 <include
                     layout="@layout/goods_include_publish_section6"
@@ -118,8 +122,7 @@
                     layout="@layout/goods_include_publish_section8"
                     android:visibility="gone" />
 
-                <!--商品打包费-->
-                <include layout="@layout/goods_include_publish_section_package" />
+
             </LinearLayout>
 
             <TextView
