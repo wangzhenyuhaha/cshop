@@ -66,12 +66,14 @@ public class PrinterModule {
     static PrinterConnectListener connectPrinterListener = new PrinterConnectListener() {
         @Override
         public void onConnect(boolean flag) {
-            ToastUtils.showShort("打印蓝牙连接成功");
+            if(flag) {
+                ToastUtils.showShort("打印蓝牙连接成功");
+            }
         }
 
         @Override
         public void onDisConnect(boolean flag) {
-            ToastUtils.showShort("打印蓝牙已断开");
+//            ToastUtils.showShort("打印蓝牙已断开");
         }
     };
 
@@ -123,17 +125,20 @@ public class PrinterModule {
                 }
             }
         });
+    }
+
+    public static void disconnect(PrinterConnectListener listener) {
         myBinder.DisconnectCurrentPort(new TaskCallback() {
             @Override
             public void OnSucceed() {
-                if(listener != null) {
+                if (listener != null) {
                     listener.onDisConnect(true);
                 }
             }
 
             @Override
             public void OnFailed() {
-                if(listener != null) {
+                if (listener != null) {
                     listener.onDisConnect(false);
                 }
             }
@@ -150,7 +155,7 @@ public class PrinterModule {
             return;
         }
         initDevice();
-        ToastUtils.showShort("正在打印....");
+//        ToastUtils.showShort("正在打印....");
         myBinder.WriteSendData(new TaskCallback() {
             @Override
             public void OnSucceed() {
