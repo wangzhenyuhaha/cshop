@@ -7,5 +7,4 @@ package com.lingmiao.shop.printer;
  **/
 public interface PrinterConnectListener {
     void onConnect(boolean flag);
-    void onDisConnect(boolean flag);
 }
