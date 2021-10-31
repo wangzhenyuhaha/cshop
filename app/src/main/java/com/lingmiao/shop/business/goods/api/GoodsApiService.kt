@@ -330,7 +330,11 @@ interface GoodsApiService {
 
     @WithHiResponse
     @POST("seller/goods/addCenterGoodsToShop")
-    fun addGoodsOfCenter(@Query("center_goods_ids") id: String?): Call<Unit>
+    fun addGoodsOfCenter(
+        @Query("center_goods_ids") id: String?,
+        @Query("category_id") categoryId: String?,
+        @Query("shop_cat_id") shopCatId: String?
+    ): Call<Unit>
 
     /***************************商品信息****************************************************/
     /**

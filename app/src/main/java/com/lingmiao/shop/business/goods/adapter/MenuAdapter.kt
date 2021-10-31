@@ -27,7 +27,7 @@ class MenuAdapter() :
             // helper.setGone(R.id.marginView, helper.adapterPosition == data.size - 1)
             // helper.setGone(R.id.menuCheckCb, isBatchEditModel);
             // 删除选中
-            helper.setChecked(R.id.menuCheckCb, isChecked?:false);
+            helper.setChecked(R.id.menuCheckCb, isChecked ?: false);
             helper.setGone(R.id.menuEditTv, !isBatchEditModel);
             helper.setGone(R.id.menuEditGoodsTv, !isBatchEditModel)
             helper.setGone(R.id.menuDeleteTv, !isBatchEditModel)
@@ -38,14 +38,17 @@ class MenuAdapter() :
             helper.addOnClickListener(R.id.menuEditTv)
             helper.addOnClickListener(R.id.menuDeleteTv)
             helper.addOnClickListener(R.id.menuEditGoodsTv)
-            helper.addOnClickListener(R.id.menuTopTv);
+            helper.addOnClickListener(R.id.menuTopTv)
 
             helper.setChecked(R.id.menuVisibleCb, disable == 1);
-            helper.setText(R.id.menuVisibleCb, if(disable == 1) "显示" else "不显示")
-          //  helper.setText(R.id.menuDescTv,if (goods_num>0) goods_num.toString()  else "0")
+            helper.setText(R.id.menuVisibleCb, if (disable == 1) "显示" else "不显示")
+            helper.setText(R.id.menuDescTv, "（共${goods_num.toString()}件商品）")
             helper.setGone(R.id.menuVisibleCb, !isBatchEditModel);
             helper.addOnClickListener(R.id.menuVisibleCb);
-            setOnCheckedChangeListener(helper.getView(R.id.menuCheckCb), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
+            setOnCheckedChangeListener(
+                helper.getView(R.id.menuCheckCb),
+                isChecked ?: false
+            ) { buttonView: CompoundButton?, isChecked: Boolean ->
                 item?.isChecked = isChecked;
 //                if(!isChecked) {
 //                    EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
@@ -66,8 +69,8 @@ class MenuAdapter() :
         notifyDataSetChanged();
     }
 
-    fun getBatchEdit() : Boolean {
-        return  isBatchEditModel;
+    fun getBatchEdit(): Boolean {
+        return isBatchEditModel;
     }
 
 }

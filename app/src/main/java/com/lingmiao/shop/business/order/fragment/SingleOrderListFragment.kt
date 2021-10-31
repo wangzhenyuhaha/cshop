@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.loadmore.BaseLoadMoreFragment
@@ -32,6 +33,10 @@ import com.lingmiao.shop.printer.PrinterModule
 import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
+import kotlinx.coroutines.Delay
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -44,6 +49,9 @@ private const val STATUS = "param1"
  */
 class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresenter>(),
     OrderListPresenter.StatusView {
+
+
+    //当前页面类型
     private var orderType: String? = "ALL"
 
     private var mCStatus: String? = null
@@ -221,6 +229,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     pvCustomTime2?.dismiss()
                 })
             pvCustomTime2?.show()
+            Log.d("WZYBUSNO", mStart.toString())
+            Log.d("WZYBUSNO", mEnd.toString())
         }
         orderResetTv.singleClick {
             if (orderType == "COMPLETE" || orderType == "ALL") {
@@ -322,8 +332,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     R.id.tvPrint -> {
                         printer(orderBean)
                     }
-                    R.id.tvMapNav ->{
-                        MapNav.chooseMapDialog(requireContext(), orderBean.getSimpleAddress());
+                    R.id.tvMapNav -> {
+                        MapNav.chooseMapDialog(requireContext(), orderBean.getSimpleAddress())
                     }
                 }
 
@@ -351,7 +361,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         showToast("接单成功")
         mLoadMoreDelegate?.refresh()
         if (UserManager.isAutoPrint()) {
-            printer(trade);
+            printer(trade)
         }
         //EventBus.getDefault().post(OrderNumberEvent())
     }
@@ -426,22 +436,23 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     fun changeTabPosition(event: TabChangeEvent) {
         LogUtils.d("changeTabPosition:$event")
         if ("ALL" == orderType && event.type == 4 && "CANCELLED" == event.status) {
-            mCStatus = event.status;
-            rbCancel?.isChecked = true;
+            mCStatus = event.status
+            rbCancel?.isChecked = true
         }
         if (event.startTime != null && event.endTime != null) {
 
             startTime = event.startTime
             endTime = event.endTime
-            Log.d("WZYBUS", startTime.toString())
-            Log.d("WZYBUS", endTime.toString())
             if (startTime != null && endTime != null) {
                 mStart = startTime
                 mEnd = endTime
-                mLoadMoreDelegate?.refresh()
+                lifecycleScope.launch(Dispatchers.Main) {
+                    delay(500)
+                    mLoadMoreDelegate?.refresh()
+                }
             }
-            startOrderDateTv.text =  formatString(Date(event.startTime!! * 1000), DATE_FORMAT)
-            endOrderDateTv.text =  formatString(Date(event.endTime!! * 1000), DATE_FORMAT)
+            startOrderDateTv.text = formatString(Date(event.startTime!! * 1000), DATE_FORMAT)
+            endOrderDateTv.text = formatString(Date(event.endTime!! * 1000), DATE_FORMAT)
             // formatString(Date(it * 1000), DATE_FORMAT)
         }
     }
@@ -450,4 +461,5 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         super.onResume()
         mLoadMoreDelegate?.refresh()
     }
+
 }

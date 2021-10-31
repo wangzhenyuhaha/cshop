@@ -1,7 +1,9 @@
 package com.lingmiao.shop.business.me.fragment
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ActivityUtils
@@ -32,6 +34,65 @@ Desc        : 运营设置
  **/
 class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
     ShopOperateSettingPresenter.View {
+
+    private val bannerArray = listOf(
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142218.jpg",
+            0
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142234.png",
+            1
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142243.jpg",
+            2
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142257.jpg",
+            3
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142306.jpg",
+            4
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142314.jpg",
+            5
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142321.jpg",
+            6
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142405.jpg",
+            7
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142634.jpg",
+            8
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142643.jpg",
+            9
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142650.jpg",
+            10
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142657.jpg",
+            11
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142705.jpg",
+            12
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142712.png",
+            13
+        )
+    )
 
     var shopReq: ApplyShopInfo = ApplyShopInfo()
 
@@ -90,7 +151,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
         //图片库
         photoSelect.singleClick {
-            ActivityUtils.startActivity(BannerActivity::class.java)
+            val intent = Intent(requireActivity(), BannerActivity::class.java)
+            intent.putExtra("number", galleryRv.getSelectPhotos().size)
+            startActivityForResult(intent, 22)
         }
 
         // 保存
@@ -151,6 +214,36 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
 
     override fun onSetSetting() {
         UserManager.setAutoPrint(autoPrinterSb.isChecked)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 22 && resultCode == Activity.RESULT_OK) {
+
+            //获得的Banner
+            val tempList = mutableListOf<GoodsGalleryVO>()
+            //获得的List
+            val list = data?.getStringExtra("list")?.split(",")
+
+            try {
+                list?.also {
+                    if (it.isNotEmpty()) {
+                        for (i in list) {
+                            if (i.isNotEmpty()) {
+                                tempList.add(GoodsGalleryVO(null, bannerArray[i.toInt()].url, null))
+                            }
+                        }
+                    }
+                }
+
+                galleryRv.addDataList(tempList)
+            } catch (e: Exception) {
+                showToast("图片获取失败，请自行上传")
+            }
+
+
+        }
     }
 
     override fun onLoadedTemplate(tcItem: FreightVoItem?, qsItem: FreightVoItem?) {

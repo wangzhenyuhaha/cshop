@@ -19,14 +19,16 @@ Create Date : 2021/3/69:59 AM
 Auther      : Fox
 Desc        :
  **/
-class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubView) : BasePreImpl(view),CategoryEditPre {
+class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubView) :
+    BasePreImpl(view), CategoryEditPre {
 
-    var shopId : Int? = null;
+    var shopId: Int? = null;
 
     private val menuPopPre: CateMenuPreImpl by lazy { CateMenuPreImpl(context, view) }
+    private val menuPopPre2: CateMenuPreImpl by lazy { CateMenuPreImpl(context, view, 1) }
 
-    fun getSellerId() : String? {
-        if(shopId == null) {
+    fun getSellerId(): String {
+        if (shopId == null) {
             shopId = UserManager.getLoginInfo()?.shopId;
         }
         return String.format("%s", shopId);
@@ -58,7 +60,7 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
             if (resp.isSuccess) {
                 val list: List<CategoryVO> = resp?.data;
                 list?.forEachIndexed { index, it ->
-                    it.showLevel = 1;
+                    it.showLevel = 1
                 }
                 view.onLoadedLv2(lv1GroupId, resp.data)
             }
@@ -89,7 +91,7 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
 
     override fun add(pId: Int, name: String) {
         var item = CategoryVO();
-        item.showLevel = if(pId == 0 ) 0 else 1;
+        item.showLevel = if (pId == 0) 0 else 1;
         item.name = name;
         item.parentId = pId;
         item.sellerId = getSellerId().toString();
@@ -104,33 +106,61 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
         }
     }
 
-    override fun clickMenuView(item: CategoryVO?, position: Int, target: View) {
-        if (item == null || item.categoryId == null) {
+    override fun clickMenuView(item: CategoryVO?, position: Int, target: View, type: Int) {
+        if (item == null) {
             return
         }
-        menuPopPre.showMenuPop(item.getMenuType(), target) { menuType ->
-            when (menuType) {
-                CateMenuPop.TYPE_GOODS_INFO -> {
-                    GoodsInfoActivity.openActivity(context, 1009, item);
-                }
-                CateMenuPop.TYPE_SPEC -> {
-                    GoodsSpecActivity.openActivity(context, 1019, item.categoryId!!)
-                }
-                CateMenuPop.TYPE_EDIT -> {
-                    showEditDialog(item);
-                }
-                CateMenuPop.TYPE_CHILDREN -> {
-                    showAddDialog(item.categoryId?.toInt()!!);
-                }
-                CateMenuPop.TYPE_DELETE -> {
-                    DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
-                        "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
-                        delete(item.categoryId)
-                    })
+        if (type == 1) {
+            menuPopPre2.showMenuPop(item.getMenuType(), target) { menuType ->
+                when (menuType) {
+                    CateMenuPop.TYPE_GOODS_INFO -> {
+                        GoodsInfoActivity.openActivity(context, 1009, item);
+                    }
+                    CateMenuPop.TYPE_SPEC -> {
+                        GoodsSpecActivity.openActivity(context, 1019, item.categoryId!!)
+                    }
+                    CateMenuPop.TYPE_EDIT -> {
+                        showEditDialog(item);
+                    }
+                    CateMenuPop.TYPE_CHILDREN -> {
+                        showAddDialog(item.categoryId?.toInt()!!);
+                    }
+                    CateMenuPop.TYPE_DELETE -> {
+                        DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
+                            "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
+                                delete(item.categoryId)
+                            })
 
+                    }
+                }
+            }
+        } else {
+            menuPopPre.showMenuPop(item.getMenuType(), target) { menuType ->
+                when (menuType) {
+                    CateMenuPop.TYPE_GOODS_INFO -> {
+                        GoodsInfoActivity.openActivity(context, 1009, item);
+                    }
+                    CateMenuPop.TYPE_SPEC -> {
+                        GoodsSpecActivity.openActivity(context, 1019, item.categoryId!!)
+                    }
+                    CateMenuPop.TYPE_EDIT -> {
+                        showEditDialog(item);
+                    }
+                    CateMenuPop.TYPE_CHILDREN -> {
+                        showAddDialog(item.categoryId?.toInt()!!);
+                    }
+                    CateMenuPop.TYPE_DELETE -> {
+                        DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
+                            "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
+                                delete(item.categoryId)
+                            })
+
+                    }
                 }
             }
         }
+
+
     }
 
     override fun showEditDialog(item: CategoryVO) {
@@ -144,7 +174,7 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
             "保存",
             null
         ) {
-            if(item.name.length > 5) {
+            if (item.name.length > 5) {
                 view?.showToast("分类名称最长为5")
                 return@showInputDialog;
             }
@@ -153,9 +183,9 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
         }
     }
 
-    override fun showAddDialog(pId : Int) {
-        DialogUtils.showInputDialog(context as Activity, "分类名称", "", "请输入","取消", "保存",null) {
-            if(it.length > 5) {
+    override fun showAddDialog(pId: Int) {
+        DialogUtils.showInputDialog(context as Activity, "分类名称", "", "请输入", "取消", "保存", null) {
+            if (it.length > 5) {
                 view?.showToast("分类名称最长为5")
                 return@showInputDialog;
             }

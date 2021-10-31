@@ -56,12 +56,9 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
     override fun getLayoutId() = R.layout.goods_fragment_goods_top_menu
 
     var mSelectPosition: Int? = null
-    var mCheckedItem: ShopGroupVO? = null
 
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
-        val dadapter = MenuAdapter().apply {
-            setOnItemClickListener { adapter, view, position ->
-            }
+        val adapter = MenuAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
                 val item = adapter.getItem(position) as ShopGroupVO
                 when (view.id) {
@@ -131,12 +128,12 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
 
                     }
 
-                    val pre = dadapter.data.get(pos - 1)
-                    val current = dadapter.data.get(pos)
+                    val pre = adapter.data.get(pos - 1)
+                    val current = adapter.data.get(pos)
                     mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort + 1)
                 } else {
                     // 移到顶
-                    val item = dadapter.data.get(pos)
+                    val item = adapter.data.get(pos)
                     mPresenter?.sort(isTop!!, item.shopCatId!!, 0)
                     handleSort(0, item)
                 }
@@ -145,14 +142,14 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
             }
         }
 
-        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(dadapter)
+        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(adapter)
 
         val mItemTouchHelper: ItemTouchHelper? = ItemTouchHelper(mItemDragAndSwipeCallback)
         mItemTouchHelper!!.attachToRecyclerView(mLoadMoreRv)
 
-        dadapter.setOnItemDragListener(listener)
-        dadapter.enableDragItem(mItemTouchHelper)
-        return dadapter
+        adapter.setOnItemDragListener(listener)
+        adapter.enableDragItem(mItemTouchHelper)
+        return adapter
     }
 
     fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
@@ -260,4 +257,9 @@ class TopMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
         mPresenter?.loadLv1GoodsGroup(isTop!!)
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter?.loadLv1GoodsGroup(isTop!!)
+    }
 }

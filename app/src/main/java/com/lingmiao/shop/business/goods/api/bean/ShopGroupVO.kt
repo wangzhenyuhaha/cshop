@@ -38,7 +38,7 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     @SerializedName("sort")
     var sort: Int = 0
     @SerializedName("goods_num")
-    var goods_num: Int = 0
+    var goods_num: Int? = 0
     /**
      * 是否选中
      */

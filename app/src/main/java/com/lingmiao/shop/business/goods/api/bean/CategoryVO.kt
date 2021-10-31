@@ -39,7 +39,7 @@ data class CategoryVO(
 
     var selected: Boolean = false
 ) : AbstractExpandableItem<CategoryVO>(), MultiItemEntity, ItemData {
-    override fun getIValue(): String? {
+    override fun getIValue(): String {
         return categoryId;
     }
 

@@ -31,7 +31,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 /**
 Create Date : 2021/3/101:00 AM
-Auther      : Fox
+Author      : Fox
 Desc        : 常用菜单列表
  **/
 class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
@@ -53,16 +53,14 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
         isTop = arguments?.getInt("isTop", 0)
     }
 
-    override fun getLayoutId(): Int{
-        return R.layout.goods_fragment_goods_top_menu
-    }
+    override fun getLayoutId() = R.layout.goods_fragment_goods_top_menu
 
     var mSelectPosition: Int? = null
-    var mCheckedItem: ShopGroupVO? = null
+
     override fun initAdapter(): BaseQuickAdapter<ShopGroupVO, BaseViewHolder> {
-        val dadapter = MenuOfUserAdapter().apply {
+        val adapter = MenuOfUserAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
-                var item = adapter.getItem(position) as ShopGroupVO
+                val item = adapter.getItem(position) as ShopGroupVO
                 when (view.id) {
                     R.id.menuTopTv -> {
                         handleSort(position, item)
@@ -128,29 +126,29 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
 
                     }
 
-                    val pre = dadapter.data.get(pos - 1)
-                    val current = dadapter.data.get(pos)
+                    val pre = adapter.data.get(pos - 1)
+                    val current = adapter.data.get(pos)
                     mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort + 1)
                 } else {
                     // 移到顶
-                    val item = dadapter.data.get(pos)
+                    val item = adapter.data.get(pos)
                     mPresenter?.sort(isTop!!, item.shopCatId!!, 0)
                     handleSort(0, item)
                 }
             }
         }
 
-        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(dadapter)
+        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(adapter)
 
         val mItemTouchHelper: ItemTouchHelper? = ItemTouchHelper(mItemDragAndSwipeCallback)
         mItemTouchHelper!!.attachToRecyclerView(mLoadMoreRv)
 
-        dadapter.setOnItemDragListener(listener)
-        dadapter.enableDragItem(mItemTouchHelper)
-        return dadapter
+        adapter.setOnItemDragListener(listener)
+        adapter.enableDragItem(mItemTouchHelper)
+        return adapter
     }
 
-    fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
+    private fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
         mSelectPosition = position
         // 移除
         mAdapter.remove(position)
@@ -179,7 +177,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
         }
 
         menuAllCheckCb.setOnCheckedChangeListener { buttonView, isChecked ->
-            mAdapter?.data?.forEachIndexed { index, goodsVO ->
+            mAdapter.data.forEachIndexed { index, goodsVO ->
                 goodsVO.isChecked = isChecked
             }
             mAdapter?.notifyDataSetChanged()
@@ -187,7 +185,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
 
         // 取消操作
         menuCancelTv.setOnClickListener {
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false)
+            (mAdapter as MenuOfUserAdapter).setBatchEditModel(false)
             menuCancelTv.gone()
             menuDeleteTv.gone()
             menuBottom.gone()
@@ -195,7 +193,7 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
         }
         // 操作完成
         menuDeleteTv.setOnClickListener {
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false)
+            (mAdapter as MenuOfUserAdapter).setBatchEditModel(false)
             menuDeleteTv.gone()
             menuBottom.gone()
             addMenuLayout.visiable()
@@ -205,16 +203,15 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
             addMenuLayout.gone()
             menuBottom.visiable()
             menuDeleteTv.visiable()
-            (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(true)
+            (mAdapter as MenuOfUserAdapter).setBatchEditModel(true)
         }
 
-        mSmartRefreshLayout?.setEnableRefresh(false)
-        mSmartRefreshLayout?.setEnableLoadMore(false)
+        mSmartRefreshLayout.setEnableRefresh(false)
+        mSmartRefreshLayout.setEnableLoadMore(false)
     }
 
-    override fun createPresenter(): CateManagerPre? {
-        return UserMenuPreImpl(this)
-    }
+    override fun createPresenter() = UserMenuPreImpl(this)
+
 
     override fun onDeleteGroupSuccess(position: Int) {
         if (position < mAdapter.data.size) {
@@ -224,15 +221,15 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
     }
 
     override fun onGroupUpdated(position: Int) {
-        mAdapter?.notifyItemChanged(position)
+        mAdapter.notifyItemChanged(position)
     }
 
     fun isBatchModel(): Boolean {
-        return (mAdapter as MenuOfUserAdapter)?.getBatchEdit()
+        return (mAdapter as MenuOfUserAdapter).getBatchEdit()
     }
 
     fun setFinishSort() {
-        (mAdapter as MenuOfUserAdapter)?.setBatchEditModel(false)
+        (mAdapter as MenuOfUserAdapter).setBatchEditModel(false)
         menuDeleteTv.gone()
         menuBottom.gone()
         addMenuLayout.visiable()
@@ -242,9 +239,8 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
 
     }
 
-    override fun useEventBus(): Boolean {
-        return true
-    }
+    override fun useEventBus() = true
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun handleRefreshEvent(event: GroupRefreshEvent) {
@@ -257,6 +253,11 @@ class UserMenuFragment : BaseLoadMoreFragment<ShopGroupVO, CateManagerPre>(),
     }
 
     override fun executePageRequest(page: IPage) {
+        mPresenter?.loadLv1GoodsGroup(isTop!!)
+    }
+
+    override fun onResume() {
+        super.onResume()
         mPresenter?.loadLv1GoodsGroup(isTop!!)
     }
 

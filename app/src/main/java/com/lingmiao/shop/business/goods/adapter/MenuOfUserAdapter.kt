@@ -21,7 +21,7 @@ import org.greenrobot.eventbus.EventBus
 class MenuOfUserAdapter() :
     BaseItemDraggableAdapter<ShopGroupVO, BaseViewHolder>(R.layout.goods_adapter_menu_user, null) {
 
-    private var isBatchEditModel: Boolean = false;
+    private var isBatchEditModel: Boolean = false
 
     override fun convert(helper: BaseViewHolder, item: ShopGroupVO?) {
         item?.apply {
@@ -30,27 +30,31 @@ class MenuOfUserAdapter() :
             // helper.setText(R.id.menuDescTv, getShopCatDesc(item))
             // helper.setText(R.id.menuOrderTv, "排序：${sort}")
             helper.setGone(R.id.marginView, helper.adapterPosition == data.size - 1)
-           // helper.setGone(R.id.menuCheckCb, isBatchEditModel);
+            // helper.setGone(R.id.menuCheckCb, isBatchEditModel);
             // 删除选中
-            helper.setChecked(R.id.menuCheckCb, isChecked?:false);
-            helper.setGone(R.id.menuEditTv, !isBatchEditModel);
+            helper.setText(R.id.menuDescTv, "（共${goods_num.toString()}件商品）")
+            helper.setChecked(R.id.menuCheckCb, isChecked ?: false);
+            helper.setGone(R.id.menuEditTv, !isBatchEditModel)
             helper.setGone(R.id.menuEditGoodsTv, !isBatchEditModel)
             helper.setGone(R.id.menuDeleteTv, !isBatchEditModel)
-            helper.setGone(R.id.divider, !isBatchEditModel);
-            helper.setGone(R.id.ivMenuTop, isBatchEditModel && helper.adapterPosition == 0);
-            helper.setGone(R.id.menuTopTv, isBatchEditModel && helper.adapterPosition > 0);
+            helper.setGone(R.id.divider, !isBatchEditModel)
+            helper.setGone(R.id.ivMenuTop, isBatchEditModel && helper.adapterPosition == 0)
+            helper.setGone(R.id.menuTopTv, isBatchEditModel && helper.adapterPosition > 0)
 
             helper.addOnClickListener(R.id.menuEditTv)
             helper.addOnClickListener(R.id.menuDeleteTv)
             helper.addOnClickListener(R.id.menuEditGoodsTv)
-            helper.addOnClickListener(R.id.menuTopTv);
+            helper.addOnClickListener(R.id.menuTopTv)
 
-            helper.setChecked(R.id.menuVisibleCb, disable == 1);
-            helper.setText(R.id.menuVisibleCb, if(disable == 1) "显示" else "不显示")
-            helper.setGone(R.id.menuVisibleCb, !isBatchEditModel);
-            helper.addOnClickListener(R.id.menuVisibleCb);
-            setOnCheckedChangeListener(helper.getView(R.id.menuCheckCb), isChecked ?: false) { buttonView: CompoundButton?, isChecked: Boolean ->
-                item?.isChecked = isChecked;
+            helper.setChecked(R.id.menuVisibleCb, disable == 1)
+            helper.setText(R.id.menuVisibleCb, if (disable == 1) "显示" else "不显示")
+            helper.setGone(R.id.menuVisibleCb, !isBatchEditModel)
+            helper.addOnClickListener(R.id.menuVisibleCb)
+            setOnCheckedChangeListener(
+                helper.getView(R.id.menuCheckCb),
+                isChecked ?: false
+            ) { buttonView: CompoundButton?, isChecked: Boolean ->
+                item.isChecked = isChecked
 //                if(!isChecked) {
 //                    EventBus.getDefault().post(RefreshGoodsStatusEvent(goodsStatus!!))
 //                }
@@ -66,16 +70,16 @@ class MenuOfUserAdapter() :
     }
 
     fun setBatchEditModel(flag: Boolean) {
-        isBatchEditModel = flag;
-        notifyDataSetChanged();
+        isBatchEditModel = flag
+        notifyDataSetChanged()
     }
 
-    fun isEditMode() : Boolean {
-        return isBatchEditModel;
+    fun isEditMode(): Boolean {
+        return isBatchEditModel
     }
 
-    fun getBatchEdit() : Boolean {
-        return  isBatchEditModel;
+    fun getBatchEdit(): Boolean {
+        return isBatchEditModel
     }
 
 }

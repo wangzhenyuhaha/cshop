@@ -6,7 +6,9 @@
     android:layout_height="wrap_content"
     android:background="@color/color_ffffff"
     android:paddingStart="@dimen/dimen_14"
-    android:paddingTop="@dimen/dimen_14">
+    android:paddingTop="@dimen/dimen_14"
+    android:paddingEnd="0dp"
+    tools:ignore="ContentDescription">
 
     <ImageView
         android:id="@+id/goodsIv"
@@ -76,6 +78,22 @@
         android:layout_height="wrap_content"
         android:button="@drawable/selector_goods_spce_checkbox"
         android:padding="@dimen/dimen_14"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/deleteIv"
+        android:layout_width="@dimen/dimen_30"
+        android:layout_height="@dimen/dimen_30"
+        android:layout_gravity="end"
+        android:paddingStart="@dimen/dimen_10"
+        android:paddingEnd="0dp"
+        android:visibility="gone"
+        android:paddingBottom="@dimen/dimen_10"
+        android:src="@mipmap/goods_spec_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginEnd="@dimen/dimen_20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 

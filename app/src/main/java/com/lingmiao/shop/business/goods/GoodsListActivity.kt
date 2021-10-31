@@ -30,7 +30,8 @@ Create Date : 2021/3/99:40 AM
 Auther      : Fox
 Desc        :
  **/
-class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.View, ViewPager.OnPageChangeListener {
+class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.View,
+    ViewPager.OnPageChangeListener {
 
     companion object {
 
@@ -63,21 +64,14 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
 
     private val tvTabList: ArrayList<IGoodsTabView> = ArrayList()
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_list
-    }
+    override fun getLayoutId() = R.layout.goods_activity_goods_list
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
 
-//    override fun useBaseLayout(): Boolean {
-//        return false;
-//    }
+    override fun useLightMode() = false
 
-    override fun useEventBus(): Boolean {
-        return true
-    }
+
+    override fun useEventBus() = true
+
 
     override fun initView() {
         initTitle()
@@ -87,9 +81,12 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
 
     private fun initTitle() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_manager_title))
-        mToolBarDelegate.setRightText("新增", ContextCompat.getColor(context,R.color.white), View.OnClickListener {
-            ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
-        })
+        mToolBarDelegate.setRightText(
+            "新增",
+            ContextCompat.getColor(context, R.color.white),
+            View.OnClickListener {
+                ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
+            })
     }
 
     private fun initTabLayout() {
@@ -99,19 +96,23 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         }
         tvTabSelling.setOnClickListener {
             viewPager.currentItem = 1
-            EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ENABLE))
+            EventBus.getDefault()
+                .post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ENABLE))
         }
         tvTabWaiting.setOnClickListener {
             viewPager.currentItem = 2
-            EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
+            EventBus.getDefault()
+                .post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_WAITING))
         }
         tvTabOffLine.setOnClickListener {
             viewPager.currentItem = 3
-            EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ENABLE))
+            EventBus.getDefault()
+                .post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_ENABLE))
         }
         tvTabSoldOut.setOnClickListener {
             viewPager.currentItem = 4
-            EventBus.getDefault().post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT))
+            EventBus.getDefault()
+                .post(RefreshGoodsStatusEvent(GoodsNewFragment.GOODS_STATUS_SOLD_OUT))
         }
 
         tvTabList.add(tvTabAll)

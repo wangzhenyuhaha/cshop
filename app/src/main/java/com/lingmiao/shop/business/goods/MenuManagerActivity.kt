@@ -22,17 +22,14 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
 
     override fun getLayoutId() = R.layout.sales_activity_stats
 
-
     override fun useLightMode() = false
-
 
     override fun createPresenter() = BasePreImpl(this)
 
-
     override fun initView() {
-
+        //设置页面标题
         initTitle()
-
+        //
         initTabLayout()
     }
 
@@ -40,16 +37,15 @@ class MenuManagerActivity : BaseActivity<BasePresenter>(), BaseView {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_menu_title))
     }
 
-    lateinit var topMenu: TopMenuFragment
-    lateinit var usedMenu: UserMenuFragment
+    private lateinit var topMenu: TopMenuFragment
+    private lateinit var usedMenu: UserMenuFragment
+
     private fun initTabLayout() {
         val fragments = mutableListOf<Fragment>()
         topMenu = TopMenuFragment.newInstance(1)
         usedMenu = UserMenuFragment.newInstance(0)
         fragments.add(topMenu)
         fragments.add(usedMenu)
-//        fragments.add(UsedMenuFragment.newInstance())
-
         val fragmentAdapter = GoodsHomePageAdapter(supportFragmentManager, fragments, mTabTitles)
         viewPager.adapter = fragmentAdapter
         tabLayout.setViewPager(viewPager)

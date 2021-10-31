@@ -169,8 +169,8 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
         // 全部清除
         headView.findViewById<ITextView>(R.id.tvGoodsFilterReset).singleClick {
-            topMenuTv.text = "点击选择置顶菜单"
-            usedMenuTv.text = "点击选择常用菜单"
+            topMenuTv.text = "点击选择菜单"
+            usedMenuTv.text = "点击选择分类"
             rgSalesEnable.clearCheck()
             isSales = null
             groupPath = ""
@@ -501,4 +501,9 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }

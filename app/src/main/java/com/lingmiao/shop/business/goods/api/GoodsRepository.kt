@@ -528,8 +528,8 @@ object GoodsRepository {
     /**
      * 从中心库添加商品
      */
-    suspend fun addGoodsOfCenter(ids: String): HiResponse<Unit> {
-        return apiService.addGoodsOfCenter(ids).awaitHiResponse();
+    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?): HiResponse<Unit> {
+        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId).awaitHiResponse()
     }
 
     /***************************商品信息****************************************************/

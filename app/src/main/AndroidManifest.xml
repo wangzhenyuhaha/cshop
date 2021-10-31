@@ -55,6 +55,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
+            android:name=".business.goods.GoodsAddTypeActivity"
+            android:exported="false" />
+        <activity
             android:name=".business.me.fragment.BannerActivity"
             android:screenOrientation="portrait" />
         <activity

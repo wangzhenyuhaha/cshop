@@ -27,6 +27,12 @@ class GroupAdapter :
             text = item.shopCatName
             isSelected = (item.shopCatId == selectedGroupId)
         }
+
+        val temp = "(${item.goods_num.toString()})"
+
+        helper.getView<TextView>(R.id.titleNum).apply {
+            text = temp
+        }
     }
 
     fun clearData() {
