@@ -200,39 +200,63 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
             //社会信用代码证有效期（营业执照有效期）
             binding.licenceEnd.setOnClickListener {
-                //选中的日期
-                val selectedDate: Calendar = Calendar.getInstance()
-                //开始日期
-                val startDate: Calendar = Calendar.getInstance()
-                //结束日期
-                val endDate: Calendar = Calendar.getInstance()
 
-                //设定结束日期，假设可以活30年
-                endDate.set(
-                    startDate.get(Calendar.YEAR) + 50, startDate.get(Calendar.MONTH), startDate.get(
-                        Calendar.DATE
-                    )
-                )
-                pvCustomTime =
-                    getDatePicker(requireContext(), selectedDate, startDate, endDate, { date, _ ->
+                DialogUtils.showDialog(
+                    requireActivity(),
+                    "营业执照有效期",
+                    "您的营业执照有效期是否为长期？",
+                    "是",
+                    "选择时间",
+                    {
+                        binding.licenceEndTV.text = "长期"
+                        model.applyShopInfo.value?.licenceEnd =
+                            (dateTime2Date("2099-11-01" + " 00:00:00")?.time ?: 0) / 1000
+                    },
+                    {
+                        //选中的日期
+                        val selectedDate: Calendar = Calendar.getInstance()
+                        //开始日期
+                        val startDate: Calendar = Calendar.getInstance()
+                        //结束日期
+                        val endDate: Calendar = Calendar.getInstance()
 
-                        //在界面上显示时间
-                        binding.licenceEndTV.text = formatString(date, DATE_FORMAT)
+                        //设定结束日期，假设可以活30年
+                        endDate.set(
+                            startDate.get(Calendar.YEAR) + 50,
+                            startDate.get(Calendar.MONTH),
+                            startDate.get(
+                                Calendar.DATE
+                            )
+                        )
+                        pvCustomTime =
+                            getDatePicker(
+                                requireContext(),
+                                selectedDate,
+                                startDate,
+                                endDate,
+                                { date, _ ->
 
-                        //获取当前精确时间
-                        val s =
-                            dateTime2Date(binding.licenceEndTV.getViewText() + " 00:00:00")?.time
-                                ?: 0
-                        timeCanUse = s / 1000
+                                    //在界面上显示时间
+                                    binding.licenceEndTV.text = formatString(date, DATE_FORMAT)
 
-                        model.applyShopInfo.value?.licenceEnd = timeCanUse
-                    }, {
-                        pvCustomTime?.returnData()
-                        pvCustomTime?.dismiss()
-                    }, {
-                        pvCustomTime?.dismiss()
+                                    //获取当前精确时间
+                                    val s =
+                                        dateTime2Date(binding.licenceEndTV.getViewText() + " 00:00:00")?.time
+                                            ?: 0
+                                    timeCanUse = s / 1000
+
+                                    model.applyShopInfo.value?.licenceEnd = timeCanUse
+                                },
+                                {
+                                    pvCustomTime?.returnData()
+                                    pvCustomTime?.dismiss()
+                                },
+                                {
+                                    pvCustomTime?.dismiss()
+                                })
+                        pvCustomTime?.show()
                     })
-                pvCustomTime?.show()
+
 
             }
 
@@ -454,9 +478,15 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                 binding.organcodeTV.text = applyShopInfo.organcode
             }
 
-             applyShopInfo.licenceEnd?.also {
-                 binding.licenceEndTV.text = formatString(Date(it * 1000), DATE_FORMAT)
-             }
+            applyShopInfo.licenceEnd?.also {
+                if (formatString(Date(it * 1000), DATE_FORMAT).toString().startsWith("2099")) {
+                    binding.licenceEndTV.text = "长期"
+                } else {
+                    binding.licenceEndTV.text = formatString(Date(it * 1000), DATE_FORMAT)
+                }
+
+
+            }
 
             applyShopInfo.taxes_distinguish_expire?.also {
                 binding.taxesExpireTV.text = formatString(Date(it * 1000), DATE_FORMAT)
@@ -467,11 +497,9 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
             }
 
 
-
         })
 
     }
-
 
 
     override fun onPause() {
