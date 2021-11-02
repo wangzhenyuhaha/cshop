@@ -25,6 +25,7 @@
         android:textSize="@dimen/sp_13" />
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/cateNumTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
