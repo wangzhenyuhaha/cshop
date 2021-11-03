@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.goods
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
@@ -46,8 +45,11 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
 
     private var mCateVo: CategoryVO? = null
 
+
+    //默认"0"
     private var cId: String = ""
 
+    //默认1
     private var mSourceId: Int? = 0
 
     //已选中商品Adapter
@@ -78,6 +80,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
             val intent = Intent(context, GoodsManagerActivity::class.java)
             //默认使用1
             intent.putExtra(KEY_SOURCE, SOURCE_TYPE)
+            //默认使用"0"
             intent.putExtra(KEY_ID, keyId)
             context.startActivity(intent)
         }
@@ -98,6 +101,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
     }
 
     override fun initBundles() {
+        //默认"0"
         cId = intent?.getStringExtra(KEY_ID) ?: "0"
         //使用GoodsManagerActivity.type默认为1
         mSourceId = intent.getIntExtra(KEY_SOURCE, SOURCE_TYPE)
@@ -216,6 +220,16 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
             mPresenter.showGroupPop()
         }
 
+        //使用默认菜单分类
+        goodsManagermoren.setOnClickListener {
+            if (goodsManagermoren.isChecked) {
+                goodsManagerdenlei.text = ""
+                this.categoryId = ""
+                goodsManagercaidan.text = ""
+                this.shopCatId = ""
+            }
+        }
+
         //确认添加商品
         goodsCheckSubmit.setOnClickListener {
             if (goodsManagermoren.isChecked) {
@@ -268,12 +282,14 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
     override fun onUpdateCategory(categoryId: String?, categoryName: String?) {
         goodsManagerdenlei.text = categoryName
         this.categoryId = categoryId
+        goodsManagermoren.isChecked = false
     }
 
     //更新菜单
     override fun onUpdateGroup(groupId: String?, groupName: String?) {
         goodsManagercaidan.text = groupName
         this.shopCatId = groupId
+        goodsManagermoren.isChecked = false
     }
 
     //更新页面
