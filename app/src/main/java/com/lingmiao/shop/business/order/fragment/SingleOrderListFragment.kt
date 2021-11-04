@@ -51,7 +51,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     OrderListPresenter.StatusView {
 
 
-    //当前页面类型
+    //当前页面类型，默认为ALL
     private var orderType: String? = "ALL"
 
     private var mCStatus: String? = null
