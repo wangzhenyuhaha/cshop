@@ -18,7 +18,7 @@ android {
         minSdkVersion android.minSdkVersion
         targetSdkVersion android.targetSdkVersion
         versionCode 1
-        versionName "0.0.64"
+        versionName "0.0.65"
         setProperty("archivesBaseName", "cshop_$versionName" + "_" + "$formattedDate")
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

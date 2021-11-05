@@ -521,16 +521,17 @@
                                 android:drawableTop="@drawable/ic_help_center"
                                 android:text="帮助中心" />
 
+
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvScan"
                                 style="@style/main_tools"
-                                android:drawableTop="@drawable/ic_more"
-                                android:text="敬请期待..." />
+                                android:drawableTop="@mipmap/ic_scan"
+                                android:text="扫码上架" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/main_tools"
                                 android:drawableTop="@drawable/ic_more"
-                                android:text="敬请期待.."
-                                android:visibility="invisible" />
+                                android:text="敬请期待..." />
 
                         </LinearLayout>
                         <!--第4行end-->

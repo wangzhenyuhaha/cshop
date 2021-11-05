@@ -41,7 +41,6 @@
             tools:text="测试1测试1测试1测试1测试1测试1测试1" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/menuDescTv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_29"

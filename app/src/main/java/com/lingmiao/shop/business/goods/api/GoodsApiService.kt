@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.api
 import StatsSalesVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -327,6 +328,11 @@ interface GoodsApiService {
     @GET("seller/center/goods/")
     @WithHiResponse
     fun getCenterGoods(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
+
+    //使用条形码查询中心库商品
+    @GET("seller/goods/queryGoodsSkuByBar")
+    @WithHiResponse
+    fun getCenterGoodsByScan(@Path("bar_code") id: String ): Call<ScanGoods>
 
     @WithHiResponse
     @POST("seller/goods/addCenterGoodsToShop")
