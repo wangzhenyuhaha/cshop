@@ -19,6 +19,7 @@ import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.GoodsCategoryActivity
 import com.lingmiao.shop.business.goods.GoodsListActivity
+import com.lingmiao.shop.business.goods.GoodsScanActivity
 import com.lingmiao.shop.business.goods.MenuManagerActivity
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
@@ -34,6 +35,7 @@ import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.event.ApplyVipEvent
+import com.lingmiao.shop.business.order.ScanOrderActivity
 import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
 import com.lingmiao.shop.business.sales.SalesSettingActivity
 import com.lingmiao.shop.business.sales.StatsActivity
@@ -534,11 +536,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 已接订单
         llMainWaitTakeGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(1))
+            //待配送，即备货中
+            EventBus.getDefault().post(TabChangeEvent(1,"ACCEPT"))
         }
         // 配送中
         llMainWaitSendGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(1))
+            EventBus.getDefault().post(TabChangeEvent(1,"SHIPPED"))
         }
         // 待退款
         llMainWaitRefund.setOnClickListener {
@@ -554,6 +557,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)
+        }
+        tvScan.setOnClickListener {
+            ActivityUtils.startActivity(GoodsScanActivity::class.java)
         }
     }
 

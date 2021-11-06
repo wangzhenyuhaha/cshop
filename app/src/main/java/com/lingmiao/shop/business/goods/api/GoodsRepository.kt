@@ -11,6 +11,7 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
 import com.lingmiao.shop.business.goods.presenter.impl.PopCategoryPreImpl
@@ -528,9 +529,15 @@ object GoodsRepository {
     /**
      * 从中心库添加商品
      */
-    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?): HiResponse<Unit> {
-        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId).awaitHiResponse()
+    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?,is_force :Int?): HiResponse<Unit> {
+        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId,is_force ).awaitHiResponse()
     }
+
+    //使用条形码查询商品
+    suspend fun searchGoodsOfCenter(id: String): HiResponse<ScanGoods> {
+        return apiService.getCenterGoodsByScan(id).awaitHiResponse()
+    }
+
 
     /***************************商品信息****************************************************/
     /**

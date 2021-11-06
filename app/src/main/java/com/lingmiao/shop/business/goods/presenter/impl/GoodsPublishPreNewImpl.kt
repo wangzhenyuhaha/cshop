@@ -57,8 +57,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      * 配送方式
      */
     override fun showDeliveryTypePop(str: String?) {
-        mGoodsDeliveryPreImpl?.showTypePop(context, str) { name, it ->
-            view?.onUpdateSpeed(it?.value, name)
+        mGoodsDeliveryPreImpl.showTypePop(context, str) { name, it ->
+            view.onUpdateSpeed(it?.value, name)
         }
     }
 
@@ -66,8 +66,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
      * 配送模工
      */
     override fun showDeliveryModelPop(str: String?) {
-        mGoodsDeliveryPreImpl?.showModelPop(context, str) { name, it ->
-            view?.onUpdateModel(it?.value, name)
+        mGoodsDeliveryPreImpl.showModelPop(context, str) { name, it ->
+            view.onUpdateModel(it?.value, name)
         }
     }
 
@@ -127,7 +127,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     /**
      * 发布
      */
-    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean) {
+    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean,scan:Boolean) {
         loadSpecKeyList(goodsVO, isMutilSpec) {
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
@@ -166,14 +166,14 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 view.hideDialogLoading()
                             }){
                                 if (goodsVO.goodsId.isNullOrBlank()) {
-                                    submitGoods(goodsVO) // 添加商品
+                                    submitGoods(goodsVO,scan) // 添加商品
                                 } else {
                                     modifyGoods(goodsVO) // 编辑商品
                                 }
                             }
                         } else {
                             if (goodsVO.goodsId.isNullOrBlank()) {
-                                submitGoods(goodsVO) // 添加商品
+                                submitGoods(goodsVO,scan) // 添加商品
                             } else {
                                 modifyGoods(goodsVO) // 编辑商品
                             }
@@ -201,19 +201,19 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     override fun showExpirePop(str: String) {
         mExpirePreImpl.showPop(context, str) { item ->
-            view?.onUpdateExpire(item)
+            view.onUpdateExpire(item)
         }
     }
 
     override fun showUseTimePop(str: String) {
         mUseTimePreImpl.showPop(context, str) { items ->
-            view?.onUpdateUseTime(items)
+            view.onUpdateUseTime(items)
         }
     }
 
     override fun showGoodsType(str: Boolean) {
         mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(str)) { item ->
-            view?.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value))
+            view.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value))
         }
     }
 
@@ -249,16 +249,20 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    private fun submitGoods(goodsVO: GoodsVOWrapper) {
+    private fun submitGoods(goodsVO: GoodsVOWrapper,scan: Boolean) {
         mCoroutine.launch {
             val resp = GoodsRepository.submitGoods(goodsVO)
             view.hideDialogLoading()
             handleResponse(resp) {
                 view.showToast("商品上架成功")
-                EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
-                EventBus.getDefault().post(RefreshGoodsStatusEvent())
-                ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
-               // view.finish()
+                if (scan)
+                {
+                    view.finish()
+                }else{
+                    EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
+                    EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                    ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+                }
             }
         }
     }

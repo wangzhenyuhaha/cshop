@@ -13,7 +13,7 @@ interface GoodsPublishPre : BasePresenter {
 
     fun loadGoodsInfo(goodsId: String?)
 
-    fun publish(goodsVO: GoodsVOWrapper,isVirtualGoods : Boolean, isMutilSpec: Boolean)
+    fun publish(goodsVO: GoodsVOWrapper,isVirtualGoods : Boolean, isMutilSpec: Boolean,scan:Boolean)
 
     fun showCategoryPop()
 

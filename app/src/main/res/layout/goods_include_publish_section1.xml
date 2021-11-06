@@ -27,6 +27,15 @@
             style="@style/goods_publish_left_mark"
             android:text="商品分类" />
 
+        <ImageView
+            android:id="@+id/cateAddIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_15"
+            android:src="@mipmap/goods_spec_blue_plus"
+            tools:ignore="ContentDescription" />
+
         <TextView
             android:id="@+id/goodsCategoryTv"
             style="@style/goods_publish_right_arrow"

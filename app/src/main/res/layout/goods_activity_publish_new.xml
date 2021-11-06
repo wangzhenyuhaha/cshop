@@ -42,16 +42,26 @@
             <!-- 类型、分类 -->
             <include layout="@layout/goods_include_publish_section1" />
 
+            <View style="@style/common_divider" />
+            <!-- 菜单管理 -->
+            <include layout="@layout/goods_include_publish_section5" />
+
             <!-- 名称、图片 -->
             <include layout="@layout/goods_include_publish_section2" />
 
             <!-- 配送方式 -->
+            <!--useless-->
             <include layout="@layout/goods_include_publish_section3_new" />
 
             <!-- 商品规格,虚拟商品的套餐 -->
             <include layout="@layout/goods_include_publish_section4_new" />
 
-            <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            <View style="@style/common_divider" />
+            <!--商品打包费-->
+            <include layout="@layout/goods_include_publish_section_package" />
+
+            <com.james.common.view.ILinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 style="@style/goods_publish_container"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -63,7 +73,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_50"
                     android:orientation="horizontal">
-
 
                     <TextView
                         style="@style/goods_publish_left"
@@ -80,6 +89,7 @@
 
 
             <!--有效期-->
+            <!--useless-->
             <LinearLayout
                 android:id="@+id/sectionVirtualExpireTime"
                 android:layout_width="match_parent"
@@ -94,18 +104,14 @@
                 <include layout="@layout/goods_include_publish_section_v_limit" />
 
             </LinearLayout>
-
+            <!--useless-->
             <LinearLayout
                 android:id="@+id/section5678Ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <!-- 菜单管理 -->
-
                 <!-- 商品视频 -->
-                <include layout="@layout/goods_include_publish_section5" />
-
                 <include
                     layout="@layout/goods_include_publish_section6"
                     android:visibility="gone" />
@@ -118,10 +124,10 @@
                     layout="@layout/goods_include_publish_section8"
                     android:visibility="gone" />
 
-                <!--商品打包费-->
-                <include layout="@layout/goods_include_publish_section_package" />
+
             </LinearLayout>
 
+            <!--useless-->
             <TextView
                 android:id="@+id/moreTv"
                 android:layout_width="wrap_content"
@@ -134,7 +140,7 @@
                 android:paddingVertical="@dimen/dimen_20"
                 android:text="展开更多信息"
                 android:textColor="@color/color_3870EA"
-                android:textSize="@dimen/dimen_13"
+                android:textSize="@dimen/sp_13"
                 android:visibility="gone" />
 
 
@@ -142,7 +148,6 @@
                 android:id="@+id/bottomFl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:background="@color/color_EEEEEE"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/dimen_15"
@@ -158,7 +163,7 @@
                     android:gravity="center"
                     android:text="预览"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/dimen_13"
+                    android:textSize="@dimen/sp_13"
                     android:visibility="gone" />
 
                 <TextView
@@ -172,7 +177,7 @@
                     android:gravity="center"
                     android:text="保存并上架"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/dimen_13"
+                    android:textSize="13sp"
                     android:visibility="gone" />
 
                 <TextView
@@ -186,7 +191,7 @@
                     android:gravity="center"
                     android:text="保存并上架"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="@dimen/dimen_13" />
+                    android:textSize="13sp" />
 
             </LinearLayout>
         </LinearLayout>

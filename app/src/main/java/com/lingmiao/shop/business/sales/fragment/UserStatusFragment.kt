@@ -58,7 +58,7 @@ class UserStatusFragment : BaseLoadMoreFragment<UserVo, IUserStatusListPresenter
         status = arguments?.getInt(KEY_TYPE)
     }
 
-    override fun getLayoutId(): Int? {
+    override fun getLayoutId(): Int {
         return R.layout.sales_fragment_user_list;
     }
 
