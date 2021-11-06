@@ -529,8 +529,8 @@ object GoodsRepository {
     /**
      * 从中心库添加商品
      */
-    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?): HiResponse<Unit> {
-        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId).awaitHiResponse()
+    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?,is_force :Int?): HiResponse<Unit> {
+        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId,is_force ).awaitHiResponse()
     }
 
     //使用条形码查询商品

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     style="@style/goods_publish_container"
     app:ivBgColor="@color/color_ffffff"
-    app:ivRadius="@dimen/dimen_5">
+    app:ivRadius="@dimen/dimen_5"
+    tools:ignore="HardcodedText">
 
     <LinearLayout style="@style/goods_publish_sub_container">
 
@@ -15,6 +17,8 @@
             android:id="@+id/goodsNameEdt"
             style="@style/goods_publish_right"
             android:hint="请输入商品名称"
+            android:inputType="none"
+            android:paddingStart="0dp"
             android:paddingEnd="@dimen/dimen_10" />
     </LinearLayout>
 
@@ -44,18 +48,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/color_999999"
-                android:textSize="9sp" />
+                android:textColor="@color/color_999999" />
         </LinearLayout>
 
-        <include
-            layout="@layout/goods_adapter_goods_gallery"/>
+        <include layout="@layout/goods_adapter_goods_gallery" />
 
         <LinearLayout
-            android:paddingTop="@dimen/dimen_15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_15">
 
             <TextView
                 style="@style/goods_publish_left_mark"
@@ -68,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:text=" (用于详情展示，最少1张，最多20张)"
                 android:textColor="@color/color_999999"
-                android:textSize="9sp" />
+                android:textSize="11sp" />
         </LinearLayout>
 
         <com.lingmiao.shop.business.goods.view.GalleryRecyclerView

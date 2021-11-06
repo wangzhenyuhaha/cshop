@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:ignore="HardcodedText,ContentDescription">
@@ -31,6 +32,18 @@
                 app:zxing_framing_rect_width="300dp"
                 app:zxing_scanner_layout="@layout/order_layout_scan_barcode"
                 app:zxing_use_texture_view="true" />
+
+            <TextView
+                android:id="@+id/noResult"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:paddingTop="@dimen/dimen_30"
+                android:text="测试"
+                android:textSize="@dimen/sp_20"
+                android:visibility="gone"
+                tools:visibility="visible" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/scan_goods"
@@ -148,7 +161,15 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_200"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/title"
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"

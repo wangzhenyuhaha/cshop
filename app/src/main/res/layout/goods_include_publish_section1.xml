@@ -33,7 +33,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:padding="@dimen/dimen_15"
-            android:src="@mipmap/goods_spec_blue_plus" />
+            android:src="@mipmap/goods_spec_blue_plus"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/goodsCategoryTv"

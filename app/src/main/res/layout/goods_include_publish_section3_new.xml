@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/section3RowDeliveryLL"
     style="@style/goods_publish_container"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:visibility="gone"
     app:ivBgColor="@color/color_ffffff"
     app:ivRadius="@dimen/dimen_5"
-    android:visibility="gone">
+    tools:ignore="HardcodedText"
+    tools:visibility="visible">
 
 
-    <View style="@style/common_divider"
-        android:visibility="gone" />
+    <View
+        style="@style/common_divider"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             style="@style/goods_publish_left_mark"
@@ -30,14 +36,17 @@
 
     </LinearLayout>
 
-    <View style="@style/common_divider"
-        android:visibility="gone" />
+    <View
+        style="@style/common_divider"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <TextView
             style="@style/goods_publish_left_mark"

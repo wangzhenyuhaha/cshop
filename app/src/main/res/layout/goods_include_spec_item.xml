@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingStart="@dimen/dimen_10"
     android:paddingEnd="@dimen/dimen_10"
     app:ivBgColor="@color/color_ffffff"
-    app:ivRadius="@dimen/dimen_5">
+    app:ivRadius="@dimen/dimen_5"
+    tools:ignore="HardcodedText">
 
     <!--  商品价格、市场价格  -->
     <LinearLayout
@@ -25,6 +27,7 @@
                 android:id="@+id/goodsPriceEdt"
                 style="@style/goods_spec_item_right_edt"
                 android:hint="售价，请输入"
+                android:paddingStart="0dp"
                 android:paddingEnd="@dimen/dimen_5" />
         </LinearLayout>
 
@@ -39,6 +42,7 @@
                 style="@style/goods_spec_item_right_edt"
                 android:hint="划线价，请输入" />
         </LinearLayout>
+
     </LinearLayout>
 
     <View style="@style/common_divider" />
@@ -59,6 +63,7 @@
                 android:id="@+id/goodsQuantityEdt"
                 style="@style/goods_spec_item_right_edt"
                 android:hint="库存数,请输入"
+                android:paddingStart="0dp"
                 android:paddingEnd="@dimen/dimen_5" />
         </LinearLayout>
 
@@ -111,9 +116,41 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/scanListView"
+        style="@style/common_divider"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/scanListItem"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_50"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <LinearLayout style="@style/goods_spec_sub_container">
+
+            <TextView
+                style="@style/goods_spce_item_left"
+                android:text="条形码" />
+
+            <EditText
+                android:id="@+id/scanListItemET"
+                style="@style/goods_spec_item_right_edt"
+                android:hint="请输入条形码"
+                android:inputType="none"
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/dimen_5" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
         android:id="@+id/vSpecNo"
         style="@style/common_divider"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
 
     <!--  货号/型号、重量  -->
     <LinearLayout

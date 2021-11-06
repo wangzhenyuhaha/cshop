@@ -51,14 +51,19 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
             }
         }
 
-        fun openActivity(context: Context, requestCode: Int, isVirtual : Boolean, goodsVO: GoodsVOWrapper) {
+        fun openActivity(
+            context: Context,
+            requestCode: Int,
+            isVirtual: Boolean,
+            goodsVO: GoodsVOWrapper
+        ) {
             if (context is Activity) {
                 val intent = Intent(context, SpecSettingActivity::class.java)
                 intent.putExtra(KEY_CATEGORY_ID, goodsVO.categoryId)
                 intent.putExtra(KEY_GOODS_ID, goodsVO.goodsId)
                 intent.putExtra(KEY_SKU_LIST, goodsVO.skuList as? ArrayList)
                 intent.putExtra(KEY_SPEC_KEY_LIST, goodsVO.specKeyList as? ArrayList)
-                intent.putExtra("type", if(isVirtual) 2 else 0)
+                intent.putExtra("type", if (isVirtual) 2 else 0)
                 context.startActivityForResult(intent, requestCode)
             }
         }
@@ -68,7 +73,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     /**
      * 虚拟的=2
      */
-    private var mType : Int? = 0
+    private var mType: Int? = 0
     private var categoryId: String? = null
     private var goodsId: String? = null
     private var skuList: List<GoodsSkuVOWrapper>? = null
@@ -79,13 +84,11 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     // 批量设置的弹窗
     private var batchSettingPop: BatchSettingPop? = null
 
-    override fun useLightMode(): Boolean {
-        return false;
-    }
+    override fun useLightMode() = false
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_spec_setting
-    }
+
+    override fun getLayoutId() = R.layout.goods_activity_spec_setting
+
 
     override fun initBundles() {
         mType = intent.getIntExtra("type", 0)
@@ -95,19 +98,18 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         specKeyList = intent.getSerializableExtra(KEY_SPEC_KEY_LIST) as? List<SpecKeyVO>
     }
 
-    override fun createPresenter(): SpecSettingPre {
-        return SpecSettingPreImpl(this, this);
-    }
+    override fun createPresenter() = SpecSettingPreImpl(this, this);
+
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("规格设置")
         initSpecContainerLayout()
         initAdapter()
         initBottomView()
-        if(skuList == null || specKeyList == null) {
+        if (skuList == null || specKeyList == null) {
             mPresenter.loadSpecKeyList(goodsId)
         }
-        if(skuList == null && specKeyList == null && goodsId == null) {
+        if (skuList == null && specKeyList == null && goodsId == null) {
             mPresenter.loadSpecListByCid(categoryId);
         }
     }
@@ -134,17 +136,28 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
                 showInputValueDialog(it)
             }
             deleteSpecValueListener = {
-                mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
+                mPresenter.getSpecKeyList(
+                    mAdapter?.data!!,
+                    specContainerLayout.getSpecKeyAndValueList()
+                )
             }
             deleteSpecItemListener = {
                 mAdapter?.clear()
-                mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
+                mPresenter.getSpecKeyList(
+                    mAdapter?.data!!,
+                    specContainerLayout.getSpecKeyAndValueList()
+                )
             }
             // 非商品编辑状态下的数据回显
             specContainerLayout.addSpecItems(specKeyList, true)
         }
         addSpecLl.setOnClickListener {
-            SpecKeyActivity.openActivity(this, SPEC_REQUEST_CODE, categoryId, specContainerLayout.getSpecList())
+            SpecKeyActivity.openActivity(
+                this,
+                SPEC_REQUEST_CODE,
+                categoryId,
+                specContainerLayout.getSpecList()
+            )
         }
     }
 
@@ -173,21 +186,24 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         }
         // 保存
         confirmTv.singleClick {
-            var list = mAdapter?.data?.filter { it?.price == ""};
-            if(list?.isNotEmpty() == true) {
+            var list = mAdapter?.data?.filter { it?.price == "" };
+            if (list?.isNotEmpty() == true) {
                 showToast("请输入商品价格")
                 return@singleClick
             }
 
             list = mAdapter?.data?.filter { it?.quantity == "" };
-            if(list?.isNotEmpty() == true) {
+            if (list?.isNotEmpty() == true) {
                 showToast("请输入商品库存")
                 return@singleClick
             }
 
             val intent = Intent()
             intent.putExtra(KEY_SKU_LIST, mAdapter?.data as? ArrayList<GoodsSkuVOWrapper>)
-            intent.putExtra(KEY_SPEC_KEY_LIST, specContainerLayout.getSpecKeyAndValueList() as? ArrayList<*>)
+            intent.putExtra(
+                KEY_SPEC_KEY_LIST,
+                specContainerLayout.getSpecKeyAndValueList() as? ArrayList<*>
+            )
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
@@ -207,9 +223,13 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) return
         if (requestCode == SPEC_REQUEST_CODE) {
-            val list = data.getSerializableExtra(SpecKeyActivity.KEY_SPEC_LIST) as? ArrayList<SpecKeyVO>
+            val list =
+                data.getSerializableExtra(SpecKeyActivity.KEY_SPEC_LIST) as? ArrayList<SpecKeyVO>
             specContainerLayout.addSpecItems(list, true)
-            mPresenter.getSpecKeyList(mAdapter?.data!!, specContainerLayout.getSpecKeyAndValueList())
+            mPresenter.getSpecKeyList(
+                mAdapter?.data!!,
+                specContainerLayout.getSpecKeyAndValueList()
+            )
         }
     }
 

@@ -53,7 +53,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         }
     }
 
-    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean) {
+    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean,scan:Boolean) {
         loadSpecKeyList(goodsVO) {
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }

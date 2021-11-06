@@ -330,7 +330,7 @@ interface GoodsApiService {
     fun getCenterGoods(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
 
     //使用条形码查询中心库商品
-    @GET("seller/goods/queryGoodsSkuByBar")
+    @GET("seller/goods/queryGoodsSkuByBar/{bar_code}")
     @WithHiResponse
     fun getCenterGoodsByScan(@Path("bar_code") id: String ): Call<ScanGoods>
 
@@ -339,7 +339,8 @@ interface GoodsApiService {
     fun addGoodsOfCenter(
         @Query("center_goods_ids") id: String?,
         @Query("category_id") categoryId: String?,
-        @Query("shop_cat_id") shopCatId: String?
+        @Query("shop_cat_id") shopCatId: String?,
+        @Query("is_force ") is_force : Int?
     ): Call<Unit>
 
     /***************************商品信息****************************************************/

@@ -90,7 +90,7 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
         mCoroutine.launch {
             view.showDialogLoading()
 
-            val resp = GoodsRepository.addGoodsOfCenter(ids,categoryId,shopCatId)
+            val resp = GoodsRepository.addGoodsOfCenter(ids,categoryId,shopCatId,0)
 
             handleResponse(resp) {
                 view.onAddSuccess()
