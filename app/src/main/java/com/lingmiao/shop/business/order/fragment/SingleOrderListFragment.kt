@@ -54,8 +54,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     //当前页面类型，默认为ALL
     private var orderType: String? = "ALL"
 
+    //备货中  配送中  已送达   进行中  已完成   已取消
     private var mCStatus: String? = null
-
 
     var pvCustomTime: TimePickerView? = null
     var pvCustomTime2: TimePickerView? = null
@@ -82,6 +82,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
     override fun initBundles() {
         super.initBundles()
+
+        //获取当前页面类型（五种）
         arguments?.let {
             orderType = it.getString(STATUS)
         }
@@ -121,6 +123,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 dateLayout.visiable()
                 orderResetTv.visiable()
                 orderFilterTv.visiable()
+                orderStatusTv.visiable()
             }
             else -> {
                 rgEnable.gone()
@@ -130,18 +133,32 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
         }
 
+        //备货中等状态重置
         orderStatusResetTv.singleClick {
             rgEnable.clearCheck()
             mCStatus = null
+            orderStatusTv.text = ""
             mLoadMoreDelegate?.refresh()
         }
-        rgEnable.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.rbTaking) {
-                mCStatus = "ACCEPT"
-            } else if (checkedId == R.id.rbShipping) {
-                mCStatus = "SHIPPED"
-            } else if (checkedId == R.id.rbSign) {
-                mCStatus = "ROG"
+
+        //选择备货中等状态
+        rgEnable.setOnCheckedChangeListener { _, checkedId ->
+            mCStatus = when (checkedId) {
+                R.id.rbTaking -> {
+                    orderStatusTv.text = "备货中"
+                    "ACCEPT"
+                }
+                R.id.rbShipping -> {
+                    orderStatusTv.text = "配送中"
+                    "SHIPPED"
+                }
+                R.id.rbSign -> {
+                    orderStatusTv.text = "已送达"
+                    "ROG"
+                }
+                else -> {
+                    null
+                }
             }
             mLoadMoreDelegate?.refresh()
         }
@@ -150,31 +167,43 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             drawerO.openDrawer(Gravity.RIGHT)
         }
 
-        val headview: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
-        rgAll = headview.findViewById<RadioGroup>(R.id.rgAll)
-        rgAll?.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.rbContinue) {
-                mCStatus = "PROCESSING"
-            } else if (checkedId == R.id.rbComplete) {
-                mCStatus = "COMPLETE"
-            } else if (checkedId == R.id.rbCancel) {
-                mCStatus = "CANCELLED"
+        val headView: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
+        rgAll = headView.findViewById<RadioGroup>(R.id.rgAll)
+        rgAll?.setOnCheckedChangeListener { _, checkedId ->
+            mCStatus = when (checkedId) {
+                R.id.rbContinue -> {
+                    orderStatusTv.text = "进行中"
+                    "PROCESSING"
+                }
+                R.id.rbComplete -> {
+                    orderStatusTv.text = "已完成"
+                    "COMPLETE"
+                }
+                R.id.rbCancel -> {
+                    orderStatusTv.text = "已取消"
+                    "CANCELLED"
+                }
+                else -> {
+                    null
+                }
+
             }
         }
-        headview.findViewById<TextView>(R.id.tvReset).singleClick {
+        headView.findViewById<TextView>(R.id.tvReset).singleClick {
             rgAll?.clearCheck()
             drawerO.closeDrawers()
             mCStatus = null
+            orderStatusTv.text = ""
             mLoadMoreDelegate?.refresh()
         }
-        rbContinue = headview.findViewById(R.id.rbContinue)
-        rbComplete = headview.findViewById(R.id.rbComplete)
-        rbCancel = headview.findViewById(R.id.rbCancel)
-
-        headview.findViewById<ITextView>(R.id.tvFinish).singleClick {
+        headView.findViewById<ITextView>(R.id.tvFinish).singleClick {
             drawerO.closeDrawers()
             mLoadMoreDelegate?.refresh()
         }
+        rbContinue = headView.findViewById(R.id.rbContinue)
+        rbComplete = headView.findViewById(R.id.rbComplete)
+        rbCancel = headView.findViewById(R.id.rbCancel)
+
     }
 
     private fun initDate() {
@@ -189,9 +218,6 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 Calendar.DATE
             )
         )
-
-        if (orderType == "COMPLETE" || orderType == "ALL") {
-        }
 
         startOrderDateTv.singleClick {
             pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
@@ -215,7 +241,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         endOrderDateTv.singleClick {
             pvCustomTime2 =
                 getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
-                    endOrderDateTv.setText(formatString(date, DATE_FORMAT))
+                    endOrderDateTv.text = formatString(date, DATE_FORMAT)
                     val e = dateTime2Date(endOrderDateTv.getViewText() + " 23:59:59")?.time ?: 0
                     mEnd = e / 1000
 
@@ -229,14 +255,13 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     pvCustomTime2?.dismiss()
                 })
             pvCustomTime2?.show()
-            Log.d("WZYBUSNO", mStart.toString())
-            Log.d("WZYBUSNO", mEnd.toString())
         }
         orderResetTv.singleClick {
             if (orderType == "COMPLETE" || orderType == "ALL") {
                 mStart = null
                 mEnd = null
                 mCStatus = null
+                orderStatusTv.text = ""
                 startOrderDateTv.text = ""
                 endOrderDateTv.text = ""
                 rbContinue?.isChecked = false
@@ -453,7 +478,24 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             startOrderDateTv.text = formatString(Date(event.startTime!! * 1000), DATE_FORMAT)
             endOrderDateTv.text = formatString(Date(event.endTime!! * 1000), DATE_FORMAT)
-            // formatString(Date(it * 1000), DATE_FORMAT)
+        }
+        if (event.type == 1 && event.status == "ACCEPT") {
+            //备货中
+            mCStatus = "ACCEPT"
+            rbTaking.isChecked = true
+            lifecycleScope.launch(Dispatchers.Main) {
+                delay(500)
+                mLoadMoreDelegate?.refresh()
+            }
+        }
+        if (event.type == 1 && event.status == "SHIPPED") {
+            //配送中
+            rbShipping.isChecked = true
+            mCStatus = "SHIPPED"
+            lifecycleScope.launch(Dispatchers.Main) {
+                delay(500)
+                mLoadMoreDelegate?.refresh()
+            }
         }
     }
 

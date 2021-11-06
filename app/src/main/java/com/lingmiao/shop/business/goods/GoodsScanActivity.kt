@@ -4,13 +4,10 @@ import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.WindowManager
-import android.widget.TextView
-import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.zxing.BarcodeFormat
@@ -31,12 +28,8 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
-import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
-import com.lingmiao.shop.util.dateTime2Date
-import com.lingmiao.shop.util.formatDouble
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.coroutines.launch
 
@@ -178,13 +171,27 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 builder.setSpan(blueSpan, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
                 mBinding.noResult.text = builder
                 mBinding.noResult.visiable()
+                mBinding.scanGoods.gone()
+                mBinding.view.gone()
+                mBinding.title.gone()
+                mBinding.goodsRV.gone()
             } else {
                 //中心库未查询到商品，但店铺中已有
-
+                mBinding.noResult.gone()
+                mBinding.scanGoods.gone()
+                mBinding.view.gone()
+                mBinding.title.visiable()
+                mBinding.goodsRV.visiable()
+                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
+                adapter?.notifyDataSetChanged()
             }
         } else {
+            mBinding.noResult.gone()
             mBinding.scanGoods.visiable()
             mBinding.view.visiable()
+
+            mBinding.title.gone()
+            mBinding.goodsRV.gone()
             GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
             mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goods_name
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
@@ -198,13 +205,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 adapter?.notifyDataSetChanged()
             }
 
-
         }
 
         hideDialogLoading()
         mBinding.zxingBarcodeScanner.resume()
     }
-
 
     override fun onScanSearchFailed() {
         mBinding.scanGoods.gone()
@@ -215,6 +220,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     override fun onAddSuccess() {
         showToast("添加成功")
+        mBinding.noResult.gone()
         mBinding.scanGoods.gone()
         mBinding.view.gone()
         mBinding.title.gone()

@@ -32,7 +32,7 @@ class OrderTabFragment : Fragment(), ViewPager.OnPageChangeListener {
     private lateinit var adapter: OrderFragmentAdapter
 
     //放回Fragment实例
-    companion object {
+    companion  object {
         private val fragmentList: ArrayList<Fragment> = ArrayList()
         fun newInstance(): OrderTabFragment {
             return OrderTabFragment()

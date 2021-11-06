@@ -536,11 +536,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 已接订单
         llMainWaitTakeGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(1))
+            //待配送，即备货中
+            EventBus.getDefault().post(TabChangeEvent(1,"ACCEPT"))
         }
         // 配送中
         llMainWaitSendGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(1))
+            EventBus.getDefault().post(TabChangeEvent(1,"SHIPPED"))
         }
         // 待退款
         llMainWaitRefund.setOnClickListener {
