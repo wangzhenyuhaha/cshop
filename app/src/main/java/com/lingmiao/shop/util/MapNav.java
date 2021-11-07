@@ -33,6 +33,7 @@ public class MapNav {
         ListDialog dialog = new ListDialog(context, (ListDialog.DialogItemClickListener) (position, id, text, chooseIndex) -> {//1:百度   2：高德   3.腾讯
             if (id.equals("1")) {
                 if (AppUtils.isAppInstalled("com.baidu.BaiduMap")) {
+                    // 官方链接 https://lbsyun.baidu.com/index.php?title=uri/api/android
                     Intent intent = new Intent();
                     intent.setData(Uri.parse("baidumap://map/navi?query=" + address + "&mode=riding&coord_type=bd09ll&src=" + context.getPackageName()));
                     context.startActivity(intent);
@@ -44,6 +45,7 @@ public class MapNav {
                 }
             } else if (id.equals("2")) {
                 if (AppUtils.isAppInstalled("com.autonavi.minimap")) {
+                    // 官方链接 https://lbs.amap.com/api/amap-mobile/guide/android/route
                     String uri = String.format("amapuri://route/plan/?dname=%s&dev=0&t=0&featureName=OnRideNavi&rideType=elebike&sourceApplication=%s", address, context.getPackageName());
                     Intent intent = new Intent("android.intent.action.VIEW", Uri.parse(uri));
                     intent.addCategory("android.intent.category.DEFAULT");
