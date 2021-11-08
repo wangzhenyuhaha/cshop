@@ -33,7 +33,7 @@ import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.coroutines.launch
 
-//https://blog.csdn.net/qq_28899635/article/details/52051617
+
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
     GoodsScanActivityPresenter.View {
 
@@ -81,7 +81,15 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
         mToolBarDelegate?.setMidTitle("扫码上架")
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        //手动查询条形码
+        mBinding.searchGoods.singleClick {
+            mBinding.writeScanCode.text.toString().also {
+                if (it.isNotEmpty()) {
+                    mPresenter?.search(it)
+                    id = it
+                }
+            }
+        }
 
         initBarCode()
 
@@ -131,26 +139,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.goods_scan_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.iv_light -> {
-                if (isLighted) {
-                    mBinding.zxingBarcodeScanner.setTorchOff()
-                } else {
-                    mBinding.zxingBarcodeScanner.setTorchOn()
-                }
-                isLighted = !isLighted
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onPause() {
         super.onPause()
@@ -158,7 +146,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     }
 
     override fun onScanSearchSuccess(data: ScanGoods) {
-
+        mBinding.zxingBarcodeScanner.pauseAndWait()
         hasAdd = data.goodsSkuDOList?.isEmpty() != true
 
 
@@ -207,14 +195,16 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
         }
 
-        hideDialogLoading()
-        mBinding.zxingBarcodeScanner.resume()
+
     }
 
     override fun onScanSearchFailed() {
+        mBinding.noResult.gone()
         mBinding.scanGoods.gone()
-        hideDialogLoading()
-        showToast("查询失败")
+        mBinding.view.gone()
+        mBinding.title.gone()
+        mBinding.goodsRV.gone()
+        showToast("扫码失败")
         mBinding.zxingBarcodeScanner.resume()
     }
 
@@ -225,6 +215,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         mBinding.view.gone()
         mBinding.title.gone()
         mBinding.goodsRV.gone()
+        mBinding.zxingBarcodeScanner.resume()
     }
 }
 
@@ -262,6 +253,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             handleResponse(resp) {
                 view.onScanSearchSuccess(resp.data)
             }
+            view.hideDialogLoading()
         }
     }
 

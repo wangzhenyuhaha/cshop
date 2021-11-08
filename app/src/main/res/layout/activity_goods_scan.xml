@@ -22,16 +22,86 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
-            <com.journeyapps.barcodescanner.DecoratedBarcodeView
-                android:id="@+id/zxing_barcode_scanner"
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                app:zxing_framing_rect_height="300dp"
-                app:zxing_framing_rect_width="300dp"
-                app:zxing_scanner_layout="@layout/order_layout_scan_barcode"
-                app:zxing_use_texture_view="true" />
+                android:layout_weight="1">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+                        android:id="@+id/zxing_barcode_scanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:zxing_framing_rect_height="300dp"
+                        app:zxing_framing_rect_width="300dp"
+                        app:zxing_scanner_layout="@layout/order_layout_scan_barcode"
+                        app:zxing_use_texture_view="true" />
+
+                    <ImageView
+                        android:id="@+id/iv_light"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="end|top"
+                        android:padding="20dp"
+                        android:src="@mipmap/light_off" />
+
+                </RelativeLayout>
+
+                <com.james.common.view.IRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="60dp"
+                    android:layout_marginBottom="75dp"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/dimen_5"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="4dp">
+
+                    <EditText
+                        android:id="@+id/writeScanCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="end"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:gravity="center"
+                        android:hint="输入条形码"
+                        android:inputType="number"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/dimen_15"
+                        android:paddingBottom="@dimen/dimen_15"
+                        android:singleLine="true"
+                        android:textColor="@color/color_333333"
+                        android:textColorHint="@color/color_3870ea_c"
+                        android:textSize="@dimen/sp_13" />
+
+                    <TextView
+                        android:id="@+id/searchGoods"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@xml/setbar_bg"
+                        android:drawablePadding="@dimen/dimen_4"
+                        android:gravity="center_vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:text="查询"
+                        android:textColor="@color/color_3870ea_c"
+                        android:textSize="@dimen/sp_13" />
+
+                </com.james.common.view.IRelativeLayout>
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/noResult"
@@ -169,11 +239,11 @@
 
             <TextView
                 android:id="@+id/title"
-                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:gravity="center_horizontal"
                 android:text="店铺已有的商品"
                 android:visibility="gone"
                 tools:visibility="visible" />

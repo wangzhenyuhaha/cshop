@@ -251,6 +251,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     private fun submitGoods(goodsVO: GoodsVOWrapper,scan: Boolean) {
         mCoroutine.launch {
+            Log.d("WZYUSOD",goodsVO.bar_code.toString())
             val resp = GoodsRepository.submitGoods(goodsVO)
             view.hideDialogLoading()
             handleResponse(resp) {

@@ -153,9 +153,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 } else {
                     goodsSpecTv.text = if (skuList.isNullOrEmpty()) "请设置规格" else "已设置"
                 }
-                for (i in goodsVO.skuList!!) {
-                    Log.d("WZYUDI", i.bar_code.toString())
-                }
+
 
             }
             REQUEST_CODE_INFO -> {
@@ -521,6 +519,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 //                this.shopCatName = categoryName
 //            }
         }
+        Log.d("WZYUSO",goodsVO.bar_code.toString())
         mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked,scan)
     }
 
