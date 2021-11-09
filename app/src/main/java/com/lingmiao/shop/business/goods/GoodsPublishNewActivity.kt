@@ -237,6 +237,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     goodsWeightEdt.setText(weight)
                     goodsSKUEdt.setText(upSkuId)
                     goodsIDEdt.setText(sn)
+                    scanEdt.setText(bar_code)
                     switchBtn.isChecked = false
                     scanEdt.setText(bar_code)
 //                    if(!goodsId.isNullOrBlank()) {

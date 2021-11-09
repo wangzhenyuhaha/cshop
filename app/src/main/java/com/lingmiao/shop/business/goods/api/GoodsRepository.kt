@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.api
 
 import StatsSalesVo
 import android.telecom.Call
+import android.util.Log
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -529,8 +530,13 @@ object GoodsRepository {
     /**
      * 从中心库添加商品
      */
-    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?,is_force :Int?): HiResponse<Unit> {
-        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId,is_force ).awaitHiResponse()
+    suspend fun addGoodsOfCenter(
+        ids: String,
+        categoryId: String?,
+        shopCatId: String?,
+        is_force: Int?
+    ): HiResponse<Unit> {
+        return apiService.addGoodsOfCenter(ids, categoryId, shopCatId, is_force).awaitHiResponse()
     }
 
     //使用条形码查询商品
