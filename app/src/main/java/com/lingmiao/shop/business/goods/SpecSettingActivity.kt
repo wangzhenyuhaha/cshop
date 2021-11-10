@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lingmiao.shop.R
@@ -38,6 +39,10 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         const val KEY_SKU_LIST = "KEY_SKU_LIST"
         const val KEY_SPEC_KEY_LIST = "KEY_SPEC_KEY_LIST"
 
+        //scan
+        const val KEY_SCAN = "KEY_SCAN"
+
+
         const val SPEC_REQUEST_CODE = 1000
 
         fun openActivity(context: Context, requestCode: Int, goodsVO: GoodsVOWrapper) {
@@ -55,7 +60,8 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
             context: Context,
             requestCode: Int,
             isVirtual: Boolean,
-            goodsVO: GoodsVOWrapper
+            goodsVO: GoodsVOWrapper,
+            scan: Boolean = false
         ) {
             if (context is Activity) {
                 val intent = Intent(context, SpecSettingActivity::class.java)
@@ -64,6 +70,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
                 intent.putExtra(KEY_SKU_LIST, goodsVO.skuList as? ArrayList)
                 intent.putExtra(KEY_SPEC_KEY_LIST, goodsVO.specKeyList as? ArrayList)
                 intent.putExtra("type", if (isVirtual) 2 else 0)
+                intent.putExtra(KEY_SCAN, scan)
                 context.startActivityForResult(intent, requestCode)
             }
         }
@@ -78,6 +85,9 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     private var goodsId: String? = null
     private var skuList: List<GoodsSkuVOWrapper>? = null
     private var specKeyList: List<SpecKeyVO>? = null
+
+    //是否是扫码而来
+    private var scan: Boolean = false
 
     private var mAdapter: SpecSettingAdapter? = null
 
@@ -96,6 +106,7 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         goodsId = intent.getStringExtra(KEY_GOODS_ID)
         skuList = intent.getSerializableExtra(KEY_SKU_LIST) as? List<GoodsSkuVOWrapper>
         specKeyList = intent.getSerializableExtra(KEY_SPEC_KEY_LIST) as? List<SpecKeyVO>
+        scan = intent.getBooleanExtra(KEY_SCAN, false)
     }
 
     override fun createPresenter() = SpecSettingPreImpl(this, this);
@@ -107,7 +118,12 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         initAdapter()
         initBottomView()
         if (skuList == null || specKeyList == null) {
-            mPresenter.loadSpecKeyList(goodsId)
+            if (scan) {
+                mPresenter.loadSpecKeyListFromCenter(goodsId)
+            } else {
+                mPresenter.loadSpecKeyList(goodsId)
+            }
+
         }
         if (skuList == null && specKeyList == null && goodsId == null) {
             mPresenter.loadSpecListByCid(categoryId);

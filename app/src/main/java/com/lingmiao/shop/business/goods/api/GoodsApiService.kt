@@ -51,9 +51,9 @@ interface GoodsApiService {
     /**
      * 新增商品
      */
-    @POST("seller/goods")
+    @POST("seller/goods/{is_up}")
     @WithHiResponse
-    fun submitGoods(@Body goods: GoodsVOWrapper): Call<GoodsVOWrapper>
+    fun submitGoods( @Path(value = "is_up") is_up: String,@Body goods: GoodsVOWrapper): Call<GoodsVOWrapper>
 
     /**
      * 编辑商品
@@ -234,6 +234,13 @@ interface GoodsApiService {
     @GET("seller/goods/app/{goods_id}/skus")
     fun loadGoodsAppSku(@Path("goods_id") goodsId: String): Call<GoodsSkuCacheVO>
 
+    /**
+     * 根据商品id 从中心库拉取与商品绑定的 skuList
+     */
+    @WithHiResponse
+    @GET("seller/center/goods/{goods_id}/skus")
+    fun loadGoodsAppSkuFromCenter(@Path("goods_id") goodsId: String): Call<GoodsSkuCacheVO>
+
     // -------------------------------- 店铺接口 -----------------------------
     /**
      * 商品分组
@@ -333,6 +340,12 @@ interface GoodsApiService {
     @GET("seller/goods/queryGoodsSkuByBar/{bar_code}")
     @WithHiResponse
     fun getCenterGoodsByScan(@Path("bar_code") id: String ): Call<ScanGoods>
+
+    //从中心库查询商品详细信息
+    @GET("/seller/center/goods/{goods_ids}")
+    @WithHiResponse
+    fun getCenterGoodsFromCenter(@Path("goods_ids") id: String ): Call<GoodsVOWrapper>
+
 
     @WithHiResponse
     @POST("seller/goods/addCenterGoodsToShop")

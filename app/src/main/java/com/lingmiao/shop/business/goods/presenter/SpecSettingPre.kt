@@ -22,6 +22,8 @@ interface SpecSettingPre: BasePresenter {
      */
     fun loadSpecKeyList(goodsId: String?)
 
+   fun  loadSpecKeyListFromCenter(goodsId: String?)
+
     fun loadSpecListByCid(cid : String?);
 
     fun showAddOldKey(cid : String?, keyId : String?, list: List<SpecValueVO>?);

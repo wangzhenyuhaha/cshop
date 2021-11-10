@@ -46,10 +46,11 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         const val REQUEST_CODE_INFO = 1004
 
         //编辑已有商品
-        fun openActivity(context: Context, goodsId: String?) {
+        //传入good_id
+        fun openActivity(context: Context, goodsId: String?, scan: Boolean = false) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_ID, goodsId)
-            intent.putExtra(KEY_SCAN, false)
+            intent.putExtra(KEY_SCAN, scan)
             context.startActivity(intent)
         }
 
@@ -114,7 +115,11 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         initSection5678View()
 
         initBottomView()
-        mPresenter.loadGoodsInfo(goodsId)
+        if (scan) {
+            goodsId?.let { mPresenter.loadGoodsInfoFromCenter(it) }
+        } else {
+            mPresenter.loadGoodsInfo(goodsId)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -237,9 +242,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     goodsWeightEdt.setText(weight)
                     goodsSKUEdt.setText(upSkuId)
                     goodsIDEdt.setText(sn)
-                    scanEdt.setText(bar_code)
                     switchBtn.isChecked = false
-                    scanEdt.setText(bar_code)
 //                    if(!goodsId.isNullOrBlank()) {
 //                        goodsQuantityEdt.isEnabled = false;
 //                    }
@@ -305,7 +308,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         goodsTypeTv.singleClick {
             mPresenter.showGoodsType(isVirtualGoods)
         }
-        // 商品类目
+        // 商品分类
         goodsCategoryTv.singleClick {
             mPresenter.showCategoryPop()
         }
@@ -320,7 +323,13 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //虚拟商品，商品套餐，设置多规格
         goodsVirtualSpecTv.singleClick {
             if (goodsVO.categoryId.isNotBlank()) {
-                SpecSettingActivity.openActivity(this, REQUEST_CODE_SKU, isVirtualGoods, goodsVO)
+                SpecSettingActivity.openActivity(
+                    this,
+                    REQUEST_CODE_SKU,
+                    isVirtualGoods,
+                    goodsVO,
+                    scan = scan
+                )
             } else {
                 showToast("请先选择商品分类")
             }
@@ -422,7 +431,13 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
         //实体商品设置多规格
         goodsSpecTv.singleClick {
-            SpecSettingActivity.openActivity(this, REQUEST_CODE_SKU, isVirtualGoods, goodsVO)
+            SpecSettingActivity.openActivity(
+                this,
+                REQUEST_CODE_SKU,
+                isVirtualGoods,
+                goodsVO,
+                scan = scan
+            )
         }
         switchBtn.setOnCheckedChangeListener { _, isChecked ->
             showSection45WithStatus(isChecked, isExpand)
@@ -463,7 +478,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             goodsType = GoodsTypeVO.getValue(isVirtualGoods)
             if (isVirtualGoods) {
                 // 虚拟
-                bar_code = null
                 price = null
                 mktprice = null
                 eventPrice = null
@@ -480,7 +494,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 availableDate = ""
 
                 if (switchBtn.isChecked) {
-                    bar_code = null
                     eventPrice = null
                     eventQuantity = null
                     price = null
@@ -492,7 +505,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     upSkuId = null
                     upGoodsId = null
                 } else {
-                    bar_code = scanEdt.getViewText()
                     eventPrice = eventPriceEdt.getViewText()
                     eventQuantity = eventQuantityEdt.getViewText()
                     price = goodsPriceEdt.getViewText()
@@ -520,8 +532,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 //                this.shopCatName = categoryName
 //            }
         }
-        Log.d("WZYUSO",goodsVO.bar_code.toString())
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked,scan)
+
+        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan)
     }
 
     /**

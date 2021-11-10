@@ -114,28 +114,33 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             context?.let { it1 -> GoodsPublishNewActivity.newPublish(it1, 0, scan = true) }
         }
         mBinding.noResult2.singleClick {
-           viewVisibility.value = 0
+            viewVisibility.value = 0
         }
 
         mBinding.goodsCheckSubmit.singleClick {
-            if (hasAdd) {
-                DialogUtils.showDialog(
-                    this,
-                    "商品已存在",
-                    "您扫描的商品已在店铺中存在，是否添加？",
-                    "取消",
-                    "添加",
-                    {
-
-                    },
-                    {
-                        mPresenter?.add(id, null, null, isForce)
-                    })
-            } else {
-                mPresenter?.add(id, null, null, isForce)
-            }
-
+            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, id, true) }
         }
+
+
+//        mBinding.goodsCheckSubmit.singleClick {
+//            if (hasAdd) {
+//                DialogUtils.showDialog(
+//                    this,
+//                    "商品已存在",
+//                    "您扫描的商品已在店铺中存在，是否添加？",
+//                    "取消",
+//                    "添加",
+//                    {
+//
+//                    },
+//                    {
+//                        mPresenter?.add(id, null, null, isForce)
+//                    })
+//            } else {
+//                mPresenter?.add(id, null, null, isForce)
+//            }
+//
+//        }
 
         adapter = GoodsAdapter()
 
@@ -182,8 +187,15 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     mBinding.title.gone()
                     mBinding.goodsRV.gone()
                 }
-                //
-
+                //中心库查询到商品，但店铺中没有
+                2 -> {
+                    mBinding.scanView.gone()
+                    mBinding.noResult.gone()
+                    mBinding.scanGoods.visiable()
+                    mBinding.view.visiable()
+                    mBinding.title.gone()
+                    mBinding.goodsRV.gone()
+                }
                 //
 
                 //
@@ -253,24 +265,24 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 adapter?.notifyDataSetChanged()
             }
         } else {
-            mBinding.noResult.gone()
-            mBinding.scanGoods.visiable()
-            mBinding.view.visiable()
-
-            mBinding.title.gone()
-            mBinding.goodsRV.gone()
+            if (data.goodsSkuDOList?.isEmpty() == true) {
+                viewVisibility.value = 2
+            } else {
+                viewVisibility.value = 3
+            }
             GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
             mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goods_name
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
             id = data.centerGoodsSkuDO?.goods_id.toString()
-            if (data.goodsSkuDOList?.isEmpty() != true) {
-                //中心库查询到商品，店铺中已有
-                mBinding.view.gone()
-                mBinding.title.visiable()
-                mBinding.goodsRV.visiable()
-                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
-                adapter?.notifyDataSetChanged()
-            }
+
+//            if (data.goodsSkuDOList?.isEmpty() != true) {
+//                //中心库查询到商品，店铺中已有
+//                mBinding.view.gone()
+//                mBinding.title.visiable()
+//                mBinding.goodsRV.visiable()
+//                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
+//                adapter?.notifyDataSetChanged()
+//            }
 
         }
 
@@ -303,7 +315,6 @@ interface GoodsScanActivityPresenter : BasePresenter {
 
     //添加商品
     fun add(ids: String, categoryId: String?, shopCatId: String?, is_force: Int?)
-
 
     interface View : BaseView {
 
@@ -368,6 +379,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             BarcodeFormat.AZTEC
         )
     }
+
 
 }
 

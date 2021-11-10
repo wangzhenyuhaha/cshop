@@ -12,8 +12,6 @@ import java.io.Serializable
  * Desc   : 商品发布
  */
 class GoodsVOWrapper : Serializable {
-    @SerializedName("bar_code")
-    var bar_code : String? = null //条形码
 
     @SerializedName("cost")
     var cost: String? = null //成本价格

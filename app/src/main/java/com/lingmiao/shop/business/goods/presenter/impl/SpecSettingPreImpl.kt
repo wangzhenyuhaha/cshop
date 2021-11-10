@@ -102,6 +102,24 @@ class SpecSettingPreImpl(val context: Context, val view: SpecSettingPre.SpceSett
         }
     }
 
+    override fun loadSpecKeyListFromCenter(goodsId: String?) {
+        // 编辑商品的场景下，goodsId 不为空
+        if (goodsId.isNullOrBlank()) {
+            return
+        }
+        mCoroutine.launch {
+            val resp = GoodsRepository.loadGoodsAppSkuFromCenter(goodsId)
+            handleResponse(resp) {
+                it.skuList?.forEach {
+                    it.generateSpecNameAndId()
+                }
+                view.onLoadCacheSkuListSuccess(it)
+            }
+        }
+    }
+
+
+
     override fun loadSpecListByCid(cid: String?) {
         if (cid.isNullOrBlank()) {
             return

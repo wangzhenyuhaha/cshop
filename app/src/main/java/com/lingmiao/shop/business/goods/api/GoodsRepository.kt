@@ -182,8 +182,8 @@ object GoodsRepository {
     /**
      * 新增商品
      */
-    suspend fun submitGoods(goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
-        return apiService.submitGoods(goods).awaitHiResponse()
+    suspend fun submitGoods(goods: GoodsVOWrapper,is_up:String): HiResponse<GoodsVOWrapper> {
+        return apiService.submitGoods(is_up,goods).awaitHiResponse()
     }
 
     /**
@@ -354,6 +354,13 @@ object GoodsRepository {
      */
     suspend fun loadGoodsAppSku(goodsId: String): HiResponse<GoodsSkuCacheVO> {
         return apiService.loadGoodsAppSku(goodsId).awaitHiResponse()
+    }
+
+    /**
+     * 根据商品id 从中心库拉取与商品绑定的 skuList
+     */
+    suspend fun loadGoodsAppSkuFromCenter(goodsId: String): HiResponse<GoodsSkuCacheVO> {
+        return apiService.loadGoodsAppSkuFromCenter(goodsId).awaitHiResponse()
     }
 
     /**
@@ -543,6 +550,12 @@ object GoodsRepository {
     suspend fun searchGoodsOfCenter(id: String): HiResponse<ScanGoods> {
         return apiService.getCenterGoodsByScan(id).awaitHiResponse()
     }
+
+    //从中心库查询商品
+    suspend fun searchGoodsFromCenter(id: String): HiResponse<GoodsVOWrapper> {
+        return apiService.getCenterGoodsFromCenter(id).awaitHiResponse()
+    }
+
 
 
     /***************************商品信息****************************************************/

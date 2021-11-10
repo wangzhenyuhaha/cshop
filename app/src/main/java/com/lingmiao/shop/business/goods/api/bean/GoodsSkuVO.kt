@@ -11,9 +11,6 @@ import java.io.Serializable
  */
 open class GoodsSkuVO : Serializable {
 
-    @SerializedName("bar_code ")
-    var bar_code: String? = null //条形码
-
     @SerializedName("cost")
     var cost: String? = null //成本价格
 

@@ -109,7 +109,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
 
     private fun submitGoods(goodsVO: GoodsVOWrapper) {
         mCoroutine.launch {
-            val resp = GoodsRepository.submitGoods(goodsVO)
+            val resp = GoodsRepository.submitGoods(goodsVO,"0")
             view.hideDialogLoading()
             handleResponse(resp) {
                 view.showToast("商品上架成功")
