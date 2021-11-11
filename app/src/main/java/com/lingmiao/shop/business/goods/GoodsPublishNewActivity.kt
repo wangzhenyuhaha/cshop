@@ -465,12 +465,20 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             isExpand = !isExpand
             showSection45WithStatus(switchBtn.isChecked, isExpand)
         }
+
+        //保存  0
+        saveTv.singleClick {
+            clickConfirmView(0)
+        }
+
+
+        //保存并上架  1
         confirmTv.singleClick {
-            clickConfirmView()
+            clickConfirmView(1)
         }
     }
 
-    private fun clickConfirmView() {
+    private fun clickConfirmView(type: Int) {
         goodsVO.apply {
             goodsName = goodsNameEdt.getViewText()
             selling = goodsSellingDescEdt.getViewText()
@@ -533,7 +541,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 //            }
         }
 
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan)
+        //type  0 保存  ，1  保存并上架
+        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan,type)
     }
 
     /**

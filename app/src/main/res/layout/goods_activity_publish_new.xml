@@ -60,8 +60,7 @@
             <!--商品打包费-->
             <include layout="@layout/goods_include_publish_section_package" />
 
-            <com.james.common.view.ILinearLayout
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
                 style="@style/goods_publish_container"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -175,10 +174,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_goods_pop_btn"
                     android:gravity="center"
-                    android:text="保存并上架"
+                    android:text="保存"
                     android:textColor="@color/color_ffffff"
-                    android:textSize="13sp"
-                    android:visibility="gone" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/confirmTv"

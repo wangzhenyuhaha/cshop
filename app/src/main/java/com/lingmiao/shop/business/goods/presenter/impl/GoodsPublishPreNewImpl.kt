@@ -133,7 +133,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         goodsVO: GoodsVOWrapper,
         isVirtualGoods: Boolean,
         isMutilSpec: Boolean,
-        scan: Boolean
+        scan: Boolean,
+        type: Int
     ) {
         loadSpecKeyList(goodsVO, isMutilSpec) {
             if (scan) {
@@ -176,16 +177,16 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 view.hideDialogLoading()
                             }) {
                                 if (goodsVO.goodsId.isNullOrBlank()) {
-                                    submitGoods(goodsVO, scan) // 添加商品
+                                    submitGoods(goodsVO, scan, type) // 添加商品
                                 } else {
-                                    modifyGoods(goodsVO) // 编辑商品
+                                    modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
                                 }
                             }
                         } else {
                             if (goodsVO.goodsId.isNullOrBlank()) {
-                                submitGoods(goodsVO, scan) // 添加商品
+                                submitGoods(goodsVO, scan, type) // 添加商品
                             } else {
-                                modifyGoods(goodsVO) // 编辑商品
+                                modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
                             }
                         }
                     }
@@ -249,12 +250,17 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean) {
+    private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int) {
         mCoroutine.launch {
-            val resp = GoodsRepository.submitGoods(goodsVO,"0")
+            val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
             view.hideDialogLoading()
             handleResponse(resp) {
-                view.showToast("商品上架成功")
+                if (type == 0) {
+                    view.showToast("商品保存成功")
+                } else {
+                    view.showToast("商品上架成功")
+                }
+
                 if (scan) {
                     view.finish()
                 } else {
@@ -266,9 +272,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    private fun modifyGoods(goodsVO: GoodsVOWrapper) {
+    private fun modifyGoods(goodsVO: GoodsVOWrapper, is_up: String) {
         mCoroutine.launch {
-            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!, goodsVO)
+            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!, is_up, goodsVO)
             view.hideDialogLoading()
             if (resp.isSuccess) {
                 view.showToast("商品修改成功")

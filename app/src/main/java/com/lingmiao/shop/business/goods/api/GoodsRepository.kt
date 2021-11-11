@@ -189,8 +189,8 @@ object GoodsRepository {
     /**
      * 编辑商品
      */
-    suspend fun modifyGoods(goodsId: String, goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
-        return apiService.modifyGoods(goodsId, goods).awaitHiResponse()
+    suspend fun modifyGoods(goodsId: String,is_up:String, goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
+        return apiService.modifyGoods(goodsId,is_up, goods).awaitHiResponse()
     }
 
     /**

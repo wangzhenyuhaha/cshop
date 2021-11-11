@@ -53,7 +53,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         }
     }
 
-    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean,scan:Boolean) {
+    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean,scan:Boolean,type:Int) {
         loadSpecKeyList(goodsVO) {
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
@@ -81,7 +81,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
                     if (goodsVO.goodsId.isNullOrBlank()) {
                         submitGoods(goodsVO) // 添加商品
                     } else {
-                        modifyGoods(goodsVO) // 编辑商品
+                        modifyGoods(goodsVO,"1p") // 编辑商品
                     }
                 }
             } catch (e: BizException) {
@@ -120,9 +120,9 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         }
     }
 
-    private fun modifyGoods(goodsVO: GoodsVOWrapper) {
+    private fun modifyGoods(goodsVO: GoodsVOWrapper,is_up:String ) {
         mCoroutine.launch {
-            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!, goodsVO)
+            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!,is_up, goodsVO)
             view.hideDialogLoading()
             if (resp.isSuccess) {
                 view.showToast("商品修改成功")

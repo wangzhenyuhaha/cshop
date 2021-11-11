@@ -197,7 +197,14 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     mBinding.goodsRV.gone()
                 }
                 //
-
+                3 -> {
+                    mBinding.scanView.gone()
+                    mBinding.noResult.gone()
+                    mBinding.scanGoods.visiable()
+                    mBinding.view.gone()
+                    mBinding.title.visiable()
+                    mBinding.goodsRV.visiable()
+                }
                 //
 
                 //
@@ -275,14 +282,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
             id = data.centerGoodsSkuDO?.goods_id.toString()
 
-//            if (data.goodsSkuDOList?.isEmpty() != true) {
-//                //中心库查询到商品，店铺中已有
-//                mBinding.view.gone()
-//                mBinding.title.visiable()
-//                mBinding.goodsRV.visiable()
-//                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
-//                adapter?.notifyDataSetChanged()
-//            }
+            if (data.goodsSkuDOList?.isEmpty() != true) {
+                //中心库查询到商品，店铺中已有
+                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
+                adapter?.notifyDataSetChanged()
+            }
 
         }
 
