@@ -8,10 +8,10 @@ import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.WindowManager
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.zxing.BarcodeFormat
@@ -33,10 +33,11 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.main.fragment.CompanyInfoFragment
+import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
-import kotlinx.android.synthetic.main.order_activity_scan.*
 import kotlinx.coroutines.launch
 
 
@@ -52,7 +53,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     //是否开灯
     private var isLighted = false
 
-    var torchListener = object : DecoratedBarcodeView.TorchListener {
+    private var torchListener = object : DecoratedBarcodeView.TorchListener {
         override fun onTorchOn() {
             mBinding.ivLight.setImageResource(R.mipmap.light_off)
         }
@@ -92,8 +93,21 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private val viewVisibility = MutableLiveData<Int>()
 
-    //1是，0否，当值为1时条形码即使存在也会复制，值为0时会判断条形码是否存在，存在的话会返回提示
-    private var isForce: Int = 1
+    //0 条形码   1  商品名称
+    private val typeSearch = MutableLiveData<Int>().also {
+        it.value = 0
+    }
+
+    //弹出的东西
+    private var pop: ApplyInfoPop? = null
+
+    //经营区域  1  2  3
+    private val typeList = listOf("条形码", "商品名称")
+
+    override fun initBundles() {
+        super.initBundles()
+        pop = ApplyInfoPop(this)
+    }
 
     override fun initView() {
 
@@ -104,7 +118,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.writeScanCode.text.toString().also {
                 if (it.isNotEmpty()) {
                     mPresenter?.search(it)
-                    id = it
                 }
             }
         }
@@ -121,31 +134,19 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, id, true) }
         }
 
-
-//        mBinding.goodsCheckSubmit.singleClick {
-//            if (hasAdd) {
-//                DialogUtils.showDialog(
-//                    this,
-//                    "商品已存在",
-//                    "您扫描的商品已在店铺中存在，是否添加？",
-//                    "取消",
-//                    "添加",
-//                    {
-//
-//                    },
-//                    {
-//                        mPresenter?.add(id, null, null, isForce)
-//                    })
-//            } else {
-//                mPresenter?.add(id, null, null, isForce)
-//            }
-//
-//        }
-
         adapter = GoodsAdapter()
 
         adapter?.also {
             mBinding.goodsRV.initAdapter(it)
+        }
+
+        mBinding.type.singleClick {
+            pop?.apply {
+                setList(typeList)
+                setTitle("搜索模式")
+                setType(CompanyInfoFragment.REG_MONEY)
+                showPopupWindow()
+            }
         }
 
         viewVisibility.observe(this, Observer {
@@ -155,13 +156,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             //view 填充
             //title  店铺已有的商品
             //goodsRV   店铺已有的商品列表
-
-//            mBinding.scanView
-//            mBinding.noResult.
-//            mBinding.scanGoods.
-//            mBinding.view.
-//            mBinding.title.
-//            mBinding.goodsRV.
             when (it) {
                 //查询条形码接口报错
                 0 -> {
@@ -196,7 +190,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     mBinding.title.gone()
                     mBinding.goodsRV.gone()
                 }
-                //
+                //中心库查询到商品，且店铺中也有
                 3 -> {
                     mBinding.scanView.gone()
                     mBinding.noResult.gone()
@@ -205,14 +199,40 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     mBinding.title.visiable()
                     mBinding.goodsRV.visiable()
                 }
-                //
-
-                //
-
-                //
             }
         })
 
+        pop?.liveData?.observe(this, Observer {
+            typeSearch.value = it
+            mBinding.type.text = typeList[it]
+            mBinding.inputEdt.text = if (it == 0) "搜索条形码" else "搜索商品名称"
+            pop?.dismiss()
+        })
+
+        mBinding.inputEdt.setOnClickListener {
+            if (typeSearch.value == 0) {
+                //条形码
+                DialogUtils.showInputDialog(
+                    this,
+                    "条形码",
+                    "",
+                    "请输入",
+                    "",
+                    "取消",
+                    "查询",
+                    null
+                ) {
+                    if (it.isNotEmpty()) {
+                        mPresenter?.search(it)
+                        id = it
+                    }
+                }
+
+            } else {
+                //商品名称
+                GoodsSearchCenterActivity.openActivity(this)
+            }
+        }
     }
 
     private fun initBarCode() {
@@ -307,6 +327,26 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         mBinding.goodsRV.gone()
         mBinding.zxingBarcodeScanner.resume()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_goods_scan, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            //重新扫码
+            R.id.resume -> {
+                viewVisibility.value = 0
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }
 
 
@@ -338,7 +378,11 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             view.showDialogLoading()
 
             val resp = GoodsRepository.searchGoodsOfCenter(id)
-
+//           Log.d("WZUSDP", resp.toString())
+//            if (resp.data == null)
+//            {
+//                Log.d("WZUSDP", "ssss")
+//            }
             handleResponse(resp) {
                 view.onScanSearchSuccess(resp.data)
             }

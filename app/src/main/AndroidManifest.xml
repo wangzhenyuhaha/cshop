@@ -55,6 +55,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
+            android:name=".business.goods.GoodsSearchCenterActivity"
+            android:exported="false" />
+        <activity
             android:name=".business.goods.GoodsScanActivity"
             android:exported="false" />
         <activity

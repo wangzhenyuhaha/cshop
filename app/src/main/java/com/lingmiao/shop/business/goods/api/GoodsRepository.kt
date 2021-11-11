@@ -12,6 +12,8 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.CenterGoods
+import com.lingmiao.shop.business.goods.Data
 import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
@@ -182,15 +184,19 @@ object GoodsRepository {
     /**
      * 新增商品
      */
-    suspend fun submitGoods(goods: GoodsVOWrapper,is_up:String): HiResponse<GoodsVOWrapper> {
-        return apiService.submitGoods(is_up,goods).awaitHiResponse()
+    suspend fun submitGoods(goods: GoodsVOWrapper, is_up: String): HiResponse<GoodsVOWrapper> {
+        return apiService.submitGoods(is_up, goods).awaitHiResponse()
     }
 
     /**
      * 编辑商品
      */
-    suspend fun modifyGoods(goodsId: String,is_up:String, goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
-        return apiService.modifyGoods(goodsId,is_up, goods).awaitHiResponse()
+    suspend fun modifyGoods(
+        goodsId: String,
+        is_up: String,
+        goods: GoodsVOWrapper
+    ): HiResponse<GoodsVOWrapper> {
+        return apiService.modifyGoods(goodsId, is_up, goods).awaitHiResponse()
     }
 
     /**
@@ -290,6 +296,18 @@ object GoodsRepository {
             map.put("supplier_name", supplier_name)
         }
         return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+
+
+    /**
+     * 通过商品名称从中心库进行匹配
+     * @param goodsName：商品名称
+     */
+    suspend fun loadGoodsListByNameFromCenter(
+        pageNo: Int,
+        goodsName: String
+    ): HiResponse<CenterGoods> {
+        return apiService.loadGoodsListFromCenter(pageNo, 20, goodsName).awaitHiResponse()
     }
 
     /**
@@ -555,7 +573,6 @@ object GoodsRepository {
     suspend fun searchGoodsFromCenter(id: String): HiResponse<GoodsVOWrapper> {
         return apiService.getCenterGoodsFromCenter(id).awaitHiResponse()
     }
-
 
 
     /***************************商品信息****************************************************/

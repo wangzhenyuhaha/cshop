@@ -3,6 +3,8 @@ package com.lingmiao.shop.business.goods.api
 import StatsSalesVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.goods.CenterGoods
+import com.lingmiao.shop.business.goods.Data
 import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
@@ -40,6 +42,17 @@ interface GoodsApiService {
     @GET("seller/goods")
     @WithHiResponse
     fun loadGoodsList(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
+
+    /**
+     * 从中心库查询商品列表
+     */
+    @GET("seller/center/goods/")
+    @WithHiResponse
+    fun loadGoodsListFromCenter(
+        @Query(value = "page_no") page_no: Int,
+        @Query(value = "page_size") page_size: Int,
+        @Query(value = "goods_name") goods_name: String
+    ): Call<CenterGoods>
 
     /**
      * 查询预警商品列表
