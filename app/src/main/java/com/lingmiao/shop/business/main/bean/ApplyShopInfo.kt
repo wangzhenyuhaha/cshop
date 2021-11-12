@@ -11,186 +11,191 @@ data class ApplyShopInfo(
     @SerializedName("shop_type")
     var shopType: Int? = null,
 
-    // 自动打印
+    //到店自提  是否开启自提，1开启，0不开启
+    @SerializedName("is_self_take")
+    var is_self_take: Int? = null,
+
+// 自动打印
     @SerializedName("auto_print")
     var autoPrint: Int? = null,
-    //三证合一
-    //必填
-    //是否三证合一 1：是 0：否
+
+//三证合一
+//必填
+//是否三证合一 1：是 0：否
     @SerializedName("thrcertflag")
     var thrcertflag: Int? = 1,
 
-    //店铺租聘合同
+//店铺租聘合同
     @SerializedName("bizplacepic")
     var bizplacepic: String? = null,
 
-    //营业执照名称
+//营业执照名称
     @SerializedName("company_name")
     var companyName: String? = null,
 
-    //统一社会信用代码证(三证合一为否时传入的是营业执照的编号)（营业执照编号）
+//统一社会信用代码证(三证合一为否时传入的是营业执照的编号)（营业执照编号）
     @SerializedName("license_num")
     var licenseNum: String? = null,
 
-    //营业执照电子版（营业执照照片）
+//营业执照电子版（营业执照照片）
     @SerializedName("licence_img")
     var licenceImg: String? = null,
 
-    //社会信用代码证有效期（营业执照有效期）
+//社会信用代码证有效期（营业执照有效期）
     @SerializedName("licence_end")
     var licenceEnd: Long? = null,
 
-    //三证合一为否时再传入以下字段
-    //税务登记证号
+//三证合一为否时再传入以下字段
+//税务登记证号
     @SerializedName("taxes_certificate_num")
     var taxes_certificate_num: String? = null,
 
-    //税务登记证照片
+//税务登记证照片
     @SerializedName("taxes_certificate_img")
     var taxes_certificate_img: String? = null,
 
-    //税务登记证有效期
+//税务登记证有效期
     @SerializedName("taxes_distinguish_expire")
     var taxes_distinguish_expire: Long? = null,
 
-    //组织机构代码证号
+//组织机构代码证号
     @SerializedName("organcode")
     var organcode: String? = null,
 
-    //组织机构代码证照片
+//组织机构代码证照片
     @SerializedName("orgcodepic")
     var orgcodepic: String? = null,
 
-    //组织机构代码证有效期
+//组织机构代码证有效期
     @SerializedName("organexpire")
     var organexpire: Long? = null,
 
-    //食品卫生许可证照片
+//食品卫生许可证照片
     @SerializedName("food_hygiene_licence_img")
     var foodAllow: String? = null,
 
-    //店铺门头照片
+//店铺门头照片
     @SerializedName("storepic")
     var shopPhotoFront: String? = null,
 
-    //店铺内景照片
+//店铺内景照片
     @SerializedName("storeinnerpic")
     var shopPhotoInside: String? = null,
 
-    //经营者与店铺门口合照
+//经营者与店铺门口合照
     @SerializedName("peasonheadpic")
     var peasonheadpic: String? = null,
 
-    //  这个其实应该传的时国徽
+//  这个其实应该传的时国徽
     @SerializedName("legal_back_img")
     var legalBackImg: String? = null,
 
-    //  这个其实应该传的时人像
+//  这个其实应该传的时人像
     @SerializedName("legal_img")
     var legalImg: String? = null,
 
-    //法人手持身份证照片
+//法人手持身份证照片
     @SerializedName("hold_img")
     var holdImg: String? = null,
 
-    //身份证信息
-    //法人姓名
+//身份证信息
+//法人姓名
     @SerializedName("legal_name")
     var legalName: String? = null,
 
-    //法人性别(法人性别,1为男，0为女)
+//法人性别(法人性别,1为男，0为女)
     @SerializedName("legal_sex")
     var legalSex: Int? = null,
 
-    //法人身份证号码
+//法人身份证号码
     @SerializedName("legal_id")
     var legalId: String? = null,
 
-    //证件有效期(法人身份证过期时间)  Data
+//证件有效期(法人身份证过期时间)  Data
     @SerializedName("legalidexpire")
     var legalIDExpire: Long? = null,
 
-    //法人地址
+//法人地址
     @SerializedName("legal_address")
     var legal_address: String? = null,
 
-    //法人电话
+//法人电话
     @SerializedName("legal_phone")
     var legal_phone: String? = null,
 
-    //店铺名称
+//店铺名称
     @SerializedName("shop_name")
     var shopName: String? = null,
 
-    //店铺经营类目    ids
+//店铺经营类目    ids
     @SerializedName("goods_management_category")
     var goodsManagementCategory: String? = null,
 
-    //店铺经营类目 返回文本
+//店铺经营类目 返回文本
     @SerializedName("category_names")
     var categoryNames: String? = null,
 
-    //所属行业id（通联）
+//所属行业id（通联）
     @SerializedName("mccid")
     var mccid: Int? = null,
 
-    //所属行业名（通联
+//所属行业名（通联
     @SerializedName("mcc_name")
     var mcc_name: String? = null,
 
-    //店铺所在省
+//店铺所在省
     @SerializedName("shop_province")
     var shopProvince: String? = null,
 
-    //店铺所在市
+//店铺所在市
     @SerializedName("shop_city")
     var shopCity: String? = null,
 
-    //店铺所在县
+//店铺所在县
     @SerializedName("shop_county")
     var shopCounty: String? = null,
 
-    //店铺所在镇
+//店铺所在镇
     @SerializedName("shop_town")
     var shopTown: String? = null,
 
-    //店铺详细地址
+//店铺详细地址
     @SerializedName("shop_add")
     var shopAdd: String? = null,
 
-    //店铺纬度
+//店铺纬度
     @SerializedName("shop_lat")
     var shopLat: Double? = null,
 
-    //店铺经度
+//店铺经度
     @SerializedName("shop_lng")
     var shopLng: Double? = null,
 
-    //店铺联系人姓名(负责人)
+//店铺联系人姓名(负责人)
     @SerializedName("link_name")
     var linkName: String? = null,
 
-    //店铺联系人电话(负责人电话)
+//店铺联系人电话(负责人电话)
     @SerializedName("link_phone")
     var linkPhone: String? = null,
 
-    //经营内容(法定经营范围)
+//经营内容(法定经营范围)
     @SerializedName("scope")
     var scope: String? = null,
 
-    //注册资金  注册资本  1: 注册资本<10万元 2: 10万元<注册资本<20万元 3: 20万元<注册资本<50万元 4: 50万元<注册资本<100万元 5: 注册资本>100万元
+//注册资金  注册资本  1: 注册资本<10万元 2: 10万元<注册资本<20万元 3: 20万元<注册资本<50万元 4: 50万元<注册资本<100万元 5: 注册资本>100万元
     @SerializedName("reg_money")
     var regMoney: Int? = null,
 
-    //员工人数  商户性质为企业、个体户时必填 1: 员工数量<10 2: 10<员工数量<20 3: 20<员工数量<50 4: 50<员工数量<100 5:员工数量>100"
+//员工人数  商户性质为企业、个体户时必填 1: 员工数量<10 2: 10<员工数量<20 3: 20<员工数量<50 4: 50<员工数量<100 5:员工数量>100"
     @SerializedName("employee_num")
     var employeeNum: Int? = null,
 
-    //经营区域  1：城区 2: 郊区 3：边远地区
+//经营区域  1：城区 2: 郊区 3：边远地区
     @SerializedName("operatelimit")
     var operateLimit: Int? = null,
 
-    //经营地段  1：商业区 2：工业区 3：住宅区
+//经营地段  1：商业区 2：工业区 3：住宅区
     @SerializedName("inspect")
     var inspect: Int? = null,
 
@@ -242,7 +247,7 @@ data class ApplyShopInfo(
     @SerializedName("bank_card")
     var bankCard: BindBankCardDTO? = null,
 
-    //签约承诺函
+//签约承诺函
     @SerializedName("authorpic")
     var authorpic: String? = null,
 
@@ -251,7 +256,7 @@ data class ApplyShopInfo(
     var promoCode: String? = null,
 
 
-    // 其他照片
+// 其他照片
     @SerializedName("other_certificates_imgs")
     var other_certificates_imgs: String? = null,
 
@@ -265,9 +270,9 @@ data class ApplyShopInfo(
 
 //店铺logo
 
-    //是否显示棋手配送   0   不显示棋手配送   1   显示
+//是否显示棋手配送   0   不显示棋手配送   1   显示
     @SerializedName("accept_carriage")
-    var accept_carriage: Int  = 1,
+    var accept_carriage: Int = 1,
 
 
     @SerializedName("shop_logo")

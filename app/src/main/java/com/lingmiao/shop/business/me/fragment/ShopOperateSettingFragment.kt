@@ -156,6 +156,12 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             startActivityForResult(intent, 22)
         }
 
+        //到店自提
+        takeSelf.setOnClickListener {
+            mPresenter?.takeSelf(if (takeSelf.isChecked) 1 else 0)
+
+        }
+
         // 保存
         tvShopOperateSubmit.setOnClickListener {
 
@@ -302,6 +308,9 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             shopReq.openStartTime = vo.openStartTime
             shopReq.openEndTime = vo.openEndTime
             setOperateTime()
+
+            //是否开启自提，1开启，0不开启
+            takeSelf.isChecked = is_self_take == 1
 
             //联系电话
             linkTelEt.setText(companyPhone)
