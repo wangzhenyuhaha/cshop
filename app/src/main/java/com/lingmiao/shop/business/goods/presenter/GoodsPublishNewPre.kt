@@ -15,6 +15,8 @@ interface GoodsPublishNewPre : GoodsPublishPre {
 
     fun showGoodsUnitPop(id : String?);
 
+    fun loadGoodsInfoFromCenter(id:String)
+
     interface PublishView : GoodsPublishPre.PublishView {
 
         fun onUpdateSpeed(id: String?, name : String?);

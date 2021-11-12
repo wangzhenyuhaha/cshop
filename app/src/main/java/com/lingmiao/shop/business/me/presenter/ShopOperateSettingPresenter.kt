@@ -26,6 +26,9 @@ interface ShopOperateSettingPresenter : BasePresenter {
 
     fun getBanner();
 
+    //到店自提
+    fun takeSelf(type:Int)
+
     interface View : BaseView {
 
         fun onUpdateWorkTime(workTimeVo1: WorkTimeVo?, workTimeVo2: WorkTimeVo?);

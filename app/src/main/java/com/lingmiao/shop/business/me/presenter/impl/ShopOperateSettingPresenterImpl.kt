@@ -159,4 +159,16 @@ class ShopOperateSettingPresenterImpl(
         }
     }
 
+    override fun takeSelf(type: Int) {
+        mCoroutine.launch {
+            val resp = MeRepository.apiService.setTakeSelf(type.toString()).awaitHiResponse()
+            if (resp.isSuccess) {
+                view.showToast("保存成功")
+            } else {
+
+            }
+
+        }
+    }
+
 }

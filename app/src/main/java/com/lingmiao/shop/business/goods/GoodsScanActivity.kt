@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods
 
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -7,7 +8,10 @@ import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import android.view.WindowManager
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.RegexUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.zxing.BarcodeFormat
@@ -25,15 +29,18 @@ import com.james.common.utils.exts.visiable
 import com.james.common.utils.permission.interceptor.CameraInterceptor
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
+import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.main.fragment.CompanyInfoFragment
+import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.coroutines.launch
 
-//https://blog.csdn.net/qq_28899635/article/details/52051617
+
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
     GoodsScanActivityPresenter.View {
 
@@ -45,6 +52,16 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     //是否开灯
     private var isLighted = false
+
+    private var torchListener = object : DecoratedBarcodeView.TorchListener {
+        override fun onTorchOn() {
+            mBinding.ivLight.setImageResource(R.mipmap.light_off)
+        }
+
+        override fun onTorchOff() {
+            mBinding.ivLight.setImageResource(R.mipmap.light_on)
+        }
+    }
 
     private val callback: BarcodeCallback = object : BarcodeCallback {
 
@@ -74,39 +91,47 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     //通过扫码查询到的商品
     private var id: String = ""
 
-    //1是，0否，当值为1时条形码即使存在也会复制，值为0时会判断条形码是否存在，存在的话会返回提示
-    private var isForce: Int = 1
+    private val viewVisibility = MutableLiveData<Int>()
+
+    //0 条形码   1  商品名称
+    private val typeSearch = MutableLiveData<Int>().also {
+        it.value = 0
+    }
+
+    //弹出的东西
+    private var pop: ApplyInfoPop? = null
+
+    //经营区域  1  2  3
+    private val typeList = listOf("条形码", "商品名称")
+
+    override fun initBundles() {
+        super.initBundles()
+        pop = ApplyInfoPop(this)
+    }
 
     override fun initView() {
 
         mToolBarDelegate?.setMidTitle("扫码上架")
 
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-
+        //手动查询条形码
+        mBinding.searchGoods.singleClick {
+            mBinding.writeScanCode.text.toString().also {
+                if (it.isNotEmpty()) {
+                    mPresenter?.search(it)
+                }
+            }
+        }
         initBarCode()
 
-        mBinding.noResult.singleClick {
+        mBinding.noResult1.singleClick {
             context?.let { it1 -> GoodsPublishNewActivity.newPublish(it1, 0, scan = true) }
+        }
+        mBinding.noResult2.singleClick {
+            viewVisibility.value = 0
         }
 
         mBinding.goodsCheckSubmit.singleClick {
-            if (hasAdd) {
-                DialogUtils.showDialog(
-                    this,
-                    "商品已存在",
-                    "您扫描的商品已在店铺中存在，是否添加？",
-                    "取消",
-                    "添加",
-                    {
-
-                    },
-                    {
-                        mPresenter?.add(id, null, null, isForce)
-                    })
-            } else {
-                mPresenter?.add(id, null, null, isForce)
-            }
-
+            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, id, true) }
         }
 
         adapter = GoodsAdapter()
@@ -115,10 +140,119 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.goodsRV.initAdapter(it)
         }
 
+        mBinding.type.singleClick {
+            pop?.apply {
+                setList(typeList)
+                setTitle("搜索模式")
+                setType(CompanyInfoFragment.REG_MONEY)
+                showPopupWindow()
+            }
+        }
 
+        viewVisibility.observe(this, Observer {
+            //scanView扫描区域
+            //noResult跳转到添加商品
+            //scan_goods中心库查询到商品后信息展示
+            //view 填充
+            //title  店铺已有的商品
+            //goodsRV   店铺已有的商品列表
+            when (it) {
+                //查询条形码接口报错
+                0 -> {
+                    mBinding.scanView.visiable()
+                    mBinding.noResult.gone()
+                    mBinding.scanGoods.gone()
+                    mBinding.view.gone()
+                    mBinding.title.gone()
+                    mBinding.goodsRV.gone()
+                    mBinding.zxingBarcodeScanner.resume()
+                }
+                //中心库未查询到商品，且店铺中也没有
+                1 -> {
+                    val content = "未搜索到商品，去手动添加或"
+                    val builder = SpannableStringBuilder(content)
+                    val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
+                    builder.setSpan(blueSpan, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    mBinding.noResult1.text = builder
+                    mBinding.scanView.gone()
+                    mBinding.noResult.visiable()
+                    mBinding.scanGoods.gone()
+                    mBinding.view.visiable()
+                    mBinding.title.gone()
+                    mBinding.goodsRV.gone()
+                }
+                //中心库查询到商品，但店铺中没有
+                2 -> {
+                    mBinding.scanView.gone()
+                    mBinding.noResult.gone()
+                    mBinding.scanGoods.visiable()
+                    mBinding.view.visiable()
+                    mBinding.title.gone()
+                    mBinding.goodsRV.gone()
+                }
+                //中心库查询到商品，且店铺中也有
+                3 -> {
+                    mBinding.scanView.gone()
+                    mBinding.noResult.gone()
+                    mBinding.scanGoods.visiable()
+                    mBinding.view.gone()
+                    mBinding.title.visiable()
+                    mBinding.goodsRV.visiable()
+                }
+            }
+        })
+
+        pop?.liveData?.observe(this, Observer {
+            typeSearch.value = it
+            mBinding.type.text = typeList[it]
+            mBinding.inputEdt.text = if (it == 0) "搜索条形码" else "搜索商品名称"
+            pop?.dismiss()
+        })
+
+        mBinding.inputEdt.setOnClickListener {
+            if (typeSearch.value == 0) {
+                //条形码
+                DialogUtils.showInputDialog(
+                    this,
+                    "条形码",
+                    "",
+                    "请输入",
+                    "",
+                    "取消",
+                    "查询",
+                    null
+                ) {
+                    if (it.isNotEmpty()) {
+                        mPresenter?.search(it)
+                        id = it
+                    }
+                }
+
+            } else {
+                //商品名称
+                GoodsSearchCenterActivity.openActivity(this)
+            }
+        }
     }
 
     private fun initBarCode() {
+
+        //对闪光灯的监听
+        mBinding.ivLight.setOnClickListener {
+            if (isLighted) {
+                mBinding.zxingBarcodeScanner.setTorchOff()
+            } else {
+                mBinding.zxingBarcodeScanner.setTorchOn()
+            }
+            mBinding.ivLight.setImageResource(if (isLighted) R.mipmap.light_off else R.mipmap.light_on)
+            isLighted = !isLighted
+        }
+
+        //如果没有闪关灯，则隐藏
+        if (!applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+            mBinding.ivLight.gone()
+        }
+        mBinding.zxingBarcodeScanner.setTorchListener(torchListener);
 
         mBinding.zxingBarcodeScanner.barcodeView.decoderFactory =
             DefaultDecoderFactory(mPresenter?.getBarcodeFormats())
@@ -131,26 +265,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.goods_scan_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.iv_light -> {
-                if (isLighted) {
-                    mBinding.zxingBarcodeScanner.setTorchOff()
-                } else {
-                    mBinding.zxingBarcodeScanner.setTorchOn()
-                }
-                isLighted = !isLighted
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 
     override fun onPause() {
         super.onPause()
@@ -158,23 +272,15 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     }
 
     override fun onScanSearchSuccess(data: ScanGoods) {
-
+        mBinding.zxingBarcodeScanner.pauseAndWait()
         hasAdd = data.goodsSkuDOList?.isEmpty() != true
 
 
         if (data.centerGoodsSkuDO?.goods_name == null) {
             if (data.goodsSkuDOList?.isEmpty() == true) {
                 //中心库未查询到商品，但店铺也没有
-                val content = "未搜索到商品，去手动添加"
-                val builder = SpannableStringBuilder(content)
-                val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
-                builder.setSpan(blueSpan, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                mBinding.noResult.text = builder
-                mBinding.noResult.visiable()
-                mBinding.scanGoods.gone()
-                mBinding.view.gone()
-                mBinding.title.gone()
-                mBinding.goodsRV.gone()
+                viewVisibility.value = 1
+
             } else {
                 //中心库未查询到商品，但店铺中已有
                 mBinding.noResult.gone()
@@ -186,36 +292,30 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 adapter?.notifyDataSetChanged()
             }
         } else {
-            mBinding.noResult.gone()
-            mBinding.scanGoods.visiable()
-            mBinding.view.visiable()
-
-            mBinding.title.gone()
-            mBinding.goodsRV.gone()
+            if (data.goodsSkuDOList?.isEmpty() == true) {
+                viewVisibility.value = 2
+            } else {
+                viewVisibility.value = 3
+            }
             GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
             mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goods_name
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
             id = data.centerGoodsSkuDO?.goods_id.toString()
+
             if (data.goodsSkuDOList?.isEmpty() != true) {
                 //中心库查询到商品，店铺中已有
-                mBinding.view.gone()
-                mBinding.title.visiable()
-                mBinding.goodsRV.visiable()
                 data.goodsSkuDOList?.let { adapter?.replaceData(it) }
                 adapter?.notifyDataSetChanged()
             }
 
         }
 
-        hideDialogLoading()
-        mBinding.zxingBarcodeScanner.resume()
+
     }
 
     override fun onScanSearchFailed() {
-        mBinding.scanGoods.gone()
-        hideDialogLoading()
         showToast("查询失败")
-        mBinding.zxingBarcodeScanner.resume()
+        viewVisibility.value = 0
     }
 
     override fun onAddSuccess() {
@@ -225,7 +325,28 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         mBinding.view.gone()
         mBinding.title.gone()
         mBinding.goodsRV.gone()
+        mBinding.zxingBarcodeScanner.resume()
     }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_goods_scan, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when (item.itemId) {
+            //重新扫码
+            R.id.resume -> {
+                viewVisibility.value = 0
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
 }
 
 
@@ -238,7 +359,6 @@ interface GoodsScanActivityPresenter : BasePresenter {
 
     //添加商品
     fun add(ids: String, categoryId: String?, shopCatId: String?, is_force: Int?)
-
 
     interface View : BaseView {
 
@@ -258,10 +378,18 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             view.showDialogLoading()
 
             val resp = GoodsRepository.searchGoodsOfCenter(id)
-
+//           Log.d("WZUSDP", resp.toString())
+//            if (resp.data == null)
+//            {
+//                Log.d("WZUSDP", "ssss")
+//            }
             handleResponse(resp) {
                 view.onScanSearchSuccess(resp.data)
             }
+            if (!resp.isSuccess) {
+                view.onScanSearchFailed()
+            }
+            view.hideDialogLoading()
         }
     }
 
@@ -299,6 +427,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             BarcodeFormat.AZTEC
         )
     }
+
 
 }
 
@@ -360,14 +489,14 @@ data class GoodsSkuDO(
     var category_id: Int? = null,
     var cost: Any? = null,
     var enable_quantity: Int? = null,
-    var event_price: Int? = null,
+    var event_price: Double? = null,
     var event_quantity: Int? = null,
     var goods_id: Int? = null,
     var goods_name: String? = null,
     var hash_code: Int? = null,
     var local_template_id: Any? = null,
     var mktprice: Any? = null,
-    var price: Int? = null,
+    var price: Double? = null,
     var quantity: Int? = null,
     var seller_id: Int? = null,
     var seller_name: String? = null,

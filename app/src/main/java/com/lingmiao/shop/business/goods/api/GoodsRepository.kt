@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.api
 
 import StatsSalesVo
 import android.telecom.Call
+import android.util.Log
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -11,6 +12,8 @@ import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
+import com.lingmiao.shop.business.goods.CenterGoods
+import com.lingmiao.shop.business.goods.Data
 import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
@@ -141,7 +144,7 @@ object GoodsRepository {
 
     suspend fun loadGoodsListOfCateId(
         pageNo: Int,
-        marketEnable: String,
+        marketEnable: String?,
         isAuth: String,
         cid: String?,
         cPath: String?
@@ -149,7 +152,9 @@ object GoodsRepository {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
-        map.put("market_enable", marketEnable)
+        if (marketEnable != null) {
+            map.put("market_enable", marketEnable)
+        }
         map.put("is_auth_string", isAuth)
         if (cid != null) {
             map.put("not_in_cat_id", cid);
@@ -181,15 +186,19 @@ object GoodsRepository {
     /**
      * 新增商品
      */
-    suspend fun submitGoods(goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
-        return apiService.submitGoods(goods).awaitHiResponse()
+    suspend fun submitGoods(goods: GoodsVOWrapper, is_up: String): HiResponse<GoodsVOWrapper> {
+        return apiService.submitGoods(is_up, goods).awaitHiResponse()
     }
 
     /**
      * 编辑商品
      */
-    suspend fun modifyGoods(goodsId: String, goods: GoodsVOWrapper): HiResponse<GoodsVOWrapper> {
-        return apiService.modifyGoods(goodsId, goods).awaitHiResponse()
+    suspend fun modifyGoods(
+        goodsId: String,
+        is_up: String,
+        goods: GoodsVOWrapper
+    ): HiResponse<GoodsVOWrapper> {
+        return apiService.modifyGoods(goodsId, is_up, goods).awaitHiResponse()
     }
 
     /**
@@ -291,6 +300,18 @@ object GoodsRepository {
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
+
+    /**
+     * 通过商品名称从中心库进行匹配
+     * @param goodsName：商品名称
+     */
+    suspend fun loadGoodsListByNameFromCenter(
+        pageNo: Int,
+        goodsName: String
+    ): HiResponse<CenterGoods> {
+        return apiService.loadGoodsListFromCenter(pageNo, 20, goodsName).awaitHiResponse()
+    }
+
     /**
      * 通过商品名称进行匹配
      * @param goodsName：商品名称
@@ -353,6 +374,13 @@ object GoodsRepository {
      */
     suspend fun loadGoodsAppSku(goodsId: String): HiResponse<GoodsSkuCacheVO> {
         return apiService.loadGoodsAppSku(goodsId).awaitHiResponse()
+    }
+
+    /**
+     * 根据商品id 从中心库拉取与商品绑定的 skuList
+     */
+    suspend fun loadGoodsAppSkuFromCenter(goodsId: String): HiResponse<GoodsSkuCacheVO> {
+        return apiService.loadGoodsAppSkuFromCenter(goodsId).awaitHiResponse()
     }
 
     /**
@@ -529,13 +557,23 @@ object GoodsRepository {
     /**
      * 从中心库添加商品
      */
-    suspend fun addGoodsOfCenter(ids: String,categoryId:String?,shopCatId:String?,is_force :Int?): HiResponse<Unit> {
-        return apiService.addGoodsOfCenter(ids,categoryId,shopCatId,is_force ).awaitHiResponse()
+    suspend fun addGoodsOfCenter(
+        ids: String,
+        categoryId: String?,
+        shopCatId: String?,
+        is_force: Int?
+    ): HiResponse<Unit> {
+        return apiService.addGoodsOfCenter(ids, categoryId, shopCatId, is_force).awaitHiResponse()
     }
 
     //使用条形码查询商品
     suspend fun searchGoodsOfCenter(id: String): HiResponse<ScanGoods> {
         return apiService.getCenterGoodsByScan(id).awaitHiResponse()
+    }
+
+    //从中心库查询商品
+    suspend fun searchGoodsFromCenter(id: String): HiResponse<GoodsVOWrapper> {
+        return apiService.getCenterGoodsFromCenter(id).awaitHiResponse()
     }
 
 

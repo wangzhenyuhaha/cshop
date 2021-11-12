@@ -174,30 +174,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <View style="@style/common_divider" />
-
-            <!--  活动价格、活动库存  -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_50"
-                android:orientation="horizontal">
-
-                <LinearLayout style="@style/goods_spec_sub_container">
-
-                    <TextView
-                        style="@style/goods_spce_item_left"
-                        android:layout_marginEnd="11dp"
-                        android:text="条形码" />
-
-                    <EditText
-                        android:id="@+id/scanEdt"
-                        style="@style/goods_spec_item_right_edt"
-                        android:hint="请输入条形码"
-                        android:paddingEnd="@dimen/dimen_5"
-                        android:paddingStart="0dp"/>
-                </LinearLayout>
-
-            </LinearLayout>
 
             <View
                 android:id="@+id/vSpecNo"

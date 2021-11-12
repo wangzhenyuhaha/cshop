@@ -115,36 +115,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:id="@+id/scanListView"
-        style="@style/common_divider"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <LinearLayout
-        android:id="@+id/scanListItem"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <LinearLayout style="@style/goods_spec_sub_container">
-
-            <TextView
-                style="@style/goods_spce_item_left"
-                android:text="条形码" />
-
-            <EditText
-                android:id="@+id/scanListItemET"
-                style="@style/goods_spec_item_right_edt"
-                android:hint="请输入条形码"
-                android:inputType="none"
-                android:paddingStart="0dp"
-                android:paddingEnd="@dimen/dimen_5" />
-        </LinearLayout>
-
-    </LinearLayout>
 
     <View
         android:id="@+id/vSpecNo"

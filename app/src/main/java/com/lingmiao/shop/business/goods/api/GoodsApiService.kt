@@ -3,6 +3,8 @@ package com.lingmiao.shop.business.goods.api
 import StatsSalesVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
+import com.lingmiao.shop.business.goods.CenterGoods
+import com.lingmiao.shop.business.goods.Data
 import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
@@ -42,6 +44,17 @@ interface GoodsApiService {
     fun loadGoodsList(@QueryMap map: MutableMap<String, Any>): Call<PageVO<GoodsVO>>
 
     /**
+     * 从中心库查询商品列表
+     */
+    @GET("seller/center/goods/")
+    @WithHiResponse
+    fun loadGoodsListFromCenter(
+        @Query(value = "page_no") page_no: Int,
+        @Query(value = "page_size") page_size: Int,
+        @Query(value = "goods_name") goods_name: String
+    ): Call<CenterGoods>
+
+    /**
      * 查询预警商品列表
      */
     @GET("seller/goods/getQuantityWarnGoods")
@@ -51,17 +64,20 @@ interface GoodsApiService {
     /**
      * 新增商品
      */
-    @POST("seller/goods")
+    @POST("seller/goods/{is_up}")
     @WithHiResponse
-    fun submitGoods(@Body goods: GoodsVOWrapper): Call<GoodsVOWrapper>
+    fun submitGoods(
+        @Path(value = "is_up") is_up: String,
+        @Body goods: GoodsVOWrapper
+    ): Call<GoodsVOWrapper>
 
     /**
      * 编辑商品
      */
-    @PUT("seller/goods/{id}")
+    @PUT("seller/goods/{id}/{is_up}")
     @WithHiResponse
     fun modifyGoods(
-        @Path(value = "id") goodsId: String,
+        @Path(value = "id") goodsId: String, @Path(value = "is_up") is_up: String,
         @Body goods: GoodsVOWrapper
     ): Call<GoodsVOWrapper>
 
@@ -234,6 +250,13 @@ interface GoodsApiService {
     @GET("seller/goods/app/{goods_id}/skus")
     fun loadGoodsAppSku(@Path("goods_id") goodsId: String): Call<GoodsSkuCacheVO>
 
+    /**
+     * 根据商品id 从中心库拉取与商品绑定的 skuList
+     */
+    @WithHiResponse
+    @GET("seller/center/goods/{goods_id}/skus")
+    fun loadGoodsAppSkuFromCenter(@Path("goods_id") goodsId: String): Call<GoodsSkuCacheVO>
+
     // -------------------------------- 店铺接口 -----------------------------
     /**
      * 商品分组
@@ -332,7 +355,13 @@ interface GoodsApiService {
     //使用条形码查询中心库商品
     @GET("seller/goods/queryGoodsSkuByBar/{bar_code}")
     @WithHiResponse
-    fun getCenterGoodsByScan(@Path("bar_code") id: String ): Call<ScanGoods>
+    fun getCenterGoodsByScan(@Path("bar_code") id: String): Call<ScanGoods>
+
+    //从中心库查询商品详细信息
+    @GET("/seller/center/goods/{goods_ids}")
+    @WithHiResponse
+    fun getCenterGoodsFromCenter(@Path("goods_ids") id: String): Call<GoodsVOWrapper>
+
 
     @WithHiResponse
     @POST("seller/goods/addCenterGoodsToShop")
@@ -340,7 +369,7 @@ interface GoodsApiService {
         @Query("center_goods_ids") id: String?,
         @Query("category_id") categoryId: String?,
         @Query("shop_cat_id") shopCatId: String?,
-        @Query("is_force ") is_force : Int?
+        @Query("is_force ") is_force: Int?
     ): Call<Unit>
 
     /***************************商品信息****************************************************/

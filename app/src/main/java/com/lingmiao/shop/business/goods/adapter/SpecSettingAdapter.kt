@@ -20,19 +20,6 @@ class SpecSettingAdapter(val type : Int) :
 
     override fun convert(helper: BaseViewHolder, specVO: GoodsSkuVOWrapper?) {
         if (specVO == null) return
-
-        //实体商品时，需要输入条形码
-        if(type != 2){
-            helper.setGone(R.id.scanListView,true)
-            helper.setGone(R.id.scanListItem,true)
-            addTextChangeListener(helper.getView(R.id.scanListItemET), specVO.bar_code) {
-                specVO.bar_code = it
-            }
-            helper.setText(R.id.scanListItemET, specVO.bar_code )
-        }
-
-
-
         helper.setText(R.id.specNameCheckbox, specVO.skuNameDesc)
         helper.setChecked(R.id.specNameCheckbox, specVO.isChecked)
         helper.setOnCheckedChangeListener(R.id.specNameCheckbox, object : CompoundButton.OnCheckedChangeListener {

@@ -96,6 +96,35 @@
                     app:kswBackDrawable="@drawable/flyme_back_drawable"
                     app:kswTintColor="@color/white" />
 
+
+            </RelativeLayout>
+
+            <View style="@style/DivideLineHorizontal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="到店自提"
+                    android:textColor="#ff333333"
+                    android:textSize="13sp" />
+
+                <com.kyleduo.switchbutton.SwitchButton
+                    android:id="@+id/takeSelf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="end|center_vertical"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    app:kswBackDrawable="@drawable/flyme_back_drawable"
+                    app:kswTintColor="@color/white" />
+
+
             </RelativeLayout>
 
             <View style="@style/DivideLineHorizontal" />

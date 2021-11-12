@@ -39,7 +39,7 @@ interface MeApi {
     //获取企业微信二维码
     @GET("seller/app/feedback/getContactWay")
     @WithHiResponse
-       fun getCompanyWeChat() :Call<FileResp<String>>
+    fun getCompanyWeChat(): Call<FileResp<String>>
 
     //    发送手机号码
     @POST("/seller/shops/clerks/smscode/edit/{mobile}")
@@ -83,6 +83,10 @@ interface MeApi {
     @WithHiResponse
     fun getBanner(): Call<List<BannerBean>>
 
+    //到店自提
+    @GET("seller/shops/isSelfTake/{is_self_take}")
+    @WithHiResponse
+    fun setTakeSelf(@Path("is_self_take") type: String): Call<List<BannerBean>>
 
     //上传banner图
     @POST("seller/shops/shopBanner/addShopBanner")

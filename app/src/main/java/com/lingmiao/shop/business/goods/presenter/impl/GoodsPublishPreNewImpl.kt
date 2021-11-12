@@ -39,13 +39,17 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     private val mExpirePreImpl: ExpirePopPreImpl by lazy { ExpirePopPreImpl(view) }
     private val mUseTimePreImpl: UseTimePopPreImpl by lazy { UseTimePopPreImpl(view) }
     private val mGoodsTypePreImpl: GoodsTypePopPreImpl by lazy { GoodsTypePopPreImpl(view) }
-    private val mGoodsDeliveryPreImpl: GoodsDeliveryPopPreImpl by lazy { GoodsDeliveryPopPreImpl(view) }
-    private val mGoodsUnitPreImpl : GoodsUnitPopPreImpl by lazy { GoodsUnitPopPreImpl(view) }
+    private val mGoodsDeliveryPreImpl: GoodsDeliveryPopPreImpl by lazy {
+        GoodsDeliveryPopPreImpl(
+            view
+        )
+    }
+    private val mGoodsUnitPreImpl: GoodsUnitPopPreImpl by lazy { GoodsUnitPopPreImpl(view) }
 
-    var shopId : Int? = null
+    var shopId: Int? = null
 
-    fun getSellerId() : Int? {
-        if(shopId == null) {
+    fun getSellerId(): Int? {
+        if (shopId == null) {
             shopId = UserManager.getLoginInfo()?.shopId
         }
         return shopId
@@ -89,19 +93,17 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    override fun loadGoodsInfoFromCenter(id: String) {
+        view.showDialogLoading()
+        mCoroutine.launch {
+            val resp = GoodsRepository.searchGoodsFromCenter(id)
+            handleResponse(resp) {
+                view.onLoadGoodsSuccess(resp.data)
+                view.onSetUseTimeStr(mUseTimePreImpl.getUseTimeStr(resp?.data?.availableDate))
+            }
+            view.hideDialogLoading()
+        }
+    }
 
 
     //GoodsPublishPre
@@ -127,8 +129,17 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     /**
      * 发布
      */
-    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean,scan:Boolean) {
+    override fun publish(
+        goodsVO: GoodsVOWrapper,
+        isVirtualGoods: Boolean,
+        isMutilSpec: Boolean,
+        scan: Boolean,
+        type: Int
+    ) {
         loadSpecKeyList(goodsVO, isMutilSpec) {
+            if (scan) {
+                goodsVO.goodsId = null
+            }
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
                 checkNotBlack(goodsVO.thumbnail) { "请添加缩略图" }
@@ -160,22 +171,22 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                         view.hideDialogLoading()
                         return@uploadThumbnailImage
                     }) {
-                        if(goodsVO?.intro.isNotBlank()) {
+                        if (goodsVO?.intro.isNotBlank()) {
                             uploadDesImages(goodsVO, fail = {
                                 view.showToast("图片上传失败，请重试")
                                 view.hideDialogLoading()
-                            }){
+                            }) {
                                 if (goodsVO.goodsId.isNullOrBlank()) {
-                                    submitGoods(goodsVO,scan) // 添加商品
+                                    submitGoods(goodsVO, scan, type) // 添加商品
                                 } else {
-                                    modifyGoods(goodsVO) // 编辑商品
+                                    modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
                                 }
                             }
                         } else {
                             if (goodsVO.goodsId.isNullOrBlank()) {
-                                submitGoods(goodsVO,scan) // 添加商品
+                                submitGoods(goodsVO, scan, type) // 添加商品
                             } else {
-                                modifyGoods(goodsVO) // 编辑商品
+                                modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
                             }
                         }
                     }
@@ -218,24 +229,14 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * 编辑商品时，获取商品关联的规格值
      */
-    private fun loadSpecKeyList(goodsVO: GoodsVOWrapper, isMutilSpec : Boolean , callback: () -> Unit) {
+    private fun loadSpecKeyList(
+        goodsVO: GoodsVOWrapper,
+        isMutilSpec: Boolean,
+        callback: () -> Unit
+    ) {
         if (goodsVO.goodsId.isNullOrBlank() || goodsVO.isAddSpec || !isMutilSpec) {
             callback.invoke()
             return
@@ -249,27 +250,31 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    private fun submitGoods(goodsVO: GoodsVOWrapper,scan: Boolean) {
+    private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int) {
         mCoroutine.launch {
-            val resp = GoodsRepository.submitGoods(goodsVO)
+            val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
             view.hideDialogLoading()
             handleResponse(resp) {
-                view.showToast("商品上架成功")
-                if (scan)
-                {
+                if (type == 0) {
+                    view.showToast("商品保存成功")
+                } else {
+                    view.showToast("商品上架成功")
+                }
+
+                if (scan) {
                     view.finish()
-                }else{
+                } else {
                     EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
                     EventBus.getDefault().post(RefreshGoodsStatusEvent())
-                    ActivityUtils.finishToActivity(GoodsListActivity::class.java,false)
+                    ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
                 }
             }
         }
     }
 
-    private fun modifyGoods(goodsVO: GoodsVOWrapper) {
+    private fun modifyGoods(goodsVO: GoodsVOWrapper, is_up: String) {
         mCoroutine.launch {
-            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!, goodsVO)
+            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!, is_up, goodsVO)
             view.hideDialogLoading()
             if (resp.isSuccess) {
                 view.showToast("商品修改成功")
@@ -285,8 +290,12 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    private fun uploadThumbnailImage(goodsVO: GoodsVOWrapper, fail: () -> Unit, success: () -> Unit) {
-        if(goodsVO.thumbnail.isNetUrl()) {
+    private fun uploadThumbnailImage(
+        goodsVO: GoodsVOWrapper,
+        fail: () -> Unit,
+        success: () -> Unit
+    ) {
+        if (goodsVO.thumbnail.isNetUrl()) {
             success.invoke()
             return
         }
@@ -296,7 +305,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 true,
                 CommonRepository.SCENE_GOODS
             )
-            if(resp.isSuccess) {
+            if (resp.isSuccess) {
                 goodsVO.thumbnail = resp.data.url
                 success.invoke()
             } else {
@@ -322,7 +331,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 }
                 requestList.add(request)
             }
-            if(requestList.size == 0) {
+            if (requestList.size == 0) {
                 success.invoke()
                 return@launch
             }
@@ -332,7 +341,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
             var isAllSuccess: Boolean = respList?.filter { !it.isSuccess }?.size == 0
 
             if (isAllSuccess) {
-                val urls = respList.map{it -> it.data.url}.joinToString(separator = ",")
+                val urls = respList.map { it -> it.data.url }.joinToString(separator = ",")
 
                 goodsVO.intro = urls
                 success.invoke()

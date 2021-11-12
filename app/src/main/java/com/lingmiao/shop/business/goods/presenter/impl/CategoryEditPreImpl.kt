@@ -6,6 +6,7 @@ import android.view.View
 import com.james.common.base.BasePreImpl
 import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.CateGoryGoodsListActivity
 import com.lingmiao.shop.business.goods.GoodsInfoActivity
 import com.lingmiao.shop.business.goods.GoodsSpecActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
@@ -137,6 +138,9 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
         } else {
             menuPopPre.showMenuPop(item.getMenuType(), target) { menuType ->
                 when (menuType) {
+                    CateMenuPop.TYPE_GOODS -> {
+                        CateGoryGoodsListActivity.openActivity(context, item.categoryPath,item.name)
+                    }
                     CateMenuPop.TYPE_GOODS_INFO -> {
                         GoodsInfoActivity.openActivity(context, 1009, item);
                     }
