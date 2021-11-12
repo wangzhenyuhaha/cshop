@@ -18,6 +18,7 @@ package com.james.common.netcore.networking.http.core
  * limitations under the License.
  */
 
+import android.util.Log
 import com.james.common.netcore.networking.http.exception.DataErrorException
 import com.james.common.netcore.networking.http.exception.HttpErrorCodeException
 import kotlinx.coroutines.*
@@ -107,6 +108,7 @@ private suspend fun <T : Any?> Call<T>.awaitHiResponseInner(throwsException: Boo
 
     } catch (e: Exception) {
         e.printStackTrace()
+        Log.d("KotlinExtensions.kt",e.message.toString())
 
         val resp = HiResponse<Any>()
         resp.msg = ""
