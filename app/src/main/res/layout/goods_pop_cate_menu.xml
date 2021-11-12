@@ -8,8 +8,14 @@
     app:ivBgColor="#a3000000"
     app:ivRadius="4dp">
 
-<!--    android:paddingHorizontal="@dimen/dimen_3"-->
-<!--    android:paddingVertical="@dimen/dimen_6"-->
+    <!--    android:paddingHorizontal="@dimen/dimen_3"-->
+    <!--    android:paddingVertical="@dimen/dimen_6"-->
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/goodsTv"
+        style="@style/style_goods_menu"
+        android:text="商品" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/goodsInfoTv"
@@ -34,11 +40,11 @@
         style="@style/style_goods_menu"
         android:text="新增二级"
         android:visibility="gone"
-        tools:visibility="visible"  />
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/deleteTv"
         style="@style/style_goods_menu"
-        android:text="删除"  />
+        android:text="删除" />
 
 </com.james.common.view.ILinearLayout>

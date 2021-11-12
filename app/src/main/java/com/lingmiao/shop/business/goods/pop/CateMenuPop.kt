@@ -27,6 +27,7 @@ class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT,var type:Int = 0)
         const val TYPE_EDIT = 0x003             //编辑
         const val TYPE_CHILDREN = 0x004         //新增二级
         const val TYPE_DELETE = 0x005;          //删除
+        const val TYPE_GOODS = 0x006;          //商品
     }
 
     init {
@@ -34,6 +35,7 @@ class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT,var type:Int = 0)
         setBackgroundColor(0)
     }
 
+    private var goodsITv: TextView? = null
     private var goodsInfoTv: TextView? = null
     private var specTv: TextView? = null
     private var cateEditTv: TextView? = null
@@ -52,7 +54,16 @@ class CateMenuPop(context: Context, var flags: Int = TYPE_EDIT,var type:Int = 0)
 
     override fun onViewCreated(contentView: View) {
         // 显示的位置
-        setPopupGravity(Gravity.LEFT or Gravity.CENTER_VERTICAL)
+        popupGravity = Gravity.START or Gravity.CENTER_VERTICAL
+        // 商品
+        goodsInfoTv = contentView.findViewById<TextView>(R.id.goodsTv).apply {
+            show(flags and TYPE_GOODS != 0)
+            setOnClickListener {
+                listener?.invoke(TYPE_GOODS)
+                dismiss()
+            }
+            visibility = if (type == 1) View.GONE else View.VISIBLE
+        }
         // 商品信息
         goodsInfoTv = contentView.findViewById<TextView>(R.id.goodsInfoTv).apply {
             show(flags and TYPE_GOODS_INFO != 0)

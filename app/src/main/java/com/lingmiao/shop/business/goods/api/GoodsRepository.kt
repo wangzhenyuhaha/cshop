@@ -144,7 +144,7 @@ object GoodsRepository {
 
     suspend fun loadGoodsListOfCateId(
         pageNo: Int,
-        marketEnable: String,
+        marketEnable: String?,
         isAuth: String,
         cid: String?,
         cPath: String?
@@ -152,7 +152,9 @@ object GoodsRepository {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)
         map.put("page_size", 10)
-        map.put("market_enable", marketEnable)
+        if (marketEnable != null) {
+            map.put("market_enable", marketEnable)
+        }
         map.put("is_auth_string", isAuth)
         if (cid != null) {
             map.put("not_in_cat_id", cid);

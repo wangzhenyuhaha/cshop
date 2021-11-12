@@ -3,7 +3,6 @@ package com.lingmiao.shop.business.goods
 import android.content.Context
 import android.content.Intent
 import android.view.MotionEvent
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.KeyboardUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -19,17 +18,10 @@ import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.isNotEmpty
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.adapter.GoodsStatusAdapter
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
-import com.lingmiao.shop.business.goods.pop.StatusMenuPop
-import com.lingmiao.shop.business.goods.presenter.impl.GoodsMenuPreImpl
-import com.lingmiao.shop.business.goods.presenter.impl.SearchStatusPreImpl
 import com.lingmiao.shop.util.GlideUtils
 import kotlinx.android.synthetic.main.goods_activity_search.*
 import kotlinx.coroutines.launch
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 interface GoodsCenterPre : BasePresenter {
 
@@ -124,7 +116,7 @@ class GoodsSearchCenterActivity : BaseLoadMoreActivity<Data, GoodsCenterPre>(),
         return CenterGoodsStatusAdapter().apply {
             //  val item = getItem(position) as CategoryVO
 
-            setOnItemChildClickListener { adapter, view, position ->
+            setOnItemChildClickListener { _, view, position ->
                 if (view.id == R.id.goodsCheckSubmit) {
                     context?.let { it1 ->
                         GoodsPublishNewActivity.openActivity(
@@ -157,7 +149,7 @@ class GoodsSearchCenterActivity : BaseLoadMoreActivity<Data, GoodsCenterPre>(),
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             // 当键盘未关闭时先拦截事件
             if (KeyboardUtils.isSoftInputVisible(context)) {
-                KeyboardUtils.hideSoftInput(context);
+                KeyboardUtils.hideSoftInput(context)
             }
         }
         return super.dispatchTouchEvent(ev)
