@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <!--顶顶顶-->
+
             <LinearLayout
                 android:id="@+id/goodsSearchLayout"
                 android:layout_width="match_parent"
@@ -32,8 +32,6 @@
                 android:layout_marginRight="@dimen/dimen_15"
                 android:layout_marginBottom="@dimen/dimen_5"
                 android:background="@drawable/shape_goods_search_edt">
-
-                <!--                R.mipmap.goods_blue_arrow_down-->
 
                 <TextView
                     android:id="@+id/type"
