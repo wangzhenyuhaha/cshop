@@ -159,7 +159,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         //到店自提
         takeSelf.setOnClickListener {
             mPresenter?.takeSelf(if (takeSelf.isChecked) 1 else 0)
-
         }
 
         // 保存
@@ -292,6 +291,10 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             list.add(GoodsGalleryVO(original = bannerBean.banner_url, sort = null))
         }
         galleryRv.addDataList(list)
+    }
+
+    override fun setTakeSelfFailed() {
+        takeSelf.isChecked= !takeSelf.isChecked
     }
 
     override fun onLoadedShopSetting(vo: ApplyShopInfo) {

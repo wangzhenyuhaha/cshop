@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.netcore.networking.http.core.awaitHiResponse
@@ -161,11 +162,15 @@ class ShopOperateSettingPresenterImpl(
 
     override fun takeSelf(type: Int) {
         mCoroutine.launch {
-            val resp = MeRepository.apiService.setTakeSelf(type.toString()).awaitHiResponse()
+            view.showDialogLoading()
+            val resp = MeRepository.apiService.setTakeSelf(type).awaitHiResponse()
             if (resp.isSuccess) {
+                view.hideDialogLoading()
                 view.showToast("保存成功")
             } else {
-
+                view.hideDialogLoading()
+                //保存失败，开关恢复原样
+                view.setTakeSelfFailed()
             }
 
         }

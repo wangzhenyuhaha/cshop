@@ -86,7 +86,7 @@ interface MeApi {
     //到店自提
     @GET("seller/shops/isSelfTake/{is_self_take}")
     @WithHiResponse
-    fun setTakeSelf(@Path("is_self_take") type: String): Call<List<BannerBean>>
+    fun setTakeSelf(@Path("is_self_take") type: Int): Call<Unit>
 
     //上传banner图
     @POST("seller/shops/shopBanner/addShopBanner")

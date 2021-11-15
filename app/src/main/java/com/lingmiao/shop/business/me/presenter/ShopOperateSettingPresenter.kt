@@ -40,5 +40,7 @@ interface ShopOperateSettingPresenter : BasePresenter {
         fun onLoadedTemplate(tcItem : FreightVoItem?, qsItem : FreightVoItem?);
 
         fun onSetBanner(bannerList : List<BannerBean>?);
+
+        fun setTakeSelfFailed()
     }
 }
