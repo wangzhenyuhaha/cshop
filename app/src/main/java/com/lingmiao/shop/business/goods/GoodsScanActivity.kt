@@ -73,6 +73,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 return
             }
             beepManager?.playBeepSoundAndVibrate()
+            id.value = result.text
             mPresenter?.search(result.text)
         }
 
@@ -88,8 +89,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     //当前扫码发现的商品是否已经添加进店铺
     private var hasAdd: Boolean = false
 
-    //通过扫码查询到的商品
-    private var id: String = ""
+    //商品条形码
+    private val id: MutableLiveData<String> = MutableLiveData<String>()
+
+    //商品ID
+    private var goods_id: String = ""
 
     private val viewVisibility = MutableLiveData<Int>()
 
@@ -113,25 +117,56 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
         mToolBarDelegate?.setMidTitle("扫码上架")
 
+        //设置ZXing
+        initBarCode()
+
+        id.observe(this, {
+            mBinding.inputEdt.text = it
+        })
+
         //手动查询条形码
         mBinding.searchGoods.singleClick {
             mBinding.writeScanCode.text.toString().also {
                 if (it.isNotEmpty()) {
+                    id.value = it
                     mPresenter?.search(it)
                 }
             }
         }
-        initBarCode()
+
+
+        val content1 = "1.中心库可能存在相同商品，但未绑定当前条形码，可以去搜索中心库商品"
+        val builder1 = SpannableStringBuilder(content1)
+        val blueSpan1 = ForegroundColorSpan(Color.parseColor("#3870EA"))
+        builder1.setSpan(blueSpan1, 27, 29, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mBinding.noResult1.text = builder1
+
+        val content2 = "2.未查询到该条形码所属商品，可以去手动添加商品"
+        val builder2 = SpannableStringBuilder(content2)
+        val blueSpan2 = ForegroundColorSpan(Color.parseColor("#3870EA"))
+        builder2.setSpan(blueSpan2, 18, 22, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mBinding.noResult2.text = builder2
+
+
+        val content3 = "3.添加其他商品，重新扫描条形码"
+        val builder3 = SpannableStringBuilder(content3)
+        val blueSpan3 = ForegroundColorSpan(Color.parseColor("#3870EA"))
+        builder3.setSpan(blueSpan3, 9, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mBinding.noResult3.text = builder3
 
         mBinding.noResult1.singleClick {
-            context?.let { it1 -> GoodsPublishNewActivity.newPublish(it1, 0, scan = true) }
+            GoodsSearchCenterActivity.openActivity(this)
         }
         mBinding.noResult2.singleClick {
+            context?.let { it1 -> GoodsPublishNewActivity.newPublish(it1, 0, scan = true) }
+        }
+
+        mBinding.noResult3.singleClick {
             viewVisibility.value = 0
         }
 
         mBinding.goodsCheckSubmit.singleClick {
-            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, id, true) }
+            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, goods_id, true) }
         }
 
         adapter = GoodsAdapter()
@@ -141,15 +176,16 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
 
         mBinding.type.singleClick {
-            pop?.apply {
-                setList(typeList)
-                setTitle("搜索模式")
-                setType(CompanyInfoFragment.REG_MONEY)
-                showPopupWindow()
-            }
+//            pop?.apply {
+//                setList(typeList)
+//                setTitle("搜索模式")
+//                setType(CompanyInfoFragment.REG_MONEY)
+//                showPopupWindow()
+//            }
         }
 
-        viewVisibility.observe(this, Observer {
+        viewVisibility.observe(this, {
+            //goodsSearchLayout 条形码显示区域
             //scanView扫描区域
             //noResult跳转到添加商品
             //scan_goods中心库查询到商品后信息展示
@@ -159,6 +195,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             when (it) {
                 //查询条形码接口报错
                 0 -> {
+                    mBinding.goodsSearchLayout.gone()
                     mBinding.scanView.visiable()
                     mBinding.noResult.gone()
                     mBinding.scanGoods.gone()
@@ -169,11 +206,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
-                    val content = "未搜索到商品，去手动添加或"
-                    val builder = SpannableStringBuilder(content)
-                    val blueSpan = ForegroundColorSpan(Color.parseColor("#3870EA"))
-                    builder.setSpan(blueSpan, 8, 12, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    mBinding.noResult1.text = builder
+                    mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
                     mBinding.noResult.visiable()
                     mBinding.scanGoods.gone()
@@ -183,6 +216,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库查询到商品，但店铺中没有
                 2 -> {
+                    mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
                     mBinding.noResult.gone()
                     mBinding.scanGoods.visiable()
@@ -192,6 +226,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库查询到商品，且店铺中也有
                 3 -> {
+                    mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
                     mBinding.noResult.gone()
                     mBinding.scanGoods.visiable()
@@ -202,7 +237,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         })
 
-        pop?.liveData?.observe(this, Observer {
+        pop?.liveData?.observe(this, {
             typeSearch.value = it
             mBinding.type.text = typeList[it]
             mBinding.inputEdt.text = if (it == 0) "搜索条形码" else "搜索商品名称"
@@ -217,14 +252,14 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     "条形码",
                     "",
                     "请输入",
-                    "",
+                    id.value ?: "",
                     "取消",
                     "查询",
                     null
                 ) {
                     if (it.isNotEmpty()) {
                         mPresenter?.search(it)
-                        id = it
+                        id.value = it
                     }
                 }
 
@@ -252,7 +287,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         if (!applicationContext.packageManager.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
             mBinding.ivLight.gone()
         }
-        mBinding.zxingBarcodeScanner.setTorchListener(torchListener);
+        mBinding.zxingBarcodeScanner.setTorchListener(torchListener)
 
         mBinding.zxingBarcodeScanner.barcodeView.decoderFactory =
             DefaultDecoderFactory(mPresenter?.getBarcodeFormats())
@@ -300,7 +335,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
             mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goods_name
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
-            id = data.centerGoodsSkuDO?.goods_id.toString()
+            goods_id = data.centerGoodsSkuDO?.goods_id.toString()
 
             if (data.goodsSkuDOList?.isEmpty() != true) {
                 //中心库查询到商品，店铺中已有
@@ -378,11 +413,6 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             view.showDialogLoading()
 
             val resp = GoodsRepository.searchGoodsOfCenter(id)
-//           Log.d("WZUSDP", resp.toString())
-//            if (resp.data == null)
-//            {
-//                Log.d("WZUSDP", "ssss")
-//            }
             handleResponse(resp) {
                 view.onScanSearchSuccess(resp.data)
             }
