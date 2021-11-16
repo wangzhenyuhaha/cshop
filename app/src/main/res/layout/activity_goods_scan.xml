@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="条形码"
+                    android:paddingStart="@dimen/dimen_2"
                     android:textColor="#3870EA"
                     android:textSize="@dimen/sp_12" />
 
@@ -47,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="@dimen/dimen_10"
-                    android:src="@mipmap/goods_blue_arrow_down" />
+                    android:src="@mipmap/scan_code" />
 
                 <TextView
                     android:id="@+id/inputEdt"
@@ -70,6 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="@dimen/dimen_10"
+                    android:visibility="gone"
                     android:src="@mipmap/goods_search_delete" />
 
             </LinearLayout>
@@ -177,7 +179,7 @@
                     android:paddingBottom="@dimen/dimen_10"
                     android:paddingTop="@dimen/dimen_50"
                     android:text="1.中心库可能存在相同商品，但未绑定当前条形码，可以去搜索中心库商品"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/noResult2"
@@ -186,7 +188,7 @@
                     android:gravity="start|center_vertical"
                     android:padding="@dimen/dimen_10"
                     android:text="2.未查询到该条形码所属商品，可以去手动添加商品"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/noResult3"
@@ -195,7 +197,7 @@
                     android:gravity="start|center_vertical"
                     android:padding="@dimen/dimen_10"
                     android:text="3.添加其他商品，重新扫描条形码"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
