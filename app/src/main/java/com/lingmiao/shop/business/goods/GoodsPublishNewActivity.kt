@@ -3,7 +3,10 @@ package com.lingmiao.shop.business.goods
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
@@ -14,6 +17,7 @@ import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
 import com.lingmiao.shop.business.photo.PhotoHelper
 import com.lingmiao.shop.util.GlideUtils
+import com.lingmiao.shop.util.initAdapter
 import com.luck.picture.lib.entity.LocalMedia
 import kotlinx.android.synthetic.main.goods_activity_publish_new.*
 import kotlinx.android.synthetic.main.goods_adapter_goods_gallery.*
@@ -32,6 +36,17 @@ import kotlinx.android.synthetic.main.goods_include_publish_section_v_time.*
  * Date   : 2020/7/25
  * Desc   : 添加商品页面
  */
+
+class SimpleAdapter :
+    BaseQuickAdapter<Data, BaseViewHolder>(R.layout.adapter_one_textview) {
+
+    override fun convert(helper: BaseViewHolder, goodsVO: Data?) {
+        goodsVO?.apply {
+            helper.setText(R.id.goodsNameTv, goods_name)
+        }
+    }
+}
+
 class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublishNewPre.PublishView {
 
     companion object {
@@ -79,6 +94,14 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
+    //是否启用根据商品名的模糊查询
+    private var searchGoods: Boolean = false
+
+    private var adapter: SimpleAdapter? = null
+
+    //当前的商品名
+    private var goodsName: String = ""
+
     override fun useLightMode() = false
 
     override fun getLayoutId() = R.layout.goods_activity_publish_new
@@ -87,6 +110,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //编辑已有商品时获得此数据
         goodsId = intent.getStringExtra(KEY_GOODS_ID)
         scan = intent.getBooleanExtra(KEY_SCAN, false)
+        if (scan && goodsId == null) {
+            searchGoods = true
+        }
     }
 
     override fun createPresenter(): GoodsPublishNewPre {
@@ -120,6 +146,53 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         } else {
             mPresenter.loadGoodsInfo(goodsId)
         }
+
+        adapter = SimpleAdapter()
+
+        adapter?.also {
+            goodsSearch.initAdapter(it)
+        }
+
+        if (searchGoods) {
+            goodsNameEdt.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    if (s.toString() == goodsName) {
+                        return
+                    } else {
+                        if (s?.length ?: 0 >= 2) {
+                            goodsName =  s.toString()
+                            mPresenter?.searchGoods(s.toString())
+                        }
+                    }
+
+                }
+
+            })
+        }
+
+        deleteSearchGoods.singleClick {
+            searchGoodsLayout.gone()
+        }
+
+        adapter?.setOnItemClickListener { adapter, _, position ->
+            val item = adapter.data[position] as Data
+            goodsName = item.goods_name
+            mPresenter.loadGoodsInfoFromCenter(item.goods_id.toString())
+            searchGoodsLayout.gone()
+        }
+
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -347,6 +420,19 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
     }
 
+    override fun searchGoodsSuccess(list: List<Data>) {
+        if (list.isEmpty()) {
+            return
+        }
+        searchGoodsLayout.visiable()
+        adapter?.replaceData(list)
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun searchGoodsFailed() {
+        searchGoodsLayout.gone()
+    }
+
     override fun onUpdateSpeed(id: String?, name: String?) {
         goodsVO.goodsDeliveryType = id
         goodsDeliveryTimeTv.text = name
@@ -542,7 +628,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
 
         //type  0 保存  ，1  保存并上架
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan,type)
+        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan, type)
     }
 
     /**

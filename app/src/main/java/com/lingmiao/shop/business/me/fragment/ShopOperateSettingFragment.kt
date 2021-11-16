@@ -91,6 +91,42 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         BannerItem(
             "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142712.png",
             13
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116101006.jpg",
+            14
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100955.jpg",
+            15
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100947.jpg",
+            16
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100940.jpg",
+            17
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100933.jpg",
+            18
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100925.jpg",
+            19
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100915.jpg",
+            20
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100905.jpg",
+            21
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100853.jpg",
+            22
         )
     )
 
@@ -159,7 +195,6 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         //到店自提
         takeSelf.setOnClickListener {
             mPresenter?.takeSelf(if (takeSelf.isChecked) 1 else 0)
-
         }
 
         // 保存
@@ -292,6 +327,10 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             list.add(GoodsGalleryVO(original = bannerBean.banner_url, sort = null))
         }
         galleryRv.addDataList(list)
+    }
+
+    override fun setTakeSelfFailed() {
+        takeSelf.isChecked= !takeSelf.isChecked
     }
 
     override fun onLoadedShopSetting(vo: ApplyShopInfo) {

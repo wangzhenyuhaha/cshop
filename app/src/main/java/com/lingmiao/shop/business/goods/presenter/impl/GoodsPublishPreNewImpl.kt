@@ -1,8 +1,6 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
-import android.util.Log
-import com.amap.api.mapcore.util.it
 import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
@@ -13,6 +11,7 @@ import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.fragment.GoodsFragment
 import com.james.common.base.BasePreImpl
+import com.james.common.base.loadmore.core.IPage
 import com.james.common.exception.BizException
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.utils.exts.*
@@ -388,6 +387,28 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
             } else {
                 fail.invoke()
             }
+        }
+    }
+
+
+    //根据商品名搜索商品
+   override fun searchGoods(
+        searchText: String
+    ) {
+        mCoroutine.launch {
+            val resp =
+                GoodsRepository.loadGoodsListByNameFromCenter(
+                    1,
+                    pageSize = 100,
+                    goodsName = searchText
+                )
+            if (resp.isSuccess) {
+                val goodsList = resp.data.data
+                view.searchGoodsSuccess(goodsList)
+            } else {
+                view.searchGoodsFailed()
+            }
+            view.hidePageLoading()
         }
     }
 }

@@ -307,9 +307,10 @@ object GoodsRepository {
      */
     suspend fun loadGoodsListByNameFromCenter(
         pageNo: Int,
+        pageSize:Int  = 20,
         goodsName: String
     ): HiResponse<CenterGoods> {
-        return apiService.loadGoodsListFromCenter(pageNo, 20, goodsName).awaitHiResponse()
+        return apiService.loadGoodsListFromCenter(pageNo, pageSize, goodsName).awaitHiResponse()
     }
 
     /**
