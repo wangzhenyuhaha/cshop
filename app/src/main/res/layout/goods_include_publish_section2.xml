@@ -5,7 +5,7 @@
     style="@style/goods_publish_container"
     app:ivBgColor="@color/color_ffffff"
     app:ivRadius="@dimen/dimen_5"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,ContentDescription">
 
     <LinearLayout style="@style/goods_publish_sub_container">
 
@@ -22,13 +22,30 @@
             android:paddingEnd="@dimen/dimen_10" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/goodsSearch"
+    <FrameLayout
+        android:id="@+id/searchGoodsLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="200dp"
         android:visibility="gone"
-        tools:visibility="visible" />
+        tools:visibility="visible">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="@dimen/dimen_20"
+            android:id="@+id/goodsSearch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/dimen_10"
+            android:id="@+id/deleteSearchGoods"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_gravity="end"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/dimen_10"
+            android:src="@mipmap/goods_spec_delete" />
+    </FrameLayout>
 
     <View style="@style/common_divider" />
 

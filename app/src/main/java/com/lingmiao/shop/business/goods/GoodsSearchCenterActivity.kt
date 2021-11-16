@@ -51,7 +51,7 @@ class GoodsCenterPreImpl(var context: Context, var view: GoodsCenterPre.StatusVi
             }
 
             val resp =
-                GoodsRepository.loadGoodsListByNameFromCenter(page.getPageIndex(), searchText)
+                GoodsRepository.loadGoodsListByNameFromCenter(page.getPageIndex(), goodsName =searchText)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())

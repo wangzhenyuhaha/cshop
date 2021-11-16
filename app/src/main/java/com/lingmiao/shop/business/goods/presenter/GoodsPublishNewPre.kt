@@ -1,5 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter
 
+import com.lingmiao.shop.business.goods.Data
+
 /**
 Create Date : 2021/3/94:34 PM
 Auther      : Fox
@@ -7,24 +9,32 @@ Desc        :
  **/
 interface GoodsPublishNewPre : GoodsPublishPre {
 
-    fun showDeliveryTypePop(str : String?);
+    fun searchGoods(searchText: String)
 
-    fun showDeliveryModelPop(str : String?);
+    fun showDeliveryTypePop(str: String?);
 
-    fun showGoodsWeightPop(id : String?);
+    fun showDeliveryModelPop(str: String?);
 
-    fun showGoodsUnitPop(id : String?);
+    fun showGoodsWeightPop(id: String?);
 
-    fun loadGoodsInfoFromCenter(id:String)
+    fun showGoodsUnitPop(id: String?);
+
+    fun loadGoodsInfoFromCenter(id: String)
 
     interface PublishView : GoodsPublishPre.PublishView {
 
-        fun onUpdateSpeed(id: String?, name : String?);
+        //搜索商品成功
+        fun searchGoodsSuccess(list: List<Data>)
 
-        fun onUpdateModel(id: String?, name : String?);
+        //搜索商品失败
+        fun searchGoodsFailed()
 
-        fun onUpdateGoodsWeight(id: String?, name : String?);
+        fun onUpdateSpeed(id: String?, name: String?);
 
-        fun onUpdateGoodsUnit(id: String?, name : String?);
+        fun onUpdateModel(id: String?, name: String?);
+
+        fun onUpdateGoodsWeight(id: String?, name: String?);
+
+        fun onUpdateGoodsUnit(id: String?, name: String?);
     }
 }

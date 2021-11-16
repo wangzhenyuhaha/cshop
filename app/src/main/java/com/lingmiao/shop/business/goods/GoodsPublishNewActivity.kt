@@ -5,8 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.core.widget.addTextChangedListener
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
@@ -36,6 +36,17 @@ import kotlinx.android.synthetic.main.goods_include_publish_section_v_time.*
  * Date   : 2020/7/25
  * Desc   : 添加商品页面
  */
+
+class SimpleAdapter :
+    BaseQuickAdapter<Data, BaseViewHolder>(R.layout.adapter_one_textview) {
+
+    override fun convert(helper: BaseViewHolder, goodsVO: Data?) {
+        goodsVO?.apply {
+            helper.setText(R.id.goodsNameTv, goods_name)
+        }
+    }
+}
+
 class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublishNewPre.PublishView {
 
     companion object {
@@ -86,7 +97,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //是否启用根据商品名的模糊查询
     private var searchGoods: Boolean = false
 
-    private var adapter: GoodsAdapter? = null
+    private var adapter: SimpleAdapter? = null
+
+    //当前的商品名
+    private var goodsName: String = ""
 
     override fun useLightMode() = false
 
@@ -133,30 +147,49 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             mPresenter.loadGoodsInfo(goodsId)
         }
 
-        adapter = GoodsAdapter()
+        adapter = SimpleAdapter()
 
         adapter?.also {
             goodsSearch.initAdapter(it)
         }
 
-        if (searchGoods)
-        {
+        if (searchGoods) {
             goodsNameEdt.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
                 }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
 
                 override fun afterTextChanged(s: Editable?) {
-                    if (s?.length ?: 0 >= 2)
-                    {
-                        showToast(s.toString())
+                    if (s.toString() == goodsName) {
+                        return
+                    } else {
+                        if (s?.length ?: 0 >= 2) {
+                            goodsName =  s.toString()
+                            mPresenter?.searchGoods(s.toString())
+                        }
                     }
 
                 }
 
             })
+        }
+
+        deleteSearchGoods.singleClick {
+            searchGoodsLayout.gone()
+        }
+
+        adapter?.setOnItemClickListener { adapter, _, position ->
+            val item = adapter.data[position] as Data
+            goodsName = item.goods_name
+            mPresenter.loadGoodsInfoFromCenter(item.goods_id.toString())
+            searchGoodsLayout.gone()
         }
 
 
@@ -385,6 +418,19 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         imageView.singleClick {
             openGallery()
         }
+    }
+
+    override fun searchGoodsSuccess(list: List<Data>) {
+        if (list.isEmpty()) {
+            return
+        }
+        searchGoodsLayout.visiable()
+        adapter?.replaceData(list)
+        adapter?.notifyDataSetChanged()
+    }
+
+    override fun searchGoodsFailed() {
+        searchGoodsLayout.gone()
     }
 
     override fun onUpdateSpeed(id: String?, name: String?) {
