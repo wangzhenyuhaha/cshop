@@ -27,11 +27,8 @@
                 android:id="@+id/goodsSearchLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:layout_marginRight="@dimen/dimen_15"
                 android:layout_marginBottom="@dimen/dimen_5"
-                android:background="@drawable/shape_goods_search_edt"
+                android:background="#ffffff"
                 android:visibility="gone"
                 tools:visibility="visible">
 
@@ -39,15 +36,15 @@
                     android:id="@+id/type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="条形码"
                     android:paddingStart="@dimen/dimen_2"
-                    android:textColor="#3870EA"
+                    android:paddingEnd="0dp"
+                    android:text="条形码"
+                    android:textColor="@color/color_666666"
                     android:textSize="@dimen/sp_12" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="@dimen/dimen_10"
                     android:src="@mipmap/scan_code" />
 
                 <TextView
@@ -56,11 +53,9 @@
                     android:layout_height="@dimen/dimen_30"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:drawableStart="@mipmap/goods_search_edit"
                     android:drawablePadding="@dimen/dimen_5"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
-                    android:hint="搜索条形码"
                     android:paddingHorizontal="@dimen/dimen_10"
                     android:singleLine="true"
                     android:textColor="@color/color_666666"
@@ -71,8 +66,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="@dimen/dimen_10"
-                    android:visibility="gone"
-                    android:src="@mipmap/goods_search_delete" />
+                    android:src="@mipmap/goods_search_delete"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -175,9 +170,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="start|center_vertical"
                     android:paddingStart="@dimen/dimen_10"
+                    android:paddingTop="@dimen/dimen_50"
                     android:paddingEnd="@dimen/dimen_10"
                     android:paddingBottom="@dimen/dimen_10"
-                    android:paddingTop="@dimen/dimen_50"
                     android:text="1.中心库可能存在相同商品，但未绑定当前条形码，可以去搜索中心库商品"
                     android:textSize="18sp" />
 
