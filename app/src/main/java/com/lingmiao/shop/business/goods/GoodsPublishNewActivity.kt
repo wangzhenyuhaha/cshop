@@ -61,7 +61,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         const val REQUEST_CODE_INFO = 1004
 
         //编辑已有商品
-        //传入good_id
         fun openActivity(context: Context, goodsId: String?, scan: Boolean = false) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_ID, goodsId)
@@ -70,7 +69,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
 
         //处理新增商品
-        //type的值为0
         fun newPublish(context: Context, type: Int?, scan: Boolean = false) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_PUB_TYPE, type)
@@ -97,6 +95,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //是否启用根据商品名的模糊查询
     private var searchGoods: Boolean = false
 
+    //显示模糊查询商品的RecyclerView
     private var adapter: SimpleAdapter? = null
 
     //当前的商品名
@@ -107,7 +106,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     override fun getLayoutId() = R.layout.goods_activity_publish_new
 
     override fun initBundles() {
-        //编辑已有商品时获得此数据
+        //获取商品的goods_id
+        //未拿到goods_id时，为新增商品
+        //拿到goods_id，若scan为true，则应将goods_id在保存时赋值为空，若scan不为空，即为编辑商品
         goodsId = intent.getStringExtra(KEY_GOODS_ID)
         scan = intent.getBooleanExtra(KEY_SCAN, false)
         if (scan && goodsId == null) {
@@ -115,13 +116,11 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
     }
 
-    override fun createPresenter(): GoodsPublishNewPre {
-        return GoodsPublishPreNewImpl(this, this)
-    }
+    override fun createPresenter() = GoodsPublishPreNewImpl(this, this)
 
     override fun initView() {
 
-        mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank()) "编辑商品" else "发布商品")
+        mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank() && !scan) "编辑商品" else "发布商品")
 
         //点击操作，实体商品和虚拟商品
         initSectionView()
@@ -171,7 +170,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                         return
                     } else {
                         if (s?.length ?: 0 >= 2) {
-                            goodsName =  s.toString()
+                            goodsName = s.toString()
                             mPresenter?.searchGoods(s.toString())
                         }
                     }

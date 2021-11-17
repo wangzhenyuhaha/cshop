@@ -40,7 +40,7 @@ class ManagerSettingActivity : BaseVBActivity<ActivityViewpagerBinding, ManagerS
 
 
     override fun onLoadedShopInfo(bean: ApplyShopInfo) {
-        UserManager.setAutoPrint(bean.autoPrint == 1);
+        UserManager.setAutoPrint(bean.autoPrint == 1)
         mBinding.activityViewpagerViewpager2.adapter = object : FragmentStateAdapter(this) {
             override fun getItemCount() = 2
             override fun createFragment(position: Int) =

@@ -1,7 +1,10 @@
 package com.lingmiao.shop.business.goods
 
+import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Environment
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -9,9 +12,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import com.blankj.utilcode.util.RegexUtils
-import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.zxing.BarcodeFormat
@@ -27,18 +27,23 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.james.common.utils.permission.interceptor.CameraInterceptor
+import com.james.common.utils.permissionX.CheckPermission
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.main.fragment.CompanyInfoFragment
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.coroutines.launch
+import java.io.BufferedInputStream
+import java.io.BufferedOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.util.*
 
 
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
@@ -52,6 +57,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     //是否开灯
     private var isLighted = false
+
+    //扫码时保存的图片
+    private var bitmap: Bitmap? = null
 
     private var torchListener = object : DecoratedBarcodeView.TorchListener {
         override fun onTorchOn() {
@@ -67,6 +75,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
         override fun barcodeResult(result: BarcodeResult) {
             mBinding.zxingBarcodeScanner.pauseAndWait()
+
+            bitmap = result.bitmap
 
             if (result.text == null || result.text.isEmpty()) {
                 mBinding.zxingBarcodeScanner.resume()
@@ -213,6 +223,42 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     mBinding.view.visiable()
                     mBinding.title.gone()
                     mBinding.goodsRV.gone()
+
+                    //保存下扫码获得的图片
+                    try {
+                        context?.let { it1 ->
+                            CheckPermission.request(
+                                it1,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            ) { allGranted, _ ->
+                                if (allGranted) {
+
+                                    //目标文件
+                                    var externalFileRootDir: File? = getExternalFilesDir(null)
+                                    do {
+                                        externalFileRootDir =
+                                            Objects.requireNonNull(externalFileRootDir)?.parentFile
+                                    } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                            "/Android"
+                                        ) == true
+                                    )
+                                    val saveDir: String? =
+                                        Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                                    val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+
+                                    val destinationFile = File(savePath, "test_scan.png")
+
+                                    val bos = BufferedOutputStream(FileOutputStream(destinationFile))
+                                    bitmap?.compress(Bitmap.CompressFormat.PNG,100,bos)
+                                    bos.flush()
+                                    bos.close()
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        //nothing to do
+                    }
                 }
                 //中心库查询到商品，但店铺中没有
                 2 -> {
