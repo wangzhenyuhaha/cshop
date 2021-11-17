@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,ContentDescription">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -14,6 +14,102 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/goodsScanLayout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:background="#ffffff"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:paddingStart="@dimen/dimen_2"
+                    android:paddingEnd="0dp"
+                    android:text="条形码"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/sp_12" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/scan_code" />
+
+                <TextView
+                    android:id="@+id/inputEdt"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_30"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_5"
+                    android:ellipsize="end"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="@dimen/dimen_10"
+                    android:singleLine="true"
+                    android:textColor="@color/color_666666"
+                    android:textColorHint="@color/color_999999"
+                    android:textSize="@dimen/sp_12" />
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/color_C3C3C3" />
+
+                <TextView
+                    android:id="@+id/scanResume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:gravity="center"
+                    android:padding="1dp"
+                    android:text="重新扫码"
+                    android:textColor="@color/primary" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/scanTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <TextView
+                    android:id="@+id/noResult1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:paddingEnd="@dimen/dimen_10"
+                    android:paddingBottom="5dp"
+                    android:text="1.中心库扫码未搜索到商品，请手动添加商品信息"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/noResult2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="start|center_vertical"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:paddingEnd="@dimen/dimen_10"
+                    android:paddingTop="@dimen/dimen_5"
+                    android:text="2.在商品信息输入商品名称可搜索中心库商品"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
 
             <!--审核不通过原因-->
             <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"

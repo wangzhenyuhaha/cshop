@@ -53,6 +53,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         const val KEY_GOODS_ID = "KEY_GOODS_ID"
         private const val KEY_GOODS_PUB_TYPE = "KEY_GOODS_PUB_TYPE"
         private const val KEY_SCAN = "KEY_SCAN"
+        private const val KEY_SCAN_CODE = "KEY_SCAN_CODE"
 
         const val REQUEST_CODE_VIDEO = 1000
         const val REQUEST_CODE_DELIVERY = 1001
@@ -69,10 +70,11 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
 
         //处理新增商品
-        fun newPublish(context: Context, type: Int?, scan: Boolean = false) {
+        fun newPublish(context: Context, type: Int?, scan: Boolean = false, scanCode: String = "") {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_PUB_TYPE, type)
             intent.putExtra(KEY_SCAN, scan)
+            intent.putExtra(KEY_SCAN_CODE, scanCode)
             context.startActivity(intent)
         }
     }
@@ -101,6 +103,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //当前的商品名
     private var goodsName: String = ""
 
+    //商品的条形码
+    private var scanCode: String = ""
+
     override fun useLightMode() = false
 
     override fun getLayoutId() = R.layout.goods_activity_publish_new
@@ -114,6 +119,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         if (scan && goodsId == null) {
             searchGoods = true
         }
+        scanCode = intent.getStringExtra(KEY_SCAN_CODE) ?: ""
     }
 
     override fun createPresenter() = GoodsPublishPreNewImpl(this, this)
@@ -121,6 +127,17 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     override fun initView() {
 
         mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank() && !scan) "编辑商品" else "发布商品")
+
+        //扫码时未扫描到商品
+        if (scan && goodsId == null) {
+            goodsScanLayout.visiable()
+            inputEdt.text = scanCode
+            scanTitle.visiable()
+            scanResume.singleClick {
+                finish()
+            }
+            scanGoodsName.visiable()
+        }
 
         //点击操作，实体商品和虚拟商品
         initSectionView()
@@ -172,6 +189,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                         if (s?.length ?: 0 >= 2) {
                             goodsName = s.toString()
                             mPresenter?.searchGoods(s.toString())
+                        }else{
+                            searchGoodsLayout.gone()
                         }
                     }
 

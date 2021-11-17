@@ -11,7 +11,21 @@
 
         <TextView
             style="@style/goods_publish_left_mark"
+            android:layout_width="wrap_content"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:text="商品名称" />
+
+        <TextView
+            android:id="@+id/scanGoodsName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="（输入商品名称自动搜索中心库）"
+            android:textSize="@dimen/sp_11"
+            android:textColor="@color/color_999999"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <EditText
             android:id="@+id/goodsNameEdt"
@@ -29,18 +43,25 @@
         android:visibility="gone"
         tools:visibility="visible">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center_vertical"
+            android:text="中心库商品"
+            android:textColor="@color/color_666666" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="@dimen/dimen_20"
             android:id="@+id/goodsSearch"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_30" />
 
         <ImageView
-            android:layout_marginTop="@dimen/dimen_10"
             android:id="@+id/deleteSearchGoods"
             android:layout_width="@dimen/dimen_30"
             android:layout_height="@dimen/dimen_30"
             android:layout_gravity="end"
+            android:layout_marginTop="@dimen/dimen_10"
             android:paddingStart="@dimen/dimen_10"
             android:paddingEnd="0dp"
             android:paddingBottom="@dimen/dimen_10"

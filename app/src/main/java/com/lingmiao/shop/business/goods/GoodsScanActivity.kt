@@ -216,13 +216,13 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
-                    mBinding.goodsSearchLayout.visiable()
-                    mBinding.scanView.gone()
-                    mBinding.noResult.visiable()
-                    mBinding.scanGoods.gone()
-                    mBinding.view.visiable()
-                    mBinding.title.gone()
-                    mBinding.goodsRV.gone()
+//                    mBinding.goodsSearchLayout.visiable()
+//                    mBinding.scanView.gone()
+//                    mBinding.noResult.visiable()
+//                    mBinding.scanGoods.gone()
+//                    mBinding.view.visiable()
+//                    mBinding.title.gone()
+//                    mBinding.goodsRV.gone()
 
                     //保存下扫码获得的图片
                     try {
@@ -249,8 +249,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
                                     val destinationFile = File(savePath, "test_scan.png")
 
-                                    val bos = BufferedOutputStream(FileOutputStream(destinationFile))
-                                    bitmap?.compress(Bitmap.CompressFormat.PNG,100,bos)
+                                    val bos =
+                                        BufferedOutputStream(FileOutputStream(destinationFile))
+                                    bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
                                     bos.flush()
                                     bos.close()
                                 }
@@ -258,6 +259,15 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                         }
                     } catch (e: Exception) {
                         //nothing to do
+                    }
+
+                    context?.let { it1 ->
+                        GoodsPublishNewActivity.newPublish(
+                            it1,
+                            0,
+                            scan = true,
+                            scanCode = id.value ?: ""
+                        )
                     }
                 }
                 //中心库查询到商品，但店铺中没有
@@ -350,6 +360,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     override fun onPause() {
         super.onPause()
         mBinding.zxingBarcodeScanner.setTorchOff()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mBinding.zxingBarcodeScanner.resume()
     }
 
     override fun onScanSearchSuccess(data: ScanGoods) {
