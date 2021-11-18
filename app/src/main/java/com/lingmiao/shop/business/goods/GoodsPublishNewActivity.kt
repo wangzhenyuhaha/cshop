@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
@@ -50,9 +51,13 @@ class SimpleAdapter :
 class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublishNewPre.PublishView {
 
     companion object {
+        //商品good_id
         const val KEY_GOODS_ID = "KEY_GOODS_ID"
-        private const val KEY_GOODS_PUB_TYPE = "KEY_GOODS_PUB_TYPE"
+        //
+        private const val KEY_GOODS_TYPE = "KEY_GOODS_TYPE"
+        //是否从扫码处跳转
         private const val KEY_SCAN = "KEY_SCAN"
+        //扫码后获得的条形码
         private const val KEY_SCAN_CODE = "KEY_SCAN_CODE"
 
         const val REQUEST_CODE_VIDEO = 1000
@@ -72,30 +77,39 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //处理新增商品
         fun newPublish(context: Context, type: Int?, scan: Boolean = false, scanCode: String = "") {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
-            intent.putExtra(KEY_GOODS_PUB_TYPE, type)
+            intent.putExtra(KEY_GOODS_TYPE, type)
             intent.putExtra(KEY_SCAN, scan)
             intent.putExtra(KEY_SCAN_CODE, scanCode)
             context.startActivity(intent)
         }
     }
 
-    //是否是虚拟商品
-    private var isVirtualGoods = false
+    // 编辑商品的商品ID
+    private var goodsId: String? = null
 
     //是否从扫码处跳转 true表示是
     private var scan: Boolean = false
 
+    //是否启用根据商品名的模糊查询
+    private var searchGoods: Boolean = false
+
+    //商品的条形码
+    private var scanCode: String = ""
+
+
+
+    //是否是虚拟商品
+    private var isVirtualGoods = false
+
     // 底部按钮是否展开
     private var isExpand = false
 
-    // 编辑商品时，所携带的商品ID
-    private var goodsId: String? = null
+
 
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
-    //是否启用根据商品名的模糊查询
-    private var searchGoods: Boolean = false
+
 
     //显示模糊查询商品的RecyclerView
     private var adapter: SimpleAdapter? = null
@@ -103,8 +117,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //当前的商品名
     private var goodsName: String = ""
 
-    //商品的条形码
-    private var scanCode: String = ""
+
 
     override fun useLightMode() = false
 
@@ -114,6 +127,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //获取商品的goods_id
         //未拿到goods_id时，为新增商品
         //拿到goods_id，若scan为true，则应将goods_id在保存时赋值为空，若scan不为空，即为编辑商品
+        //若scan为true，则good_id提交时需要赋值为null（此时店铺中无商品，无法编辑，只能新增）
         goodsId = intent.getStringExtra(KEY_GOODS_ID)
         scan = intent.getBooleanExtra(KEY_SCAN, false)
         if (scan && goodsId == null) {
@@ -291,6 +305,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper) {
         this.goodsVO = goodsVO
+        Log.d("WZYSDD",goodsVO.goodsId)
         goodsVO.apply {
             if (isAuth == 3) {
                 authFailLayout.visiable()

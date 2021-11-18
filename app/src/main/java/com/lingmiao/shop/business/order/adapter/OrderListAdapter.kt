@@ -20,21 +20,24 @@ import com.lingmiao.shop.util.stampToDate
 class OrderListAdapter :
     BaseQuickAdapter<OrderList, BaseViewHolder>(R.layout.order_adapter_order_list) {
     override fun convert(helper: BaseViewHolder, item: OrderList) {
-        helper.setText(R.id.tvOrderSn, "订单编号："+item.sn)
-            .setText(R.id.tvOrderStatus, item.orderStatusText)
+
+        //订单编号
+        helper.setText(R.id.tvOrderSn, "订单编号：" + item.sn)
+        //订单状态
+        helper.setText(R.id.tvOrderStatus, item.orderStatusText)
 
         helper.setText(R.id.tvReplenishRemark, item.replenishRemark);
         helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice);
         helper.setGone(R.id.replenishLayout, item?.replenishRemark?.isNotEmpty() == true);
-        helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
+        helper.setText(R.id.tvOrderTime, "下单时间：" + stampToDate(item.createTime))
         // 地址
         helper.setText(R.id.tvFullAddress, item.getSimpleAddress())
         // 餐费
         helper.setText(R.id.tvTableAware, item?.getTableAwareHint());
         helper.setGone(R.id.tableAwareLayout, item?.getTableAwareHint()?.isNotEmpty())
         // 打包费
-        helper.setGone(R.id.packagePriceLayout, item?.packagePrice?.compareTo(0.0)?:0>0);
-        helper.setGone(R.id.packagePriceLine, item?.packagePrice?.compareTo(0.0)?:0>0);
+        helper.setGone(R.id.packagePriceLayout, item?.packagePrice?.compareTo(0.0) ?: 0 > 0);
+        helper.setGone(R.id.packagePriceLine, item?.packagePrice?.compareTo(0.0) ?: 0 > 0);
         helper.setText(R.id.tvPackagePrice, "￥" + item?.packagePrice);
 
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)
@@ -45,7 +48,7 @@ class OrderListAdapter :
         val tvProductAttribute = helper.getView<TextView>(R.id.tvProductAttribute)
         val tvProductRefund = helper.getView<TextView>(R.id.tvProductRefund)
 
-        if(item.skuList.size == 1) {
+        if (item.skuList.size == 1) {
             val product = item.skuList[0]
             ivProduct2.visibility = View.GONE
             when (product.serviceStatus) {
@@ -81,7 +84,7 @@ class OrderListAdapter :
             }
 //        GlideUtils.setCornerImageUrl(helper.getView(R.id.ivBuyerHead),item.)
             GlideUtils.setImageUrl(helper.getView(R.id.ivProduct1), product.goodsImage)
-        } else if(item.skuList.size > 1) {
+        } else if (item.skuList.size > 1) {
             helper.setText(
                 R.id.tvProductName,
                 MyApp.getInstance().getString(R.string.order_product_count, item.totalNum)
@@ -98,7 +101,11 @@ class OrderListAdapter :
         helper.setText(
             R.id.tvTotalMoney,
             MyApp.getInstance()
-                .getString(R.string.order_money, item.skuList?.size?:0, item.orderAmount.toString())
+                .getString(
+                    R.string.order_money,
+                    item.skuList?.size ?: 0,
+                    item.orderAmount.toString()
+                )
         )
 
 
@@ -169,24 +176,24 @@ class OrderListAdapter :
         )
         var showBottomArea = false
         helper.setText(R.id.tvOrderSubStatus, "");
-        when(item.orderStatus) {
-           "PAID_OFF" -> {
-               showBottomArea = true;
-               // 已付款,待接单
-               tvAccept.visibility = View.VISIBLE
-               tvRefuse.visibility = View.VISIBLE
-           }
+        when (item.orderStatus) {
+            "PAID_OFF" -> {
+                showBottomArea = true;
+                // 已付款,待接单
+                tvAccept.visibility = View.VISIBLE
+                tvRefuse.visibility = View.VISIBLE
+            }
             "ACCEPT" -> {
                 showBottomArea = true;
                 // 已接单,进行中,待送配
-                if(item?.shippingType == IConstant.SHIP_TYPE_GLOBAL) {
+                if (item?.shippingType == IConstant.SHIP_TYPE_GLOBAL) {
                     // 骑手配送
 //                    tvShipment.setText("备货完成");
 //                    tvPhoneUser.visibility = View.VISIBLE
                 } else {
                     tvShipment.visiable()
                 }
-                if(item?.isPrepare == 1) {
+                if (item?.isPrepare == 1) {
                     tvPrepare.gone()
                 } else {
                     tvPrepare.visiable()
@@ -195,7 +202,7 @@ class OrderListAdapter :
             }
             "SHIPPED" -> {
                 showBottomArea = true;
-                if(item?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
+                if (item?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
                     // 已发货,进行中,送配达
                     tvSign.visibility = View.VISIBLE
                 } else {
@@ -225,7 +232,7 @@ class OrderListAdapter :
         }
 
 
-        when(item.serviceStatus) {
+        when (item.serviceStatus) {
             "NOT_APPLY" -> {
                 // 未申请
             }
@@ -253,17 +260,31 @@ class OrderListAdapter :
             }
         }
 
+        when (item.shippingType) {
+            "SELF" -> {
+                tvShipment.gone()
+                if (item.orderStatus == "COMPLETE") {
+                    //核销按钮
+
+                }
+                //显示同城配送按钮
+                helper.getView<TextView>(R.id.takeSelf).visiable()
+
+            }
+
+
+        }
 
         val viOrderDivide = helper.getView<View>(R.id.viOrderDivide)
         val llOrderBottom = helper.getView<LinearLayout>(R.id.llOrderBottom)
-        if(showBottomArea){
+        if (showBottomArea) {
             llOrderBottom.visibility = View.VISIBLE
-        }else{
+        } else {
             llOrderBottom.visibility = View.GONE
         }
-        if(helper.layoutPosition==data.size-1){
+        if (helper.layoutPosition == data.size - 1) {
             viOrderDivide.visibility = View.VISIBLE
-        }else{
+        } else {
             viOrderDivide.visibility = View.GONE
         }
     }
