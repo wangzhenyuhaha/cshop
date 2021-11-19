@@ -53,10 +53,13 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     companion object {
         //商品good_id
         const val KEY_GOODS_ID = "KEY_GOODS_ID"
+
         //
         private const val KEY_GOODS_TYPE = "KEY_GOODS_TYPE"
+
         //是否从扫码处跳转
         private const val KEY_SCAN = "KEY_SCAN"
+
         //扫码后获得的条形码
         private const val KEY_SCAN_CODE = "KEY_SCAN_CODE"
 
@@ -97,7 +100,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     private var scanCode: String = ""
 
 
-
     //是否是虚拟商品
     private var isVirtualGoods = false
 
@@ -105,10 +107,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     private var isExpand = false
 
 
-
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
-
 
 
     //显示模糊查询商品的RecyclerView
@@ -116,7 +116,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     //当前的商品名
     private var goodsName: String = ""
-
 
 
     override fun useLightMode() = false
@@ -203,7 +202,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                         if (s?.length ?: 0 >= 2) {
                             goodsName = s.toString()
                             mPresenter?.searchGoods(s.toString())
-                        }else{
+                        } else {
                             searchGoodsLayout.gone()
                         }
                     }
@@ -305,7 +304,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper) {
         this.goodsVO = goodsVO
-        Log.d("WZYSDD",goodsVO.goodsId)
         goodsVO.apply {
             if (isAuth == 3) {
                 authFailLayout.visiable()
@@ -313,7 +311,17 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             } else {
                 authFailLayout.gone()
             }
-            GlideUtils.setImageUrl(imageView, goodsVO.thumbnail, R.mipmap.goods_selected_img)
+            if (thumbnail.isNotBlank()) {
+                GlideUtils.setImageUrl(imageView, goodsVO.thumbnail, R.mipmap.goods_selected_img)
+            } else {
+                GlideUtils.setImageUrl(
+                    imageView,
+                    goodsGalleryList?.get(0)?.original,
+                    R.mipmap.goods_selected_img
+                )
+                thumbnail = goodsGalleryList?.get(0)?.original
+            }
+
             // 商品分类
 //            goodsCategoryTv.text = Html.fromHtml(categoryName)
             goodsCategoryTv.text = categoryName?.replace("&gt;", "/")
