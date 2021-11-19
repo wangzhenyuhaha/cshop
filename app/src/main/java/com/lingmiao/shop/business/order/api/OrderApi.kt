@@ -139,4 +139,9 @@ interface OrderApi {
     @WithHiResponse
     fun verifyOrderShip(@Path("verification_code") code: String): Call<BaseDesc>
 
+    //    点击核销按钮请求路径(自提)
+    @POST("seller/trade/orders/{order_sn}/complete")
+    @WithHiResponse
+    fun verifyOrderShipSelf(@Path("order_sn") code: String): Call<Unit>
+
 }

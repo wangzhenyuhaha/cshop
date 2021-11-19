@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg">
+    android:background="@color/common_bg"
+    android:orientation="vertical"
+    tools:ignore="ContentDescription,HardcodedText">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_above="@+id/llOrderBottom"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -17,11 +19,12 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/orderStatusTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="@color/white"
-                android:paddingLeft="25dp"
-                android:paddingRight="36dp">
+                android:paddingStart="25dp"
+                android:paddingEnd="36dp">
 
                 <TextView
                     android:id="@+id/tvOrderStatus"
@@ -46,7 +49,7 @@
                     android:id="@+id/ivOrderStatus"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     tools:src="#00ff00" />
             </RelativeLayout>
@@ -55,7 +58,7 @@
                 android:id="@+id/tvStation"
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:layout_marginLeft="17dp"
+                android:layout_marginStart="17dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
                 android:text="收货信息"
@@ -76,10 +79,12 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:orientation="vertical"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -99,12 +104,14 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                tools:text="快递发货"
                                 android:textColor="#f00"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                tools:text="快递发货" />
 
                         </LinearLayout>
+
                         <LinearLayout
+                            android:id="@+id/orderPersonName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
@@ -123,13 +130,14 @@
                                 android:layout_width="120dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                tools:text="张三疯"
-                                android:singleLine="true"
                                 android:ellipsize="end"
+                                android:singleLine="true"
                                 android:textColor="#ff000000"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                tools:text="张三疯" />
 
                         </LinearLayout>
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -137,6 +145,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/orderPhoto"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
@@ -149,9 +158,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                tools:text="150****1234"
                                 android:textColor="#ff000000"
-                                android:textSize="13sp" />
+                                android:textSize="13sp"
+                                tools:text="150****1234" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -160,18 +169,18 @@
                         android:id="@+id/tvShipInfoCopy"
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
-                        android:text="一键复制收货信息"
+                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
                         android:gravity="center"
-                        android:layout_alignParentRight="true"
-                        android:textColor="#ff3870ea"
-                        app:ivBorderWidth="1px"
                         android:paddingLeft="12dp"
                         android:paddingRight="12dp"
-                        app:ivRadius="12dp"
+                        android:text="一键复制收货信息"
+                        android:textColor="#ff3870ea"
+                        android:textSize="13sp"
                         app:ivBorderColor="#ff3870ea"
-                        android:textSize="13sp" />
+                        app:ivBorderWidth="1px"
+                        app:ivRadius="12dp" />
                 </RelativeLayout>
 
 
@@ -195,9 +204,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top"
-                        tools:text="上海市青浦区徐泾镇沪青平公路1881号豪都国际花园公路1881号豪都国际花园"
                         android:textColor="#ff000000"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        tools:text="上海市青浦区徐泾镇沪青平公路1881号豪都国际花园公路1881号豪都国际花园" />
 
                 </LinearLayout>
             </com.james.common.view.ILinearLayout>
@@ -245,9 +254,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="自提点："
                             android:textColor="#ff666666"
-                            android:textSize="13sp"
-                            android:text="自提点：" />
+                            android:textSize="13sp" />
 
                         <TextView
                             android:id="@+id/tvLeaderPoint"
@@ -277,9 +286,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            tools:text="张三"
                             android:textColor="#ff000000"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="张三" />
+
                         <TextView
                             android:id="@+id/tvLeaderPhone"
                             android:layout_width="wrap_content"
@@ -309,9 +319,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="top"
-                            tools:text="上海市青浦区徐泾镇沪青平公路1881号豪都国际花园公路1881号豪都国际花园"
                             android:textColor="#ff000000"
-                            android:textSize="13sp" />
+                            android:textSize="13sp"
+                            tools:text="上海市青浦区徐泾镇沪青平公路1881号豪都国际花园公路1881号豪都国际花园" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -418,9 +428,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvOrderDetailGoods"
-                    android:layout_marginBottom="13dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="13dp" />
 
                 <View style="@style/DivideLineHorizontal" />
 
@@ -441,6 +451,31 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
+                        android:gravity="center_vertical"
+                        android:textColor="#ff000000"
+                        android:textSize="14sp"
+                        tools:text="￥170.00" />
+                </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="包装费："
+                        android:textColor="#ff000000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/baozhuangMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
                         android:gravity="center_vertical"
                         android:textColor="#ff000000"
                         android:textSize="14sp"
@@ -547,7 +582,7 @@
                         android:id="@+id/tvDetailPayMoney"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="center_vertical"
                         android:textColor="#ff000000"
                         android:textSize="14sp"
@@ -560,10 +595,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
-                android:layout_marginLeft="17dp"
+                android:layout_marginStart="17dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:text="其他信息"
+                android:text="订单信息"
                 android:textColor="#ff000000"
                 android:textSize="14sp" />
 
@@ -762,18 +797,20 @@
         android:id="@+id/llOrderBottom"
         android:layout_width="match_parent"
         android:layout_height="58dp"
-        android:layout_alignParentBottom="true"
         android:background="@color/white"
-        android:gravity="right|center_vertical"
+        android:gravity="end|center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:paddingRight="15dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
 
         <com.james.common.view.ITextView
             android:id="@+id/tvCancelOrder"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="取消订单"
             android:textColor="#ff3870ea"
@@ -782,13 +819,14 @@
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvShipment"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="开始配送"
             android:textColor="#fff"
@@ -797,14 +835,15 @@
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
 
         <com.james.common.view.ITextView
             android:id="@+id/tvVerify"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="立即核销"
             android:textColor="#fff"
@@ -813,13 +852,14 @@
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvUpdatePrice"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="修改价格"
             android:textColor="#ff3870ea"
@@ -828,13 +868,14 @@
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvQuickPay"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="催付"
             android:textColor="#fff"
@@ -843,13 +884,14 @@
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvLookLogistics"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="查看物流"
             android:textColor="#ff3870ea"
@@ -858,13 +900,14 @@
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvAfterSale"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="售后处理"
             android:textColor="#fff"
@@ -873,13 +916,14 @@
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvDelete"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="删除"
             android:textColor="#ff3870ea"
@@ -888,6 +932,46 @@
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/back"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="返回"
+            android:textColor="#ff3870ea"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:ivBgColor="#fff"
+            app:ivBorderColor="#ff3870ea"
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
+
+        <View
+            android:id="@+id/view"
+            android:visibility="gone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/hexiaoOrder"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="核销订单"
+            android:textColor="#fff"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:ivBgColor="#ff3870ea"
+            app:ivBorderColor="#ff3870ea"
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
     </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

@@ -20,34 +20,51 @@ import com.lingmiao.shop.util.stampToDate
 class OrderListAdapter :
     BaseQuickAdapter<OrderList, BaseViewHolder>(R.layout.order_adapter_order_list) {
     override fun convert(helper: BaseViewHolder, item: OrderList) {
-        helper.setText(R.id.tvOrderSn, "订单编号："+item.sn)
-            .setText(R.id.tvOrderStatus, item.orderStatusText)
 
-        helper.setText(R.id.tvReplenishRemark, item.replenishRemark);
-        helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice);
-        helper.setGone(R.id.replenishLayout, item?.replenishRemark?.isNotEmpty() == true);
-        helper.setText(R.id.tvOrderTime, "下单时间："+stampToDate(item.createTime))
-        // 地址
+        //订单编号
+        helper.setText(R.id.tvOrderSn, "订单编号：" + item.sn)
+        //订单状态
+        helper.setText(R.id.tvOrderStatus, item.orderStatusText)
+        //加购商品
+        helper.setText(R.id.tvReplenishRemark, item.replenishRemark)
+        //加购商品价格
+        helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice)
+        //加购项是否显示
+        helper.setGone(R.id.replenishLayout, item.replenishRemark?.isNotEmpty() == true)
+        //下单时间
+        helper.setText(R.id.tvOrderTime, "下单时间：" + stampToDate(item.createTime))
+        //送货地址
         helper.setText(R.id.tvFullAddress, item.getSimpleAddress())
-        // 餐费
-        helper.setText(R.id.tvTableAware, item?.getTableAwareHint());
-        helper.setGone(R.id.tableAwareLayout, item?.getTableAwareHint()?.isNotEmpty())
-        // 打包费
-        helper.setGone(R.id.packagePriceLayout, item?.packagePrice?.compareTo(0.0)?:0>0);
-        helper.setGone(R.id.packagePriceLine, item?.packagePrice?.compareTo(0.0)?:0>0);
-        helper.setText(R.id.tvPackagePrice, "￥" + item?.packagePrice);
+        //客户所需餐具
+        helper.setText(R.id.tvTableAware, item.getTableAwareHint())
+        //餐具是否显示
+        helper.setGone(R.id.tableAwareLayout, item.getTableAwareHint().isNotEmpty())
+        //打包费是否显示
+        helper.setGone(R.id.packagePriceLayout, item.packagePrice?.compareTo(0.0) ?: 0 > 0)
+        //打包费分割线是否显示
+        helper.setGone(R.id.packagePriceLine, item.packagePrice?.compareTo(0.0) ?: 0 > 0)
+        //打包费
+        helper.setText(R.id.tvPackagePrice, "￥" + item.packagePrice)
 
+
+        //商品图片2
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)
+        //复制订单编号
         val ivOrderNumberCopy = helper.getView<ImageView>(R.id.ivOrderNumberCopy)
         ivOrderNumberCopy.setOnClickListener {
             OtherUtils.copyToClipData(item.sn)
         }
+        //商品规格
         val tvProductAttribute = helper.getView<TextView>(R.id.tvProductAttribute)
+        //商品退款状态
         val tvProductRefund = helper.getView<TextView>(R.id.tvProductRefund)
 
-        if(item.skuList.size == 1) {
+        //只有一个商品时
+        if (item.skuList.size == 1) {
+            //商品有一张图片
             val product = item.skuList[0]
             ivProduct2.visibility = View.GONE
+            //改变商品退款状态
             when (product.serviceStatus) {
                 "APPLY" -> {
                     tvProductRefund.visibility = View.VISIBLE
@@ -66,10 +83,13 @@ class OrderListAdapter :
                     tvProductRefund.text = "退款已失效"
                 }
             }
+            //商品名
             helper.setText(R.id.tvProductName, product.name)
-//            helper.setText(R.id.tvProductAttribute,product.name)
+            //商品价格
             helper.setText(R.id.tvProductPrice, "￥" + product.purchasePrice)
+            //商品数量
             helper.setText(R.id.tvProductCount, "×" + product.num)
+            //清空商品规格
             tvProductAttribute.text = ""
             if (product.specList != null && product.specList!!.isNotEmpty()) {
                 var attributeString = ""
@@ -77,11 +97,14 @@ class OrderListAdapter :
                     attributeString = attributeString + bean.specName + ":" + bean.specValue + ","
                 }
                 attributeString = attributeString.substring(0, attributeString.length - 1)
+                //显示商品规格
                 tvProductAttribute.text = attributeString
             }
-//        GlideUtils.setCornerImageUrl(helper.getView(R.id.ivBuyerHead),item.)
+            //显示商品图片
             GlideUtils.setImageUrl(helper.getView(R.id.ivProduct1), product.goodsImage)
-        } else if(item.skuList.size > 1) {
+        } else if (item.skuList.size > 1) {
+
+            //商品名称
             helper.setText(
                 R.id.tvProductName,
                 MyApp.getInstance().getString(R.string.order_product_count, item.totalNum)
@@ -94,99 +117,146 @@ class OrderListAdapter :
             helper.setText(R.id.tvProductCount, "")
         }
 
-        helper.getView<GoodsItemRvLayout>(R.id.goodsItemC).addItems(item.skuList);
+        helper.getView<GoodsItemRvLayout>(R.id.goodsItemC).addItems(item.skuList)
         helper.setText(
             R.id.tvTotalMoney,
             MyApp.getInstance()
-                .getString(R.string.order_money, item.skuList?.size?:0, item.orderAmount.toString())
+                .getString(
+                    R.string.order_money,
+                    item.skuList.size ?: 0,
+                    item.orderAmount.toString()
+                )
         )
 
-
-        val tvAccept = helper.getView<TextView>(R.id.tvAccept)
-        val tvRefuse = helper.getView<TextView>(R.id.tvRefuse)
+        //取消订单
         val tvCancelOrder = helper.getView<TextView>(R.id.tvCancelOrder)
-        val tvUpdatePrice = helper.getView<TextView>(R.id.tvUpdatePrice)
-        val tvQuickPay = helper.getView<TextView>(R.id.tvQuickPay)
-        val tvShipment = helper.getView<TextView>(R.id.tvShipment)
-        val tvPrepare = helper.getView<TextView>(R.id.tvPrepare)
-        val tvSign = helper.getView<TextView>(R.id.tvSign)
-        val tvVerify = helper.getView<TextView>(R.id.tvVerify);
-        val tvLookLogistics = helper.getView<TextView>(R.id.tvLookLogistics)
-        val tvAfterSale = helper.getView<TextView>(R.id.tvAfterSale)
-        val tvDelete = helper.getView<TextView>(R.id.tvDelete)
-        val tvRefuseService = helper.getView<TextView>(R.id.tvRefuseService)
-        val tvAcceptService = helper.getView<TextView>(R.id.tvAcceptService)
-        val tvPhoneUser = helper.getView<TextView>(R.id.tvPhoneUser)
-        val tvPrint = helper.getView<TextView>(R.id.tvPrint)
-
-        tvAccept.visibility = View.GONE
-        tvRefuse.visibility = View.GONE
-        tvRefuseService.visibility = View.GONE
-        tvAcceptService.visibility = View.GONE
-        tvCancelOrder.visibility = View.GONE
-        tvUpdatePrice.visibility = View.GONE
-        tvQuickPay.visibility = View.GONE
-        tvShipment.visibility = View.GONE
-        tvPrepare.visibility = View.GONE
-        tvSign.visibility = View.GONE
-        tvVerify.visibility = View.GONE
-        tvLookLogistics.visibility = View.GONE
-        tvAfterSale.visibility = View.GONE
-        tvDelete.visibility = View.GONE
-        tvPhoneUser.visibility = View.GONE
-        tvPrint.gone()
-
-        helper.addOnClickListener(R.id.tvAccept)
-        helper.addOnClickListener(R.id.tvRefuse)
         helper.addOnClickListener(R.id.tvCancelOrder)
-        helper.addOnClickListener(R.id.tvUpdatePrice)
-        helper.addOnClickListener(R.id.tvQuickPay)
-        helper.addOnClickListener(R.id.tvShipment)
-        helper.addOnClickListener(R.id.tvPrepare)
-        helper.addOnClickListener(R.id.tvVerify)
-        helper.addOnClickListener(R.id.tvLookLogistics)
-        helper.addOnClickListener(R.id.tvAfterSale)
-        helper.addOnClickListener(R.id.tvDelete)
-        helper.addOnClickListener(R.id.tvAcceptService)
-        helper.addOnClickListener(R.id.tvRefuseService)
-        helper.addOnClickListener(R.id.tvSign)
-        helper.addOnClickListener(R.id.tvPhoneUser)
-        helper.addOnClickListener(R.id.tvPrint)
-        // 导航
-        helper.addOnClickListener(R.id.tvMapNav);
-//        订单类型是否如下:
-//        全部ALL
-//        待付款WAIT_PAY
-//        待发货WAIT_SHIP
-//        已发货WAIT_ROG
-//        售后/退款 WAIT_REFUND
-//                已取消CANCELLED
-//    ALL, WAIT_PAY, WAIT_SHIP, WAIT_ROG, CANCELLED, COMPLETE, WAIT_COMMENT, REFUND, WAIT_REFUN
 
+        //接单
+        val tvAccept = helper.getView<TextView>(R.id.tvAccept)
+        helper.addOnClickListener(R.id.tvAccept)
+
+        //拒绝接单
+        val tvRefuse = helper.getView<TextView>(R.id.tvRefuse)
+        helper.addOnClickListener(R.id.tvRefuse)
+
+        //打印
+        val tvPrint = helper.getView<TextView>(R.id.tvPrint)
+        helper.addOnClickListener(R.id.tvPrint)
+
+        //备货完成
+        val tvPrepare = helper.getView<TextView>(R.id.tvPrepare)
+        helper.addOnClickListener(R.id.tvPrepare)
+
+        //开始配送
+        val tvShipment = helper.getView<TextView>(R.id.tvShipment)
+        helper.addOnClickListener(R.id.tvShipment)
+
+        //联系用户
+        val tvPhoneUser = helper.getView<TextView>(R.id.tvPhoneUser)
+        helper.addOnClickListener(R.id.tvPhoneUser)
+
+        //确认送达
+        val tvSign = helper.getView<TextView>(R.id.tvSign)
+        helper.addOnClickListener(R.id.tvSign)
+
+        //核销
+        val tvVerify = helper.getView<TextView>(R.id.tvVerify)
+        helper.addOnClickListener(R.id.tvVerify)
+
+        //修改价格
+        val tvUpdatePrice = helper.getView<TextView>(R.id.tvUpdatePrice)
+        helper.addOnClickListener(R.id.tvUpdatePrice)
+
+        //催付
+        val tvQuickPay = helper.getView<TextView>(R.id.tvQuickPay)
+        helper.addOnClickListener(R.id.tvQuickPay)
+
+        //查看物流
+        val tvLookLogistics = helper.getView<TextView>(R.id.tvLookLogistics)
+        helper.addOnClickListener(R.id.tvLookLogistics)
+
+        //售后处理
+        val tvAfterSale = helper.getView<TextView>(R.id.tvAfterSale)
+        helper.addOnClickListener(R.id.tvAfterSale)
+
+        //删除
+        val tvDelete = helper.getView<TextView>(R.id.tvDelete)
+        helper.addOnClickListener(R.id.tvDelete)
+
+        //同意退款
+        val tvAcceptService = helper.getView<TextView>(R.id.tvAcceptService)
+        helper.addOnClickListener(R.id.tvAcceptService)
+
+        //拒绝退款
+        val tvRefuseService = helper.getView<TextView>(R.id.tvRefuseService)
+        helper.addOnClickListener(R.id.tvRefuseService)
+
+        //订单核销
+        val hexiaoOrder = helper.getView<TextView>(R.id.tvOrderHeXiao)
+        helper.addOnClickListener(R.id.tvOrderHeXiao)
+
+        //导航
+        helper.addOnClickListener(R.id.tvMapNav)
+
+        //设置订单状态的颜色
         helper.setTextColor(
             R.id.tvOrderStatus,
             MyApp.getInstance().resources.getColor(R.color.color_3870EA)
         )
+
         var showBottomArea = false
-        helper.setText(R.id.tvOrderSubStatus, "");
-        when(item.orderStatus) {
-           "PAID_OFF" -> {
-               showBottomArea = true;
-               // 已付款,待接单
-               tvAccept.visibility = View.VISIBLE
-               tvRefuse.visibility = View.VISIBLE
-           }
+        helper.setText(R.id.tvOrderSubStatus, "")
+
+
+        //NEW("新订单"),
+        //INTODB_ERROR("下单失败"),
+        //CONFIRM("已确认"),
+        //PAID_OFF("已付款"),
+        //ACCEPT("已接单"),
+        //FORMED("已经成团"),
+        //SHIPPED("已发货"),
+        //PART_SHIPPED("部分发货"),
+        //ROG("已收货"),
+        //COMPLETE("已完成"),
+        //CANCELLED("已取消"),
+        //AFTER_SERVICE("售后中");
+        if (item.shippingType == IConstant.SHIP_TYPE_SELF) {
+            helper.getView<TextView>(R.id.takeSelf).visiable()
+            tvShipment.gone()
+        }
+
+        when (item.orderStatus) {
+            "PAID_OFF" -> {
+                showBottomArea = true
+                // 已付款,待接单
+                tvAccept.visiable()
+                tvRefuse.visiable()
+            }
             "ACCEPT" -> {
-                showBottomArea = true;
+                showBottomArea = true
                 // 已接单,进行中,待送配
-                if(item?.shippingType == IConstant.SHIP_TYPE_GLOBAL) {
-                    // 骑手配送
-//                    tvShipment.setText("备货完成");
-//                    tvPhoneUser.visibility = View.VISIBLE
-                } else {
-                    tvShipment.visiable()
+                when (item.shippingType) {
+                    IConstant.SHIP_TYPE_GLOBAL -> {
+                        //骑手配送
+                    }
+                    IConstant.SHIP_TYPE_SELF -> {
+                        //自提
+                        if (item.isPrepare == 1) {
+                            //备货完成
+                            hexiaoOrder.visiable()
+                        } else {
+                            hexiaoOrder.gone()
+                        }
+                    }
+                    IConstant.SHIP_TYPE_LOCAL -> {
+                        //开始配送
+                        tvShipment.visiable()
+                    }
                 }
-                if(item?.isPrepare == 1) {
+                //是否备货了
+                if (item.isPrepare == 1) {
+                    //备货完成
                     tvPrepare.gone()
                 } else {
                     tvPrepare.visiable()
@@ -194,13 +264,18 @@ class OrderListAdapter :
                 tvPrint.visiable()
             }
             "SHIPPED" -> {
-                showBottomArea = true;
-                if(item?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
-                    // 已发货,进行中,送配达
-                    tvSign.visibility = View.VISIBLE
-                } else {
-                    // 骑手配送
-                    tvPhoneUser.visibility = View.VISIBLE
+                showBottomArea = true
+                when (item.shippingType) {
+                    IConstant.SHIP_TYPE_LOCAL -> {
+                        tvSign.visibility = View.VISIBLE
+                    }
+                    IConstant.SHIP_TYPE_GLOBAL -> {
+                        // 骑手配送
+                        tvPhoneUser.visibility = View.VISIBLE
+                    }
+                    IConstant.SHIP_TYPE_SELF -> {
+                        hexiaoOrder.visiable()
+                    }
                 }
             }
             "ROG" -> {
@@ -225,7 +300,7 @@ class OrderListAdapter :
         }
 
 
-        when(item.serviceStatus) {
+        when (item.serviceStatus) {
             "NOT_APPLY" -> {
                 // 未申请
             }
@@ -253,18 +328,29 @@ class OrderListAdapter :
             }
         }
 
-
         val viOrderDivide = helper.getView<View>(R.id.viOrderDivide)
         val llOrderBottom = helper.getView<LinearLayout>(R.id.llOrderBottom)
-        if(showBottomArea){
+        if (showBottomArea) {
             llOrderBottom.visibility = View.VISIBLE
-        }else{
+        } else {
             llOrderBottom.visibility = View.GONE
         }
-        if(helper.layoutPosition==data.size-1){
+        if (helper.layoutPosition == data.size - 1) {
             viOrderDivide.visibility = View.VISIBLE
-        }else{
+        } else {
             viOrderDivide.visibility = View.GONE
+        }
+
+        //如果是商家自己送的，显示部分信息
+        if (item.shippingType == IConstant.SHIP_TYPE_LOCAL) {
+            helper.setGone(R.id.tvMapNav, true)
+            helper.setGone(R.id.tvFullAddressTitle, true)
+            helper.setGone(R.id.tvFullAddress, true)
+            helper.setGone(R.id.orderName, true)
+            helper.setGone(R.id.orderPhotoNumber, true)
+            helper.setText(R.id.orderName,item.shipName)
+            helper.setText(R.id.orderPhotoNumber,item.shipMobile)
+            //item.orderStatusText
         }
     }
 

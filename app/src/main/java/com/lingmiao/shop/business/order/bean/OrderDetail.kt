@@ -47,6 +47,8 @@ data class OrderDetail(
     var goodsNum: Int?,//商品数量
     @SerializedName("goods_price")
     var goodsPrice: Double?,//商品总额
+    @SerializedName("package_price")
+    var package_price: Double?,//包装费
     @SerializedName("items_json")
     var itemsJson: String?,//货物列表json?
     @SerializedName("leader")

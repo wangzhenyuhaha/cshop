@@ -54,4 +54,19 @@ class OrderDetailPresenterImpl(private var view: OrderDetailPresenter.View) :
             view?.hideDialogLoading();
         }
     }
+
+    override fun verifyOrderCodeSelf(id: String) {
+        mCoroutine.launch {
+            view.showDialogLoading()
+            val resp = OrderRepository.apiService.verifyOrderShipSelf(id).awaitHiResponse()
+            if (resp.isSuccess ) {
+                view.verifySuccess()
+                view.showToast("核销成功")
+            } else {
+                view.verifyFailed()
+            }
+            view.hideDialogLoading()
+        }
+
+    }
 }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
@@ -50,9 +51,17 @@ class SimpleAdapter :
 class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublishNewPre.PublishView {
 
     companion object {
+        //商品good_id
         const val KEY_GOODS_ID = "KEY_GOODS_ID"
-        private const val KEY_GOODS_PUB_TYPE = "KEY_GOODS_PUB_TYPE"
+
+        //
+        private const val KEY_GOODS_TYPE = "KEY_GOODS_TYPE"
+
+        //是否从扫码处跳转
         private const val KEY_SCAN = "KEY_SCAN"
+
+        //扫码后获得的条形码
+        private const val KEY_SCAN_CODE = "KEY_SCAN_CODE"
 
         const val REQUEST_CODE_VIDEO = 1000
         const val REQUEST_CODE_DELIVERY = 1001
@@ -61,7 +70,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         const val REQUEST_CODE_INFO = 1004
 
         //编辑已有商品
-        //传入good_id
         fun openActivity(context: Context, goodsId: String?, scan: Boolean = false) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_ID, goodsId)
@@ -70,58 +78,79 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
 
         //处理新增商品
-        //type的值为0
-        fun newPublish(context: Context, type: Int?, scan: Boolean = false) {
+        fun newPublish(context: Context, type: Int?, scan: Boolean = false, scanCode: String = "") {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
-            intent.putExtra(KEY_GOODS_PUB_TYPE, type)
+            intent.putExtra(KEY_GOODS_TYPE, type)
             intent.putExtra(KEY_SCAN, scan)
+            intent.putExtra(KEY_SCAN_CODE, scanCode)
             context.startActivity(intent)
         }
     }
 
-    //是否是虚拟商品
-    private var isVirtualGoods = false
+    // 编辑商品的商品ID
+    private var goodsId: String? = null
 
     //是否从扫码处跳转 true表示是
     private var scan: Boolean = false
 
+    //是否启用根据商品名的模糊查询
+    private var searchGoods: Boolean = false
+
+    //商品的条形码
+    private var scanCode: String = ""
+
+
+    //是否是虚拟商品
+    private var isVirtualGoods = false
+
     // 底部按钮是否展开
     private var isExpand = false
 
-    // 编辑商品时，所携带的商品ID
-    private var goodsId: String? = null
 
     // 添加/编辑商品 的数据实体
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
-    //是否启用根据商品名的模糊查询
-    private var searchGoods: Boolean = false
 
+    //显示模糊查询商品的RecyclerView
     private var adapter: SimpleAdapter? = null
 
     //当前的商品名
     private var goodsName: String = ""
+
 
     override fun useLightMode() = false
 
     override fun getLayoutId() = R.layout.goods_activity_publish_new
 
     override fun initBundles() {
-        //编辑已有商品时获得此数据
+        //获取商品的goods_id
+        //未拿到goods_id时，为新增商品
+        //拿到goods_id，若scan为true，则应将goods_id在保存时赋值为空，若scan不为空，即为编辑商品
+        //若scan为true，则good_id提交时需要赋值为null（此时店铺中无商品，无法编辑，只能新增）
         goodsId = intent.getStringExtra(KEY_GOODS_ID)
         scan = intent.getBooleanExtra(KEY_SCAN, false)
         if (scan && goodsId == null) {
             searchGoods = true
         }
+        scanCode = intent.getStringExtra(KEY_SCAN_CODE) ?: ""
     }
 
-    override fun createPresenter(): GoodsPublishNewPre {
-        return GoodsPublishPreNewImpl(this, this)
-    }
+    override fun createPresenter() = GoodsPublishPreNewImpl(this, this)
 
     override fun initView() {
 
-        mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank()) "编辑商品" else "发布商品")
+        mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank() && !scan) "编辑商品" else "发布商品")
+
+        //扫码时未扫描到商品
+        if (scan && goodsId == null) {
+            goodsScanLayout.visiable()
+            inputEdt.text = scanCode
+            scanTitle.visiable()
+            scanResume.singleClick {
+                finish()
+            }
+            scanGoodsName.visiable()
+        }
 
         //点击操作，实体商品和虚拟商品
         initSectionView()
@@ -171,8 +200,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                         return
                     } else {
                         if (s?.length ?: 0 >= 2) {
-                            goodsName =  s.toString()
+                            goodsName = s.toString()
                             mPresenter?.searchGoods(s.toString())
+                        } else {
+                            searchGoodsLayout.gone()
                         }
                     }
 
@@ -280,7 +311,17 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             } else {
                 authFailLayout.gone()
             }
-            GlideUtils.setImageUrl(imageView, goodsVO.thumbnail, R.mipmap.goods_selected_img)
+            if (thumbnail.isNotBlank()) {
+                GlideUtils.setImageUrl(imageView, goodsVO.thumbnail, R.mipmap.goods_selected_img)
+            } else {
+                GlideUtils.setImageUrl(
+                    imageView,
+                    goodsGalleryList?.get(0)?.original,
+                    R.mipmap.goods_selected_img
+                )
+                thumbnail = goodsGalleryList?.get(0)?.original
+            }
+
             // 商品分类
 //            goodsCategoryTv.text = Html.fromHtml(categoryName)
             goodsCategoryTv.text = categoryName?.replace("&gt;", "/")

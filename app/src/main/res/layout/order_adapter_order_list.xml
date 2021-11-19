@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.james.common.view.ILinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.james.common.view.ILinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#EDEDED"
     android:layout_marginTop="15dp"
+    android:background="#EDEDED"
+    android:orientation="vertical"
     android:paddingTop="15dp"
     app:ivBgColor="#fff"
     app:ivRadius="5dp"
-    tools:context=".business.order.fragment.SingleOrderListFragment">
+    tools:context=".business.order.fragment.SingleOrderListFragment"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="12dp"
-        android:layout_height="wrap_content">
+        android:layout_marginBottom="12dp">
 
         <ImageView
             android:id="@+id/ivBuyerHead"
-            android:visibility="gone"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:visibility="gone"
             tools:src="@color/common_bg" />
 
         <TextView
@@ -37,48 +37,63 @@
 
         <ImageView
             android:id="@+id/ivOrderNumberCopy"
-            android:layout_toRightOf="@id/tvOrderSn"
             android:layout_width="9dp"
             android:layout_height="12dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="@dimen/dimen_3"
-            android:layout_marginLeft="5dp"
+            android:layout_toEndOf="@id/tvOrderSn"
             android:src="@mipmap/order_number_copy" />
+
+        <TextView
+            android:id="@+id/takeSelf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_toEndOf="@+id/ivOrderNumberCopy"
+            android:background="@xml/setbar_bg_green"
+            android:padding="@dimen/dimen_2"
+            android:text="自提"
+            android:textColor="@color/color_0EA60"
+            android:textSize="@dimen/sp_11"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/tvOrderStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            tools:text="待付款"
+            android:layout_alignParentEnd="true"
             android:textColor="#ff3870ea"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="待付款" />
 
         <TextView
             android:id="@+id/tvOrderTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/tvOrderSn"
+            android:layout_marginTop="@dimen/dimen_10"
             android:textColor="#ff000000"
             android:textSize="13sp"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:layout_below="@id/tvOrderSn"
             tools:text="下单时间:2010-01-01 24:23" />
 
 
         <TextView
-            android:layout_marginTop="@dimen/dimen_12"
             android:id="@+id/tvOrderSubStatus"
-            android:layout_below="@id/tvOrderSn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@id/tvOrderTime"
+            android:layout_below="@id/tvOrderSn"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dimen_12"
+            android:layout_toEndOf="@id/tvOrderTime"
             android:ellipsize="end"
-            android:gravity="right"
-            android:paddingLeft="@dimen/dimen_5"
-            tools:text="待付款"
+            android:gravity="end"
             android:lines="1"
+            android:paddingStart="@dimen/dimen_5"
+            android:paddingEnd="0dp"
             android:textColor="#ff3870ea"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="待付款" />
 
     </RelativeLayout>
 
@@ -93,228 +108,277 @@
         android:layout_below="@+id/divider"
         android:paddingBottom="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"/>
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/replenishLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/replenishLayout">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
             android:text="加购"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_12"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingVertical="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:textSize="@dimen/sp_12" />
 
         <TextView
-            android:paddingLeft="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_15"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
             android:id="@+id/tvReplenishRemark"
             android:layout_width="0dp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="fsafdsa"
-            android:layout_height="wrap_content"/>
+            android:paddingVertical="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingEnd="0dp"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold"
+            tools:text="fsafdsa" />
 
         <TextView
-            android:padding="@dimen/dimen_15"
-            android:textStyle="bold"
-            android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_12"
             android:id="@+id/tvReplenishPrice"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
-            android:layout_height="wrap_content"/>
+            android:gravity="end"
+            android:padding="@dimen/dimen_15"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
         style="@style/DivideLineHorizontal"
-        android:layout_marginHorizontal="@dimen/dimen_15"/>
+        android:layout_marginHorizontal="@dimen/dimen_15" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/tableAwareLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/tableAwareLayout"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
             android:text="餐具"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingVertical="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:textSize="@dimen/sp_12" />
 
         <TextView
-            android:paddingLeft="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_15"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
             android:id="@+id/tvTableAware"
             android:layout_width="0dp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="fsafdsa"
-            android:gravity="right"
-            android:paddingRight="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:gravity="end"
+            android:paddingVertical="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingEnd="@dimen/dimen_15"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold"
+            tools:text="fsafdsa" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <View
         android:id="@+id/packagePriceLine"
         style="@style/DivideLineHorizontal"
-        android:layout_marginHorizontal="@dimen/dimen_15"/>
+        android:layout_marginHorizontal="@dimen/dimen_15" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/packagePriceLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/packagePriceLayout"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
             android:text="打包费"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
-            android:paddingLeft="@dimen/dimen_15"
-            android:paddingVertical="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:textSize="@dimen/sp_12" />
 
         <TextView
-            android:paddingLeft="@dimen/dimen_10"
-            android:paddingVertical="@dimen/dimen_15"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
             android:id="@+id/tvPackagePrice"
             android:layout_width="0dp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="fsafdsa"
-            android:gravity="right"
-            android:paddingRight="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:gravity="end"
+            android:paddingVertical="@dimen/dimen_15"
+            android:paddingStart="@dimen/dimen_10"
+            android:paddingEnd="@dimen/dimen_15"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_12"
+            android:textStyle="bold"
+            tools:text="fsafdsa" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <RelativeLayout
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="15dp"
+        android:layout_marginTop="14dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="14dp">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/ivProduct1"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
             tools:src="@color/common_bg" />
 
         <ImageView
             android:id="@+id/ivProduct2"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_toRightOf="@id/ivProduct1"
+            android:layout_toEndOf="@id/ivProduct1"
             tools:src="@color/common_bg" />
 
         <TextView
             android:id="@+id/tvProductName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_toRightOf="@id/ivProduct2"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@id/ivProduct2"
             android:ellipsize="end"
             android:lineSpacingMultiplier="0.8"
             android:lines="2"
-            tools:text="衣品天成男装衣品天成男装衣品天成衣品天成衣品天..."
             android:textColor="#ff000000"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:text="衣品天成男装衣品天成男装衣品天成衣品天成衣品天..." />
 
         <TextView
             android:id="@+id/tvProductAttribute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="40dp"
-            android:layout_toRightOf="@id/ivProduct2"
-            tools:text="颜色：黑色，尺码：175/L 颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L"
-            android:singleLine="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_toEndOf="@id/ivProduct2"
             android:ellipsize="end"
+            android:singleLine="true"
             android:textColor="#ffa5a5a5"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="颜色：黑色，尺码：175/L 颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L颜色：黑色，尺码：175/L" />
 
         <TextView
             android:id="@+id/tvProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            tools:text="￥79"
+            android:layout_alignParentEnd="true"
             android:textColor="#ff000000"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            tools:ignore="RelativeOverlap"
+            tools:text="￥79" />
 
         <TextView
             android:id="@+id/tvProductCount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/tvProductPrice"
-            tools:text="×2"
+            android:layout_alignParentEnd="true"
             android:textColor="#ffa5a5a5"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="×2" />
 
         <TextView
             android:id="@+id/tvProductRefund"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:text="退款中"
-            android:visibility="gone"
             android:textColor="#ffa5a5a5"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
     </RelativeLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="14dp"
         android:background="@color/white"
-        android:layout_marginTop="14dp">
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="80dp"
+            android:id="@+id/tvFullAddressTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
             android:text="@string/order_address_hint"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
-            android:paddingLeft="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:textSize="@dimen/sp_14"
+            android:visibility="gone" />
 
         <TextView
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12"
             android:id="@+id/tvFullAddress"
             android:layout_width="0dp"
-            android:textStyle="bold"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            tools:text="fsafdsa"
-            android:gravity="right"
-            android:paddingRight="@dimen/dimen_15"
-            android:layout_height="wrap_content"/>
+            android:gravity="start"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/dimen_15"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_14"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="fsafdsa" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/orderName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
+            android:text="@string/order_address_hint"
+            android:textColor="@color/color_666666"
+            android:textSize="@dimen/sp_11"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/orderPhotoNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:paddingStart="0dp"
+            android:paddingEnd="@dimen/dimen_15"
+            android:textColor="@color/color_999999"
+            android:textSize="@dimen/sp_11"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="17601279137"
+            tools:visibility="visible" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -322,153 +386,158 @@
         android:id="@+id/tvMapNav"
         android:layout_width="72dp"
         android:layout_height="30dp"
-        android:layout_marginRight="@dimen/dimen_15"
+        android:layout_gravity="end"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginEnd="@dimen/dimen_15"
+        android:gravity="center"
         android:text="导航"
-        android:layout_marginLeft="10dp"
         android:textColor="#ff3870ea"
         android:textSize="12sp"
+        android:visibility="gone"
         app:ivBgColor="#fff"
-        app:ivRadius="15dp"
-        android:gravity="center"
-        app:ivBorderWidth="1px"
         app:ivBorderColor="#ff3870ea"
-        android:layout_gravity="right"
-        />
+        app:ivBorderWidth="1px"
+        app:ivRadius="15dp" />
 
     <TextView
         android:id="@+id/tvTotalMoney"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:padding="@dimen/dimen_15"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right|center_vertical"
-        tools:text="共1件商品，实付款￥79.00"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:gravity="end|center_vertical"
+        android:padding="@dimen/dimen_15"
         android:textColor="#ff000000"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="共1件商品，实付款￥79.00" />
 
     <LinearLayout
         android:id="@+id/llOrderBottom"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="58dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:gravity="right|center_vertical"
-        android:layout_height="58dp">
+        android:gravity="end|center_vertical"
+        android:orientation="horizontal">
 
         <com.james.common.view.ITextView
             android:id="@+id/tvCancelOrder"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="取消订单"
-            android:layout_marginLeft="10dp"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
-
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvAccept"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="接单"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvRefuse"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="拒绝接单"
-            android:layout_marginLeft="10dp"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvPrint"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="打印"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvPrepare"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="备货完成"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvShipment"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="开始配送"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvPhoneUser"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="联系用户"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
-
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvSign"
             android:layout_width="72dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:gravity="center"
             android:text="确认送达"
             android:textColor="#fff"
@@ -477,134 +546,159 @@
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
-
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvVerify"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="核销"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvUpdatePrice"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="修改价格"
-            android:layout_marginLeft="10dp"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
+
         <com.james.common.view.ITextView
             android:id="@+id/tvQuickPay"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="催付"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvLookLogistics"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="查看物流"
-            android:layout_marginLeft="10dp"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
+
         <com.james.common.view.ITextView
             android:id="@+id/tvAfterSale"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="售后处理"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvDelete"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="删除"
-            android:layout_marginLeft="10dp"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
-
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvAcceptService"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="同意退款"
-            android:layout_marginLeft="10dp"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvRefuseService"
             android:layout_width="72dp"
             android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
             android:text="拒绝退款"
-            android:layout_marginLeft="10dp"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
-            app:ivRadius="15dp"
-            android:gravity="center"
-            app:ivBorderWidth="1px"
             app:ivBorderColor="#ff3870ea"
-            />
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvOrderHeXiao"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:text="订单核销"
+            android:textColor="#ff3870ea"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:ivBgColor="#fff"
+            app:ivBorderColor="#ff3870ea"
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
     </LinearLayout>
 
     <View
         android:id="@+id/viOrderDivide"
         android:layout_width="match_parent"
-        android:layout_below="@+id/llOrderItem"
         android:layout_height="15dp"
-        android:background="#EDEDED"/>
+        android:layout_below="@+id/llOrderItem"
+        android:background="#EDEDED" />
 
 </com.james.common.view.ILinearLayout>

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.order
 import android.app.Activity
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -43,15 +44,13 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
     private val mCoroutine: CoroutineSupport by lazy { CoroutineSupport() }
     private var order: OrderDetail? = null
     private lateinit var tradeSn: String
-    override fun getLayoutId(): Int {
-        return R.layout.order_activity_order_detail
-    }
+
+    override fun getLayoutId() = R.layout.order_activity_order_detail
 
     override fun initView() {
-//        order = intent?.getParcelableExtra<OrderList>("order")
+
         tradeSn = intent?.getStringExtra("orderId").toString()
         mToolBarDelegate.setMidTitle("订单详情")
-//        showPageLoading()
 
         mPresenter.requestOrderDetailData(tradeSn)
 
@@ -69,6 +68,8 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
         tvLookLogistics.setOnClickListener(this)
         tvAfterSale.setOnClickListener(this)
         tvDelete.setOnClickListener(this)
+        back.setOnClickListener(this)
+        hexiaoOrder.setOnClickListener(this)
     }
 
     private fun copyOrderNumber() {
@@ -84,7 +85,7 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
                 if (order?.cancelLeftTime != null && order?.cancelLeftTime!! > 0) {
                     var cancelLeftTime = order?.cancelLeftTime
                     mCoroutine.launch {
-                        while(cancelLeftTime!!>0){
+                        while (cancelLeftTime!! > 0) {
                             cancelTimeString =
                                 (cancelLeftTime!! / 3600).toString() + "时" + (cancelLeftTime!! / 60 % 60).toString() + "分" + (cancelLeftTime!! % 60).toString() + "秒"
                             initOrderStatusColor("等待支付", "剩余" + cancelTimeString + "后自动取消订单", "red")
@@ -108,7 +109,7 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
             }
             "已付款" -> {
                 ivOrderStatus.setImageResource(R.mipmap.order_send_good)
-                initOrderStatusColor("订单已支付", "待使用" , "green")
+                initOrderStatusColor("订单已支付", "待使用", "green")
             }
             "已发货" -> {
                 ivOrderStatus.setImageResource(R.mipmap.order_send_good)
@@ -163,19 +164,19 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
     }
 
 
-    override fun createPresenter(): OrderDetailPresenter {
-        return OrderDetailPresenterImpl(this)
-    }
+    override fun createPresenter() = OrderDetailPresenterImpl(this)
+
 
     override fun onOrderDetailSuccess(bean: OrderDetail) {
         hidePageLoading()
         order = bean
 
-        if(bean?.isVirtualOrderTag()) {
-            mToolBarDelegate.setMidTitle("服务订单详情");
+        if (bean.isVirtualOrderTag()) {
+            mToolBarDelegate.setMidTitle("服务订单详情")
         }
 
         initOrderStatus()
+
 
         var shippingType = "快递发货"
         if (bean.shippingType == IConstant.SHIP_TYPE_LOCAL) {
@@ -184,6 +185,7 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
             shippingType = "门店自提"
         }
         tvShipType.text = shippingType
+
         tvShipName.text = bean.shipName.orEmpty()
         if (bean.shipMobile.orEmpty().length > 7) {
             tvShipPhone.text =
@@ -212,10 +214,28 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
         initBottomButton()
 
 
+        //如果时自提订单，则需要做额外设置
+        if (bean.shippingType == IConstant.SHIP_TYPE_SELF) {
+            orderStatusTextLayout.gone()
+            tvStation.text = "取货信息"
+            orderPersonName.gone()
+            orderPhoto.text = "取货电话"
+            tvLeaderInfoKey.gone()
+            rlLeadInfoValue.gone()
+            tvShipInfoCopy.text = "一键复制取货信息"
+
+            //设置底部按钮
+            llOrderBottom.visiable()
+            back.visiable()
+            hexiaoOrder.visiable()
+            view.visiable()
+        }
+
+
     }
 
     private fun initUseInfo(bean: OrderDetail) {
-        if(order?.isVirtualOrderTag() == true) {
+        if (order?.isVirtualOrderTag() == true) {
             tvUseInfo.visiable();
             llUseInfo.visiable();
 
@@ -241,18 +261,18 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
             llStation.visiable();
 
             // 运费金额
-             layoutShipMoney.visiable();
-             lineShipMoney.visiable();
+            layoutShipMoney.visiable();
+            lineShipMoney.visiable();
             // 订单总额
             lineOrderMoney.visiable();
             layoutOrderMoney.visiable();
         }
-        tvDetailDateLimit.setText(stampToDate(order?.expiryDayTimestamp?:0));
+        tvDetailDateLimit.setText(stampToDate(order?.expiryDayTimestamp ?: 0));
         tvDetailDateTime.setText(
             String.format(
-                "%s%s%s", if(bean?.availableDate?.length == 0) "" else "每",
+                "%s%s%s", if (bean?.availableDate?.length == 0) "" else "每",
                 bean?.availableDate,
-                if(bean?.availableDate?.length == 0) "" else "可用"
+                if (bean?.availableDate?.length == 0) "" else "可用"
             )
         );
     }
@@ -269,7 +289,7 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
             if (orderOperateAllowable.allowCheckExpress) tvLookLogistics.visibility = View.VISIBLE
             if (orderOperateAllowable.allowEditPrice) tvUpdatePrice.visibility = View.VISIBLE
             if (orderOperateAllowable.allowShip) {
-                if(order?.isVirtualOrderTag() == true) {
+                if (order?.isVirtualOrderTag() == true) {
                     tvVerify.visibility = View.VISIBLE
                 } else {
                     tvShipment.visibility = View.VISIBLE
@@ -311,6 +331,7 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
 
     private fun initGoodsInfo(bean: OrderDetail) {
         tvDetailGoodsMoney.text = "￥" + order?.goodsPrice
+        baozhuangMoney.text = "￥" + order?.package_price
         tvDetailShipMoney.text = "￥" + order?.shippingPrice
         tvDetailOrderMoney.text = "￥" + order?.orderPrice
         tvDetailDiscountMoney.text = "￥" + order?.discountPrice
@@ -424,7 +445,7 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
             R.id.tvVerify -> {// 核销
                 order?.verificationCode?.apply {
                     DialogUtils.showDialog(context!!, "核销提示", "确定要核销该订单吗？",
-                        "取消", "确定核销", View.OnClickListener { }, View.OnClickListener {
+                        "取消", "确定核销", { }, {
                             showDialogLoading()
                             mPresenter?.verifyOrderCode(order?.verificationCode!!)
                         })
@@ -445,10 +466,16 @@ class OrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPre
             }
             R.id.tvDelete -> {
                 DialogUtils.showDialog(this, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
-                    "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
+                    "取消", "确定删除", { }, {
                         showDialogLoading()
                         mPresenter?.deleteOrder(order?.sn!!)
                     })
+            }
+            R.id.back -> {
+                finish()
+            }
+            R.id.hexiaoOrder -> {
+                order?.sn?.let { mPresenter?.verifyOrderCodeSelf(it) }
             }
         }
     }
