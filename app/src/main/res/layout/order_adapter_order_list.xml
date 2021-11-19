@@ -234,7 +234,7 @@
         android:layout_marginTop="14dp"
         android:layout_marginRight="15dp"
         android:visibility="gone"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/ivProduct1"
@@ -307,7 +307,8 @@
             android:text="退款中"
             android:textColor="#ffa5a5a5"
             android:textSize="12sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
     </RelativeLayout>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -388,10 +389,12 @@
             android:text="取消订单"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvAccept"
@@ -402,10 +405,12 @@
             android:text="接单"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvRefuse"
@@ -416,10 +421,12 @@
             android:text="拒绝接单"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvPrint"
@@ -430,10 +437,12 @@
             android:text="打印"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvPrepare"
@@ -444,10 +453,12 @@
             android:text="备货完成"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvShipment"
@@ -458,10 +469,12 @@
             android:text="开始配送"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvPhoneUser"
@@ -472,10 +485,12 @@
             android:text="联系用户"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvSign"
@@ -490,7 +505,8 @@
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvVerify"
@@ -501,10 +517,12 @@
             android:text="核销"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvUpdatePrice"
@@ -515,10 +533,12 @@
             android:text="修改价格"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvQuickPay"
@@ -529,10 +549,12 @@
             android:text="催付"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvLookLogistics"
@@ -543,10 +565,12 @@
             android:text="查看物流"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvAfterSale"
@@ -557,10 +581,12 @@
             android:text="售后处理"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvDelete"
@@ -571,11 +597,12 @@
             android:text="删除"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
-
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvAcceptService"
@@ -586,10 +613,12 @@
             android:text="同意退款"
             android:textColor="#fff"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvRefuseService"
@@ -600,10 +629,12 @@
             android:text="拒绝退款"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
+            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp" />
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
 
         <com.james.common.view.ITextView
             android:id="@+id/tvOrderHeXiao"

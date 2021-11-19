@@ -67,7 +67,7 @@
             android:background="@null"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="center"
-            android:hint="输入验证码去核销"
+            android:hint="输入取货码去核销"
             android:inputType="number"
             android:orientation="horizontal"
             android:paddingTop="@dimen/dimen_15"

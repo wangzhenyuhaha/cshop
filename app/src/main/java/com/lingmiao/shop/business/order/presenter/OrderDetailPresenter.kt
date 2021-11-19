@@ -8,6 +8,7 @@ interface OrderDetailPresenter: BasePresenter{
 	fun requestOrderDetailData(tradeSn: String)
     fun deleteOrder(tradeSn: String)
     fun verifyOrderCode(id : String)
+    fun verifyOrderCodeSelf(id:String)
 	
 	interface View : BaseView {
         fun onOrderDetailSuccess(bean: OrderDetail)

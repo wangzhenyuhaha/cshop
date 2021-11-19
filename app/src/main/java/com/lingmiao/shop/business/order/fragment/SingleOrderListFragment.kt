@@ -11,6 +11,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.bigkoo.pickerview.view.TimePickerView
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
@@ -294,21 +295,21 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     }
                     R.id.tvShipment -> {
                         DialogUtils.showDialog(requireActivity(), "配送提示", "确认开始配送该订单？",
-                            "取消", "确定配送", View.OnClickListener { }, View.OnClickListener {
+                            "取消", "确定配送", { }, {
                                 showDialogLoading()
                                 mPresenter?.shipOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvPrepare -> {
                         DialogUtils.showDialog(requireActivity(), "备货提示", "确认该订单已经备货？",
-                            "取消", "备货完成", View.OnClickListener { }, View.OnClickListener {
+                            "取消", "备货完成", { }, {
                                 showDialogLoading()
                                 mPresenter?.prepareOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvSign -> {
                         DialogUtils.showDialog(requireActivity(), "送达提示", "确认已经送达该订单？",
-                            "取消", "确定送达", View.OnClickListener { }, View.OnClickListener {
+                            "取消", "确定送达", { }, {
                                 showDialogLoading()
                                 mPresenter?.signOrder(orderBean.sn!!)
                             })
@@ -335,21 +336,21 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     }
                     R.id.tvDelete -> {
                         DialogUtils.showDialog(requireActivity(), "删除提示", "删除后不可恢复，确定要删除该订单吗？",
-                            "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
+                            "取消", "确定删除", { }, {
                                 showDialogLoading()
                                 mPresenter?.deleteOrder(orderBean.sn!!)
                             })
                     }
                     R.id.tvAccept -> {
                         DialogUtils.showDialog(requireActivity(), "接单提示", "确认是否接单?",
-                            "取消", "确定接单", View.OnClickListener { }, View.OnClickListener {
+                            "取消", "确定接单", { }, {
                                 showDialogLoading()
                                 mPresenter?.takeOrder(orderBean)
                             })
                     }
                     R.id.tvRefuse -> {
                         DialogUtils.showDialog(requireActivity(), "拒绝接单提示", "确认是否拒绝接单?",
-                            "取消", "确定拒绝", View.OnClickListener { }, View.OnClickListener {
+                            "取消", "确定拒绝", { }, {
                                 showDialogLoading()
                                 mPresenter?.refuseOrder(orderBean.sn!!)
                             })
@@ -359,6 +360,9 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     }
                     R.id.tvMapNav -> {
                         MapNav.chooseMapDialog(requireContext(), orderBean.getSimpleAddress())
+                    }
+                    R.id.tvOrderHeXiao -> {
+                        ActivityUtils.startActivity(ScanOrderActivity::class.java)
                     }
                 }
 
