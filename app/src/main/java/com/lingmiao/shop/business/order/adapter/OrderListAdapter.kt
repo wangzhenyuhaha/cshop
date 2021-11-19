@@ -221,6 +221,11 @@ class OrderListAdapter :
         //COMPLETE("已完成"),
         //CANCELLED("已取消"),
         //AFTER_SERVICE("售后中");
+        if (item.shippingType == IConstant.SHIP_TYPE_SELF) {
+            helper.getView<TextView>(R.id.takeSelf).visiable()
+            tvShipment.gone()
+        }
+
         when (item.orderStatus) {
             "PAID_OFF" -> {
                 showBottomArea = true
@@ -237,7 +242,6 @@ class OrderListAdapter :
                     }
                     IConstant.SHIP_TYPE_SELF -> {
                         //自提
-                        helper.getView<TextView>(R.id.takeSelf).visiable()
                         if (item.isPrepare == 1) {
                             //备货完成
                             hexiaoOrder.visiable()
@@ -250,6 +254,7 @@ class OrderListAdapter :
                         tvShipment.visiable()
                     }
                 }
+                //是否备货了
                 if (item.isPrepare == 1) {
                     //备货完成
                     tvPrepare.gone()
@@ -334,6 +339,18 @@ class OrderListAdapter :
             viOrderDivide.visibility = View.VISIBLE
         } else {
             viOrderDivide.visibility = View.GONE
+        }
+
+        //如果是商家自己送的，显示部分信息
+        if (item.shippingType == IConstant.SHIP_TYPE_LOCAL) {
+            helper.setGone(R.id.tvMapNav, true)
+            helper.setGone(R.id.tvFullAddressTitle, true)
+            helper.setGone(R.id.tvFullAddress, true)
+            helper.setGone(R.id.orderName, true)
+            helper.setGone(R.id.orderPhotoNumber, true)
+            helper.setText(R.id.orderName,item.shipName)
+            helper.setText(R.id.orderPhotoNumber,item.shipMobile)
+            //item.orderStatusText
         }
     }
 

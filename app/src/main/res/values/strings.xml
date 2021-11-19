@@ -150,7 +150,7 @@
     <string name="order_time_hint" translatable="false">下单时间</string>
     <string name="order_remark_hint" translatable="false">订单备注</string>
     <string name="order_delivery_time_hint" translatable="false">送达时间</string>
-    <string name="order_address_hint" translatable="false">送货地址</string>
+    <string name="order_address_hint" translatable="false">送货地址：</string>
     <string name="order_ship_type_hint" translatable="false">配送方式</string>
     <string name="order_ship_rider_hint" translatable="false">配送骑士</string>
     <string name="order_ship_hint" translatable="false">配送信息</string>
