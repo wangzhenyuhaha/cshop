@@ -15,6 +15,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!--            扫码未获取商品-->
             <LinearLayout
                 android:id="@+id/goodsScanLayout"
                 android:layout_width="match_parent"
@@ -75,6 +76,7 @@
 
             </LinearLayout>
 
+            <!--            扫码未获取商品-->
             <LinearLayout
                 android:id="@+id/scanTitle"
                 android:layout_width="match_parent"
@@ -102,14 +104,12 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="start|center_vertical"
                     android:paddingStart="@dimen/dimen_10"
-                    android:paddingEnd="@dimen/dimen_10"
                     android:paddingTop="@dimen/dimen_5"
+                    android:paddingEnd="@dimen/dimen_10"
                     android:text="2.在商品信息输入商品名称可搜索中心库商品"
                     android:textSize="14sp" />
 
-
             </LinearLayout>
-
 
             <!--审核不通过原因-->
             <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -133,26 +133,25 @@
                         tools:text="实物商品" />
 
                 </LinearLayout>
+
             </com.james.common.view.ILinearLayout>
 
-            <!-- 类型、分类 -->
+            <!--商品类型、商品分类 -->
             <include layout="@layout/goods_include_publish_section1" />
 
             <View style="@style/common_divider" />
+
             <!-- 菜单管理 -->
             <include layout="@layout/goods_include_publish_section5" />
 
             <!-- 名称、图片 -->
             <include layout="@layout/goods_include_publish_section2" />
 
-            <!-- 配送方式 -->
-            <!--useless-->
-            <include layout="@layout/goods_include_publish_section3_new" />
-
-            <!-- 商品规格,虚拟商品的套餐 -->
+            <!-- 商品规格-->
             <include layout="@layout/goods_include_publish_section4_new" />
 
             <View style="@style/common_divider" />
+
             <!--商品打包费-->
             <include layout="@layout/goods_include_publish_section_package" />
 
@@ -183,7 +182,7 @@
             </com.james.common.view.ILinearLayout>
 
 
-            <!--有效期-->
+            <!--有效期   使用时间-->
             <!--useless-->
             <LinearLayout
                 android:id="@+id/sectionVirtualExpireTime"
@@ -199,7 +198,8 @@
                 <include layout="@layout/goods_include_publish_section_v_limit" />
 
             </LinearLayout>
-            <!--useless-->
+
+            <!--            useless-->
             <LinearLayout
                 android:id="@+id/section5678Ll"
                 android:layout_width="match_parent"

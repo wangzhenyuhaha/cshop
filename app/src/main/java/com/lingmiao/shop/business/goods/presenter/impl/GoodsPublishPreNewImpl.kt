@@ -1,6 +1,8 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import android.util.Log
+import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
@@ -14,6 +16,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.exception.BizException
 import com.james.common.netcore.networking.http.core.HiResponse
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.GoodsListActivity
@@ -33,11 +36,68 @@ import java.io.File
 class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.PublishView) :
     BasePreImpl(view), GoodsPublishNewPre {
 
+
+    //切换商品类型
+    private val mGoodsTypePreImpl: GoodsTypePopPreImpl by lazy { GoodsTypePopPreImpl(view) }
+    override fun showGoodsType(isVirtual: Boolean) {
+        mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(isVirtual)) { item ->
+            view.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value))
+        }
+    }
+
+    //选择商品分类
     private val mCategoryPreImpl: PopCategoryPreImpl by lazy { PopCategoryPreImpl(view) }
+    override fun showCategoryPop() {
+        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { cate, names ->
+            view.onUpdateCategory(cate?.categoryId, names)
+        }
+    }
+
+    //选择商品菜单
     private val mGroupPreImpl: PopGroupPreImpl by lazy { PopGroupPreImpl(view) }
+    override fun showGroupPop() {
+        mGroupPreImpl.showGoodsGroupPop(context) { group, names ->
+            view.onUpdateGroup(group?.shopCatId, names)
+        }
+    }
+
+    //根据商品名搜索商品
+    override fun searchGoods(
+        searchText: String
+    ) {
+        mCoroutine.launch {
+            val resp =
+                GoodsRepository.loadGoodsListByNameFromCenter(
+                    1,
+                    pageSize = 100,
+                    goodsName = searchText
+                )
+            if (resp.isSuccess) {
+                val goodsList = resp.data.data
+                view.searchGoodsSuccess(goodsList)
+            } else {
+                view.searchGoodsFailed()
+            }
+            view.hidePageLoading()
+        }
+    }
+
+    //根据商品名称从中心库搜索商品
+    override fun loadGoodsInfoFromCenter(id: String) {
+        view.showDialogLoading()
+        mCoroutine.launch {
+            val resp = GoodsRepository.searchGoodsFromCenter(id)
+            handleResponse(resp) {
+                view.onLoadGoodsSuccess(resp.data)
+            }
+            view.hideDialogLoading()
+        }
+    }
+
+
     private val mExpirePreImpl: ExpirePopPreImpl by lazy { ExpirePopPreImpl(view) }
     private val mUseTimePreImpl: UseTimePopPreImpl by lazy { UseTimePopPreImpl(view) }
-    private val mGoodsTypePreImpl: GoodsTypePopPreImpl by lazy { GoodsTypePopPreImpl(view) }
+
     private val mGoodsDeliveryPreImpl: GoodsDeliveryPopPreImpl by lazy {
         GoodsDeliveryPopPreImpl(
             view
@@ -92,18 +152,6 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    override fun loadGoodsInfoFromCenter(id: String) {
-        view.showDialogLoading()
-        mCoroutine.launch {
-            val resp = GoodsRepository.searchGoodsFromCenter(id)
-            handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data)
-                view.onSetUseTimeStr(mUseTimePreImpl.getUseTimeStr(resp?.data?.availableDate))
-            }
-            view.hideDialogLoading()
-        }
-    }
-
 
     //GoodsPublishPre
 
@@ -128,6 +176,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     /**
      * 发布
      */
+    //isMutilSpec是否多规格
+    //scan是否扫码处跳转
+    //type 保存  0  保存并上架  1
     override fun publish(
         goodsVO: GoodsVOWrapper,
         isVirtualGoods: Boolean,
@@ -136,9 +187,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         type: Int
     ) {
         loadSpecKeyList(goodsVO, isMutilSpec) {
-            if (scan) {
-                goodsVO.goodsId = null
-            }
+
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
                 checkNotBlack(goodsVO.thumbnail) { "请添加缩略图" }
@@ -170,11 +219,15 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                         view.hideDialogLoading()
                         return@uploadThumbnailImage
                     }) {
-                        if (goodsVO?.intro.isNotBlank()) {
+                        //goodsVO.intro 不是必须
+                        if (goodsVO.intro.isNotBlank() && (goodsVO.intro?.startsWith("<p>") != true)) {
                             uploadDesImages(goodsVO, fail = {
                                 view.showToast("图片上传失败，请重试")
                                 view.hideDialogLoading()
                             }) {
+                                if (scan) {
+                                    goodsVO.goodsId = null
+                                }
                                 if (goodsVO.goodsId.isNullOrBlank()) {
                                     submitGoods(goodsVO, scan, type) // 添加商品
                                 } else {
@@ -182,6 +235,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 }
                             }
                         } else {
+                            if (scan) {
+                                goodsVO.goodsId = null
+                            }
                             if (goodsVO.goodsId.isNullOrBlank()) {
                                 submitGoods(goodsVO, scan, type) // 添加商品
                             } else {
@@ -193,37 +249,6 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
             } catch (e: BizException) {
                 view.showToast(e.message.check())
             }
-        }
-    }
-
-
-    override fun showCategoryPop() {
-        mCategoryPreImpl.showCategoryPop(context, getSellerId()!!) { cate, names ->
-            view.onUpdateCategory(cate?.categoryId, names)
-        }
-    }
-
-    override fun showGroupPop() {
-        mGroupPreImpl.showGoodsGroupPop(context) { group, names ->
-            view.onUpdateGroup(group?.shopCatId, names)
-        }
-    }
-
-    override fun showExpirePop(str: String) {
-        mExpirePreImpl.showPop(context, str) { item ->
-            view.onUpdateExpire(item)
-        }
-    }
-
-    override fun showUseTimePop(str: String) {
-        mUseTimePreImpl.showPop(context, str) { items ->
-            view.onUpdateUseTime(items)
-        }
-    }
-
-    override fun showGoodsType(str: Boolean) {
-        mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(str)) { item ->
-            view.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value))
         }
     }
 
@@ -251,18 +276,52 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int) {
         mCoroutine.launch {
+            Log.d("WZYUDI",goodsVO.bar_code.toString())
             val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
             view.hideDialogLoading()
             handleResponse(resp) {
-                if (type == 0) {
-                    view.showToast("商品保存成功")
-                } else {
-                    view.showToast("商品上架成功")
-                }
 
                 if (scan) {
-                    view.finish()
+                    if (type == 0) {
+                        //仅保存
+                        DialogUtils.showDialog(ActivityUtils.getTopActivity(),
+                            "商品保存成功",
+                            "是否继续扫码？",
+                            "查看商品",
+                            "继续",
+                            {
+                                ActivityUtils.startActivity(GoodsListActivity::class.java)
+                                EventBus.getDefault()
+                                    .post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_IS_AUTH))
+                                EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                                view.finish()
+                            },
+                            { view.finish() })
+                    } else {
+                        //保存上架
+                        DialogUtils.showDialog(ActivityUtils.getTopActivity(),
+                            "商品上架成功",
+                            "是否继续扫码？",
+                            "查看商品",
+                            "继续",
+                            {
+                                ActivityUtils.startActivity(GoodsListActivity::class.java)
+                                EventBus.getDefault()
+                                    .post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
+                                EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                                view.finish()
+                            },
+                            { view.finish() })
+                    }
+
                 } else {
+                    if (type == 0) {
+                        //仅保存
+                        view.showToast("商品保存成功")
+                    } else {
+                        //保存上架
+                        view.showToast("商品上架成功")
+                    }
                     EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
                     EventBus.getDefault().post(RefreshGoodsStatusEvent())
                     ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
@@ -391,24 +450,17 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
     }
 
 
-    //根据商品名搜索商品
-   override fun searchGoods(
-        searchText: String
-    ) {
-        mCoroutine.launch {
-            val resp =
-                GoodsRepository.loadGoodsListByNameFromCenter(
-                    1,
-                    pageSize = 100,
-                    goodsName = searchText
-                )
-            if (resp.isSuccess) {
-                val goodsList = resp.data.data
-                view.searchGoodsSuccess(goodsList)
-            } else {
-                view.searchGoodsFailed()
-            }
-            view.hidePageLoading()
+    //useless
+    override fun showExpirePop(str: String) {
+        mExpirePreImpl.showPop(context, str) { item ->
+            view.onUpdateExpire(item)
+        }
+    }
+
+    //useless
+    override fun showUseTimePop(str: String) {
+        mUseTimePreImpl.showPop(context, str) { items ->
+            view.onUpdateUseTime(items)
         }
     }
 }

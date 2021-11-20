@@ -14,16 +14,12 @@
 
 
     <View
-        style="@style/common_divider"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        style="@style/common_divider" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:orientation="horizontal">
 
         <TextView
             style="@style/goods_publish_left_mark"
@@ -37,16 +33,13 @@
     </LinearLayout>
 
     <View
-        style="@style/common_divider"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        style="@style/common_divider"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:orientation="horizontal"
-        android:visibility="gone"
-        tools:visibility="visible">
+      >
 
         <TextView
             style="@style/goods_publish_left_mark"
