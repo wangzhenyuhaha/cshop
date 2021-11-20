@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.MotionEvent
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseActivity
@@ -74,7 +75,7 @@ class GoodsDetailActivity : BaseActivity<GoodsDetailPre>(), GoodsDetailPre.View 
     override fun initView() {
         mToolBarDelegate.setMidTitle(getString(R.string.goods_detail_title))
 
-
+        //商品描述
         etFeedbackContent.setText(mContent);
 
         mInfoAdapter = GoodsInfoAdapter(mInfoList).apply {

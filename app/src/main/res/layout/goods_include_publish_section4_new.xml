@@ -8,7 +8,7 @@
     app:ivRadius="@dimen/dimen_5"
     tools:ignore="HardcodedText">
 
-    <!--    虚拟商品设置套餐-->
+    <!--    设置多规格-->
     <LinearLayout
         android:id="@+id/section4RowVirtualSpecLl"
         android:layout_width="match_parent"
@@ -17,7 +17,6 @@
         android:visibility="gone"
         tools:visibility="visible">
 
-        <!--  虚拟商品的套餐  -->
         <TextView
             style="@style/goods_spce_item_left_mark"
             android:text="设置套餐" />
@@ -32,8 +31,7 @@
 
     </LinearLayout>
 
-
-<!--    实体商品设置单规格-->
+    <!--    实体商品设置单规格-->
     <LinearLayout
         android:id="@+id/section4Row1Ll"
         android:layout_width="match_parent"
@@ -51,6 +49,7 @@
                 style="@style/goods_spce_item_left_mark"
                 android:text="设置规格" />
 
+            <!--            这东西没用全程gone-->
             <TextView
                 android:id="@+id/goodsSpecTv"
                 style="@style/goods_spec_item_right_edt"
@@ -59,7 +58,7 @@
                 android:gravity="end|center_vertical"
                 android:hint="请设置规格"
                 android:visibility="gone"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
         </LinearLayout>
 
         <View style="@style/common_divider" />
@@ -180,6 +179,7 @@
                 style="@style/common_divider" />
 
             <!--  货号/型号、重量  -->
+<!--            useless-->
             <LinearLayout
                 android:id="@+id/llSpecNo"
                 android:layout_width="match_parent"
@@ -250,10 +250,9 @@
 
     </LinearLayout>
 
-    <View
-        style="@style/common_divider" />
+    <View style="@style/common_divider" />
 
-
+    <!--    实体商品多规格启动按钮-->
     <LinearLayout
         android:id="@+id/section4Row6Ll"
         android:layout_width="match_parent"
@@ -274,8 +273,8 @@
                 style="@style/goods_spec_item_right_edt"
                 android:hint="输入外部商品id"
                 android:inputType="text"
-                android:paddingEnd="@dimen/dimen_10"
-                android:paddingStart="0dp"/>
+                android:paddingStart="0dp"
+                android:paddingEnd="@dimen/dimen_10" />
         </LinearLayout>
 
         <LinearLayout style="@style/goods_spec_sub_container">

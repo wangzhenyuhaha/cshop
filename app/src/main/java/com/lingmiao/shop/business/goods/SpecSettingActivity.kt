@@ -7,16 +7,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.james.common.base.BaseActivity
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.isNotEmpty
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.SpecSettingAdapter
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.pop.BatchSettingPop
 import com.lingmiao.shop.business.goods.presenter.SpecSettingPre
 import com.lingmiao.shop.business.goods.presenter.impl.SpecSettingPreImpl
-import com.james.common.base.BaseActivity
-import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.isNotEmpty
-import com.james.common.utils.exts.singleClick
 import kotlinx.android.synthetic.main.goods_activity_spec_setting.*
 
 
@@ -29,17 +29,24 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
     SpecSettingPre.SpceSettingView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         super.onCreate(savedInstanceState)
     }
 
     companion object {
+        //商品分类的ID
         const val KEY_CATEGORY_ID = "KEY_CATEGORY_ID"
+
+        //商品ID
         const val KEY_GOODS_ID = "KEY_GOODS_ID"
+
+        //SKU  List
         const val KEY_SKU_LIST = "KEY_SKU_LIST"
+
+        //规格字段
         const val KEY_SPEC_KEY_LIST = "KEY_SPEC_KEY_LIST"
 
-        //scan
+        //scan 是否是扫码处过来的
         const val KEY_SCAN = "KEY_SCAN"
 
 
@@ -77,28 +84,26 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
 
     }
 
-    /**
-     * 虚拟的=2
-     */
+    //虚拟商品 2  实体商品  0
     private var mType: Int? = 0
+    //商品分类的ID
     private var categoryId: String? = null
+    //商品ID
     private var goodsId: String? = null
+    //商品SKU  List
     private var skuList: List<GoodsSkuVOWrapper>? = null
+    //规格数据列表
     private var specKeyList: List<SpecKeyVO>? = null
-
-    //是否是扫码而来
+    //是否是扫码而来、默认不是
     private var scan: Boolean = false
-
+    //显示每个规格的商品
     private var mAdapter: SpecSettingAdapter? = null
-
     // 批量设置的弹窗
     private var batchSettingPop: BatchSettingPop? = null
 
     override fun useLightMode() = false
 
-
     override fun getLayoutId() = R.layout.goods_activity_spec_setting
-
 
     override fun initBundles() {
         mType = intent.getIntExtra("type", 0)
@@ -114,19 +119,67 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("规格设置")
+
+        //设置可以显示的规格
         initSpecContainerLayout()
+
         initAdapter()
         initBottomView()
+
         if (skuList == null || specKeyList == null) {
             if (scan) {
+                //从中心库查询
                 mPresenter.loadSpecKeyListFromCenter(goodsId)
             } else {
+                //NO
                 mPresenter.loadSpecKeyList(goodsId)
             }
-
         }
+
+        //如果是新增加的商品，
         if (skuList == null && specKeyList == null && goodsId == null) {
-            mPresenter.loadSpecListByCid(categoryId);
+            mPresenter.loadSpecListByCid(categoryId)
+        }
+    }
+
+    private fun initSpecContainerLayout() {
+        specContainerLayout.apply {
+            //与添加规格绑定
+            bindAddSpecBtn(addSpecLl)
+            //加载原有规格值 useless
+            loadSpecValueListener = {
+                mPresenter?.showAddOldKey(categoryId, it, getSpecValueList(it))
+            }
+            //添加规格值
+            addSpecValueListener = {
+                showInputValueDialog(it)
+            }
+            //删除规格值
+            deleteSpecValueListener = {
+                mPresenter.getSpecKeyList(
+                    mAdapter?.data!!,
+                    specContainerLayout.getSpecKeyAndValueList()
+                )
+            }
+            //删除规格
+            deleteSpecItemListener = {
+                mAdapter?.clear()
+                mPresenter.getSpecKeyList(
+                    mAdapter?.data!!,
+                    specContainerLayout.getSpecKeyAndValueList()
+                )
+            }
+            //显示已有规格
+            specContainerLayout.addSpecItems(specKeyList, true)
+        }
+        //添加规格
+        addSpecLl.setOnClickListener {
+            SpecKeyActivity.openActivity(
+                this,
+                SPEC_REQUEST_CODE,
+                categoryId,
+                specContainerLayout.getSpecList()
+            )
         }
     }
 
@@ -139,41 +192,6 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
         // 回显数据
         if (skuList.isNotEmpty()) {
             mAdapter?.addData(skuList!!)
-        }
-    }
-
-    private fun initSpecContainerLayout() {
-        specContainerLayout.apply {
-            bindAddSpecBtn(addSpecLl)
-            loadSpecValueListener = {
-                mPresenter?.showAddOldKey(categoryId, it, getSpecValueList(it));
-            }
-            addSpecValueListener = {
-                showInputValueDialog(it)
-            }
-            deleteSpecValueListener = {
-                mPresenter.getSpecKeyList(
-                    mAdapter?.data!!,
-                    specContainerLayout.getSpecKeyAndValueList()
-                )
-            }
-            deleteSpecItemListener = {
-                mAdapter?.clear()
-                mPresenter.getSpecKeyList(
-                    mAdapter?.data!!,
-                    specContainerLayout.getSpecKeyAndValueList()
-                )
-            }
-            // 非商品编辑状态下的数据回显
-            specContainerLayout.addSpecItems(specKeyList, true)
-        }
-        addSpecLl.setOnClickListener {
-            SpecKeyActivity.openActivity(
-                this,
-                SPEC_REQUEST_CODE,
-                categoryId,
-                specContainerLayout.getSpecList()
-            )
         }
     }
 
@@ -228,9 +246,9 @@ class SpecSettingActivity : BaseActivity<SpecSettingPre>(),
 
     private fun showBatchSettingPop() {
         if (batchSettingPop == null) {
-            batchSettingPop = BatchSettingPop(this, {
+            batchSettingPop = BatchSettingPop(this) {
                 mAdapter?.updateSetting(it)
-            })
+            }
         }
         batchSettingPop!!.show(mType == 2)
     }

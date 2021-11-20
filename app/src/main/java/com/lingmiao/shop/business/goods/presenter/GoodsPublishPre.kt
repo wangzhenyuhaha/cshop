@@ -11,29 +11,60 @@ import com.james.common.base.BaseView
  */
 interface GoodsPublishPre : BasePresenter {
 
-    fun loadGoodsInfo(goodsId: String?)
+    //切换商品类型
+    fun showGoodsType(isVirtual: Boolean)
 
-    fun publish(goodsVO: GoodsVOWrapper,isVirtualGoods : Boolean, isMutilSpec: Boolean,scan:Boolean,type:Int)
-
+    //设置商品分类
     fun showCategoryPop()
 
+    //设置商品菜单
     fun showGroupPop()
 
-    fun showExpirePop(str : String)
+    fun loadGoodsInfo(goodsId: String?)
 
-    fun showUseTimePop(str : String)
+    fun publish(
+        goodsVO: GoodsVOWrapper,
+        isVirtualGoods: Boolean,
+        isMutilSpec: Boolean,
+        scan: Boolean,
+        type: Int
+    )
 
-    fun showGoodsType(isVirtual : Boolean)
+
+
+
+    //useless
+    //有效期至
+    fun showExpirePop(str: String)
+
+    //使用时间
+    fun showUseTimePop(str: String)
+
 
     interface PublishView : BaseView {
-        fun onSetGoodsType(isVirtual : Boolean);
-        fun onSetUseTimeStr(useTime : String);
-        fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper)
+        //切换实体商品虚拟商品
+        fun onSetGoodsType(isVirtual: Boolean)
+
+        //切换分类
         fun onUpdateCategory(categoryId: String?, categoryName: String?)
+
+        //设置菜单
         fun onUpdateGroup(groupId: String?, groupName: String?)
+
+
+        fun onSetUseTimeStr(useTime: String);
+        fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper)
+
+
         fun finish()
-        fun onUpdateExpire(item : GoodsUseExpireVo?)
-        fun onUpdateUseTime(list : List<MultiPickerItemBean>?)
+
+        //useless
+        //有效期至
+        fun onUpdateExpire(item: GoodsUseExpireVo?)
+
+        //useless
+        //使用时间
+        fun onUpdateUseTime(list: List<MultiPickerItemBean>?)
     }
 
 }
