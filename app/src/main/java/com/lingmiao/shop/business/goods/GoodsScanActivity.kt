@@ -8,10 +8,12 @@ import android.os.Environment
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.zxing.BarcodeFormat
@@ -21,11 +23,9 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
 import com.james.common.base.BaseView
+import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.doIntercept
-import com.james.common.utils.exts.gone
-import com.james.common.utils.exts.singleClick
-import com.james.common.utils.exts.visiable
+import com.james.common.utils.exts.*
 import com.james.common.utils.permission.interceptor.CameraInterceptor
 import com.james.common.utils.permissionX.CheckPermission
 import com.journeyapps.barcodescanner.BarcodeCallback
@@ -33,17 +33,21 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
+import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
@@ -144,7 +148,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         }
 
-
         val content1 = "1.中心库可能存在相同商品，但未绑定当前条形码，可以去搜索中心库商品"
         val builder1 = SpannableStringBuilder(content1)
         val blueSpan1 = ForegroundColorSpan(Color.parseColor("#3870EA"))
@@ -216,59 +219,71 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
-//                    mBinding.goodsSearchLayout.visiable()
-//                    mBinding.scanView.gone()
-//                    mBinding.noResult.visiable()
-//                    mBinding.scanGoods.gone()
-//                    mBinding.view.visiable()
-//                    mBinding.title.gone()
-//                    mBinding.goodsRV.gone()
-
                     //保存下扫码获得的图片
                     try {
-                        context?.let { it1 ->
-                            CheckPermission.request(
-                                it1,
-                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                            ) { allGranted, _ ->
-                                if (allGranted) {
+                        //这是一个Fragment
+                        CheckPermission.request(
+                            context!!,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                        ) { allGranted, _ ->
+                            if (allGranted) {
+                                //目标文件
+                                var externalFileRootDir: File? = getExternalFilesDir(null)
+                                do {
+                                    externalFileRootDir =
+                                        Objects.requireNonNull(externalFileRootDir)?.parentFile
+                                } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                        "/Android"
+                                    ) == true
+                                )
+                                val saveDir: String? =
+                                    Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                                val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
 
-                                    //目标文件
-                                    var externalFileRootDir: File? = getExternalFilesDir(null)
-                                    do {
-                                        externalFileRootDir =
-                                            Objects.requireNonNull(externalFileRootDir)?.parentFile
-                                    } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
-                                            "/Android"
-                                        ) == true
-                                    )
-                                    val saveDir: String? =
-                                        Objects.requireNonNull(externalFileRootDir)?.absolutePath
-                                    val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+                                val destinationFile = File(savePath, "test_scan.png")
+                                val bos =
+                                    BufferedOutputStream(FileOutputStream(destinationFile))
+                                bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
+                                bos.flush()
+                                bos.close()
 
-                                    val destinationFile = File(savePath, "test_scan.png")
 
-                                    val bos =
-                                        BufferedOutputStream(FileOutputStream(destinationFile))
-                                    bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
-                                    bos.flush()
-                                    bos.close()
-                                }
+                                //上传图片，成功后调用接口
+                                val urlList = ArrayList(listOf<String>("${savePath}/test_scan.png"))
+
+                                uploadImages(urlList, {
+                                    //失败了，nothing to do
+                                }, {
+                                    id.value?.let { it1 -> mPresenter?.addGoodsSkuBarCodeLog(it1,urlList[0]) }
+                                })
+                            }
+                            hideDialogLoading()
+                            //跳转到新增商品界面
+                            context?.let { it1 ->
+                                GoodsPublishNewActivity.newPublish(
+                                    it1,
+                                    0,
+                                    scan = true,
+                                    scanCode = id.value ?: ""
+                                )
                             }
                         }
+
                     } catch (e: Exception) {
-                        //nothing to do
+                        hideDialogLoading()
+                        //跳转到新增商品界面
+                        context?.let { it1 ->
+                            GoodsPublishNewActivity.newPublish(
+                                it1,
+                                0,
+                                scan = true,
+                                scanCode = id.value ?: ""
+                            )
+                        }
                     }
 
-                    context?.let { it1 ->
-                        GoodsPublishNewActivity.newPublish(
-                            it1,
-                            0,
-                            scan = true,
-                            scanCode = id.value ?: ""
-                        )
-                    }
+
                 }
                 //中心库查询到商品，但店铺中没有
                 2 -> {
@@ -356,7 +371,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
-
     override fun onPause() {
         super.onPause()
         mBinding.zxingBarcodeScanner.setTorchOff()
@@ -376,18 +390,14 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             if (data.goodsSkuDOList?.isEmpty() == true) {
                 //中心库未查询到商品，但店铺也没有
                 viewVisibility.value = 1
-
             } else {
                 //中心库未查询到商品，但店铺中已有
-                mBinding.noResult.gone()
-                mBinding.scanGoods.gone()
-                mBinding.view.gone()
-                mBinding.title.visiable()
-                mBinding.goodsRV.visiable()
-                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
-                adapter?.notifyDataSetChanged()
+                hideDialogLoading()
+                showToast("数据错误")
+                viewVisibility.value = 0
             }
         } else {
+            hideDialogLoading()
             if (data.goodsSkuDOList?.isEmpty() == true) {
                 viewVisibility.value = 2
             } else {
@@ -403,7 +413,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 data.goodsSkuDOList?.let { adapter?.replaceData(it) }
                 adapter?.notifyDataSetChanged()
             }
-
         }
 
 
@@ -443,10 +452,50 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
+    //上传图片
+    private fun uploadImages(list: ArrayList<String>, fail: () -> Unit, success: () -> Unit) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
+            // 多张图片并行上传
+            list.forEach {
+                val request = async {
+                    if (it.isNetUrl()) {
+                        HiResponse(0, "", FileResponse("", "", it))
+                    } else {
+                        CommonRepository.uploadFile(
+                            File(it),
+                            true,
+                            CommonRepository.SCENE_GOODS
+                        )
+                    }
+                }
+                requestList.add(request)
+            }
+
+            // 多个接口相互等待
+            val respList = requestList.awaitAll()
+            var isAllSuccess = true
+            respList.forEachIndexed { index, it ->
+                if (it.isSuccess) {
+                    list[index] = it.data?.url ?: ""
+                } else {
+                    isAllSuccess = false
+                }
+            }
+            if (isAllSuccess) {
+                success.invoke()
+            } else {
+                fail.invoke()
+            }
+        }
+    }
 }
 
 
 interface GoodsScanActivityPresenter : BasePresenter {
+
+    //添加条形码扫描记录
+    fun addGoodsSkuBarCodeLog(bar_code: String, url: String)
 
     fun getBarcodeFormats(): Collection<BarcodeFormat>
 
@@ -469,6 +518,7 @@ interface GoodsScanActivityPresenter : BasePresenter {
 class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) : BasePreImpl(view),
     GoodsScanActivityPresenter {
 
+
     override fun search(id: String) {
         mCoroutine.launch {
             view.showDialogLoading()
@@ -480,7 +530,6 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             if (!resp.isSuccess) {
                 view.onScanSearchFailed()
             }
-            view.hideDialogLoading()
         }
     }
 
@@ -494,6 +543,16 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
                 view.onAddSuccess()
             }
             view.hideDialogLoading()
+        }
+    }
+
+    override fun addGoodsSkuBarCodeLog(bar_code: String, url: String) {
+        mCoroutine.launch {
+
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog(bar_code,url)
+            handleResponse(resp) {
+               //nothing to do
+            }
         }
     }
 
@@ -518,7 +577,6 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             BarcodeFormat.AZTEC
         )
     }
-
 
 }
 
@@ -597,4 +655,9 @@ data class GoodsSkuDO(
     var thumbnail: String? = null,
     var up_sku_id: Any? = null,
     var weight: Any? = null
+)
+
+data class GoodsSkuBarcodeLog(
+    var bar_code: String? = null,
+    var img_url: String? = null
 )
