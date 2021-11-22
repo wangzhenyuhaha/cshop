@@ -22,6 +22,7 @@ import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.james.common.view.ITextView
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.order.*
@@ -368,8 +369,20 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
             }
             setOnItemClickListener { adapter, view, position ->
-                val orderBean = adapter.data[position] as OrderList
-                OrderShowActivity.open(requireActivity(), orderBean, 11)
+                val temp = adapter.data[position] as OrderList
+
+                if (temp.shippingType == IConstant.SHIP_TYPE_SELF) {
+                    //自提
+                    val intent =
+                        Intent(context, SelfOrderDetailActivity::class.java)
+                    intent.putExtra("orderId", temp.sn)
+                    startActivity(intent)
+                } else {
+                    //非自提
+                    val orderBean = adapter.data[position] as OrderList
+                    OrderShowActivity.open(requireActivity(), orderBean, 11)
+                }
+
             }
             emptyView = EmptyView(mContext).apply {
                 setBackgroundResource(R.color.color_ffffff)
