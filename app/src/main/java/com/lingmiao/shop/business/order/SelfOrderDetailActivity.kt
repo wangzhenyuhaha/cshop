@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
+import com.james.common.utils.exts.gone
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.bean.OrderDetail
@@ -76,6 +77,10 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
         ) + "****" + bean.shipMobile?.substring(7) else ""
         tihuohaoma.text = photoNumber
 
+        //提货时间
+        if (order?.pick_time != null) zitishijian.text =
+            TimeUtils.date2String(order?.pick_time?.let { Date(it * 1000) })
+
         //自提点，即店铺名称
         zitidian.text = bean.sellerName
 
@@ -84,7 +89,8 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
 
         //订单编号
         dingdanbianhao.text = tradeSn
-        dingdanzhuantai.text = bean.orderStatus
+        //订单状态
+        dingdanzhuantai.text = bean.shipStatusText
 
         //商品信息
         dingdanshangpin.layoutManager = LinearLayoutManager(this)
@@ -138,10 +144,6 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
         "￥${order?.package_price}".also {
             selfOrderBaozhuang.text = it
         }
-        //运费金额
-        "￥${order?.shippingPrice}".also {
-            selfOrderyunfei.text = it
-        }
         //订单总额
         "￥${order?.orderPrice}".also {
             selfOrderzonge.text = it
@@ -154,6 +156,19 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
         "￥${order?.needPayMoney}".also {
             selfOrderyingfu.text = it
         }
+
+        //买家头像
+        if (bean.member_face?.isNotBlank() == true) {
+            GlideUtils.setImageUrl(maijiatouxiang, bean.member_face)
+        } else {
+            maijiatouxiang.gone()
+        }
+
+        //买家姓名
+        "买家姓名：${bean.member_nick_name}".also { maijiaxinming.text = it }
+
+        //买家号码
+        "买家号码：${bean.member_mobile}".also { maijiadianhua.text = it }
 
         //订单类型
         var orderTypeName = "普通订单"//normal

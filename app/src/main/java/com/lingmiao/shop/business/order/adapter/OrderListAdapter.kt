@@ -247,6 +247,7 @@ class OrderListAdapter :
                 when (item.shippingType) {
                     IConstant.SHIP_TYPE_GLOBAL -> {
                         //骑手配送
+                        hexiaoOrder.gone()
                     }
                     IConstant.SHIP_TYPE_SELF -> {
                         //自提
@@ -260,6 +261,7 @@ class OrderListAdapter :
                     IConstant.SHIP_TYPE_LOCAL -> {
                         //开始配送
                         tvShipment.visiable()
+                        hexiaoOrder.gone()
                     }
                 }
                 //是否备货了
@@ -276,10 +278,12 @@ class OrderListAdapter :
                 when (item.shippingType) {
                     IConstant.SHIP_TYPE_LOCAL -> {
                         tvSign.visibility = View.VISIBLE
+                        hexiaoOrder.gone()
                     }
                     IConstant.SHIP_TYPE_GLOBAL -> {
                         // 骑手配送
                         tvPhoneUser.visibility = View.VISIBLE
+                        hexiaoOrder.gone()
                     }
                     IConstant.SHIP_TYPE_SELF -> {
                         hexiaoOrder.visiable()

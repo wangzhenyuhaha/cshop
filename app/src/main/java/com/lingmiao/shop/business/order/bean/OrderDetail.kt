@@ -1,4 +1,5 @@
 package com.lingmiao.shop.business.order.bean
+
 import android.view.View
 import com.lingmiao.shop.util.GlideUtils
 import com.google.gson.annotations.SerializedName
@@ -7,6 +8,17 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 data class OrderDetail(
+
+    //提货时间
+    @SerializedName("pick_time")
+    var pick_time: Long? = null,
+    //买家头像
+    @SerializedName("member_face")
+    var member_face: String? = null,
+    @SerializedName("member_nick_name")
+    var member_nick_name: String? = null,
+    @SerializedName("member_mobile")
+    var member_mobile: String? = null,
     @SerializedName("address_id")
     var addressId: Int?,//收货地址ID
     @SerializedName("admin_remark")
@@ -191,8 +203,8 @@ data class OrderDetail(
     var weight: Double?//订单商品总重量
 ) {
 
-    fun convertLongToTime (time: Long): String {
-        if(time == null) {
+    fun convertLongToTime(time: Long): String {
+        if (time == null) {
             return "";
         } else {
             val date = Date(time)
@@ -201,15 +213,15 @@ data class OrderDetail(
         }
     }
 
-    fun getExpireTime() : String {
-        if(expiryDayTimestamp == null) {
+    fun getExpireTime(): String {
+        if (expiryDayTimestamp == null) {
             return "";
         }
         return convertLongToTime(expiryDayTimestamp!!);
     }
 
 
-    fun isVirtualOrderTag() : Boolean {
+    fun isVirtualOrderTag(): Boolean {
         return isVirtualOrder == 1;
     }
 }

@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.order
 
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
 import com.google.zxing.ResultPoint
@@ -136,9 +135,8 @@ class ScanOrderActivity : BaseActivity<ScanOrderPresenter>(), ScanOrderPresenter
         zxing_barcode_scanner?.pauseAndWait()
         data?.apply {
             val intent =
-                Intent(context, OrderDetailActivity::class.java)
+                Intent(context, SelfOrderDetailActivity::class.java)
             intent.putExtra("orderId", data.sn)
-            Log.d("WZYSUDI",data.sn.toString())
             startActivity(intent)
         }
         finish()
