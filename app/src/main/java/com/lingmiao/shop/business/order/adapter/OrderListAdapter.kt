@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.order.adapter
 
+import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -199,6 +200,9 @@ class OrderListAdapter :
         //导航
         helper.addOnClickListener(R.id.tvMapNav)
 
+        //配送方式
+        val peisongfanshi =  helper.getView<TextView>(R.id.takeSelf)
+
         //设置订单状态的颜色
         helper.setTextColor(
             R.id.tvOrderStatus,
@@ -222,8 +226,12 @@ class OrderListAdapter :
         //CANCELLED("已取消"),
         //AFTER_SERVICE("售后中");
         if (item.shippingType == IConstant.SHIP_TYPE_SELF) {
-            helper.getView<TextView>(R.id.takeSelf).visiable()
+            peisongfanshi.text = "自提"
+            peisongfanshi.setBackgroundColor(Color.parseColor("#FF8647"))
             tvShipment.gone()
+        }else{
+            peisongfanshi.setBackgroundColor(Color.parseColor("#FF4747"))
+            peisongfanshi.text = "配送"
         }
 
         when (item.orderStatus) {

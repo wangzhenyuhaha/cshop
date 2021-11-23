@@ -117,6 +117,8 @@ data class OrderDetail(
     var sellerLogo: String?,//店铺logo
     @SerializedName("seller_name")
     var sellerName: String?,
+    @SerializedName("seller_address")
+    var sellerAddress: String?,
     @SerializedName("service_status")
     var serviceStatus: String?,//售后状态
     @SerializedName("service_status_text")

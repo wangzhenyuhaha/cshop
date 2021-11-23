@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.order
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -86,10 +87,7 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
         zitidian.text = bean.sellerName
 
         //取货地址
-        val address = bean.shipProvince.orEmpty() + bean.shipCity.orEmpty() +
-                bean.shipCounty.orEmpty() +
-                bean.shipTown.orEmpty() + bean.shipAddr.orEmpty()
-        tihuodizhi.text = address
+        tihuodizhi.text = bean.sellerAddress
 
         //订单编号
         dingdanbianhao.text = tradeSn
