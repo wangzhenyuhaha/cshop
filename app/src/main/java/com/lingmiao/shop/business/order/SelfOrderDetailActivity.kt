@@ -1,8 +1,5 @@
 package com.lingmiao.shop.business.order
 
-import android.app.Activity
-import android.content.Intent
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,18 +9,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
-import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.bean.OrderDetail
 import com.lingmiao.shop.business.order.bean.OrderNumberEvent
 import com.lingmiao.shop.business.order.bean.OrderSku
-import com.lingmiao.shop.business.order.fragment.SingleOrderListFragment
 import com.lingmiao.shop.business.order.presenter.OrderDetailPresenter
 import com.lingmiao.shop.business.order.presenter.impl.OrderDetailPresenterImpl
 import com.lingmiao.shop.util.GlideUtils
-import com.lingmiao.shop.util.OtherUtils
-import kotlinx.android.synthetic.main.order_activity_order_detail.*
 import kotlinx.android.synthetic.main.order_activity_order_detail.back
 import kotlinx.android.synthetic.main.order_activity_order_detail.hexiaoOrder
 import kotlinx.android.synthetic.main.order_activity_self_order_detail.*

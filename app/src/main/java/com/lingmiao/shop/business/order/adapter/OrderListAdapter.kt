@@ -201,7 +201,7 @@ class OrderListAdapter :
         helper.addOnClickListener(R.id.tvMapNav)
 
         //配送方式
-        val peisongfanshi =  helper.getView<TextView>(R.id.takeSelf)
+        val peisongfanshi = helper.getView<TextView>(R.id.takeSelf)
 
         //设置订单状态的颜色
         helper.setTextColor(
@@ -229,7 +229,7 @@ class OrderListAdapter :
             peisongfanshi.text = "自提"
             peisongfanshi.setBackgroundColor(Color.parseColor("#FF8647"))
             tvShipment.gone()
-        }else{
+        } else {
             peisongfanshi.setBackgroundColor(Color.parseColor("#FF4747"))
             peisongfanshi.text = "配送"
         }
@@ -349,17 +349,66 @@ class OrderListAdapter :
             viOrderDivide.visibility = View.GONE
         }
 
-        //如果是商家自己送的，显示部分信息
-        if (item.shippingType == IConstant.SHIP_TYPE_LOCAL) {
-            helper.setGone(R.id.tvMapNav, true)
-            helper.setGone(R.id.tvFullAddressTitle, true)
-            helper.setGone(R.id.tvFullAddress, true)
-            helper.setGone(R.id.orderName, true)
-            helper.setGone(R.id.orderPhotoNumber, true)
-            helper.setText(R.id.orderName,item.shipName)
-            helper.setText(R.id.orderPhotoNumber,item.shipMobile)
-            //item.orderStatusText
+        //根据配送方式显示地址等信息
+        //RecyclerView是Item复用的
+        when (item.shippingType) {
+            IConstant.SHIP_TYPE_LOCAL -> {
+                //商家配送
+                helper.setGone(R.id.zitidanzhuangtai, false)
+                helper.setGone(R.id.tvMapNav, true)
+                helper.setGone(R.id.tvFullAddressTitle, true)
+                helper.setGone(R.id.tvFullAddress, true)
+            }
+            IConstant.SHIP_TYPE_GLOBAL -> {
+                helper.setGone(R.id.zitidanzhuangtai, true)
+                val temp = when (item.shipStatus) {
+                    "SHOP_INVENTORY" -> {
+                        "商家备货中"
+                    }
+                    "WAIT_RIDER_RECEIVING_ORDER" -> {
+                        "待骑手接单"
+                    }
+                    "WAIT_RIDER_DELIVER" -> {
+                        "待骑手取货"
+                    }
+                    "SHIP_NO" -> {
+                        "未发货"
+                    }
+                    "SHIP_YES" -> {
+                        "配送中"
+                    }
+                    "SHIP_ROG" -> {
+                        "已送达"
+                    }
+                    "SHIP_CANCEL" -> {
+                        "取消发货"
+                    }
+                    else -> {
+                        ""
+                    }
+                }
+                helper.setText(R.id.zitidanzhuangtai, "配送状态：$temp")
+                helper.setGone(R.id.tvMapNav, false)
+                helper.setGone(R.id.tvFullAddressTitle, true)
+                helper.setGone(R.id.tvFullAddress, true)
+            }
+            IConstant.SHIP_TYPE_SELF -> {
+                //自提
+                helper.setGone(R.id.zitidanzhuangtai, false)
+                helper.setGone(R.id.tvMapNav, false)
+                //不显示地址
+                helper.setGone(R.id.tvFullAddressTitle, false)
+                helper.setGone(R.id.tvFullAddress, false)
+            }
         }
+        if (item.shipName?.isNotBlank() == true) {
+            helper.setText(R.id.orderName, item.shipName)
+        } else {
+            helper.setText(R.id.orderName, item.member_nick_name)
+        }
+
+        helper.setText(R.id.orderPhotoNumber, item.shipMobile)
+
     }
 
 }

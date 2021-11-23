@@ -36,6 +36,8 @@ data class OrderList(
     var memberId: Int?,
     @SerializedName("member_name")
     var memberName: String?,
+    @SerializedName("member_nick_name")
+    var member_nick_name: String?,
     @SerializedName("order_amount")
     var orderAmount: Double?,
     @SerializedName("order_id")
