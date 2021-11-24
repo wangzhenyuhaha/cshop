@@ -563,13 +563,18 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             //上传图片，成功后调用接口
             val urlList =
                 ArrayList(listOf(pictureAddress))
+            val id = try {
+                (goods_id ?: "0").toInt()
+            } catch (e: Exception) {
+                0
+            }
 
             uploadImages(urlList, {
                 //失败了，nothing to do
             }, {
                 scanCode.let { it1 ->
                     mPresenter?.addGoodsSkuBarCodeLog(
-                        goods_id.toString(),
+                        id,
                         it1,
                         urlList[0]
                     )

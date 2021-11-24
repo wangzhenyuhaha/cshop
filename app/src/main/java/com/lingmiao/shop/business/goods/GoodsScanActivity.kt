@@ -389,7 +389,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
     override fun addGoodsSkuBarCodeLog(bar_code: String, url: String) {
         mCoroutine.launch {
 
-            val resp = GoodsRepository.addGoodsSkuBarCodeLog("", bar_code, url)
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog(0, bar_code, url)
             handleResponse(resp) {
                 //nothing to do
             }
@@ -501,5 +501,5 @@ data class GoodsSkuBarcodeLog(
     var bar_code: String? = null,
     var img_url: String? = null,
     //商品ID
-    var id: String? = null
+    var goods_id: Int? = null
 )

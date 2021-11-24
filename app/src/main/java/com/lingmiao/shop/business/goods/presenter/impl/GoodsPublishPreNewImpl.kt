@@ -272,7 +272,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    override fun addGoodsSkuBarCodeLog(id: String, bar_code: String, url: String) {
+    override fun addGoodsSkuBarCodeLog(id: Int, bar_code: String, url: String) {
         mCoroutine.launch {
 
             val resp = GoodsRepository.addGoodsSkuBarCodeLog(id, bar_code, url)

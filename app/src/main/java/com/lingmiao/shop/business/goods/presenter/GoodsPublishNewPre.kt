@@ -18,7 +18,7 @@ interface GoodsPublishNewPre : GoodsPublishPre {
     fun showGoodsWeightPop(id: String?);
 
     //添加条形码扫描记录
-    fun addGoodsSkuBarCodeLog(id:String,bar_code: String, url: String)
+    fun addGoodsSkuBarCodeLog(id: Int, bar_code: String, url: String)
 
     fun showGoodsUnitPop(id: String?);
 
