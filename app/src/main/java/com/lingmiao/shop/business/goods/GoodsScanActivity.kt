@@ -89,6 +89,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             beepManager?.playBeepSoundAndVibrate()
             id.value = result.text
             mPresenter?.search(result.text)
+            scanType  = 1
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {
@@ -100,9 +101,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private var adapter: GoodsAdapter? = null
 
-    //当前扫码发现的商品是否已经添加进店铺
-    private var hasAdd: Boolean = false
-
     //商品条形码
     private val id: MutableLiveData<String> = MutableLiveData<String>()
 
@@ -111,21 +109,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private val viewVisibility = MutableLiveData<Int>()
 
-    //0 条形码   1  商品名称
-    private val typeSearch = MutableLiveData<Int>().also {
-        it.value = 0
-    }
-
-    //弹出的东西
-    private var pop: ApplyInfoPop? = null
-
-    //经营区域  1  2  3
-    private val typeList = listOf("条形码", "商品名称")
-
-    override fun initBundles() {
-        super.initBundles()
-        pop = ApplyInfoPop(this)
-    }
+    //当前查询条形码方式  1 扫码查询   2  输入查询
+    private var scanType: Int = 1
 
     override fun initView() {
 
@@ -144,38 +129,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 if (it.isNotEmpty()) {
                     id.value = it
                     mPresenter?.search(it)
+                    scanType =2
                 }
             }
-        }
-
-        val content1 = "1.中心库可能存在相同商品，但未绑定当前条形码，可以去搜索中心库商品"
-        val builder1 = SpannableStringBuilder(content1)
-        val blueSpan1 = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder1.setSpan(blueSpan1, 27, 29, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.noResult1.text = builder1
-
-        val content2 = "2.未查询到该条形码所属商品，可以去手动添加商品"
-        val builder2 = SpannableStringBuilder(content2)
-        val blueSpan2 = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder2.setSpan(blueSpan2, 18, 22, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.noResult2.text = builder2
-
-
-        val content3 = "3.添加其他商品，重新扫描条形码"
-        val builder3 = SpannableStringBuilder(content3)
-        val blueSpan3 = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder3.setSpan(blueSpan3, 9, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.noResult3.text = builder3
-
-        mBinding.noResult1.singleClick {
-            GoodsSearchCenterActivity.openActivity(this)
-        }
-        mBinding.noResult2.singleClick {
-            context?.let { it1 -> GoodsPublishNewActivity.newPublish(it1, 0, scan = true) }
-        }
-
-        mBinding.noResult3.singleClick {
-            viewVisibility.value = 0
         }
 
         mBinding.goodsCheckSubmit.singleClick {
@@ -188,19 +144,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.goodsRV.initAdapter(it)
         }
 
-        mBinding.type.singleClick {
-//            pop?.apply {
-//                setList(typeList)
-//                setTitle("搜索模式")
-//                setType(CompanyInfoFragment.REG_MONEY)
-//                showPopupWindow()
-//            }
-        }
-
         viewVisibility.observe(this, {
             //goodsSearchLayout 条形码显示区域
             //scanView扫描区域
-            //noResult跳转到添加商品
             //scan_goods中心库查询到商品后信息展示
             //view 填充
             //title  店铺已有的商品
@@ -210,7 +156,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 0 -> {
                     mBinding.goodsSearchLayout.gone()
                     mBinding.scanView.visiable()
-                    mBinding.noResult.gone()
                     mBinding.scanGoods.gone()
                     mBinding.view.gone()
                     mBinding.title.gone()
@@ -219,45 +164,76 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
-                    //保存下扫码获得的图片
-                    try {
-                        //这是一个Fragment
-                        CheckPermission.request(
-                            context!!,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        ) { allGranted, _ ->
-                            if (allGranted) {
-                                //目标文件
-                                var externalFileRootDir: File? = getExternalFilesDir(null)
-                                do {
-                                    externalFileRootDir =
-                                        Objects.requireNonNull(externalFileRootDir)?.parentFile
-                                } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
-                                        "/Android"
-                                    ) == true
-                                )
-                                val saveDir: String? =
-                                    Objects.requireNonNull(externalFileRootDir)?.absolutePath
-                                val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
+                    //如果是输入条形码，不需要保存图片
+                    if (scanType ==2){
+                        hideDialogLoading()
+                        //跳转到新增商品界面
+                        context?.let { it1 ->
+                            GoodsPublishNewActivity.newPublish(
+                                it1,
+                                0,
+                                scan = true,
+                                scanCode = id.value ?: ""
+                            )
+                        }
+                    }else{
+                        //保存下扫码获得的图片
+                        try {
+                            //这是一个Fragment
+                            CheckPermission.request(
+                                context!!,
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.READ_EXTERNAL_STORAGE
+                            ) { allGranted, _ ->
+                                if (allGranted) {
+                                    //目标文件
+                                    var externalFileRootDir: File? = getExternalFilesDir(null)
+                                    do {
+                                        externalFileRootDir =
+                                            Objects.requireNonNull(externalFileRootDir)?.parentFile
+                                    } while (Objects.requireNonNull(externalFileRootDir)?.absolutePath?.contains(
+                                            "/Android"
+                                        ) == true
+                                    )
+                                    val saveDir: String? =
+                                        Objects.requireNonNull(externalFileRootDir)?.absolutePath
+                                    val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
 
-                                val destinationFile = File(savePath, "test_scan.png")
-                                val bos =
-                                    BufferedOutputStream(FileOutputStream(destinationFile))
-                                bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
-                                bos.flush()
-                                bos.close()
+                                    val destinationFile = File(savePath, "test_scan.png")
+                                    val bos =
+                                        BufferedOutputStream(FileOutputStream(destinationFile))
+                                    bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
+                                    bos.flush()
+                                    bos.close()
 
 
-                                //上传图片，成功后调用接口
-                                val urlList = ArrayList(listOf<String>("${savePath}/test_scan.png"))
+                                    //上传图片，成功后调用接口
+                                    val urlList = ArrayList(listOf<String>("${savePath}/test_scan.png"))
 
-                                uploadImages(urlList, {
-                                    //失败了，nothing to do
-                                }, {
-                                    id.value?.let { it1 -> mPresenter?.addGoodsSkuBarCodeLog(it1,urlList[0]) }
-                                })
+                                    uploadImages(urlList, {
+                                        //失败了，nothing to do
+                                    }, {
+                                        id.value?.let { it1 ->
+                                            mPresenter?.addGoodsSkuBarCodeLog(
+                                                it1,
+                                                urlList[0]
+                                            )
+                                        }
+                                    })
+                                }
+                                hideDialogLoading()
+                                //跳转到新增商品界面
+                                context?.let { it1 ->
+                                    GoodsPublishNewActivity.newPublish(
+                                        it1,
+                                        0,
+                                        scan = true,
+                                        scanCode = id.value ?: ""
+                                    )
+                                }
                             }
+
+                        } catch (e: Exception) {
                             hideDialogLoading()
                             //跳转到新增商品界面
                             context?.let { it1 ->
@@ -269,19 +245,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                 )
                             }
                         }
-
-                    } catch (e: Exception) {
-                        hideDialogLoading()
-                        //跳转到新增商品界面
-                        context?.let { it1 ->
-                            GoodsPublishNewActivity.newPublish(
-                                it1,
-                                0,
-                                scan = true,
-                                scanCode = id.value ?: ""
-                            )
-                        }
                     }
+
 
 
                 }
@@ -289,7 +254,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 2 -> {
                     mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
-                    mBinding.noResult.gone()
                     mBinding.scanGoods.visiable()
                     mBinding.view.visiable()
                     mBinding.title.gone()
@@ -299,7 +263,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 3 -> {
                     mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
-                    mBinding.noResult.gone()
                     mBinding.scanGoods.visiable()
                     mBinding.view.gone()
                     mBinding.title.visiable()
@@ -308,37 +271,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         })
 
-        pop?.liveData?.observe(this, {
-            typeSearch.value = it
-            mBinding.type.text = typeList[it]
-            mBinding.inputEdt.text = if (it == 0) "搜索条形码" else "搜索商品名称"
-            pop?.dismiss()
-        })
-
-        mBinding.inputEdt.setOnClickListener {
-            if (typeSearch.value == 0) {
-                //条形码
-                DialogUtils.showInputDialog(
-                    this,
-                    "条形码",
-                    "",
-                    "请输入",
-                    id.value ?: "",
-                    "取消",
-                    "查询",
-                    null
-                ) {
-                    if (it.isNotEmpty()) {
-                        mPresenter?.search(it)
-                        id.value = it
-                    }
-                }
-
-            } else {
-                //商品名称
-                GoodsSearchCenterActivity.openActivity(this)
-            }
-        }
     }
 
     private fun initBarCode() {
@@ -383,8 +315,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     override fun onScanSearchSuccess(data: ScanGoods) {
         mBinding.zxingBarcodeScanner.pauseAndWait()
-        hasAdd = data.goodsSkuDOList?.isEmpty() != true
-
 
         if (data.centerGoodsSkuDO?.goods_name == null) {
             if (data.goodsSkuDOList?.isEmpty() == true) {
@@ -421,16 +351,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     override fun onScanSearchFailed() {
         showToast("查询失败")
         viewVisibility.value = 0
-    }
-
-    override fun onAddSuccess() {
-        showToast("添加成功")
-        mBinding.noResult.gone()
-        mBinding.scanGoods.gone()
-        mBinding.view.gone()
-        mBinding.title.gone()
-        mBinding.goodsRV.gone()
-        mBinding.zxingBarcodeScanner.resume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -502,22 +422,17 @@ interface GoodsScanActivityPresenter : BasePresenter {
     //查询商品
     fun search(id: String)
 
-    //添加商品
-    fun add(ids: String, categoryId: String?, shopCatId: String?, is_force: Int?)
-
     interface View : BaseView {
 
         fun onScanSearchSuccess(data: ScanGoods)
 
         fun onScanSearchFailed()
-        fun onAddSuccess()
     }
 }
 
 
 class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) : BasePreImpl(view),
     GoodsScanActivityPresenter {
-
 
     override fun search(id: String) {
         mCoroutine.launch {
@@ -533,25 +448,12 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
         }
     }
 
-    override fun add(ids: String, categoryId: String?, shopCatId: String?, is_force: Int?) {
-        mCoroutine.launch {
-            view.showDialogLoading()
-
-            val resp = GoodsRepository.addGoodsOfCenter(ids, categoryId, shopCatId, is_force)
-
-            handleResponse(resp) {
-                view.onAddSuccess()
-            }
-            view.hideDialogLoading()
-        }
-    }
-
     override fun addGoodsSkuBarCodeLog(bar_code: String, url: String) {
         mCoroutine.launch {
 
-            val resp = GoodsRepository.addGoodsSkuBarCodeLog(bar_code,url)
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog(bar_code, url)
             handleResponse(resp) {
-               //nothing to do
+                //nothing to do
             }
         }
     }
