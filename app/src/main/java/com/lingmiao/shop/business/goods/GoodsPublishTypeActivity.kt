@@ -17,8 +17,8 @@ Desc        : 商品发布之类型选择
  **/
 class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPublishTypePre.View {
 
-    private var mList : MutableList<CategoryVO>? =null;
-    private var mTypeAdapter : GoodsPublishTypeAdapter?=null;
+    private var mList: MutableList<CategoryVO>? = null;
+    private var mTypeAdapter: GoodsPublishTypeAdapter? = null;
 
     override fun createPresenter(): GoodsPublishTypePre {
         return GoodsPublishTypePreImpl(this, this);
@@ -45,7 +45,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         mTypeAdapter = GoodsPublishTypeAdapter(mList).apply {
             setOnItemChildClickListener { adapter, view, position ->
                 val viewType = adapter.getItemViewType(position);
-                if(viewType == AreasAdapter.TYPE_LEVEL_0) {
+                if (viewType == AreasAdapter.TYPE_LEVEL_0) {
 //                    val bItem = adapter.data[position] as CategoryVO;
 //                    if(view.id == R.id.expandIv || view.id == R.id.titleLL) {
 //                        if(bItem.isExpanded) {
@@ -54,18 +54,18 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
 //                            mTypeAdapter?.expand(position, false)
 //                        }
 //                    }
-                    if(position == 0) {
+                    if (position == 0) {
                         GoodsManagerActivity.type(context, "0");
                     } else {
-                        GoodsPublishNewActivity.newPublish(context, 0);
+                        GoodsPublishNewActivity.newPublish(context)
                     }
-                } else if(viewType == AreasAdapter.TYPE_LEVEL_1) {
+                } else if (viewType == AreasAdapter.TYPE_LEVEL_1) {
                     val bItem = adapter.data[position] as CategoryVO
 
-                    if(bItem?.parentLevel == 0) {
+                    if (bItem?.parentLevel == 0) {
                         GoodsManagerActivity.type(context, "0");
                     } else {
-                        GoodsPublishNewActivity.newPublish(context, 0);
+                        GoodsPublishNewActivity.newPublish(context)
                     }
                 }
             }
@@ -80,7 +80,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
     }
 
     private fun initData() {
-        mList  = mutableListOf();
+        mList = mutableListOf();
     }
 
     fun addFirstLevel() {
@@ -105,7 +105,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         item.name = "商品中心库";
         item.showLevel = 0;
 
-        for(it in list) {
+        for (it in list) {
             it.showLevel = 1;
             it.parentLevel = 0;
             item.addSubItem(it);
@@ -120,7 +120,7 @@ class GoodsPublishTypeActivity : BaseActivity<GoodsPublishTypePre>(), GoodsPubli
         item2.categoryId = "2";
         item2.name = "自有商品";
         item2.showLevel = 0;
-        for(it in list) {
+        for (it in list) {
             it.showLevel = 1;
             it.parentLevel = 1;
             item2.addSubItem(it);

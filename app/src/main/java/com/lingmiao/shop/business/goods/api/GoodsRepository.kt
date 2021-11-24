@@ -574,8 +574,9 @@ object GoodsRepository {
     }
 
     //添加条形码扫描记录
-    suspend fun addGoodsSkuBarCodeLog(bar_code: String, url: String): HiResponse<Unit> {
-        return apiService.addGoodsSkuBarCodeLog(GoodsSkuBarcodeLog(bar_code, url)).awaitHiResponse()
+    suspend fun addGoodsSkuBarCodeLog(id: String, bar_code: String, url: String): HiResponse<Unit> {
+        return apiService.addGoodsSkuBarCodeLog(GoodsSkuBarcodeLog(bar_code, url, id))
+            .awaitHiResponse()
     }
 
     //从中心库查询商品

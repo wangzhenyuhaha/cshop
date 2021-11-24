@@ -6,11 +6,15 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
+import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.utils.exts.*
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
+import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
@@ -31,6 +35,8 @@ import kotlinx.android.synthetic.main.goods_include_publish_section6.*
 import kotlinx.android.synthetic.main.goods_include_publish_section8.*
 import kotlinx.android.synthetic.main.goods_include_publish_section_package.*
 import kotlinx.android.synthetic.main.goods_include_publish_section_v_time.*
+import kotlinx.coroutines.*
+import java.io.File
 
 /**
  * Author : Elson
@@ -54,14 +60,14 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //商品good_id
         const val KEY_GOODS_ID = "KEY_GOODS_ID"
 
-        //
-        private const val KEY_GOODS_TYPE = "KEY_GOODS_TYPE"
-
         //是否从扫码处跳转
         private const val KEY_SCAN = "KEY_SCAN"
 
         //扫码后获得的条形码
         private const val KEY_SCAN_CODE = "KEY_SCAN_CODE"
+
+        //保存的商品图片地址
+        private const val KEY_PICTURE_ADDRESS = "KEY_PICTURE_ADDRESS"
 
         const val REQUEST_CODE_VIDEO = 1000
         const val REQUEST_CODE_DELIVERY = 1001
@@ -78,11 +84,16 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
 
         //处理新增商品
-        fun newPublish(context: Context, type: Int?, scan: Boolean = false, scanCode: String = "") {
+        fun newPublish(
+            context: Context,
+            scan: Boolean = false,
+            scanCode: String = "",
+            pictureAddress: String = ""
+        ) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
-            intent.putExtra(KEY_GOODS_TYPE, type)
             intent.putExtra(KEY_SCAN, scan)
             intent.putExtra(KEY_SCAN_CODE, scanCode)
+            intent.putExtra(KEY_PICTURE_ADDRESS, pictureAddress)
             context.startActivity(intent)
         }
     }
@@ -93,8 +104,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //是否从扫码处跳转 true表示是
     private var scan: Boolean = false
 
-    //是否启用根据商品名的模糊查询，scan为true。goods_id为null启用
+    //是否启用根据商品名的模糊查询，scan为true。goods_id为null启用,此时表示扫码条形码或者搜索条形码结果没有
+    //查询到商品，跳转到该页面，这时还需要将商品的图片和条形码以及返回的商品ID上传到后台
     private var searchGoods: Boolean = false
+
+    //图片的保存地址
+    private var pictureAddress: String = ""
 
     //商品的条形码
     private var scanCode: String = ""
@@ -110,7 +125,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     //当前的商品名
     private var goodsName: String = ""
-
 
     //显示模糊查询商品的RecyclerView
     private var adapter: SimpleAdapter? = null
@@ -137,6 +151,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
         //商品的条形码
         scanCode = intent.getStringExtra(KEY_SCAN_CODE) ?: ""
+        pictureAddress = intent.getStringExtra(KEY_PICTURE_ADDRESS) ?: ""
     }
 
     override fun createPresenter() = GoodsPublishPreNewImpl(this, this)
@@ -538,10 +553,68 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     }
 
 
-
-
     override fun searchGoodsFailed() {
         searchGoodsLayout.gone()
+    }
+
+    override fun loadGoodsInfo(goods_id: String?) {
+        if (searchGoods && pictureAddress.isNotBlank()) {
+
+            //上传图片，成功后调用接口
+            val urlList =
+                ArrayList(listOf(pictureAddress))
+
+            uploadImages(urlList, {
+                //失败了，nothing to do
+            }, {
+                scanCode.let { it1 ->
+                    mPresenter?.addGoodsSkuBarCodeLog(
+                        goods_id.toString(),
+                        it1,
+                        urlList[0]
+                    )
+                }
+            })
+        }
+    }
+
+
+    //上传图片
+    private fun uploadImages(list: ArrayList<String>, fail: () -> Unit, success: () -> Unit) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
+            // 多张图片并行上传
+            list.forEach {
+                val request = async {
+                    if (it.isNetUrl()) {
+                        HiResponse(0, "", FileResponse("", "", it))
+                    } else {
+                        CommonRepository.uploadFile(
+                            File(it),
+                            true,
+                            CommonRepository.SCENE_GOODS
+                        )
+                    }
+                }
+                requestList.add(request)
+            }
+
+            // 多个接口相互等待
+            val respList = requestList.awaitAll()
+            var isAllSuccess = true
+            respList.forEachIndexed { index, it ->
+                if (it.isSuccess) {
+                    list[index] = it.data?.url ?: ""
+                } else {
+                    isAllSuccess = false
+                }
+            }
+            if (isAllSuccess) {
+                success.invoke()
+            } else {
+                fail.invoke()
+            }
+        }
     }
 
     override fun onUpdateSpeed(id: String?, name: String?) {

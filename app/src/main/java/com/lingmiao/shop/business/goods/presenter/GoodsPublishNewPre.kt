@@ -17,6 +17,9 @@ interface GoodsPublishNewPre : GoodsPublishPre {
 
     fun showGoodsWeightPop(id: String?);
 
+    //添加条形码扫描记录
+    fun addGoodsSkuBarCodeLog(id:String,bar_code: String, url: String)
+
     fun showGoodsUnitPop(id: String?);
 
     fun loadGoodsInfoFromCenter(id: String)
@@ -28,6 +31,9 @@ interface GoodsPublishNewPre : GoodsPublishPre {
 
         //搜索商品失败
         fun searchGoodsFailed()
+
+        //上传商品图片数据
+        fun loadGoodsInfo(goods_id: String?)
 
         fun onUpdateSpeed(id: String?, name: String?);
 

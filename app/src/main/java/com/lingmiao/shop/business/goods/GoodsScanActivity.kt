@@ -3,12 +3,7 @@ package com.lingmiao.shop.business.goods
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Environment
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -24,7 +19,6 @@ import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
 import com.james.common.base.BaseView
 import com.james.common.netcore.networking.http.core.HiResponse
-import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.*
 import com.james.common.utils.permission.interceptor.CameraInterceptor
 import com.james.common.utils.permissionX.CheckPermission
@@ -36,13 +30,10 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
-import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.coroutines.*
-import java.io.BufferedInputStream
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -89,7 +80,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             beepManager?.playBeepSoundAndVibrate()
             id.value = result.text
             mPresenter?.search(result.text)
-            scanType  = 1
+            scanType = 1
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {
@@ -129,7 +120,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 if (it.isNotEmpty()) {
                     id.value = it
                     mPresenter?.search(it)
-                    scanType =2
+                    scanType = 2
                 }
             }
         }
@@ -165,18 +156,17 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
                     //如果是输入条形码，不需要保存图片
-                    if (scanType ==2){
+                    if (scanType == 2) {
                         hideDialogLoading()
                         //跳转到新增商品界面
                         context?.let { it1 ->
                             GoodsPublishNewActivity.newPublish(
                                 it1,
-                                0,
                                 scan = true,
                                 scanCode = id.value ?: ""
                             )
                         }
-                    }else{
+                    } else {
                         //保存下扫码获得的图片
                         try {
                             //这是一个Fragment
@@ -185,6 +175,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.READ_EXTERNAL_STORAGE
                             ) { allGranted, _ ->
+                                var temp = ""
                                 if (allGranted) {
                                     //目标文件
                                     var externalFileRootDir: File? = getExternalFilesDir(null)
@@ -205,30 +196,16 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                     bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
                                     bos.flush()
                                     bos.close()
-
-
-                                    //上传图片，成功后调用接口
-                                    val urlList = ArrayList(listOf<String>("${savePath}/test_scan.png"))
-
-                                    uploadImages(urlList, {
-                                        //失败了，nothing to do
-                                    }, {
-                                        id.value?.let { it1 ->
-                                            mPresenter?.addGoodsSkuBarCodeLog(
-                                                it1,
-                                                urlList[0]
-                                            )
-                                        }
-                                    })
+                                    temp = savePath
                                 }
                                 hideDialogLoading()
                                 //跳转到新增商品界面
                                 context?.let { it1 ->
                                     GoodsPublishNewActivity.newPublish(
                                         it1,
-                                        0,
                                         scan = true,
-                                        scanCode = id.value ?: ""
+                                        scanCode = id.value ?: "",
+                                        pictureAddress = "${temp}/test_scan.png"
                                     )
                                 }
                             }
@@ -239,14 +216,12 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                             context?.let { it1 ->
                                 GoodsPublishNewActivity.newPublish(
                                     it1,
-                                    0,
                                     scan = true,
                                     scanCode = id.value ?: ""
                                 )
                             }
                         }
                     }
-
 
 
                 }
@@ -372,43 +347,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
-    //上传图片
-    private fun uploadImages(list: ArrayList<String>, fail: () -> Unit, success: () -> Unit) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val requestList = ArrayList<Deferred<HiResponse<FileResponse>>>()
-            // 多张图片并行上传
-            list.forEach {
-                val request = async {
-                    if (it.isNetUrl()) {
-                        HiResponse(0, "", FileResponse("", "", it))
-                    } else {
-                        CommonRepository.uploadFile(
-                            File(it),
-                            true,
-                            CommonRepository.SCENE_GOODS
-                        )
-                    }
-                }
-                requestList.add(request)
-            }
-
-            // 多个接口相互等待
-            val respList = requestList.awaitAll()
-            var isAllSuccess = true
-            respList.forEachIndexed { index, it ->
-                if (it.isSuccess) {
-                    list[index] = it.data?.url ?: ""
-                } else {
-                    isAllSuccess = false
-                }
-            }
-            if (isAllSuccess) {
-                success.invoke()
-            } else {
-                fail.invoke()
-            }
-        }
-    }
 }
 
 
@@ -451,7 +389,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
     override fun addGoodsSkuBarCodeLog(bar_code: String, url: String) {
         mCoroutine.launch {
 
-            val resp = GoodsRepository.addGoodsSkuBarCodeLog(bar_code, url)
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog("", bar_code, url)
             handleResponse(resp) {
                 //nothing to do
             }
@@ -561,5 +499,7 @@ data class GoodsSkuDO(
 
 data class GoodsSkuBarcodeLog(
     var bar_code: String? = null,
-    var img_url: String? = null
+    var img_url: String? = null,
+    //商品ID
+    var id: String? = null
 )
