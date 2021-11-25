@@ -292,7 +292,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         mBinding.zxingBarcodeScanner.pauseAndWait()
 
         if (data.centerGoodsSkuDO?.goods_name == null) {
-            if (data.goodsSkuDOList?.isEmpty() == true) {
+            if (data.goodsSkuDOList?.isEmpty() == true || data.goodsSkuDOList == null) {
                 //中心库未查询到商品，但店铺也没有
                 viewVisibility.value = 1
             } else {

@@ -53,7 +53,7 @@ interface GoodsApiService {
         @Query(value = "page_no") page_no: Int,
         @Query(value = "page_size") page_size: Int,
         @Query(value = "goods_name") goods_name: String
-    ): Call<CenterGoods>
+    ): Call<PageVO<Data>>
 
     /**
      * 查询预警商品列表

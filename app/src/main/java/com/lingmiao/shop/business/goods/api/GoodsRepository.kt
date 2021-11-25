@@ -310,7 +310,7 @@ object GoodsRepository {
         pageNo: Int,
         pageSize: Int = 20,
         goodsName: String
-    ): HiResponse<CenterGoods> {
+    ): HiResponse<PageVO<Data>> {
         return apiService.loadGoodsListFromCenter(pageNo, pageSize, goodsName).awaitHiResponse()
     }
 

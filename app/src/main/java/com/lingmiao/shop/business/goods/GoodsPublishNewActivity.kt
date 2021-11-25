@@ -49,7 +49,7 @@ class SimpleAdapter :
 
     override fun convert(helper: BaseViewHolder, goodsVO: Data?) {
         goodsVO?.apply {
-            helper.setText(R.id.goodsNameTv, goods_name)
+            helper.setText(R.id.goodsNameTv, goodsName)
         }
     }
 }
@@ -231,8 +231,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
         adapter?.setOnItemClickListener { adapter, _, position ->
             val item = adapter.data[position] as Data
-            goodsName = item.goods_name
-            mPresenter.loadGoodsInfoFromCenter(item.goods_id.toString())
+            goodsName = item.goodsName.toString()
+            mPresenter.loadGoodsInfoFromCenter(item.goodsId.toString())
             searchGoodsLayout.gone()
         }
 

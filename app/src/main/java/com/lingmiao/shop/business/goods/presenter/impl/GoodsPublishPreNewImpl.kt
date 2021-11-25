@@ -72,7 +72,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 )
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
-                view.searchGoodsSuccess(goodsList)
+                if (goodsList != null) {
+                    view.searchGoodsSuccess(goodsList)
+                }
             } else {
                 view.searchGoodsFailed()
             }
