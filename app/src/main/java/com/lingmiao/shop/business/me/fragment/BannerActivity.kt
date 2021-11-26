@@ -20,7 +20,7 @@ class BannerActivity : BaseVBActivity<ActivityBannerBinding, BannerActivityPrese
 
     private val bannerArray = listOf(
         BannerItem(
-            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142218.jpg",
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211126150741.jpg",
             0
         ),
         BannerItem(
