@@ -135,7 +135,7 @@ class ScanOrderActivity : BaseActivity<ScanOrderPresenter>(), ScanOrderPresenter
         zxing_barcode_scanner?.pauseAndWait()
         data?.apply {
             val intent =
-                Intent(context, OrderDetailActivity::class.java)
+                Intent(context, SelfOrderDetailActivity::class.java)
             intent.putExtra("orderId", data.sn)
             startActivity(intent)
         }

@@ -3,15 +3,12 @@ package com.lingmiao.shop.business.goods
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Environment
-import android.text.Spannable
-import android.text.SpannableStringBuilder
-import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.zxing.BarcodeFormat
@@ -21,11 +18,8 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
 import com.james.common.base.BaseView
-import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.doIntercept
-import com.james.common.utils.exts.gone
-import com.james.common.utils.exts.singleClick
-import com.james.common.utils.exts.visiable
+import com.james.common.netcore.networking.http.core.HiResponse
+import com.james.common.utils.exts.*
 import com.james.common.utils.permission.interceptor.CameraInterceptor
 import com.james.common.utils.permissionX.CheckPermission
 import com.journeyapps.barcodescanner.BarcodeCallback
@@ -33,17 +27,18 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.CommonRepository
+import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
-import kotlinx.coroutines.launch
-import java.io.BufferedInputStream
+import kotlinx.coroutines.*
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
@@ -85,6 +80,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             beepManager?.playBeepSoundAndVibrate()
             id.value = result.text
             mPresenter?.search(result.text)
+            scanType = 1
         }
 
         override fun possibleResultPoints(resultPoints: List<ResultPoint>) {
@@ -96,9 +92,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private var adapter: GoodsAdapter? = null
 
-    //当前扫码发现的商品是否已经添加进店铺
-    private var hasAdd: Boolean = false
-
     //商品条形码
     private val id: MutableLiveData<String> = MutableLiveData<String>()
 
@@ -107,21 +100,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private val viewVisibility = MutableLiveData<Int>()
 
-    //0 条形码   1  商品名称
-    private val typeSearch = MutableLiveData<Int>().also {
-        it.value = 0
-    }
-
-    //弹出的东西
-    private var pop: ApplyInfoPop? = null
-
-    //经营区域  1  2  3
-    private val typeList = listOf("条形码", "商品名称")
-
-    override fun initBundles() {
-        super.initBundles()
-        pop = ApplyInfoPop(this)
-    }
+    //当前查询条形码方式  1 扫码查询   2  输入查询
+    private var scanType: Int = 1
 
     override fun initView() {
 
@@ -140,39 +120,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 if (it.isNotEmpty()) {
                     id.value = it
                     mPresenter?.search(it)
+                    scanType = 2
                 }
             }
-        }
-
-
-        val content1 = "1.中心库可能存在相同商品，但未绑定当前条形码，可以去搜索中心库商品"
-        val builder1 = SpannableStringBuilder(content1)
-        val blueSpan1 = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder1.setSpan(blueSpan1, 27, 29, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.noResult1.text = builder1
-
-        val content2 = "2.未查询到该条形码所属商品，可以去手动添加商品"
-        val builder2 = SpannableStringBuilder(content2)
-        val blueSpan2 = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder2.setSpan(blueSpan2, 18, 22, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.noResult2.text = builder2
-
-
-        val content3 = "3.添加其他商品，重新扫描条形码"
-        val builder3 = SpannableStringBuilder(content3)
-        val blueSpan3 = ForegroundColorSpan(Color.parseColor("#3870EA"))
-        builder3.setSpan(blueSpan3, 9, 13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-        mBinding.noResult3.text = builder3
-
-        mBinding.noResult1.singleClick {
-            GoodsSearchCenterActivity.openActivity(this)
-        }
-        mBinding.noResult2.singleClick {
-            context?.let { it1 -> GoodsPublishNewActivity.newPublish(it1, 0, scan = true) }
-        }
-
-        mBinding.noResult3.singleClick {
-            viewVisibility.value = 0
         }
 
         mBinding.goodsCheckSubmit.singleClick {
@@ -185,19 +135,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.goodsRV.initAdapter(it)
         }
 
-        mBinding.type.singleClick {
-//            pop?.apply {
-//                setList(typeList)
-//                setTitle("搜索模式")
-//                setType(CompanyInfoFragment.REG_MONEY)
-//                showPopupWindow()
-//            }
-        }
-
         viewVisibility.observe(this, {
             //goodsSearchLayout 条形码显示区域
             //scanView扫描区域
-            //noResult跳转到添加商品
             //scan_goods中心库查询到商品后信息展示
             //view 填充
             //title  店铺已有的商品
@@ -207,7 +147,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 0 -> {
                     mBinding.goodsSearchLayout.gone()
                     mBinding.scanView.visiable()
-                    mBinding.noResult.gone()
                     mBinding.scanGoods.gone()
                     mBinding.view.gone()
                     mBinding.title.gone()
@@ -216,24 +155,28 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
-//                    mBinding.goodsSearchLayout.visiable()
-//                    mBinding.scanView.gone()
-//                    mBinding.noResult.visiable()
-//                    mBinding.scanGoods.gone()
-//                    mBinding.view.visiable()
-//                    mBinding.title.gone()
-//                    mBinding.goodsRV.gone()
-
-                    //保存下扫码获得的图片
-                    try {
+                    //如果是输入条形码，不需要保存图片
+                    if (scanType == 2) {
+                        hideDialogLoading()
+                        //跳转到新增商品界面
                         context?.let { it1 ->
-                            CheckPermission.request(
+                            GoodsPublishNewActivity.newPublish(
                                 it1,
+                                scan = true,
+                                scanCode = id.value ?: ""
+                            )
+                        }
+                    } else {
+                        //保存下扫码获得的图片
+                        try {
+                            //这是一个Fragment
+                            CheckPermission.request(
+                                context!!,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                 Manifest.permission.READ_EXTERNAL_STORAGE
                             ) { allGranted, _ ->
+                                var temp = ""
                                 if (allGranted) {
-
                                     //目标文件
                                     var externalFileRootDir: File? = getExternalFilesDir(null)
                                     do {
@@ -248,33 +191,44 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                     val savePath = saveDir + "/" + Environment.DIRECTORY_DOWNLOADS
 
                                     val destinationFile = File(savePath, "test_scan.png")
-
                                     val bos =
                                         BufferedOutputStream(FileOutputStream(destinationFile))
                                     bitmap?.compress(Bitmap.CompressFormat.PNG, 100, bos)
                                     bos.flush()
                                     bos.close()
+                                    temp = savePath
+                                }
+                                hideDialogLoading()
+                                //跳转到新增商品界面
+                                context?.let { it1 ->
+                                    GoodsPublishNewActivity.newPublish(
+                                        it1,
+                                        scan = true,
+                                        scanCode = id.value ?: "",
+                                        pictureAddress = "${temp}/test_scan.png"
+                                    )
                                 }
                             }
+
+                        } catch (e: Exception) {
+                            hideDialogLoading()
+                            //跳转到新增商品界面
+                            context?.let { it1 ->
+                                GoodsPublishNewActivity.newPublish(
+                                    it1,
+                                    scan = true,
+                                    scanCode = id.value ?: ""
+                                )
+                            }
                         }
-                    } catch (e: Exception) {
-                        //nothing to do
                     }
 
-                    context?.let { it1 ->
-                        GoodsPublishNewActivity.newPublish(
-                            it1,
-                            0,
-                            scan = true,
-                            scanCode = id.value ?: ""
-                        )
-                    }
+
                 }
                 //中心库查询到商品，但店铺中没有
                 2 -> {
                     mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
-                    mBinding.noResult.gone()
                     mBinding.scanGoods.visiable()
                     mBinding.view.visiable()
                     mBinding.title.gone()
@@ -284,7 +238,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 3 -> {
                     mBinding.goodsSearchLayout.visiable()
                     mBinding.scanView.gone()
-                    mBinding.noResult.gone()
                     mBinding.scanGoods.visiable()
                     mBinding.view.gone()
                     mBinding.title.visiable()
@@ -293,37 +246,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         })
 
-        pop?.liveData?.observe(this, {
-            typeSearch.value = it
-            mBinding.type.text = typeList[it]
-            mBinding.inputEdt.text = if (it == 0) "搜索条形码" else "搜索商品名称"
-            pop?.dismiss()
-        })
-
-        mBinding.inputEdt.setOnClickListener {
-            if (typeSearch.value == 0) {
-                //条形码
-                DialogUtils.showInputDialog(
-                    this,
-                    "条形码",
-                    "",
-                    "请输入",
-                    id.value ?: "",
-                    "取消",
-                    "查询",
-                    null
-                ) {
-                    if (it.isNotEmpty()) {
-                        mPresenter?.search(it)
-                        id.value = it
-                    }
-                }
-
-            } else {
-                //商品名称
-                GoodsSearchCenterActivity.openActivity(this)
-            }
-        }
     }
 
     private fun initBarCode() {
@@ -356,7 +278,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
-
     override fun onPause() {
         super.onPause()
         mBinding.zxingBarcodeScanner.setTorchOff()
@@ -369,25 +290,19 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     override fun onScanSearchSuccess(data: ScanGoods) {
         mBinding.zxingBarcodeScanner.pauseAndWait()
-        hasAdd = data.goodsSkuDOList?.isEmpty() != true
-
 
         if (data.centerGoodsSkuDO?.goods_name == null) {
-            if (data.goodsSkuDOList?.isEmpty() == true) {
+            if (data.goodsSkuDOList?.isEmpty() == true || data.goodsSkuDOList == null) {
                 //中心库未查询到商品，但店铺也没有
                 viewVisibility.value = 1
-
             } else {
                 //中心库未查询到商品，但店铺中已有
-                mBinding.noResult.gone()
-                mBinding.scanGoods.gone()
-                mBinding.view.gone()
-                mBinding.title.visiable()
-                mBinding.goodsRV.visiable()
-                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
-                adapter?.notifyDataSetChanged()
+                hideDialogLoading()
+                showToast("数据错误")
+                viewVisibility.value = 0
             }
         } else {
+            hideDialogLoading()
             if (data.goodsSkuDOList?.isEmpty() == true) {
                 viewVisibility.value = 2
             } else {
@@ -403,7 +318,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 data.goodsSkuDOList?.let { adapter?.replaceData(it) }
                 adapter?.notifyDataSetChanged()
             }
-
         }
 
 
@@ -412,16 +326,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     override fun onScanSearchFailed() {
         showToast("查询失败")
         viewVisibility.value = 0
-    }
-
-    override fun onAddSuccess() {
-        showToast("添加成功")
-        mBinding.noResult.gone()
-        mBinding.scanGoods.gone()
-        mBinding.view.gone()
-        mBinding.title.gone()
-        mBinding.goodsRV.gone()
-        mBinding.zxingBarcodeScanner.resume()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -448,20 +352,19 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
 interface GoodsScanActivityPresenter : BasePresenter {
 
+    //添加条形码扫描记录
+    fun addGoodsSkuBarCodeLog(bar_code: String, url: String)
+
     fun getBarcodeFormats(): Collection<BarcodeFormat>
 
     //查询商品
     fun search(id: String)
-
-    //添加商品
-    fun add(ids: String, categoryId: String?, shopCatId: String?, is_force: Int?)
 
     interface View : BaseView {
 
         fun onScanSearchSuccess(data: ScanGoods)
 
         fun onScanSearchFailed()
-        fun onAddSuccess()
     }
 }
 
@@ -480,20 +383,16 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             if (!resp.isSuccess) {
                 view.onScanSearchFailed()
             }
-            view.hideDialogLoading()
         }
     }
 
-    override fun add(ids: String, categoryId: String?, shopCatId: String?, is_force: Int?) {
+    override fun addGoodsSkuBarCodeLog(bar_code: String, url: String) {
         mCoroutine.launch {
-            view.showDialogLoading()
 
-            val resp = GoodsRepository.addGoodsOfCenter(ids, categoryId, shopCatId, is_force)
-
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog(0, bar_code, url)
             handleResponse(resp) {
-                view.onAddSuccess()
+                //nothing to do
             }
-            view.hideDialogLoading()
         }
     }
 
@@ -518,7 +417,6 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             BarcodeFormat.AZTEC
         )
     }
-
 
 }
 
@@ -597,4 +495,11 @@ data class GoodsSkuDO(
     var thumbnail: String? = null,
     var up_sku_id: Any? = null,
     var weight: Any? = null
+)
+
+data class GoodsSkuBarcodeLog(
+    var bar_code: String? = null,
+    var img_url: String? = null,
+    //商品ID
+    var goods_id: Int? = null
 )

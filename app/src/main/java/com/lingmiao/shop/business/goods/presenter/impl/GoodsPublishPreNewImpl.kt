@@ -2,24 +2,22 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import android.util.Log
-import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
+import com.james.common.base.BasePreImpl
+import com.james.common.exception.BizException
+import com.james.common.netcore.networking.http.core.HiResponse
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.*
 import com.lingmiao.shop.base.CommonRepository
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.bean.FileResponse
+import com.lingmiao.shop.business.goods.GoodsListActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsTypeVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
 import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
 import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
 import com.lingmiao.shop.business.goods.fragment.GoodsFragment
-import com.james.common.base.BasePreImpl
-import com.james.common.base.loadmore.core.IPage
-import com.james.common.exception.BizException
-import com.james.common.netcore.networking.http.core.HiResponse
-import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.*
-import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.GoodsListActivity
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -74,7 +72,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                 )
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
-                view.searchGoodsSuccess(goodsList)
+                if (goodsList != null) {
+                    view.searchGoodsSuccess(goodsList)
+                }
             } else {
                 view.searchGoodsFailed()
             }
@@ -274,14 +274,24 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
+    override fun addGoodsSkuBarCodeLog(id: Int, bar_code: String, url: String) {
+        mCoroutine.launch {
+
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog(id, bar_code, url)
+            handleResponse(resp) {
+
+            }
+        }
+    }
+
     private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int) {
         mCoroutine.launch {
-            Log.d("WZYUDI",goodsVO.bar_code.toString())
             val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
             view.hideDialogLoading()
             handleResponse(resp) {
 
                 if (scan) {
+                    view.loadGoodsInfo(resp.data.goodsId)
                     if (type == 0) {
                         //仅保存
                         DialogUtils.showDialog(ActivityUtils.getTopActivity(),

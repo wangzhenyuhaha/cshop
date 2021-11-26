@@ -14,6 +14,7 @@ import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
 import com.lingmiao.shop.business.goods.CenterGoods
 import com.lingmiao.shop.business.goods.Data
+import com.lingmiao.shop.business.goods.GoodsSkuBarcodeLog
 import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
@@ -307,9 +308,9 @@ object GoodsRepository {
      */
     suspend fun loadGoodsListByNameFromCenter(
         pageNo: Int,
-        pageSize:Int  = 20,
+        pageSize: Int = 20,
         goodsName: String
-    ): HiResponse<CenterGoods> {
+    ): HiResponse<PageVO<Data>> {
         return apiService.loadGoodsListFromCenter(pageNo, pageSize, goodsName).awaitHiResponse()
     }
 
@@ -570,6 +571,12 @@ object GoodsRepository {
     //使用条形码查询商品
     suspend fun searchGoodsOfCenter(id: String): HiResponse<ScanGoods> {
         return apiService.getCenterGoodsByScan(id).awaitHiResponse()
+    }
+
+    //添加条形码扫描记录
+    suspend fun addGoodsSkuBarCodeLog(id: Int, bar_code: String, url: String): HiResponse<Unit> {
+        return apiService.addGoodsSkuBarCodeLog(GoodsSkuBarcodeLog(bar_code, url, id))
+            .awaitHiResponse()
     }
 
     //从中心库查询商品

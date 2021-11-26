@@ -44,19 +44,18 @@
             android:layout_toEndOf="@id/tvOrderSn"
             android:src="@mipmap/order_number_copy" />
 
-        <TextView
+        <com.james.common.view.ITextView
             android:id="@+id/takeSelf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_marginStart="@dimen/dimen_15"
             android:layout_toEndOf="@+id/ivOrderNumberCopy"
             android:background="@xml/setbar_bg_green"
             android:padding="@dimen/dimen_2"
             android:text="自提"
-            android:textColor="@color/color_0EA60"
+            android:textColor="@color/color_ffffff"
             android:textSize="@dimen/sp_11"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            app:ivRadius="5dp" />
 
         <TextView
             android:id="@+id/tvOrderStatus"
@@ -82,10 +81,9 @@
             android:id="@+id/tvOrderSubStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvOrderSn"
-            android:layout_alignParentEnd="true"
+            android:layout_below="@id/tvOrderTime"
+            android:layout_alignParentStart="true"
             android:layout_marginTop="@dimen/dimen_12"
-            android:layout_toEndOf="@id/tvOrderTime"
             android:ellipsize="end"
             android:gravity="end"
             android:lines="1"
@@ -326,8 +324,7 @@
             android:paddingEnd="0dp"
             android:text="@string/order_address_hint"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_14"
-            android:visibility="gone" />
+            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/tvFullAddress"
@@ -340,7 +337,6 @@
             android:textColor="@color/color_666666"
             android:textSize="@dimen/sp_14"
             android:textStyle="bold"
-            android:visibility="gone"
             tools:text="fsafdsa" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -360,9 +356,7 @@
             android:paddingEnd="0dp"
             android:text="@string/order_address_hint"
             android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_11"
-            android:visibility="gone"
-            tools:visibility="visible" />
+            android:textSize="@dimen/sp_14" />
 
         <TextView
             android:id="@+id/orderPhotoNumber"
@@ -374,31 +368,60 @@
             android:paddingStart="0dp"
             android:paddingEnd="@dimen/dimen_15"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_11"
+            android:textSize="@dimen/sp_14"
             android:textStyle="bold"
-            android:visibility="gone"
             tools:text="17601279137"
             tools:visibility="visible" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <com.james.common.view.ITextView
-        android:id="@+id/tvMapNav"
-        android:layout_width="72dp"
-        android:layout_height="30dp"
-        android:layout_gravity="end"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="@dimen/dimen_15"
-        android:layout_marginEnd="@dimen/dimen_15"
-        android:gravity="center"
-        android:text="导航"
-        android:textColor="#ff3870ea"
-        android:textSize="12sp"
-        android:visibility="gone"
-        app:ivBgColor="#fff"
-        app:ivBorderColor="#ff3870ea"
-        app:ivBorderWidth="1px"
-        app:ivRadius="15dp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/zitidanzhuangtai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvOrderSn"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@id/tvOrderTime"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:lines="1"
+            android:paddingStart="@dimen/dimen_15"
+            android:paddingEnd="0dp"
+            android:textColor="#ff3870ea"
+            android:textSize="12sp"
+            tools:text="待付款" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="1" />
+
+        <com.james.common.view.ITextView
+            android:id="@+id/tvMapNav"
+            android:layout_width="72dp"
+            android:layout_height="30dp"
+            android:layout_gravity="end"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="@dimen/dimen_15"
+            android:gravity="center"
+            android:text="导航"
+            android:textColor="#ff3870ea"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:ivBgColor="#fff"
+            app:ivBorderColor="#ff3870ea"
+            app:ivBorderWidth="1px"
+            app:ivRadius="15dp"
+            tools:visibility="visible" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:id="@+id/tvTotalMoney"

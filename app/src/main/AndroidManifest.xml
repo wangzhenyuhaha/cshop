@@ -55,17 +55,19 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
+            android:name=".business.order.SelfOrderDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".business.goods.CateGoryGoodsListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".business.goods.GoodsSearchCenterActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.goods.GoodsScanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".business.goods.GoodsAddTypeActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.me.fragment.BannerActivity"
             android:screenOrientation="portrait" />

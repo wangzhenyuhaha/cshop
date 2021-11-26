@@ -5,6 +5,7 @@ import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.CenterGoods
 import com.lingmiao.shop.business.goods.Data
+import com.lingmiao.shop.business.goods.GoodsSkuBarcodeLog
 import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
@@ -52,7 +53,7 @@ interface GoodsApiService {
         @Query(value = "page_no") page_no: Int,
         @Query(value = "page_size") page_size: Int,
         @Query(value = "goods_name") goods_name: String
-    ): Call<CenterGoods>
+    ): Call<PageVO<Data>>
 
     /**
      * 查询预警商品列表
@@ -356,6 +357,10 @@ interface GoodsApiService {
     @GET("seller/goods/queryGoodsSkuByBar/{bar_code}")
     @WithHiResponse
     fun getCenterGoodsByScan(@Path("bar_code") id: String): Call<ScanGoods>
+
+    //添加条形码扫描记录
+    @POST("seller/goods/goodsSkuBarcodeLog/addGoodsSkuBarcodeLog")
+    fun addGoodsSkuBarCodeLog(@Body body: GoodsSkuBarcodeLog):Call<Unit>
 
     //从中心库查询商品详细信息
     @GET("/seller/center/goods/{goods_ids}")
