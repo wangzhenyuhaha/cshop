@@ -116,7 +116,7 @@ class BannerActivity : BaseVBActivity<ActivityBannerBinding, BannerActivityPrese
     //已有的图片数量
     private var number: Int = 0
 
-    //自定义上传的Banner数量
+    //自定义上传的Banner总数
     private var temp: Int = 0
 
     private lateinit var adapter: BannerAdapter
@@ -130,11 +130,9 @@ class BannerActivity : BaseVBActivity<ActivityBannerBinding, BannerActivityPrese
         //获取已有的Banner图数量
         number = intent?.getIntExtra("number", 0) ?: 0
         temp = number
-
     }
 
     override fun initView() {
-
         mToolBarDelegate?.setMidTitle("请选择Banner图")
 
         adapter = BannerAdapter().apply {
@@ -196,7 +194,7 @@ class BannerAdapter : BaseQuickAdapter<BannerItem, BaseViewHolder>(R.layout.tool
         helper.addOnClickListener(R.id.bannerCheck)
         val imageView = helper.getView<ImageView>(R.id.banner_body)
         GlideUtils.setImageUrl(imageView, item?.url)
-
+        helper.getView<CheckBox>(R.id.bannerCheck).isChecked = item?.select?:false
     }
 
 }
