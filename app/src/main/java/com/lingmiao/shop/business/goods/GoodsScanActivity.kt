@@ -11,6 +11,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import com.google.gson.annotations.SerializedName
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.google.zxing.client.android.BeepManager
@@ -498,8 +499,11 @@ data class GoodsSkuDO(
 )
 
 data class GoodsSkuBarcodeLog(
+    @SerializedName("bar_code")
     var bar_code: String? = null,
+    @SerializedName("img_url")
     var img_url: String? = null,
     //商品ID
+    @SerializedName("goods_id")
     var goods_id: Int? = null
 )
