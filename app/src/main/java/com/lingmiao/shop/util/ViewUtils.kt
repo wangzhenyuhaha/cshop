@@ -9,46 +9,46 @@ Create Date : 2021/6/215:02 PM
 Auther      : Fox
 Desc        :
  **/
-inline fun TextView.drawable(left: Drawable?, top: Drawable?, right: Drawable?, bottom: Drawable?) {
+fun TextView.drawable(left: Drawable?, top: Drawable?, right: Drawable?, bottom: Drawable?) {
     apply {
         setCompoundDrawables(left, top, right, bottom);
     }
 }
 
-inline fun TextView.drawableLeft(left: Drawable) {
+fun TextView.drawableLeft(left: Drawable) {
     drawable(left, null, null, null);
 }
 
-inline fun TextView.drawableTop(top: Drawable) {
+fun TextView.drawableTop(top: Drawable) {
     drawable(null, top, null, null);
 }
 
-inline fun TextView.drawableRight(right: Drawable) {
+fun TextView.drawableRight(right: Drawable) {
     drawable(null, null, right, null);
 }
 
-inline fun TextView.drawableBottom(bottom: Drawable) {
+fun TextView.drawableBottom(bottom: Drawable) {
     drawable(null, null, null, bottom);
 }
 
-inline fun TextView.res(@DrawableRes left: Int?,@DrawableRes top: Int?,@DrawableRes right: Int?,@DrawableRes bottom: Int?) {
+fun TextView.res(@DrawableRes left: Int?,@DrawableRes top: Int?,@DrawableRes right: Int?,@DrawableRes bottom: Int?) {
     apply {
         setCompoundDrawablesWithIntrinsicBounds(left?:0, top?:0, right?:0, bottom?:0);
     }
 }
 
-inline fun TextView.drawableLeft(@DrawableRes left: Int) {
+fun TextView.drawableLeft(@DrawableRes left: Int) {
     res(left, null, null, null);
 }
 
-inline fun TextView.drawableTop(@DrawableRes top: Int) {
+fun TextView.drawableTop(@DrawableRes top: Int) {
     res(null, top, null, null);
 }
 
-inline fun TextView.drawableRight(@DrawableRes right: Int) {
+fun TextView.drawableRight(@DrawableRes right: Int) {
     res(null, null, right, null);
 }
 
-inline fun TextView.drawableBottom(@DrawableRes bottom: Int) {
+fun TextView.drawableBottom(@DrawableRes bottom: Int) {
     res(null, null, null, bottom);
 }

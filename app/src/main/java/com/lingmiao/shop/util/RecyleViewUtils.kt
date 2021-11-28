@@ -13,13 +13,13 @@ Desc        :
  **/
 
 
-inline fun <T> RecyclerView.initAdapter(mAdapter : BaseQuickAdapter<T,BaseViewHolder>){
+fun <T> RecyclerView.initAdapter(mAdapter : BaseQuickAdapter<T,BaseViewHolder>){
     apply {
         layoutManager = initLayoutManager(context);
-        adapter = mAdapter!!;
+        adapter = mAdapter;
     }
 }
 
-inline fun initLayoutManager(context: Context): RecyclerView.LayoutManager {
+fun initLayoutManager(context: Context): RecyclerView.LayoutManager {
     return LinearLayoutManager(context)
 }
