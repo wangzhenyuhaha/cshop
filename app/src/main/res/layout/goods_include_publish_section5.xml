@@ -3,22 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/goods_publish_container"
-    android:layout_height="@dimen/dimen_50"
-    android:orientation="horizontal"
-    android:layout_marginTop="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dimen_14"
+    android:orientation="vertical"
     app:ivBgColor="@color/color_ffffff"
     app:ivRadius="@dimen/dimen_5"
     tools:ignore="HardcodedText">
 
 
-    <TextView
-        style="@style/goods_publish_left"
-        android:text="菜单管理" />
 
-    <TextView
-        android:id="@+id/goodsGroupTv"
-        style="@style/goods_publish_right_arrow"
-        android:hint="请选择" />
+    <LinearLayout style="@style/goods_publish_sub_container">
+
+        <TextView
+            style="@style/goods_publish_left_mark"
+            android:text="商品分类" />
+
+        <ImageView
+            android:id="@+id/cateAddIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_15"
+            android:src="@mipmap/goods_spec_blue_plus"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/goodsCategoryTv"
+            style="@style/goods_publish_right_arrow"
+            android:hint="请选择商品分类" />
+    </LinearLayout>
+
+    <View style="@style/common_divider" />
+
+    <LinearLayout style="@style/goods_publish_sub_container">
+
+        <TextView
+            style="@style/goods_publish_left"
+            android:text="菜单管理" />
+
+        <TextView
+            android:id="@+id/goodsGroupTv"
+            style="@style/goods_publish_right_arrow"
+            android:hint="请选择" />
+    </LinearLayout>
+
 
 
 </com.james.common.view.ILinearLayout>

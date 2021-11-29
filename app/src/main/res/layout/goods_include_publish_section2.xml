@@ -7,69 +7,6 @@
     app:ivRadius="@dimen/dimen_5"
     tools:ignore="HardcodedText,ContentDescription">
 
-    <LinearLayout style="@style/goods_publish_sub_container">
-
-        <TextView
-            style="@style/goods_publish_left_mark"
-            android:layout_width="wrap_content"
-            android:paddingStart="0dp"
-            android:paddingEnd="0dp"
-            android:text="商品名称" />
-
-        <TextView
-            android:id="@+id/scanGoodsName"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="（输入商品名称自动搜索中心库）"
-            android:textSize="@dimen/sp_11"
-            android:textColor="@color/color_999999"
-            android:visibility="gone"
-            tools:visibility="visible" />
-
-        <EditText
-            android:id="@+id/goodsNameEdt"
-            style="@style/goods_publish_right"
-            android:hint="请输入商品名称"
-            android:inputType="none"
-            android:paddingStart="0dp"
-            android:paddingEnd="@dimen/dimen_10" />
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/searchGoodsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:visibility="gone"
-        tools:visibility="visible">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:text="中心库商品"
-            android:textColor="@color/color_666666" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/goodsSearch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_30" />
-
-        <ImageView
-            android:id="@+id/deleteSearchGoods"
-            android:layout_width="@dimen/dimen_30"
-            android:layout_height="@dimen/dimen_30"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:paddingStart="@dimen/dimen_10"
-            android:paddingEnd="0dp"
-            android:paddingBottom="@dimen/dimen_10"
-            android:src="@mipmap/goods_spec_delete" />
-    </FrameLayout>
-
-    <View style="@style/common_divider" />
-
     <LinearLayout
         style="@style/goods_publish_sub_container"
         android:layout_width="match_parent"
