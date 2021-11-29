@@ -559,7 +559,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     override fun loadGoodsInfo(goods_id: String?) {
         if (searchGoods && pictureAddress.isNotBlank()) {
-
             //上传图片，成功后调用接口
             val urlList =
                 ArrayList(listOf(pictureAddress))
@@ -572,14 +571,23 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             uploadImages(urlList, {
                 //失败了，nothing to do
             }, {
-                scanCode.let { it1 ->
-                    mPresenter?.addGoodsSkuBarCodeLog(
-                        id,
-                        it1,
-                        urlList[0]
-                    )
-                }
+                mPresenter?.addGoodsSkuBarCodeLog(
+                    id,
+                    scanCode,
+                    urlList[0]
+                )
             })
+        } else if (searchGoods && pictureAddress.isBlank()) {
+            val id = try {
+                (goods_id ?: "0").toInt()
+            } catch (e: Exception) {
+                0
+            }
+            mPresenter?.addGoodsSkuBarCodeLog(
+                id,
+                scanCode,
+                ""
+            )
         }
     }
 

@@ -162,9 +162,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 }
                 //中心库未查询到商品，且店铺中也没有
                 1 -> {
-                    //如果是输入条形码，不需要保存图片
+                    //如果是输入条形码，不需要保存图片,但是记录还是要传的
                     if (scanType == 2) {
-                        hideDialogLoading()
                         //跳转到新增商品界面
                         context?.let { it1 ->
                             GoodsPublishNewActivity.newPublish(
@@ -177,7 +176,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     } else {
                         //保存下扫码获得的图片
                         try {
-                            //这是一个Fragment
+                            //这是一个Fragment，请求权限保存图片在本地
                             CheckPermission.request(
                                 context!!,
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -373,7 +372,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 interface GoodsScanActivityPresenter : BasePresenter {
 
     //添加条形码扫描记录
-    fun addGoodsSkuBarCodeLog(bar_code: String, url: String)
+    fun addGoodsSkuBarCodeLog(goods_id: Int,bar_code: String, url: String)
 
     fun getBarcodeFormats(): Collection<BarcodeFormat>
 
@@ -405,10 +404,10 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
         }
     }
 
-    override fun addGoodsSkuBarCodeLog(bar_code: String, url: String) {
+    override fun addGoodsSkuBarCodeLog(goods_id: Int,bar_code: String, url: String) {
         mCoroutine.launch {
 
-            val resp = GoodsRepository.addGoodsSkuBarCodeLog(0, bar_code, url)
+            val resp = GoodsRepository.addGoodsSkuBarCodeLog(goods_id, bar_code, url)
             handleResponse(resp) {
                 //nothing to do
             }
