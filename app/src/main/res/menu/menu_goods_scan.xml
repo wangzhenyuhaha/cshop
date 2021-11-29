@@ -7,6 +7,5 @@
         android:icon="@drawable/ic_refresh_24"
         android:title="重新扫码"
         app:showAsAction="ifRoom"
-        android:visible="false"
         tools:ignore="HardcodedText" />
 </menu>
