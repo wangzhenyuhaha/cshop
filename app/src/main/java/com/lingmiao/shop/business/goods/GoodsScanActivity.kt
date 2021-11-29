@@ -8,7 +8,6 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.gson.annotations.SerializedName
@@ -19,8 +18,10 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
 import com.james.common.base.BaseView
-import com.james.common.netcore.networking.http.core.HiResponse
-import com.james.common.utils.exts.*
+import com.james.common.utils.exts.doIntercept
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.james.common.utils.permission.interceptor.CameraInterceptor
 import com.james.common.utils.permissionX.CheckPermission
 import com.journeyapps.barcodescanner.BarcodeCallback
@@ -28,18 +29,15 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
-import com.lingmiao.shop.base.CommonRepository
-import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.launch
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
@@ -97,7 +95,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     private val id: MutableLiveData<String> = MutableLiveData<String>()
 
     //商品ID
-    private var goods_id: String = ""
+    private var goodsId: String = ""
 
     private val viewVisibility = MutableLiveData<Int>()
 
@@ -127,7 +125,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
 
         mBinding.goodsCheckSubmit.singleClick {
-            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, goods_id, true) }
+            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, goodsId, true) }
         }
 
         adapter = GoodsAdapter()
@@ -144,7 +142,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             //title  店铺已有的商品
             //goodsRV   店铺已有的商品列表
             when (it) {
-                //查询条形码接口报错
+                //查询条形码接口报错，重新开始，恢复原样
                 0 -> {
                     mBinding.goodsSearchLayout.gone()
                     mBinding.scanView.visiable()
@@ -229,6 +227,15 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
 
                 }
+                //中心库未查询到商品，但是店铺中有
+                4 -> {
+                    mBinding.goodsSearchLayout.visiable()
+                    mBinding.scanView.gone()
+                    mBinding.scanGoods.gone()
+                    mBinding.view.gone()
+                    mBinding.title.visiable()
+                    mBinding.goodsRV.visiable()
+                }
                 //中心库查询到商品，但店铺中没有
                 2 -> {
                     mBinding.goodsSearchLayout.visiable()
@@ -294,6 +301,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     override fun onScanSearchSuccess(data: ScanGoods) {
         mBinding.zxingBarcodeScanner.pauseAndWait()
+        hideDialogLoading()
 
         if (data.centerGoodsSkuDO?.goods_name == null) {
             if (data.goodsSkuDOList?.isEmpty() == true || data.goodsSkuDOList == null) {
@@ -301,12 +309,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 viewVisibility.value = 1
             } else {
                 //中心库未查询到商品，但店铺中已有
-                hideDialogLoading()
-                showToast("数据错误")
-                viewVisibility.value = 0
+                viewVisibility.value = 4
+                data.goodsSkuDOList?.let { adapter?.replaceData(it) }
+                adapter?.notifyDataSetChanged()
             }
         } else {
-            hideDialogLoading()
             if (data.goodsSkuDOList?.isEmpty() == true) {
                 viewVisibility.value = 2
             } else {
@@ -315,7 +322,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
             mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goods_name
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
-            goods_id = data.centerGoodsSkuDO?.goods_id.toString()
+            goodsId = data.centerGoodsSkuDO?.goods_id.toString()
 
             if (data.goodsSkuDOList?.isEmpty() != true) {
                 //中心库查询到商品，店铺中已有
@@ -328,7 +335,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     }
 
     override fun onScanSearchFailed() {
-        showToast("查询失败")
+        hideDialogLoading()
+        showToast("查询失败，请检查网络连接")
         viewVisibility.value = 0
     }
 
@@ -371,7 +379,6 @@ interface GoodsScanActivityPresenter : BasePresenter {
         fun onScanSearchFailed()
     }
 }
-
 
 class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) : BasePreImpl(view),
     GoodsScanActivityPresenter {

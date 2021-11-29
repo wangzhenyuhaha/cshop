@@ -645,6 +645,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     private fun clickConfirmView(type: Int) {
         goodsVO.apply {
+            bar_code = if (scanCode.isNotBlank()) scanCode else null
             goodsName = goodsNameEdt.getViewText()
             selling = goodsSellingDescEdt.getViewText()
             goodsGalleryList = galleryRv.getSelectPhotos()
