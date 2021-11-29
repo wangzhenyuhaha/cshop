@@ -12,6 +12,7 @@ import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.goods.GoodsListActivity
+import com.lingmiao.shop.business.goods.GoodsScanActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsTypeVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
@@ -306,7 +307,10 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 EventBus.getDefault().post(RefreshGoodsStatusEvent())
                                 view.finish()
                             },
-                            { view.finish() })
+                            {
+                                view.finish()
+                                ActivityUtils.startActivity(GoodsScanActivity::class.java)
+                            })
                     } else {
                         //保存上架
                         DialogUtils.showDialog(ActivityUtils.getTopActivity(),
@@ -321,7 +325,10 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 EventBus.getDefault().post(RefreshGoodsStatusEvent())
                                 view.finish()
                             },
-                            { view.finish() })
+                            {
+                                view.finish()
+                                ActivityUtils.startActivity(GoodsScanActivity::class.java)
+                            })
                     }
 
                 } else {

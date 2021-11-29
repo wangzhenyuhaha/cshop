@@ -167,6 +167,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                 scanCode = id.value ?: ""
                             )
                         }
+                        finish()
                     } else {
                         //保存下扫码获得的图片
                         try {
@@ -209,6 +210,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                         pictureAddress = "${temp}/test_scan.png"
                                     )
                                 }
+                                finish()
                             }
 
                         } catch (e: Exception) {
@@ -221,6 +223,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                                     scanCode = id.value ?: ""
                                 )
                             }
+                            finish()
                         }
                     }
 
