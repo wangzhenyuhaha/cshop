@@ -127,8 +127,8 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
                         showAddDialog(item.categoryId?.toInt()!!);
                     }
                     CateMenuPop.TYPE_DELETE -> {
-                        DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
-                            "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
+                        DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该分类吗？",
+                            "取消", "确定删除", { }, {
                                 delete(item.categoryId)
                             })
 
@@ -154,8 +154,8 @@ class CategoryEditPreImpl(var context: Context, var view: CategoryEditPre.PubVie
                         showAddDialog(item.categoryId?.toInt()!!);
                     }
                     CateMenuPop.TYPE_DELETE -> {
-                        DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该订单吗？",
-                            "取消", "确定删除", View.OnClickListener { }, View.OnClickListener {
+                        DialogUtils.showDialog(context as Activity, "删除提示", "删除后不可恢复，确定要删除该分类吗？",
+                            "取消", "确定删除", { }, {
                                 delete(item.categoryId)
                             })
 

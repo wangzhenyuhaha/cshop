@@ -7,9 +7,6 @@
     android:paddingStart="@dimen/dimen_14">
 
     <CheckBox
-        app:layout_constraintTop_toTopOf="@+id/goodsIv"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/goodsIv"
         android:id="@+id/cb_goods_check"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -17,30 +14,33 @@
         android:paddingStart="@dimen/dimen_10"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/dimen_13"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/goodsIv"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/goodsIv" />
 
     <ImageView
         android:id="@+id/goodsIv"
         android:layout_width="@dimen/dimen_67"
         android:layout_height="@dimen/dimen_67"
         android:background="@color/color_999999"
+        app:layout_constraintBottom_toBottomOf="@+id/goodsPriceTv"
         app:layout_constraintLeft_toRightOf="@id/cb_goods_check"
-        app:layout_constraintTop_toTopOf="@+id/goodsNameTv"
-        app:layout_constraintBottom_toBottomOf="@+id/goodsPriceTv"/>
+        app:layout_constraintTop_toTopOf="@+id/goodsNameTv" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/goodsSoldOutTv"
-        android:textSize="@dimen/sp_11"
-        android:textColor="@color/white"
-        android:text="已售馨"
         android:layout_width="@dimen/dimen_67"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:background="#99C3C3C3"
+        android:gravity="center_horizontal"
+        android:text="已售馨"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_11"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/goodsIv"
         app:layout_constraintLeft_toRightOf="@id/cb_goods_check"
-        app:layout_constraintRight_toRightOf="@id/goodsIv"
-        app:layout_constraintBottom_toBottomOf="@+id/goodsIv"/>
+        app:layout_constraintRight_toRightOf="@id/goodsIv" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier"
@@ -50,16 +50,16 @@
         app:constraint_referenced_ids="goodsIv" />
 
     <TextView
-        android:paddingTop="@dimen/dimen_15"
-        android:drawablePadding="@dimen/dimen_5"
         android:id="@+id/goodsNameTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_14"
         android:layout_marginEnd="@dimen/dimen_14"
+        android:drawablePadding="@dimen/dimen_5"
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:lines="1"
+        android:paddingTop="@dimen/dimen_15"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/sp_12"
         app:layout_constraintHorizontal_weight="1"
@@ -69,34 +69,34 @@
         tools:text="我是商品描述信息我是商品描述信息我是商品描述信息我是商品描述信息" />
 
     <TextView
-        tools:visibility="visible"
-        android:visibility="gone"
-        android:paddingTop="@dimen/dimen_15"
-        android:drawablePadding="@dimen/dimen_5"
         android:id="@+id/goodsStatusTv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_14"
         android:layout_marginEnd="@dimen/dimen_14"
+        android:drawablePadding="@dimen/dimen_5"
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:lines="1"
+        android:paddingTop="@dimen/dimen_15"
         android:textColor="@color/red"
         android:textSize="@dimen/sp_12"
+        android:visibility="gone"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="审核中" />
+        tools:text="审核中"
+        tools:visibility="visible" />
 
     <ImageView
-        android:visibility="gone"
         android:id="@+id/searchGoodsStatusIv"
-        android:src="@mipmap/goods_status_2"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dimen_17"
         android:layout_marginStart="@dimen/dimen_14"
         android:layout_marginTop="@dimen/dimen_12"
         android:layout_marginEnd="@dimen/dimen_10"
+        android:src="@mipmap/goods_status_2"
+        android:visibility="gone"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -132,37 +132,37 @@
         app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
         tools:text="销量：3005" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/enableGoodsQuantityTv"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="@dimen/dimen_14"-->
-<!--        android:layout_marginTop="@dimen/dimen_12"-->
-<!--        android:layout_marginEnd="@dimen/dimen_14"-->
-<!--        android:ellipsize="end"-->
-<!--        android:includeFontPadding="false"-->
-<!--        android:lines="1"-->
-<!--        android:textColor="@color/color_999999"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/goodsSalesTv"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"-->
-<!--        android:textSize="@dimen/sp_11"-->
-<!--        tools:text="可用库存：3005"/>-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/enableGoodsQuantityTv"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="@dimen/dimen_14"-->
+    <!--        android:layout_marginTop="@dimen/dimen_12"-->
+    <!--        android:layout_marginEnd="@dimen/dimen_14"-->
+    <!--        android:ellipsize="end"-->
+    <!--        android:includeFontPadding="false"-->
+    <!--        android:lines="1"-->
+    <!--        android:textColor="@color/color_999999"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/goodsSalesTv"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"-->
+    <!--        android:textSize="@dimen/sp_11"-->
+    <!--        tools:text="可用库存：3005"/>-->
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/goodsAuthStatusTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_12"
-        android:paddingRight="@dimen/dimen_15"
         android:ellipsize="end"
         android:includeFontPadding="false"
-        app:layout_constraintRight_toRightOf="parent"
         android:lines="1"
+        android:paddingRight="@dimen/dimen_15"
         android:textColor="@color/color_999999"
-        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
         android:textSize="@dimen/sp_11"
-        tools:text="可用库存：3005"/>
+        android:visibility="gone"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
+        tools:text="可用库存：3005" />
 
 
     <TextView
@@ -176,11 +176,11 @@
         android:includeFontPadding="false"
         android:lines="1"
         android:textColor="@color/color_999999"
+        android:textSize="@dimen/sp_11"
+        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@id/goodsSalesTv"
         app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
-        android:textSize="@dimen/sp_11"
-        tools:text="规格：3005"
-        android:visibility="gone"/>
+        tools:text="规格：3005" />
 
 
     <TextView
@@ -192,15 +192,14 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:lines="1"
-        android:visibility="gone"
-        tools:text="[来源：原供应商]"
         android:textColor="@color/color_999999"
         android:textSize="@dimen/sp_11"
+        android:visibility="gone"
         app:layout_constraintLeft_toRightOf="@id/barrier"
-        app:layout_constraintTop_toBottomOf="@+id/goodsQuantityTv" />
+        app:layout_constraintTop_toBottomOf="@+id/goodsQuantityTv"
+        tools:text="[来源：原供应商]" />
 
     <TextView
-        android:paddingBottom="@dimen/dimen_15"
         android:id="@+id/goodsPriceTv"
         android:layout_width="@dimen/dimen_100"
         android:layout_height="wrap_content"
@@ -209,71 +208,70 @@
         android:ellipsize="end"
         android:includeFontPadding="false"
         android:lines="1"
+        android:paddingBottom="@dimen/dimen_15"
         android:textColor="@color/color_FD8424"
         android:textSize="@dimen/sp_12"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@id/barrier"
         app:layout_constraintTop_toBottomOf="@+id/goodsQuantityTv"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="售价：￥200.00" />
 
 
     <com.james.common.view.IRelativeLayout
-        android:layout_width="wrap_content"
         android:id="@+id/goodsDiscountC"
-        tools:visibility="visible"
-        android:visibility="gone"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginEnd="@dimen/dimen_14"
         android:paddingLeft="@dimen/dimen_8"
-        android:paddingRight="@dimen/dimen_8"
         android:paddingTop="@dimen/dimen_2"
-        app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv"
-        app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
+        android:paddingRight="@dimen/dimen_8"
+        android:visibility="gone"
         app:ivBgColor="@color/color_ffffff"
-        app:ivRadius="@dimen/dimen_5"
         app:ivBorderColor="@color/color_999999"
         app:ivBorderWidth="@dimen/dimen_1"
-        >
+        app:ivRadius="@dimen/dimen_5"
+        app:layout_constraintLeft_toRightOf="@id/goodsPriceTv"
+        app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv"
+        tools:visibility="visible">
+
         <TextView
-            android:text="折扣"
             android:id="@+id/goodsStatusIv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_17"
+            android:text="折扣"
             android:textColor="@color/color_999999"
-            android:textSize="@dimen/sp_11"/>
+            android:textSize="@dimen/sp_11" />
     </com.james.common.view.IRelativeLayout>
 
     <com.james.common.view.IRelativeLayout
-        android:visibility="gone"
-        tools:visibility="visible"
         android:id="@+id/goodsSourceC"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_10"
         android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginEnd="@dimen/dimen_14"
         android:paddingLeft="@dimen/dimen_8"
-        android:paddingRight="@dimen/dimen_8"
         android:paddingTop="@dimen/dimen_2"
-        app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv"
-        app:layout_constraintLeft_toRightOf="@id/goodsDiscountC"
+        android:paddingRight="@dimen/dimen_8"
+        android:visibility="gone"
         app:ivBgColor="@color/color_ffffff"
-        app:ivRadius="@dimen/dimen_5"
         app:ivBorderColor="@color/primary"
         app:ivBorderWidth="@dimen/dimen_1"
-        android:layout_marginLeft="@dimen/dimen_10"
-        >
+        app:ivRadius="@dimen/dimen_5"
+        app:layout_constraintLeft_toRightOf="@id/goodsDiscountC"
+        app:layout_constraintTop_toBottomOf="@+id/goodsOwnerTv"
+        tools:visibility="visible">
 
         <TextView
-            android:text="自有"
             android:id="@+id/goodsSourceIv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_17"
+            android:text="自有"
             android:textColor="@color/primary"
-            android:textSize="@dimen/sp_11"/>
+            android:textSize="@dimen/sp_11" />
 
     </com.james.common.view.IRelativeLayout>
-
 
 
     <ImageView
@@ -292,7 +290,7 @@
         android:layout_height="@dimen/dimen_half"
         android:layout_marginTop="@dimen/dimen_16"
         android:background="@color/color_E6E6E6"
-        app:layout_constraintLeft_toLeftOf="@+id/goodsNameTv"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/goodsNameTv" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -27,7 +27,7 @@ Desc        :
 class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(),
     CategoryEditPre.PubView {
 
-    private var mList: MutableList<CategoryVO>? = mutableListOf();
+    private var mList: MutableList<CategoryVO>? = mutableListOf()
 
     //默认 0  中心库添加商品时添加分类 1
     var type: Int = 0
@@ -58,9 +58,7 @@ class GoodsCategoryActivity : BaseLoadMoreActivity<CategoryVO, CategoryEditPre>(
 
     override fun useLightMode() = false
 
-
     override fun createPresenter() = CategoryEditPreImpl(this, this)
-
 
     override fun getLayoutId() = R.layout.goods_activity_goods_catetory
 
