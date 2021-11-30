@@ -372,7 +372,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 interface GoodsScanActivityPresenter : BasePresenter {
 
     //添加条形码扫描记录
-    fun addGoodsSkuBarCodeLog(goods_id: Int,bar_code: String, url: String)
+    fun addGoodsSkuBarCodeLog(goods_id: Int, bar_code: String, url: String)
 
     fun getBarcodeFormats(): Collection<BarcodeFormat>
 
@@ -404,7 +404,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
         }
     }
 
-    override fun addGoodsSkuBarCodeLog(goods_id: Int,bar_code: String, url: String) {
+    override fun addGoodsSkuBarCodeLog(goods_id: Int, bar_code: String, url: String) {
         mCoroutine.launch {
 
             val resp = GoodsRepository.addGoodsSkuBarCodeLog(goods_id, bar_code, url)
@@ -469,91 +469,51 @@ class GoodsAdapter :
 }
 
 data class ScanGoods(
-    @SerializedName("centerGoodsSkuDO")
     var centerGoodsSkuDO: CenterGoodsSkuDO? = null,
-    @SerializedName("goodsSkuDOList")
     var goodsSkuDOList: List<GoodsSkuDO>? = null
 )
 
 data class CenterGoodsSkuDO(
-    @SerializedName("bar_code")
     var bar_code: String? = null,
-    @SerializedName("category_id")
     var category_id: Int? = null,
-    @SerializedName("cost")
     var cost: Any? = null,
-    @SerializedName("enable_quantity")
     var enable_quantity: Int? = null,
-    @SerializedName("goods_id")
     var goods_id: Int? = null,
-    @SerializedName("goods_name")
     var goods_name: String? = null,
-    @SerializedName("hash_code")
     var hash_code: Int? = null,
-    @SerializedName("local_template_id")
     var local_template_id: Any? = null,
-    @SerializedName("mktprice")
     var mktprice: Any? = null,
-    @SerializedName("price")
     var price: Int? = null,
-    @SerializedName("quantity")
     var quantity: Int? = null,
-    @SerializedName("sku_id")
     var sku_id: Int? = null,
-    @SerializedName("sn")
     var sn: String? = null,
-    @SerializedName("template_id")
     var template_id: Any? = null,
-    @SerializedName("thumbnail")
     var thumbnail: String? = null,
-    @SerializedName("up_sku_id")
     var up_sku_id: Any? = null,
-    @SerializedName("weight")
     var weight: Any? = null
 )
 
 data class GoodsSkuDO(
-    @SerializedName("bar_code")
     var bar_code: String? = null,
-    @SerializedName("category_id")
     var category_id: Int? = null,
-    @SerializedName("cost")
     var cost: Any? = null,
-    @SerializedName("enable_quantity")
     var enable_quantity: Int? = null,
-    @SerializedName("event_price")
     var event_price: Double? = null,
-    @SerializedName("event_quantity")
     var event_quantity: Int? = null,
-    @SerializedName("goods_id")
     var goods_id: Int? = null,
-    @SerializedName("goods_name")
     var goods_name: String? = null,
-    @SerializedName("hash_code")
     var hash_code: Int? = null,
-    @SerializedName("local_template_id")
     var local_template_id: Any? = null,
-    @SerializedName("mktprice")
     var mktprice: Any? = null,
-    @SerializedName("price")
     var price: Double? = null,
-    @SerializedName("quantity")
     var quantity: Int? = null,
-    @SerializedName("seller_id")
     var seller_id: Int? = null,
-    @SerializedName("seller_name")
     var seller_name: String? = null,
-    @SerializedName("sku_id")
     var sku_id: Int? = null,
-    @SerializedName("sn")
     var sn: String? = null,
-    @SerializedName("template_id")
     var template_id: Any? = null,
-    @SerializedName("thumbnail")
     var thumbnail: String? = null,
-    @SerializedName("up_sku_id")
     var up_sku_id: Any? = null,
-    @SerializedName("weight")
     var weight: Any? = null
 )
 
