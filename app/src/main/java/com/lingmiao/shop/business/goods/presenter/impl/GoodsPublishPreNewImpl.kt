@@ -83,13 +83,13 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    //根据商品名称从中心库搜索商品
+    //根据商品名称从中心库搜索商品,从中心库拿到的菜单，分类设为null，暂时只能手动选择
     override fun loadGoodsInfoFromCenter(id: String) {
         view.showDialogLoading()
         mCoroutine.launch {
             val resp = GoodsRepository.searchGoodsFromCenter(id)
             handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data)
+                view.onLoadGoodsSuccess(resp.data,true)
             }
             view.hideDialogLoading()
         }
@@ -167,7 +167,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         mCoroutine.launch {
             val resp = GoodsRepository.loadGoodsById(goodsId)
             handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data)
+                view.onLoadGoodsSuccess(resp.data,false)
                 view.onSetUseTimeStr(mUseTimePreImpl.getUseTimeStr(resp?.data?.availableDate))
             }
             view.hideDialogLoading()

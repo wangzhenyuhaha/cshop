@@ -31,8 +31,6 @@ interface GoodsPublishPre : BasePresenter {
     )
 
 
-
-
     //useless
     //有效期至
     fun showExpirePop(str: String)
@@ -53,7 +51,7 @@ interface GoodsPublishPre : BasePresenter {
 
 
         fun onSetUseTimeStr(useTime: String);
-        fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper)
+        fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper, center: Boolean)
 
 
         fun finish()

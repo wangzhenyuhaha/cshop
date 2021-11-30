@@ -46,7 +46,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         mCoroutine.launch {
             val resp = GoodsRepository.loadGoodsById(goodsId)
             handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data)
+                view.onLoadGoodsSuccess(resp.data,false)
                 view.onSetUseTimeStr(mUseTimePreImpl.getUseTimeStr(resp?.data?.availableDate))
             }
             view.hideDialogLoading()

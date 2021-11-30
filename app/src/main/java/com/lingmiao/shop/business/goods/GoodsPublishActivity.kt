@@ -137,7 +137,7 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
         goodsVirtualUseTimeTv.text = useTime
     }
 
-    override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper) {
+    override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper,center:Boolean) {
         this.goodsVO = goodsVO
         goodsVO.apply {
             // 商品分类
