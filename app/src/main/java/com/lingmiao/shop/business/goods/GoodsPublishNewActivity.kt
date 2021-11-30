@@ -101,7 +101,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     // 编辑商品的商品ID
     private var goodsId: String? = null
 
-    //是否从扫码处跳转 true表示是
+    //是否从扫码处跳转 true表示是，是否禁用多规格,true表示禁用
     private var scan: Boolean = false
 
     //是否启用根据商品名的模糊查询，scan为true。goods_id为null启用,此时表示扫码条形码或者搜索条形码结果没有
@@ -158,6 +158,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     override fun initView() {
         mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank() && !scan) "编辑商品" else "发布商品")
+
+        if (scan) {
+            section4Row6Ll.gone()
+        }
 
         //扫码时未扫描到商品
         if (scan && goodsId == null) {
@@ -753,6 +757,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         } else {
             //实体商品,显示多规格切换按钮
             section4Row6Ll.show(true)
+            if (scan) {
+                section4Row6Ll.gone()
+            }
             //根据多规格按钮选中情况显示单规格还是多规格
             section4Row1Ll.show(!switchBtn.isChecked)
             section4RowVirtualSpecLl.show(switchBtn.isChecked)
@@ -767,12 +774,18 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             section4Row1Ll.show(false)
             //隐藏实体商品设置多规格按钮
             section4Row6Ll.show(false)
+            if (scan) {
+                section4Row6Ll.gone()
+            }
             //显示设置多规格
             section4RowVirtualSpecLl.show(true)
         } else {
             //实体商品
             //显示实体商品多规格按钮
             section4Row6Ll.show(true)
+            if (scan) {
+                section4Row6Ll.gone()
+            }
             section4Row1Ll.show(!isChecked)
             section4RowVirtualSpecLl.show(isChecked)
         }
