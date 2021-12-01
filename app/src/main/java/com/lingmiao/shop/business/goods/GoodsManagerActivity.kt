@@ -269,13 +269,14 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
         mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.color_ffffff))
 
         //默认加载所有商品
-        if (UserManager.getLoginInfo()?.goodsCateId == null) {
-            mPresenter.loadCID()
-        } else {
-            cId = "0|${UserManager.getLoginInfo()?.goodsCateId}"
-            mLoadMoreDelegate?.refresh()
-        }
+//        if (UserManager.getLoginInfo()?.goodsCateId == null) {
+//            mPresenter.loadCID()
+//        } else {
+//            cId = "0|${UserManager.getLoginInfo()?.goodsCateId}"
+//            mLoadMoreDelegate?.refresh()
+//        }
 
+        mLoadMoreDelegate?.refresh()
 
         //点击搜索
         goodsSearchLayout.singleClick {

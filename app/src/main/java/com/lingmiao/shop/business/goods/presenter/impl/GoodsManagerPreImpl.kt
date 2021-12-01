@@ -34,37 +34,48 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
     }
 
     override fun showCategoryPop(target: View) {
-        if (UserManager.getLoginInfo()?.goodsCateId == null) {
-            mCoroutine.launch {
-                val resp = MeRepository.apiService.getShop().awaitHiResponse()
-                if (resp.isSuccess) {
-                    mCategoryPreImpl.showCenterCategoryPop(
-                        context,
-                        resp.data.goodsManagementCategory ?: "0"
-                    ) { items, str ->
-                        if (items?.size ?: 0 > 0) {
-                            val item = items?.get(items.size - 1)
-                            view.onUpdateCategory(item)
-                        }
-                    }
-                } else {
-                    mCategoryPreImpl.showCenterCategoryPop(context, "0") { items, str ->
-                        if (items?.size ?: 0 > 0) {
-                            val item = items?.get(items.size - 1)
-                            view.onUpdateCategory(item)
-                        }
-                    }
-                }
-            }
-        } else {
-            val id = UserManager.getLoginInfo()?.goodsCateId ?: "0"
-            mCategoryPreImpl.showCenterCategoryPop(context, id) { items, _ ->
-                if (items?.size ?: 0 > 0) {
-                    val item = items?.get(items.size - 1)
-                    view.onUpdateCategory(item)
-                }
+
+        //加载店铺的分类
+        mCategoryPreImpl.showCenterCategoryPop(context, "0") { items, str ->
+            if (items?.size ?: 0 > 0) {
+                val item = items?.get(items.size - 1)
+                view.onUpdateCategory(item)
             }
         }
+
+
+//        if (UserManager.getLoginInfo()?.goodsCateId == null) {
+//            mCoroutine.launch {
+//                val resp = MeRepository.apiService.getShop().awaitHiResponse()
+//                if (resp.isSuccess) {
+//                    mCategoryPreImpl.showCenterCategoryPop(
+//                        context,
+//                        resp.data.goodsManagementCategory ?: "0"
+//                    ) { items, str ->
+//                        if (items?.size ?: 0 > 0) {
+//                            val item = items?.get(items.size - 1)
+//                            view.onUpdateCategory(item)
+//                        }
+//                    }
+//                } else {
+//                    mCategoryPreImpl.showCenterCategoryPop(context, "0") { items, str ->
+//                        if (items?.size ?: 0 > 0) {
+//                            val item = items?.get(items.size - 1)
+//                            view.onUpdateCategory(item)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        else {
+//            val id = UserManager.getLoginInfo()?.goodsCateId ?: "0"
+//            mCategoryPreImpl.showCenterCategoryPop(context, id) { items, _ ->
+//                if (items?.size ?: 0 > 0) {
+//                    val item = items?.get(items.size - 1)
+//                    view.onUpdateCategory(item)
+//                }
+//            }
+//        }
 
 
     }

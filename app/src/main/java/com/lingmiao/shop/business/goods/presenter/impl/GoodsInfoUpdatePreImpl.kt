@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
+import android.util.Log
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.base.UserManager
@@ -13,17 +14,22 @@ import kotlinx.coroutines.launch
 /**
  * Desc   : 商品信息编辑
  */
-class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.PublicView) : BasePreImpl(view),
+class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.PublicView) :
+    BasePreImpl(view),
     GoodsInfoEditPre {
 
-    private val mItemPreImpl: ChildrenCatePopPreImpl<CategoryVO> by lazy { ChildrenCatePopPreImpl<CategoryVO>(view) }
+    private val mItemPreImpl: ChildrenCatePopPreImpl<CategoryVO> by lazy {
+        ChildrenCatePopPreImpl<CategoryVO>(
+            view
+        )
+    }
 
-    var mCateList : List<CategoryVO> ? = null;
+    var mCateList: List<CategoryVO>? = null
 
     override fun addInfo(cId: String, name: String?) {
         mCoroutine.launch {
             view?.showDialogLoading()
-            val vo : GoodsParamVo = GoodsParamVo();
+            val vo: GoodsParamVo = GoodsParamVo();
             vo.paramName = name;
             vo.categoryId = cId;
             vo.groupId = 0;
@@ -44,22 +50,24 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
     }
 
     override fun itemClick(id: String?) {
-        if(mCateList == null) {
+        if (mCateList == null) {
+            //获取当前一级分类的二级分类
             loadList(id) {
-                show();
+                show()
             }
         } else {
-            show();
+            show()
         }
     }
 
     fun show() {
-        if(mCateList == null || mCateList?.size == 0) {
-            view?.showToast("没有查找到相关分类")
-            return;
+        if (mCateList == null || mCateList?.size == 0) {
+            view.showToast("没有查找到相关分类")
+            return
         }
-        mItemPreImpl?.showPop(context, "", mCateList) {
-            view?.onSetCategories(it);
+        //
+        mItemPreImpl.showPop(context, "", mCateList) {
+            view.onSetCategories(it)
         }
     }
 
@@ -68,13 +76,13 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
             return
         }
         mCoroutine.launch {
-            view?.showDialogLoading()
+            view.showDialogLoading()
             val resp = GoodsRepository.loadUserCategory(id, getSellerId()?.toString())
             if (resp.isSuccess) {
-                mCateList = resp?.data;
-                call?.invoke(resp?.data);
+                mCateList = resp.data
+                call?.invoke(resp.data)
             }
-            view?.hideDialogLoading()
+            view.hideDialogLoading()
         }
     }
 
@@ -84,10 +92,10 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
         }
     }
 
-    var shopId : Int? = null;
+    var shopId: Int? = null;
 
-    fun getSellerId() : Int? {
-        if(shopId == null) {
+    fun getSellerId(): Int? {
+        if (shopId == null) {
             shopId = UserManager.getLoginInfo()?.shopId;
         }
         return shopId;

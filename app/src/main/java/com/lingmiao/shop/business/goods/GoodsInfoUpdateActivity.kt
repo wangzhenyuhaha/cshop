@@ -20,64 +20,63 @@ Desc        :
  **/
 class GoodsInfoUpdateActivity : BaseActivity<GoodsInfoEditPre>(), GoodsInfoEditPre.PublicView {
 
-    private var cId : String =""
+    //当前一级分类的ID
+    private var cId: String = ""
 
     companion object {
-        fun add(context: Context, id : String?, result : Int) {
-            if(context is Activity) {
-                val intent = Intent(context, GoodsInfoUpdateActivity::class.java);
-                intent.putExtra("pId", id);
+
+        //id 分类ID   result返回码
+        fun add(context: Context, id: String?, result: Int) {
+            if (context is Activity) {
+                val intent = Intent(context, GoodsInfoUpdateActivity::class.java)
+                intent.putExtra("pId", id)
                 context.startActivityForResult(intent, result)
             }
         }
 
-        fun update(context: Context, id : String?, result : Int) {
-            if(context is Activity) {
-                val intent = Intent(context, GoodsInfoUpdateActivity::class.java);
-                intent.putExtra("pId", id);
+        fun update(context: Context, id: String?, result: Int) {
+            if (context is Activity) {
+                val intent = Intent(context, GoodsInfoUpdateActivity::class.java)
+                intent.putExtra("pId", id)
                 context.startActivityForResult(intent, result)
             }
         }
     }
-
 
     override fun initBundles() {
-        cId = intent.getStringExtra("pId").toString()
+        cId = intent.getStringExtra("pId") ?: ""
     }
 
-    override fun useLightMode(): Boolean {
-        return false;
-    }
+    override fun useLightMode() = false
 
-    override fun createPresenter(): GoodsInfoEditPre {
-        return GoodsInfoUpdatePreImpl(this, this)
-    }
+    override fun createPresenter() = GoodsInfoUpdatePreImpl(this, this)
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_info_update
-    }
+    override fun getLayoutId() = R.layout.goods_activity_goods_info_update
 
     override fun initView() {
+
         mToolBarDelegate.setMidTitle(getString(R.string.goods_info_add_title))
 
-
+        //选择同步的分类
         tvCategoriesName.singleClick {
-            mPresenter?.itemClick(cId);
+            //一级分类的ID
+            mPresenter?.itemClick(cId)
         }
-        infoSubmitTv.singleClick {
-            if(tvGoodsInfoName?.getViewText() == null) {
 
-                return@singleClick;
+        infoSubmitTv.singleClick {
+            if (tvGoodsInfoName?.getViewText() == null) {
+
+                return@singleClick
             }
             mPresenter?.addInfo(cId, tvGoodsInfoName?.getViewText())
         }
-        if(cId?.isNullOrEmpty()) {
-            mPresenter?.loadCateList(cId);
+        if (cId?.isNullOrEmpty()) {
+            mPresenter?.loadCateList(cId)
         }
     }
 
     override fun onAddInfo(vo: GoodsParamVo) {
-        setResult(Activity.RESULT_OK);
+        setResult(Activity.RESULT_OK)
     }
 
     override fun onUpdated(vo: GoodsParamVo) {
@@ -85,6 +84,6 @@ class GoodsInfoUpdateActivity : BaseActivity<GoodsInfoEditPre>(), GoodsInfoEditP
     }
 
     override fun onSetCategories(list: List<CategoryVO>?) {
-        tvCategoriesName.setText(list?.map { it?.name }?.joinToString(separator = ","));
+        tvCategoriesName.text = list?.map { it?.name }?.joinToString(separator = ",")
     }
 }

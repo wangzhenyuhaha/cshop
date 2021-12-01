@@ -7,6 +7,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
@@ -169,6 +170,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             inputEdt.text = scanCode
             scanTitle.visiable()
             scanResume.singleClick {
+                ActivityUtils.startActivity(GoodsScanActivity::class.java)
                 finish()
             }
             scanGoodsName.visiable()

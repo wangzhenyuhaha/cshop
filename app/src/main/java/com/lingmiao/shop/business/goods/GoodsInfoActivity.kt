@@ -25,16 +25,21 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
     GoodsInfoPre.PublicView {
 
     private var categoryId: String? = null
+
+    //0 一级分类   1  二级分类
     private var level: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         super.onCreate(savedInstanceState)
     }
 
     companion object {
 
+        //分类ID
         const val KEY_CATEGORY_ID = "KEY_CATEGORY_ID"
+
+        //0 一级分类   1  二级分类
         const val KEY_CATEGORY_LEVEL = "KEY_CATEGORY_LEVEL"
 
         const val SPEC_REQUEST_CODE = 1000
@@ -50,33 +55,26 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
 
     }
 
-    override fun useLightMode(): Boolean {
-        return false;
-    }
+    override fun useLightMode() = false
 
-    override fun getLayoutId(): Int {
-        return R.layout.goods_activity_goods_info
-    }
+    override fun getLayoutId() = R.layout.goods_activity_goods_info
 
     override fun initBundles() {
         categoryId = intent.getStringExtra(KEY_CATEGORY_ID)
         level = intent.getIntExtra(KEY_CATEGORY_LEVEL, 1)
     }
 
-    override fun createPresenter(): GoodsInfoPre {
-        return GoodsInfoPreImpl(this)
-    }
+    override fun createPresenter() = GoodsInfoPreImpl(this)
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("商品信息")
 
-
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
-            mPresenter?.loadInfoList(categoryId);
+            mPresenter?.loadInfoList(categoryId)
         }
 
-        infoNameTv.text = "商品信息";
+        infoNameTv.text = "商品信息"
 
         //显示图片
         goods_activity_goods_info_pictureButton.singleClick {
@@ -86,11 +84,12 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
 
         addInfoTv.singleClick {
             if (level == 1) {
+                //二级分类
                 DialogUtils.showInputDialog(
                     this, "商品信息", "", "请输入具体信息，不同信息用\",\"分隔",
                     "取消", "保存", null
                 ) {
-                    val its = it.split(",");
+                    val its = it.split(",")
                     its.forEachIndexed { _, s ->
                         if (s.isNotEmpty()) {
                             mPresenter.addInfo(categoryId!!, s)
@@ -98,48 +97,42 @@ class GoodsInfoActivity : BaseActivity<GoodsInfoPre>(),
                     }
                 }
             } else {
-                GoodsInfoUpdateActivity.add(this, categoryId, SPEC_REQUEST_CODE);
+                GoodsInfoUpdateActivity.add(this, categoryId, SPEC_REQUEST_CODE)
             }
         }
         infoFlowLayout.apply {
             clickDeleteCallback = {
                 if (it?.isNotEmpty() == true) {
-                    mPresenter?.deleteInfo(it!!);
+                    mPresenter?.deleteInfo(it)
                 }
             }
         }
-        mPresenter?.loadInfoList(categoryId);
+        mPresenter?.loadInfoList(categoryId)
 
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == SPEC_REQUEST_CODE) {
-            mPresenter?.loadInfoList(categoryId);
+            mPresenter?.loadInfoList(categoryId)
         }
     }
 
     override fun onLoadInfoListSuccess(list: List<GoodsParamVo>) {
         smartRefreshLayout.finishRefresh()
-        infoFlowLayout.removeAllViews();
-        infoFlowLayout.addSpecValues(categoryId, list);
+        infoFlowLayout.removeAllViews()
+        infoFlowLayout.addSpecValues(categoryId, list)
     }
 
     override fun onAddInfo(vo: GoodsParamVo) {
-        val list = mutableListOf<GoodsParamVo>();
+        val list = mutableListOf<GoodsParamVo>()
         list.add(vo)
-        infoFlowLayout.addSpecValues(categoryId, list);
+        infoFlowLayout.addSpecValues(categoryId, list)
     }
 
     override fun onInfoDeleted(id: String) {
 
     }
-
-
-
-
-
-
 
 
 }
