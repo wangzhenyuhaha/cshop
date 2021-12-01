@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Environment
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -30,6 +31,8 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.goods.api.bean.GoodsSkuDO
+import com.lingmiao.shop.business.goods.api.bean.ScanGoods
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
@@ -310,7 +313,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         mBinding.zxingBarcodeScanner.pauseAndWait()
         hideDialogLoading()
 
-        if (data.centerGoodsSkuDO?.goods_name == null) {
+        if (data.centerGoodsSkuDO?.goodsName == null) {
             if (data.goodsSkuDOList?.isEmpty() == true || data.goodsSkuDOList == null) {
                 //中心库未查询到商品，但店铺也没有
                 viewVisibility.value = 1
@@ -327,7 +330,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                 viewVisibility.value = 3
             }
             GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
-            mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goods_name
+            mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goodsName
             mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
             goodsId = data.centerGoodsSkuDO?.goods_id.toString()
 
@@ -395,6 +398,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             view.showDialogLoading()
 
             val resp = GoodsRepository.searchGoodsOfCenter(id)
+         //   Log.d("WZYDFF",resp.data.centerGoodsSkuDO.toString())
             handleResponse(resp) {
                 view.onScanSearchSuccess(resp.data)
             }
@@ -417,6 +421,7 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
     override fun getBarcodeFormats(): Collection<BarcodeFormat> {
         return listOf(
             BarcodeFormat.EAN_13,
+            BarcodeFormat.EAN_8
         )
     }
 
@@ -452,54 +457,7 @@ class GoodsAdapter :
     }
 }
 
-data class ScanGoods(
-    var centerGoodsSkuDO: CenterGoodsSkuDO? = null,
-    var goodsSkuDOList: List<GoodsSkuDO>? = null
-)
 
-data class CenterGoodsSkuDO(
-    var bar_code: String? = null,
-    var category_id: Int? = null,
-    var cost: Any? = null,
-    var enable_quantity: Int? = null,
-    var goods_id: Int? = null,
-    var goods_name: String? = null,
-    var hash_code: Int? = null,
-    var local_template_id: Any? = null,
-    var mktprice: Any? = null,
-    var price: Int? = null,
-    var quantity: Int? = null,
-    var sku_id: Int? = null,
-    var sn: String? = null,
-    var template_id: Any? = null,
-    var thumbnail: String? = null,
-    var up_sku_id: Any? = null,
-    var weight: Any? = null
-)
-
-data class GoodsSkuDO(
-    var bar_code: String? = null,
-    var category_id: Int? = null,
-    var cost: Any? = null,
-    var enable_quantity: Int? = null,
-    var event_price: Double? = null,
-    var event_quantity: Int? = null,
-    var goods_id: Int? = null,
-    var goods_name: String? = null,
-    var hash_code: Int? = null,
-    var local_template_id: Any? = null,
-    var mktprice: Any? = null,
-    var price: Double? = null,
-    var quantity: Int? = null,
-    var seller_id: Int? = null,
-    var seller_name: String? = null,
-    var sku_id: Int? = null,
-    var sn: String? = null,
-    var template_id: Any? = null,
-    var thumbnail: String? = null,
-    var up_sku_id: Any? = null,
-    var weight: Any? = null
-)
 
 data class GoodsSkuBarcodeLog(
     @SerializedName("bar_code")

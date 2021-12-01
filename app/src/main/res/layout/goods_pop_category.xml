@@ -5,13 +5,15 @@
     android:layout_height="480dp"
     android:background="@drawable/shape_goods_pop_quantity"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dimen_10">
+    android:paddingTop="@dimen/dimen_10"
+    tools:ignore="HardcodedText,ContentDescription">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/dimen_15">
+        android:paddingStart="@dimen/dimen_15"
+        android:paddingEnd="0dp">
 
         <TextView
             android:layout_width="0dp"
@@ -20,7 +22,7 @@
             android:gravity="center_vertical"
             android:text="商品分类选择"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/dimen_15" />
+            android:textSize="@dimen/sp_15" />
 
         <ImageView
             android:id="@+id/closeIv"
@@ -36,8 +38,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_10"
         android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        android:paddingRight="@dimen/dimen_15">
+        android:paddingStart="15dp"
+        android:paddingEnd="@dimen/dimen_15">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -73,11 +75,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 style="@style/style_goods_category_title"
@@ -114,11 +116,11 @@
             android:overScrollMode="never" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:visibility="gone"
             android:id="@+id/level3Rv"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:overScrollMode="never" />
+            android:overScrollMode="never"
+            android:visibility="gone" />
     </LinearLayout>
 </LinearLayout>

@@ -3,14 +3,11 @@ package com.lingmiao.shop.business.goods.api
 import StatsSalesVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
-import com.lingmiao.shop.business.goods.CenterGoods
 import com.lingmiao.shop.business.goods.Data
 import com.lingmiao.shop.business.goods.GoodsSkuBarcodeLog
-import com.lingmiao.shop.business.goods.ScanGoods
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
-import com.lingmiao.shop.business.main.bean.TlMccListVO
 import com.lingmiao.shop.business.main.bean.TlMccListVOItem
 import com.lingmiao.shop.business.sales.bean.GoodsSalesRespBean
 import retrofit2.Call
@@ -360,7 +357,7 @@ interface GoodsApiService {
 
     //添加条形码扫描记录
     @POST("seller/goods/goodsSkuBarcodeLog/addGoodsSkuBarcodeLog")
-    fun addGoodsSkuBarCodeLog(@Body body: GoodsSkuBarcodeLog):Call<Unit>
+    fun addGoodsSkuBarCodeLog(@Body body: GoodsSkuBarcodeLog): Call<Unit>
 
     //从中心库查询商品详细信息
     @GET("/seller/center/goods/{goods_ids}")
