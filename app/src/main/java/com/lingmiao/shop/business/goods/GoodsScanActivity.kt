@@ -398,7 +398,6 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
             view.showDialogLoading()
 
             val resp = GoodsRepository.searchGoodsOfCenter(id)
-         //   Log.d("WZYDFF",resp.data.centerGoodsSkuDO.toString())
             handleResponse(resp) {
                 view.onScanSearchSuccess(resp.data)
             }
@@ -421,7 +420,8 @@ class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) 
     override fun getBarcodeFormats(): Collection<BarcodeFormat> {
         return listOf(
             BarcodeFormat.EAN_13,
-            BarcodeFormat.EAN_8
+            BarcodeFormat.EAN_8,
+            BarcodeFormat.UPC_EAN_EXTENSION
         )
     }
 

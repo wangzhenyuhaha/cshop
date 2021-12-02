@@ -5,37 +5,37 @@ import com.google.gson.annotations.SerializedName
 
 data class CenterGoodsSkuDO(
     @SerializedName("bar_code")
-    var `bar_code`: String? = null,
+    var bar_code: String? = null,
     @SerializedName("category_id")
-    var `category_id`: Int? = null,
+    var category_id: Int? = null,
     @SerializedName("cost")
-    var `cost`: Any? = null,
+    var cost: Any? = null,
     @SerializedName("enable_quantity")
-    var `enable_quantity`: Int? = null,
+    var enable_quantity: Int? = null,
     @SerializedName("goods_id")
-    var `goods_id`: Int? = null,
+    var goods_id: Int? = null,
     @SerializedName("goods_name")
     var goodsName: String? = null,
     @SerializedName("hash_code")
-    var `hash_code`: Int? = null,
+    var hash_code: Int? = null,
     @SerializedName("local_template_id")
-    var `local_template_id`: Any? = null,
+    var local_template_id: Any? = null,
     @SerializedName("mktprice")
-    var `mktprice`: Any? = null,
+    var mktprice: Any? = null,
     @SerializedName("price")
-    var `price`: Int? = null,
+    var price: Double? = null,
     @SerializedName("quantity")
-    var `quantity`: Int? = null,
+    var quantity: Int? = null,
     @SerializedName("sku_id")
-    var `sku_id`: Int? = null,
+    var sku_id: Int? = null,
     @SerializedName("sn")
-    var `sn`: String? = null,
+    var sn: String? = null,
     @SerializedName("template_id")
-    var `template_id`: Any? = null,
+    var template_id: Any? = null,
     @SerializedName("thumbnail")
-    var `thumbnail`: String? = null,
+    var thumbnail: String? = null,
     @SerializedName("up_sku_id")
-    var `up_sku_id`: Any? = null,
+    var up_sku_id: Any? = null,
     @SerializedName("weight")
-    var `weight`: Any? = null
+    var weight: Any? = null
 )
