@@ -21,13 +21,16 @@ Desc        :
 class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) : BasePreImpl(view),
     GoodsManagerPre {
 
+    //选择分类
     private val mCategoryPreImpl: PopCategoryPreImpl by lazy { PopCategoryPreImpl(view) }
+
+    //
     private val mGroupPreImpl: PopGroupPreImpl by lazy { PopGroupPreImpl(view) }
 
-    var shopId : Int? = null
+    var shopId: Int? = null
 
-    fun getSellerId() : Int? {
-        if(shopId == null) {
+    fun getSellerId(): Int? {
+        if (shopId == null) {
             shopId = UserManager.getLoginInfo()?.shopId
         }
         return shopId
@@ -36,12 +39,12 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
     override fun showCategoryPop(target: View) {
 
         //加载店铺的分类
-        mCategoryPreImpl.showCenterCategoryPop(context, "0") { items, str ->
+        mCategoryPreImpl.showCenterThreeCategoryPop(context, "0", { items, _ ->
             if (items?.size ?: 0 > 0) {
                 val item = items?.get(items.size - 1)
                 view.onUpdateCategory(item)
             }
-        }
+        })
 
 
 //        if (UserManager.getLoginInfo()?.goodsCateId == null) {
@@ -97,11 +100,11 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
         }
     }
 
-    override fun add(ids: String,categoryId:String?,shopCatId:String?) {
+    override fun add(ids: String, categoryId: String?, shopCatId: String?) {
         mCoroutine.launch {
             view.showDialogLoading()
 
-            val resp = GoodsRepository.addGoodsOfCenter(ids,categoryId,shopCatId,0)
+            val resp = GoodsRepository.addGoodsOfCenter(ids, categoryId, shopCatId, 0)
 
             handleResponse(resp) {
                 view.onAddSuccess()
@@ -112,7 +115,7 @@ class GoodsManagerPreImpl(var context: Context, var view: GoodsManagerPre.View) 
 
 
     //加载goods_management_category
-    override  fun loadCID() {
+    override fun loadCID() {
         mCoroutine.launch {
             val resp = MeRepository.apiService.getShop().awaitHiResponse()
             if (resp.isSuccess) {

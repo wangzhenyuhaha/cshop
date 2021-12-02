@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="480dp"
+    android:background="@drawable/shape_goods_pop_quantity"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/dimen_10"
+    tools:ignore="HardcodedText,ContentDescription,UseCompoundDrawables">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_15"
+        android:paddingEnd="0dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="商品分类选择"
+            android:textColor="@color/color_333333"
+            android:textSize="@dimen/sp_15" />
+
+        <ImageView
+            android:id="@+id/closeIv"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_7"
+            android:padding="@dimen/dimen_7"
+            android:src="@mipmap/goods_pop_close" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="@dimen/dimen_15">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/style_goods_category_title"
+                android:text="一级分类" />
+
+            <ImageView
+                android:id="@+id/level1IndicatorIv"
+                style="@style/style_goods_category_indicator"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/style_goods_category_title"
+                android:text="二级分类" />
+
+            <ImageView
+                android:id="@+id/level2IndicatorIv"
+                style="@style/style_goods_category_indicator"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/style_goods_category_title"
+                android:text="三级分类" />
+
+            <ImageView
+                android:id="@+id/level3IndicatorIv"
+                style="@style/style_goods_category_indicator"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--  列表  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:orientation="horizontal"
+        android:paddingStart="15dp"
+        android:paddingEnd="@dimen/dimen_15">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/level1Rv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/level2Rv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/level3Rv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:overScrollMode="never" />
+    </LinearLayout>
+</LinearLayout>
