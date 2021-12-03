@@ -223,7 +223,7 @@
                         tools:text="规格" />
 
 
-                    <com.james.common.view.ITextView
+                    <TextView
                         android:id="@+id/goodsCheckSubmit"
                         android:layout_width="100dp"
                         android:layout_height="38dp"
@@ -232,11 +232,11 @@
                         android:layout_marginTop="@dimen/dimen_7"
                         android:layout_marginEnd="@dimen/dimen_15"
                         android:layout_marginBottom="@dimen/dimen_7"
+                        android:background="@xml/setbar_bg_blue"
                         android:gravity="center"
                         android:text="编辑详情"
-                        android:textColor="@color/white"
-                        app:ivBgColor="@color/color_3870EA"
-                        app:ivRadius="19dp"
+                        android:textColor="@color/primary"
+                        android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="@+id/scan_goods_main"
                         app:layout_constraintRight_toRightOf="@+id/scan_goods_main" />
 
@@ -259,7 +259,10 @@
                         <EditText
                             android:id="@+id/goodsPriceEdt"
                             style="@style/goods_spec_item_right_edt"
-                            android:layout_margin="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="10dp"
                             android:background="@xml/setbar_bg_grey"
                             android:hint=" 售价，请输入"
                             android:paddingStart="10dp"
@@ -276,7 +279,10 @@
                         <EditText
                             android:id="@+id/goodskucunEdt"
                             style="@style/goods_spec_item_right_edt"
-                            android:layout_margin="5dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginBottom="10dp"
                             android:background="@xml/setbar_bg_grey"
                             android:hint=" 库存，请输入"
                             android:paddingStart="@dimen/dimen_10"
@@ -305,6 +311,7 @@
                     <TextView
                         android:id="@+id/goodsCategoryTv"
                         style="@style/goods_publish_right_arrow"
+                        android:layout_marginEnd="12dp"
                         android:hint="请选择商品分类" />
                 </LinearLayout>
 
@@ -319,6 +326,7 @@
                     <TextView
                         android:id="@+id/goodsGroupTv"
                         style="@style/goods_publish_right_arrow"
+                        android:layout_marginEnd="12dp"
                         android:hint="请选择" />
                 </LinearLayout>
 
@@ -352,10 +360,10 @@
                         android:layout_marginStart="@dimen/dimen_15"
                         android:layout_marginEnd="@dimen/dimen_15"
                         android:layout_weight="1"
-                        android:background="@drawable/shape_goods_pop_btn"
+                        android:background="@xml/setbar_bg_blue"
                         android:gravity="center"
                         android:text="保存"
-                        android:textColor="@color/color_ffffff"
+                        android:textColor="@color/primary"
                         android:textSize="13sp" />
 
                     <TextView
