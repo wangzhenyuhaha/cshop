@@ -8,13 +8,13 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ActivityUtils
 import com.google.zxing.ResultPoint
 import com.google.zxing.client.android.BeepManager
 import com.james.common.base.BaseVBActivity
-import com.james.common.utils.exts.doIntercept
-import com.james.common.utils.exts.gone
-import com.james.common.utils.exts.singleClick
-import com.james.common.utils.exts.visiable
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.*
 import com.james.common.utils.permission.interceptor.CameraInterceptor
 import com.james.common.utils.permissionX.CheckPermission
 import com.journeyapps.barcodescanner.BarcodeCallback
@@ -23,13 +23,31 @@ import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsScanAdapter
+import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuDO
+import com.lingmiao.shop.business.goods.api.bean.GoodsTypeVO
+import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
 import com.lingmiao.shop.business.goods.api.bean.ScanGoods
+import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
+import com.lingmiao.shop.business.goods.event.RefreshGoodsStatusEvent
+import com.lingmiao.shop.business.goods.fragment.GoodsFragment
 import com.lingmiao.shop.business.goods.presenter.GoodsScanActivityPresenter
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsScanActivityPresenterImpl
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
+import kotlinx.android.synthetic.main.goods_activity_publish_new.*
+import kotlinx.android.synthetic.main.goods_adapter_goods_gallery.*
+import kotlinx.android.synthetic.main.goods_include_publish_section1.*
+import kotlinx.android.synthetic.main.goods_include_publish_section2.*
+import kotlinx.android.synthetic.main.goods_include_publish_section4_new.*
+import kotlinx.android.synthetic.main.goods_include_publish_section5.*
+import kotlinx.android.synthetic.main.goods_include_publish_section8.*
+import kotlinx.android.synthetic.main.goods_include_publish_section_package.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.greenrobot.eventbus.EventBus
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -44,6 +62,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     override fun getViewBinding() = ActivityGoodsScanBinding.inflate(layoutInflater)
 
     override fun useLightMode() = false
+
+    //从中心库查询到的商品
+    private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
 
     //是否开灯
     private var isLighted = false
@@ -90,7 +111,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     //商品条形码
     private val id: MutableLiveData<String> = MutableLiveData<String>()
 
-    //商品ID
+    //扫码出来的中心库商品ID
     private var goodsId: String = ""
 
     private val viewVisibility = MutableLiveData<Int>()
@@ -120,9 +141,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         }
 
-        mBinding.goodsCheckSubmit.singleClick {
-            context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, goodsId, true) }
-        }
 
         adapter = GoodsScanAdapter()
 
@@ -260,6 +278,49 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         })
 
+        //编辑详情
+        mBinding.goodsCheckSubmit.singleClick {
+            context?.let { it1 ->
+                GoodsPublishNewActivity.openActivity(
+                    it1,
+                    goodsId,
+                    true,
+                    this.goodsVO.thumbnail,
+                    mBinding.goodsPriceEdt.getViewText(),
+                    mBinding.goodskucunEdt.getViewText(),
+                    this.goodsVO.categoryId,
+                    this.goodsVO.categoryName,
+                    this.goodsVO.shopCatId,
+                    this.goodsVO.shopCatName
+                )
+            }
+        }
+
+        //添加新的分类，只是跳转
+        cateAddIv.singleClick {
+            GoodsCategoryActivity.openActivity(this, 1)
+        }
+
+        //修改商品分类
+        mBinding.goodsCategoryTv.singleClick {
+            mPresenter?.showCategoryPop()
+        }
+
+        //选择商品菜单
+        mBinding.goodsGroupTv.singleClick {
+            mPresenter?.showGroupPop()
+        }
+
+        //保存
+        mBinding.saveTv.singleClick {
+            clickConfirmView(0)
+        }
+
+        //保存并上架
+        mBinding.confirmTv.singleClick {
+            clickConfirmView(1)
+        }
+
     }
 
     private fun initBarCode() {
@@ -322,9 +383,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             } else {
                 viewVisibility.value = 3
             }
-            GlideUtils.setImageUrl(mBinding.goodsIv, data.centerGoodsSkuDO?.thumbnail)
-            mBinding.goodsNameTv.text = data.centerGoodsSkuDO?.goodsName
-            mBinding.goodsPriceTv.text = data.centerGoodsSkuDO?.price.toString()
+            data.centerGoodsSkuDO?.goods_id?.let { mPresenter?.loadGoodsInfoFromCenter(it.toString()) }
             goodsId = data.centerGoodsSkuDO?.goods_id.toString()
 
             if (data.goodsSkuDOList?.isEmpty() != true) {
@@ -335,6 +394,72 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
 
 
+    }
+
+    //从中心库中成功加载到商品
+    override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper, center: Boolean) {
+        this.goodsVO = goodsVO
+        if (center) {
+            this.goodsVO.also {
+                it.categoryId = null
+                it.categoryName = null
+                it.shopCatId = null
+                it.shopCatName = null
+            }
+        }
+        goodsVO.apply {
+            //中心库中有商品时，在UI上显示
+            //商品图片
+            //如果没有缩图，则用第一张主图代替
+            if (thumbnail.isNotBlank()) {
+                GlideUtils.setImageUrl(mBinding.goodsIv, thumbnail)
+            } else {
+                GlideUtils.setImageUrl(mBinding.goodsIv, goodsGalleryList?.get(0)?.original)
+                thumbnail = goodsGalleryList?.get(0)?.original
+            }
+
+            //商品名
+            mBinding.goodsNameTv.text = goodsName
+
+            //商品价格
+            mBinding.goodsPriceEdt.setText("$price")
+
+            //商品库存
+            mBinding.goodskucunEdt.setText("$quantity")
+
+            //商品分类
+            mBinding.goodsCategoryTv.text = categoryName
+
+            //商品菜单
+            mBinding.goodsGroupTv.text = shopCatName
+        }
+    }
+
+    //选择分类
+    override fun onUpdateCategory(categoryId: String?, categoryName: String?) {
+        //显示分类名字
+        mBinding.goodsCategoryTv.text = categoryName
+        goodsVO.apply {
+            //赋值分类ID和Name
+            this.categoryId = categoryId
+            this.categoryName = categoryName
+            //菜单未设置
+            if (this.shopCatId.isNullOrEmpty()) {
+                //UI上菜单显示分类，但是实际上不传菜单数据
+                onUpdateGroup(null, categoryName)
+            }
+        }
+    }
+
+    //选择菜单
+    override fun onUpdateGroup(groupId: String?, groupName: String?) {
+        mBinding.goodsGroupTv.text = groupName
+        if (groupId != null) {
+            goodsVO.apply {
+                this.shopCatId = groupId
+                this.shopCatName = groupName
+            }
+        }
     }
 
     override fun onScanSearchFailed() {
@@ -362,6 +487,83 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         }
     }
 
+    private fun clickConfirmView(type: Int) {
+
+        if (goodsVO.categoryId == null) {
+            showToast("请选择商品分类")
+            return
+        }
+
+        showDialogLoading()
+        goodsVO.apply {
+            bar_code = id.value
+            price = mBinding.goodsPriceEdt.getViewText()
+            quantity = mBinding.goodskucunEdt.getViewText()
+            goodsId = null
+        }
+
+
+        //goodsVO 商品数据类  type保存或者保存并上架
+        submitGoods(goodsVO, type) // 添加商品
+
+
+    }
+
+    private fun submitGoods(goodsVO: GoodsVOWrapper, type: Int) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
+            if (resp.isSuccess) {
+                withContext(Dispatchers.Main)
+                {
+                    if (type == 0) {
+                        //仅保存
+                        DialogUtils.showDialog(
+                            ActivityUtils.getTopActivity(),
+                            "商品保存成功",
+                            "是否继续扫码？",
+                            "查看商品",
+                            "继续",
+                            {
+                                ActivityUtils.startActivity(GoodsListActivity::class.java)
+                                EventBus.getDefault()
+                                    .post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_IS_AUTH))
+                                EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                                finish()
+                            },
+                            {
+                                viewVisibility.value = 0
+                            })
+                    } else {
+                        //保存上架
+                        DialogUtils.showDialog(
+                            ActivityUtils.getTopActivity(),
+                            "商品上架成功",
+                            "是否继续扫码？",
+                            "查看商品",
+                            "继续",
+                            {
+                                ActivityUtils.startActivity(GoodsListActivity::class.java)
+                                EventBus.getDefault()
+                                    .post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
+                                EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                                finish()
+                            },
+                            {
+                                viewVisibility.value = 0
+                            })
+                    }
+                    hideDialogLoading()
+                }
+            } else {
+                withContext(Dispatchers.Main)
+                {
+                    hideDialogLoading()
+                    showToast("网络错误")
+                }
+            }
+
+        }
+    }
 }
 
 

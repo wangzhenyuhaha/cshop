@@ -58,7 +58,7 @@ class GoodsVOWrapper : Serializable {
     var categoryId: String? = null
 
     @SerializedName("category_name")
-    var categoryName: String? = null // 分组名称
+    var categoryName: String? = null // 分类名称
 
     /**
      * @see GoodsConfig.DELIVERY_PRICE_WAY_DEFAULT
@@ -115,10 +115,10 @@ class GoodsVOWrapper : Serializable {
     var selling: String? = null //商品卖点
 
     @SerializedName("shop_cat_id")
-    var shopCatId: String? = null //店铺分类id
+    var shopCatId: String? = null //菜单id
 
     @SerializedName("shop_cat_name")
-    var shopCatName: String? = null //店铺分类名称
+    var shopCatName: String? = null //菜单
 
     @SerializedName("sku_list")
     var skuList: List<GoodsSkuVO>? = null //sku列表

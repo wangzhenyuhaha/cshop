@@ -343,6 +343,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                     EventBus.getDefault().post(RefreshGoodsStatusEvent())
                     ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
                 }
+
             }
         }
     }

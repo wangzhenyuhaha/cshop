@@ -70,17 +70,56 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //保存的商品图片地址
         private const val KEY_PICTURE_ADDRESS = "KEY_PICTURE_ADDRESS"
 
+        //商品缩略图
+        private const val KEY_GOODS_THUMBNAIL = "KEY_GOODS_THUMBNAIL"
+
+        //商品价格
+        private const val KEY_GOODS_PRICE = "KEY_GOODS_PRICE"
+
+        //商品库存 quantity
+        private const val KEY_GOODS_QUANTITY = "KEY_GOODS_QUANTITY"
+
+        //商品分类ID
+        private const val KEY_GOODS_CATEGORYID = "KEY_GOODS_CATEGORYID"
+
+        //商品分类name
+        private const val KEY_GOODS_CATEGORYNAME = "KEY_GOODS_CATEGORYNAME"
+
+        //商品菜单
+        private const val KEY_GOODS_SHOPCATID = "KEY_GOODS_SHOPCATID"
+
+        //商品菜单name
+        private const val KEY_GOODS_SHOPCATNAME = "KEY_GOODS_SHOPCATNAME"
+
         const val REQUEST_CODE_VIDEO = 1000
         const val REQUEST_CODE_DELIVERY = 1001
         const val REQUEST_CODE_SKU = 1002
         const val REQUEST_CODE_DESC = 1003
         const val REQUEST_CODE_INFO = 1004
 
-        //编辑已有商品
-        fun openActivity(context: Context, goodsId: String?, scan: Boolean = false) {
+        //编辑已有商品或者中心库中已有商品
+        fun openActivity(
+            context: Context,
+            goodsId: String?,
+            scan: Boolean = false,
+            thumbnail: String? = null,
+            price: String? = null,
+            quantity: String? = null,
+            categoryId: String? = null,
+            categoryName: String? = null,
+            shopCatId: String? = null,
+            shopCatName: String? = null
+        ) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_ID, goodsId)
             intent.putExtra(KEY_SCAN, scan)
+            intent.putExtra(KEY_GOODS_THUMBNAIL, thumbnail)
+            intent.putExtra(KEY_GOODS_PRICE, price)
+            intent.putExtra(KEY_GOODS_QUANTITY, quantity)
+            intent.putExtra(KEY_GOODS_CATEGORYID, categoryId)
+            intent.putExtra(KEY_GOODS_CATEGORYNAME, categoryName)
+            intent.putExtra(KEY_GOODS_SHOPCATID, shopCatId)
+            intent.putExtra(KEY_GOODS_SHOPCATNAME, shopCatName)
             context.startActivity(intent)
         }
 
@@ -130,6 +169,15 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //显示模糊查询商品的RecyclerView
     private var adapter: SimpleAdapter? = null
 
+    //已经提前修改的商品信息
+    private var thumbnail: String? = null
+    private var price: String? = null
+    private var quantity: String? = null
+    private var categoryId: String? = null
+    private var categoryName: String? = null
+    private var shopCatId: String? = null
+    private var shopCatName: String? = null
+
 
     override fun useLightMode() = false
 
@@ -153,6 +201,16 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //商品的条形码
         scanCode = intent.getStringExtra(KEY_SCAN_CODE) ?: ""
         pictureAddress = intent.getStringExtra(KEY_PICTURE_ADDRESS) ?: ""
+
+        //已经提前修改的商品信息
+        thumbnail = intent.getStringExtra(KEY_GOODS_THUMBNAIL)
+        price = intent.getStringExtra(KEY_GOODS_PRICE)
+        quantity = intent.getStringExtra(KEY_GOODS_QUANTITY)
+        categoryId = intent.getStringExtra(KEY_GOODS_CATEGORYID)
+        categoryName = intent.getStringExtra(KEY_GOODS_CATEGORYNAME)
+        shopCatId = intent.getStringExtra(KEY_GOODS_SHOPCATID)
+        shopCatName = intent.getStringExtra(KEY_GOODS_SHOPCATNAME)
+
     }
 
     override fun createPresenter() = GoodsPublishPreNewImpl(this, this)
@@ -472,6 +530,29 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
             // 商品卖点
             //goodsSellingDescEdt.setText(selling)
+
+            //如果是通过扫码查询到中心库商品而来
+
+
+        }
+        if (thumbnail != null) {
+            this@GoodsPublishNewActivity.goodsVO.apply {
+                thumbnail = this@GoodsPublishNewActivity.thumbnail
+                price = this@GoodsPublishNewActivity.price
+                quantity = this@GoodsPublishNewActivity.quantity
+                categoryId = this@GoodsPublishNewActivity.categoryId
+                categoryName = this@GoodsPublishNewActivity.categoryName
+                shopCatId = this@GoodsPublishNewActivity.shopCatId
+                shopCatName = this@GoodsPublishNewActivity.shopCatName
+            }
+            //更新UI显示
+            GlideUtils.setImageUrl(imageView, this.goodsVO.thumbnail, R.mipmap.goods_selected_img)
+            goodsPriceEdt.setText(this.goodsVO.price)
+            goodsQuantityEdt.setText(this.goodsVO.quantity)
+            onUpdateCategory(this.goodsVO.categoryId, this.goodsVO.categoryName)
+            if (this.goodsVO.shopCatId != null) {
+                onUpdateGroup(this.goodsVO.shopCatId, this.goodsVO.shopCatName)
+            }
 
         }
     }
