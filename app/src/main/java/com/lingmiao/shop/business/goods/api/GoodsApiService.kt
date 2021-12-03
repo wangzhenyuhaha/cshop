@@ -4,7 +4,6 @@ import StatsSalesVo
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.Data
-import com.lingmiao.shop.business.goods.GoodsSkuBarcodeLog
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest

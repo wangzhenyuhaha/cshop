@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.blankj.utilcode.util.ActivityUtils
@@ -276,7 +277,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
 //            mLoadMoreDelegate?.refresh()
 //        }
 
-      // mLoadMoreDelegate?.refresh()
+        mLoadMoreDelegate?.refresh()
 
         //点击搜索
         goodsSearchLayout.singleClick {
@@ -354,6 +355,7 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
      * 执行分页请求
      */
     override fun executePageRequest(page: IPage) {
+
         mPresenter.loadListData(page, mAdapter.data, cId)
     }
 

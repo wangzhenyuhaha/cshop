@@ -7,7 +7,6 @@ import com.james.common.utils.exts.check
 import com.james.common.utils.exts.isNotBlank
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.goods.Data
-import com.lingmiao.shop.business.goods.GoodsSkuBarcodeLog
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityRequest
@@ -543,7 +542,9 @@ object GoodsRepository {
      */
     suspend fun getCenterGoods(pageNo: Int, cId: String): HiResponse<PageVO<GoodsVO>> {
         val map = mutableMapOf<String, Any>()
-        map.put("category_path", cId)
+        if (cId != "0") {
+            map.put("category_path", cId)
+        }
         map.put("page_no", pageNo)
         map.put("page_size", 20)
         return apiService.getCenterGoods(map).awaitHiResponse()

@@ -4,21 +4,13 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Environment
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
-import com.google.gson.annotations.SerializedName
-import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.google.zxing.client.android.BeepManager
-import com.james.common.base.BasePreImpl
-import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBActivity
-import com.james.common.base.BaseView
 import com.james.common.utils.exts.doIntercept
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
@@ -30,13 +22,14 @@ import com.journeyapps.barcodescanner.BarcodeResult
 import com.journeyapps.barcodescanner.DecoratedBarcodeView
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.goods.adapter.GoodsScanAdapter
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuDO
 import com.lingmiao.shop.business.goods.api.bean.ScanGoods
+import com.lingmiao.shop.business.goods.presenter.GoodsScanActivityPresenter
+import com.lingmiao.shop.business.goods.presenter.impl.GoodsScanActivityPresenterImpl
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
-import kotlinx.coroutines.launch
 import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -92,7 +85,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private var beepManager: BeepManager? = null
 
-    private var adapter: GoodsAdapter? = null
+    private var adapter: GoodsScanAdapter? = null
 
     //商品条形码
     private val id: MutableLiveData<String> = MutableLiveData<String>()
@@ -102,7 +95,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private val viewVisibility = MutableLiveData<Int>()
 
-    //当前查询条形码方式  1 扫码查询   2  输入查询
+    //当前查询条形码方式  1 扫码查询   2  输入查询(已经不存在了)
     private var scanType: Int = 1
 
     override fun initView() {
@@ -131,7 +124,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             context?.let { it1 -> GoodsPublishNewActivity.openActivity(it1, goodsId, true) }
         }
 
-        adapter = GoodsAdapter()
+        adapter = GoodsScanAdapter()
 
         adapter?.setOnItemChildClickListener { adapter, view, position ->
             val item = adapter.getItem(position) as GoodsSkuDO
@@ -372,99 +365,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 }
 
 
-interface GoodsScanActivityPresenter : BasePresenter {
-
-    //添加条形码扫描记录
-    fun addGoodsSkuBarCodeLog(goods_id: Int, bar_code: String, url: String)
-
-    fun getBarcodeFormats(): Collection<BarcodeFormat>
-
-    //查询商品
-    fun search(id: String)
-
-    interface View : BaseView {
-
-        fun onScanSearchSuccess(data: ScanGoods)
-
-        fun onScanSearchFailed()
-    }
-}
-
-class GoodsScanActivityPresenterImpl(val view: GoodsScanActivityPresenter.View) : BasePreImpl(view),
-    GoodsScanActivityPresenter {
-
-    override fun search(id: String) {
-        mCoroutine.launch {
-            view.showDialogLoading()
-
-            val resp = GoodsRepository.searchGoodsOfCenter(id)
-            handleResponse(resp) {
-                view.onScanSearchSuccess(resp.data)
-            }
-            if (!resp.isSuccess) {
-                view.onScanSearchFailed()
-            }
-        }
-    }
-
-    override fun addGoodsSkuBarCodeLog(goods_id: Int, bar_code: String, url: String) {
-        mCoroutine.launch {
-
-            val resp = GoodsRepository.addGoodsSkuBarCodeLog(goods_id, bar_code, url)
-            handleResponse(resp) {
-                //nothing to do
-            }
-        }
-    }
-
-    override fun getBarcodeFormats(): Collection<BarcodeFormat> {
-        return listOf(
-            BarcodeFormat.EAN_13,
-            BarcodeFormat.EAN_8,
-            BarcodeFormat.UPC_EAN_EXTENSION
-        )
-    }
-
-}
-
-class GoodsAdapter :
-    BaseQuickAdapter<GoodsSkuDO, BaseViewHolder>(R.layout.goods_adapter_goods_check) {
-
-    override fun convert(helper: BaseViewHolder, item: GoodsSkuDO?) {
-        item?.apply {
-
-            //显示图片
-            GlideUtils.setImageUrl1(helper.getView(R.id.goodsIv), thumbnail)
-
-
-            //显示商品名
-            helper.setText(R.id.goodsNameTv, goods_name)
-
-            //useless
-            helper.setText(R.id.goodsQuantityTv, "")
-
-            //商品价格
-            helper.setText(R.id.goodsPriceTv, price.toString())
-
-
-            helper.setVisible(R.id.menuIv, false)
-            helper.setVisible(R.id.deleteIv, false)
-
-            helper.setVisible(R.id.goodsCheckSubmit, true)
-
-            helper.addOnClickListener(R.id.goodsCheckSubmit)
-        }
-    }
-}
 
 
 
-data class GoodsSkuBarcodeLog(
-    @SerializedName("bar_code")
-    var bar_code: String? = null,
-    @SerializedName("img_url")
-    var img_url: String? = null,
-    //商品ID
-    @SerializedName("goods_id")
-    var goods_id: Int? = null
-)
+
+

@@ -154,6 +154,8 @@
 
             </FrameLayout>
 
+
+<!--            重置-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/scan_goods"
                 android:layout_width="match_parent"
