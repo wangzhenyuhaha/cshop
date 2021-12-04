@@ -50,7 +50,7 @@
 
             <TextView
                 style="@style/style_goods_category_title"
-                android:text="一级分类" />
+                android:text="类型" />
 
             <ImageView
                 android:id="@+id/level1IndicatorIv"
@@ -66,7 +66,7 @@
 
             <TextView
                 style="@style/style_goods_category_title"
-                android:text="二级分类" />
+                android:text="一级分类" />
 
             <ImageView
                 android:id="@+id/level2IndicatorIv"
@@ -82,7 +82,7 @@
 
             <TextView
                 style="@style/style_goods_category_title"
-                android:text="三级分类" />
+                android:text="二级分类" />
 
             <ImageView
                 android:id="@+id/level3IndicatorIv"

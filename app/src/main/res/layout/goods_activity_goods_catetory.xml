@@ -15,15 +15,15 @@
         android:layout_marginBottom="@dimen/dimen_10">
 
         <TextView
-            android:background="@drawable/shape_goods_pop_quantity"
             android:id="@+id/categoryAddTv"
-            android:paddingVertical="@dimen/dimen_10"
-            android:paddingHorizontal="@dimen/dimen_15"
-            android:gravity="center_vertical"
-            android:drawableRight="@mipmap/goods_spec_blue_plus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="添加分类"/>
+            android:background="@drawable/shape_goods_pop_quantity"
+            android:drawableRight="@mipmap/goods_spec_blue_plus"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/dimen_15"
+            android:paddingVertical="@dimen/dimen_10"
+            android:text="添加分类" />
 
     </com.james.common.view.IRelativeLayout>
 

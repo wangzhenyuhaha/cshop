@@ -65,7 +65,6 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
             view.showToast("没有查找到相关分类")
             return
         }
-        //
         mItemPreImpl.showPop(context, "", mCateList) {
             view.onSetCategories(it)
         }
