@@ -21,7 +21,7 @@ Desc        :
 https://open.weixin.qq.com/cgi-bin/announce?action=getannouncement&key=11534138374cE6li&version=&lang=zh_CN&token=2
 
  **/
-class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = SendMessageToWX.Req.WXSceneSession) {
+class WxShare(val context: Context?, val api : IWXAPI,var mTargetScene: Int = SendMessageToWX.Req.WXSceneSession) {
 
     var mTitle : String = "";
 
@@ -168,7 +168,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         if(!checkApiAndContext()) {
             return;
         }
-        val bmp = BitmapFactory.decodeResource(context.resources, mIconDrawable)
+        val bmp = BitmapFactory.decodeResource(context!!.resources, mIconDrawable)
         val imgObj = WXImageObject(bmp)
 
         val msg = WXMediaMessage()
@@ -206,7 +206,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         msg.description = mDescription;
 
         val bmp = BitmapFactory.decodeResource(
-            context.resources,
+            context!!.resources,
             mIconDrawable
         )
         val thumbBmp = Bitmap.createScaledBitmap(
@@ -238,7 +238,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         msg.title = mTitle
         msg.description = mDescription
         val bmp = BitmapFactory.decodeResource(
-            context.resources,
+            context!!.resources,
             mIconDrawable
         )
         val thumbBmp = Bitmap.createScaledBitmap(
@@ -263,7 +263,7 @@ class WxShare(val context: Context, val api : IWXAPI,var mTargetScene: Int = Sen
         val msg = WXMediaMessage(webpage)
         msg.title = mTitle;
         msg.description = mDescription
-        val bmp = BitmapFactory.decodeResource(context.resources, mIconDrawable)
+        val bmp = BitmapFactory.decodeResource(context!!.resources, mIconDrawable)
         val thumbBmp = Bitmap.createScaledBitmap(
             bmp,
             mThumbSize,

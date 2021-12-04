@@ -91,8 +91,7 @@ object Fetch {
 
                 val responseBody = response.body()
                 val contentLength = responseBody!!.contentLength()
-                val bodySize =
-                    if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
+                // val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
 
 
                 val source = responseBody.source()

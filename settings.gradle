@@ -1,6 +1,6 @@
 include ':wechat'
 include ':map'
-include ':common', ':ucrop', ':picture_library',":library"
+include ':common', ":library"
 include ':app'
 rootProject.name = "cshop"
 include ':dkplayer-players:ijk'
