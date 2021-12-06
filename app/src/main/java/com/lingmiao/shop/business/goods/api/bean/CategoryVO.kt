@@ -52,11 +52,11 @@ data class CategoryVO(
     }
 
     override fun isItemChecked(): Boolean? {
-        return isChecked;
+        return isChecked
     }
 
     override fun shiftChecked(flag: Boolean?) {
-        isChecked = !(flag?:false!!);
+        isChecked = !(flag?: false)
     }
 
     override fun getItemType(): Int {

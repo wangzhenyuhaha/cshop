@@ -30,17 +30,21 @@ class ChildrenCatePopPreImpl<T : ItemData>(view: BaseView) : BasePreImpl(view) {
 
     fun showAllPop(context: Context, value: String?, list: List<T>?, callback: (List<T>?) -> Unit) {
         mItemAllPop = AbsOneItemAllPop<T>(context, value, list, "请选择分类").apply {
-            isMultiChecked = true;
+            //设置是否可以选择，false表示可以选择
+            isMultiChecked = true
             listener = { item: List<T> ->
-                callback.invoke(item);
+                callback.invoke(item)
             }
         }
-        mItemPop?.showPopupWindow();
+        mItemAllPop?.showPopupWindow()
     }
 
     override fun onDestroy() {
         mItemPop?.dismiss()
         mItemPop = null;
+
+        mItemAllPop?.dismiss()
+        mItemAllPop = null;
         super.onDestroy()
     }
 }

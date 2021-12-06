@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
@@ -70,7 +71,9 @@ class GoodsInfoUpdateActivity : BaseActivity<GoodsInfoEditPre>(), GoodsInfoEditP
             }
             mPresenter?.addInfo(cId, tvGoodsInfoName?.getViewText())
         }
-        if (cId?.isNullOrEmpty()) {
+
+        //useless
+        if (cId.isEmpty()) {
             mPresenter?.loadCateList(cId)
         }
     }
@@ -84,6 +87,6 @@ class GoodsInfoUpdateActivity : BaseActivity<GoodsInfoEditPre>(), GoodsInfoEditP
     }
 
     override fun onSetCategories(list: List<CategoryVO>?) {
-        tvCategoriesName.text = list?.map { it?.name }?.joinToString(separator = ",")
+        tvCategoriesName.text = list?.joinToString(separator = ",") { it.name }
     }
 }

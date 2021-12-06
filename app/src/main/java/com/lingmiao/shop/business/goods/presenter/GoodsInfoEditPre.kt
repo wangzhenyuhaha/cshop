@@ -17,6 +17,9 @@ interface GoodsInfoEditPre: BasePresenter {
 
     fun loadCateList(id: String?)
 
+    //加载当前一级分类的二级分类
+    fun loadSecondCateList()
+
     interface PublicView : BaseView {
 
         fun onAddInfo(vo: GoodsParamVo)

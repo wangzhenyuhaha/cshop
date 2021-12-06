@@ -51,7 +51,7 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
 
     override fun itemClick(id: String?) {
         if (mCateList == null) {
-            //获取当前一级分类的二级分类
+            //获取当前一级分类的二级分类,获取后保存，
             loadList(id) {
                 show()
             }
@@ -65,7 +65,7 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
             view.showToast("没有查找到相关分类")
             return
         }
-        mItemPreImpl.showPop(context, "", mCateList) {
+        mItemPreImpl.showAllPop(context, "", mCateList) {
             view.onSetCategories(it)
         }
     }
@@ -79,6 +79,9 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
             val resp = GoodsRepository.loadUserCategory(id, getSellerId()?.toString())
             if (resp.isSuccess) {
                 mCateList = resp.data
+                for (i in mCateList!!) {
+                    i.isChecked = true
+                }
                 call?.invoke(resp.data)
             }
             view.hideDialogLoading()
@@ -87,8 +90,17 @@ class GoodsInfoUpdatePreImpl(val context: Context, val view: GoodsInfoEditPre.Pu
 
     override fun loadCateList(id: String?) {
         loadList(id) {
+            for (i in mCateList!!)
+            {
+                Log.d("WZYDIID",i.isChecked.toString())
+            }
             mCateList = it;
         }
+    }
+
+    override fun loadSecondCateList() {
+
+
     }
 
     var shopId: Int? = null;

@@ -24,11 +24,12 @@
             android:layout_height="wrap_content"
             android:text="请选择商品类型："
             android:textColor="#ff333333"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:paddingStart="@dimen/dimen_10"
             android:paddingEnd="0dp"
             android:text="全选"
@@ -40,6 +41,7 @@
             style="@style/tools_sub_item_check_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:layout_marginStart="@dimen/dimen_5"
             android:layout_marginEnd="0dp" />
 
@@ -75,5 +77,5 @@
         android:textColor="@color/color_ffffff"
         android:textSize="@dimen/sp_13"
         android:visibility="gone"
-        tools:visibility="visible"/>
+        tools:visibility="visible" />
 </LinearLayout>
