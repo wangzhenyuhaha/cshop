@@ -179,8 +179,12 @@ object GoodsRepository {
     /**
      * 新增商品
      */
-    suspend fun submitGoods(goods: GoodsVOWrapper, is_up: String): HiResponse<GoodsVOWrapper> {
-        return apiService.submitGoods(is_up, goods).awaitHiResponse()
+    suspend fun submitGoods(
+        goods: GoodsVOWrapper,
+        is_up: String,
+        is_from_center: Int = 0
+    ): HiResponse<GoodsVOWrapper> {
+        return apiService.submitGoods(is_up, is_from_center, goods).awaitHiResponse()
     }
 
     /**

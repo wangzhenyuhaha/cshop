@@ -399,14 +399,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     //从中心库中成功加载到商品
     override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper, center: Boolean) {
         this.goodsVO = goodsVO
-        if (center) {
-            this.goodsVO.also {
-                it.categoryId = null
-                it.categoryName = null
-                it.shopCatId = null
-                it.shopCatName = null
-            }
-        }
+
         goodsVO.apply {
             //中心库中有商品时，在UI上显示
             //商品图片
@@ -431,7 +424,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.goodsCategoryTv.text = categoryName
 
             //商品菜单
-            mBinding.goodsGroupTv.text = shopCatName
+            mBinding.goodsGroupTv.text = if (shopCatName.isNotBlank()) {
+                shopCatName
+            } else {
+                categoryName
+            }
         }
     }
 
@@ -511,7 +508,10 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private fun submitGoods(goodsVO: GoodsVOWrapper, type: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
-            val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
+
+            val resp =
+                GoodsRepository.submitGoods(goodsVO, type.toString(), 1)
+
             if (resp.isSuccess) {
                 withContext(Dispatchers.Main)
                 {

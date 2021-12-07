@@ -89,7 +89,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         mCoroutine.launch {
             val resp = GoodsRepository.searchGoodsFromCenter(id)
             handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data,true)
+                view.onLoadGoodsSuccess(resp.data, true)
             }
             view.hideDialogLoading()
         }
@@ -167,7 +167,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         mCoroutine.launch {
             val resp = GoodsRepository.loadGoodsById(goodsId)
             handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data,false)
+                view.onLoadGoodsSuccess(resp.data, false)
                 view.onSetUseTimeStr(mUseTimePreImpl.getUseTimeStr(resp?.data?.availableDate))
             }
             view.hideDialogLoading()
@@ -287,7 +287,11 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int) {
         mCoroutine.launch {
-            val resp = GoodsRepository.submitGoods(goodsVO, type.toString())
+            val resp = if (scan) {
+                GoodsRepository.submitGoods(goodsVO, type.toString(),1)
+            } else {
+                GoodsRepository.submitGoods(goodsVO, type.toString())
+            }
             view.hideDialogLoading()
             handleResponse(resp) {
 

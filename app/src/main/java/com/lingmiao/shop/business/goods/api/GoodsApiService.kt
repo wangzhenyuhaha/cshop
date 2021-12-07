@@ -61,10 +61,11 @@ interface GoodsApiService {
     /**
      * 新增商品
      */
-    @POST("seller/goods/{is_up}")
+    @POST("seller/goods/{is_up}/{is_from_center}")
     @WithHiResponse
     fun submitGoods(
         @Path(value = "is_up") is_up: String,
+        @Path(value = "is_from_center") is_from_center: Int,
         @Body goods: GoodsVOWrapper
     ): Call<GoodsVOWrapper>
 

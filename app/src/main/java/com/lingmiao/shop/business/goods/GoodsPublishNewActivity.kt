@@ -422,14 +422,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //获得商品数据
     override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper, center: Boolean) {
         this.goodsVO = goodsVO
-        if (center) {
-            this.goodsVO.also {
-                it.categoryId = null
-                it.categoryName = null
-                it.shopCatId = null
-                it.shopCatName = null
-            }
-        }
         goodsVO.apply {
             //审核未通过原因
             if (isAuth == 3) {
