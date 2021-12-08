@@ -61,7 +61,7 @@ interface GoodsApiService {
     /**
      * 新增商品
      */
-    @POST("seller/goods/{is_up}/{is_from_center}")
+    @POST("seller/goods/add/{is_up}/{is_from_center}")
     @WithHiResponse
     fun submitGoods(
         @Path(value = "is_up") is_up: String,
