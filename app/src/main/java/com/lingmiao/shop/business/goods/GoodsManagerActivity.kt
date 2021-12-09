@@ -277,12 +277,12 @@ class GoodsManagerActivity : BaseLoadMoreActivity<GoodsVO, GoodsManagerPre>(),
 //            mLoadMoreDelegate?.refresh()
 //        }
 
-        mLoadMoreDelegate?.refresh()
-
         //点击搜索
         goodsSearchLayout.singleClick {
             GoodsSearchCenterActivity.openActivity(this)
         }
+
+        firstTypeTv.performClick()
 
     }
 

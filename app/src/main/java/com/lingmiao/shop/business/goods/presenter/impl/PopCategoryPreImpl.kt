@@ -135,7 +135,7 @@ class PopCategoryPreImpl(val view: BaseView) : BasePreImpl(view) {
             this.query = query
         }
 
-        categoryThreePop?.setLv1Data(list)
+        categoryThreePop?.setLv1Data(list.filter { !it.children.isNullOrEmpty() })
         categoryThreePop?.showPopupWindow()
     }
 
