@@ -51,12 +51,12 @@ class ReplenishInfoFragment :
             return if (it.thrcertflag == 1) {
                 //是
                 !(it.regMoney == null || it.employeeNum == null || it.operateLimit == null || it.inspect == null || it.thrcertflag == null
-                        || it.companyName.isNullOrEmpty() || it.licenseNum.isNullOrEmpty() || it.licenceImg.isNullOrEmpty() || it.licenceEnd == null
+                        || it.licenseNum.isNullOrEmpty() || it.licenceImg.isNullOrEmpty() || it.licenceEnd == null
                         )
             } else {
                 //否
                 !(it.regMoney == null || it.employeeNum == null || it.operateLimit == null || it.inspect == null || it.thrcertflag == null
-                        || it.companyName.isNullOrEmpty() || it.licenseNum.isNullOrEmpty() || it.licenceImg.isNullOrEmpty() || it.licenceEnd == null
+                        || it.licenseNum.isNullOrEmpty() || it.licenceImg.isNullOrEmpty() || it.licenceEnd == null
                         || it.taxes_certificate_num.isNullOrEmpty() || it.taxes_certificate_img.isNullOrEmpty() || it.taxes_distinguish_expire == null
                         || it.organcode.isNullOrEmpty() || it.orgcodepic.isNullOrEmpty() || it.organexpire == null
                         )

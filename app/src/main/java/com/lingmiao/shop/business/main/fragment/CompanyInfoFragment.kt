@@ -165,7 +165,7 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
 
             //营业执照名称
             binding.companyName.setOnClickListener {
-                DialogUtils.showInputDialog(
+                DialogUtils.showInputDialogEmpty(
                     requireActivity(),
                     "营业执照名称",
                     "",
@@ -175,9 +175,15 @@ class CompanyInfoFragment : BaseVBFragment<FragmentCompanyInfoBinding, BasePrese
                     "保存",
                     null
                 ) {
-                    binding.companyNameTV.text = it
-                    model.applyShopInfo.value?.companyName = it
-                    model.companyAccount.value?.openAccountName = it
+                    if (it.isEmpty()) {
+                        binding.companyNameTV.text = "请输入"
+                        model.applyShopInfo.value?.companyName = null
+                        model.companyAccount.value?.openAccountName = null
+                    } else {
+                        binding.companyNameTV.text = it
+                        model.applyShopInfo.value?.companyName = it
+                        model.companyAccount.value?.openAccountName = it
+                    }
                 }
             }
 
