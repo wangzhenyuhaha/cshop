@@ -530,6 +530,7 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/main_tools"
+                                android:id="@+id/testNewFra"
                                 android:drawableTop="@drawable/ic_more"
                                 android:text="敬请期待..." />
 

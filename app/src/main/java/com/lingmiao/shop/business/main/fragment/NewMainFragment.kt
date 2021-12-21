@@ -17,10 +17,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.GoodsCategoryActivity
-import com.lingmiao.shop.business.goods.GoodsListActivity
-import com.lingmiao.shop.business.goods.GoodsScanActivity
-import com.lingmiao.shop.business.goods.MenuManagerActivity
+import com.lingmiao.shop.business.goods.*
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.*
@@ -492,6 +489,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
             ActivityUtils.startActivity(MenuManagerActivity::class.java)
 //             ActivityUtils.startActivity(GoodsPublishActivity::class.java)
 //             GoodsPublishActivity.openActivity(context!!, "");
+        }
+        testNewFra.setOnClickListener {
+            ActivityUtils.startActivity(MenuGoodsManagerActivity::class.java)
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {

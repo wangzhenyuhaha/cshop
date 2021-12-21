@@ -39,6 +39,8 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     var sort: Int = 0
     @SerializedName("goods_num")
     var goods_num: Int? = 0
+    //是否显示删除
+    var isdeleted:Boolean = false
     /**
      * 是否选中
      */
