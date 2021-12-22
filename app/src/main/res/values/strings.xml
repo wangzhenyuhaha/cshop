@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">C店商家</string>
+    <string name="app_name" translatable="false">C店商户</string>
     <string name="main" translatable="false">首页</string>
     <string name="product" translatable="false">商品</string>
     <string name="order" translatable="false">订单</string>

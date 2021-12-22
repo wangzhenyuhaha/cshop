@@ -23,46 +23,63 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/topFirst"
-                android:layout_width="@dimen/dimen_60"
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/firstMenu"
+                android:layout_width="80dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:layout_marginStart="@dimen/dimen_5"
                 app:layout_constraintBottom_toBottomOf="@+id/container"
                 app:layout_constraintStart_toStartOf="@+id/container"
                 app:layout_constraintTop_toTopOf="@+id/container">
 
-                <TextView
+                <LinearLayout
+                    android:id="@+id/topFirst"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:text="置顶菜单" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/container"
+                    app:layout_constraintStart_toStartOf="@+id/container"
+                    app:layout_constraintTop_toTopOf="@+id/container">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_one"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@xml/setbar_bg_menu_title"
+                        android:gravity="center"
+                        android:text="（置顶菜单）"
+                        android:textSize="11sp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:text="常用菜单" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_one"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_CACACA" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_two"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@xml/setbar_bg_grey"
+                        android:gravity="center"
+                        android:text="（置顶菜单）"
+                        android:textSize="11sp" />
 
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_three"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginStart="@dimen/dimen_60"
+                android:layout_marginStart="75dp"
                 app:layout_constraintEnd_toEndOf="@+id/container"
-                app:layout_constraintStart_toEndOf="@+id/topFirst"
+
                 app:layout_constraintTop_toTopOf="@+id/container" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

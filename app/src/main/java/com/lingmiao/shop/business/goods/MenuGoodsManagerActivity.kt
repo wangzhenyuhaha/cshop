@@ -1,9 +1,12 @@
 package com.lingmiao.shop.business.goods
 
 import android.app.Activity
+import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.DialogUtils
@@ -22,19 +25,16 @@ class MenuGoodsManagerActivity :
 
     //置顶菜单
     private var firstTop: List<ShopGroupVO>? = null
-
-    //常用菜单
-    private var secondTop: List<ShopGroupVO>? = null
-
-    //一级菜单置顶菜单Adapter
     private var firstAdapter: SimpleMenuAdapter? = null
     var firstStart: Int = -1
 
-    //一级菜单常用菜单Adapter
+    //常用菜单
+    private var secondTop: List<ShopGroupVO>? = null
     private var secondAdapter: SimpleMenuAdapter? = null
     var secondStart: Int = -1
 
-    //二级菜单Adapter
+    //二级菜单
+    private var thirdTop: List<ShopGroupVO>? = null
     private var thirdAdapter: SimpleMenuAdapter? = null
 
 
@@ -48,21 +48,21 @@ class MenuGoodsManagerActivity :
 
         mToolBarDelegate?.setMidTitle("菜单管理")
 
-
         //置顶菜单
-        val fAdapter = SimpleMenuAdapter().apply {
-            setOnItemChildClickListener { adapter, view, position ->
-                val item = adapter.getItem(position) as ShopGroupVO
-                when (view.id) {
 
-                }
-            }
+        firstAdapter = SimpleMenuAdapter().apply {
         }
 
-
         val listener: OnItemDragListener = object : OnItemDragListener {
+
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
+                //获取初始位置
                 firstStart = pos
+
+                for (i in firstAdapter?.data!!) {
+                    Log.d("WZYSUSI", i.shopCatName.toString())
+                }
+
             }
 
             override fun onItemDragMoving(
@@ -75,17 +75,45 @@ class MenuGoodsManagerActivity :
             }
 
             override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
+                //获取到达的位置
+                //pos为Item到达的位置
                 if (pos > 0) {
+                    Log.d("WZYSUSI", pos.toString())
+                    val item = firstAdapter?.data?.get(pos)
 
+                    if (item != null) {
+                        mPresenter?.sort(1, item.shopCatId!!, pos)
+                    }
                 } else {
                     //到顶了
-                    val item = fAdapter.data[pos]
-                    mPresenter?.sort(1, item.shopCatId!!, 0)
-                    handleSort(0, item)
+                    //获取第一个Item
+                    val item = firstAdapter?.data?.get(pos)
+                    if (item != null) {
+                        mPresenter?.sort(1, item.shopCatId!!, 0)
+                    }
                 }
-            }
 
+
+
+
+
+                for (i in firstAdapter?.data!!) {
+                    Log.d("WZYSUSI", i.shopCatName.toString())
+                }
+
+
+            }
         }
+
+        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(firstAdapter)
+        val mItemTouchHelper = ItemTouchHelper(mItemDragAndSwipeCallback)
+        mItemTouchHelper.attachToRecyclerView(mBinding.rvOne)
+        firstAdapter?.setOnItemDragListener(listener)
+        firstAdapter?.enableDragItem(mItemTouchHelper)
+
+        mBinding.rvOne.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mBinding.rvOne.adapter = firstAdapter
 
 
         //                if (pos > 0) {
@@ -106,20 +134,6 @@ class MenuGoodsManagerActivity :
         //                }
 
 
-        //
-        //        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(adapter)
-        //
-        //        val mItemTouchHelper: ItemTouchHelper? = ItemTouchHelper(mItemDragAndSwipeCallback)
-        //        mItemTouchHelper!!.attachToRecyclerView(mLoadMoreRv)
-        //
-        //        adapter.setOnItemDragListener(listener)
-        //        adapter.enableDragItem(mItemTouchHelper)
-        firstAdapter = fAdapter
-
-        mBinding.rvOne.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        mBinding.rvOne.adapter = firstAdapter
-
         //常用菜单
         secondAdapter = SimpleMenuAdapter()
         mBinding.rvTwo.layoutManager =
@@ -132,7 +146,7 @@ class MenuGoodsManagerActivity :
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvThree.adapter = thirdAdapter
 
-
+// mLoadMoreRv.smoothScrollToPosition(toPosition)
         //先加载置顶菜单
         mPresenter?.loadLv1GoodsGroup(1)
 
@@ -158,7 +172,7 @@ class MenuGoodsManagerActivity :
         handleSort(position, 0, item, 0)
     }
 
-    fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
+    private fun handleSort(position: Int, toPosition: Int, item: ShopGroupVO, sortValue: Int) {
 //        mSelectPosition = position
 //        // 移除
 //        mAdapter.remove(position)

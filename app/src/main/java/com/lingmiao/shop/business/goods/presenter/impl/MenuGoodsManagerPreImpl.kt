@@ -22,7 +22,7 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
     //排序
     override fun sort(isTop : Int, cid: String, sort : Int) {
         mCoroutine.launch {
-            val resp = GoodsRepository.sort(isTop, cid, sort);
+            val resp = GoodsRepository.sort(isTop, cid, sort)
             handleResponse(resp) {
                 view.onSortSuccess()
             }
