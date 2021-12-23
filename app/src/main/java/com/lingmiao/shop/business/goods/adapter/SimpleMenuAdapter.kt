@@ -16,7 +16,6 @@ class SimpleMenuAdapter() :
         null
     ) {
 
-    private var isBatchEditModel: Boolean = false
 
     override fun convert(helper: BaseViewHolder, item: ShopGroupVO?) {
         item?.apply {
@@ -27,7 +26,9 @@ class SimpleMenuAdapter() :
             // helper.addOnClickListener(R.id.menuIconIv)
 
             //菜单名称
-            helper.setText(R.id.menuName, shopCatName)
+            helper.setText(R.id.menuName, "${shopCatName}(${goods_num})")
+
+            //goods_num
 //            helper.addOnClickListener(R.id.menuName)
             //删除
 //          helper.setGone(R.id .deleteIv,isdeleted)

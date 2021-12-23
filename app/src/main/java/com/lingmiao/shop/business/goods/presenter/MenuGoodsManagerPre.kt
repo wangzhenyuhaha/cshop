@@ -10,7 +10,7 @@ interface MenuGoodsManagerPre : BasePresenter {
     fun loadLv1GoodsGroup(isTop: Int)
 
     //排序
-    fun sort(isTop : Int, cid: String, sort : Int)
+    fun sort(isTop: Int, cid: String, sort: Int)
 
     interface View : BaseView {
 
@@ -18,7 +18,7 @@ interface MenuGoodsManagerPre : BasePresenter {
         fun onLoadLv1GoodsGroupSuccess(list: List<ShopGroupVO>, isTop: Int)
 
         //排序成功
-        fun onSortSuccess()
+        fun onSortSuccess(isTop: Int)
 
     }
 }

@@ -1,27 +1,27 @@
 package com.lingmiao.shop.business.goods
 
-import android.app.Activity
 import android.util.Log
-import android.view.View
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback
 import com.chad.library.adapter.base.listener.OnItemDragListener
 import com.james.common.base.BaseVBActivity
-import com.james.common.utils.DialogUtils
-import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.SimpleMenuAdapter
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.MenuGoodsManagerPreImpl
 import com.lingmiao.shop.databinding.ActivityMenuGoodsManagerBinding
-import com.lingmiao.shop.util.initLayoutManager
 
 
 class MenuGoodsManagerActivity :
     BaseVBActivity<ActivityMenuGoodsManagerBinding, MenuGoodsManagerPre>(),
     MenuGoodsManagerPre.View {
+
+    //是否处于编辑状态 true 是  false 否
+    private val isEdited: MutableLiveData<Boolean> = MutableLiveData()
 
     //置顶菜单
     private var firstTop: List<ShopGroupVO>? = null
@@ -47,9 +47,15 @@ class MenuGoodsManagerActivity :
     override fun initView() {
 
         mToolBarDelegate?.setMidTitle("菜单管理")
+        mToolBarDelegate?.setRightText("编辑") {
+            isEdited.value = isEdited.value == false
+        }
+
+        isEdited.observe(this, Observer {
+
+        })
 
         //置顶菜单
-
         firstAdapter = SimpleMenuAdapter().apply {
         }
 
@@ -58,11 +64,9 @@ class MenuGoodsManagerActivity :
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
                 //获取初始位置
                 firstStart = pos
-
                 for (i in firstAdapter?.data!!) {
-                    Log.d("WZYSUSI", i.shopCatName.toString())
+                    Log.d("WZYTSTTSD", i.sort.toString())
                 }
-
             }
 
             override fun onItemDragMoving(
@@ -78,11 +82,11 @@ class MenuGoodsManagerActivity :
                 //获取到达的位置
                 //pos为Item到达的位置
                 if (pos > 0) {
-                    Log.d("WZYSUSI", pos.toString())
-                    val item = firstAdapter?.data?.get(pos)
 
-                    if (item != null) {
-                        mPresenter?.sort(1, item.shopCatId!!, pos)
+                    val pre = firstAdapter?.data?.get(pos - 1)
+                    val item = firstAdapter?.data?.get(pos)
+                    if (item != null && pre != null) {
+                        mPresenter?.sort(1, item.shopCatId!!, pre.sort + 1)
                     }
                 } else {
                     //到顶了
@@ -92,16 +96,6 @@ class MenuGoodsManagerActivity :
                         mPresenter?.sort(1, item.shopCatId!!, 0)
                     }
                 }
-
-
-
-
-
-                for (i in firstAdapter?.data!!) {
-                    Log.d("WZYSUSI", i.shopCatName.toString())
-                }
-
-
             }
         }
 
@@ -114,24 +108,6 @@ class MenuGoodsManagerActivity :
         mBinding.rvOne.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mBinding.rvOne.adapter = firstAdapter
-
-
-        //                if (pos > 0) {
-        //                    mSelectPosition = pos
-        //
-        //                    if (mStartPoi > pos) {
-        //                        // 向上
-        //                        mAdapter.notifyItemRangeChanged(pos, mStartPoi - pos + 1)
-        //                    } else {
-        //                        // 向上
-        //                        mAdapter.notifyItemRangeChanged(mStartPoi, pos - mStartPoi + 1)
-        //
-        //                    }
-        //
-        //                    val pre = adapter.data.get(pos - 1)
-        //                    val current = adapter.data.get(pos)
-        //                    mPresenter?.sort(isTop!!, current.shopCatId!!, pre.sort + 1)
-        //                }
 
 
         //常用菜单
@@ -186,8 +162,8 @@ class MenuGoodsManagerActivity :
 //        mPresenter?.sort(isTop!!, item.shopCatId!!, sortValue)
     }
 
-    override fun onSortSuccess() {
-
+    override fun onSortSuccess(isTop: Int) {
+        mPresenter?.loadLv1GoodsGroup(isTop)
     }
 
 }
