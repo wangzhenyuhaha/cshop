@@ -3,18 +3,20 @@ package com.lingmiao.shop.business.goods.presenter.impl
 import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.lingmiao.shop.business.goods.api.GoodsRepository
+import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
 import kotlinx.coroutines.launch
 
 class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPre.View) :
     BasePreImpl(view), MenuGoodsManagerPre {
 
-    override fun loadLv1GoodsGroup(isTop: Int) {
+    //加载一级菜单
+    override fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean) {
         mCoroutine.launch {
             view.showDialogLoading()
             val resp = GoodsRepository.loadLv1ShopGroup(isTop)
             if (resp.isSuccess) {
-                view.onLoadLv1GoodsGroupSuccess(resp.data, isTop)
+                view.onLoadLv1GoodsGroupSuccess(resp.data, isTop, isSecond)
             }
         }
     }
@@ -31,5 +33,16 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
 
     }
 
+    //删除一级菜单
+    override fun deleteGoodsGroup(groupVO: ShopGroupVO?, position: Int) {
+        if (groupVO?.shopCatId.isNullOrBlank()) return
+        mCoroutine.launch {
+            val resp = GoodsRepository.deleteShopGroup(groupVO?.shopCatId)
+            handleResponse(resp) {
+                view.showToast("删除成功")
+                view.onDeleteGroupSuccess(position)
+            }
+        }
+    }
 }
 

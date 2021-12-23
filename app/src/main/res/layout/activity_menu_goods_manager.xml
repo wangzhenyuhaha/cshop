@@ -57,6 +57,21 @@
                         android:background="@color/color_CACACA" />
 
                     <TextView
+                        android:id="@+id/menuAddOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@xml/setbar_bg_menu_end"
+                        android:drawableEnd="@mipmap/goods_spec_blue_plus"
+                        android:gravity="center_vertical"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="@dimen/dimen_10"
+                        android:text="(可以使用活动价)"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_12"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
@@ -77,10 +92,17 @@
                 android:id="@+id/rv_three"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:layout_marginStart="75dp"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/container"
-
                 app:layout_constraintTop_toTopOf="@+id/container" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="95dp"
+                android:layout_marginTop="75dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

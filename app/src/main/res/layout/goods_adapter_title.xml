@@ -12,25 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/menuIconIv"
-            android:layout_width="@dimen/dimen_29"
-            android:layout_height="@dimen/dimen_29"
-            app:layout_constraintBottom_toBottomOf="@+id/container"
-            app:layout_constraintStart_toStartOf="@+id/container"
-            app:layout_constraintTop_toTopOf="@+id/container" />
 
         <TextView
             android:id="@+id/menuName"
             android:layout_width="55dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@xml/setbar_bg_grey"
+            android:gravity="center"
             android:paddingStart="5dp"
             android:paddingEnd="0dp"
             android:textSize="11sp"
-            android:textColor="@drawable/selector_goods_category_item"
             app:layout_constraintBottom_toBottomOf="@+id/container"
             app:layout_constraintEnd_toEndOf="@+id/container"
-            app:layout_constraintStart_toEndOf="@+id/menuIconIv"
+            app:layout_constraintStart_toStartOf="@+id/container"
             app:layout_constraintTop_toTopOf="@+id/container" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

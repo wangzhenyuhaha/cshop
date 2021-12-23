@@ -517,7 +517,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 今日数据
         // 订单数量
         storeDataOfTodayTv.singleClick {
-            EventBus.getDefault().post(TabChangeEvent(4, startTime = startTime,endTime = endTime))
+            EventBus.getDefault().post(TabChangeEvent(4, startTime = startTime, endTime = endTime))
             //ActivityUtils.startActivity(StatsActivity::class.java)
         }
         // 销售额
@@ -537,11 +537,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 已接订单
         llMainWaitTakeGoods.setOnClickListener {
             //待配送，即备货中
-            EventBus.getDefault().post(TabChangeEvent(1,"ACCEPT"))
+            EventBus.getDefault().post(TabChangeEvent(1, "ACCEPT"))
         }
         // 配送中
         llMainWaitSendGoods.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(1,"SHIPPED"))
+            EventBus.getDefault().post(TabChangeEvent(1, "SHIPPED"))
         }
         // 待退款
         llMainWaitRefund.setOnClickListener {
@@ -549,11 +549,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 已完成
         layoutTodayFinish.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(3, startTime = startTime,endTime = endTime))
+            EventBus.getDefault().post(TabChangeEvent(3, startTime = startTime, endTime = endTime))
         }
         // 失效
         layoutTodayInvalid.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(4, "CANCELLED",  startTime = startTime,endTime = endTime))
+            EventBus.getDefault()
+                .post(TabChangeEvent(4, "CANCELLED", startTime = startTime, endTime = endTime))
         }
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)
