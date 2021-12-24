@@ -13,7 +13,6 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
     //加载一级菜单
     override fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean) {
         mCoroutine.launch {
-            view.showDialogLoading()
             val resp = GoodsRepository.loadLv1ShopGroup(isTop)
             if (resp.isSuccess) {
                 view.onLoadLv1GoodsGroupSuccess(resp.data, isTop, isSecond)
@@ -24,7 +23,6 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
     //排序
     override fun sort(isTop: Int, cid: String, sort: Int) {
         mCoroutine.launch {
-            view.showDialogLoading()
             val resp = GoodsRepository.sort(isTop, cid, sort)
             handleResponse(resp) {
                 view.onSortSuccess(isTop)
@@ -34,13 +32,13 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
     }
 
     //删除一级菜单
-    override fun deleteGoodsGroup(groupVO: ShopGroupVO?, position: Int) {
+    override fun deleteGoodsGroup(groupVO: ShopGroupVO?, position: Int, isTop: Int) {
         if (groupVO?.shopCatId.isNullOrBlank()) return
         mCoroutine.launch {
             val resp = GoodsRepository.deleteShopGroup(groupVO?.shopCatId)
             handleResponse(resp) {
                 view.showToast("删除成功")
-                view.onDeleteGroupSuccess(position)
+                view.onDeleteGroupSuccess(position, isTop)
             }
         }
     }

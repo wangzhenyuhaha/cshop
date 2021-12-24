@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.goods
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -25,7 +24,6 @@ import com.lingmiao.shop.business.goods.fragment.GoodsMenuFragment
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.MenuGoodsManagerPreImpl
 import com.lingmiao.shop.databinding.ActivityMenuGoodsManagerBinding
-import kotlinx.android.synthetic.main.activity_goods_scan.*
 
 @SuppressLint("NotifyDataSetChanged")
 class MenuGoodsManagerActivity :
@@ -87,16 +85,22 @@ class MenuGoodsManagerActivity :
                 firstAdapter?.notifyDataSetChanged()
 
                 //常用菜单
+                secondAdapter?.data?.let { list ->
+                    for (i in list) {
+                        i.isdeleted = true
+                    }
+                }
+                secondAdapter?.notifyDataSetChanged()
 
                 //二级菜单
-                if (viewModel.item.value?.children?.isNotEmpty() == true) {
-                    thirdAdapter?.data?.let { list ->
-                        for (i in list) {
-                            i.isdeleted = true
-                        }
-                    }
-                    thirdAdapter?.notifyDataSetChanged()
-                }
+//                if (viewModel.item.value?.children?.isNotEmpty() == true) {
+//                    thirdAdapter?.data?.let { list ->
+//                        for (i in list) {
+//                            i.isdeleted = true
+//                        }
+//                    }
+//                    thirdAdapter?.notifyDataSetChanged()
+//                }
             } else {
                 mToolBarDelegate?.setRightText("编辑") { isEdited.value = isEdited.value == false }
                 //完成状态中
@@ -116,16 +120,22 @@ class MenuGoodsManagerActivity :
 
 
                 //常用菜单
+                secondAdapter?.data?.let { list ->
+                    for (i in list) {
+                        i.isdeleted = false
+                    }
+                }
+                secondAdapter?.notifyDataSetChanged()
 
                 //二级菜单
-                if (viewModel.item.value?.children?.isNotEmpty() == true) {
-                    thirdAdapter?.data?.let { list ->
-                        for (i in list) {
-                            i.isdeleted = false
-                        }
-                    }
-                    thirdAdapter?.notifyDataSetChanged()
-                }
+//                if (viewModel.item.value?.children?.isNotEmpty() == true) {
+//                    thirdAdapter?.data?.let { list ->
+//                        for (i in list) {
+//                            i.isdeleted = false
+//                        }
+//                    }
+//                    thirdAdapter?.notifyDataSetChanged()
+//                }
             }
         })
 
@@ -152,7 +162,8 @@ class MenuGoodsManagerActivity :
                             null, {
                                 mPresenter?.deleteGoodsGroup(
                                     firstAdapter?.getItem(position),
-                                    position
+                                    position,
+                                    1
                                 )
                             })
                     }
@@ -246,7 +257,8 @@ class MenuGoodsManagerActivity :
                             null, {
                                 mPresenter?.deleteGoodsGroup(
                                     secondAdapter?.getItem(position),
-                                    position
+                                    position,
+                                    0
                                 )
                             })
                     }
@@ -311,12 +323,12 @@ class MenuGoodsManagerActivity :
         secondAdapter?.setOnItemClickListener { adapter, _, position ->
             if (isEdited.value == true) {
                 //编辑中
-//                MenuEditActivity.openActivity(
-//                    this,
-//                    ShopGroupVO.LEVEL_1,
-//                    firstAdapter?.getItem(position)?.shopCatPid,
-//                    firstAdapter?.getItem(position)
-//                )
+                UserMenuEditActivity.openActivity(
+                    this,
+                    secondAdapter?.getItem(position)?.shopCatPid,
+                    secondAdapter?.getItem(position),
+                    0
+                )
             } else {
                 secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                 secondAdapter?.notifyDataSetChanged()
@@ -426,7 +438,7 @@ class MenuGoodsManagerActivity :
             isFragmentExited = true
             firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
         }
-        hideDialogLoading()
+
     }
 
     //排序成功
@@ -435,11 +447,21 @@ class MenuGoodsManagerActivity :
     }
 
     //删除一级菜单成功
-    override fun onDeleteGroupSuccess(position: Int) {
-        if (position < firstAdapter?.data?.size!!) {
-            firstAdapter?.data?.removeAt(position)
-            firstAdapter?.notifyDataSetChanged()
+    override fun onDeleteGroupSuccess(position: Int, isTop: Int) {
+        if (isTop == 1) {
+            //置顶
+            if (position < firstAdapter?.data?.size!!) {
+                firstAdapter?.data?.removeAt(position)
+                firstAdapter?.notifyDataSetChanged()
+            }
+        } else {
+            //常用
+            if (position < secondAdapter?.data?.size!!) {
+                secondAdapter?.data?.removeAt(position)
+                secondAdapter?.notifyDataSetChanged()
+            }
         }
+
     }
 
     override fun onResume() {
