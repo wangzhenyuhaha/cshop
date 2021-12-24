@@ -75,15 +75,31 @@
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
-                        android:background="@xml/setbar_bg_grey"
+                        android:background="@xml/setbar_bg_menu_title"
                         android:gravity="center"
-                        android:text="（置顶菜单）"
+                        android:text="（常用菜单）"
                         android:textSize="11sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_two"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_CACACA" />
+
+                    <TextView
+                        android:id="@+id/menuAddTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@xml/setbar_bg_menu_end"
+                        android:drawableEnd="@mipmap/goods_spec_blue_plus"
+                        android:gravity="center_vertical"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="@dimen/dimen_10"
+                        android:text="(无法使用活动价)"
+                        android:textColor="@color/red"
+                        android:textSize="@dimen/sp_12"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>

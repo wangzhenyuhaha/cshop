@@ -22,6 +22,7 @@
             android:gravity="center"
             android:paddingStart="5dp"
             android:paddingEnd="0dp"
+            android:textColor="@drawable/selector_goods_category_item"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/container"
             app:layout_constraintEnd_toEndOf="@+id/container"

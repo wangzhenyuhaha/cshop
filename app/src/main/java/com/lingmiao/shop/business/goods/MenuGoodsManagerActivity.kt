@@ -25,6 +25,7 @@ import com.lingmiao.shop.business.goods.fragment.GoodsMenuFragment
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.MenuGoodsManagerPreImpl
 import com.lingmiao.shop.databinding.ActivityMenuGoodsManagerBinding
+import kotlinx.android.synthetic.main.activity_goods_scan.*
 
 @SuppressLint("NotifyDataSetChanged")
 class MenuGoodsManagerActivity :
@@ -45,7 +46,6 @@ class MenuGoodsManagerActivity :
     var firstStart: Int = -1
 
     //常用菜单
-    private var secondTop: List<ShopGroupVO>? = null
     private var secondAdapter: SimpleMenuAdapter? = null
     var secondStart: Int = -1
 
@@ -72,7 +72,11 @@ class MenuGoodsManagerActivity :
             if (it) {
                 mToolBarDelegate?.setRightText("完成") { isEdited.value = isEdited.value == false }
                 //编辑状态中
+                //置顶
                 mBinding.menuAddOne.visiable()
+                //常用
+                mBinding.menuAddTwo.visiable()
+
 
                 //置顶菜单
                 firstAdapter?.data?.let { list ->
@@ -96,7 +100,11 @@ class MenuGoodsManagerActivity :
             } else {
                 mToolBarDelegate?.setRightText("编辑") { isEdited.value = isEdited.value == false }
                 //完成状态中
+                //置顶
                 mBinding.menuAddOne.gone()
+                //常用
+                mBinding.menuAddTwo.gone()
+
 
                 //置顶菜单
                 firstAdapter?.data?.let { list ->
@@ -121,43 +129,34 @@ class MenuGoodsManagerActivity :
             }
         })
 
+        //设置置顶菜单
+        initFirstMenu()
 
-        //置顶菜单
+        //设置常用菜单
+        initSecondMenu()
+
+        //设置二级菜单
+        initThirdMenu()
+    }
+
+    //置顶菜单
+    private fun initFirstMenu() {
+
         firstAdapter = SimpleMenuAdapter().apply {
             setOnItemChildClickListener { _, view, position ->
-
                 when (view.id) {
                     R.id.deleteIv -> {
                         DialogUtils.showDialog(context as Activity,
                             "删除提示", "删除后不可恢复，确定要删除该菜单吗？",
                             "取消", "确定删除",
-                            null, View.OnClickListener {
+                            null, {
                                 mPresenter?.deleteGoodsGroup(
                                     firstAdapter?.getItem(position),
                                     position
                                 )
                             })
                     }
-
                 }
-            }
-        }
-
-        //编辑置顶菜单
-        firstAdapter?.setOnItemClickListener { adapter, _, position ->
-            if (isEdited.value == true) {
-                //编辑中
-                MenuEditActivity.openActivity(
-                    this,
-                    ShopGroupVO.LEVEL_1,
-                    firstAdapter?.getItem(position)?.shopCatPid,
-                    firstAdapter?.getItem(position)
-                )
-            } else {
-
-                firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
-                firstAdapter?.notifyDataSetChanged()
-                viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
             }
         }
 
@@ -166,7 +165,9 @@ class MenuGoodsManagerActivity :
             MenuEditActivity.openActivity(this, ShopGroupVO.LEVEL_1, null, null)
         }
 
-        val listener: OnItemDragListener = object : OnItemDragListener {
+
+        //知道菜单排序
+        val listenerOne: OnItemDragListener = object : OnItemDragListener {
 
             override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
                 //获取初始位置
@@ -206,42 +207,163 @@ class MenuGoodsManagerActivity :
         val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(firstAdapter)
         val mItemTouchHelper = ItemTouchHelper(mItemDragAndSwipeCallback)
         mItemTouchHelper.attachToRecyclerView(mBinding.rvOne)
-        firstAdapter?.setOnItemDragListener(listener)
+        firstAdapter?.setOnItemDragListener(listenerOne)
         firstAdapter?.enableDragItem(mItemTouchHelper)
 
         mBinding.rvOne.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mBinding.rvOne.adapter = firstAdapter
 
+        //查看商品
+        firstAdapter?.setOnItemClickListener { adapter, _, position ->
+            if (isEdited.value == true) {
+                //编辑中
+                MenuEditActivity.openActivity(
+                    this,
+                    ShopGroupVO.LEVEL_1,
+                    firstAdapter?.getItem(position)?.shopCatPid,
+                    firstAdapter?.getItem(position)
+                )
+            } else {
+                firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                firstAdapter?.notifyDataSetChanged()
+                viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+            }
+        }
 
-        //常用菜单
-        secondAdapter = SimpleMenuAdapter()
+    }
+
+    //常用菜单
+    private fun initSecondMenu() {
+
+        secondAdapter = SimpleMenuAdapter().apply {
+            setOnItemChildClickListener { _, view, position ->
+                when (view.id) {
+                    R.id.deleteIv -> {
+                        DialogUtils.showDialog(context as Activity,
+                            "删除提示", "删除后不可恢复，确定要删除该菜单吗？",
+                            "取消", "确定删除",
+                            null, {
+                                mPresenter?.deleteGoodsGroup(
+                                    secondAdapter?.getItem(position),
+                                    position
+                                )
+                            })
+                    }
+                }
+            }
+        }
+
+        //添加常用菜单
+        mBinding.menuAddTwo.singleClick {
+            UserMenuEditActivity.openActivity(this, "0", null, 0)
+        }
+
+        //常用菜单排序
+        val listenerTwo: OnItemDragListener = object : OnItemDragListener {
+
+            override fun onItemDragStart(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
+                //获取初始位置
+                secondStart = pos
+            }
+
+            override fun onItemDragMoving(
+                source: RecyclerView.ViewHolder?,
+                from: Int,
+                target: RecyclerView.ViewHolder?,
+                to: Int
+            ) {
+                //nothing to do
+            }
+
+            override fun onItemDragEnd(viewHolder: RecyclerView.ViewHolder?, pos: Int) {
+                //获取到达的位置
+                //pos为Item到达的位置
+                if (pos > 0) {
+
+                    val pre = secondAdapter?.data?.get(pos - 1)
+                    val item = secondAdapter?.data?.get(pos)
+                    if (item != null && pre != null) {
+                        mPresenter?.sort(0, item.shopCatId!!, pre.sort + 1)
+                    }
+                } else {
+                    //到顶了
+                    //获取第一个Item
+                    val item = secondAdapter?.data?.get(pos)
+                    if (item != null) {
+                        mPresenter?.sort(0, item.shopCatId!!, 0)
+                    }
+                }
+            }
+        }
+
+        val mItemDragAndSwipeCallback = ItemDragAndSwipeCallback(secondAdapter)
+        val mItemTouchHelper = ItemTouchHelper(mItemDragAndSwipeCallback)
+        mItemTouchHelper.attachToRecyclerView(mBinding.rvTwo)
+        secondAdapter?.setOnItemDragListener(listenerTwo)
+        secondAdapter?.enableDragItem(mItemTouchHelper)
+
         mBinding.rvTwo.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mBinding.rvTwo.adapter = secondAdapter
 
+        //查看商品
+        secondAdapter?.setOnItemClickListener { adapter, _, position ->
+            if (isEdited.value == true) {
+                //编辑中
+//                MenuEditActivity.openActivity(
+//                    this,
+//                    ShopGroupVO.LEVEL_1,
+//                    firstAdapter?.getItem(position)?.shopCatPid,
+//                    firstAdapter?.getItem(position)
+//                )
+            } else {
+                secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                secondAdapter?.notifyDataSetChanged()
+                viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+            }
+        }
+
+    }
+
+    //二级菜单
+    private fun initThirdMenu() {
         //二级菜单
         thirdAdapter = SimpleMenuTwoAdapter()
+
+
+        thirdAdapter?.setOnItemClickListener { adapter, _, position ->
+            if (viewModel.item.value?.isTop == 0) {
+                thirdAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                thirdAdapter?.notifyDataSetChanged()
+                val item = adapter.data[position] as ShopGroupVO
+                item.isSecondMenu = true
+                viewModel.setShopGroup(item)
+            }
+        }
+
+
         mBinding.rvThree.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvThree.adapter = thirdAdapter
+
+
         //监听一级菜单的变化
         viewModel.item.observe(this, {
 
             if (it.children == null || (it.children?.isEmpty() == true)) {
-                val list: List<ShopGroupVO> = listOf(it)
+                if (!it.isSecondMenu) {
+                    val list: List<ShopGroupVO> = listOf(it)
+                    thirdAdapter?.replaceData(list)
+                    thirdAdapter?.notifyDataSetChanged()
+                }
+
+            } else {
+                val list: List<ShopGroupVO> = it.children!!
                 thirdAdapter?.replaceData(list)
                 thirdAdapter?.notifyDataSetChanged()
-            } else {
-
             }
         })
-
-
-// mLoadMoreRv.smoothScrollToPosition(toPosition)
-        //先加载置顶菜单
-
-
     }
 
     //加载一级菜单成功
@@ -274,10 +396,27 @@ class MenuGoodsManagerActivity :
             }
 
         } else {
-            secondTop = list
+
+            if (isEdited.value == true) {
+                //编辑状态
+                //常用菜单
+                list.let {
+                    for (i in it) {
+                        i.isdeleted = true
+                    }
+                }
+            } else {
+                list.let {
+                    for (i in it) {
+                        i.isdeleted = false
+                    }
+                }
+            }
+
             secondAdapter?.replaceData(list)
         }
 
+        //加载Fragment
         if (!isFragmentExited) {
             //添加Fragment
             supportFragmentManager.commit {
@@ -287,7 +426,6 @@ class MenuGoodsManagerActivity :
             isFragmentExited = true
             firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
         }
-
         hideDialogLoading()
     }
 
@@ -308,4 +446,5 @@ class MenuGoodsManagerActivity :
         super.onResume()
         mPresenter?.loadLv1GoodsGroup(1, true)
     }
+
 }
