@@ -2,8 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="90dp"
-    android:layout_height="50dp"
+    android:layout_width="70dp"
+    android:layout_height="40dp"
     tools:ignore="ContentDescription,HardcodedText">
 
 
@@ -15,13 +15,10 @@
 
         <TextView
             android:id="@+id/menuName"
-            android:layout_width="55dp"
+            android:layout_width="60dp"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/dimen_10"
             android:background="@xml/setbar_bg_grey"
             android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="0dp"
             android:textColor="@drawable/selector_goods_category_item"
             android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="@+id/container"

@@ -61,6 +61,7 @@ class MenuGoodsManagerActivity :
         mToolBarDelegate?.setMidTitle("菜单管理")
 
         //加载已有菜单数据
+        showDialogLoading()
         mPresenter?.loadLv1GoodsGroup(1, true)
 
         //默认完成状态中
@@ -438,7 +439,7 @@ class MenuGoodsManagerActivity :
             isFragmentExited = true
             firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
         }
-
+        hideDialogLoading()
     }
 
     //排序成功

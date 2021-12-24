@@ -54,7 +54,7 @@
                         android:id="@+id/rv_one"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_CACACA" />
+                        android:background="@color/color_E6E6E6" />
 
                     <TextView
                         android:id="@+id/menuAddOne"
@@ -84,7 +84,7 @@
                         android:id="@+id/rv_two"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/color_CACACA" />
+                        android:background="@color/color_E6E6E6" />
 
                     <TextView
                         android:id="@+id/menuAddTwo"
@@ -107,7 +107,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_three"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_marginStart="95dp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/container"
@@ -118,7 +118,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="95dp"
-                android:layout_marginTop="75dp" />
+                android:layout_marginTop="60dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
