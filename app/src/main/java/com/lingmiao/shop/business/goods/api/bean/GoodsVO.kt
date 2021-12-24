@@ -76,7 +76,9 @@ data class GoodsVO(
     /**
      * 是否选中
      */
-    var isChecked: Boolean? = false
+    var isChecked: Boolean? = false,
+    //是否是活动中  true是
+    var isEvent: Boolean = false
 ) : Serializable {
 
     companion object {

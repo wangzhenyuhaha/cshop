@@ -33,8 +33,6 @@ class MenuGoodsManagerActivity :
 
     private val viewModel by viewModels<MenuGoodsManagerViewModel>()
 
-    //选中的一级菜单
-    private var selectedGroup: ShopGroupVO? = null
 
     //是否已经加载Fragment
     private var isFragmentExited: Boolean = false
@@ -126,8 +124,8 @@ class MenuGoodsManagerActivity :
 
         //置顶菜单
         firstAdapter = SimpleMenuAdapter().apply {
-            setOnItemChildClickListener { adapter, view, position ->
-                val item = adapter.getItem(position) as ShopGroupVO
+            setOnItemChildClickListener { _, view, position ->
+
                 when (view.id) {
                     R.id.deleteIv -> {
                         DialogUtils.showDialog(context as Activity,
@@ -146,10 +144,15 @@ class MenuGoodsManagerActivity :
         }
 
         //编辑置顶菜单
-        firstAdapter?.setOnItemClickListener { adapter, view, position ->
+        firstAdapter?.setOnItemClickListener { adapter, _, position ->
             if (isEdited.value == true) {
                 //编辑中
-                showToast("正在编")
+                MenuEditActivity.openActivity(
+                    this,
+                    ShopGroupVO.LEVEL_1,
+                    firstAdapter?.getItem(position)?.shopCatPid,
+                    firstAdapter?.getItem(position)
+                )
             } else {
 
                 firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
