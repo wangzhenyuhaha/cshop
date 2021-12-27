@@ -67,8 +67,8 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
         const val LEVEL_1 = 1
         const val LEVEL_2 = 2
 
-        const val TYPE_SHOW = 0
-        const val TYPE_HIDE = 1
+        const val TYPE_SHOW = 1
+        const val TYPE_HIDE = 0
 
         fun convert(groupVO: ShopGroupVO?): ShopGroupVO {
             return if (groupVO == null) {

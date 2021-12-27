@@ -1,26 +1,32 @@
 package com.lingmiao.shop.business.goods
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
-import com.lingmiao.shop.business.goods.presenter.GroupManagerEditPre
-import com.lingmiao.shop.business.goods.presenter.impl.GroupManagerEditPreImpl
 import com.james.common.base.BaseActivity
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.UserChildrenAdapter
+import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.UserMenuEditPre
 import com.lingmiao.shop.business.goods.presenter.impl.UserMenuEditPreImpl
 import com.lingmiao.shop.util.initAdapter
+import kotlinx.android.synthetic.main.goods_activity_menu_edit.*
 import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.*
+import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.hideRadio
+import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.menuNameEdt
+import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.showRadio
+import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.submitTv
+import kotlinx.android.synthetic.main.goods_activity_user_menu_edit.switchBtn
 
 /**
  * Desc   : 菜单 - 编辑常用菜单
  */
+@SuppressLint("NotifyDataSetChanged")
 class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.GroupEditView {
 
     var mChildrenAdapter: UserChildrenAdapter? = null
@@ -67,7 +73,7 @@ class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gr
     }
 
     override fun useLightMode(): Boolean {
-        return false;
+        return false
     }
 
     override fun getLayoutId(): Int {
@@ -85,18 +91,18 @@ class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gr
             menuChildrenLayout.visiable()
         } else {
             mToolBarDelegate.setMidTitle("添加常用菜单")
-            menuChildrenLayout.gone();
+            menuChildrenLayout.gone()
         }
         if (isTop == 0) {
             switchBtn.isClickable = false
             //常用菜单，禁止使用活动价
         }
 
-        initAdapter();
+        initAdapter()
 
         addChildrenTv.singleClick {
             DialogUtils.showInputDialog(context, "菜单名称", "", "请输入", "取消", "保存", null) {
-                mPresenter?.addGroup(it, groupVO.shopCatId!!);
+                mPresenter?.addGroup(it, groupVO.shopCatId!!)
             }
         }
         // 提交编辑/添加的按钮
@@ -105,11 +111,10 @@ class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gr
                 shopCatPid = parentGroupId
                 shopCatName = menuNameEdt.getViewText()
                 shopCatDesc = ""
-                sort = 0;
+                sort = 0
                 isTop = 0
                 isEvent = if (switchBtn.isChecked) 1 else 0
-
-
+                setDisable(showRadio.isChecked)
             }
             if (isEditMode) {
                 mPresenter.modifyGroup(groupVO)
@@ -118,23 +123,23 @@ class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gr
             }
         }
 
-        if (groupVO?.shopCatId?.length ?: 0 > 0) {
-            mPresenter.getShopGroupAndChildren(groupVO?.shopCatId!!);
+        if (groupVO.shopCatId?.length ?: 0 > 0) {
+            mPresenter.getShopGroupAndChildren(groupVO.shopCatId!!)
         } else {
             restoreUI()
         }
     }
 
     fun initAdapter() {
-        mChildrenList = groupVO?.children ?: mutableListOf();
+        mChildrenList = groupVO.children ?: mutableListOf()
         mChildrenAdapter = UserChildrenAdapter(mChildrenList).apply {
-            setOnItemChildClickListener { adapter, view, position ->
+            setOnItemChildClickListener { _, view, position ->
                 val item = mChildrenAdapter?.getItem(position)
                 if (view.id == R.id.cateChildrenMoreIv) {
-                    mPresenter?.clickMenuView(item, position, view);
+                    mPresenter?.clickMenuView(item, position, view)
                 }
             }
-            setOnItemClickListener { adapter, view, position ->
+            setOnItemClickListener { _, _, _ ->
 
             }
         }
@@ -147,38 +152,40 @@ class UserMenuEditActivity : BaseActivity<UserMenuEditPre>(), UserMenuEditPre.Gr
     private fun restoreUI() {
         if (isEditMode) {
             switchBtn.isChecked = groupVO.isEvent == 1
-            menuNameEdt.setText(groupVO?.shopCatName)
-            mChildrenList = groupVO?.children ?: mutableListOf()
-            mChildrenAdapter?.replaceData(mChildrenList!!);
+            menuNameEdt.setText(groupVO.shopCatName)
+            mChildrenList = groupVO.children ?: mutableListOf()
+            mChildrenAdapter?.replaceData(mChildrenList!!)
+            showRadio.isChecked = groupVO.isGroupShow()
+            hideRadio.isChecked = !groupVO.isGroupShow()
         }
     }
 
     override fun onSetGroup(item: ShopGroupVO) {
-        groupVO = item;
-        restoreUI();
+        groupVO = item
+        restoreUI()
     }
 
     override fun onDeleteGroupSuccess(position: Int) {
-        mChildrenList?.removeAt(position);
-        mChildrenAdapter?.replaceData(mChildrenList!!);
+        mChildrenList?.removeAt(position)
+        mChildrenAdapter?.replaceData(mChildrenList!!)
     }
 
     override fun onDeleteFailed() {
-        mPresenter?.getShopGroupAndChildren(groupVO.shopCatId!!);
+        mPresenter?.getShopGroupAndChildren(groupVO.shopCatId!!)
     }
 
     override fun onGroupAdded(item: ShopGroupVO) {
-        mChildrenList?.add(item);
-        mChildrenAdapter?.replaceData(mChildrenList!!);
+        mChildrenList?.add(item)
+        mChildrenAdapter?.replaceData(mChildrenList!!)
     }
 
     override fun onUpdated(item: ShopGroupVO, position: Int) {
-        mChildrenList?.set(position, item);
-        mChildrenAdapter?.notifyDataSetChanged();
+        mChildrenList?.set(position, item)
+        mChildrenAdapter?.notifyDataSetChanged()
     }
 
     override fun onUpdateFail() {
-        mPresenter?.getShopGroupAndChildren(groupVO.shopCatId!!);
+        mPresenter?.getShopGroupAndChildren(groupVO.shopCatId!!)
     }
 
 }

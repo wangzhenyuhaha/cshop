@@ -99,15 +99,12 @@
 
         </LinearLayout>
 
-        <View
-            style="@style/common_divider"
-            android:visibility="gone" />
+        <View style="@style/common_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:orientation="horizontal">
 
             <TextView
                 style="@style/goods_group_edit_left"
@@ -139,6 +136,7 @@
                     android:paddingEnd="0dp"
                     android:text="不显示" />
             </RadioGroup>
+
         </LinearLayout>
 
         <View
@@ -173,7 +171,6 @@
         </LinearLayout>
 
     </com.james.common.view.ILinearLayout>
-
 
     <androidx.legacy.widget.Space
         android:layout_width="wrap_content"
