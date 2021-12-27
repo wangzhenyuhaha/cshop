@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.adapter
 
 import android.widget.TextView
+import com.blankj.utilcode.util.ActivityUtils
 import com.chad.library.adapter.base.BaseItemDraggableAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
@@ -39,6 +40,13 @@ class SimpleMenuAdapter :
             //删除
             helper.setGone(R.id.deleteIv, isdeleted)
             helper.addOnClickListener(R.id.deleteIv)
+
+            if (item.catPath == selectGroupId){
+                //选中了
+                helper.setBackgroundRes(R.id.container, R.color.color_FFFFFF)
+            }else{
+                helper.setBackgroundRes(R.id.container, R.color.color_CACACA)
+            }
 
         }
     }

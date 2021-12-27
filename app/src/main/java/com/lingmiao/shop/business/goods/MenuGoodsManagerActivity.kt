@@ -24,6 +24,7 @@ import com.lingmiao.shop.business.goods.fragment.GoodsMenuFragment
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.MenuGoodsManagerPreImpl
 import com.lingmiao.shop.databinding.ActivityMenuGoodsManagerBinding
+import com.lingmiao.shop.widget.EmptyView
 
 @SuppressLint("NotifyDataSetChanged")
 class MenuGoodsManagerActivity :
@@ -239,6 +240,8 @@ class MenuGoodsManagerActivity :
             } else {
                 firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                 firstAdapter?.notifyDataSetChanged()
+                secondAdapter?.setGroupId("")
+                secondAdapter?.notifyDataSetChanged()
                 viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
             }
         }
@@ -331,6 +334,8 @@ class MenuGoodsManagerActivity :
                     0
                 )
             } else {
+                firstAdapter?.setGroupId("")
+                firstAdapter?.notifyDataSetChanged()
                 secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                 secondAdapter?.notifyDataSetChanged()
                 viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
