@@ -102,14 +102,33 @@
 
             </androidx.core.widget.NestedScrollView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_three"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginStart="95dp"
                 android:layout_marginTop="15dp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="@+id/container"
-                app:layout_constraintTop_toTopOf="@+id/container" />
+                app:layout_constraintTop_toTopOf="@+id/container">
+
+
+                <TextView
+                    android:id="@+id/menuNameAll"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:background="@xml/setbar_bg_grey"
+                    android:gravity="center"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:text="全部"
+                    android:textColor="@drawable/selector_goods_category_item"
+                    android:textSize="11sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_three"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragment"

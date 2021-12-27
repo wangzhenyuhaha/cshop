@@ -252,6 +252,8 @@ class MenuGoodsManagerActivity :
                             secondAdapter?.setGroupId("")
                             secondAdapter?.notifyDataSetChanged()
                             viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                            //默认选中全部
+                            setSecondAll(true)
                         }
                     )
                 } else {
@@ -261,7 +263,10 @@ class MenuGoodsManagerActivity :
                     firstAdapter?.notifyDataSetChanged()
                     secondAdapter?.setGroupId("")
                     secondAdapter?.notifyDataSetChanged()
+                    //更新选中的一级菜单
                     viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                    //默认选中全部
+                    setSecondAll(true)
                 }
 
 
@@ -372,6 +377,8 @@ class MenuGoodsManagerActivity :
                             secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                             secondAdapter?.notifyDataSetChanged()
                             viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                            //默认选中全部
+                            setSecondAll(true)
                         }
                     )
                 } else {
@@ -381,7 +388,10 @@ class MenuGoodsManagerActivity :
                     firstAdapter?.notifyDataSetChanged()
                     secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                     secondAdapter?.notifyDataSetChanged()
+                    //更新选中的一级菜单
                     viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                    //默认选中全部
+                    setSecondAll(true)
 
                 }
 
@@ -403,6 +413,10 @@ class MenuGoodsManagerActivity :
                 val item = adapter.data[position] as ShopGroupVO
                 item.isSecondMenu = true
                 viewModel.setShopGroup(item)
+
+                //
+
+                setSecondAll(false)
             }
         }
 
@@ -411,11 +425,16 @@ class MenuGoodsManagerActivity :
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvThree.adapter = thirdAdapter
 
+        //增加对二级菜单行的监听
+        mBinding.menuNameAll.singleClick {
+
+        }
 
         //监听一级菜单的变化
         viewModel.item.observe(this, {
 
             if (it.children == null || (it.children?.isEmpty() == true)) {
+                //没有二级菜单
                 if (!it.isSecondMenu) {
                     val list: List<ShopGroupVO> = listOf(it)
                     thirdAdapter?.replaceData(list)
@@ -423,6 +442,7 @@ class MenuGoodsManagerActivity :
                 }
 
             } else {
+                //有二级菜单
                 val list: List<ShopGroupVO> = it.children!!
                 thirdAdapter?.replaceData(list)
                 thirdAdapter?.notifyDataSetChanged()
@@ -489,6 +509,8 @@ class MenuGoodsManagerActivity :
             }
             isFragmentExited = true
             firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
+            //默认选中全部
+            setSecondAll(true)
             firstAdapter?.setGroupId((firstAdapter?.data?.get(0) as ShopGroupVO).catPath)
             firstAdapter?.notifyDataSetChanged()
         }
@@ -523,4 +545,8 @@ class MenuGoodsManagerActivity :
         mPresenter?.loadLv1GoodsGroup(1, true)
     }
 
+    //二级菜单默认是否全部
+    private fun setSecondAll(isAll: Boolean) {
+        mBinding.menuNameAll.isSelected = isAll
+    }
 }
