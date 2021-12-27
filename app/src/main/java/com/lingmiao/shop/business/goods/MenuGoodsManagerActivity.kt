@@ -24,7 +24,6 @@ import com.lingmiao.shop.business.goods.fragment.GoodsMenuFragment
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
 import com.lingmiao.shop.business.goods.presenter.impl.MenuGoodsManagerPreImpl
 import com.lingmiao.shop.databinding.ActivityMenuGoodsManagerBinding
-import com.lingmiao.shop.widget.EmptyView
 
 @SuppressLint("NotifyDataSetChanged")
 class MenuGoodsManagerActivity :
@@ -179,7 +178,6 @@ class MenuGoodsManagerActivity :
             MenuEditActivity.openActivity(this, ShopGroupVO.LEVEL_1, null, null)
         }
 
-
         //知道菜单排序
         val listenerOne: OnItemDragListener = object : OnItemDragListener {
 
@@ -239,11 +237,34 @@ class MenuGoodsManagerActivity :
                     firstAdapter?.getItem(position)
                 )
             } else {
-                firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
-                firstAdapter?.notifyDataSetChanged()
-                secondAdapter?.setGroupId("")
-                secondAdapter?.notifyDataSetChanged()
-                viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                if ((adapter.data[position] as ShopGroupVO).disable != 1) {
+                    //不显示
+                    //提示该菜单未显示
+                    DialogUtils.showDialog(this,
+                        "查看商品",
+                        "当前菜单未在小程序显示，是否查看该菜单下的商品？",
+                        "取消",
+                        "查看",
+                        null,
+                        {
+                            firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                            firstAdapter?.notifyDataSetChanged()
+                            secondAdapter?.setGroupId("")
+                            secondAdapter?.notifyDataSetChanged()
+                            viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                        }
+                    )
+                } else {
+                    //显示
+                    //提示该菜单未显示
+                    firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                    firstAdapter?.notifyDataSetChanged()
+                    secondAdapter?.setGroupId("")
+                    secondAdapter?.notifyDataSetChanged()
+                    viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                }
+
+
             }
         }
 
@@ -335,11 +356,35 @@ class MenuGoodsManagerActivity :
                     0
                 )
             } else {
-                firstAdapter?.setGroupId("")
-                firstAdapter?.notifyDataSetChanged()
-                secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
-                secondAdapter?.notifyDataSetChanged()
-                viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+
+                if ((adapter.data[position] as ShopGroupVO).disable != 1) {
+                    //不显示
+                    //提示该菜单未显示
+                    DialogUtils.showDialog(this,
+                        "查看商品",
+                        "当前菜单未在小程序显示，是否查看该菜单下的商品？",
+                        "取消",
+                        "查看",
+                        null,
+                        {
+                            firstAdapter?.setGroupId("")
+                            firstAdapter?.notifyDataSetChanged()
+                            secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                            secondAdapter?.notifyDataSetChanged()
+                            viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+                        }
+                    )
+                } else {
+                    //显示
+                    //提示该菜单未显示
+                    firstAdapter?.setGroupId("")
+                    firstAdapter?.notifyDataSetChanged()
+                    secondAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                    secondAdapter?.notifyDataSetChanged()
+                    viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
+
+                }
+
             }
         }
 
