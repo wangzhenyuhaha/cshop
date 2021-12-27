@@ -61,9 +61,6 @@ class MenuGoodsManagerActivity :
 
         mToolBarDelegate?.setMidTitle("菜单管理")
 
-        //加载已有菜单数据
-        showDialogLoading()
-        mPresenter?.loadLv1GoodsGroup(1, true)
 
         //默认完成状态中
         isEdited.value = false
@@ -149,6 +146,10 @@ class MenuGoodsManagerActivity :
 
         //设置二级菜单
         initThirdMenu()
+
+        //加载已有菜单数据
+        showDialogLoading()
+        mPresenter?.loadLv1GoodsGroup(1, true)
     }
 
     //置顶菜单
@@ -443,6 +444,8 @@ class MenuGoodsManagerActivity :
             }
             isFragmentExited = true
             firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
+            firstAdapter?.setGroupId((firstAdapter?.data?.get(0) as ShopGroupVO).catPath)
+            firstAdapter?.notifyDataSetChanged()
         }
         hideDialogLoading()
     }

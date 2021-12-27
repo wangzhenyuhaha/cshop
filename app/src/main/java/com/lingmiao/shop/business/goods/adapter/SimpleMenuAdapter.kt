@@ -33,7 +33,27 @@ class SimpleMenuAdapter :
                 "${shopCatName}(${goods_num})".let {
                     text = it
                 }
-                isSelected = (item.catPath == selectGroupId)
+                if (item.catPath == selectGroupId) {
+                    helper.setTextColor(
+                        R.id.menuName,
+                        ActivityUtils.getTopActivity().resources.getColor(R.color.color_3870EA)
+                    )
+                } else {
+                    if (disable != 1) {
+                        //不显示
+                        helper.setTextColor(
+                            R.id.menuName,
+                            ActivityUtils.getTopActivity().resources.getColor(R.color.color_CACACA)
+                        )
+                    }else{
+                        //显示
+                        helper.setTextColor(
+                            R.id.menuName,
+                            ActivityUtils.getTopActivity().resources.getColor(R.color.color_333333)
+                        )
+                    }
+                }
+
             }
 
 
@@ -41,11 +61,17 @@ class SimpleMenuAdapter :
             helper.setGone(R.id.deleteIv, isdeleted)
             helper.addOnClickListener(R.id.deleteIv)
 
-            if (item.catPath == selectGroupId){
+            if (item.catPath == selectGroupId) {
                 //选中了
                 helper.setBackgroundRes(R.id.container, R.color.color_FFFFFF)
-            }else{
-                helper.setBackgroundRes(R.id.container, R.color.color_CACACA)
+            } else {
+                if (disable == 1) {
+                    //显示
+                    helper.setBackgroundRes(R.id.container, R.color.color_CACACA)
+                } else {
+                    helper.setBackgroundRes(R.id.container, R.color.common_bg)
+                }
+
             }
 
         }
