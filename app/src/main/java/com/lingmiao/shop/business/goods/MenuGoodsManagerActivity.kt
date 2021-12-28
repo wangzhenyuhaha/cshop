@@ -434,15 +434,11 @@ class MenuGoodsManagerActivity :
         viewModel.item.observe(this, {
 
             if (it.children == null || (it.children?.isEmpty() == true)) {
-                //没有二级菜单
-                if (!it.isSecondMenu) {
-                    val list: List<ShopGroupVO> = listOf(it)
-                    thirdAdapter?.replaceData(list)
-                    thirdAdapter?.notifyDataSetChanged()
-                }
-
+                //没有二级菜单,只显示全部
+                thirdAdapter?.replaceData(listOf())
+                thirdAdapter?.notifyDataSetChanged()
             } else {
-                //有二级菜单
+                //有二级菜单，显示二级菜单
                 val list: List<ShopGroupVO> = it.children!!
                 thirdAdapter?.replaceData(list)
                 thirdAdapter?.notifyDataSetChanged()

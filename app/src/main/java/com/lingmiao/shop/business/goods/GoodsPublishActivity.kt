@@ -346,7 +346,7 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
             }
 
         }
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked,false,1)
+        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked,false,1,0)
     }
 
     /**

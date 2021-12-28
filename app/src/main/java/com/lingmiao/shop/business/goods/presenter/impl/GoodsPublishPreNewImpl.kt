@@ -185,7 +185,8 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         isVirtualGoods: Boolean,
         isMutilSpec: Boolean,
         scan: Boolean,
-        type: Int
+        type: Int,
+        isFromCenter: Int
     ) {
         loadSpecKeyList(goodsVO, isMutilSpec) {
 
@@ -230,7 +231,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                     goodsVO.goodsId = null
                                 }
                                 if (goodsVO.goodsId.isNullOrBlank()) {
-                                    submitGoods(goodsVO, scan, type) // 添加商品
+                                    submitGoods(goodsVO, scan, type, isFromCenter) // 添加商品
                                 } else {
                                     modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
                                 }
@@ -240,7 +241,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 goodsVO.goodsId = null
                             }
                             if (goodsVO.goodsId.isNullOrBlank()) {
-                                submitGoods(goodsVO, scan, type) // 添加商品
+                                submitGoods(goodsVO, scan, type, isFromCenter) // 添加商品
                             } else {
                                 modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
                             }
@@ -285,13 +286,11 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
-    private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int) {
+    private fun submitGoods(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int, isFromCenter: Int) {
         mCoroutine.launch {
-            val resp = if (scan) {
-                GoodsRepository.submitGoods(goodsVO, type.toString(),1)
-            } else {
-                GoodsRepository.submitGoods(goodsVO, type.toString())
-            }
+            val resp =
+                GoodsRepository.submitGoods(goodsVO, type.toString(), isFromCenter)
+
             view.hideDialogLoading()
             handleResponse(resp) {
 

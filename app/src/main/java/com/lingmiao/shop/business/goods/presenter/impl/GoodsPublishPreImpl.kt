@@ -46,14 +46,21 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         mCoroutine.launch {
             val resp = GoodsRepository.loadGoodsById(goodsId)
             handleResponse(resp) {
-                view.onLoadGoodsSuccess(resp.data,false)
+                view.onLoadGoodsSuccess(resp.data, false)
                 view.onSetUseTimeStr(mUseTimePreImpl.getUseTimeStr(resp?.data?.availableDate))
             }
             view.hideDialogLoading()
         }
     }
 
-    override fun publish(goodsVO: GoodsVOWrapper, isVirtualGoods: Boolean, isMutilSpec: Boolean,scan:Boolean,type:Int) {
+    override fun publish(
+        goodsVO: GoodsVOWrapper,
+        isVirtualGoods: Boolean,
+        isMutilSpec: Boolean,
+        scan: Boolean,
+        type: Int,
+        isFromCenter: Int
+    ) {
         loadSpecKeyList(goodsVO) {
             try {
                 checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
@@ -81,7 +88,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
                     if (goodsVO.goodsId.isNullOrBlank()) {
                         submitGoods(goodsVO) // 添加商品
                     } else {
-                        modifyGoods(goodsVO,"1p") // 编辑商品
+                        modifyGoods(goodsVO, "1p") // 编辑商品
                     }
                 }
             } catch (e: BizException) {
@@ -109,7 +116,7 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
 
     private fun submitGoods(goodsVO: GoodsVOWrapper) {
         mCoroutine.launch {
-            val resp = GoodsRepository.submitGoods(goodsVO,"0")
+            val resp = GoodsRepository.submitGoods(goodsVO, "0")
             view.hideDialogLoading()
             handleResponse(resp) {
                 view.showToast("商品上架成功")
@@ -120,9 +127,9 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         }
     }
 
-    private fun modifyGoods(goodsVO: GoodsVOWrapper,is_up:String ) {
+    private fun modifyGoods(goodsVO: GoodsVOWrapper, is_up: String) {
         mCoroutine.launch {
-            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!,is_up, goodsVO)
+            val resp = GoodsRepository.modifyGoods(goodsVO.goodsId!!, is_up, goodsVO)
             view.hideDialogLoading()
             if (resp.isSuccess) {
                 view.showToast("商品修改成功")

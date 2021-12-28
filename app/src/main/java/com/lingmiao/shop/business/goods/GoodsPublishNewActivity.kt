@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -45,6 +46,7 @@ import java.io.File
  * Desc   : 添加商品页面
  */
 
+@SuppressLint("NotifyDataSetChanged")
 class SimpleAdapter :
     BaseQuickAdapter<Data, BaseViewHolder>(R.layout.adapter_one_textview) {
 
@@ -137,6 +139,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             context.startActivity(intent)
         }
     }
+
+    //是否从中心库复制而来的商品
+    private var isFromCenter = 0
 
     // 编辑商品的商品ID
     private var goodsId: String? = null
@@ -297,6 +302,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             val item = adapter.data[position] as Data
             goodsName = item.goodsName.toString()
             mPresenter.loadGoodsInfoFromCenter(item.goodsId.toString())
+            isFromCenter = 1
             searchGoodsLayout.gone()
         }
 
@@ -803,7 +809,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
 
         //type  0 保存  ，1  保存并上架
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan, type)
+        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan, type, isFromCenter)
     }
 
 

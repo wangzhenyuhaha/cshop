@@ -20,10 +20,10 @@ class MenuGoodsManagerViewModel : ViewModel() {
     val savedItem: LiveData<ShopGroupVO>
         get() = _savedItem
 
-    //更改选中的Item(并包括暂存的)
+    //更改选中的Item(并包括暂存的),在点击一级菜单时使用
     fun setShopGroup(group: ShopGroupVO) {
         _item.value = group
-       // _savedItem.value = group
+        _savedItem.value = group
     }
 
     fun setShopGroupOnlyFirst(group: ShopGroupVO) {

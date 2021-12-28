@@ -27,7 +27,8 @@ interface GoodsPublishPre : BasePresenter {
         isVirtualGoods: Boolean,
         isMutilSpec: Boolean,
         scan: Boolean,
-        type: Int
+        type: Int,
+        isFromCenter: Int
     )
 
 
