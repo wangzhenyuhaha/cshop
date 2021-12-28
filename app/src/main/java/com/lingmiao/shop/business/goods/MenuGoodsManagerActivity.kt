@@ -32,7 +32,6 @@ class MenuGoodsManagerActivity :
 
     private val viewModel by viewModels<MenuGoodsManagerViewModel>()
 
-
     //是否已经加载Fragment
     private var isFragmentExited: Boolean = false
 
@@ -59,7 +58,6 @@ class MenuGoodsManagerActivity :
     override fun initView() {
 
         mToolBarDelegate?.setMidTitle("菜单管理")
-
 
         //默认完成状态中
         isEdited.value = false

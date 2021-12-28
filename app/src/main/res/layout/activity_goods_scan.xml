@@ -222,7 +222,6 @@
                         app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
                         tools:text="规格" />
 
-
                     <TextView
                         android:id="@+id/goodsCheckSubmit"
                         android:layout_width="100dp"
@@ -239,7 +238,6 @@
                         android:textSize="13sp"
                         app:layout_constraintBottom_toBottomOf="@+id/scan_goods_main"
                         app:layout_constraintRight_toRightOf="@+id/scan_goods_main" />
-
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -382,7 +380,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
 
             <View
                 android:id="@+id/view"

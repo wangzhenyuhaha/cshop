@@ -25,7 +25,6 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.adapter.GoodsScanAdapter
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuDO
-import com.lingmiao.shop.business.goods.api.bean.GoodsTypeVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
 import com.lingmiao.shop.business.goods.api.bean.ScanGoods
 import com.lingmiao.shop.business.goods.event.GoodsHomeTabEvent
@@ -36,14 +35,7 @@ import com.lingmiao.shop.business.goods.presenter.impl.GoodsScanActivityPresente
 import com.lingmiao.shop.databinding.ActivityGoodsScanBinding
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
-import kotlinx.android.synthetic.main.goods_activity_publish_new.*
-import kotlinx.android.synthetic.main.goods_adapter_goods_gallery.*
-import kotlinx.android.synthetic.main.goods_include_publish_section1.*
-import kotlinx.android.synthetic.main.goods_include_publish_section2.*
-import kotlinx.android.synthetic.main.goods_include_publish_section4_new.*
 import kotlinx.android.synthetic.main.goods_include_publish_section5.*
-import kotlinx.android.synthetic.main.goods_include_publish_section8.*
-import kotlinx.android.synthetic.main.goods_include_publish_section_package.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -62,6 +54,9 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     override fun getViewBinding() = ActivityGoodsScanBinding.inflate(layoutInflater)
 
     override fun useLightMode() = false
+
+    //当前分类菜单是否来自中心库（该页面中默认是来自中心库）
+    private var isFromCenter = 1
 
     //从中心库查询到的商品
     private var goodsVO: GoodsVOWrapper = GoodsVOWrapper()
@@ -440,23 +435,32 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             //赋值分类ID和Name
             this.categoryId = categoryId
             this.categoryName = categoryName
-            //菜单未设置
-            if (this.shopCatId.isNullOrEmpty()) {
-                //UI上菜单显示分类，但是实际上不传菜单数据
-                onUpdateGroup(null, categoryName)
-            }
+        }
+        if(isFromCenter == 1)
+        {
+            goodsVO.shopCatId = null
+            goodsVO.shopCatName = null
+            mBinding.goodsGroupTv.text = "请选择"
+            isFromCenter =0
         }
     }
 
     //选择菜单
     override fun onUpdateGroup(groupId: String?, groupName: String?) {
         mBinding.goodsGroupTv.text = groupName
-        if (groupId != null) {
-            goodsVO.apply {
-                this.shopCatId = groupId
-                this.shopCatName = groupName
-            }
+        goodsVO.apply {
+            this.shopCatId = groupId
+            this.shopCatName = groupName
         }
+
+        if(isFromCenter == 1)
+        {
+            goodsVO.categoryId = null
+            goodsVO.categoryName = null
+            mBinding.goodsCategoryTv.text = "请选择商品分类"
+            isFromCenter =0
+        }
+
     }
 
     override fun onScanSearchFailed() {
@@ -491,6 +495,11 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             return
         }
 
+        if (goodsVO.shopCatId == null) {
+            showToast("请选择商品菜单")
+            return
+        }
+
         showDialogLoading()
         goodsVO.apply {
             bar_code = id.value
@@ -510,7 +519,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
         lifecycleScope.launch(Dispatchers.IO) {
 
             val resp =
-                GoodsRepository.submitGoods(goodsVO, type.toString(), 1)
+                GoodsRepository.submitGoods(goodsVO, type.toString(), isFromCenter)
 
             if (resp.isSuccess) {
                 withContext(Dispatchers.Main)
