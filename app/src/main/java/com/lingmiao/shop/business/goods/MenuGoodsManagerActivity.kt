@@ -146,6 +146,14 @@ class MenuGoodsManagerActivity :
         //设置二级菜单
         initThirdMenu()
 
+        //全部
+        mBinding.menuNameAll.singleClick {
+            mBinding.menuNameAll.isSelected = true
+            thirdAdapter?.setGroupId("")
+            thirdAdapter?.notifyDataSetChanged()
+            viewModel.setFirstToSecond()
+        }
+
         //加载已有菜单数据
         showDialogLoading()
         mPresenter?.loadLv1GoodsGroup(1, true)
@@ -410,13 +418,14 @@ class MenuGoodsManagerActivity :
             if (viewModel.item.value?.isTop == 0) {
                 thirdAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                 thirdAdapter?.notifyDataSetChanged()
+                setSecondAll(false)
+
+
                 val item = adapter.data[position] as ShopGroupVO
                 item.isSecondMenu = true
-                viewModel.setShopGroup(item)
+                //设置当前选中的菜单未这个
+                viewModel.setShopGroupOnlyFirst(item)
 
-                //
-
-                setSecondAll(false)
             }
         }
 
@@ -425,22 +434,24 @@ class MenuGoodsManagerActivity :
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvThree.adapter = thirdAdapter
 
-        //增加对二级菜单行的监听
-        mBinding.menuNameAll.singleClick {
 
-        }
-
-        //监听一级菜单的变化
+        //监听选中菜单的变化
         viewModel.item.observe(this, {
 
             if (it.children == null || (it.children?.isEmpty() == true)) {
                 //没有二级菜单,只显示全部
-                thirdAdapter?.replaceData(listOf())
-                thirdAdapter?.notifyDataSetChanged()
+                if (!it.isSecondMenu) {
+                    val list: List<ShopGroupVO> = listOf()
+                    thirdAdapter?.replaceData(list)
+                    thirdAdapter?.notifyDataSetChanged()
+                }
+
             } else {
                 //有二级菜单，显示二级菜单
                 val list: List<ShopGroupVO> = it.children!!
                 thirdAdapter?.replaceData(list)
+                //清除保存的数据（该数据保存在thirdAdapter中）
+                thirdAdapter?.setGroupId("")
                 thirdAdapter?.notifyDataSetChanged()
             }
         })

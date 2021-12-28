@@ -26,8 +26,15 @@ class MenuGoodsManagerViewModel : ViewModel() {
         _savedItem.value = group
     }
 
+    //设置当前选中的菜单
     fun setShopGroupOnlyFirst(group: ShopGroupVO) {
         _item.value = group
     }
+
+    //将当前选中的菜单设为选中的一级菜单
+    fun setFirstToSecond() {
+        _item.value = _savedItem.value
+    }
+
 
 }
