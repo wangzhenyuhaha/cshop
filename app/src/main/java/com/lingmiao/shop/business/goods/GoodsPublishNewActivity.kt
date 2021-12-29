@@ -93,6 +93,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //商品菜单name
         private const val KEY_GOODS_SHOPCATNAME = "KEY_GOODS_SHOPCATNAME"
 
+        //是否菜单分类是从中心库中所来
+        private const val IS_FROM_CENTER = "IS_FROM_CENTER"
+
         const val REQUEST_CODE_VIDEO = 1000
         const val REQUEST_CODE_DELIVERY = 1001
         const val REQUEST_CODE_SKU = 1002
@@ -110,7 +113,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             categoryId: String? = null,
             categoryName: String? = null,
             shopCatId: String? = null,
-            shopCatName: String? = null
+            shopCatName: String? = null,
+            isFromCenter: Int? = null
         ) {
             val intent = Intent(context, GoodsPublishNewActivity::class.java)
             intent.putExtra(KEY_GOODS_ID, goodsId)
@@ -122,6 +126,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             intent.putExtra(KEY_GOODS_CATEGORYNAME, categoryName)
             intent.putExtra(KEY_GOODS_SHOPCATID, shopCatId)
             intent.putExtra(KEY_GOODS_SHOPCATNAME, shopCatName)
+            intent.putExtra(IS_FROM_CENTER, isFromCenter)
             context.startActivity(intent)
         }
 
@@ -140,7 +145,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
     }
 
-    //是否从中心库复制而来的商品
+    //是否从中心库复制而来的商品(该页面默认不是来自中心库)
     private var isFromCenter = 0
 
     // 编辑商品的商品ID
@@ -215,7 +220,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         categoryName = intent.getStringExtra(KEY_GOODS_CATEGORYNAME)
         shopCatId = intent.getStringExtra(KEY_GOODS_SHOPCATID)
         shopCatName = intent.getStringExtra(KEY_GOODS_SHOPCATNAME)
-
+        isFromCenter = intent.getIntExtra(IS_FROM_CENTER, 0)
     }
 
     override fun createPresenter() = GoodsPublishPreNewImpl(this, this)
@@ -396,11 +401,19 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             //赋值分类ID和Name
             this.categoryId = categoryId
             this.categoryName = categoryName
-            //菜单未设置
-            if (this.shopCatId.isNullOrEmpty()) {
-                //UI上菜单显示分类，但是实际上不传菜单数据
-                onUpdateGroup(null, categoryName)
-            }
+        }
+
+        if (isFromCenter == 1) {
+            goodsVO.shopCatId = null
+            goodsVO.shopCatName = null
+            goodsGroupTv.text = "请选择"
+            isFromCenter = 0
+        }
+
+        //菜单未设置
+        if (goodsVO.shopCatId.isNullOrEmpty()) {
+            //UI上菜单显示分类，但是实际上不传菜单数据
+            onUpdateGroup(null, categoryName)
         }
     }
 
@@ -412,6 +425,13 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 this.shopCatId = groupId
                 this.shopCatName = groupName
             }
+        }
+
+        if (isFromCenter == 1) {
+            goodsVO.categoryId = null
+            goodsVO.categoryName = null
+            goodsCategoryTv.text = "请选择商品分类"
+            isFromCenter = 0
         }
     }
 
@@ -512,26 +532,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
             // 打包费
             goodsPackageFeeEdt.setText(packagePrice.toString())
-
-            // 商品视频
-//            if (videoUrl.isNotBlank()) {
-//                goodsVideoTv.text = "已选择"
-//            }
-            // 商品详情
-//            if (intro.isNotBlank()) {
-//                goodsDetailTv.text = "已添加"
-//            }
-
-            //metaDescription = des
-            //                    this.intro
-
-
-            // 商品卖点
-            //goodsSellingDescEdt.setText(selling)
-
-            //如果是通过扫码查询到中心库商品而来
-
-
         }
         if (thumbnail != null) {
             this@GoodsPublishNewActivity.goodsVO.apply {
@@ -547,9 +547,17 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             GlideUtils.setImageUrl(imageView, this.goodsVO.thumbnail, R.mipmap.goods_selected_img)
             goodsPriceEdt.setText(this.goodsVO.price)
             goodsQuantityEdt.setText(this.goodsVO.quantity)
-            onUpdateCategory(this.goodsVO.categoryId, this.goodsVO.categoryName)
-            if (this.goodsVO.shopCatId != null) {
-                onUpdateGroup(this.goodsVO.shopCatId, this.goodsVO.shopCatName)
+            //将分类菜单对应的值赋值给页面，不能调用方法，以免重置isFromCenter
+
+            //显示分类名字
+            goodsCategoryTv.text =  this@GoodsPublishNewActivity.goodsVO.categoryName
+            //显示菜单名字
+            if (this@GoodsPublishNewActivity.goodsVO.shopCatId.isNullOrEmpty()) {
+                //显示分类名字
+                goodsGroupTv.text = this@GoodsPublishNewActivity.goodsVO.categoryName
+            }else{
+                //显示菜单名字
+                goodsGroupTv.text = this@GoodsPublishNewActivity.goodsVO.shopCatName
             }
 
         }

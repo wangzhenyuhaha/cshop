@@ -136,7 +136,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             }
         }
 
-
         adapter = GoodsScanAdapter()
 
         adapter?.setOnItemChildClickListener { adapter, view, position ->
@@ -286,7 +285,8 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
                     this.goodsVO.categoryId,
                     this.goodsVO.categoryName,
                     this.goodsVO.shopCatId,
-                    this.goodsVO.shopCatName
+                    this.goodsVO.shopCatName,
+                    isFromCenter
                 )
             }
         }
