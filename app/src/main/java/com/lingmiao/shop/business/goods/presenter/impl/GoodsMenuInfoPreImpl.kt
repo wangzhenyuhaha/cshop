@@ -51,7 +51,7 @@ class GoodsMenuInfoPreImpl(val context: Context, val view: GoodsMenuInfoPre.View
     }
 
     private fun showGroup(isTop: Int, callback: (List<ShopGroupVO>?, String?) -> Unit) {
-        mGroupPreImpl.showGoodsGroupPop(context, isTop, callback);
+        mGroupPreImpl.showGoodsGroupPop(context, isTop, callback)
     }
 
     override fun clickMenuView(isTop: Int, item: GoodsVO?, position: Int, target: View) {
@@ -65,7 +65,7 @@ class GoodsMenuInfoPreImpl(val context: Context, val view: GoodsMenuInfoPre.View
             when (menuType) {
                 ChildrenGoodsMenuPop.TYPE_PRICE -> {
                     //弹出下拉菜单,输入商品ID
-                    quantityPopPre.clickQuantityGoods(item.goodsId) {
+                    quantityPopPre.clickQuantityGoodsNew(item.goodsId) {
                     }
                 }
                 ChildrenGoodsMenuPop.TYPE_EDIT_CATE -> {

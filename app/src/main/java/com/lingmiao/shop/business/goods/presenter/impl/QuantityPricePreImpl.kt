@@ -4,10 +4,12 @@ import android.content.Context
 import android.util.Log
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BaseView
+import com.lingmiao.shop.business.goods.GoodsPublishNewActivity
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsSkuVOWrapper
 import com.lingmiao.shop.business.goods.api.request.PriceAndQuantity
 import com.lingmiao.shop.business.goods.api.request.QuantityPriceRequest
+import com.lingmiao.shop.business.goods.pop.GoodsNewQuantityPricePop
 import com.lingmiao.shop.business.goods.pop.GoodsQuantityPricePop
 import kotlinx.coroutines.launch
 
@@ -32,6 +34,64 @@ class QuantityPricePreImpl(var context: Context, var view: BaseView) : BasePreIm
             } else {
                 showQuantityPricePop(goodsId!!, it, callback)
             }
+        }
+    }
+
+    //New
+    fun clickQuantityGoodsNew(goodsId: String?, callback: (String) -> Unit) {
+        exeGoodsSku(goodsId) {
+            //这里是返回的数据  skuResp.data
+            //size 表示规格数量
+            //GoodsSkuVOWrapper : GoodsSkuVO()
+            //返回数据
+
+            if (it.size == 1) {
+                showQuantityPricePopNew(goodsId!!, arrayListOf(it[0]), callback)
+            } else {
+                showQuantityPricePopNew(goodsId!!, it, callback)
+            }
+        }
+    }
+
+
+    //新的更改活动价格和库存
+    private fun showQuantityPricePopNew(
+        goodsId: String,
+        skuList: List<GoodsSkuVOWrapper>,
+        callback: (String) -> Unit
+    ) {
+        //skuList中的数据 skuNameDesc空       skuIds null            isChecked false                  isEditable true
+
+        //初始化PopWindow,setConfirmListener()  setSkuList()
+        val multiQuantityPop = GoodsNewQuantityPricePop(context, "活动价格/库存")
+
+        //设置对确定按钮的监听，post数据
+        multiQuantityPop.setConfirmListener {
+            if (it.isNullOrEmpty()) {
+                view.showToast("请输入价格及库存数量")
+                return@setConfirmListener
+            }
+            exeQuantityPriceRequest(goodsId, it) { skuList ->
+
+                multiQuantityPop.dismiss()
+                //useless
+                callback.invoke(skuList)
+            }
+        }
+
+        multiQuantityPop.setGoodsDetailListener {
+            GoodsPublishNewActivity.openActivity(context, skuList[0].goodsId.toString())
+        }
+
+
+        multiQuantityPop.apply {
+            //传入数据
+            setSkuList(skuList)
+            //传入图片名称
+            setGoodsInfo(skuList)
+            //设置点击后跳转到编辑商品页面
+
+            showPopupWindow()
         }
     }
 

@@ -16,44 +16,51 @@
         android:textSize="@dimen/sp_13"
         tools:text="规格值1，规格值2" />
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_50"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="价格:"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12" />
+        <LinearLayout style="@style/goods_spec_sub_container">
 
-        <EditText
-            android:id="@+id/priceEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:hint="请输入价格"
-            android:paddingStart="@dimen/dimen_5"
-            android:paddingEnd="@dimen/dimen_5" />
+            <TextView
+                style="@style/goods_spce_item_left_mark"
+                android:text="商品价格" />
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="库存:"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12" />
+            <EditText
+                android:id="@+id/priceEdt"
+                style="@style/goods_spec_item_right_edt"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@xml/setbar_bg_grey"
+                android:hint=" 售价，请输入"
+                android:paddingStart="10dp"
+                android:paddingEnd="@dimen/dimen_5"
+                android:textColor="@color/primary" />
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/quantityEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:hint="请输入库存"
-            android:paddingStart="@dimen/dimen_5"
-            android:paddingEnd="@dimen/dimen_5" />
+        <LinearLayout style="@style/goods_spec_sub_container">
 
+            <TextView
+                style="@style/goods_spce_item_left_mark"
+                android:text="商品库存" />
+
+            <EditText
+                android:id="@+id/quantityEdt"
+                style="@style/goods_spec_item_right_edt"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@xml/setbar_bg_grey"
+                android:hint=" 库存，请输入"
+                android:paddingStart="@dimen/dimen_10"
+                android:paddingEnd="0dp"
+                android:textColor="@color/primary" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -61,40 +68,45 @@
         android:layout_height="@dimen/dimen_50"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="活动价格:"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12" />
+        <LinearLayout style="@style/goods_spec_sub_container">
 
+            <TextView
+                style="@style/goods_spce_item_left_mark"
+                android:text="活动价格" />
 
-        <EditText
-            android:id="@+id/event_priceEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:hint="请输入活动价格"
-            android:paddingStart="@dimen/dimen_5"
-            android:paddingEnd="@dimen/dimen_5" />
+            <EditText
+                android:id="@+id/event_priceEdt"
+                style="@style/goods_spec_item_right_edt"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@xml/setbar_bg_grey"
+                android:hint=" 售价，请输入"
+                android:paddingStart="10dp"
+                android:paddingEnd="@dimen/dimen_5"
+                android:textColor="@color/primary" />
+        </LinearLayout>
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="活动库存:"
-            android:textColor="@color/color_666666"
-            android:textSize="@dimen/sp_12" />
+        <LinearLayout style="@style/goods_spec_sub_container">
 
+            <TextView
+                style="@style/goods_spce_item_left_mark"
+                android:text="活动库存" />
 
-        <EditText
-            android:id="@+id/event_quantityEdt"
-            style="@style/goods_spec_item_right_edt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:hint="请输入活动库存"
-            android:paddingStart="@dimen/dimen_5"
-            android:paddingEnd="@dimen/dimen_5" />
+            <EditText
+                android:id="@+id/event_quantityEdt"
+                style="@style/goods_spec_item_right_edt"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@xml/setbar_bg_grey"
+                android:hint=" 库存，请输入"
+                android:paddingStart="@dimen/dimen_10"
+                android:paddingEnd="0dp"
+                android:textColor="@color/primary" />
+        </LinearLayout>
     </LinearLayout>
 
     <View style="@style/common_divider" />

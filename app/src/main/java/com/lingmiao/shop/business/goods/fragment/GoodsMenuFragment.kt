@@ -57,4 +57,10 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
     override fun onUpdatedGoodsGroup() {
         mLoadMoreDelegate?.refresh()
     }
+
+
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }
