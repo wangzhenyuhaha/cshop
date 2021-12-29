@@ -42,5 +42,21 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
             }
         }
     }
+
+    //修改二级菜单的名称
+    override fun updateSecondGroup(
+        item: ShopGroupVO,
+        newName: String,
+        position: Int
+    ) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.updateShopGroup(item.shopCatId!!, item)
+            if (resp.isSuccess) {
+                view.updateSecondGroupSuccess(newName, position)
+            }
+        }
+    }
+
+
 }
 

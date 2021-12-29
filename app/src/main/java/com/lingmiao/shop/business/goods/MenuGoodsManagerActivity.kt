@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -431,7 +432,28 @@ class MenuGoodsManagerActivity :
             if (viewModel.item.value?.isTop == 0) {
                 if (isEdited.value == true) {
                     //编辑中
-
+                    DialogUtils.showInputDialog(
+                        context as Activity,
+                        "菜单名称",
+                        "",
+                        "请输入",
+                        (adapter.data[position] as ShopGroupVO).shopCatName,
+                        "取消",
+                        "保存",
+                        null
+                    ) {
+                        //更新云端二级菜单名称
+                        //获取当前对应Item
+                        val item = adapter.data[position] as ShopGroupVO
+                        item.shopCatName = it
+                        mPresenter?.updateSecondGroup(item, it, position)
+//                        item.shopCatName = it;
+//                        update(item, {
+//                            view?.onUpdated(item, position);
+//                        }, {
+//
+//                        });
+                    }
 
                 } else {
                     thirdAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
@@ -571,6 +593,14 @@ class MenuGoodsManagerActivity :
                 }
             }
         }
+    }
+
+    override fun updateSecondGroupSuccess(newName: String, position: Int) {
+        thirdAdapter?.data?.get(position)?.shopCatName = newName
+        thirdAdapter?.notifyDataSetChanged()
+
+        //更新保存的一级菜单中的二级菜单数据
+        mPresenter?.loadLv1GoodsGroup(1, true)
     }
 
     override fun onResume() {

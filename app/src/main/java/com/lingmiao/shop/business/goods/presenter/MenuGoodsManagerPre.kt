@@ -15,6 +15,10 @@ interface MenuGoodsManagerPre : BasePresenter {
     //删除一级菜单 isTop 1 置顶   0 常用
     fun deleteGoodsGroup(groupVO: ShopGroupVO?, position: Int, isTop: Int)
 
+    //更新二级菜单名称
+    fun updateSecondGroup(item: ShopGroupVO, newName: String, position: Int)
+
+
     interface View : BaseView {
 
         //加载一级菜单成功
@@ -24,6 +28,9 @@ interface MenuGoodsManagerPre : BasePresenter {
         fun onSortSuccess(isTop: Int)
 
         //删除一级菜单成功
-        fun onDeleteGroupSuccess(position: Int,isTop: Int)
+        fun onDeleteGroupSuccess(position: Int, isTop: Int)
+
+        //更新二级菜单名称成功
+        fun updateSecondGroupSuccess(newName: String, position: Int)
     }
 }
