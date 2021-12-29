@@ -158,7 +158,7 @@ class MenuGoodsManagerActivity :
 
         //加载已有菜单数据
         showDialogLoading()
-        mPresenter?.loadLv1GoodsGroup(1, true)
+        mPresenter?.loadLv1GoodsGroup(1, true, 1)
     }
 
     //置顶菜单
@@ -506,72 +506,80 @@ class MenuGoodsManagerActivity :
     override fun onLoadLv1GoodsGroupSuccess(
         list: List<ShopGroupVO>,
         isTop: Int,
-        isSecond: Boolean
+        isSecond: Boolean, type: Int
     ) {
 
-        if (isTop == 1) {
-            if (isEdited.value == true) {
-                //编辑状态
-                //置顶菜单
-                list.let {
-                    for (i in it) {
-                        i.isdeleted = true
+        when(type)
+        {
+            1->{
+                if (isTop == 1) {
+                    if (isEdited.value == true) {
+                        //编辑状态
+                        //置顶菜单
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = true
+                            }
+                        }
+                    } else {
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = false
+                            }
+                        }
                     }
+
+                    firstAdapter?.replaceData(list)
+                    if (isSecond) {
+                        mPresenter?.loadLv1GoodsGroup(0, false, 1)
+                    }
+
+                } else {
+
+                    if (isEdited.value == true) {
+                        //编辑状态
+                        //常用菜单
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = true
+                            }
+                        }
+                    } else {
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = false
+                            }
+                        }
+                    }
+
+                    secondAdapter?.replaceData(list)
                 }
-            } else {
-                list.let {
-                    for (i in it) {
-                        i.isdeleted = false
+
+                //加载Fragment
+                if (!isFragmentExited) {
+                    //添加Fragment
+                    supportFragmentManager.commit {
+                        setReorderingAllowed(true)
+                        add<GoodsMenuFragment>(R.id.fragment)
                     }
+                    isFragmentExited = true
+                    firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
+                    //默认选中全部
+                    setSecondAll(true)
+                    firstAdapter?.setGroupId((firstAdapter?.data?.get(0) as ShopGroupVO).catPath)
+                    firstAdapter?.notifyDataSetChanged()
                 }
             }
-
-            firstAdapter?.replaceData(list)
-            if (isSecond) {
-                mPresenter?.loadLv1GoodsGroup(0, false)
+            2->{
+               // viewModel.savedItem.value?.let { viewModel.setShopGroup(it) }
             }
-
-        } else {
-
-            if (isEdited.value == true) {
-                //编辑状态
-                //常用菜单
-                list.let {
-                    for (i in it) {
-                        i.isdeleted = true
-                    }
-                }
-            } else {
-                list.let {
-                    for (i in it) {
-                        i.isdeleted = false
-                    }
-                }
-            }
-
-            secondAdapter?.replaceData(list)
-        }
-
-        //加载Fragment
-        if (!isFragmentExited) {
-            //添加Fragment
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<GoodsMenuFragment>(R.id.fragment)
-            }
-            isFragmentExited = true
-            firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
-            //默认选中全部
-            setSecondAll(true)
-            firstAdapter?.setGroupId((firstAdapter?.data?.get(0) as ShopGroupVO).catPath)
-            firstAdapter?.notifyDataSetChanged()
         }
         hideDialogLoading()
     }
 
     //排序成功
     override fun onSortSuccess(isTop: Int) {
-        mPresenter?.loadLv1GoodsGroup(isTop, false)
+        mPresenter?.loadLv1GoodsGroup(isTop, false, 1)
     }
 
     //删除一级菜单成功
@@ -604,13 +612,13 @@ class MenuGoodsManagerActivity :
         thirdAdapter?.notifyDataSetChanged()
 
         //更新保存的一级菜单中的二级菜单数据
-        mPresenter?.loadLv1GoodsGroup(1, true)
+        mPresenter?.loadLv1GoodsGroup(1, true, 1)
     }
 
     override fun addGroupSuccess() {
 
         //更新保存的一级菜单数据
-        mPresenter?.loadLv1GoodsGroup(1, true)
+        mPresenter?.loadLv1GoodsGroup(1, true, 2)
 
         //UI层面更新
 
@@ -639,7 +647,7 @@ class MenuGoodsManagerActivity :
 
     override fun onResume() {
         super.onResume()
-        mPresenter?.loadLv1GoodsGroup(1, true)
+        mPresenter?.loadLv1GoodsGroup(1, true, 1)
     }
 
     //二级菜单默认是否全部

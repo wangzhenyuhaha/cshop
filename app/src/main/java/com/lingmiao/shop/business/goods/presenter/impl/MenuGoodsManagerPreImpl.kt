@@ -12,11 +12,14 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
     BasePreImpl(view), MenuGoodsManagerPre {
 
     //加载一级菜单
-    override fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean) {
+    //type
+    //1普通
+    //2新增了二级菜单
+    override fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean, type: Int) {
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv1ShopGroup(isTop)
             if (resp.isSuccess) {
-                view.onLoadLv1GoodsGroupSuccess(resp.data, isTop, isSecond)
+                view.onLoadLv1GoodsGroupSuccess(resp.data, isTop, isSecond, type)
             }
         }
     }

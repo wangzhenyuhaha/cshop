@@ -9,7 +9,7 @@ interface MenuGoodsManagerPre : BasePresenter {
     fun getShopId() : String
 
     //加载一级菜单
-    fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean)
+    fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean,type:Int)
 
     //排序
     fun sort(isTop: Int, cid: String, sort: Int)
@@ -28,7 +28,7 @@ interface MenuGoodsManagerPre : BasePresenter {
     interface View : BaseView {
 
         //加载一级菜单成功
-        fun onLoadLv1GoodsGroupSuccess(list: List<ShopGroupVO>, isTop: Int, isSecond: Boolean)
+        fun onLoadLv1GoodsGroupSuccess(list: List<ShopGroupVO>, isTop: Int, isSecond: Boolean,type:Int)
 
         //排序成功
         fun onSortSuccess(isTop: Int)
