@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="380dp"
     android:background="@drawable/shape_goods_pop_quantity"
     android:orientation="vertical"
-    android:paddingTop="@dimen/dimen_10"
-    tools:ignore="HardcodedText,ContentDescription">
+    android:paddingTop="@dimen/dimen_10">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingStart="@dimen/dimen_14"
-        android:paddingEnd="0dp">
+        android:paddingStart="@dimen/dimen_14">
 
         <TextView
             android:id="@+id/tvTitle"
@@ -24,7 +20,7 @@
             android:gravity="center_vertical"
             android:text="价格/库存设置"
             android:textColor="@color/color_333333"
-            android:textSize="@dimen/sp_15" />
+            android:textSize="@dimen/dimen_15" />
 
         <ImageView
             android:id="@+id/closeIv"
@@ -35,111 +31,19 @@
             android:src="@mipmap/goods_pop_close" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/scan_goods"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:background="@color/color_ffffff"
-        android:orientation="vertical"
-        android:paddingStart="@dimen/dimen_14"
-        android:paddingTop="@dimen/dimen_14"
-        android:paddingEnd="0dp"
-        tools:ignore="ContentDescription">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/scan_goods_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_ffffff">
-
-            <ImageView
-                android:id="@+id/goodsIv"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginBottom="@dimen/dimen_10"
-                android:background="@color/color_F1F1F1"
-                app:layout_constraintBottom_toBottomOf="@+id/scan_goods_main"
-                app:layout_constraintLeft_toLeftOf="@+id/scan_goods_main"
-                app:layout_constraintTop_toTopOf="@+id/scan_goods_main" />
-
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/barrier"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:barrierDirection="end"
-                app:constraint_referenced_ids="goodsIv" />
-
-            <TextView
-                android:id="@+id/goodsNameTv"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_14"
-                android:layout_marginEnd="@dimen/dimen_14"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:lines="1"
-                android:textColor="@color/color_333333"
-                android:textSize="@dimen/sp_12"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintRight_toRightOf="@+id/scan_goods_main"
-                app:layout_constraintTop_toTopOf="@+id/scan_goods_main"
-                tools:text="我是商品描述信息" />
-
-            <TextView
-                android:id="@+id/goodsQuantityTv"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_14"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:ellipsize="end"
-                android:includeFontPadding="false"
-                android:lines="1"
-                android:textColor="@color/color_999999"
-                android:textSize="@dimen/sp_11"
-                app:layout_constraintLeft_toRightOf="@id/barrier"
-                app:layout_constraintTop_toBottomOf="@+id/goodsNameTv"
-                tools:text="规格" />
-
-            <TextView
-                android:id="@+id/goodsCheckSubmit"
-                android:layout_width="100dp"
-                android:layout_height="38dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="@dimen/dimen_7"
-                android:layout_marginEnd="@dimen/dimen_15"
-                android:layout_marginBottom="@dimen/dimen_7"
-                android:background="@xml/setbar_bg_blue"
-                android:gravity="center"
-                android:text="编辑详情"
-                android:textColor="@color/primary"
-                android:textSize="13sp"
-                app:layout_constraintBottom_toBottomOf="@+id/scan_goods_main"
-                app:layout_constraintRight_toRightOf="@+id/scan_goods_main" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View style="@style/common_divider" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_20"
-            android:paddingHorizontal="@dimen/dimen_14" />
-
-        <View style="@style/common_divider" />
-
-    </LinearLayout>
-
+        android:layout_height="260dp"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:paddingHorizontal="@dimen/dimen_14" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="@dimen/dimen_half"
         android:layout_marginStart="@dimen/dimen_15"
         android:layout_marginTop="@dimen/dimen_5"
-        android:layout_weight="1" />
+        android:background="@color/color_C3C3C3" />
 
     <TextView
         android:id="@+id/confirmTv"
@@ -147,11 +51,11 @@
         android:layout_height="@dimen/dimen_38"
         android:layout_marginStart="@dimen/dimen_15"
         android:layout_marginEnd="@dimen/dimen_15"
-        android:layout_marginBottom="@dimen/dimen_10"
+        android:layout_marginBottom="@dimen/dimen_14"
         android:background="@drawable/shape_goods_pop_btn"
         android:gravity="center"
         android:text="确定"
         android:textColor="@color/color_ffffff"
-        android:textSize="@dimen/sp_13" />
+        android:textSize="@dimen/dimen_13" />
 
 </LinearLayout>

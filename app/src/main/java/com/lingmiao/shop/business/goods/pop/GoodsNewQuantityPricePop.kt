@@ -78,7 +78,7 @@ class GoodsNewQuantityPricePop(context: Context, val title: String?) : BasePopup
     }
 
     override fun onCreateContentView(): View {
-        return createPopupById(R.layout.goods_pop_quantity_multi)
+        return createPopupById(R.layout.goods_pop_new_quantity)
     }
 
     override fun onViewCreated(contentView: View) {
