@@ -89,14 +89,13 @@ class MenuGoodsManagerActivity :
                 secondAdapter?.notifyDataSetChanged()
 
                 //二级菜单
-//                if (viewModel.item.value?.children?.isNotEmpty() == true) {
-//                    thirdAdapter?.data?.let { list ->
-//                        for (i in list) {
-//                            i.isdeleted = true
-//                        }
-//                    }
-//                    thirdAdapter?.notifyDataSetChanged()
-//                }
+                thirdAdapter?.data?.let { list ->
+                    for (i in list) {
+                        i.isdeleted = true
+                    }
+                }
+                thirdAdapter?.notifyDataSetChanged()
+
             } else {
                 mToolBarDelegate?.setRightText("编辑") { isEdited.value = isEdited.value == false }
                 //完成状态中
@@ -124,14 +123,13 @@ class MenuGoodsManagerActivity :
                 secondAdapter?.notifyDataSetChanged()
 
                 //二级菜单
-//                if (viewModel.item.value?.children?.isNotEmpty() == true) {
-//                    thirdAdapter?.data?.let { list ->
-//                        for (i in list) {
-//                            i.isdeleted = false
-//                        }
-//                    }
-//                    thirdAdapter?.notifyDataSetChanged()
-//                }
+                thirdAdapter?.data?.let { list ->
+                    for (i in list) {
+                        i.isdeleted = false
+                    }
+                }
+                thirdAdapter?.notifyDataSetChanged()
+
             }
         })
 
@@ -409,20 +407,43 @@ class MenuGoodsManagerActivity :
     //二级菜单
     private fun initThirdMenu() {
         //二级菜单
-        thirdAdapter = SimpleMenuTwoAdapter()
+        thirdAdapter = SimpleMenuTwoAdapter().apply {
+            setOnItemChildClickListener { _, view, position ->
+                when (view.id) {
+                    R.id.deleteIv -> {
+                        DialogUtils.showDialog(context as Activity,
+                            "删除提示", "删除后不可恢复，确定要删除该菜单吗？",
+                            "取消", "确定删除",
+                            null, {
+                                mPresenter?.deleteGoodsGroup(
+                                    thirdAdapter?.getItem(position),
+                                    position,
+                                    2
+                                )
+                            })
+                    }
+                }
+            }
+        }
 
 
         thirdAdapter?.setOnItemClickListener { adapter, _, position ->
             if (viewModel.item.value?.isTop == 0) {
-                thirdAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
-                thirdAdapter?.notifyDataSetChanged()
-                setSecondAll(false)
+                if (isEdited.value == true) {
+                    //编辑中
 
 
-                val item = adapter.data[position] as ShopGroupVO
-                item.isSecondMenu = true
-                //设置当前选中的菜单未这个
-                viewModel.setShopGroupOnlyFirst(item)
+                } else {
+                    thirdAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
+                    thirdAdapter?.notifyDataSetChanged()
+                    setSecondAll(false)
+
+                    val item = adapter.data[position] as ShopGroupVO
+                    item.isSecondMenu = true
+                    //设置当前选中的菜单未这个
+                    viewModel.setShopGroupOnlyFirst(item)
+                }
+
 
             }
         }
@@ -529,20 +550,27 @@ class MenuGoodsManagerActivity :
 
     //删除一级菜单成功
     override fun onDeleteGroupSuccess(position: Int, isTop: Int) {
-        if (isTop == 1) {
-            //置顶
-            if (position < firstAdapter?.data?.size!!) {
-                firstAdapter?.data?.removeAt(position)
-                firstAdapter?.notifyDataSetChanged()
+        //isTop 1 置顶   0  常用   2  二级
+        when (isTop) {
+            0 -> {
+                if (position < secondAdapter?.data?.size!!) {
+                    secondAdapter?.data?.removeAt(position)
+                    secondAdapter?.notifyDataSetChanged()
+                }
             }
-        } else {
-            //常用
-            if (position < secondAdapter?.data?.size!!) {
-                secondAdapter?.data?.removeAt(position)
-                secondAdapter?.notifyDataSetChanged()
+            1 -> {
+                if (position < firstAdapter?.data?.size!!) {
+                    firstAdapter?.data?.removeAt(position)
+                    firstAdapter?.notifyDataSetChanged()
+                }
+            }
+            else -> {
+                if (position < thirdAdapter?.data?.size!!) {
+                    thirdAdapter?.data?.removeAt(position)
+                    thirdAdapter?.notifyDataSetChanged()
+                }
             }
         }
-
     }
 
     override fun onResume() {
