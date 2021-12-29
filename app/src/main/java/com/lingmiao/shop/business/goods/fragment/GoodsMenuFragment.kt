@@ -28,6 +28,8 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
         })
     }
 
+    override fun getLayoutId()= R.layout.fragment_white_load_more
+
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
         return GoodsMenuNewAdapter().apply {
             //menuIv

@@ -6,6 +6,8 @@ import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 
 interface MenuGoodsManagerPre : BasePresenter {
 
+    fun getShopId() : String
+
     //加载一级菜单
     fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean)
 
@@ -18,6 +20,10 @@ interface MenuGoodsManagerPre : BasePresenter {
     //更新二级菜单名称
     fun updateSecondGroup(item: ShopGroupVO, newName: String, position: Int)
 
+    // 添加二级菜单
+    fun addGroup(str: String, pid: String)
+
+    //
 
     interface View : BaseView {
 
@@ -32,5 +38,8 @@ interface MenuGoodsManagerPre : BasePresenter {
 
         //更新二级菜单名称成功
         fun updateSecondGroupSuccess(newName: String, position: Int)
+
+        //增加二级菜单成功
+        fun addGroupSuccess()
     }
 }

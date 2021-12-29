@@ -70,6 +70,10 @@ class MenuGoodsManagerActivity :
                 mBinding.menuAddOne.visiable()
                 //常用
                 mBinding.menuAddTwo.visiable()
+                //二级
+                if (viewModel.item.value?.isTop == 0) {
+                    mBinding.menuAddThree.visiable()
+                }
 
 
                 //置顶菜单
@@ -103,6 +107,8 @@ class MenuGoodsManagerActivity :
                 mBinding.menuAddOne.gone()
                 //常用
                 mBinding.menuAddTwo.gone()
+                //二级
+                mBinding.menuAddThree.gone()
 
 
                 //置顶菜单
@@ -406,6 +412,14 @@ class MenuGoodsManagerActivity :
 
     //二级菜单
     private fun initThirdMenu() {
+
+        //添加二级菜单
+        mBinding.menuAddThree.singleClick {
+            DialogUtils.showInputDialog(this, "菜单名称", "", "请输入", "取消", "保存", null) {
+                viewModel.savedItem.value?.shopCatId?.let { it1 -> mPresenter?.addGroup(it, it1) }
+            }
+        }
+
         //二级菜单
         thirdAdapter = SimpleMenuTwoAdapter().apply {
             setOnItemChildClickListener { _, view, position ->
@@ -426,7 +440,6 @@ class MenuGoodsManagerActivity :
             }
         }
 
-
         thirdAdapter?.setOnItemClickListener { adapter, _, position ->
             if (viewModel.item.value?.isTop == 0) {
                 if (isEdited.value == true) {
@@ -446,12 +459,6 @@ class MenuGoodsManagerActivity :
                         val item = adapter.data[position] as ShopGroupVO
                         item.shopCatName = it
                         mPresenter?.updateSecondGroup(item, it, position)
-//                        item.shopCatName = it;
-//                        update(item, {
-//                            view?.onUpdated(item, position);
-//                        }, {
-//
-//                        });
                     }
 
                 } else {
@@ -469,11 +476,9 @@ class MenuGoodsManagerActivity :
             }
         }
 
-
         mBinding.rvThree.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mBinding.rvThree.adapter = thirdAdapter
-
 
         //监听选中菜单的变化
         viewModel.item.observe(this, {
@@ -600,6 +605,36 @@ class MenuGoodsManagerActivity :
 
         //更新保存的一级菜单中的二级菜单数据
         mPresenter?.loadLv1GoodsGroup(1, true)
+    }
+
+    override fun addGroupSuccess() {
+
+        //更新保存的一级菜单数据
+        mPresenter?.loadLv1GoodsGroup(1, true)
+
+        //UI层面更新
+
+
+//        val item = viewModel.savedItem
+//
+//        if (it.children == null || (it.children?.isEmpty() == true)) {
+//            //没有二级菜单,只显示全部
+//            if (!it.isSecondMenu) {
+//                val list: List<ShopGroupVO> = listOf()
+//                thirdAdapter?.replaceData(list)
+//                thirdAdapter?.notifyDataSetChanged()
+//            }
+//
+//        } else {
+//            //有二级菜单，显示二级菜单
+//            val list: List<ShopGroupVO> = it.children!!
+//            thirdAdapter?.replaceData(list)
+//            //清除保存的数据（该数据保存在thirdAdapter中）
+//            thirdAdapter?.setGroupId("")
+//            thirdAdapter?.notifyDataSetChanged()
+//        }
+//    })
+
     }
 
     override fun onResume() {

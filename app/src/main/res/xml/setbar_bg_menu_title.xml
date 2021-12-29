@@ -3,12 +3,12 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 背景色-->
-    <solid android:color="@color/color_CACACA" />
+    <solid android:color="@color/common_bg" />
 
     <!--    边框宽度，颜色-->
     <stroke
         android:width="1dp"
-        android:color="@color/color_CACACA" />
+        android:color="@color/common_bg" />
 
     <!--    <<corners    //定义圆角-->
     <!--    android:radius="dimension"      //全部的圆角半径-->

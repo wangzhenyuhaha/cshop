@@ -485,12 +485,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 菜单管理
         tvMenuManager.setOnClickListener {
-            ActivityUtils.startActivity(MenuManagerActivity::class.java)
+            ActivityUtils.startActivity(MenuGoodsManagerActivity::class.java)
 //             ActivityUtils.startActivity(GoodsPublishActivity::class.java)
 //             GoodsPublishActivity.openActivity(context!!, "");
         }
         testNewFra.setOnClickListener {
-            ActivityUtils.startActivity(MenuGoodsManagerActivity::class.java)
+           //
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {

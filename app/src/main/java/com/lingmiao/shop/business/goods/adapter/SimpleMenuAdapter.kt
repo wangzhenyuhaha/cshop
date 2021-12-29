@@ -67,7 +67,7 @@ class SimpleMenuAdapter :
             } else {
                 if (disable == 1) {
                     //显示
-                    helper.setBackgroundRes(R.id.container, R.color.color_CACACA)
+                    helper.setBackgroundRes(R.id.container, R.color.common_bg)
                 } else {
                     helper.setBackgroundRes(R.id.container, R.color.common_bg)
                 }

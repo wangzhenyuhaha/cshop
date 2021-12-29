@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg"
+    android:background="@color/common_ffffff"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:ignore="HardcodedText,ContentDescription">
@@ -48,6 +48,7 @@
                         android:background="@xml/setbar_bg_menu_title"
                         android:gravity="center"
                         android:text="（置顶菜单）"
+                        android:textColor="@color/color_333333"
                         android:textSize="11sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -59,7 +60,7 @@
                         android:id="@+id/menuAddOne"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@xml/setbar_bg_menu_end"
+                        android:background="@color/common_bg"
                         android:drawableEnd="@mipmap/goods_spec_blue_plus"
                         android:gravity="center_vertical"
                         android:paddingStart="0dp"
@@ -73,10 +74,11 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="15dp"
-                        android:background="@xml/setbar_bg_menu_title"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/common_bg"
                         android:gravity="center"
                         android:text="（常用菜单）"
+                        android:textColor="@color/color_333333"
                         android:textSize="11sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -116,17 +118,30 @@
                     android:id="@+id/menuNameAll"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
                     android:background="@xml/setbar_bg_grey"
                     android:gravity="center"
-                    android:layout_marginStart="@dimen/dimen_5"
                     android:text="全部"
                     android:textColor="@drawable/selector_goods_category_item"
                     android:textSize="11sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_three"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/menuAddThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/common_ffffff"
+                    android:drawableEnd="@mipmap/goods_spec_blue_plus"
+                    android:gravity="center"
+                    android:paddingStart="0dp"
+                    android:paddingEnd="@dimen/dimen_10"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
 
             </LinearLayout>
 

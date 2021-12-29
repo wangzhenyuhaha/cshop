@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 import android.content.Context
 import com.james.common.base.BasePreImpl
+import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 import com.lingmiao.shop.business.goods.presenter.MenuGoodsManagerPre
@@ -53,6 +54,25 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
             val resp = GoodsRepository.updateShopGroup(item.shopCatId!!, item)
             if (resp.isSuccess) {
                 view.updateSecondGroupSuccess(newName, position)
+            }
+        }
+    }
+
+    override fun getShopId(): String {
+        return UserManager.getLoginInfo()?.shopId?.toString() ?: "";
+    }
+
+    //增加二级菜单
+    override fun addGroup(str: String, pid: String) {
+        mCoroutine.launch {
+            val groupVO = ShopGroupVO()
+            groupVO.shopId = getShopId()
+            groupVO.shopCatName = str
+            groupVO.shopCatPid = pid
+            groupVO.isTop = 0
+            val resp = GoodsRepository.submitShopGroup(groupVO)
+            handleResponse(resp) {
+                view.addGroupSuccess()
             }
         }
     }
