@@ -436,29 +436,32 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             this.categoryId = categoryId
             this.categoryName = categoryName
         }
-        if(isFromCenter == 1)
-        {
+        if (isFromCenter == 1) {
             goodsVO.shopCatId = null
             goodsVO.shopCatName = null
             mBinding.goodsGroupTv.text = "请选择"
-            isFromCenter =0
+            isFromCenter = 0
+        }
+        if (goodsVO.shopCatId.isNullOrEmpty()) {
+            //UI上菜单显示分类，但是实际上不传菜单数据
+            onUpdateGroup(null, categoryName)
         }
     }
 
     //选择菜单
     override fun onUpdateGroup(groupId: String?, groupName: String?) {
         mBinding.goodsGroupTv.text = groupName
-        goodsVO.apply {
-            this.shopCatId = groupId
-            this.shopCatName = groupName
+        if (groupId != null) {
+            goodsVO.apply {
+                this.shopCatId = groupId
+                this.shopCatName = groupName
+            }
         }
-
-        if(isFromCenter == 1)
-        {
+        if (isFromCenter == 1) {
             goodsVO.categoryId = null
             goodsVO.categoryName = null
             mBinding.goodsCategoryTv.text = "请选择商品分类"
-            isFromCenter =0
+            isFromCenter = 0
         }
 
     }
@@ -492,11 +495,6 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
         if (goodsVO.categoryId == null) {
             showToast("请选择商品分类")
-            return
-        }
-
-        if (goodsVO.shopCatId == null) {
-            showToast("请选择商品菜单")
             return
         }
 
