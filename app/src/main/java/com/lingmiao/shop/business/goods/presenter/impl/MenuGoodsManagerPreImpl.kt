@@ -62,7 +62,7 @@ class MenuGoodsManagerPreImpl(val context: Context, val view: MenuGoodsManagerPr
     }
 
     override fun getShopId(): String {
-        return UserManager.getLoginInfo()?.shopId?.toString() ?: "";
+        return UserManager.getLoginInfo()?.shopId?.toString() ?: ""
     }
 
     //增加二级菜单

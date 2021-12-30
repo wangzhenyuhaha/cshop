@@ -74,7 +74,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="2dp"
                         android:background="@color/common_bg"
                         android:gravity="center"
                         android:text="（常用菜单）"
@@ -106,7 +106,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="95dp"
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal"
@@ -150,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="95dp"
-                android:layout_marginTop="60dp" />
+                android:layout_marginTop="50dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
