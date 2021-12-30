@@ -25,6 +25,7 @@
             android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
+            android:gravity="start"
             android:paddingEnd="0dp"
             android:textColor="@drawable/selector_goods_menu_item"
             android:textSize="11sp"
@@ -32,6 +33,19 @@
             app:layout_constraintEnd_toEndOf="@+id/container"
             app:layout_constraintStart_toEndOf="@+id/menuIconIv"
             app:layout_constraintTop_toTopOf="@+id/container" />
+
+        <TextView
+            android:id="@+id/menuNumber"
+            android:layout_width="55dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="0dp"
+            android:gravity="start"
+            android:textColor="@drawable/selector_goods_menu_item"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="@+id/container"
+            app:layout_constraintStart_toEndOf="@+id/menuIconIv"
+            app:layout_constraintTop_toBottomOf="@+id/menuName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

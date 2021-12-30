@@ -30,7 +30,7 @@ class SimpleMenuAdapter :
 
             //菜单名称
             helper.getView<TextView>(R.id.menuName).apply {
-                "${shopCatName}(${goods_num})".let {
+                "$shopCatName".let {
                     text = it
                 }
                 if (item.catPath == selectGroupId) {
@@ -56,6 +56,33 @@ class SimpleMenuAdapter :
 
             }
 
+            //菜单数量
+            helper.getView<TextView>(R.id.menuNumber).apply {
+                "(${goods_num})".let {
+                    text = it
+                }
+                if (item.catPath == selectGroupId) {
+                    helper.setTextColor(
+                        R.id.menuNumber,
+                        ActivityUtils.getTopActivity().resources.getColor(R.color.color_3870EA)
+                    )
+                } else {
+                    if (disable != 1) {
+                        //不显示
+                        helper.setTextColor(
+                            R.id.menuNumber,
+                            ActivityUtils.getTopActivity().resources.getColor(R.color.color_CACACA)
+                        )
+                    }else{
+                        //显示
+                        helper.setTextColor(
+                            R.id.menuNumber,
+                            ActivityUtils.getTopActivity().resources.getColor(R.color.color_333333)
+                        )
+                    }
+                }
+
+            }
 
             //删除
             helper.setGone(R.id.deleteIv, isdeleted)
