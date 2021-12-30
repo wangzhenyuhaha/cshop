@@ -3,6 +3,7 @@
     <!--用于背景色-->
     <color name="common_bg">#EDEDED</color>
     <color name="common_ffffff">#ffffff</color>
+    <color name="common_f9">#F9F9F9</color>
     <color name="divide_big">#F6F6F6</color>
     <color name="gray_bg_click">#F6F6F6</color>
     <color name="colorPrimary">#3b81C9</color>

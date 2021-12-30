@@ -416,7 +416,7 @@ class MenuGoodsManagerActivity :
 
         //添加二级菜单
         mBinding.menuAddThree.singleClick {
-            DialogUtils.showInputDialog(this, "菜单名称", "", "请输入", "取消", "保存", null) {
+            DialogUtils.showInputDialog(this, "新增二级菜单名称", "", "请输入", "取消", "保存", null) {
                 viewModel.savedItem.value?.shopCatId?.let { it1 -> mPresenter?.addGroup(it, it1) }
             }
         }
