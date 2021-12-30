@@ -32,7 +32,7 @@ class SimpleMenuTwoAdapter :
             }
 
             //删除
-            helper.setGone(R.id.deleteIv, isdeleted)
+            helper.setGone(R.id.deleteIv, if (isButton) false else isdeleted)
             helper.addOnClickListener(R.id.deleteIv)
 
 

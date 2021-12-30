@@ -113,18 +113,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/container"
                 app:layout_constraintTop_toTopOf="@+id/container">
 
-
-                <TextView
-                    android:id="@+id/menuNameAll"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/dimen_5"
-                    android:background="@xml/setbar_bg_grey"
-                    android:gravity="center"
-                    android:text="全部"
-                    android:textColor="@drawable/selector_goods_category_item"
-                    android:textSize="11sp" />
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_three"
                     android:layout_width="0dp"

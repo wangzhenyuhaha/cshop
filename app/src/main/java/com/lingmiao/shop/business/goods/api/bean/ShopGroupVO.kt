@@ -58,6 +58,9 @@ class ShopGroupVO : AbstractExpandableItem<ShopGroupVO>(), MultiItemEntity, Seri
     //是否是二级菜单
     var isSecondMenu: Boolean = false
 
+    //是否是用作额外的按钮的选项(默认不是)
+    var isButton: Boolean = false
+
     /**
      * 是否选中
      */

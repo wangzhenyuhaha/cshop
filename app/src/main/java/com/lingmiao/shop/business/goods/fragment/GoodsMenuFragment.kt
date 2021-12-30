@@ -49,11 +49,18 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
 
     override fun executePageRequest(page: IPage) {
         hidePageLoading()
+        val temp = if (model.item.value?.isButton == true) {
+            //选中了全部
+            model.savedItem.value
+        } else {
+            //
+            model.item.value
+        }
         mPresenter?.loadListData(
-            model.item.value?.catPath,
+            temp?.catPath,
             page,
             mAdapter.data,
-            model.item.value?.isEvent
+            temp?.isEvent
         )
     }
 

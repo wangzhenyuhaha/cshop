@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.goods
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -33,6 +32,9 @@ class MenuGoodsManagerActivity :
 
     private val viewModel by viewModels<MenuGoodsManagerViewModel>()
 
+    //查询全部二级菜单
+    private lateinit var allSecondMenu: ShopGroupVO
+
     //是否已经加载Fragment
     private var isFragmentExited: Boolean = false
 
@@ -59,6 +61,12 @@ class MenuGoodsManagerActivity :
     override fun initView() {
 
         mToolBarDelegate?.setMidTitle("菜单管理")
+
+        allSecondMenu = ShopGroupVO().also {
+            it.isButton = true
+            it.shopCatName = "全部"
+            it.catPath = "NULL"
+        }
 
         //默认完成状态中
         isEdited.value = false
@@ -148,14 +156,6 @@ class MenuGoodsManagerActivity :
 
         //设置二级菜单
         initThirdMenu()
-
-        //全部
-        mBinding.menuNameAll.singleClick {
-            mBinding.menuNameAll.isSelected = true
-            thirdAdapter?.setGroupId("")
-            thirdAdapter?.notifyDataSetChanged()
-            viewModel.setFirstToSecond()
-        }
 
         //加载已有菜单数据
         showDialogLoading()
@@ -264,7 +264,7 @@ class MenuGoodsManagerActivity :
                             secondAdapter?.notifyDataSetChanged()
                             viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
                             //默认选中全部
-                            setSecondAll(true)
+                            thirdAdapter?.setGroupId("NULL")
                         }
                     )
                 } else {
@@ -277,7 +277,7 @@ class MenuGoodsManagerActivity :
                     //更新选中的一级菜单
                     viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
                     //默认选中全部
-                    setSecondAll(true)
+                    thirdAdapter?.setGroupId("NULL")
                 }
 
 
@@ -389,7 +389,7 @@ class MenuGoodsManagerActivity :
                             secondAdapter?.notifyDataSetChanged()
                             viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
                             //默认选中全部
-                            setSecondAll(true)
+                            thirdAdapter?.setGroupId("NULL")
                         }
                     )
                 } else {
@@ -402,7 +402,7 @@ class MenuGoodsManagerActivity :
                     //更新选中的一级菜单
                     viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
                     //默认选中全部
-                    setSecondAll(true)
+                    thirdAdapter?.setGroupId("NULL")
 
                 }
 
@@ -423,51 +423,56 @@ class MenuGoodsManagerActivity :
 
         //二级菜单
         thirdAdapter = SimpleMenuTwoAdapter().apply {
-            setOnItemChildClickListener { _, view, position ->
+            setOnItemChildClickListener { adapter, view, position ->
+                val temp = adapter.data[position] as ShopGroupVO
                 when (view.id) {
                     R.id.deleteIv -> {
-                        DialogUtils.showDialog(context as Activity,
-                            "删除提示", "删除后不可恢复，确定要删除该菜单吗？",
-                            "取消", "确定删除",
-                            null, {
-                                mPresenter?.deleteGoodsGroup(
-                                    thirdAdapter?.getItem(position),
-                                    position,
-                                    2
-                                )
-                            })
+                        if (!temp.isButton) {
+                            DialogUtils.showDialog(context as Activity,
+                                "删除提示", "删除后不可恢复，确定要删除该菜单吗？",
+                                "取消", "确定删除",
+                                null, {
+                                    mPresenter?.deleteGoodsGroup(
+                                        thirdAdapter?.getItem(position),
+                                        position,
+                                        2
+                                    )
+                                })
+                        }
                     }
                 }
             }
         }
 
         thirdAdapter?.setOnItemClickListener { adapter, _, position ->
+
+            val item = adapter.data[position] as ShopGroupVO
+
             if (viewModel.item.value?.isTop == 0) {
                 if (isEdited.value == true) {
                     //编辑中
-                    DialogUtils.showInputDialog(
-                        context as Activity,
-                        "菜单名称",
-                        "",
-                        "请输入",
-                        (adapter.data[position] as ShopGroupVO).shopCatName,
-                        "取消",
-                        "保存",
-                        null
-                    ) {
-                        //更新云端二级菜单名称
-                        //获取当前对应Item
-                        val item = adapter.data[position] as ShopGroupVO
-                        item.shopCatName = it
-                        mPresenter?.updateSecondGroup(item, it, position)
+                    if (!item.isButton) {
+                        DialogUtils.showInputDialog(
+                            context as Activity,
+                            "菜单名称",
+                            "",
+                            "请输入",
+                            (adapter.data[position] as ShopGroupVO).shopCatName,
+                            "取消",
+                            "保存",
+                            null
+                        ) {
+                            //更新云端二级菜单名称
+                            //获取当前对应Item
+
+                            item.shopCatName = it
+                            mPresenter?.updateSecondGroup(item, it, position)
+                        }
                     }
 
                 } else {
                     thirdAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                     thirdAdapter?.notifyDataSetChanged()
-                    setSecondAll(false)
-
-                    val item = adapter.data[position] as ShopGroupVO
                     item.isSecondMenu = true
                     //设置当前选中的菜单未这个
                     viewModel.setShopGroupOnlyFirst(item)
@@ -487,7 +492,7 @@ class MenuGoodsManagerActivity :
             if (it.children == null || (it.children?.isEmpty() == true)) {
                 //没有二级菜单,只显示全部
                 if (!it.isSecondMenu) {
-                    val list: List<ShopGroupVO> = listOf()
+                    val list: List<ShopGroupVO> = listOf(allSecondMenu)
                     thirdAdapter?.replaceData(list)
                     thirdAdapter?.notifyDataSetChanged()
                 }
@@ -514,8 +519,9 @@ class MenuGoodsManagerActivity :
                         }
                     }
                 }
-
-                thirdAdapter?.replaceData(list)
+                thirdAdapter?.replaceData(listOf<ShopGroupVO>())
+                thirdAdapter?.addData(allSecondMenu)
+                thirdAdapter?.addData(list)
                 thirdAdapter?.notifyDataSetChanged()
             }
         })
@@ -584,7 +590,7 @@ class MenuGoodsManagerActivity :
                     isFragmentExited = true
                     firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
                     //默认选中全部
-                    setSecondAll(true)
+                    thirdAdapter?.setGroupId("NULL")
                     firstAdapter?.setGroupId((firstAdapter?.data?.get(0) as ShopGroupVO).catPath)
                     firstAdapter?.notifyDataSetChanged()
                 }
@@ -703,10 +709,5 @@ class MenuGoodsManagerActivity :
     override fun onResume() {
         super.onResume()
         mPresenter?.loadLv1GoodsGroup(1, true, 1)
-    }
-
-    //二级菜单默认是否全部
-    private fun setSecondAll(isAll: Boolean) {
-        mBinding.menuNameAll.isSelected = isAll
     }
 }
