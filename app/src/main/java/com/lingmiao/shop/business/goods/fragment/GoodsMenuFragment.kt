@@ -48,7 +48,7 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
 
 
     override fun executePageRequest(page: IPage) {
-        hidePageLoading()
+        showPageLoading()
         val temp = if (model.item.value?.isButton == true) {
             //选中了全部
             model.savedItem.value
@@ -69,6 +69,7 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
     }
 
     override fun onLoadMoreSuccess(list: List<GoodsVO>?, hasMore: Boolean) {
+        hidePageLoading()
         super.onLoadMoreSuccess(list, hasMore)
         if (mAdapter.data.size == 0) {
             showNoData()
