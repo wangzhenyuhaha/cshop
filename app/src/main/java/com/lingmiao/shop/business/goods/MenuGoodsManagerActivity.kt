@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -494,9 +495,27 @@ class MenuGoodsManagerActivity :
             } else {
                 //有二级菜单，显示二级菜单
                 val list: List<ShopGroupVO> = it.children!!
-                thirdAdapter?.replaceData(list)
-                //清除保存的数据（该数据保存在thirdAdapter中）
+                //清除保存的数据(这个数据是选中的二级菜单)（该数据保存在thirdAdapter中）
                 thirdAdapter?.setGroupId("")
+
+                //判断是否处于编辑状态
+                if (isEdited.value == true) {
+                    //编辑状态
+                    //二级菜单
+                    list.let { it1 ->
+                        for (i in it1) {
+                            i.isdeleted = true
+                        }
+                    }
+                } else {
+                    list.let { it1 ->
+                        for (i in it1) {
+                            i.isdeleted = false
+                        }
+                    }
+                }
+
+                thirdAdapter?.replaceData(list)
                 thirdAdapter?.notifyDataSetChanged()
             }
         })
@@ -506,12 +525,12 @@ class MenuGoodsManagerActivity :
     override fun onLoadLv1GoodsGroupSuccess(
         list: List<ShopGroupVO>,
         isTop: Int,
-        isSecond: Boolean, type: Int
+        isSecond: Boolean,
+        type: Int
     ) {
 
-        when(type)
-        {
-            1->{
+        when (type) {
+            1 -> {
                 if (isTop == 1) {
                     if (isEdited.value == true) {
                         //编辑状态
@@ -570,8 +589,69 @@ class MenuGoodsManagerActivity :
                     firstAdapter?.notifyDataSetChanged()
                 }
             }
-            2->{
-               // viewModel.savedItem.value?.let { viewModel.setShopGroup(it) }
+            2 -> {
+                //加载更新二级菜单
+                if (isTop == 1) {
+                    if (isEdited.value == true) {
+                        //编辑状态
+                        //置顶菜单
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = true
+                            }
+                        }
+                    } else {
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = false
+                            }
+                        }
+                    }
+                    firstAdapter?.replaceData(list)
+                    if (isSecond) {
+                        mPresenter?.loadLv1GoodsGroup(0, false, 2)
+                    }
+                } else {
+
+                    if (isEdited.value == true) {
+                        //编辑状态
+                        //常用菜单
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = true
+                            }
+                        }
+                    } else {
+                        list.let {
+                            for (i in it) {
+                                i.isdeleted = false
+                            }
+                        }
+                    }
+
+                    secondAdapter?.replaceData(list)
+
+                    //开始更新二级菜单的UI
+                    //已选中的一级菜单ID
+                    val tempId = viewModel.savedItem.value?.shopCatId
+                    firstAdapter?.data?.let {
+                        for (i in it) {
+                            if (i.shopCatId == tempId) {
+                                viewModel.setShopGroup(i)
+                            }
+                        }
+                    }
+
+                    secondAdapter?.data?.let {
+                        for (i in it) {
+                            if (i.shopCatId == tempId) {
+                                viewModel.setShopGroup(i)
+                            }
+                        }
+                    }
+
+                }
+
             }
         }
         hideDialogLoading()
@@ -616,33 +696,8 @@ class MenuGoodsManagerActivity :
     }
 
     override fun addGroupSuccess() {
-
-        //更新保存的一级菜单数据
-        mPresenter?.loadLv1GoodsGroup(1, true, 2)
-
-        //UI层面更新
-
-
-//        val item = viewModel.savedItem
-//
-//        if (it.children == null || (it.children?.isEmpty() == true)) {
-//            //没有二级菜单,只显示全部
-//            if (!it.isSecondMenu) {
-//                val list: List<ShopGroupVO> = listOf()
-//                thirdAdapter?.replaceData(list)
-//                thirdAdapter?.notifyDataSetChanged()
-//            }
-//
-//        } else {
-//            //有二级菜单，显示二级菜单
-//            val list: List<ShopGroupVO> = it.children!!
-//            thirdAdapter?.replaceData(list)
-//            //清除保存的数据（该数据保存在thirdAdapter中）
-//            thirdAdapter?.setGroupId("")
-//            thirdAdapter?.notifyDataSetChanged()
-//        }
-//    })
-
+        //更新保存的一级菜单数据,更新成功后继续更新UI
+        mPresenter?.loadLv1GoodsGroup(1, isSecond = true, type = 2)
     }
 
     override fun onResume() {

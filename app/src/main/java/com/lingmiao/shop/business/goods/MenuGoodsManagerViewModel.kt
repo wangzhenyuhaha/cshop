@@ -8,7 +8,7 @@ import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 class MenuGoodsManagerViewModel : ViewModel() {
 
 
-    //当前选中的一级菜单
+    //当前选中的菜单
     private val _item = MutableLiveData<ShopGroupVO>()
 
     //暂存的一级菜单

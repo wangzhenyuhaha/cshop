@@ -6,10 +6,11 @@ import com.lingmiao.shop.business.goods.api.bean.ShopGroupVO
 
 interface MenuGoodsManagerPre : BasePresenter {
 
-    fun getShopId() : String
+    fun getShopId(): String
 
     //加载一级菜单
-    fun loadLv1GoodsGroup(isTop: Int, isSecond: Boolean,type:Int)
+    //isTop 1 置顶 0 常用   isSecond true 需要加载常用菜单      type
+    fun loadLv1GoodsGroup(isTop: Int = 1, isSecond: Boolean = false, type: Int = 1)
 
     //排序
     fun sort(isTop: Int, cid: String, sort: Int)
@@ -28,7 +29,12 @@ interface MenuGoodsManagerPre : BasePresenter {
     interface View : BaseView {
 
         //加载一级菜单成功
-        fun onLoadLv1GoodsGroupSuccess(list: List<ShopGroupVO>, isTop: Int, isSecond: Boolean,type:Int)
+        fun onLoadLv1GoodsGroupSuccess(
+            list: List<ShopGroupVO>,
+            isTop: Int,
+            isSecond: Boolean,
+            type: Int
+        )
 
         //排序成功
         fun onSortSuccess(isTop: Int)
