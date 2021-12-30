@@ -28,7 +28,7 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
         })
     }
 
-    override fun getLayoutId()= R.layout.fragment_white_load_more
+    override fun getLayoutId() = R.layout.fragment_white_load_more
 
     override fun initAdapter(): BaseQuickAdapter<GoodsVO, BaseViewHolder> {
         return GoodsMenuNewAdapter().apply {
@@ -48,6 +48,7 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
 
 
     override fun executePageRequest(page: IPage) {
+        hidePageLoading()
         mPresenter?.loadListData(
             model.item.value?.catPath,
             page,
@@ -60,6 +61,12 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
         mLoadMoreDelegate?.refresh()
     }
 
+    override fun onLoadMoreSuccess(list: List<GoodsVO>?, hasMore: Boolean) {
+        super.onLoadMoreSuccess(list, hasMore)
+        if (mAdapter.data.size == 0) {
+            showNoData()
+        }
+    }
 
     override fun onResume() {
         super.onResume()
