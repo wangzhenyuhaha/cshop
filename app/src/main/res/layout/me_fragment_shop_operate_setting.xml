@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/common_bg"
-    tools:ignore="HardcodedText,RelativeOverlap">
+    tools:ignore="HardcodedText,RelativeOverlap,ContentDescription">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -26,8 +26,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:src="@mipmap/common_must_input" />
+
                 <TextView
-                    style="@style/goods_spce_item_left_mark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -73,86 +79,122 @@
 
             <View style="@style/DivideLineHorizontal" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:src="@mipmap/common_must_input"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="自动接单"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
                 <com.kyleduo.switchbutton.SwitchButton
                     android:id="@+id/autoOrderSb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginStart="@dimen/dimen_20"
                     app:kswBackDrawable="@drawable/flyme_back_drawable"
                     app:kswTintColor="@color/white" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <View style="@style/DivideLineHorizontal" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:src="@mipmap/common_must_input"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="到店自提"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
                 <com.kyleduo.switchbutton.SwitchButton
                     android:id="@+id/takeSelf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginStart="@dimen/dimen_20"
                     app:kswBackDrawable="@drawable/flyme_back_drawable"
                     app:kswTintColor="@color/white" />
 
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <View style="@style/DivideLineHorizontal" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:src="@mipmap/common_must_input"
+                    android:visibility="invisible" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:text="是否自动打印(选否为手动打印)"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
                 <com.kyleduo.switchbutton.SwitchButton
                     android:id="@+id/autoPrinterSb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
                     android:layout_gravity="end|center_vertical"
                     android:layout_marginStart="@dimen/dimen_20"
                     app:kswBackDrawable="@drawable/flyme_back_drawable"
                     app:kswTintColor="@color/white" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <View style="@style/DivideLineHorizontal" />
 
@@ -161,8 +203,14 @@
                 android:layout_height="50dp"
                 android:orientation="horizontal">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:src="@mipmap/common_must_input" />
+
                 <TextView
-                    style="@style/goods_spce_item_left_mark"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -211,25 +259,59 @@
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/linkPhontHintTv"
+                    android:orientation="horizontal"
                     android:paddingTop="@dimen/dimen_5"
-                    android:paddingBottom="@dimen/dimen_5"
-                    android:text="体现在顾客端 供用户联系" />
+                    android:paddingBottom="@dimen/dimen_5">
 
-                <EditText
-                    android:id="@+id/linkTelEt"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="体现在顾客端 供用户联系" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentEnd="true"
-                    android:gravity="center"
-                    android:hint="请输入联系电话"
-                    android:inputType="number"
-                    android:textColor="#ff999999"
-                    android:textSize="12sp"
-                    tools:text="18621774835" />
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/linkTelEt"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:hint="请输入联系电话"
+                        android:inputType="number"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        tools:text="18621774835" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:paddingTop="@dimen/dimen_15"
+                        android:paddingBottom="@dimen/dimen_15"
+                        android:text="分钟"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_13"
+                        android:visibility="invisible" />
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 
@@ -366,6 +448,14 @@
                     android:orientation="horizontal"
                     android:paddingTop="@dimen/dimen_15">
 
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input"
+                        android:visibility="invisible" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -397,6 +487,8 @@
                     android:id="@+id/galleryRv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:paddingEnd="0dp"
                     android:layout_marginTop="@dimen/dp_10"
                     android:nestedScrollingEnabled="false" />
 
@@ -404,6 +496,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" (建议尺寸：750X176px)"
+                    android:paddingStart="@dimen/dimen_10"
+                    android:paddingEnd="0dp"
                     android:textColor="@color/color_999999"
                     android:textSize="11sp" />
 

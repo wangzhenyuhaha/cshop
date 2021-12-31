@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/common_bg">
+    android:background="@color/common_bg"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,8 +16,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingRight="15dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="15dp"
             app:ivBgColor="@color/white"
             app:ivRadius="5dp">
 
@@ -24,11 +25,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="66dp">
 
-                <TextView
-                    style="@style/goods_spce_item_left_mark"
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:src="@mipmap/common_must_input" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="店铺LOGO"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -37,7 +44,7 @@
                     android:id="@+id/ivShopManageLogo"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:scaleType="centerCrop"
                     android:src="#EDEDED" />
@@ -53,6 +60,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="店铺名称"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -83,6 +91,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="店铺编号"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -110,6 +119,7 @@
                     android:id="@+id/tvShopManageSloganHint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:drawableRight="@mipmap/ic_tips"
                     android:drawablePadding="@dimen/dimen_10"
                     android:text="店铺口号"
@@ -142,6 +152,7 @@
                     android:id="@+id/tvShopManageRemarkHint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:drawableRight="@mipmap/ic_tips"
                     android:drawablePadding="@dimen/dimen_10"
                     android:text="店铺公告"
@@ -215,6 +226,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="店铺类型"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -242,6 +254,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="主营类目"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -270,6 +283,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="店铺资质"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -298,6 +312,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="店铺地址"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -335,6 +350,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="紧急联系人"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
@@ -363,6 +379,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
                     android:text="紧急联系人电话"
                     android:textColor="#ff333333"
                     android:textSize="13sp" />
