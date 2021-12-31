@@ -255,11 +255,10 @@ class MenuGoodsManagerActivity :
                     //不显示
                     //提示该菜单未显示
                     DialogUtils.showDialog(this,
-                        "查看商品",
-                        "当前菜单未在小程序显示，是否查看该菜单下的商品？",
-                        "取消",
+                        "提示",
+                        "当前菜单未在小程序显示，点击设置开启菜单显示",
                         "查看",
-                        null,
+                        "设置",
                         {
                             firstAdapter?.setGroupId((adapter.data[position] as ShopGroupVO).catPath)
                             firstAdapter?.notifyDataSetChanged()
@@ -268,6 +267,14 @@ class MenuGoodsManagerActivity :
                             viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
                             //默认选中全部
                             thirdAdapter?.setGroupId("NULL")
+                        },
+                        {
+                            MenuEditActivity.openActivity(
+                                this,
+                                ShopGroupVO.LEVEL_1,
+                                firstAdapter?.getItem(position)?.shopCatPid,
+                                firstAdapter?.getItem(position)
+                            )
                         }
                     )
                 } else {
@@ -380,11 +387,10 @@ class MenuGoodsManagerActivity :
                     //不显示
                     //提示该菜单未显示
                     DialogUtils.showDialog(this,
-                        "查看商品",
-                        "当前菜单未在小程序显示，是否查看该菜单下的商品？",
-                        "取消",
+                        "提示",
+                        "当前菜单未在小程序显示，点击设置开启菜单显示",
                         "查看",
-                        null,
+                        "设置",
                         {
                             firstAdapter?.setGroupId("")
                             firstAdapter?.notifyDataSetChanged()
@@ -393,6 +399,14 @@ class MenuGoodsManagerActivity :
                             viewModel.setShopGroup(adapter.data[position] as ShopGroupVO)
                             //默认选中全部
                             thirdAdapter?.setGroupId("NULL")
+                        },
+                        {
+                            UserMenuEditActivity.openActivity(
+                                this,
+                                secondAdapter?.getItem(position)?.shopCatPid,
+                                secondAdapter?.getItem(position),
+                                0
+                            )
                         }
                     )
                 } else {
