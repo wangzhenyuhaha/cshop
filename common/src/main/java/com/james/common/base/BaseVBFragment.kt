@@ -110,6 +110,10 @@ abstract class BaseVBFragment<VB : ViewBinding, P : BasePresenter> : Fragment(),
         getLoadingDelegate().showDialogLoading(getString(R.string.loading))
     }
 
+    override fun showReason(text: String) {
+        getPageLoadingDelegate().showReason(text)
+    }
+
     override fun showDialogLoading(content: String?) {
         getLoadingDelegate().showDialogLoading(content)
     }

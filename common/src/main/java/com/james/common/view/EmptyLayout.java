@@ -84,6 +84,12 @@ public class EmptyLayout extends RelativeLayout {
 //        img.setImageResource(imgResource);
 //    }
 
+    public void setErrorText(String text) {
+        setVisibility(View.VISIBLE);
+        pwLoading.setVisibility(View.GONE);
+        tvError.setText(text);
+    }
+
     public void setErrorType(int errorType) {
         errorState = errorType;
         if (errorState == HIDE_LAYOUT) {
@@ -141,7 +147,6 @@ public class EmptyLayout extends RelativeLayout {
         }
         super.setVisibility(visibility);
     }
-
 
 
     public void setNoDataImage(int resId) {

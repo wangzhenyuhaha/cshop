@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.view.EmptyLayout
+import kotlinx.android.synthetic.main.fragment_base.*
 
 /**
  * Author : Elson
@@ -17,6 +18,7 @@ interface PageLoadingDelegate {
     fun showNoData()
     fun showNoNetwork()
     fun showDataError()
+    fun showReason(text: String)
 }
 
 class DefaultPageLoadingDelegate(val context: Context) : PageLoadingDelegate {
@@ -41,6 +43,11 @@ class DefaultPageLoadingDelegate(val context: Context) : PageLoadingDelegate {
     override fun showNoData() {
         if (isFinishing()) return
         elEmpty?.setErrorType(EmptyLayout.NO_DATA)
+    }
+
+    override fun showReason(text: String) {
+        if (isFinishing()) return
+        elEmpty?.setErrorText(text)
     }
 
     override fun showNoNetwork() {

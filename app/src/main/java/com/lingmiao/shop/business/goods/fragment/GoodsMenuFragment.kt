@@ -72,7 +72,7 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
         hidePageLoading()
         super.onLoadMoreSuccess(list, hasMore)
         if (mAdapter.data.size == 0) {
-            showNoData()
+            showReason("没有商品")
         }
     }
 

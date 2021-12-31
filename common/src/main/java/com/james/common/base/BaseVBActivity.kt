@@ -152,6 +152,10 @@ abstract class BaseVBActivity<VB : ViewBinding, P : BasePresenter> : AppCompatAc
         getPageLoadingDelegate().showNoNetwork()
     }
 
+    override fun showReason(text: String) {
+        getPageLoadingDelegate().showNoNetwork()
+    }
+
     override fun showDataError() {
         getPageLoadingDelegate().showDataError()
     }

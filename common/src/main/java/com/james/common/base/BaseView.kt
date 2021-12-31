@@ -7,6 +7,7 @@ interface BaseView {
     fun showNoData()
     fun showNoNetwork()
     fun showDataError()
+    fun showReason(text: String)
 
     // DialogLoading
     fun showDialogLoading()

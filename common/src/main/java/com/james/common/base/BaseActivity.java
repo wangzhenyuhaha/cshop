@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import com.blankj.utilcode.util.ToastUtils;
 import com.james.common.R;
 import com.james.common.base.delegate.DefaultLoadingDelegate;
@@ -40,6 +41,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     protected P mPresenter;
     protected Bundle savedInstanceState;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +70,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         tlBar = findViewById(R.id.tl_bar);
         elEmpty = findViewById(R.id.el_empty);
 
-        mToolBarDelegate = new ToolBarDelegate(this, tlBar,useLightMode());
+        mToolBarDelegate = new ToolBarDelegate(this, tlBar, useLightMode());
     }
 
     private void addContentView() {
@@ -78,7 +80,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     // ------------------- Override Method start ------------------
-    protected void initBundles() {}
+    protected void initBundles() {
+    }
 
     @NonNull
     protected abstract P createPresenter();
@@ -90,6 +93,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     /**
      * 是否使用基类里面的布局，
+     *
      * @return true：将子类的布局作为 View 添加到父容器中。
      * @implNote 返回false时，并且使用showPageLoading时要在自定义布局中加入empty view
      */
@@ -169,6 +173,11 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     }
 
     @Override
+    public void showReason(String text) {
+        getPageLoadingDelegate().showNoNetwork();
+    }
+
+    @Override
     public void showDialogLoading() {
         getLoadingDelegate().showDialogLoading(getString(R.string.loading));
     }
@@ -203,6 +212,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
      * note :
      * true : 底部白菜
      * false: 主题色
+     *
      * @return 默认为 true
      */
     public boolean useLightMode() {

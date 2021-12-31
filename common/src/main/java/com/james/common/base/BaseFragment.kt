@@ -104,6 +104,12 @@ abstract class BaseFragment<P : BasePresenter> : Fragment(), BaseView {
         getLoadingDelegate().showDialogLoading(getString(R.string.loading))
     }
 
+    override fun showReason(text: String) {
+        if (isPageFinish()) return
+        elEmpty.setErrorText(text)
+    }
+
+
     override fun showDialogLoading(content: String?) {
         getLoadingDelegate().showDialogLoading(content)
     }
