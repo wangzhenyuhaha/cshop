@@ -24,28 +24,32 @@
             android:id="@+id/menuName"
             android:layout_width="55dp"
             android:layout_height="wrap_content"
-            android:paddingStart="5dp"
+            android:layout_marginStart="4dp"
             android:gravity="start"
+            android:lines="1"
+            android:paddingStart="5dp"
             android:paddingEnd="0dp"
             android:textColor="@drawable/selector_goods_menu_item"
             android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@+id/container"
+            android:layout_marginTop="@dimen/dimen_11"
             app:layout_constraintEnd_toEndOf="@+id/container"
             app:layout_constraintStart_toEndOf="@+id/menuIconIv"
-            app:layout_constraintTop_toTopOf="@+id/container" />
+            app:layout_constraintTop_toTopOf="@+id/container"
+            tools:text="AAAAA" />
 
         <TextView
             android:id="@+id/menuNumber"
             android:layout_width="55dp"
             android:layout_height="wrap_content"
+            android:gravity="start"
             android:paddingStart="5dp"
             android:paddingEnd="0dp"
-            android:gravity="start"
             android:textColor="@drawable/selector_goods_menu_item"
             android:textSize="11sp"
-            app:layout_constraintEnd_toEndOf="@+id/container"
-            app:layout_constraintStart_toEndOf="@+id/menuIconIv"
-            app:layout_constraintTop_toBottomOf="@+id/menuName" />
+            app:layout_constraintStart_toStartOf="@+id/menuName"
+            app:layout_constraintTop_toBottomOf="@+id/menuName"
+            tools:text="BBBB" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
