@@ -32,6 +32,9 @@ class MenuGoodsManagerActivity :
 
     private val viewModel by viewModels<MenuGoodsManagerViewModel>()
 
+    //获得第一个菜单是常用还是置顶   置顶0   常用1
+    private var firstItemType: Int = 0
+
     //查询全部二级菜单
     private lateinit var allSecondMenu: ShopGroupVO
 
@@ -578,22 +581,35 @@ class MenuGoodsManagerActivity :
                     }
 
                     secondAdapter?.replaceData(list)
+                    //加载Fragment
+                    if (!isFragmentExited) {
+                        //添加Fragment
+                        supportFragmentManager.commit {
+                            setReorderingAllowed(true)
+                            add<GoodsMenuFragment>(R.id.fragment)
+                        }
+                        isFragmentExited = true
+                        //获取进入后显示的菜单
+
+                        val temp = findFirstMenu()
+                        temp?.let { viewModel.setShopGroup(it) }
+
+                        //默认选中全部
+                        thirdAdapter?.setGroupId("NULL")
+                        if (firstItemType == 0) {
+                            //置顶
+                            firstAdapter?.setGroupId(temp?.catPath)
+                            firstAdapter?.notifyDataSetChanged()
+                        } else {
+                            //常用
+                            secondAdapter?.setGroupId(temp?.catPath)
+                            secondAdapter?.notifyDataSetChanged()
+                        }
+
+                    }
                 }
 
-                //加载Fragment
-                if (!isFragmentExited) {
-                    //添加Fragment
-                    supportFragmentManager.commit {
-                        setReorderingAllowed(true)
-                        add<GoodsMenuFragment>(R.id.fragment)
-                    }
-                    isFragmentExited = true
-                    firstAdapter?.data?.get(0)?.let { viewModel.setShopGroup(it) }
-                    //默认选中全部
-                    thirdAdapter?.setGroupId("NULL")
-                    firstAdapter?.setGroupId((firstAdapter?.data?.get(0) as ShopGroupVO).catPath)
-                    firstAdapter?.notifyDataSetChanged()
-                }
+
             }
             2 -> {
                 //加载更新二级菜单
@@ -710,4 +726,29 @@ class MenuGoodsManagerActivity :
         super.onResume()
         mPresenter?.loadLv1GoodsGroup(1, true, 1)
     }
+
+    //进入页面寻找第一个显示的菜单
+    private fun findFirstMenu(): ShopGroupVO? {
+        firstAdapter?.data?.let {
+            for (item in it) {
+                if (item.disable == 1) {
+                    //显示
+                    firstItemType = 0
+                    return item
+                }
+            }
+        }
+        secondAdapter?.data?.let {
+            for (item in it) {
+                if (item.disable == 1) {
+                    //显示
+
+                    firstItemType = 1
+                    return item
+                }
+            }
+        }
+        return null
+    }
+
 }
