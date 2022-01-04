@@ -121,8 +121,8 @@ class GoodsGroupPop(context: Context): BasePopupWindow(context) {
     }
 
     fun setTitle(name: String?, hint: String?) {
-        groupNameTv?.setText(name?:"请选择")
-        groupHintTv?.setText(hint?:"");
+        groupNameTv?.text = name?:"请选择"
+        groupHintTv?.text = hint?:""
     }
 
 }

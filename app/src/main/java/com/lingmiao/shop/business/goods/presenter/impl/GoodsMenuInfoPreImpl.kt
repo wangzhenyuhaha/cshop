@@ -51,7 +51,7 @@ class GoodsMenuInfoPreImpl(val context: Context, val view: GoodsMenuInfoPre.View
     }
 
     private fun showGroup(isTop: Int, callback: (List<ShopGroupVO>?, String?) -> Unit) {
-        mGroupPreImpl.showGoodsGroupPop(context, isTop, callback)
+        mGroupPreImpl.showAllGoodsGroupPop(context, callback)
     }
 
     override fun clickMenuView(isTop: Int, item: GoodsVO?, position: Int, target: View) {

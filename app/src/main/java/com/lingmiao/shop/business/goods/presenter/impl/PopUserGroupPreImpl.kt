@@ -19,7 +19,11 @@ class PopUserGroupPreImpl(view: BaseView) : BasePreImpl(view) {
 
     private var lv1Cache: MutableList<ShopGroupVO> = mutableListOf()
 
-    fun showGoodsGroupPop(context: Context,isTop : Int, callback: (List<ShopGroupVO>?, String?) -> Unit) {
+    fun showGoodsGroupPop(
+        context: Context,
+        isTop: Int,
+        callback: (List<ShopGroupVO>?, String?) -> Unit
+    ) {
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv1ShopGroup(isTop)
             if (resp.isSuccess) {
@@ -28,7 +32,25 @@ class PopUserGroupPreImpl(view: BaseView) : BasePreImpl(view) {
         }
     }
 
-    fun showGoodsGroupPop(context: Context,isTop : Int, path: String?, callback: (List<ShopGroupVO>?, String?) -> Unit) {
+    //获取全部菜单
+    fun showAllGoodsGroupPop(
+        context: Context,
+        callback: (List<ShopGroupVO>?, String?) -> Unit
+    ) {
+        mCoroutine.launch {
+            val resp = GoodsRepository.loadLv1ShopGroup()
+            if (resp.isSuccess) {
+                showPopWindow(context, resp.data, callback)
+            }
+        }
+    }
+
+    fun showGoodsGroupPop(
+        context: Context,
+        isTop: Int,
+        path: String?,
+        callback: (List<ShopGroupVO>?, String?) -> Unit
+    ) {
         mCoroutine.launch {
             val resp = GoodsRepository.loadLv1ShopGroup(isTop, path)
             if (resp.isSuccess) {
@@ -47,7 +69,7 @@ class PopUserGroupPreImpl(view: BaseView) : BasePreImpl(view) {
                 callback.invoke(groupVO, groupName)
             }
         }
-        goodsGroupPop?.setTitle("请选择商品分组", "(移动商品到所选分组)");
+        goodsGroupPop?.setTitle("请选择商品菜单", "(移动商品到所选菜单)")
         goodsGroupPop?.setLv1Data(list)
         goodsGroupPop?.showPopupWindow()
     }
