@@ -174,7 +174,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 "退出登录",
                 "确定退出登录吗？",
                 null,
-                View.OnClickListener {
+                {
                     UserManager.loginOut()
                     ActivityUtils.startActivity(LoginActivity::class.java)
                     ActivityUtils.finishAllActivitiesExceptNewest()
@@ -324,7 +324,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                         // 最终状态，显示店铺状态
                         shopStatusLayout.visiable()
                         mPresenter?.getWaringNumber()
-                        switchStatusBtn.setCheckedNoEvent(loginInfo?.openStatus ?: false)
+                        switchStatusBtn.setCheckedNoEvent(loginInfo.openStatus ?: false)
                     }
                     //                    tvMainShopName.text=loginInfo?.nickname
                     initOpeningShopView()
@@ -490,7 +490,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //             GoodsPublishActivity.openActivity(context!!, "");
         }
         testNewFra.setOnClickListener {
-           //
+
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {
@@ -600,7 +600,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         if (!bean.needUpgrade) return
         versionUpdateDialog = DialogUtils.showVersionUpdateDialog(
             requireActivity(), "版本更新", bean.upgradeContent ?: "", null,
-            View.OnClickListener {
+            {
                 val builder = AllenVersionChecker
                     .getInstance()
                     .downloadOnly(crateUIData(bean))
@@ -630,7 +630,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     override fun applyVIP(message: String) {
         DialogUtils.showDialog(requireActivity(), "店铺到期", message, "取消", "续约", null,
-            View.OnClickListener {
+            {
                 mPresenter?.searchData()
             })
     }
@@ -665,7 +665,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun updateLogo(event: LoginInfo) {
-        event?.apply {
+        event.apply {
             setShop()
         }
     }
