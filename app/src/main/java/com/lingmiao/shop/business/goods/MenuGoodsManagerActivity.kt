@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
@@ -148,6 +149,12 @@ class MenuGoodsManagerActivity :
                 }
                 thirdAdapter?.notifyDataSetChanged()
 
+            }
+        })
+
+        viewModel.refreshMenu.observe(this, {
+            if (it == 1) {
+                mPresenter?.loadLv1GoodsGroup(1, true, 1)
             }
         })
 

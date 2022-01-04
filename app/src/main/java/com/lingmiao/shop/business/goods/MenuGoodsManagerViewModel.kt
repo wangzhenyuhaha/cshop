@@ -36,5 +36,12 @@ class MenuGoodsManagerViewModel : ViewModel() {
         _item.value = _savedItem.value
     }
 
+    private val _refreshMenu = MutableLiveData<Int>()
 
+    val refreshMenu: LiveData<Int>
+        get() = _refreshMenu
+
+    fun setRefreshMenu(data: Int) {
+        _refreshMenu.value = data
+    }
 }

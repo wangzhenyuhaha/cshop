@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.goods.fragment
 
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -62,6 +63,8 @@ class GoodsMenuFragment : BaseLoadMoreFragment<GoodsVO, GoodsMenuInfoPre>(), Goo
             mAdapter.data,
             temp?.isEvent
         )
+        //顺便更新一下菜单
+        model.setRefreshMenu(1)
     }
 
     override fun onUpdatedGoodsGroup() {
