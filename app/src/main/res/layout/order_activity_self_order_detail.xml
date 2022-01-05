@@ -384,9 +384,9 @@
                     <LinearLayout
 
                         android:layout_width="wrap_content"
-                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_height="wrap_content">
+                        android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/maijiaxinming"
@@ -399,10 +399,10 @@
 
                         <TextView
                             android:id="@+id/maijiadianhua"
-                            android:layout_marginTop="@dimen/dimen_5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginTop="@dimen/dimen_5"
                             android:text="买家号码"
                             android:textColor="#ff666666"
                             android:textSize="12sp" />
@@ -575,9 +575,7 @@
         android:gravity="end|center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:visibility="gone"
-        tools:visibility="visible">
+        android:paddingRight="15dp">
 
 
         <com.james.common.view.ITextView
@@ -589,19 +587,16 @@
             android:text="返回"
             android:textColor="#ff3870ea"
             android:textSize="12sp"
-            android:visibility="gone"
             app:ivBgColor="#fff"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp"
-            tools:visibility="visible" />
+            app:ivRadius="15dp" />
 
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:visibility="visible" />
+            android:layout_weight="1" />
 
         <com.james.common.view.ITextView
             android:id="@+id/hexiaoOrder"
@@ -612,12 +607,10 @@
             android:text="核销订单"
             android:textColor="#fff"
             android:textSize="12sp"
-            android:visibility="gone"
             app:ivBgColor="#ff3870ea"
             app:ivBorderColor="#ff3870ea"
             app:ivBorderWidth="1px"
-            app:ivRadius="15dp"
-            tools:visibility="visible" />
+            app:ivRadius="15dp" />
     </LinearLayout>
 
 </LinearLayout>

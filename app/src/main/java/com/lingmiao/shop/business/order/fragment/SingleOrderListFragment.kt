@@ -376,6 +376,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                     val intent =
                         Intent(context, SelfOrderDetailActivity::class.java)
                     intent.putExtra("orderId", temp.sn)
+                    intent.putExtra("type", 0)
                     startActivity(intent)
                 } else {
                     //非自提

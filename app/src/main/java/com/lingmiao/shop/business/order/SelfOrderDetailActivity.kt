@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.coroutine.CoroutineSupport
 import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.bean.OrderDetail
@@ -38,10 +39,22 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
     //订单SN
     private lateinit var tradeSn: String
 
+    //使用类型   0 只是查看      1  可以核销的
+    private var type: Int = 0
+
+
     override fun getLayoutId() = R.layout.order_activity_self_order_detail
 
     override fun initView() {
         tradeSn = intent?.getStringExtra("orderId").toString()
+        type = intent?.getIntExtra("type", 0) ?: 0
+
+        if (type == 0) {
+            llOrderBottom.gone()
+        } else {
+            llOrderBottom.visiable()
+        }
+
         mToolBarDelegate.setMidTitle("订单详情")
         mPresenter.requestOrderDetailData(tradeSn)
 

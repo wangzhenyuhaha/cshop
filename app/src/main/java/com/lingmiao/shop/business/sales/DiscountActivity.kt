@@ -22,7 +22,7 @@ class DiscountActivity : BaseVBActivity<ActivityDiscountBinding, DiscountPresent
         mToolBarDelegate?.setMidTitle("优惠券")
 
         mToolBarDelegate?.setRightText("新增") {
-            ActivityUtils.startActivity(MenuGoodsManagerActivity::class.java)
+            DiscountDetailActivity.openActivity(this, 1)
         }
 
     }

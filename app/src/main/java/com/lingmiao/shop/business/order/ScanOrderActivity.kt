@@ -137,6 +137,7 @@ class ScanOrderActivity : BaseActivity<ScanOrderPresenter>(), ScanOrderPresenter
             val intent =
                 Intent(context, SelfOrderDetailActivity::class.java)
             intent.putExtra("orderId", data.sn)
+            intent.putExtra("type", 1)
             startActivity(intent)
         }
         finish()
