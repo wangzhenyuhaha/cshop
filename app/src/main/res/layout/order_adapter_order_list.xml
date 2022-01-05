@@ -76,6 +76,21 @@
             android:textSize="13sp"
             tools:text="下单时间:2010-01-01 24:23" />
 
+        <TextView
+            android:id="@+id/zitishijian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvOrderSn"
+            android:layout_marginStart="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_toEndOf="@+id/tvOrderTime"
+            android:text="自提"
+            android:textColor="#ff000000"
+            android:textSize="13sp"
+            android:visibility="gone"
+            tools:text="自提时间:2010-01-01 24:23"
+            tools:visibility="visible" />
+
 
         <TextView
             android:id="@+id/tvOrderSubStatus"

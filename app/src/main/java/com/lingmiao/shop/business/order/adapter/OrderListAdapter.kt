@@ -47,6 +47,10 @@ class OrderListAdapter :
         //打包费
         helper.setText(R.id.tvPackagePrice, "￥" + item.packagePrice)
 
+        //自提时间
+        helper.setGone(R.id.zitishijian, if (item.pickTime == null) false else true)
+
+        helper.setText(R.id.zitishijian, "自提时间：" + stampToDate(item.pickTime))
 
         //商品图片2
         val ivProduct2 = helper.getView<ImageView>(R.id.ivProduct2)

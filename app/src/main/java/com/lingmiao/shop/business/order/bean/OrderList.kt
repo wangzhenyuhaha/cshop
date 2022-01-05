@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class OrderList(
+
+    //自提时间
+    @SerializedName("pick_time")
+    var pickTime: Long?,
     // 打包费
     @SerializedName("package_price")
     var packagePrice : Double? = 0.0,
