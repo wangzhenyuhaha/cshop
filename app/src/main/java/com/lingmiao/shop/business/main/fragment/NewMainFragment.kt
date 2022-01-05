@@ -32,10 +32,7 @@ import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.event.ApplyVipEvent
-import com.lingmiao.shop.business.sales.SalesActivityGoodsWarning
-import com.lingmiao.shop.business.sales.SalesSettingActivity
-import com.lingmiao.shop.business.sales.StatsActivity
-import com.lingmiao.shop.business.sales.UserManagerActivity
+import com.lingmiao.shop.business.sales.*
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.OtherUtils
@@ -490,7 +487,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //             GoodsPublishActivity.openActivity(context!!, "");
         }
         testNewFra.setOnClickListener {
-
+            ActivityUtils.startActivity(SalesMarketingActivity::class.java)
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {

@@ -50,11 +50,8 @@ object CommonRepository {
                     format(Bitmap.CompressFormat.PNG)
                 }
             }else{
-                Compressor.compress(Utils.getApp(), beforeFile) {
-                    format(Bitmap.CompressFormat.JPEG)
-                }
+                Compressor.compress(Utils.getApp(), beforeFile)
             }
-
         }
         val currentType = if (isImage) imageType else videoType
         val requestFile: RequestBody = RequestBody.create(
