@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- 背景色-->
+    <solid android:color="#00000000" />
+
+    <!--    边框宽度，颜色-->
+    <stroke
+        android:width="1dp"
+        android:color="@color/color_C3C3C3" />
+
+    <corners
+        android:bottomLeftRadius="3dp"
+        android:topLeftRadius="3dp" />
+
+    <!--    <<corners    //定义圆角-->
+    <!--    android:radius="dimension"      //全部的圆角半径-->
+    <!--    android:topLeftRadius="dimension"   //左上角的圆角半径-->
+    <!--    android:topRightRadius="dimension"  //右上角的圆角半径-->
+    <!--    android:bottomLeftRadius="dimension"    //左下角的圆角半径-->
+    <!--    android:bottomRightRadius="dimension" />    //右下角的圆角半径-->
+</shape>
