@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.sales
 import android.content.Context
 import android.content.Intent
 import com.james.common.base.BaseVBActivity
+import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.business.sales.presenter.DiscountDetailPre
 import com.lingmiao.shop.business.sales.presenter.impl.DiscountDetailPreImpl
 import com.lingmiao.shop.databinding.ActivityDiscountDetailBinding
@@ -30,6 +31,9 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     //0 查看优惠券详情 1 新增优惠券
     private var type: Int = 0
 
+    //优惠券名称
+    private var title: String? = null
+
     override fun initBundles() {
         type = intent.getIntExtra(DISCOUNT_TYPE, 0)
 
@@ -43,8 +47,28 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             mToolBarDelegate?.setMidTitle("新增优惠券")
         }
 
+        if (type == 1) {
+            addDiscount()
+        } else {
+            readDiscount()
+        }
+
+    }
 
 
+    //这是如果新增优惠券，特有操作
+    private fun addDiscount() {
+
+        mBinding.nameInput.singleClick {
+
+        }
+
+
+    }
+
+
+    //这是如果查看优惠券，特有操作
+    private fun readDiscount() {
 
     }
 
