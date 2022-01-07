@@ -18,29 +18,34 @@ interface PromotionService {
      */
     @POST(" /seller/promotion/full-discounts")
     @WithHiResponse
-    fun submitDiscount(@Body goods : SalesVo?): Call<SalesVo>
+    fun submitDiscount(@Body goods: SalesVo?): Call<SalesVo>
+
+    //新增优惠券
+    @POST("/seller/promotion/coupons")
+    @WithHiResponse
+    fun submitCoupons(@QueryMap map: MutableMap<String, Any>): Call<Unit>
 
     @PUT("/seller/promotion/full-discounts/{id}")
     @WithHiResponse
-    fun update(@Path(value = "id") id: String?, @Body item : SalesVo) : Call<SalesVo>
+    fun update(@Path(value = "id") id: String?, @Body item: SalesVo): Call<SalesVo>
 
     @GET("/seller/promotion/full-discounts/{id}")
     @WithHiResponse
-    fun getDiscountById(@Path(value = "id") id: String) : Call<SalesVo>
+    fun getDiscountById(@Path(value = "id") id: String): Call<SalesVo>
 
     /**
      * 删除
      */
     @DELETE("seller/promotion/full-discounts/{id}")
     @WithHiResponse
-    fun deleteDiscountById(@Path(value = "id") id: String) : Call<Unit>
+    fun deleteDiscountById(@Path(value = "id") id: String): Call<Unit>
 
     /**
      * 修改满减优惠活动结束时间-立即结束
      */
     @PUT("seller/promotion/full-discounts/end/{id}")
     @WithHiResponse
-    fun endDiscount(@Path(value = "id") id: String) : Call<Unit>
+    fun endDiscount(@Path(value = "id") id: String): Call<Unit>
 
     /**
      * 获取列表

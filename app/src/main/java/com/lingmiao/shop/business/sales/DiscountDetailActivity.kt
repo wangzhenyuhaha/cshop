@@ -2,11 +2,21 @@ package com.lingmiao.shop.business.sales
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
+import com.bigkoo.pickerview.view.TimePickerView
+import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseVBActivity
-import com.james.common.utils.exts.singleClick
+import com.james.common.utils.DialogUtils
+import com.james.common.utils.exts.*
+import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.presenter.DiscountDetailPre
 import com.lingmiao.shop.business.sales.presenter.impl.DiscountDetailPreImpl
 import com.lingmiao.shop.databinding.ActivityDiscountDetailBinding
+import com.lingmiao.shop.util.DATE_FORMAT
+import com.lingmiao.shop.util.dateTime2Date
+import com.lingmiao.shop.util.formatString
+import com.lingmiao.shop.util.getDatePicker
+import java.util.*
 
 class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, DiscountDetailPre>(),
     DiscountDetailPre.View {
@@ -31,8 +41,14 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     //0 查看优惠券详情 1 新增优惠券
     private var type: Int = 0
 
-    //优惠券名称
-    private var title: String? = null
+    //优惠券
+    private var coupon: Coupon = Coupon()
+
+    //时间选择器
+    var pvCustomTime1: TimePickerView? = null
+    var pvCustomTime2: TimePickerView? = null
+    var pvCustomTime3: TimePickerView? = null
+    var pvCustomTime4: TimePickerView? = null
 
     override fun initBundles() {
         type = intent.getIntExtra(DISCOUNT_TYPE, 0)
@@ -59,11 +75,267 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     //这是如果新增优惠券，特有操作
     private fun addDiscount() {
 
+        //优惠券名称(必填)
         mBinding.nameInput.singleClick {
-
+            DialogUtils.showInputDialog(
+                this,
+                "优惠券名称", "", "请输入优惠券名称",
+                coupon.title, "取消", "保存", null
+            ) {
+                mBinding.nameInput.text = it
+                coupon.title = it
+            }
         }
 
+        //系统当前时间
+        val selectedDate: Calendar = Calendar.getInstance()
 
+        val startDate: Calendar = Calendar.getInstance()
+        startDate.set(
+            selectedDate.get(Calendar.YEAR), selectedDate.get(Calendar.MONTH), selectedDate.get(
+                Calendar.DATE
+            )
+        )
+
+        val endDate: Calendar = Calendar.getInstance()
+        endDate.set(
+            selectedDate.get(Calendar.YEAR) + 5, selectedDate.get(Calendar.MONTH), selectedDate.get(
+                Calendar.DATE
+            )
+        )
+
+        //优惠券有效期起始
+        mBinding.couponTimeStart.singleClick {
+            KeyboardUtils.hideSoftInput(it)
+            //时间选择器 ，自定义布局
+            pvCustomTime1 =
+                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
+                    mBinding.couponTimeStart.text = formatString(date, DATE_FORMAT)
+                    coupon.couponStartTime = (dateTime2Date(
+                        mBinding.couponTimeStart.getViewText() + " 00:00:00"
+                    )?.time ?: 0) / 1000
+                }, {
+                    pvCustomTime1?.returnData()
+                    pvCustomTime1?.dismiss()
+                }, {
+                    pvCustomTime1?.dismiss()
+                })
+            pvCustomTime1?.show()
+        }
+
+        //优惠券有效期结束
+        mBinding.couponTimeEnd.singleClick {
+            KeyboardUtils.hideSoftInput(it)
+            //时间选择器 ，自定义布局
+            pvCustomTime2 =
+                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
+                    mBinding.couponTimeEnd.text = formatString(date, DATE_FORMAT)
+                    coupon.couponEndTime = (dateTime2Date(
+                        mBinding.couponTimeEnd.getViewText() + " 23:59:59"
+                    )?.time ?: 0) / 1000
+                }, {
+                    pvCustomTime2?.returnData()
+                    pvCustomTime2?.dismiss()
+                }, {
+                    pvCustomTime2?.dismiss()
+                })
+            pvCustomTime2?.show()
+        }
+
+        //选择使用时间方式
+        mBinding.timeType.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == mBinding.timeType1.id) {
+
+                //固定时间
+                coupon.useTimeType = "FIX"
+                mBinding.useTimeDay.gone()
+                mBinding.useTimeDetail.visiable()
+            } else if (checkedId == mBinding.timeType2.id) {
+                //领取后生效
+                coupon.useTimeType = "PERIOD"
+                mBinding.useTimeDay.visiable()
+                mBinding.useTimeDetail.gone()
+            }
+        }
+
+        //选择优惠券使用时间开始
+        mBinding.useTimeStart.singleClick {
+            KeyboardUtils.hideSoftInput(it)
+            //时间选择器 ，自定义布局
+            pvCustomTime3 =
+                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
+                    mBinding.useTimeStart.text = formatString(date, DATE_FORMAT)
+                    coupon.useStartTime = (dateTime2Date(
+                        mBinding.useTimeStart.getViewText() + " 00:00:00"
+                    )?.time ?: 0) / 1000
+                }, {
+                    pvCustomTime3?.returnData()
+                    pvCustomTime3?.dismiss()
+                }, {
+                    pvCustomTime3?.dismiss()
+                })
+            pvCustomTime3?.show()
+        }
+
+        //选择优惠券使用时间结束
+        mBinding.useTimeEnd.singleClick {
+            KeyboardUtils.hideSoftInput(it)
+            //时间选择器 ，自定义布局
+            pvCustomTime4 =
+                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
+                    mBinding.useTimeEnd.text = formatString(date, DATE_FORMAT)
+                    coupon.useEndTime = (dateTime2Date(
+                        mBinding.useTimeEnd.getViewText() + " 23:59:59"
+                    )?.time ?: 0) / 1000
+                }, {
+                    pvCustomTime4?.returnData()
+                    pvCustomTime4?.dismiss()
+                }, {
+                    pvCustomTime4?.dismiss()
+                })
+            pvCustomTime4?.show()
+        }
+
+        //选择生效天数
+        mBinding.useTimeDayNumber.singleClick {
+            DialogUtils.showInputDialog(
+                this,
+                "生效天数", "", "请输入优惠券生效天数",
+                if (coupon.usePeriod == null) "" else coupon.usePeriod.toString(), "取消", "保存", null
+            ) {
+                try {
+                    coupon.usePeriod = it.toInt()
+                    mBinding.useTimeDayNumber.text = it
+                } catch (e: Exception) {
+                    coupon.usePeriod = null
+                    mBinding.useTimeDayNumber.text = ""
+                    showToast("请输入数字")
+                }
+
+            }
+        }
+
+        //库存
+        mBinding.stockNumber.singleClick {
+            DialogUtils.showInputDialog(
+                this,
+                "库存", "", "请输入优惠券库存",
+                if (coupon.createNum == null) "" else coupon.createNum.toString(), "取消", "保存", null
+            ) {
+                try {
+                    coupon.createNum = it.toInt()
+                    mBinding.stockNumber.text = it
+                } catch (e: Exception) {
+                    coupon.createNum = null
+                    mBinding.stockNumber.text = ""
+                    showToast("请输入数字")
+                }
+            }
+        }
+
+        //优惠规则  满
+        mBinding.rulerNumberMan.singleClick {
+            DialogUtils.showInputDialog(
+                this,
+                "优惠券门槛", "", "请输入优惠券需满多少元",
+                if (coupon.manPrice == null) "" else coupon.manPrice.toString(), "取消", "保存", null
+            ) {
+                try {
+                    coupon.manPrice = it.toDouble()
+                    mBinding.rulerNumberMan.text = it
+                } catch (e: Exception) {
+                    coupon.manPrice = null
+                    mBinding.rulerNumberMan.text = ""
+                    showToast("请输入数字")
+                }
+            }
+        }
+
+        //优惠规则  减
+        mBinding.rulerNumberJian.singleClick {
+            DialogUtils.showInputDialog(
+                this,
+                "优惠券面额", "", "请输入优惠券可减多少元",
+                if (coupon.jianPrice == null) "" else coupon.jianPrice.toString(), "取消", "保存", null
+            ) {
+                try {
+                    coupon.jianPrice = it.toDouble()
+                    mBinding.rulerNumberJian.text = it
+                } catch (e: Exception) {
+                    coupon.jianPrice = null
+                    mBinding.rulerNumberJian.text = ""
+                    showToast("请输入数字")
+                }
+            }
+        }
+
+        //每人限额
+        mBinding.personalMoreNumber.singleClick {
+            DialogUtils.showInputDialog(
+                this,
+                "没人限额", "", "请输入每人限领多少张",
+                if (coupon.limitNum == null) "" else coupon.limitNum.toString(), "取消", "保存", null
+            ) {
+                try {
+                    coupon.limitNum = it.toInt()
+                    mBinding.personalMoreNumber.text = it
+                } catch (e: Exception) {
+                    coupon.limitNum = null
+                    mBinding.personalMoreNumber.text = ""
+                    showToast("请输入数字")
+                }
+            }
+        }
+
+        mBinding.submit.singleClick {
+
+            //检查是否数据完全
+            checkNotBlack(coupon.title) {
+                "请输入优惠券名称"
+            }
+
+            if (coupon.couponStartTime == null || coupon.couponEndTime == null) {
+                showToast("请完整输入优惠券有效期")
+                return@singleClick
+            }
+
+            checkNotBlack(coupon.useTimeType) {
+                "请选择优惠券使用时间模式"
+            }
+            if (coupon.useTimeType == "FIX") {
+                //固定时间
+                if (coupon.useStartTime == null || coupon.useEndTime == null) {
+                    showToast("请完整输入优惠券使用时间")
+                    return@singleClick
+                }
+            } else {
+                if (coupon.usePeriod == null) {
+                    showToast("请输入优惠券领取后生效的天数")
+                    return@singleClick
+                }
+            }
+
+            if (coupon.createNum == null) {
+                showToast("请输入优惠券库存")
+                return@singleClick
+            }
+            if (coupon.manPrice == null) {
+                showToast("请输入优惠券使用门槛")
+                return@singleClick
+            }
+            if (coupon.jianPrice == null) {
+                showToast("请输入优惠券面额")
+                return@singleClick
+            }
+            if (coupon.limitNum == null) {
+                showToast("请输入优惠券每人限额")
+                return@singleClick
+            }
+
+            //调用接口，添加优惠券
+            mPresenter?.submitDiscount(coupon)
+
+        }
     }
 
 
@@ -73,5 +345,9 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     }
 
     override fun useLightMode() = false
+    override fun onSubmitCoupons() {
+        showToast("优惠券添加成功")
+        finish()
+    }
 
 }
