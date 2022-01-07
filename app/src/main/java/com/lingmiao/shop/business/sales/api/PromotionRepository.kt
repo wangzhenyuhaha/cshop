@@ -6,6 +6,7 @@ import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.bean.SalesVo
 import com.lingmiao.shop.net.Fetch
+import retrofit2.Call
 
 /**
 Create Date : 2021/6/34:44 PM
@@ -39,6 +40,14 @@ object PromotionRepository {
             map["coupon_type"] = "GOODS"
         }
         return apiService.submitCoupons(map).awaitHiResponse()
+    }
+
+    suspend fun searchCoupons(pageNo: Int): HiResponse<PageVO<Coupon>> {
+        val map = mutableMapOf<String, Any>()
+        map["page_no"] = pageNo
+        map["page_size"] = 10
+        return apiService.searchCoupons(map).awaitHiResponse()
+
     }
 
     suspend fun getDiscounts(pageNo: Int): HiResponse<PageVO<SalesVo>> {

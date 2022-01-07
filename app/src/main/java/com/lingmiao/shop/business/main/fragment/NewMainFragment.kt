@@ -488,7 +488,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         testNewFra.setOnClickListener {
             //ActivityUtils.startActivity(SalesMarketingActivity::class.java)
-            DiscountDetailActivity.openActivity(requireContext(), 1)
+            ActivityUtils.startActivity(DiscountActivity::class.java)
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {
