@@ -26,9 +26,13 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
         //0  查看优惠券详情   1  新增优惠券
         private const val DISCOUNT_TYPE = "DISCOUNT_TYPE"
 
-        fun openActivity(context: Context, type: Int) {
+        //显示的优惠券
+        private const val COUPON = "COUPON"
+
+        fun openActivity(context: Context, type: Int, item: Coupon? = null) {
             val intent = Intent(context, DiscountDetailActivity::class.java)
             intent.putExtra(DISCOUNT_TYPE, type)
+            intent.putExtra(COUPON, item)
             context.startActivity(intent)
         }
 
@@ -52,7 +56,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
     override fun initBundles() {
         type = intent.getIntExtra(DISCOUNT_TYPE, 0)
-
+        coupon = intent.getSerializableExtra(COUPON) as Coupon
     }
 
     override fun initView() {
@@ -341,7 +345,42 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
     //这是如果查看优惠券，特有操作
     private fun readDiscount() {
+        mBinding.apply {
+            nameInput.text = coupon.title
+            couponTimeStart.text = formatString(
+                coupon.couponStartTime?.times(1000)?.let { Date(it) },
+                DATE_FORMAT
+            )
+            couponTimeEnd.text = formatString(
+                coupon.couponEndTime?.times(1000)?.let { Date(it) },
+                DATE_FORMAT
+            )
+            if (coupon.useTimeType == "FIX") {
+                //固定时间
+                timeType1.isChecked = true
+                mBinding.useTimeDay.gone()
+                mBinding.useTimeDetail.visiable()
+                useTimeStart.text = formatString(
+                    coupon.useStartTime?.times(1000)?.let { Date(it) },
+                    DATE_FORMAT
+                )
+                useTimeEnd.text = formatString(
+                    coupon.useEndTime?.times(1000)?.let { Date(it) },
+                    DATE_FORMAT
+                )
+            } else {
+                //领取后生效
+                timeType2.isChecked = true
+                mBinding.useTimeDay.visiable()
+                mBinding.useTimeDetail.gone()
+                useTimeDayNumber.text = coupon.usePeriod.toString()
+            }
+            stockNumber.text = coupon.createNum.toString()
+            rulerNumberMan.text = coupon.manPrice.toString()
+            rulerNumberJian.text = coupon.jianPrice.toString()
+            personalMoreNumber.text = coupon.limitNum.toString()
 
+        }
     }
 
     override fun useLightMode() = false

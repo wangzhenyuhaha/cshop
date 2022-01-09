@@ -529,8 +529,8 @@
                                 android:text="扫码上架" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                style="@style/main_tools"
                                 android:id="@+id/testNewFra"
+                                style="@style/main_tools"
                                 android:drawableTop="@drawable/ic_more"
                                 android:text="敬请期待..." />
 

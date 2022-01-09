@@ -54,8 +54,7 @@ class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
 
                 when (view.id) {
                     R.id.couponDetail -> {
-
-                        //  DiscountDetailActivity
+                        DiscountDetailActivity.openActivity(context, 0, item)
                     }
 
                     R.id.couponBegin -> {
