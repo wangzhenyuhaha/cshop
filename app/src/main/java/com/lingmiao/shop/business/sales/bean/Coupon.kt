@@ -5,6 +5,10 @@ import java.io.Serializable
 
 class Coupon : Serializable {
 
+    //优惠券ID
+    @SerializedName("coupon_id")
+    var couponID: Int? = null
+
     //优惠券名称
     @SerializedName("title")
     var title: String? = null

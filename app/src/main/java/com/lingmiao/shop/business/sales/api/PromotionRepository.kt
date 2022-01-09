@@ -50,6 +50,12 @@ object PromotionRepository {
 
     }
 
+
+    //删除优惠券
+    suspend fun deleteCoupons(id:  Int): HiResponse<Unit> {
+        return apiService.deleteCoupon(id).awaitHiResponse()
+    }
+
     suspend fun getDiscounts(pageNo: Int): HiResponse<PageVO<SalesVo>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_no", pageNo)

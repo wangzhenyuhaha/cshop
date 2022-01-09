@@ -31,6 +31,11 @@ interface PromotionService {
     @WithHiResponse
     fun searchCoupons(@QueryMap map: MutableMap<String, Any>): Call<PageVO<Coupon>>
 
+    //删除优惠券
+    @DELETE("/seller/promotion/coupons/{id}")
+    @WithHiResponse
+    fun deleteCoupon(@Path(value = "id") id: Int): Call<Unit>
+
     @PUT("/seller/promotion/full-discounts/{id}")
     @WithHiResponse
     fun update(@Path(value = "id") id: String?, @Body item: SalesVo): Call<SalesVo>

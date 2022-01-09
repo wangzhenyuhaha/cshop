@@ -92,6 +92,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/couponDetail"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -100,6 +101,7 @@
             android:textColor="@color/primary" />
 
         <TextView
+            android:id="@+id/couponBegin"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -108,6 +110,7 @@
             android:textColor="@color/red" />
 
         <TextView
+            android:id="@+id/couponDelete"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

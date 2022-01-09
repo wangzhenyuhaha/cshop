@@ -9,9 +9,15 @@ import com.lingmiao.shop.business.sales.bean.Coupon
 
 interface DiscountPresenter : BasePresenter {
 
+    //查询优惠券列表
     fun loadListData(page: IPage, list: List<*>)
+
+    //删除优惠券
+    fun deleteCoupon(id: Int,position:Int)
 
     interface View : BaseView, BaseLoadMoreView<Coupon> {
 
+        //删除优惠券成功
+        fun deleteCouponSuccess(position: Int)
     }
 }

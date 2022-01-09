@@ -1,18 +1,19 @@
 package com.lingmiao.shop.business.sales
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.core.content.ContextCompat
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.CateGoryGoodsAdapter
 import com.lingmiao.shop.business.sales.adapter.DiscountAdapter
 import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.presenter.DiscountPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.DiscountPreImpl
 
+@SuppressLint("NotifyDataSetChanged")
 class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
     DiscountPresenter.View {
 
@@ -33,13 +34,56 @@ class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
 
     override fun useLightMode() = false
 
+
+    override fun deleteCouponSuccess(position: Int) {
+        mAdapter.remove(position)
+        mAdapter.notifyDataSetChanged()
+        showToast("成功删除该优惠券")
+    }
+
     override fun executePageRequest(page: IPage) {
         mPresenter.loadListData(page, mAdapter.data)
     }
 
     override fun initAdapter(): BaseQuickAdapter<Coupon, BaseViewHolder> {
         return DiscountAdapter().apply {
+
+            setOnItemChildClickListener { adapter, view, position ->
+
+                val item = adapter.getItem(position) as Coupon
+
+                when (view.id) {
+                    R.id.couponDetail -> {
+
+                        //  DiscountDetailActivity
+                    }
+
+                    R.id.couponBegin -> {
+
+                    }
+
+                    R.id.couponDelete -> {
+                        DialogUtils.showDialog(context,
+                            "提示",
+                            "确定删除优惠券${item.title}吗？",
+                            "取消",
+                            "确定",
+                            {
+
+                            }, {
+                                item.couponID?.let { mPresenter.deleteCoupon(it, position) }
+                            })
+                    }
+                }
+
+
+            }
+
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
+    }
 }

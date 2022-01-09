@@ -19,8 +19,25 @@ class DiscountAdapter :
         //优惠券库存
         helper.setText(R.id.createNum, "（库存${item?.createNum}）")
         //优惠券状态
-        // helper.setText(R.id.orderGoodsNameTv, item?.title)
+        //helper.setText(R.id.orderGoodsNameTv, item?.title)
         //优惠券
+
+
+
+
+
+
+        //点击操作
+
+
+        //查看详情
+        helper.addOnClickListener(R.id.couponDetail)
+
+        //开始/停止发放
+        helper.addOnClickListener(R.id.couponBegin)
+
+        //删除
+        helper.addOnClickListener(R.id.couponDelete)
     }
 
 }

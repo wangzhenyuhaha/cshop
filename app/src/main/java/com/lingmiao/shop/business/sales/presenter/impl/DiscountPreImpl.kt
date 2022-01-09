@@ -28,6 +28,19 @@ class DiscountPreImpl(val context: Context, val view: DiscountPresenter.View) : 
         }
     }
 
+    override fun deleteCoupon(id: Int, position: Int) {
+        mCoroutine.launch {
+            view.showDialogLoading()
+            val resp = PromotionRepository.deleteCoupons(id)
+            view.hideDialogLoading()
+            handleResponse(resp) {
+                view.deleteCouponSuccess(position)
+            }
+
+
+        }
+    }
+
 
 }
 
