@@ -7,6 +7,7 @@ import com.james.common.base.loadmore.core.IPage
 import com.lingmiao.shop.business.goods.api.GoodsRepository
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.sales.api.PromotionRepository
+import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.presenter.DiscountPresenter
 import kotlinx.coroutines.launch
 
@@ -38,6 +39,18 @@ class DiscountPreImpl(val context: Context, val view: DiscountPresenter.View) : 
             }
 
 
+        }
+    }
+
+    override fun editCoupon(item: Coupon, id: Int, position: Int) {
+        mCoroutine.launch {
+            view.showDialogLoading()
+            val resp = PromotionRepository.editCoupon(item, id)
+            view.hideDialogLoading()
+            handleResponse(resp)
+            {
+                view.editCouponSuccess(position)
+            }
         }
     }
 

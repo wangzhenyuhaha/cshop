@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.sales
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseVBActivity
@@ -77,7 +78,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
     //这是如果新增优惠券，特有操作
     private fun addDiscount() {
-
+        coupon = Coupon()
         //优惠券名称(必填)
         mBinding.nameInput.singleClick {
             DialogUtils.showInputDialog(
@@ -308,6 +309,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
         mBinding.submit.singleClick {
 
             //检查是否数据完全
+
             checkNotBlack(coupon?.title) {
                 "请输入优惠券名称"
             }

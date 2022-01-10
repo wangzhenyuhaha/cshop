@@ -13,11 +13,17 @@ interface DiscountPresenter : BasePresenter {
     fun loadListData(page: IPage, list: List<*>)
 
     //删除优惠券
-    fun deleteCoupon(id: Int,position:Int)
+    fun deleteCoupon(id: Int, position: Int)
+
+    //编辑优惠券
+    fun editCoupon(item: Coupon, id: Int, position: Int)
 
     interface View : BaseView, BaseLoadMoreView<Coupon> {
 
         //删除优惠券成功
         fun deleteCouponSuccess(position: Int)
+
+        //编辑优惠券成功
+        fun editCouponSuccess(position: Int)
     }
 }

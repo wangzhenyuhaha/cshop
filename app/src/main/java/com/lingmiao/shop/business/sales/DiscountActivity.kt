@@ -31,14 +31,18 @@ class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
 
     }
 
-
     override fun useLightMode() = false
-
 
     override fun deleteCouponSuccess(position: Int) {
         mAdapter.remove(position)
         mAdapter.notifyDataSetChanged()
         showToast("成功删除该优惠券")
+    }
+
+    override fun editCouponSuccess(position: Int) {
+        //mLoadMoreDelegate?.refresh()
+        //mAdapter.
+        showToast("成功，尚未编写UI更新代码")
     }
 
     override fun executePageRequest(page: IPage) {
@@ -58,7 +62,9 @@ class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
                     }
 
                     R.id.couponBegin -> {
-
+                        val temp = item.disabled
+                        item.disabled = if (temp == 0) 1 else 0
+                        item.couponID?.let { mPresenter.editCoupon(item, it, position) }
                     }
 
                     R.id.couponDelete -> {
