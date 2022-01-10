@@ -40,9 +40,8 @@ class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
     }
 
     override fun editCouponSuccess(position: Int) {
-        //mLoadMoreDelegate?.refresh()
-        //mAdapter.
-        showToast("成功，尚未编写UI更新代码")
+        mLoadMoreDelegate?.refresh()
+
     }
 
     override fun executePageRequest(page: IPage) {
@@ -62,9 +61,8 @@ class DiscountActivity : BaseLoadMoreActivity<Coupon, DiscountPresenter>(),
                     }
 
                     R.id.couponBegin -> {
-                        val temp = item.disabled
-                        item.disabled = if (temp == 0) 1 else 0
-                        item.couponID?.let { mPresenter.editCoupon(item, it, position) }
+                        val disabled = if (item.disabled == 0) -1 else 0
+                        item.couponID?.let { mPresenter.editCoupon(disabled, it, position) }
                     }
 
                     R.id.couponDelete -> {

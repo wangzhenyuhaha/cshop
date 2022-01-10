@@ -36,12 +36,12 @@ interface PromotionService {
     @WithHiResponse
     fun deleteCoupon(@Path(value = "id") id: Int): Call<Unit>
 
-    //修改优惠券
-    @PUT("/seller/promotion/coupons/{coupon_id}")
+    //修改优惠券是否发放
+    @GET("/seller/promotion/coupons/{id}/{disable}")
     @WithHiResponse
     fun editCoupon(
-        @Path(value = "coupon_id") id: Int,
-        @QueryMap map: MutableMap<String, Any>
+        @Path(value = "id") id: Int,
+        @Path(value = "disable") disabled: Int
     ): Call<Unit>
 
 

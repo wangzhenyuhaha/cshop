@@ -56,24 +56,8 @@ object PromotionRepository {
     }
 
     //修改优惠券
-    suspend fun editCoupon(item: Coupon, id: Int): HiResponse<Unit> {
-        val map = mutableMapOf<String, Any>()
-        item.apply {
-            title?.let { map.put("title", it) }
-            couponStartTime?.let { map.put("start_time", it) }
-            couponEndTime?.let { map.put("end_time", it) }
-            useTimeType?.let { map.put("use_time_type", it) }
-            useStartTime?.let { map.put("use_start_time", it) }
-            useEndTime?.let { map.put("use_end_time", it) }
-            usePeriod?.let { map.put("use_period", it) }
-            createNum?.let { map.put("create_num", it) }
-            manPrice?.let { map.put("coupon_threshold_price", it) }
-            jianPrice?.let { map.put("coupon_price", it) }
-            limitNum?.let { map["limit_num"] = it }
-            disabled?.let { map.put("disabled", it) }
-            map["coupon_type"] = "GOODS"
-        }
-        return apiService.editCoupon(id,map).awaitHiResponse()
+    suspend fun editCoupon(disabled: Int, id: Int): HiResponse<Unit> {
+        return apiService.editCoupon(id,disabled).awaitHiResponse()
     }
 
     suspend fun getDiscounts(pageNo: Int): HiResponse<PageVO<SalesVo>> {

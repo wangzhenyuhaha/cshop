@@ -53,7 +53,7 @@ class Coupon : Serializable {
     @SerializedName("limit_num")
     var limitNum: Int? = null
 
-    //是否禁用 0：否，1：是
+    //是否禁用 -1：否，0：是
     @SerializedName("disabled")
     var disabled: Int? = null
 }

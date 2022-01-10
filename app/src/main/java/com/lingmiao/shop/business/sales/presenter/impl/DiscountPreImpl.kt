@@ -42,10 +42,10 @@ class DiscountPreImpl(val context: Context, val view: DiscountPresenter.View) : 
         }
     }
 
-    override fun editCoupon(item: Coupon, id: Int, position: Int) {
+    override fun editCoupon(disabled: Int, id: Int, position: Int) {
         mCoroutine.launch {
             view.showDialogLoading()
-            val resp = PromotionRepository.editCoupon(item, id)
+            val resp = PromotionRepository.editCoupon(disabled, id)
             view.hideDialogLoading()
             handleResponse(resp)
             {

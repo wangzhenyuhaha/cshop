@@ -36,16 +36,12 @@ class DiscountAdapter :
             helper.setGone(R.id.couponBegin, false)
         } else {
             //没过期，可发放
-            helper.setText(R.id.couponStatus, "${start}~${end}")
-            helper.setText(R.id.couponBegin, if (item?.disabled == 0) "开始发放" else "停止发放")
-            helper.setGone(R.id.couponDelete, item?.disabled == 0)
+            helper.setText(R.id.couponStatus, "$start ~ $end")
+            helper.setText(R.id.couponBegin, if (item?.disabled == -1) "开始发放" else "停止发放")
+            helper.setGone(R.id.couponDelete, item?.disabled == -1)
         }
 
-        //优惠券状态
-        helper.setText(R.id.couponStatus, if (item?.disabled == 0) "停止发放" else "正在发放")
-
         //优惠券是否发放
-
 
 
         //点击操作
