@@ -4,26 +4,47 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.bean.Coupon
+import com.lingmiao.shop.util.DATE_FORMAT
+import com.lingmiao.shop.util.formatString
+import java.util.*
 
 class DiscountAdapter :
     BaseQuickAdapter<Coupon, BaseViewHolder>(R.layout.sales_adapter_discount_item) {
 
 
     override fun convert(helper: BaseViewHolder, item: Coupon?) {
+
         //优惠券面额
         helper.setText(R.id.jianPrice, "¥ ${item?.jianPrice.toString()}")
+
         //优惠券门槛
-        helper.setText(R.id.manPrice, "满${item?.manPrice.toString()}可用")
+        helper.setText(R.id.manPrice, "满 ${item?.manPrice.toString()} 可用")
+
         //优惠券名字
         helper.setText(R.id.title, item?.title)
+
         //优惠券库存
         helper.setText(R.id.createNum, "（库存${item?.createNum}）")
+
         //优惠券状态
-        //helper.setText(R.id.orderGoodsNameTv, item?.title)
-        //优惠券
+        val start = formatString(item?.couponStartTime?.times(1000)?.let { Date(it) }, DATE_FORMAT)
+        val end = formatString(item?.couponEndTime?.times(1000)?.let { Date(it) }, DATE_FORMAT)
+        val now = Date().time
+        if (now > item?.couponEndTime?.times(1000) ?: 0) {
+            //过期了
+            helper.setText(R.id.couponStatus, "优惠券已过期")
+            helper.setGone(R.id.couponBegin, false)
+        } else {
+            //没过期，可发放
+            helper.setText(R.id.couponStatus, "${start}~${end}")
+            helper.setText(R.id.couponBegin, if (item?.disabled == 0) "开始发放" else "停止发放")
+            helper.setGone(R.id.couponDelete, item?.disabled == 0)
+        }
 
+        //优惠券状态
+        helper.setText(R.id.couponStatus, if (item?.disabled == 0) "停止发放" else "正在发放")
 
-
+        //优惠券是否发放
 
 
 

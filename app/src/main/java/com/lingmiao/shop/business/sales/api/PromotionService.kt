@@ -36,6 +36,12 @@ interface PromotionService {
     @WithHiResponse
     fun deleteCoupon(@Path(value = "id") id: Int): Call<Unit>
 
+    //开始发放优惠券
+
+    @POST("")
+
+    //停止发放优惠券
+
     @PUT("/seller/promotion/full-discounts/{id}")
     @WithHiResponse
     fun update(@Path(value = "id") id: String?, @Body item: SalesVo): Call<SalesVo>

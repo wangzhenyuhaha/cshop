@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.sales
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseVBActivity
@@ -46,17 +45,17 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     private var type: Int = 0
 
     //优惠券
-    private var coupon: Coupon = Coupon()
+    private var coupon: Coupon? = Coupon()
 
     //时间选择器
-    var pvCustomTime1: TimePickerView? = null
-    var pvCustomTime2: TimePickerView? = null
-    var pvCustomTime3: TimePickerView? = null
-    var pvCustomTime4: TimePickerView? = null
+    private var pvCustomTime1: TimePickerView? = null
+    private var pvCustomTime2: TimePickerView? = null
+    private var pvCustomTime3: TimePickerView? = null
+    private var pvCustomTime4: TimePickerView? = null
 
     override fun initBundles() {
         type = intent.getIntExtra(DISCOUNT_TYPE, 0)
-        coupon = intent.getSerializableExtra(COUPON) as Coupon
+        coupon = intent.getSerializableExtra(COUPON) as Coupon?
     }
 
     override fun initView() {
@@ -84,10 +83,10 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             DialogUtils.showInputDialog(
                 this,
                 "优惠券名称", "", "请输入优惠券名称",
-                coupon.title, "取消", "保存", null
+                coupon?.title, "取消", "保存", null
             ) {
                 mBinding.nameInput.text = it
-                coupon.title = it
+                coupon?.title = it
             }
         }
 
@@ -115,7 +114,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             pvCustomTime1 =
                 getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
                     mBinding.couponTimeStart.text = formatString(date, DATE_FORMAT)
-                    coupon.couponStartTime = (dateTime2Date(
+                    coupon?.couponStartTime = (dateTime2Date(
                         mBinding.couponTimeStart.getViewText() + " 00:00:00"
                     )?.time ?: 0) / 1000
                 }, {
@@ -134,7 +133,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             pvCustomTime2 =
                 getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
                     mBinding.couponTimeEnd.text = formatString(date, DATE_FORMAT)
-                    coupon.couponEndTime = (dateTime2Date(
+                    coupon?.couponEndTime = (dateTime2Date(
                         mBinding.couponTimeEnd.getViewText() + " 23:59:59"
                     )?.time ?: 0) / 1000
                 }, {
@@ -151,12 +150,12 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             if (checkedId == mBinding.timeType1.id) {
 
                 //固定时间
-                coupon.useTimeType = "FIX"
+                coupon?.useTimeType = "FIX"
                 mBinding.useTimeDay.gone()
                 mBinding.useTimeDetail.visiable()
             } else if (checkedId == mBinding.timeType2.id) {
                 //领取后生效
-                coupon.useTimeType = "PERIOD"
+                coupon?.useTimeType = "PERIOD"
                 mBinding.useTimeDay.visiable()
                 mBinding.useTimeDetail.gone()
             }
@@ -169,7 +168,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             pvCustomTime3 =
                 getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
                     mBinding.useTimeStart.text = formatString(date, DATE_FORMAT)
-                    coupon.useStartTime = (dateTime2Date(
+                    coupon?.useStartTime = (dateTime2Date(
                         mBinding.useTimeStart.getViewText() + " 00:00:00"
                     )?.time ?: 0) / 1000
                 }, {
@@ -188,7 +187,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             pvCustomTime4 =
                 getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
                     mBinding.useTimeEnd.text = formatString(date, DATE_FORMAT)
-                    coupon.useEndTime = (dateTime2Date(
+                    coupon?.useEndTime = (dateTime2Date(
                         mBinding.useTimeEnd.getViewText() + " 23:59:59"
                     )?.time ?: 0) / 1000
                 }, {
@@ -204,14 +203,19 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
         mBinding.useTimeDayNumber.singleClick {
             DialogUtils.showInputDialog(
                 this,
-                "生效天数", "", "请输入优惠券生效天数",
-                if (coupon.usePeriod == null) "" else coupon.usePeriod.toString(), "取消", "保存", null
+                "生效天数",
+                "",
+                "请输入优惠券生效天数",
+                if (coupon?.usePeriod == null) "" else coupon?.usePeriod.toString(),
+                "取消",
+                "保存",
+                null
             ) {
                 try {
-                    coupon.usePeriod = it.toInt()
+                    coupon?.usePeriod = it.toInt()
                     mBinding.useTimeDayNumber.text = it
                 } catch (e: Exception) {
-                    coupon.usePeriod = null
+                    coupon?.usePeriod = null
                     mBinding.useTimeDayNumber.text = ""
                     showToast("请输入数字")
                 }
@@ -223,14 +227,19 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
         mBinding.stockNumber.singleClick {
             DialogUtils.showInputDialog(
                 this,
-                "库存", "", "请输入优惠券库存",
-                if (coupon.createNum == null) "" else coupon.createNum.toString(), "取消", "保存", null
+                "库存",
+                "",
+                "请输入优惠券库存",
+                if (coupon?.createNum == null) "" else coupon?.createNum.toString(),
+                "取消",
+                "保存",
+                null
             ) {
                 try {
-                    coupon.createNum = it.toInt()
+                    coupon?.createNum = it.toInt()
                     mBinding.stockNumber.text = it
                 } catch (e: Exception) {
-                    coupon.createNum = null
+                    coupon?.createNum = null
                     mBinding.stockNumber.text = ""
                     showToast("请输入数字")
                 }
@@ -242,13 +251,13 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             DialogUtils.showInputDialog(
                 this,
                 "优惠券门槛", "", "请输入优惠券需满多少元",
-                if (coupon.manPrice == null) "" else coupon.manPrice.toString(), "取消", "保存", null
+                if (coupon?.manPrice == null) "" else coupon?.manPrice.toString(), "取消", "保存", null
             ) {
                 try {
-                    coupon.manPrice = it.toDouble()
+                    coupon?.manPrice = it.toDouble()
                     mBinding.rulerNumberMan.text = it
                 } catch (e: Exception) {
-                    coupon.manPrice = null
+                    coupon?.manPrice = null
                     mBinding.rulerNumberMan.text = ""
                     showToast("请输入数字")
                 }
@@ -259,14 +268,19 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
         mBinding.rulerNumberJian.singleClick {
             DialogUtils.showInputDialog(
                 this,
-                "优惠券面额", "", "请输入优惠券可减多少元",
-                if (coupon.jianPrice == null) "" else coupon.jianPrice.toString(), "取消", "保存", null
+                "优惠券面额",
+                "",
+                "请输入优惠券可减多少元",
+                if (coupon?.jianPrice == null) "" else coupon?.jianPrice.toString(),
+                "取消",
+                "保存",
+                null
             ) {
                 try {
-                    coupon.jianPrice = it.toDouble()
+                    coupon?.jianPrice = it.toDouble()
                     mBinding.rulerNumberJian.text = it
                 } catch (e: Exception) {
-                    coupon.jianPrice = null
+                    coupon?.jianPrice = null
                     mBinding.rulerNumberJian.text = ""
                     showToast("请输入数字")
                 }
@@ -278,13 +292,13 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             DialogUtils.showInputDialog(
                 this,
                 "没人限额", "", "请输入每人限领多少张",
-                if (coupon.limitNum == null) "" else coupon.limitNum.toString(), "取消", "保存", null
+                if (coupon?.limitNum == null) "" else coupon?.limitNum.toString(), "取消", "保存", null
             ) {
                 try {
-                    coupon.limitNum = it.toInt()
+                    coupon?.limitNum = it.toInt()
                     mBinding.personalMoreNumber.text = it
                 } catch (e: Exception) {
-                    coupon.limitNum = null
+                    coupon?.limitNum = null
                     mBinding.personalMoreNumber.text = ""
                     showToast("请输入数字")
                 }
@@ -294,44 +308,44 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
         mBinding.submit.singleClick {
 
             //检查是否数据完全
-            checkNotBlack(coupon.title) {
+            checkNotBlack(coupon?.title) {
                 "请输入优惠券名称"
             }
 
-            if (coupon.couponStartTime == null || coupon.couponEndTime == null) {
+            if (coupon?.couponStartTime == null || coupon?.couponEndTime == null) {
                 showToast("请完整输入优惠券有效期")
                 return@singleClick
             }
 
-            checkNotBlack(coupon.useTimeType) {
+            checkNotBlack(coupon?.useTimeType) {
                 "请选择优惠券使用时间模式"
             }
-            if (coupon.useTimeType == "FIX") {
+            if (coupon?.useTimeType == "FIX") {
                 //固定时间
-                if (coupon.useStartTime == null || coupon.useEndTime == null) {
+                if (coupon?.useStartTime == null || coupon?.useEndTime == null) {
                     showToast("请完整输入优惠券使用时间")
                     return@singleClick
                 }
             } else {
-                if (coupon.usePeriod == null) {
+                if (coupon?.usePeriod == null) {
                     showToast("请输入优惠券领取后生效的天数")
                     return@singleClick
                 }
             }
 
-            if (coupon.createNum == null) {
+            if (coupon?.createNum == null) {
                 showToast("请输入优惠券库存")
                 return@singleClick
             }
-            if (coupon.manPrice == null) {
+            if (coupon?.manPrice == null) {
                 showToast("请输入优惠券使用门槛")
                 return@singleClick
             }
-            if (coupon.jianPrice == null) {
+            if (coupon?.jianPrice == null) {
                 showToast("请输入优惠券面额")
                 return@singleClick
             }
-            if (coupon.limitNum == null) {
+            if (coupon?.limitNum == null) {
                 showToast("请输入优惠券每人限额")
                 return@singleClick
             }
@@ -346,26 +360,26 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     //这是如果查看优惠券，特有操作
     private fun readDiscount() {
         mBinding.apply {
-            nameInput.text = coupon.title
+            nameInput.text = coupon?.title
             couponTimeStart.text = formatString(
-                coupon.couponStartTime?.times(1000)?.let { Date(it) },
+                coupon?.couponStartTime?.times(1000)?.let { Date(it) },
                 DATE_FORMAT
             )
             couponTimeEnd.text = formatString(
-                coupon.couponEndTime?.times(1000)?.let { Date(it) },
+                coupon?.couponEndTime?.times(1000)?.let { Date(it) },
                 DATE_FORMAT
             )
-            if (coupon.useTimeType == "FIX") {
+            if (coupon?.useTimeType == "FIX") {
                 //固定时间
                 timeType1.isChecked = true
                 mBinding.useTimeDay.gone()
                 mBinding.useTimeDetail.visiable()
                 useTimeStart.text = formatString(
-                    coupon.useStartTime?.times(1000)?.let { Date(it) },
+                    coupon?.useStartTime?.times(1000)?.let { Date(it) },
                     DATE_FORMAT
                 )
                 useTimeEnd.text = formatString(
-                    coupon.useEndTime?.times(1000)?.let { Date(it) },
+                    coupon?.useEndTime?.times(1000)?.let { Date(it) },
                     DATE_FORMAT
                 )
             } else {
@@ -373,12 +387,12 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
                 timeType2.isChecked = true
                 mBinding.useTimeDay.visiable()
                 mBinding.useTimeDetail.gone()
-                useTimeDayNumber.text = coupon.usePeriod.toString()
+                useTimeDayNumber.text = coupon?.usePeriod.toString()
             }
-            stockNumber.text = coupon.createNum.toString()
-            rulerNumberMan.text = coupon.manPrice.toString()
-            rulerNumberJian.text = coupon.jianPrice.toString()
-            personalMoreNumber.text = coupon.limitNum.toString()
+            stockNumber.text = coupon?.createNum.toString()
+            rulerNumberMan.text = coupon?.manPrice.toString()
+            rulerNumberJian.text = coupon?.jianPrice.toString()
+            personalMoreNumber.text = coupon?.limitNum.toString()
 
         }
     }

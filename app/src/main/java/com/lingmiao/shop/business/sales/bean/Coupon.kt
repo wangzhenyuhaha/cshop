@@ -42,7 +42,7 @@ class Coupon : Serializable {
     var createNum: Int? = null
 
     //优惠规则   满
-    @SerializedName("coupon_threshold_price ")
+    @SerializedName("coupon_threshold_price")
     var manPrice: Double? = null
 
     //优惠规则  减
@@ -52,4 +52,8 @@ class Coupon : Serializable {
     //每人限领
     @SerializedName("limit_num")
     var limitNum: Int? = null
+
+    //是否禁用 0：否，1：是
+    @SerializedName("disabled")
+    var disabled: Int? = null
 }

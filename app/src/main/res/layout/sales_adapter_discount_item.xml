@@ -35,6 +35,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_5"
             android:gravity="center"
             android:text="满20可用" />
     </LinearLayout>
@@ -75,6 +77,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/couponStatus"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
