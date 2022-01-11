@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.sales
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.KeyboardUtils
 import com.james.common.base.BaseVBActivity
