@@ -202,7 +202,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
         //选择生效天数
         mBinding.useTimeDayNumber.singleClick {
-            DialogUtils.showInputDialog(
+            DialogUtils.showInputDialogNumber(
                 this,
                 "生效天数",
                 "",
@@ -226,7 +226,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
         //库存
         mBinding.stockNumber.singleClick {
-            DialogUtils.showInputDialog(
+            DialogUtils.showInputDialogNumber(
                 this,
                 "库存",
                 "",
@@ -249,7 +249,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
         //优惠规则  满
         mBinding.rulerNumberMan.singleClick {
-            DialogUtils.showInputDialog(
+            DialogUtils.showInputDialogNumber(
                 this,
                 "优惠券门槛", "", "请输入优惠券需满多少元",
                 if (coupon?.manPrice == null) "" else coupon?.manPrice.toString(), "取消", "保存", null
@@ -267,7 +267,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
         //优惠规则  减
         mBinding.rulerNumberJian.singleClick {
-            DialogUtils.showInputDialog(
+            DialogUtils.showInputDialogNumber(
                 this,
                 "优惠券面额",
                 "",
@@ -290,7 +290,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
         //每人限额
         mBinding.personalMoreNumber.singleClick {
-            DialogUtils.showInputDialog(
+            DialogUtils.showInputDialogNumber(
                 this,
                 "没人限额", "", "请输入每人限领多少张",
                 if (coupon?.limitNum == null) "" else coupon?.limitNum.toString(), "取消", "保存", null
