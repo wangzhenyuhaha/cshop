@@ -19,11 +19,12 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_marginBottom="@dimen/dimen_60"
+            android:layout_height="match_parent">
 
             <com.james.common.view.ILinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:orientation="vertical"
                 android:paddingStart="10dp"
@@ -158,7 +159,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="优惠券名称"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline1"
                         app:layout_constraintStart_toStartOf="@+id/container"
                         app:layout_constraintTop_toTopOf="@+id/container" />
@@ -172,7 +172,6 @@
                         android:minWidth="100dp"
                         android:padding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/name"
                         app:layout_constraintStart_toEndOf="@+id/name"
                         app:layout_constraintTop_toTopOf="@+id/name"
@@ -186,7 +185,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="优惠券有效期"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline2"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@+id/guideline1" />
@@ -261,7 +259,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="使用时间"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline3"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@+id/guideline2" />
@@ -282,8 +279,7 @@
                             android:layout_weight="1"
                             android:padding="@dimen/dimen_15"
                             android:text="固定时间"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:textColor="@color/color_666666" />
 
                         <RadioButton
                             android:id="@+id/timeType2"
@@ -292,8 +288,7 @@
                             android:layout_weight="1"
                             android:padding="@dimen/dimen_15"
                             android:text="领取后生效"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:textColor="@color/color_666666" />
 
                     </RadioGroup>
 
@@ -311,9 +306,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="领取优惠券后共生效"
+                            android:text="领取优惠券后"
                             android:textColor="@color/color_666666"
-                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="@+id/stock"
                             app:layout_constraintStart_toStartOf="@+id/nameInput"
                             app:layout_constraintTop_toTopOf="@+id/stock" />
@@ -326,16 +320,14 @@
                             android:background="@xml/setbar_bg_grey"
                             android:gravity="center"
                             android:minWidth="@dimen/dimen_50"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:textColor="@color/color_666666" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_10"
-                            android:text="天"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:text="天有效"
+                            android:textColor="@color/color_666666" />
 
                     </LinearLayout>
 
@@ -410,7 +402,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="库存"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline5"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@id/guideline4" />
@@ -422,7 +413,6 @@
                         android:background="@xml/setbar_bg_grey_13"
                         android:minWidth="100dp"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="@+id/stock"
                         app:layout_constraintStart_toStartOf="@+id/nameInput"
@@ -437,7 +427,6 @@
                         android:paddingEnd="@dimen/dimen_5"
                         android:text="张"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/stockNumber"
                         app:layout_constraintStart_toEndOf="@+id/stockNumber"
                         app:layout_constraintTop_toTopOf="@+id/stockNumber" />
@@ -450,7 +439,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="优惠规则"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline6"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@id/guideline5" />
@@ -469,7 +457,6 @@
                             android:layout_height="wrap_content"
                             android:text="满"
                             android:textColor="@color/color_666666"
-                            android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="@+id/stock"
                             app:layout_constraintStart_toStartOf="@+id/nameInput"
                             app:layout_constraintTop_toTopOf="@+id/stock" />
@@ -482,16 +469,14 @@
                             android:background="@xml/setbar_bg_grey"
                             android:gravity="center"
                             android:minWidth="@dimen/dimen_50"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:textColor="@color/color_666666" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_10"
                             android:text="减"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:textColor="@color/color_666666" />
 
                         <TextView
                             android:id="@+id/rulerNumberJian"
@@ -501,8 +486,7 @@
                             android:gravity="center"
                             android:background="@xml/setbar_bg_grey"
                             android:minWidth="@dimen/dimen_50"
-                            android:textColor="@color/color_666666"
-                            android:textSize="16sp" />
+                            android:textColor="@color/color_666666" />
 
                     </LinearLayout>
 
@@ -514,7 +498,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="适用商品"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline7"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@id/guideline6" />
@@ -524,7 +507,6 @@
                         android:layout_height="wrap_content"
                         android:text="当前为【所有商品】都可参与活动"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/goods"
                         app:layout_constraintStart_toStartOf="@+id/nameInput"
                         app:layout_constraintTop_toTopOf="@+id/goods" />
@@ -537,7 +519,6 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="每人限领"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toTopOf="@+id/guideline8"
                         app:layout_constraintStart_toStartOf="@+id/name"
                         app:layout_constraintTop_toBottomOf="@+id/guideline7" />
@@ -549,7 +530,6 @@
                         android:background="@xml/setbar_bg_grey_13"
                         android:minWidth="100dp"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         android:gravity="center"
                         app:layout_constraintBottom_toBottomOf="@+id/personalMore"
                         app:layout_constraintStart_toStartOf="@+id/nameInput"
@@ -564,7 +544,6 @@
                         android:paddingEnd="@dimen/dimen_5"
                         android:text="张"
                         android:textColor="@color/color_666666"
-                        android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/personalMore"
                         app:layout_constraintStart_toEndOf="@+id/personalMoreNumber"
                         app:layout_constraintTop_toTopOf="@+id/personalMore" />
