@@ -33,11 +33,15 @@ class DiscountAdapter :
         if (now > item?.couponEndTime?.times(1000) ?: 0) {
             //过期了
             helper.setText(R.id.couponStatus, "优惠券已过期")
+            helper.setGone(R.id.couponDetail, true)
             helper.setGone(R.id.couponBegin, false)
+            helper.setGone(R.id.couponDelete, true)
         } else {
             //没过期，可发放
             helper.setText(R.id.couponStatus, "$start ~ $end")
             helper.setText(R.id.couponBegin, if (item?.disabled == -1) "开始发放" else "停止发放")
+            helper.setGone(R.id.couponDetail, true)
+            helper.setGone(R.id.couponBegin, true)
             helper.setGone(R.id.couponDelete, item?.disabled == -1)
         }
 

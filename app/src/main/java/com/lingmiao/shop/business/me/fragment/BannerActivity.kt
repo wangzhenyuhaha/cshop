@@ -110,6 +110,14 @@ class BannerActivity : BaseVBActivity<ActivityBannerBinding, BannerActivityPrese
         BannerItem(
             "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100853.jpg",
             22
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20220110114334.jpg",
+            23
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20220110114323.jpg",
+            24
         )
     )
 
@@ -194,7 +202,7 @@ class BannerAdapter : BaseQuickAdapter<BannerItem, BaseViewHolder>(R.layout.tool
         helper.addOnClickListener(R.id.bannerCheck)
         val imageView = helper.getView<ImageView>(R.id.banner_body)
         GlideUtils.setImageUrl(imageView, item?.url)
-        helper.getView<CheckBox>(R.id.bannerCheck).isChecked = item?.select?:false
+        helper.getView<CheckBox>(R.id.bannerCheck).isChecked = item?.select ?: false
     }
 
 }

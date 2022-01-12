@@ -127,6 +127,14 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         BannerItem(
             "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100853.jpg",
             22
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20220110114334.jpg",
+            23
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20220110114323.jpg",
+            24
         )
     )
 
