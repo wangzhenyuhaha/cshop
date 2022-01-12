@@ -62,6 +62,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
                             android:text="优惠券"
+                            android:textColor="@color/color_333333"
                             app:layout_constraintStart_toEndOf="@+id/container1_IV"
                             app:layout_constraintTop_toTopOf="@+id/container1_IV" />
 
@@ -70,6 +71,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="券动客心，营销必备"
+                            android:textColor="@color/color_333333"
                             app:layout_constraintBottom_toBottomOf="@+id/container1_IV"
                             app:layout_constraintStart_toStartOf="@+id/container1_TV1" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -111,6 +113,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
                             android:text="满减活动"
+                            android:textColor="@color/color_333333"
                             app:layout_constraintStart_toEndOf="@+id/container2_IV"
                             app:layout_constraintTop_toTopOf="@+id/container2_IV" />
 
@@ -119,6 +122,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="满减即享优惠"
+                            android:textColor="@color/color_333333"
                             app:layout_constraintBottom_toBottomOf="@+id/container2_IV"
                             app:layout_constraintStart_toStartOf="@+id/container2_TV1" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -159,6 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="30dp"
                             android:text="电子券"
+                            android:textColor="@color/color_333333"
                             app:layout_constraintStart_toEndOf="@+id/container3_IV"
                             app:layout_constraintTop_toTopOf="@+id/container3_IV" />
 
@@ -167,6 +172,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="虚拟商品，立享优惠"
+                            android:textColor="@color/color_333333"
                             app:layout_constraintBottom_toBottomOf="@+id/container3_IV"
                             app:layout_constraintStart_toStartOf="@+id/container3_TV1" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
