@@ -28,112 +28,150 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container1"
-                    android:layout_margin="@dimen/dimen_10"
-                    android:background="@color/common_ffffff"
+                <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="120dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
 
-                    <ImageView
-                        android:src="@mipmap/youhuiquan"
-                        android:id="@+id/container1_IV"
-                        android:layout_width="@dimen/dimen_60"
-                        android:layout_height="@dimen/dimen_60"
-                        android:layout_marginStart="@dimen/dimen_40"
-                        app:layout_constraintBottom_toBottomOf="@+id/container1"
-                        app:layout_constraintStart_toStartOf="@+id/container1"
-                        app:layout_constraintTop_toTopOf="@+id/container1" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container1"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
 
-                    <TextView
-                        android:id="@+id/container1_TV1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:text="优惠券"
-                        app:layout_constraintStart_toEndOf="@+id/container1_IV"
-                        app:layout_constraintTop_toTopOf="@+id/container1_IV" />
+                        <ImageView
+                            android:id="@+id/container1_IV"
+                            android:layout_width="@dimen/dimen_60"
+                            android:layout_height="@dimen/dimen_60"
+                            android:layout_marginStart="@dimen/dimen_40"
+                            android:src="@mipmap/youhuiquan"
+                            app:layout_constraintBottom_toBottomOf="@+id/container1"
+                            app:layout_constraintStart_toStartOf="@+id/container1"
+                            app:layout_constraintTop_toTopOf="@+id/container1" />
 
-                    <TextView
-                        android:id="@+id/container1_TV2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="券动客心，营销必备"
-                        app:layout_constraintBottom_toBottomOf="@+id/container1_IV"
-                        app:layout_constraintStart_toStartOf="@+id/container1_TV1" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/container1_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:text="优惠券"
+                            app:layout_constraintStart_toEndOf="@+id/container1_IV"
+                            app:layout_constraintTop_toTopOf="@+id/container1_IV" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container2"
-                    android:background="@color/common_ffffff"
+                        <TextView
+                            android:id="@+id/container1_TV2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="券动客心，营销必备"
+                            app:layout_constraintBottom_toBottomOf="@+id/container1_IV"
+                            app:layout_constraintStart_toStartOf="@+id/container1_TV1" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+
+                <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/dimen_5"
-                    android:layout_height="120dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
 
-                    <ImageView
-                        android:src="@mipmap/manjian"
-                        android:id="@+id/container2_IV"
-                        android:layout_width="@dimen/dimen_60"
-                        android:layout_height="@dimen/dimen_60"
-                        android:layout_marginStart="@dimen/dimen_40"
-                        app:layout_constraintBottom_toBottomOf="@+id/container2"
-                        app:layout_constraintStart_toStartOf="@+id/container2"
-                        app:layout_constraintTop_toTopOf="@+id/container2" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container2"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
 
-                    <TextView
-                        android:id="@+id/container2_TV1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:text="满减活动"
-                        app:layout_constraintStart_toEndOf="@+id/container2_IV"
-                        app:layout_constraintTop_toTopOf="@+id/container2_IV" />
+                        <ImageView
+                            android:id="@+id/container2_IV"
+                            android:layout_width="@dimen/dimen_60"
+                            android:layout_height="@dimen/dimen_60"
+                            android:layout_marginStart="@dimen/dimen_40"
+                            android:src="@mipmap/manjian"
+                            app:layout_constraintBottom_toBottomOf="@+id/container2"
+                            app:layout_constraintStart_toStartOf="@+id/container2"
+                            app:layout_constraintTop_toTopOf="@+id/container2" />
 
-                    <TextView
-                        android:id="@+id/container2_TV2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="满减即享优惠"
-                        app:layout_constraintBottom_toBottomOf="@+id/container2_IV"
-                        app:layout_constraintStart_toStartOf="@+id/container2_TV1" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/container2_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:text="满减活动"
+                            app:layout_constraintStart_toEndOf="@+id/container2_IV"
+                            app:layout_constraintTop_toTopOf="@+id/container2_IV" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/container3"
-                    android:background="@color/common_ffffff"
+                        <TextView
+                            android:id="@+id/container2_TV2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="满减即享优惠"
+                            app:layout_constraintBottom_toBottomOf="@+id/container2_IV"
+                            app:layout_constraintStart_toStartOf="@+id/container2_TV1" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+                <com.james.common.view.ILinearLayout
                     android:layout_width="match_parent"
-                    android:layout_margin="@dimen/dimen_5"
-                    android:layout_height="120dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
 
-                    <ImageView
-                        android:src="@mipmap/dianziquan"
-                        android:id="@+id/container3_IV"
-                        android:layout_width="@dimen/dimen_60"
-                        android:layout_height="@dimen/dimen_60"
-                        android:layout_marginStart="@dimen/dimen_40"
-                        app:layout_constraintBottom_toBottomOf="@+id/container3"
-                        app:layout_constraintStart_toStartOf="@+id/container3"
-                        app:layout_constraintTop_toTopOf="@+id/container3" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container3"
+                        android:layout_width="match_parent"
+                        android:layout_height="120dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
 
-                    <TextView
-                        android:id="@+id/container3_TV1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:text="电子券"
-                        app:layout_constraintStart_toEndOf="@+id/container3_IV"
-                        app:layout_constraintTop_toTopOf="@+id/container3_IV" />
+                        <ImageView
+                            android:id="@+id/container3_IV"
+                            android:layout_width="@dimen/dimen_60"
+                            android:layout_height="@dimen/dimen_60"
+                            android:layout_marginStart="@dimen/dimen_40"
+                            android:src="@mipmap/dianziquan"
+                            app:layout_constraintBottom_toBottomOf="@+id/container3"
+                            app:layout_constraintStart_toStartOf="@+id/container3"
+                            app:layout_constraintTop_toTopOf="@+id/container3" />
 
-                    <TextView
-                        android:id="@+id/container3_TV2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="虚拟商品，立享优惠"
-                        app:layout_constraintBottom_toBottomOf="@+id/container3_IV"
-                        app:layout_constraintStart_toStartOf="@+id/container3_TV1" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <TextView
+                            android:id="@+id/container3_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="30dp"
+                            android:text="电子券"
+                            app:layout_constraintStart_toEndOf="@+id/container3_IV"
+                            app:layout_constraintTop_toTopOf="@+id/container3_IV" />
 
+                        <TextView
+                            android:id="@+id/container3_TV2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="虚拟商品，立享优惠"
+                            app:layout_constraintBottom_toBottomOf="@+id/container3_IV"
+                            app:layout_constraintStart_toStartOf="@+id/container3_TV1" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
