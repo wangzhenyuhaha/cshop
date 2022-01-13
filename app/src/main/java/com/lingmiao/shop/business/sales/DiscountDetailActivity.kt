@@ -11,10 +11,8 @@ import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.presenter.DiscountDetailPre
 import com.lingmiao.shop.business.sales.presenter.impl.DiscountDetailPreImpl
 import com.lingmiao.shop.databinding.ActivityDiscountDetailBinding
+import com.lingmiao.shop.util.*
 import com.lingmiao.shop.util.DATE_FORMAT
-import com.lingmiao.shop.util.dateTime2Date
-import com.lingmiao.shop.util.formatString
-import com.lingmiao.shop.util.getDatePicker
 import java.util.*
 
 class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, DiscountDetailPre>(),
@@ -112,10 +110,11 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime1 =
-                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
-                    mBinding.couponTimeStart.text = formatString(date, DATE_FORMAT)
+                getDatePicker(this, selectedDate, startDate, endDate, 3, { date, _ ->
+                    val temp = "${formatString(date, HOUR_FORMAT)}:00"
+                    mBinding.couponTimeStart.text = temp
                     coupon.couponStartTime = (dateTime2Date(
-                        mBinding.couponTimeStart.getViewText() + " 00:00:00"
+                        mBinding.couponTimeStart.getViewText() + ":00"
                     )?.time ?: 0) / 1000
                 }, {
                     pvCustomTime1?.returnData()
@@ -131,10 +130,11 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime2 =
-                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
-                    mBinding.couponTimeEnd.text = formatString(date, DATE_FORMAT)
+                getDatePicker(this, selectedDate, startDate, endDate, 3, { date, _ ->
+                    val temp = "${formatString(date, HOUR_FORMAT)}:00"
+                    mBinding.couponTimeEnd.text = temp
                     coupon.couponEndTime = (dateTime2Date(
-                        mBinding.couponTimeEnd.getViewText() + " 23:59:59"
+                        mBinding.couponTimeEnd.getViewText() + ":00"
                     )?.time ?: 0) / 1000
                 }, {
                     pvCustomTime2?.returnData()
@@ -166,10 +166,11 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime3 =
-                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
-                    mBinding.useTimeStart.text = formatString(date, DATE_FORMAT)
+                getDatePicker(this, selectedDate, startDate, endDate, 3, { date, _ ->
+                    val temp = "${formatString(date, HOUR_FORMAT)}:00"
+                    mBinding.useTimeStart.text = temp
                     coupon.useStartTime = (dateTime2Date(
-                        mBinding.useTimeStart.getViewText() + " 00:00:00"
+                        mBinding.useTimeStart.getViewText() + ":00"
                     )?.time ?: 0) / 1000
                 }, {
                     pvCustomTime3?.returnData()
@@ -185,10 +186,11 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime4 =
-                getDatePicker(this, selectedDate, startDate, endDate, { date, _ ->
-                    mBinding.useTimeEnd.text = formatString(date, DATE_FORMAT)
+                getDatePicker(this, selectedDate, startDate, endDate, 3,{ date, _ ->
+                    val temp = "${formatString(date, HOUR_FORMAT)}:00"
+                    mBinding.useTimeEnd.text = temp
                     coupon.useEndTime = (dateTime2Date(
-                        mBinding.useTimeEnd.getViewText() + " 23:59:59"
+                        mBinding.useTimeEnd.getViewText() + ":00"
                     )?.time ?: 0) / 1000
                 }, {
                     pvCustomTime4?.returnData()

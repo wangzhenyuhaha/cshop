@@ -23,14 +23,16 @@ const val MINUTES_TIME_FORMAT = "yyyy-MM-dd HH:mm"
 
 const val DATE_FORMAT = "yyyy-MM-dd"
 
+const val HOUR_FORMAT = "yyyy-MM-dd HH"
+
 const val DATE_FORMAT_OTHER = "yyyy/MM/dd"
 
 const val MINUTES_TIME_FORMAT_OTHER = "yyyy/MM/dd HH:mm"
 
 const val DATE_TIME_FORMAT_OTHER = "yyyy/MM/dd HH:mm:ss"
 
-fun stampToDate(s: Long?, formatType: String=DATE_TIME_FORMAT): String {
-    if(s == null) {
+fun stampToDate(s: Long?, formatType: String = DATE_TIME_FORMAT): String {
+    if (s == null) {
         return "";
     }
     val simpleDateFormat = SimpleDateFormat(formatType)
@@ -42,12 +44,12 @@ fun stampToDate(s: Long?): String {
     return stampToDate(s, DATE_TIME_FORMAT);
 }
 
-fun longToDate(s: Long? ): String {
+fun longToDate(s: Long?): String {
     return longToDate(s, DATE_FORMAT);
 }
 
-fun longToDate(s: Long?, formatType: String=DATE_FORMAT): String {
-    if(s == null) {
+fun longToDate(s: Long?, formatType: String = DATE_FORMAT): String {
+    if (s == null) {
         return "";
     }
     val simpleDateFormat = SimpleDateFormat(formatType)
@@ -63,32 +65,40 @@ fun stringToDate(strTime: String?, formatType: String?): Date? {
     return formatter.parse(strTime)
 }
 
-fun date2Date(strTime: String?) : Date? {
+fun date2Date(strTime: String?): Date? {
     return stringToDate(strTime, DATE_FORMAT);
 }
 
-fun dateTime2Date(strTime: String?) : Date? {
+fun dateTime2Date(strTime: String?): Date? {
     return stringToDate(strTime, DATE_TIME_FORMAT);
 }
 
-fun dateTime3Date(strTime: String?) : Date? {
+fun dateTime3Date(strTime: String?): Date? {
     return stringToDate(strTime, DATE_TIME_FORMAT_SECOND);
 }
 
-fun formatDate(date: Date?) : String?{
+fun formatDate(date: Date?): String? {
     return formatString(date, DATE_FORMAT);
 }
 
-fun formatDateTime(date: Date?) : String?{
+fun formatDateTime(date: Date?): String? {
     return formatString(date, DATE_TIME_FORMAT);
 }
 
-fun formatString(date: Date?, formatType: String?) : String?{
+fun formatString(date: Date?, formatType: String?): String? {
     val format = SimpleDateFormat(formatType)//
     return format.format(date)
 }
 
-fun getDefaultDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end: Calendar, click :((Date?, View?) -> Unit)?, confirm : ((View?) -> Unit)?, cancel : ((View?) -> Unit)?) : TimePickerView {
+fun getDefaultDatePicker(
+    context: Context,
+    selectedDate: Calendar,
+    start: Calendar,
+    end: Calendar,
+    click: ((Date?, View?) -> Unit)?,
+    confirm: ((View?) -> Unit)?,
+    cancel: ((View?) -> Unit)?
+): TimePickerView {
     return TimePickerBuilder(context, click)
         .setLayoutRes(
             R.layout.goods_view_time
@@ -115,7 +125,15 @@ fun getDefaultDatePicker(context: Context, selectedDate: Calendar, start: Calend
 }
 
 
-fun getDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end: Calendar, click :((Date?, View?) -> Unit)?, confirm : ((View?) -> Unit)?, cancel : ((View?) -> Unit)?) : TimePickerView {
+fun getDatePicker(
+    context: Context,
+    selectedDate: Calendar,
+    start: Calendar,
+    end: Calendar,
+    click: ((Date?, View?) -> Unit)?,
+    confirm: ((View?) -> Unit)?,
+    cancel: ((View?) -> Unit)?
+): TimePickerView {
     return TimePickerBuilder(context, click)
         .setLayoutRes(
             R.layout.goods_view_time
@@ -142,13 +160,23 @@ fun getDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end
 }
 
 
-
-fun getDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end: Calendar, type : Int, click :((Date?, View?) -> Unit)?, confirm : ((View?) -> Unit)?, cancel : ((View?) -> Unit)?) : TimePickerView {
+fun getDatePicker(
+    context: Context,
+    selectedDate: Calendar,
+    start: Calendar,
+    end: Calendar,
+    type: Int,
+    click: ((Date?, View?) -> Unit)?,
+    confirm: ((View?) -> Unit)?,
+    cancel: ((View?) -> Unit)?
+): TimePickerView {
     var values = booleanArrayOf(true, true, true, false, false, false)
-    if(type == 1) {
+    if (type == 1) {
         values = booleanArrayOf(true, false, false, false, false, false)
-    } else if(type == 2) {
+    } else if (type == 2) {
         values = booleanArrayOf(true, true, false, false, false, false)
+    } else if (type == 3) {
+        values = booleanArrayOf(true, true, true, true, false, false)
     }
     return TimePickerBuilder(context, click)
         .setLayoutRes(
@@ -175,7 +203,15 @@ fun getDatePicker(context: Context, selectedDate: Calendar, start: Calendar, end
         .build()
 }
 
-fun getDefaultTimePicker(context: Context, selectedDate: Calendar, start: Calendar, end: Calendar, click :((Date?, View?) -> Unit)?, confirm : ((View?) -> Unit)?, cancel : ((View?) -> Unit)?) : TimePickerView {
+fun getDefaultTimePicker(
+    context: Context,
+    selectedDate: Calendar,
+    start: Calendar,
+    end: Calendar,
+    click: ((Date?, View?) -> Unit)?,
+    confirm: ((View?) -> Unit)?,
+    cancel: ((View?) -> Unit)?
+): TimePickerView {
     return TimePickerBuilder(context, click)
         .setLayoutRes(
             R.layout.goods_view_time

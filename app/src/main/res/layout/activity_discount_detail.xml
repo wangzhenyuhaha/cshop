@@ -167,7 +167,7 @@
                         android:id="@+id/nameInput"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/dimen_30"
+                        android:layout_marginStart="@dimen/dimen_35"
                         android:background="@xml/setbar_bg_grey"
                         android:minWidth="100dp"
                         android:padding="@dimen/dimen_5"
@@ -183,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:drawableEnd="@mipmap/common_must_input"
-                        android:text="优惠券有效期"
+                        android:text="优惠券领取时间"
                         android:textColor="@color/color_666666"
                         app:layout_constraintBottom_toTopOf="@+id/guideline2"
                         app:layout_constraintStart_toStartOf="@+id/name"
@@ -498,9 +498,9 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="适用商品"
                         android:textColor="@color/color_666666"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline8"
                         app:layout_constraintStart_toStartOf="@+id/name"
-                        app:layout_constraintTop_toBottomOf="@id/guideline6" />
+                        app:layout_constraintTop_toBottomOf="@id/guideline7" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -519,9 +519,9 @@
                         android:drawableEnd="@mipmap/common_must_input"
                         android:text="每人限领"
                         android:textColor="@color/color_666666"
-                        app:layout_constraintBottom_toTopOf="@+id/guideline8"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline7"
                         app:layout_constraintStart_toStartOf="@+id/name"
-                        app:layout_constraintTop_toBottomOf="@+id/guideline7" />
+                        app:layout_constraintTop_toBottomOf="@+id/guideline6" />
 
                     <TextView
                         android:id="@+id/personalMoreNumber"
