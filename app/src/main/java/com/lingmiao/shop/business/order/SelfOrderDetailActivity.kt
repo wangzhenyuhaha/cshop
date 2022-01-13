@@ -161,8 +161,12 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
         "￥${order?.orderPrice}".also {
             selfOrderzonge.text = it
         }
+        //电子券/优惠券
+        "-￥${order?.couponPrice}".also {
+            couponPrice.text = it
+        }
         //优惠金额
-        "￥${order?.discountPrice}".also {
+        "-￥${order?.discountPrice}".also {
             selfOrderyouhui.text = it
         }
         //应付总额

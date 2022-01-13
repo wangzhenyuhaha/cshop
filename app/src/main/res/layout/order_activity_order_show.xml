@@ -227,42 +227,11 @@
 
         </RelativeLayout>
 
-        <View style="@style/DivideLineHorizontal" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:padding="@dimen/dimen_15"
-                android:text="@string/order_discount_hint"
-                android:textColor="@color/color_666666"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/orderDiscountTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:gravity="center_vertical"
-                android:padding="@dimen/dimen_15"
-                android:text="￥200"
-                android:textColor="@color/red"
-                android:textSize="12sp" />
-
-        </RelativeLayout>
-
         <View
             android:id="@+id/couponView"
             style="@style/DivideLineHorizontal"
             android:visibility="gone"
             tools:visibility="visible" />
-
 
         <RelativeLayout
             android:id="@+id/couponDetail"
@@ -294,6 +263,37 @@
                 android:textSize="12sp" />
 
         </RelativeLayout>
+
+        <View style="@style/DivideLineHorizontal" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="@string/order_discount_hint"
+                android:textColor="@color/color_666666"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/orderDiscountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/dimen_15"
+                android:text="￥200"
+                android:textColor="@color/red"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
 
         <View style="@style/DivideLineHorizontal" />
 

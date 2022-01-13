@@ -46,10 +46,9 @@ class OrderListAdapter :
         helper.setGone(R.id.packagePriceLine, item.packagePrice?.compareTo(0.0) ?: 0 > 0)
         //打包费
         helper.setText(R.id.tvPackagePrice, "￥" + item.packagePrice)
-
         //自提时间
-        helper.setGone(R.id.zitishijian, if (item.pickTime == null) false else true)
-
+        helper.setGone(R.id.zitishijian, item.pickTime != null)
+        //自提时间
         helper.setText(R.id.zitishijian, "自提时间：" + stampToDate(item.pickTime))
 
         //商品图片2
@@ -63,6 +62,10 @@ class OrderListAdapter :
         val tvProductAttribute = helper.getView<TextView>(R.id.tvProductAttribute)
         //商品退款状态
         val tvProductRefund = helper.getView<TextView>(R.id.tvProductRefund)
+
+
+
+
 
         //只有一个商品时
         if (item.skuList.size == 1) {

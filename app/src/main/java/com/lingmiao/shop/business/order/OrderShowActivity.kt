@@ -79,7 +79,7 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
         tvOrderTime.text = String.format("下单时间：%s", stampToDate(mItem?.createTime))
         tvOrderSubStatus.text = mItem?.cancelReason
         orderShipFeeTv.text = String.format("￥%s", mItem?.shippingAmount)
-        orderDiscountTv.text = String.format("￥%s", mItem?.discountPrice)
+        orderDiscountTv.text = String.format("-￥%s", mItem?.discountPrice)
         orderPayMoneyTv.text = String.format("￥%s", mItem?.payMoney)
 //        orderPayTypeTv
         orderTimeTv.text = stampToDate(mItem?.createTime)
