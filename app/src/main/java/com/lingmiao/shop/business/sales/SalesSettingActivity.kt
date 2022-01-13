@@ -91,7 +91,7 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo, ISalesSettingPresente
     }
 
     override fun initOthers() {
-        mToolBarDelegate.setMidTitle(getString(R.string.sales_setting_title))
+        mToolBarDelegate.setMidTitle("满减设置")
         mToolBarDelegate.setRightText("新增", View.OnClickListener {
             SalesActivityEditActivity.open(context as Activity, REQUEST_EDIT)
         })

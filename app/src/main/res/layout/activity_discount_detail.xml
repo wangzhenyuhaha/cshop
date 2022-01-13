@@ -495,7 +495,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:drawableEnd="@mipmap/common_must_input"
                         android:text="适用商品"
                         android:textColor="@color/color_666666"
                         app:layout_constraintBottom_toTopOf="@+id/guideline8"

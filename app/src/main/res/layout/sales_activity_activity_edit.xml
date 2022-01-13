@@ -28,12 +28,12 @@
             <TextView
                 style="@style/goods_group_edit_left"
                 android:layout_width="110dp"
-                android:text="活动/优惠名称" />
+                android:text="满减活动名称" />
 
             <EditText
                 android:id="@+id/menuNameEdt"
                 style="@style/goods_group_edit_right"
-                android:hint="请输入活动/优惠名称" />
+                android:hint="请输入满减活动名称" />
         </LinearLayout>
 
         <View style="@style/common_divider" />
