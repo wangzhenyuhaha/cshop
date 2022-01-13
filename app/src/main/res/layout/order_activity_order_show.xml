@@ -257,20 +257,28 @@
 
         </RelativeLayout>
 
-        <View style="@style/DivideLineHorizontal" />
+        <View
+            android:id="@+id/couponView"
+            style="@style/DivideLineHorizontal"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
 
         <RelativeLayout
+            android:id="@+id/couponDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:padding="@dimen/dimen_15"
-                android:text="使用的优惠券"
+                android:text="优惠券/电子券"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp" />
 
@@ -485,8 +493,8 @@
                 android:drawablePadding="@dimen/dimen_10"
                 android:gravity="center_vertical"
                 android:padding="@dimen/dimen_15"
-                android:paddingEnd="@dimen/dimen_15"
                 android:paddingStart="0dp"
+                android:paddingEnd="@dimen/dimen_15"
                 android:text="张稳重 18621774835"
                 android:textColor="@color/color_666666"
                 android:textSize="12sp" />

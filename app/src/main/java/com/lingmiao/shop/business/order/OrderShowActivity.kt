@@ -59,7 +59,6 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
     override fun createPresenter() = OrderDetailPresenterImpl(this)
 
-
     override fun getLayoutId() = R.layout.order_activity_order_show
 
 
@@ -68,6 +67,7 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("订单详情")
+        mItem?.sn?.let { mPresenter.requestOrderDetailData(it) }
         refreshView()
     }
 
@@ -78,7 +78,6 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
         tvOrderStatus.text = mItem?.orderStatusText
         tvOrderTime.text = String.format("下单时间：%s", stampToDate(mItem?.createTime))
         tvOrderSubStatus.text = mItem?.cancelReason
-        "满 ${mItem?.fullMinus} 减${mItem?.couponPrice}".also { couponUse.text = it }
         orderShipFeeTv.text = String.format("￥%s", mItem?.shippingAmount)
         orderDiscountTv.text = String.format("￥%s", mItem?.discountPrice)
         orderPayMoneyTv.text = String.format("￥%s", mItem?.payMoney)
@@ -131,8 +130,9 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
     }
 
     override fun onOrderDetailSuccess(bean: OrderDetail) {
-//        mItem = bean;
-//        refreshView();
+        couponView.visiable()
+        couponDetail.visiable()
+        "-￥${bean.couponPrice}".also { couponUse.text = it }
     }
 
     override fun onOrderDetailError(code: Int) {

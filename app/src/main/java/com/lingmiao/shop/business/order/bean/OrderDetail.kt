@@ -1,9 +1,6 @@
 package com.lingmiao.shop.business.order.bean
 
-import android.view.View
-import com.lingmiao.shop.util.GlideUtils
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.synthetic.main.order_activity_order_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
 
