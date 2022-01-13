@@ -12,7 +12,6 @@ import com.lingmiao.shop.business.sales.presenter.DiscountDetailPre
 import com.lingmiao.shop.business.sales.presenter.impl.DiscountDetailPreImpl
 import com.lingmiao.shop.databinding.ActivityDiscountDetailBinding
 import com.lingmiao.shop.util.*
-import com.lingmiao.shop.util.DATE_FORMAT
 import java.util.*
 
 class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, DiscountDetailPre>(),
@@ -186,7 +185,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             KeyboardUtils.hideSoftInput(it)
             //时间选择器 ，自定义布局
             pvCustomTime4 =
-                getDatePicker(this, selectedDate, startDate, endDate, 3,{ date, _ ->
+                getDatePicker(this, selectedDate, startDate, endDate, 3, { date, _ ->
                     val temp = "${formatString(date, HOUR_FORMAT)}:00"
                     mBinding.useTimeEnd.text = temp
                     coupon.useEndTime = (dateTime2Date(
@@ -351,7 +350,6 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
                 showToast("请输入优惠券每人限额")
                 return@singleClick
             }
-
             //调用接口，添加优惠券
             mPresenter?.submitDiscount(coupon)
 
@@ -365,11 +363,11 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             nameInput.text = coupon.title
             couponTimeStart.text = formatString(
                 coupon.couponStartTime?.times(1000)?.let { Date(it) },
-                DATE_FORMAT
+                MINUTES_TIME_FORMAT
             )
             couponTimeEnd.text = formatString(
                 coupon.couponEndTime?.times(1000)?.let { Date(it) },
-                DATE_FORMAT
+                MINUTES_TIME_FORMAT
             )
             if (coupon.useTimeType == "FIX") {
                 //固定时间
@@ -378,11 +376,11 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
                 mBinding.useTimeDetail.visiable()
                 useTimeStart.text = formatString(
                     coupon.useStartTime?.times(1000)?.let { Date(it) },
-                    DATE_FORMAT
+                    MINUTES_TIME_FORMAT
                 )
                 useTimeEnd.text = formatString(
                     coupon.useEndTime?.times(1000)?.let { Date(it) },
-                    DATE_FORMAT
+                    MINUTES_TIME_FORMAT
                 )
             } else {
                 //领取后生效
@@ -397,6 +395,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
             personalMoreNumber.text = coupon.limitNum.toString()
 
         }
+        mBinding.submit.gone()
     }
 
     override fun useLightMode() = false

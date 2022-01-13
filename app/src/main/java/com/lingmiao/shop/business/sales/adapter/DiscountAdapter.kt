@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.bean.Coupon
-import com.lingmiao.shop.util.DATE_FORMAT
+import com.lingmiao.shop.util.MINUTES_TIME_FORMAT_OTHER
 import com.lingmiao.shop.util.formatString
 import java.util.*
 
@@ -27,8 +27,14 @@ class DiscountAdapter :
         helper.setText(R.id.createNum, "（库存${item?.createNum}）")
 
         //优惠券状态
-        val start = formatString(item?.couponStartTime?.times(1000)?.let { Date(it) }, DATE_FORMAT)
-        val end = formatString(item?.couponEndTime?.times(1000)?.let { Date(it) }, DATE_FORMAT)
+        val start = formatString(
+            item?.couponStartTime?.times(1000)?.let { Date(it) },
+            MINUTES_TIME_FORMAT_OTHER
+        )
+        val end = formatString(
+            item?.couponEndTime?.times(1000)?.let { Date(it) },
+            MINUTES_TIME_FORMAT_OTHER
+        )
         val now = Date().time
         if (now > item?.couponEndTime?.times(1000) ?: 0) {
             //过期了
@@ -38,7 +44,7 @@ class DiscountAdapter :
             helper.setGone(R.id.couponDelete, true)
         } else {
             //没过期，可发放
-            helper.setText(R.id.couponStatus, "$start ~ $end")
+            helper.setText(R.id.couponStatus, "开始： $start\n结束： $end")
             helper.setText(R.id.couponBegin, if (item?.disabled == -1) "开始发放" else "停止发放")
             helper.setGone(R.id.couponDetail, true)
             helper.setGone(R.id.couponBegin, true)
