@@ -162,6 +162,8 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
             selfOrderzonge.text = it
         }
         //电子券/优惠券
+        couponView.visiable()
+        couponDetail.visiable()
         "-￥${order?.couponPrice}".also {
             couponPrice.text = it
         }

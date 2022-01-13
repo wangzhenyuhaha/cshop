@@ -24,12 +24,24 @@ class OrderListAdapter :
 
         //订单编号
         helper.setText(R.id.tvOrderSn, "订单编号：" + item.sn)
+
         //订单状态
         helper.setText(R.id.tvOrderStatus, item.orderStatusText)
+        //设置订单状态的颜色
+        helper.setTextColor(
+            R.id.tvOrderStatus,
+            MyApp.getInstance().resources.getColor(R.color.color_3870EA)
+        )
+
         //加购商品
         helper.setText(R.id.tvReplenishRemark, item.replenishRemark)
+
         //加购商品价格
         helper.setText(R.id.tvReplenishPrice, "￥" + item.replenishPrice)
+
+
+
+
         //加购项是否显示
         helper.setGone(R.id.replenishLayout, item.replenishRemark?.isNotEmpty() == true)
         //下单时间
@@ -210,11 +222,6 @@ class OrderListAdapter :
         //配送方式
         val peisongfanshi = helper.getView<TextView>(R.id.takeSelf)
 
-        //设置订单状态的颜色
-        helper.setTextColor(
-            R.id.tvOrderStatus,
-            MyApp.getInstance().resources.getColor(R.color.color_3870EA)
-        )
 
         var showBottomArea = false
         helper.setText(R.id.tvOrderSubStatus, "")
