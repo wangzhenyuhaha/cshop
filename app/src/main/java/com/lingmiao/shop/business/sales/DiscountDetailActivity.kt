@@ -346,6 +346,10 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
                 showToast("请输入优惠券面额")
                 return@singleClick
             }
+            if (coupon.jianPrice ?: 0.0 > coupon.manPrice ?: 0.0) {
+                showToast("优惠券面额需要小于使用门槛")
+                return@singleClick
+            }
             if (coupon.limitNum == null) {
                 showToast("请输入优惠券每人限额")
                 return@singleClick

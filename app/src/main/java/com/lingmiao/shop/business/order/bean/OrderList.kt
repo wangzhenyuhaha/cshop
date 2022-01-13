@@ -5,12 +5,20 @@ import java.io.Serializable
 
 data class OrderList(
 
+    //满减金额
+    @SerializedName("full_minus")
+    var fullMinus: Double? = null,
+
+    //优惠券减的金额
+    @SerializedName("coupon_price")
+    var couponPrice: Double? = null,
+
     //自提时间
     @SerializedName("pick_time")
     var pickTime: Long?,
     // 打包费
     @SerializedName("package_price")
-    var packagePrice : Double? = 0.0,
+    var packagePrice: Double? = 0.0,
     @SerializedName("cancel_left_time")
     var cancelLeftTime: Long?,
     @SerializedName("cancel_reason")
@@ -147,19 +155,19 @@ data class OrderList(
     @SerializedName("waiting_group_nums")
     var waitingGroupNums: Int?,
     @SerializedName("order_operate_allowable_vo")
-    var orderOperateAllowable:OrderOperateAllowable?,
+    var orderOperateAllowable: OrderOperateAllowable?,
     // 补充费用
     @SerializedName("replenish_price")
     var replenishPrice: Double? = 0.0,
     // 补充说明
     @SerializedName("replenish_remark")
-    var replenishRemark : String? = "",
+    var replenishRemark: String? = "",
 
     @SerializedName("tableware_type")
-    var tablewareType : Int?,
+    var tablewareType: Int?,
     // 是否备货完成 1是 0否
     @SerializedName("is_prepare")
-    var isPrepare : Int? = -1
+    var isPrepare: Int? = -1
 
 //    @SerializedName("available_date")
 //    var availableDate: String?,
@@ -171,22 +179,22 @@ data class OrderList(
 //    @SerializedName("order_operate_allowable_vo")
 //    var orderOperateAllowableVo: OrderOperateAllowable?,
 ) : Serializable {
-    fun isVirtualOrderTag() : Boolean {
+    fun isVirtualOrderTag(): Boolean {
         return isVirtualOrder == 1;
     }
 
-    fun getSimpleAddress() : String {
+    fun getSimpleAddress(): String {
         return shipTown.orEmpty() + shipAddr.orEmpty();
     }
 
-    fun getFullAddress() : String {
+    fun getFullAddress(): String {
         return shipProvince.orEmpty() + shipCity.orEmpty() +
                 shipCounty.orEmpty() +
                 shipTown.orEmpty() + shipAddr.orEmpty();
     }
 
-    fun getTableAwareHint() : String {
-        when(tablewareType) {
+    fun getTableAwareHint(): String {
+        when (tablewareType) {
             0 -> {
                 return "无需餐具";
             }
@@ -261,7 +269,7 @@ data class Sku(
     var subtotal: Double?
 ) : Serializable {
 
-    fun getSpecValues() : String? {
+    fun getSpecValues(): String? {
         return specList?.map { it?.specValue }?.joinToString(separator = "/");
     }
 }
@@ -329,4 +337,4 @@ data class OrderOperateAllowable(
     var allowServiceCancel: Boolean = false,//是否允许取消(售后)
     @SerializedName("allow_ship")
     var allowShip: Boolean = false//是否允许被发货
-)  : Serializable
+) : Serializable

@@ -3,12 +3,11 @@ package com.lingmiao.shop.business.order.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.lifecycleScope
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.ActivityUtils
@@ -35,7 +34,6 @@ import com.lingmiao.shop.printer.PrinterModule
 import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
-import kotlinx.coroutines.Delay
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -166,11 +164,11 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
 
         orderFilterTv.singleClick {
-            drawerO.openDrawer(Gravity.RIGHT)
+            drawerO.openDrawer(GravityCompat.END)
         }
 
         val headView: View = navigateView.inflateHeaderView(R.layout.order_view_menu_header)
-        rgAll = headView.findViewById<RadioGroup>(R.id.rgAll)
+        rgAll = headView.findViewById(R.id.rgAll)
         rgAll?.setOnCheckedChangeListener { _, checkedId ->
             mCStatus = when (checkedId) {
                 R.id.rbContinue -> {
@@ -222,7 +220,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         )
 
         startOrderDateTv.singleClick {
-            pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
+            pvCustomTime = getDatePicker(mContext, selectedDate, startDate, endDate, { date, _ ->
                 startOrderDateTv.text = formatString(date, DATE_FORMAT)
 
                 val s = dateTime2Date(startOrderDateTv.getViewText() + " 00:00:00")?.time ?: 0
@@ -242,7 +240,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
         endOrderDateTv.singleClick {
             pvCustomTime2 =
-                getDatePicker(mContext, selectedDate, startDate, endDate, { date, view ->
+                getDatePicker(mContext, selectedDate, startDate, endDate, { date, _ ->
                     endOrderDateTv.text = formatString(date, DATE_FORMAT)
                     val e = dateTime2Date(endOrderDateTv.getViewText() + " 23:59:59")?.time ?: 0
                     mEnd = e / 1000
@@ -280,7 +278,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 val orderBean = adapter.data[position] as OrderList
                 when (view.id) {
                     R.id.tvPhoneUser -> {
-                        OtherUtils.goToDialApp(activity, orderBean?.shipMobile)
+                        OtherUtils.goToDialApp(activity, orderBean.shipMobile)
                     }
                     R.id.tvCancelOrder -> {
                         val intent = Intent(activity, OrderCancelActivity::class.java)
@@ -368,7 +366,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 }
 
             }
-            setOnItemClickListener { adapter, view, position ->
+            setOnItemClickListener { adapter, _, position ->
                 val temp = adapter.data[position] as OrderList
 
                 if (temp.shippingType == IConstant.SHIP_TYPE_SELF) {

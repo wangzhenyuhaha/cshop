@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.View
-import com.blankj.utilcode.util.TimeUtils
 import com.james.common.base.BaseActivity
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
@@ -21,17 +20,17 @@ import kotlinx.android.synthetic.main.order_activity_order_show.*
 
 /**
 Create Date : 2021/4/119:42 AM
-Auther      : Fox
+Author      : Fox
 Desc        :
  **/
 class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPresenter.View {
 
-    private var mItem : OrderList? = null
+    private var mItem: OrderList? = null
 
     companion object {
         fun open(
             context: Context,
-            item : OrderList?,
+            item: OrderList?,
             resultValue: Int
         ) {
             if (context is Activity) {
@@ -43,7 +42,7 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
         fun open(
             context: Context,
-            item : OrderList?
+            item: OrderList?
         ) {
             if (context is Activity) {
                 val intent = Intent(context, OrderShowActivity::class.java)
@@ -55,79 +54,79 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
     }
 
     override fun initBundles() {
-        mItem = intent?.getSerializableExtra("item") as OrderList;
+        mItem = intent?.getSerializableExtra("item") as OrderList
     }
 
-    override fun createPresenter(): OrderDetailPresenter {
-        return OrderDetailPresenterImpl(this);
-    }
+    override fun createPresenter() = OrderDetailPresenterImpl(this)
 
-    override fun getLayoutId(): Int {
-        return R.layout.order_activity_order_show;
-    }
 
-    override fun useLightMode(): Boolean {
-        return false;
-    }
+    override fun getLayoutId() = R.layout.order_activity_order_show
+
+
+    override fun useLightMode() = false
+
 
     override fun initView() {
         mToolBarDelegate.setMidTitle("订单详情")
-        refreshView();
+        refreshView()
     }
 
-    fun refreshView() {
-        goodsItemC.addItems(mItem?.skuList);
+    private fun refreshView() {
+        goodsItemC.addItems(mItem?.skuList)
 
-        tvOrderSn.setText(String.format("订单编号：%s", mItem?.sn));
-        tvOrderStatus.setText(mItem?.orderStatusText);
-        tvOrderTime.setText(String.format("下单时间：%s", stampToDate(mItem?.createTime)))
-        tvOrderSubStatus.setText(mItem?.cancelReason)
-
+        tvOrderSn.text = String.format("订单编号：%s", mItem?.sn)
+        tvOrderStatus.text = mItem?.orderStatusText
+        tvOrderTime.text = String.format("下单时间：%s", stampToDate(mItem?.createTime))
+        tvOrderSubStatus.text = mItem?.cancelReason
+        "满 ${mItem?.fullMinus} 减${mItem?.couponPrice}".also { couponUse.text = it }
         orderShipFeeTv.text = String.format("￥%s", mItem?.shippingAmount)
-        orderDiscountTv.text = String.format("￥%s", mItem?.discountPrice);
-        orderPayMoneyTv.text = String.format("￥%s", mItem?.payMoney);
+        orderDiscountTv.text = String.format("￥%s", mItem?.discountPrice)
+        orderPayMoneyTv.text = String.format("￥%s", mItem?.payMoney)
 //        orderPayTypeTv
-        orderTimeTv.text = stampToDate(mItem?.createTime);
+        orderTimeTv.text = stampToDate(mItem?.createTime)
 
-        orderRemarkTv.text = mItem?.remark;
-        orderDeliveryTimeTv.text = stampToDate(mItem?.shipTime);
+        orderRemarkTv.text = mItem?.remark
+        orderDeliveryTimeTv.text = stampToDate(mItem?.shipTime)
 
         orderAddressTv.text = mItem?.getFullAddress()
 
-        tvTableAware.text = mItem?.getTableAwareHint();
-        tableAwareLayout.visibility = if(tvTableAware.text?.isNotEmpty() == true) View.VISIBLE else View.GONE;
+        tvTableAware.text = mItem?.getTableAwareHint()
+        tableAwareLayout.visibility =
+            if (tvTableAware.text?.isNotEmpty() == true) View.VISIBLE else View.GONE
 
-        tvPackagePrice.text = String.format("￥%s", mItem?.packagePrice);
-        packagePriceLayout.visibility = if(mItem?.packagePrice?.compareTo(0.0)?:0 > 0) View.VISIBLE else View.GONE;
-        packagePriceLine.visibility = if(mItem?.packagePrice?.compareTo(0.0)?:0 > 0) View.VISIBLE else View.GONE;
+        tvPackagePrice.text = String.format("￥%s", mItem?.packagePrice)
+        packagePriceLayout.visibility =
+            if (mItem?.packagePrice?.compareTo(0.0) ?: 0 > 0) View.VISIBLE else View.GONE
+        packagePriceLine.visibility =
+            if (mItem?.packagePrice?.compareTo(0.0) ?: 0 > 0) View.VISIBLE else View.GONE
 
-        orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile);
+        orderOwnerTv.text = String.format("%s %s", mItem?.shipName, mItem?.shipMobile)
         orderOwnerTv.singleClick {
             OtherUtils.goToDialApp(context!!, mItem?.shipMobile)
         }
 
         var shippingType = "骑手配送"
-        var shippingMobile = mItem?.riderMobile;
+        var shippingMobile = mItem?.riderMobile
         if (mItem?.shippingType == IConstant.SHIP_TYPE_LOCAL) {
             shippingType = "商家配送"
-            shippingMobile = mItem?.sellerMobile;
+            shippingMobile = mItem?.sellerMobile
         }
         //orderShipTypeTv.text = shippingType;
 
-        orderShipHintTv.text = shippingType;
-        orderShipRiderTv.text = shippingMobile;
+        orderShipHintTv.text = shippingType
+        orderShipRiderTv.text = shippingMobile
         orderShipRiderTv.singleClick {
             OtherUtils.goToDialApp(context!!, shippingMobile)
         }
 
-        tvReplenishRemark.text = mItem?.replenishRemark;
-        tvReplenishPrice.text = "￥" + mItem?.replenishPrice
-        if(mItem?.replenishRemark?.isNotEmpty() == true) {
-            replenishLayout.visiable();
-            replenishLine.visiable();
+        tvReplenishRemark.text = mItem?.replenishRemark
+        ("￥" + mItem?.replenishPrice).also { tvReplenishPrice.text = it }
+        if (mItem?.replenishRemark?.isNotEmpty() == true) {
+            replenishLayout.visiable()
+            replenishLine.visiable()
         } else {
-            replenishLayout.gone();
-            replenishLine.gone();
+            replenishLayout.gone()
+            replenishLine.gone()
         }
     }
 
