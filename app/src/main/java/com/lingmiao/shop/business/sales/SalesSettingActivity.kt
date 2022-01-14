@@ -82,13 +82,9 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo, ISalesSettingPresente
         }
     }
 
-    override fun createPresenter(): ISalesSettingPresenter {
-        return SalesSettingPreImpl(this, this)
-    }
+    override fun createPresenter() = SalesSettingPreImpl(this, this)
 
-    override fun useLightMode(): Boolean {
-        return false
-    }
+    override fun useLightMode() = false
 
     override fun initOthers() {
         mToolBarDelegate.setMidTitle("满减设置")
@@ -97,9 +93,8 @@ class SalesSettingActivity : BaseLoadMoreActivity<SalesVo, ISalesSettingPresente
         })
     }
 
-    override fun autoRefresh(): Boolean {
-        return true
-    }
+    override fun autoRefresh() = true
+
 
     override fun onDelete(position: Int) {
         if (position < mAdapter.data.size) {

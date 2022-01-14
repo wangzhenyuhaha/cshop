@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:ellipsize="end"
         android:gravity="center_vertical"
-        android:maxWidth="150dp"
+        android:maxWidth="300dp"
         android:paddingHorizontal="@dimen/dimen_15"
         android:paddingVertical="@dimen/dimen_10"
         android:singleLine="true"
@@ -53,17 +53,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/salesNameTv" />
 
-    <com.lingmiao.shop.business.sales.view.SalesActivityRvLayout
+    <TextView
         android:id="@+id/salesActivityC"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/divider"
+        android:orientation="horizontal"
         android:paddingTop="@dimen/dp_10"
+        android:text="测试测试测试test"
+        android:paddingHorizontal="@dimen/dimen_15"
+        android:paddingVertical="@dimen/dimen_10"
         android:paddingBottom="@dimen/dp_10"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/divider">
 
-    </com.lingmiao.shop.business.sales.view.SalesActivityRvLayout>
+
+    </TextView>
 
     <View
         android:id="@+id/vCLine"
