@@ -16,7 +16,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_50"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -36,7 +37,9 @@
                 android:hint="请输入满减活动名称" />
         </LinearLayout>
 
-        <View style="@style/common_divider" />
+        <View
+            style="@style/common_divider"
+            android:visibility="gone" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,16 +65,16 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:paddingVertical="@dimen/dimen_15"
                     android:id="@+id/firstMenuTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/ic_date"
                     android:drawablePadding="@dimen/dimen_5"
-                    android:text="请选择"
                     android:gravity="right"
                     android:maxLines="1"
+                    android:paddingVertical="@dimen/dimen_15"
+                    android:text="请选择"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
@@ -108,15 +111,15 @@
 
                 <TextView
                     android:id="@+id/secondMenuTv"
-                    android:paddingVertical="@dimen/dimen_15"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawableRight="@mipmap/ic_date"
                     android:drawablePadding="@dimen/dimen_5"
-                    android:text="请选择"
                     android:gravity="right"
                     android:maxLines="1"
+                    android:paddingVertical="@dimen/dimen_15"
+                    android:text="请选择"
                     android:textColor="@color/color_666666"
                     android:textColorHint="@color/color_999999"
                     android:textSize="@dimen/sp_12" />
