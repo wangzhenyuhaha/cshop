@@ -31,7 +31,7 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
     //  1   2
     var mViewType: Int? = 0
 
-    // 0 不显示棋手配送   1显示
+    // 0 不显示骑手配送   1显示
     //默认显示骑手配送
     var type: Int = 1
 
@@ -83,12 +83,9 @@ class DeliveryManagerActivity : BaseActivity<ManagerSettingPresenter>(),
 
     override fun getLayoutId() = R.layout.sales_activity_stats
 
-
     override fun useLightMode() = false
 
-
     override fun createPresenter() = ManagerSettingPresenterImpl(this)
-
 
     override fun initView() {
 

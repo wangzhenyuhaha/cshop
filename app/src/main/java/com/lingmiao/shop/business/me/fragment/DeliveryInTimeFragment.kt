@@ -1,14 +1,16 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.james.common.base.BaseFragment
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.me.presenter.DeliveryInTimePresenter
 import com.lingmiao.shop.business.me.presenter.impl.DeliveryInTimePresenterImpl
-import com.lingmiao.shop.business.tools.adapter.PriceAdapter
 import com.lingmiao.shop.business.tools.adapter.RangeAdapter
 import com.lingmiao.shop.business.tools.adapter.TimeAdapter
 import com.lingmiao.shop.business.tools.api.JsonUtil
@@ -28,20 +30,21 @@ Create Date : 2021/3/53:40 PM
 Auther      : Fox
 Desc        :
  **/
+@SuppressLint("NotifyDataSetChanged")
 class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     DeliveryInTimePresenter.View {
 
-    private lateinit var mPriceAdapter: PriceAdapter
+    //加收费用Adapter
     private lateinit var mRangeAdapter: RangeAdapter
-    private lateinit var mTimeAdapter: TimeAdapter
 
-    //按时间段配送时效列表
-    private lateinit var mTimeList: MutableList<TimeSection>
+    //按时间段配送时效Adapter
+    private lateinit var mTimeAdapter: TimeAdapter
 
     //加收费用列表
     private lateinit var mRangeList: MutableList<PeekTime>
 
-    private lateinit var mPriceList: MutableList<DistanceSection>
+    //按时间段配送时效列表
+    private lateinit var mTimeList: MutableList<TimeSection>
 
     //24小时时间列表
     private lateinit var mTimeValueList: MutableList<TimeValue>
@@ -49,9 +52,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     //按时间段配送时效当日次日
     private lateinit var mDayTypeList: MutableList<String>
 
+    //配送模板
     private var mItem: FreightVoItem? = null
 
-    var mFeeSetting: FeeSettingVo = FeeSettingVo()
+    private var mFeeSetting: FeeSettingVo = FeeSettingVo()
 
     //配送时效
     private var mTimeSetting: TimeSettingVo = TimeSettingVo()
@@ -76,9 +80,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
     override fun initViewsAndData(rootView: View) {
 
-        //无用
-        initPricePart()
-
         //加收费用
         initRangePart()
 
@@ -88,11 +89,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
         //选择配送时效
         updateTimeCheckBox()
 
-        //无用
-        updateCityExpressPayTypeCheckBox()
-
         //保存
         tvShopSettingSubmit.singleClick {
+
+            val setting = mTimeSetting
             //不为空才起效
             mItem?.apply {
 
@@ -115,6 +115,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                     showToast("请填完配送费")
                     return@singleClick
                 }
+                if (et_model_price_km_out.getViewText() == "0") {
+                    showToast("配送费中每超出公里数请勿设置为0")
+                    return@singleClick
+                }
                 //配送范围
                 if (et_model_out_range_km.getViewText().isEmpty()) {
                     showToast("请输入配送范围")
@@ -130,6 +134,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                         showToast("请填完配送时效")
                         return@singleClick
                     }
+                    if (et_model_time_km_out.getViewText() == "0") {
+                        showToast("按公里数配送中每超出公里数请勿设置为0")
+                        return@singleClick
+                    }
                 }
                 if (cb_model_time_section.isChecked) {
                     //按时间
@@ -137,28 +145,28 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                         showToast("请填完配送时效")
                         return@singleClick
                     } else {
-                        if (mTimeList[0].arriveTime.isNullOrEmpty() || mTimeList[0].shipTime.isNullOrEmpty()|| mTimeList[0].arriveStartTime.isNullOrEmpty()) {
+                        //先检查第一个
+                        if (mTimeList[0].arriveTime.isNullOrEmpty() || mTimeList[0].shipTime.isNullOrEmpty() || mTimeList[0].arriveStartTime.isNullOrEmpty()) {
                             showToast("请填完配送时效")
                             return@singleClick
                         }
                     }
                 }
 
+                //设置数据给Item
                 name = "商家配送"
                 // 基础（默认）
                 templateType = FreightVoItem.TYPE_LOCAL
+                //useless
                 type =
                     if (cb_model_pay_km_section.isChecked) FreightVoItem.TYPE_KM_SECTION else FreightVoItem.TYPE_KM_COUNT
-
                 //起送价格
                 baseShipPrice = et_model_km_price.getViewText()
-
                 //配送范围
                 shipRange = et_model_out_range_km.getViewText()
-
                 //配送时效
                 //按公里或者时间
-                val setting = mTimeSetting
+
                 if (cb_model_time_km.isChecked) {
                     // 按公里数
                     setting.timeType = TimeSettingVo.TIME_TYPE_BASE
@@ -168,7 +176,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                     setting.unitTime = et_model_time_minute_more.getViewText()
                     // 清数据
                     setting.timeSections = null
-
                 }
                 if (cb_model_time_section.isChecked) {
                     // 按时间段
@@ -183,9 +190,8 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //配货时间
                 val readyTime = deliveryThingEt.getViewText().toInt()
                 setting.readyTime = readyTime
-                timeSettingVo = TimeSettingReqVo(setting)
-                timeSetting = JsonUtil.instance.toJson(setting)
 
+                // 计费
                 //配送费
                 mFeeSetting.feeType = FeeSettingVo.FEE_TYPE_DISTANCE
                 mFeeSetting.baseDistance = et_model_price_km.getViewText()
@@ -193,19 +199,71 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 mFeeSetting.unitDistance = et_model_price_km_out.getViewText()
                 mFeeSetting.unitPrice = et_model_price_minute_more.getViewText()
 
-                // 清数据
+                // 清数据（无用数据）
                 mFeeSetting.distanceSections = null
 
-                // 计费
-                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
-                feeSettingVo = FeeSettingReqVo(mFeeSetting)
 
                 // 快递 clear data
                 items = null
                 type = null
             }
 
-            mPresenter?.addModel(mItem!!)
+            mItem?.apply {
+
+
+                //按时间段配送时效
+                //遍历一遍，出现数据不完整的让用户进行选择
+                if (cb_model_time_section.isChecked) {
+                    val temp1 = mutableListOf<Int>()
+                    val temp2 = mutableListOf<TimeSection>()
+                    for ((number, i) in setting.timeSections!!.withIndex()) {
+                        if (!(i.arriveTime.isNullOrEmpty() || i.shipTime.isNullOrEmpty() || i.arriveStartTime.isNullOrEmpty())) {
+                            temp1.add(number)
+                        }
+                    }
+                    if (temp1.size < mTimeList.size) {
+
+                        DialogUtils.showDialog(requireActivity(),
+                            "配送时效未填写完整", "请选择填写完整配送时效或放弃未填写时效",
+                            "重新填写", "确定删除",
+                            null,
+                            {
+                                for (i in temp1) {
+                                    temp2.add(mTimeList[i])
+                                }
+                                setting.timeSections = temp2
+                                mTimeList = temp2
+                                mTimeAdapter.replaceData(mTimeList)
+
+
+                                timeSettingVo = TimeSettingReqVo(setting)
+                                timeSetting = JsonUtil.instance.toJson(setting)
+
+                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                mPresenter?.addModel(mItem!!)
+                            })
+
+
+                    } else {
+                        //正常
+                        timeSettingVo = TimeSettingReqVo(setting)
+                        timeSetting = JsonUtil.instance.toJson(setting)
+
+                        feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                        feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                        mPresenter?.addModel(mItem!!)
+                    }
+
+
+
+                }
+
+
+
+            }
+
+
         }
 
         //初始化页面
@@ -221,34 +279,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
         }
     }
 
-    //无用
-    private fun initPricePart() {
-
-        //设置配送费数据（空）
-        mPriceList = arrayListOf()
-        mPriceList.add(DistanceSection())
-
-        mPriceAdapter = PriceAdapter().apply {
-            setOnItemChildClickListener { adapter, view, position ->
-                val item = adapter.data[position] as DistanceSection
-                if (view.id == R.id.tv_model_price_delete && position != 0) {
-                    mPriceList.remove(item)
-                    mPriceAdapter.replaceData(mPriceList)
-                }
-            }
-
-            val footer = View.inflate(context, R.layout.tools_footer_model_add, null)
-            footer.findViewById<View>(R.id.tv_model_add).setOnClickListener {
-                mPriceList.add(DistanceSection())
-                mPriceAdapter.replaceData(mPriceList)
-            }
-            addFooterView(footer)
-        }
-
-        rv_model_price.initAdapter(mPriceAdapter)
-
-        mPriceAdapter.replaceData(mPriceList)
-    }
 
     //加收费用
     private fun initRangePart() {
@@ -269,7 +299,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //开始时间
                 else if (view.id == R.id.et_model_range_start) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it ->
+                    pop.setOnClickListener {
                         run {
                             item.peekTimeStart = it.name
                             item.startTimeCount = it.value
@@ -282,7 +312,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //结束时间
                 else if (view.id == R.id.et_model_range_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it ->
+                    pop.setOnClickListener {
                         run {
                             item.peekTimeEnd = it.name
                             item.endTimeCount = it.value
@@ -303,7 +333,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
         }
 
         rv_model_range.initAdapter(mRangeAdapter)
-
         mRangeAdapter.replaceData(mRangeList)
     }
 
@@ -330,7 +359,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //付款时间
                 else if (view.id == R.id.et_model_km_start) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it ->
+                    pop.setOnClickListener {
                         run {
                             item.shipTime = it.name
                             item.shipTimeCount = it.value
@@ -343,7 +372,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //送达时间上界
                 else if (view.id == R.id.et_model_km_endo) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it ->
+                    pop.setOnClickListener {
                         item.arriveStartTime = it.name
                         item.arriveTimeCount = it.value
                         run {
@@ -356,7 +385,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //送达时间下界
                 else if (view.id == R.id.et_model_km_end) {
                     val pop = TimeListPop(requireContext(), mTimeValueList)
-                    pop.setOnClickListener { it ->
+                    pop.setOnClickListener {
                         item.arriveTime = it.name
                         item.arriveTimeCount = it.value
                         run {
@@ -369,10 +398,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 //更换类型
                 else if (view.id == R.id.tv_model_time_type) {
                     val pop = DayPop(requireContext(), mDayTypeList)
-                    pop.setOnClickListener { it, position ->
+                    pop.setOnClickListener { it, position1 ->
 
                         run {
-                            if (position == 0) {
+                            if (position1 == 0) {
                                 item.shiftToday()
                                 if (item.arriveTimeCount ?: 0 <= item.shipTimeCount ?: 0) {
                                     item.arriveTime = null
@@ -398,7 +427,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
         }
 
         rv_model_time.initAdapter(mTimeAdapter)
-
         mTimeAdapter.replaceData(mTimeList)
     }
 
@@ -418,22 +446,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
         }
     }
 
-    /**
-     * 同城配送的计费方式
-     */
-    private fun updateCityExpressPayTypeCheckBox() {
-        rg_model_pay_km.setOnCheckedChangeListener { group, checkedId ->
-            if (checkedId == R.id.cb_model_pay_km_section) {
-                rv_model_price.visibility = View.VISIBLE
-                ll_model_price_section.visibility = View.GONE
-            } else if (checkedId == R.id.cb_model_pay_km_num) {
-                rv_model_price.visibility = View.GONE
-                ll_model_price_section.visibility = View.VISIBLE
-            }
-        }
-        rv_model_price.visibility = View.GONE
-        ll_model_price_section.visibility = View.VISIBLE
-    }
 
     override fun updateModelSuccess(b: Boolean) {
         showToast("提交成功")
@@ -483,13 +495,14 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 et_model_time_minute.setText(String.format("%s", mTimeSetting.baseTime))
                 et_model_time_km_out.setText(String.format("%s", mTimeSetting.unitDistance))
                 et_model_time_minute_more.setText(String.format("%s", mTimeSetting.unitTime))
-                deliveryThingEt.setText(String.format("%s", mTimeSetting.readyTime))
             } else {
                 //按时间段
                 cb_model_time_section.isChecked = true
                 mTimeList = mTimeSetting.timeSections ?: arrayListOf()
                 mTimeAdapter.replaceData(mTimeList)
             }
+            //配货时间
+            deliveryThingEt.setText(String.format("%s", mTimeSetting.readyTime))
         }
     }
 

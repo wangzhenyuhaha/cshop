@@ -4,7 +4,6 @@ import com.james.common.base.BasePresenter
 import com.james.common.base.BaseView
 import com.james.common.base.loadmore.BaseLoadMoreView
 import com.james.common.base.loadmore.core.IPage
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.sales.bean.Coupon
 
 interface DiscountPresenter : BasePresenter {

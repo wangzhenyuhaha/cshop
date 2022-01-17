@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
+import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -57,28 +58,25 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
     }
 
     override fun getFeeSetting(item: FreightVoItem?): FeeSettingVo {
-        return json?.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting?:"");
+        return json.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting?:"")
     }
 
     override fun getTimeSetting(item: FreightVoItem?): TimeSettingVo {
-        return json?.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting?:"");
+        return json.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting?:"")
     }
 
     override fun getTemplate(str : String) {
-        //shops/ship-templates
         mCoroutine.launch {
-            //view.showDialogLoading();
-            val resp = ToolsRepository.shipTemplates(str);
+            val resp = ToolsRepository.shipTemplates(str)
             if(resp.isSuccess) {
-                if(resp.data.size > 0) {
-                    view.setModel(resp?.data?.get(0));
+                if(resp.data.isNotEmpty()) {
+                    view.setModel(resp.data?.get(0))
                 } else {
                     view.setModel(null)
                 }
             } else {
                 view.setModel(null)
             }
-            //view.hideDialogLoading();
         }
     }
 
