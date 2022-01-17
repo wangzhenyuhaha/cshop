@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
@@ -235,13 +234,45 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                                 mTimeList = temp2
                                 mTimeAdapter.replaceData(mTimeList)
 
-
                                 timeSettingVo = TimeSettingReqVo(setting)
                                 timeSetting = JsonUtil.instance.toJson(setting)
 
-                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
-                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
-                                mPresenter?.addModel(mItem!!)
+                                //第二步
+
+                                //判断是否有空的
+                                val temp3 = mutableListOf<Int>()
+                                val temp4 = mutableListOf<PeekTime>()
+                                for ((number, i) in mFeeSetting.peekTimes!!.withIndex()) {
+                                    if (!(i.peekTimeEnd.isNullOrEmpty() || i.peekTimePrice.isNullOrEmpty() || i.peekTimeStart.isNullOrEmpty())) {
+                                        temp3.add(number)
+                                    }
+                                }
+
+                                if (temp3.size < mFeeSetting.peekTimes?.size ?: 0) {
+                                    //判断是否去空
+                                    DialogUtils.showDialog(requireActivity(),
+                                        "加收费用未填写完整", "请选择填写完整加收费用或放弃未填写部分",
+                                        "重新填写", "确定删除",
+                                        null,
+                                        {
+                                            val list = mFeeSetting.peekTimes
+                                            for (i in temp3) {
+                                                list?.get(i)?.let { it1 -> temp4.add(it1) }
+                                            }
+
+                                            mFeeSetting.peekTimes = temp4
+                                            feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                            feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                            mPresenter?.addModel(mItem!!)
+                                        })
+
+                                } else {
+                                    feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                    feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                    mPresenter?.addModel(mItem!!, true)
+                                }
+
+
                             })
 
 
@@ -250,15 +281,88 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                         timeSettingVo = TimeSettingReqVo(setting)
                         timeSetting = JsonUtil.instance.toJson(setting)
 
+                        //第二步
+
+
+                        //判断是否有空的
+                        val temp3 = mutableListOf<Int>()
+                        val temp4 = mutableListOf<PeekTime>()
+                        for ((number, i) in mFeeSetting.peekTimes!!.withIndex()) {
+                            if (!(i.peekTimeEnd.isNullOrEmpty() || i.peekTimePrice.isNullOrEmpty() || i.peekTimeStart.isNullOrEmpty())) {
+                                temp3.add(number)
+                            }
+                        }
+
+                        if (temp3.size < mFeeSetting.peekTimes?.size ?: 0) {
+                            //判断是否去空
+                            DialogUtils.showDialog(requireActivity(),
+                                "加收费用未填写完整", "请选择填写完整加收费用或放弃未填写部分",
+                                "重新填写", "确定删除",
+                                null,
+                                {
+                                    val list = mFeeSetting.peekTimes
+                                    for (i in temp3) {
+                                        list?.get(i)?.let { it1 -> temp4.add(it1) }
+                                    }
+
+                                    mFeeSetting.peekTimes = temp4
+                                    feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                    feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                    mPresenter?.addModel(mItem!!)
+                                })
+
+                        } else {
+                            feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                            feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                            mPresenter?.addModel(mItem!!)
+                        }
+
+
+                    }
+
+
+                } else {
+                    //正常
+                    timeSettingVo = TimeSettingReqVo(setting)
+                    timeSetting = JsonUtil.instance.toJson(setting)
+
+                    //第二步
+
+
+                    //判断是否有空的
+                    val temp3 = mutableListOf<Int>()
+                    val temp4 = mutableListOf<PeekTime>()
+                    for ((number, i) in mFeeSetting.peekTimes!!.withIndex()) {
+                        if (!(i.peekTimeEnd.isNullOrEmpty() || i.peekTimePrice.isNullOrEmpty() || i.peekTimeStart.isNullOrEmpty())) {
+                            temp3.add(number)
+                        }
+                    }
+
+                    if (temp3.size < mFeeSetting.peekTimes?.size ?: 0) {
+                        //判断是否去空
+                        DialogUtils.showDialog(requireActivity(),
+                            "加收费用未填写完整", "请选择填写完整加收费用或放弃未填写部分",
+                            "重新填写", "确定删除",
+                            null,
+                            {
+                                val list = mFeeSetting.peekTimes
+                                for (i in temp3) {
+                                    list?.get(i)?.let { it1 -> temp4.add(it1) }
+                                }
+
+                                mFeeSetting.peekTimes = temp4
+                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                mPresenter?.addModel(mItem!!)
+                            })
+
+                    } else {
                         feeSetting = JsonUtil.instance.toJson(mFeeSetting)
                         feeSettingVo = FeeSettingReqVo(mFeeSetting)
                         mPresenter?.addModel(mItem!!)
                     }
 
-
-
                 }
-
 
 
             }
@@ -447,8 +551,11 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     }
 
 
-    override fun updateModelSuccess(b: Boolean) {
+    override fun updateModelSuccess(b: Boolean, type: Boolean) {
         showToast("提交成功")
+        if (type) {
+            mPresenter?.getTemplate(FreightVoItem.TYPE_LOCAL)
+        }
     }
 
     override fun setModel(item: FreightVoItem?) {

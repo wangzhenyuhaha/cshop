@@ -12,9 +12,9 @@ Auther      : Fox
 Desc        :
  **/
 interface DeliveryInTimePresenter : BasePresenter {
-    fun addModel(mItem: FreightVoItem)
+    fun addModel(mItem: FreightVoItem, type: Boolean = false)
     fun updateModel(mItem: FreightVoItem)
-    fun getTemplate(str : String);
+    fun getTemplate(str: String);
 
 
     fun getFeeSetting(item: FreightVoItem?): FeeSettingVo;
@@ -22,7 +22,7 @@ interface DeliveryInTimePresenter : BasePresenter {
     fun getTimeSetting(item: FreightVoItem?): TimeSettingVo;
 
     interface View : BaseView {
-        fun updateModelSuccess(b: Boolean)
-        fun setModel(item : FreightVoItem?)
+        fun updateModelSuccess(b: Boolean,type: Boolean)
+        fun setModel(item: FreightVoItem?)
     }
 }

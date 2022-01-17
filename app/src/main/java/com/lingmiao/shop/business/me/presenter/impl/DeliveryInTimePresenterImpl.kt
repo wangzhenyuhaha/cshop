@@ -27,13 +27,13 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
         json = Gson();
     }
 
-    override fun addModel(item: FreightVoItem) {
+    override fun addModel(item: FreightVoItem,type:Boolean) {
         mCoroutine.launch {
             view.showDialogLoading()
             LogUtils.dTag("add model" + item.name)
             val resp = ToolsRepository.addShipTemplate(item)
             handleResponse(resp) {
-                view.updateModelSuccess(true)
+                view.updateModelSuccess(true,type)
             }
             view.hideDialogLoading()
         }
@@ -45,12 +45,12 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
             if(item?.isLocalTemplateType()) {
                 val resp = ToolsRepository.updateShipTemplates(item?.id!!, item);
                 handleResponse(resp) {
-                    view.updateModelSuccess(resp.data);
+                    view.updateModelSuccess(resp.data,false);
                 }
             } else {
                 val resp = ToolsRepository.updateShipTemplates(item);
                 handleResponse(resp) {
-                    view.updateModelSuccess(true);
+                    view.updateModelSuccess(true,false);
                 }
             }
             view.hidePageLoading();
