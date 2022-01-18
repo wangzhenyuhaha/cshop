@@ -18,22 +18,23 @@ Create Date : 2021/3/24:08 PM
 Auther      : Fox
 Desc        :
  **/
-class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : BasePreImpl(view) ,DeliveryInTimePresenter {
+class DeliveryInTimePresenterImpl(val view: DeliveryInTimePresenter.View) : BasePreImpl(view),
+    DeliveryInTimePresenter {
 
-    private var json : Gson;
+    private var json: Gson;
 
     init {
 
         json = Gson();
     }
 
-    override fun addModel(item: FreightVoItem,type:Boolean) {
+    override fun addModel(item: FreightVoItem, type: Boolean) {
         mCoroutine.launch {
             view.showDialogLoading()
             LogUtils.dTag("add model" + item.name)
             val resp = ToolsRepository.addShipTemplate(item)
             handleResponse(resp) {
-                view.updateModelSuccess(true,type)
+                view.updateModelSuccess(true, type)
             }
             view.hideDialogLoading()
         }
@@ -42,15 +43,15 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
     override fun updateModel(item: FreightVoItem) {
         mCoroutine.launch {
             view.showPageLoading();
-            if(item?.isLocalTemplateType()) {
+            if (item?.isLocalTemplateType()) {
                 val resp = ToolsRepository.updateShipTemplates(item?.id!!, item);
                 handleResponse(resp) {
-                    view.updateModelSuccess(resp.data,false);
+                    view.updateModelSuccess(resp.data, false);
                 }
             } else {
                 val resp = ToolsRepository.updateShipTemplates(item);
                 handleResponse(resp) {
-                    view.updateModelSuccess(true,false);
+                    view.updateModelSuccess(true, false);
                 }
             }
             view.hidePageLoading();
@@ -58,18 +59,20 @@ class DeliveryInTimePresenterImpl (val view : DeliveryInTimePresenter.View) : Ba
     }
 
     override fun getFeeSetting(item: FreightVoItem?): FeeSettingVo {
-        return json.getAdapter(TypeToken.get(FeeSettingVo::class.java)).fromJson(item?.feeSetting?:"")
+        return json.getAdapter(TypeToken.get(FeeSettingVo::class.java))
+            .fromJson(item?.feeSetting ?: "")
     }
 
     override fun getTimeSetting(item: FreightVoItem?): TimeSettingVo {
-        return json.getAdapter(TypeToken.get(TimeSettingVo::class.java)).fromJson(item?.timeSetting?:"")
+        return json.getAdapter(TypeToken.get(TimeSettingVo::class.java))
+            .fromJson(item?.timeSetting ?: "")
     }
 
-    override fun getTemplate(str : String) {
+    override fun getTemplate(str: String) {
         mCoroutine.launch {
             val resp = ToolsRepository.shipTemplates(str)
-            if(resp.isSuccess) {
-                if(resp.data.isNotEmpty()) {
+            if (resp.isSuccess) {
+                if (resp.data.isNotEmpty()) {
                     view.setModel(resp.data?.get(0))
                 } else {
                     view.setModel(null)
