@@ -403,6 +403,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
     }
 
     override fun useLightMode() = false
+
     override fun onSubmitCoupons() {
         showToast("优惠券添加成功")
         finish()
