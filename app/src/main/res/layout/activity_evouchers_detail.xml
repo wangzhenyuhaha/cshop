@@ -47,7 +47,7 @@
                         android:layout_marginStart="@dimen/dimen_5"
                         android:drawableEnd="@mipmap/common_must_input"
                         android:gravity="start"
-                        android:text="优惠券名称"
+                        android:text="电子券名称"
                         android:textColor="@color/color_666666" />
 
                     <TextView
@@ -59,7 +59,7 @@
                         android:layout_gravity="center_vertical"
                         android:padding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
-                        tools:text="这里输入的是优惠券名称" />
+                        tools:text="这里输入的是电子券名称" />
                 </LinearLayout>
 
             </com.james.common.view.ILinearLayout>

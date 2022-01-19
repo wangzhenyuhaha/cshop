@@ -33,9 +33,12 @@ class GoodsMenuNewAdapter :
             helper.setText(
                 R.id.goodsQuantityTv,
                 if (isEvent)
-                    mContext.getString(R.string.goods_home_event_quantity, eventQuantity.toString())
+                    mContext.getString(
+                        R.string.goods_home_event_quantity,
+                        enableQuantity.toString()
+                    )
                 else
-                    mContext.getString(R.string.goods_home_quantity, quantity)
+                    mContext.getString(R.string.goods_home_quantity, enableQuantity.toString())
             )
 
             //价格
