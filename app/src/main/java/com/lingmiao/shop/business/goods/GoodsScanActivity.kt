@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Environment
@@ -10,6 +11,7 @@ import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.KeyboardUtils
 import com.google.zxing.ResultPoint
 import com.google.zxing.client.android.BeepManager
 import com.james.common.base.BaseVBActivity
@@ -45,7 +47,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.util.*
 
-
+@SuppressLint("NotifyDataSetChanged")
 class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActivityPresenter>(),
     GoodsScanActivityPresenter.View {
 
@@ -410,7 +412,10 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
             mBinding.goodsNameTv.text = goodsName
 
             //商品价格
-            mBinding.goodsPriceEdt.setText("$price")
+            //不显示商品价格，并聚焦
+            mBinding.goodsPriceEdt.requestFocus()
+            KeyboardUtils.showSoftInput()
+            price = null
 
             //商品库存
             mBinding.goodskucunEdt.setText("$quantity")
@@ -495,6 +500,14 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
         if (goodsVO.categoryId == null) {
             showToast("请选择商品分类")
+            return
+        }
+        if (mBinding.goodsPriceEdt.getViewText().isEmpty()) {
+            showToast("请输入商品价格")
+            return
+        }
+        if (mBinding.goodskucunEdt.getViewText().isEmpty()) {
+            showToast("请输入商品库存")
             return
         }
 

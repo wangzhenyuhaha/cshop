@@ -555,6 +555,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)
         }
+        //扫码上架
         tvScan.setOnClickListener {
             ActivityUtils.startActivity(GoodsScanActivity::class.java)
         }

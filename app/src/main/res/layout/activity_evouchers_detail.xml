@@ -30,7 +30,7 @@
                 android:layout_marginEnd="@dimen/dimen_10"
                 android:orientation="vertical"
                 android:paddingStart="10dp"
-                android:paddingEnd="15dp"
+                android:paddingEnd="10dp"
                 app:ivBgColor="@color/common_ffffff"
                 app:ivRadius="5dp">
 
@@ -50,13 +50,185 @@
                         android:text="电子券名称"
                         android:textColor="@color/color_666666" />
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
                     <TextView
                         android:id="@+id/nameInput"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@xml/setbar_bg_grey"
+                        android:padding="@dimen/dimen_5"
+                        android:textColor="@color/color_666666"
+                        tools:text="这里输入的是电子券名称" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62.5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/youxiaoqi"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@xml/setbar_bg_grey"
-                        android:minWidth="100dp"
                         android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_5"
+                        android:drawableEnd="@mipmap/common_must_input"
+                        android:gravity="start"
+                        android:text="有效期"
+                        android:textColor="@color/color_666666" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@xml/setbar_bg_grey"
+                        android:padding="@dimen/dimen_5"
+                        android:textColor="@color/color_666666"
+                        tools:text="这里输入的是电子券名称" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62.5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_5"
+                        android:drawableEnd="@mipmap/common_must_input"
+                        android:gravity="start"
+                        android:text="电子券名称"
+                        android:textColor="@color/color_666666" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@xml/setbar_bg_grey"
+                        android:padding="@dimen/dimen_5"
+                        android:textColor="@color/color_666666"
+                        tools:text="这里输入的是电子券名称" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62.5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_5"
+                        android:drawableEnd="@mipmap/common_must_input"
+                        android:gravity="start"
+                        android:text="电子券名称"
+                        android:textColor="@color/color_666666" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@xml/setbar_bg_grey"
+                        android:padding="@dimen/dimen_5"
+                        android:textColor="@color/color_666666"
+                        tools:text="这里输入的是电子券名称" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62.5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_5"
+                        android:drawableEnd="@mipmap/common_must_input"
+                        android:gravity="start"
+                        android:text="电子券名称"
+                        android:textColor="@color/color_666666" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@xml/setbar_bg_grey"
+                        android:padding="@dimen/dimen_5"
+                        android:textColor="@color/color_666666"
+                        tools:text="这里输入的是电子券名称" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="62.5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/dimen_5"
+                        android:drawableEnd="@mipmap/common_must_input"
+                        android:gravity="start"
+                        android:text="电子券名称"
+                        android:textColor="@color/color_666666" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:background="@xml/setbar_bg_grey"
                         android:padding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
                         tools:text="这里输入的是电子券名称" />
