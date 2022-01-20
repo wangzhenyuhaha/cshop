@@ -62,10 +62,12 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:background="@xml/setbar_bg_grey"
+                        android:gravity="center_vertical"
                         android:padding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666"
-                        tools:text="这里输入的是电子券名称" />
+                        android:textColor="@color/color_666666" />
                 </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,18 +90,109 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
 
-                    <TextView
-
+                    <RadioGroup
+                        android:id="@+id/timeType"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/dimen_10"
-                        android:background="@xml/setbar_bg_grey"
-                        android:padding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666"
-                        tools:text="这里输入的是电子券名称" />
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/time"
+                        app:layout_constraintStart_toStartOf="@+id/nameInput"
+                        app:layout_constraintTop_toTopOf="@+id/time">
+
+                        <RadioButton
+                            android:id="@+id/timeType1"
+                            style="@style/tools_sub_item_radio_box"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dimen_15"
+                            android:text="长期有效"
+                            android:textColor="@color/color_666666" />
+
+                        <RadioButton
+                            android:id="@+id/timeType2"
+                            style="@style/tools_sub_item_radio_box"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dimen_15"
+                            android:text="固定时间"
+                            android:textColor="@color/color_666666" />
+
+                    </RadioGroup>
                 </LinearLayout>
 
+                <View android:id="@+id/timeDivide"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    style="@style/DivideLineHorizontal" />
+
+                <LinearLayout
+                    android:id="@+id/time"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:layout_width="match_parent"
+                    android:layout_height="62.5dp"
+                    android:baselineAligned="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_10"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_10"
+                            android:text="开始："
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_11" />
+
+                        <TextView
+                            android:id="@+id/useTimeStart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@mipmap/ic_date"
+                            android:drawablePadding="@dimen/dimen_5"
+                            android:text="请选择"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_11" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dimen_10"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/dimen_10"
+                            android:text="结束："
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_11" />
+
+                        <TextView
+                            android:id="@+id/useTimeEnd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@mipmap/ic_date"
+                            android:drawablePadding="@dimen/dimen_5"
+                            android:text="请选择"
+                            android:textColor="@color/color_666666"
+                            android:textSize="@dimen/sp_11" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,14 +200,13 @@
                     android:orientation="horizontal">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dimen_5"
                         android:drawableEnd="@mipmap/common_must_input"
                         android:gravity="start"
-                        android:text="电子券名称"
+                        android:text="价值金额"
                         android:textColor="@color/color_666666" />
 
                     <View
@@ -123,7 +215,6 @@
                         android:layout_weight="1" />
 
                     <TextView
-
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -131,41 +222,7 @@
                         android:background="@xml/setbar_bg_grey"
                         android:padding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
-                        tools:text="这里输入的是电子券名称" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="62.5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/dimen_5"
-                        android:drawableEnd="@mipmap/common_must_input"
-                        android:gravity="start"
-                        android:text="电子券名称"
-                        android:textColor="@color/color_666666" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <TextView
-
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/dimen_10"
-                        android:background="@xml/setbar_bg_grey"
-                        android:padding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666"
-                        tools:text="这里输入的是电子券名称" />
+                        tools:text="请输入电子券金额" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -174,14 +231,13 @@
                     android:orientation="horizontal">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dimen_5"
                         android:drawableEnd="@mipmap/common_must_input"
                         android:gravity="start"
-                        android:text="电子券名称"
+                        android:text="适用商品"
                         android:textColor="@color/color_666666" />
 
                     <View
@@ -190,15 +246,15 @@
                         android:layout_weight="1" />
 
                     <TextView
-
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dimen_10"
-                        android:background="@xml/setbar_bg_grey"
-                        android:padding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666"
-                        tools:text="这里输入的是电子券名称" />
+                        android:drawableEnd="@mipmap/common_arrow_right"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:gravity="center_vertical"
+                        android:hint="请选择参加活动的商品"
+                        android:textColor="@color/color_666666" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -207,14 +263,13 @@
                     android:orientation="horizontal">
 
                     <TextView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/dimen_5"
                         android:drawableEnd="@mipmap/common_must_input"
                         android:gravity="start"
-                        android:text="电子券名称"
+                        android:text="库存"
                         android:textColor="@color/color_666666" />
 
                     <View
@@ -223,7 +278,6 @@
                         android:layout_weight="1" />
 
                     <TextView
-
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -231,7 +285,7 @@
                         android:background="@xml/setbar_bg_grey"
                         android:padding="@dimen/dimen_5"
                         android:textColor="@color/color_666666"
-                        tools:text="这里输入的是电子券名称" />
+                        tools:text="这里输入的是库存" />
                 </LinearLayout>
 
             </com.james.common.view.ILinearLayout>

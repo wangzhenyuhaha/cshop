@@ -301,7 +301,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
                         app:layout_constraintStart_toStartOf="@+id/nameInput"
                         app:layout_constraintTop_toTopOf="@+id/guideline3"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -340,7 +340,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/guideline4"
                         app:layout_constraintStart_toStartOf="@+id/nameInput"
                         app:layout_constraintTop_toTopOf="@+id/guideline3"
-                        tools:visibility="gone">
+                        tools:visibility="visible">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
