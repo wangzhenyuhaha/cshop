@@ -31,7 +31,7 @@ class SalesMarketingActivity : BaseVBActivity<ActivitySalesMarketingBinding, Sal
 
         //电子券
         mBinding.container3.singleClick {
-             ActivityUtils.startActivity(ElectronicVouchersActivity::class.java)
+           //  ActivityUtils.startActivity(ElectronicVouchersActivity::class.java)
         }
 
 

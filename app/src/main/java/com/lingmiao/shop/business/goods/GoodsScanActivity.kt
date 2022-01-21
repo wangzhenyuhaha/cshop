@@ -113,7 +113,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
     private val viewVisibility = MutableLiveData<Int>()
 
-    //当前查询条形码方式  1 扫码查询   2  输入查询(已经不存在了)
+    //当前查询条形码方式  1 扫码查询   2  输入查询
     private var scanType: Int = 1
 
     override fun initView() {
@@ -497,6 +497,10 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
     }
 
     private fun clickConfirmView(type: Int) {
+
+        //收起软键盘
+        KeyboardUtils.hideSoftInput(this)
+        mBinding.writeScanCode.setText("")
 
         if (goodsVO.categoryId == null) {
             showToast("请选择商品分类")
