@@ -21,7 +21,7 @@ interface PromotionService {
     @WithHiResponse
     fun submitDiscount(@Body goods: SalesVo?): Call<SalesVo>
 
-    //新增优惠券
+    //新增优惠券/电子券
     @POST("/seller/promotion/coupons")
     @WithHiResponse
     fun submitCoupons(@QueryMap map: MutableMap<String, Any>): Call<Unit>

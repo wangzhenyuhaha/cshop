@@ -258,7 +258,7 @@ class EVouchersDetailActivity :
                 electronicVouchers.useStartTime = (selectedDate.time.time) / 1000
                 electronicVouchers.useEndTime = (lastDate.time.time) / 1000
             }
-
+            mPresenter?.submitDiscount(electronicVouchers)
 
         }
 
@@ -287,13 +287,19 @@ class EVouchersDetailActivity :
         }
     }
 
-    fun fail() {
+
+    override fun onSubmitElectronicVoucher() {
+        showToast("添加电子券成功")
+        finish()
+    }
+
+    override fun onSubmitElectronicVoucherFailed() {
+        showToast("添加电子券失败")
         if (mBinding.timeType1.isChecked) {
             electronicVouchers.couponStartTime = null
             electronicVouchers.couponEndTime = null
             mBinding.useTimeStart.text = "请选择"
             mBinding.useTimeEnd.text = "请选择"
         }
-
     }
 }
