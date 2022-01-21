@@ -413,6 +413,7 @@ class GoodsScanActivity : BaseVBActivity<ActivityGoodsScanBinding, GoodsScanActi
 
             //商品价格
             //不显示商品价格，并聚焦
+            mBinding.goodsPriceEdt.setText("")
             mBinding.goodsPriceEdt.requestFocus()
             KeyboardUtils.showSoftInput()
             price = null
