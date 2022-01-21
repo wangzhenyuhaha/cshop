@@ -1,13 +1,9 @@
 package com.lingmiao.shop.business.sales.presenter.impl
 
 import android.content.Context
-import android.util.Log
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.core.IPage
-import com.lingmiao.shop.business.goods.api.GoodsRepository
-import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.sales.api.PromotionRepository
-import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.presenter.DiscountPresenter
 import kotlinx.coroutines.launch
 

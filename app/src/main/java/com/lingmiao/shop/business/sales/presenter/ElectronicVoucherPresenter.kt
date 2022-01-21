@@ -7,7 +7,17 @@ import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 
 interface ElectronicVoucherPresenter : BasePresenter {
 
-    interface View : BaseView, BaseLoadMoreView<ElectronicVoucher> {
+    //删除电子券
+    fun deleteElectronicVoucher(id: Int, position: Int)
 
+    //编辑电子券
+    fun editElectronicVoucher(disabled: Int, id: Int, position: Int)
+
+    interface View : BaseView, BaseLoadMoreView<ElectronicVoucher> {
+        //删除电子券成功
+        fun deleteCouponSuccess(position: Int)
+
+        //编辑电子券成功
+        fun editCouponSuccess(position: Int)
     }
 }

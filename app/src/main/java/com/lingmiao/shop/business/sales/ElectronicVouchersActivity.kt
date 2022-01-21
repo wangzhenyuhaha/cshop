@@ -6,8 +6,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
+import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.adapter.ElectronicVouchersAdapter
+import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 import com.lingmiao.shop.business.sales.presenter.ElectronicVoucherPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.ElectronicVoucherPreImpl
@@ -22,7 +24,36 @@ class ElectronicVouchersActivity :
     override fun createPresenter() = ElectronicVoucherPreImpl(this, this)
 
     override fun initAdapter(): BaseQuickAdapter<ElectronicVoucher, BaseViewHolder> {
-        return ElectronicVouchersAdapter()
+        return ElectronicVouchersAdapter().apply {
+            setOnItemChildClickListener { adapter, view, position ->
+                val item = adapter.getItem(position) as ElectronicVoucher
+
+                when (view.id) {
+                    R.id.couponDetail -> {
+                        EVouchersDetailActivity.openActivity(context, 0, item)
+                    }
+
+                    R.id.couponBegin -> {
+                        val disabled = if (item.disabled == 0) -1 else 0
+                        item.couponID?.let { mPresenter.editCoupon(disabled, it, position) }
+                    }
+
+                    R.id.couponDelete -> {
+                        DialogUtils.showDialog(context,
+                            "提示",
+                            "确定删除优惠券${item.title}吗？",
+                            "取消",
+                            "确定",
+                            {
+
+                            }, {
+                                item.couponID?.let { mPresenter.deleteCoupon(it, position) }
+                            })
+                    }
+                }
+
+            }
+        }
     }
 
     override fun executePageRequest(page: IPage) {
