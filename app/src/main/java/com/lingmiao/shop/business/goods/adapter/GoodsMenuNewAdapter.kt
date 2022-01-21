@@ -7,7 +7,6 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.util.GlideUtils
-import com.lingmiao.shop.util.formatDouble
 
 class GoodsMenuNewAdapter :
     BaseQuickAdapter<GoodsVO, BaseViewHolder>(R.layout.goods_adapter_goods_menu) {
@@ -57,7 +56,7 @@ class GoodsMenuNewAdapter :
                 if (marketEnable == 1) {
                     "已上架"
                 } else {
-                    ""
+                    "已下架"
                 }
             )
 

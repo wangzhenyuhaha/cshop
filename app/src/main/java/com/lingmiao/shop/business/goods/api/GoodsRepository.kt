@@ -135,6 +135,19 @@ object GoodsRepository {
         return apiService.loadGoodsList(map).awaitHiResponse()
     }
 
+    suspend fun loadGoodsListOfCatePath(
+        pageNo: Int,
+        path: String?
+    ): HiResponse<PageVO<GoodsVO>> {
+        val map = mutableMapOf<String, Any>()
+        map["page_no"] = pageNo
+        map["page_size"] = 10
+        if (path != null) {
+            map["category_path"] = path
+        }
+        return apiService.loadGoodsList(map).awaitHiResponse()
+    }
+
     suspend fun loadGoodsListOfCateId(
         pageNo: Int,
         marketEnable: String?,

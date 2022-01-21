@@ -73,9 +73,9 @@ class SalesGoodsActivity : BaseLoadMoreActivity<GoodsVO, ISalesGoodPresenter>(),
             }
         }
         submitTv.singleClick {
-            val list = mAdapter?.data.filter { it?.isChecked == true };
+            val list = mAdapter.data.filter { it?.isChecked == true };
             val rangeType = if(allGoodsRb.isChecked) SalesActivityEditActivity.VALUE_ALL else SalesActivityEditActivity.VALUE_PART
-            if(mItem == null || mItem?.id?.isNullOrEmpty() == true) {
+            if(mItem == null || mItem?.id?.isEmpty() == true) {
                 val intent = Intent();
                 intent.putExtra("type", rangeType);
                 if(partGoodsRb.isChecked) {

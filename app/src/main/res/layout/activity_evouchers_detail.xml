@@ -64,7 +64,10 @@
                         android:background="@xml/setbar_bg_grey"
                         android:gravity="center_vertical"
                         android:padding="@dimen/dimen_5"
-                        android:textColor="@color/color_666666" />
+                        android:paddingStart="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:textColor="@color/color_666666"
+                        tools:text="请输入电子券名字" />
                 </LinearLayout>
 
                 <View style="@style/DivideLineHorizontal" />
@@ -122,20 +125,21 @@
                     </RadioGroup>
                 </LinearLayout>
 
-                <View android:id="@+id/timeDivide"
+                <View
+                    android:id="@+id/timeDivide"
+                    style="@style/DivideLineHorizontal"
                     android:visibility="gone"
-                    tools:visibility="visible"
-                    style="@style/DivideLineHorizontal" />
+                    tools:visibility="visible" />
 
                 <LinearLayout
                     android:id="@+id/time"
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:layout_width="match_parent"
                     android:layout_height="62.5dp"
                     android:baselineAligned="false"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -215,15 +219,20 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/price"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:background="@xml/setbar_bg_grey"
                         android:padding="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
                         android:textColor="@color/color_666666"
                         tools:text="请输入电子券金额" />
                 </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -246,6 +255,7 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/useGoods"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/dimen_10"
@@ -256,6 +266,8 @@
                         android:textColor="@color/color_666666" />
 
                 </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -278,12 +290,15 @@
                         android:layout_weight="1" />
 
                     <TextView
+                        android:id="@+id/stock"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="@dimen/dimen_10"
                         android:background="@xml/setbar_bg_grey"
                         android:padding="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
                         android:textColor="@color/color_666666"
                         tools:text="这里输入的是库存" />
                 </LinearLayout>

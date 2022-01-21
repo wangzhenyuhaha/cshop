@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.goods.fragment
 
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.chad.library.adapter.base.BaseQuickAdapter

@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.sales
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -11,12 +12,13 @@ import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
-import com.lingmiao.shop.business.sales.bean.Coupon
+import com.lingmiao.shop.business.me.fragment.BannerActivity
 import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 import com.lingmiao.shop.business.sales.presenter.EVouchersDetailPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.EVouchersDetailPreImpl
 import com.lingmiao.shop.databinding.ActivityEvouchersDetailBinding
 import com.lingmiao.shop.util.*
+import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 import java.util.*
 
 class EVouchersDetailActivity :
@@ -169,49 +171,57 @@ class EVouchersDetailActivity :
             pvCustomTime2?.show()
         }
 
+        //价值金额
+        mBinding.price.singleClick {
+            DialogUtils.showInputDialogNumber(
+                this,
+                "价值金额",
+                "",
+                "请输入电子券价值金额",
+                if (electronicVouchers.jianPrice == null) "" else electronicVouchers.jianPrice.toString(),
+                "取消",
+                "保存",
+                null
+            ) {
+                try {
+                    electronicVouchers.jianPrice = it.toDouble()
+                    mBinding.price.text = it
+                } catch (e: Exception) {
+                    electronicVouchers.jianPrice = null
+                    mBinding.price.text = ""
+                    showToast("请输入数字")
+                }
+            }
+        }
 
-//            //库存
-//            mBinding.stockNumber.singleClick {
-//                DialogUtils.showInputDialogNumber(
-//                    this,
-//                    "库存",
-//                    "",
-//                    "请输入优惠券库存",
-//                    if (coupon.createNum == null) "" else coupon.createNum.toString(),
-//                    "取消",
-//                    "保存",
-//                    null
-//                ) {
-//                    try {
-//                        coupon.createNum = it.toInt()
-//                        mBinding.stockNumber.text = it
-//                    } catch (e: Exception) {
-//                        coupon.createNum = null
-//                        mBinding.stockNumber.text = ""
-//                        showToast("请输入数字")
-//                    }
-//                }
-//            }
-//
-//            //优惠规则  满
-//            mBinding.rulerNumberMan.singleClick {
-//                DialogUtils.showInputDialogNumber(
-//                    this,
-//                    "优惠券门槛", "", "请输入优惠券需满多少元",
-//                    if (coupon.manPrice == null) "" else coupon.manPrice.toString(), "取消", "保存", null
-//                ) {
-//                    try {
-//                        coupon.manPrice = it.toDouble()
-//                        mBinding.rulerNumberMan.text = it
-//                    } catch (e: Exception) {
-//                        coupon.manPrice = null
-//                        mBinding.rulerNumberMan.text = ""
-//                        showToast("请输入数字")
-//                    }
-//                }
-//            }
-//
+        //适用商品
+        mBinding.useGoods.singleClick {
+            val intent = Intent(this, SelectGoodsActivity::class.java)
+            startActivityForResult(intent, 22)
+        }
 
+        //库存
+        mBinding.stock.singleClick {
+            DialogUtils.showInputDialogNumber(
+                this,
+                "库存",
+                "",
+                "请输入电子券库存",
+                if (electronicVouchers.createNum == null) "" else electronicVouchers.createNum.toString(),
+                "取消",
+                "保存",
+                null
+            ) {
+                try {
+                    electronicVouchers.createNum = it.toInt()
+                    mBinding.stock.text = it
+                } catch (e: Exception) {
+                    electronicVouchers.createNum = null
+                    mBinding.stock.text = ""
+                    showToast("请输入数字")
+                }
+            }
+        }
 
         mBinding.submit.singleClick {
 
@@ -227,30 +237,18 @@ class EVouchersDetailActivity :
                     return@singleClick
                 }
             }
-
-//
-//                if (coupon.createNum == null) {
-//                    showToast("请输入优惠券库存")
-//                    return@singleClick
-//                }
-//                if (coupon.manPrice == null) {
-//                    showToast("请输入优惠券使用门槛")
-//                    return@singleClick
-//                }
-//                if (coupon.jianPrice == null) {
-//                    showToast("请输入优惠券面额")
-//                    return@singleClick
-//                }
-//                if (coupon.jianPrice ?: 0.0 > coupon.manPrice ?: 0.0) {
-//                    showToast("优惠券面额需要小于使用门槛")
-//                    return@singleClick
-//                }
-//                if (coupon.limitNum == null) {
-//                    showToast("请输入优惠券每人限额")
-//                    return@singleClick
-//                }
-//                //调用接口，添加优惠券
-//                mPresenter?.submitDiscount(coupon)
+            if (electronicVouchers.jianPrice == null) {
+                showToast("请输入电子券金额")
+                return@singleClick
+            }
+            if (electronicVouchers.createNum == null) {
+                showToast("请输入电子券库存")
+                return@singleClick
+            }
+            if (electronicVouchers.goodsID == null) {
+                showToast("请选择电子券适用的商品")
+                return@singleClick
+            }
 
             //调用接口前，添加一些必要数据
             electronicVouchers.useTimeType = "FIX"
@@ -261,7 +259,6 @@ class EVouchersDetailActivity :
                 electronicVouchers.useEndTime = (lastDate.time.time) / 1000
             }
 
-            //保存失败后要根据情况去除电子券有效期，
 
         }
 
@@ -274,14 +271,29 @@ class EVouchersDetailActivity :
     override fun useLightMode() = false
 
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 22 && resultCode == Activity.RESULT_OK) {
+            val goodsId = data?.getStringExtra("goods_id")
+            val goodsName = data?.getStringExtra("goods_name")
+            if (goodsId != null) {
+                try {
+                    electronicVouchers.goodsID = goodsId.toInt()
+                    mBinding.useGoods.text = goodsName
+                } catch (e: Exception) {
 
-    fun fail(){
-          if (mBinding.timeType1.isChecked){
-              electronicVouchers.couponStartTime =  null
-              electronicVouchers.couponEndTime = null
-              mBinding.useTimeStart.text = "请选择"
-              mBinding.useTimeEnd.text = "请选择"
-          }
+                }
+            }
+        }
+    }
+
+    fun fail() {
+        if (mBinding.timeType1.isChecked) {
+            electronicVouchers.couponStartTime = null
+            electronicVouchers.couponEndTime = null
+            mBinding.useTimeStart.text = "请选择"
+            mBinding.useTimeEnd.text = "请选择"
+        }
 
     }
 }

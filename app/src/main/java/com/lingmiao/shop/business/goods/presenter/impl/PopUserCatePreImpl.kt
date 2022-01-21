@@ -25,13 +25,13 @@ class PopUserCatePreImpl(val view: BaseView) : BasePreImpl(view) {
             showPopWindow(context, lv1Cache!!, callback)
         } else {
             mCoroutine.launch {
-                view?.showDialogLoading();
-                val resp = GoodsRepository.loadUserCategory(cateId,String.format("%s", UserManager?.getLoginInfo()?.goodsCateId?:"0"));
+                view.showDialogLoading();
+                val resp = GoodsRepository.loadUserCategory(cateId,String.format("%s", UserManager.getLoginInfo()?.goodsCateId?:"0"));
                 lv1Cache = resp.data;
                 if (resp.isSuccess) {
                     showPopWindow(context, resp.data, callback)
                 }
-                view?.hideDialogLoading()
+                view.hideDialogLoading()
             }
         }
     }
