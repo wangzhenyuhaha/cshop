@@ -70,6 +70,14 @@ object PromotionRepository {
         return apiService.searchCoupons(map).awaitHiResponse()
     }
 
+    suspend fun searchElectronicVoucher(pageNo: Int): HiResponse<PageVO<ElectronicVoucher>> {
+        val map = mutableMapOf<String, Any>()
+        map["page_no"] = pageNo
+        map["page_size"] = 10
+        map["coupon_type"] = "GOODS"
+        return apiService.searchElectronicVoucher(map).awaitHiResponse()
+    }
+
     //删除优惠券
     suspend fun deleteCoupons(id: Int): HiResponse<Unit> {
         return apiService.deleteCoupon(id).awaitHiResponse()

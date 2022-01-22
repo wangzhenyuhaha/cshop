@@ -10,7 +10,20 @@ import kotlinx.coroutines.launch
 class ElectronicVoucherPreImpl(val context: Context, val view: ElectronicVoucherPresenter.View) :
     BasePreImpl(view), ElectronicVoucherPresenter {
 
-
+    override fun loadListData(
+        page: IPage,
+        list: List<*>
+    ) {
+        mCoroutine.launch {
+            val resp = PromotionRepository.searchElectronicVoucher(page.getPageIndex())
+            if (resp.isSuccess) {
+                val goodsList = resp.data.data
+                view.onLoadMoreSuccess(goodsList, goodsList?.size ?: 0 >= 10)
+            } else {
+                view.onLoadMoreFailed()
+            }
+        }
+    }
 
     override fun deleteElectronicVoucher(id: Int, position: Int) {
         mCoroutine.launch {

@@ -23,6 +23,17 @@ class ElectronicVouchersActivity :
 
     override fun createPresenter() = ElectronicVoucherPreImpl(this, this)
 
+    override fun initView() {
+        super.initView()
+
+        mToolBarDelegate?.setMidTitle("电子券")
+        mToolBarDelegate?.setRightText("新增") {
+            EVouchersDetailActivity.openActivity(this, 1)
+        }
+        mSmartRefreshLayout.setEnableRefresh(true)
+        mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.common_bg))
+    }
+
     override fun initAdapter(): BaseQuickAdapter<ElectronicVoucher, BaseViewHolder> {
         return ElectronicVouchersAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
@@ -35,7 +46,13 @@ class ElectronicVouchersActivity :
 
                     R.id.couponBegin -> {
                         val disabled = if (item.disabled == 0) -1 else 0
-                        item.couponID?.let { mPresenter.editCoupon(disabled, it, position) }
+                        item.couponID?.let {
+                            mPresenter.editElectronicVoucher(
+                                disabled,
+                                it,
+                                position
+                            )
+                        }
                     }
 
                     R.id.couponDelete -> {
@@ -47,7 +64,12 @@ class ElectronicVouchersActivity :
                             {
 
                             }, {
-                                item.couponID?.let { mPresenter.deleteCoupon(it, position) }
+                                item.couponID?.let {
+                                    mPresenter.deleteElectronicVoucher(
+                                        it,
+                                        position
+                                    )
+                                }
                             })
                     }
                 }
@@ -57,17 +79,21 @@ class ElectronicVouchersActivity :
     }
 
     override fun executePageRequest(page: IPage) {
-
+        mPresenter.loadListData(page, mAdapter.data)
     }
 
-    override fun initView() {
-        super.initView()
+    override fun deleteCouponSuccess(position: Int) {
+        mAdapter.remove(position)
+        mAdapter.notifyDataSetChanged()
+        showToast("成功删除优电子券")
+    }
 
-        mToolBarDelegate?.setMidTitle("电子券")
-        mToolBarDelegate?.setRightText("新增") {
-            EVouchersDetailActivity.openActivity(this, 1)
-        }
-        mSmartRefreshLayout.setEnableRefresh(true)
-        mSmartRefreshLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.common_bg))
+    override fun editCouponSuccess(position: Int) {
+        mLoadMoreDelegate?.refresh()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mLoadMoreDelegate?.refresh()
     }
 }

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.sales.api
 import com.james.common.netcore.networking.http.annotations.WithHiResponse
 import com.lingmiao.shop.business.common.bean.PageVO
 import com.lingmiao.shop.business.sales.bean.Coupon
+import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 import com.lingmiao.shop.business.sales.bean.SalesVo
 import retrofit2.Call
 import retrofit2.http.*
@@ -26,10 +27,15 @@ interface PromotionService {
     @WithHiResponse
     fun submitCoupons(@QueryMap map: MutableMap<String, Any>): Call<Unit>
 
-    //查询优惠券
+    //查询优惠券/电子券
     @GET("/seller/promotion/coupons")
     @WithHiResponse
     fun searchCoupons(@QueryMap map: MutableMap<String, Any>): Call<PageVO<Coupon>>
+
+    //查询电子券
+    @GET("/seller/promotion/coupons")
+    @WithHiResponse
+    fun searchElectronicVoucher(@QueryMap map: MutableMap<String, Any>): Call<PageVO<ElectronicVoucher>>
 
     //删除优惠券
     @DELETE("/seller/promotion/coupons/{id}")

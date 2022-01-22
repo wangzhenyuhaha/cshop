@@ -60,6 +60,7 @@ class ElectronicVouchersAdapter :
             helper.setText(R.id.couponStatus, "长期有效")
         }
 
+        helper.setGone(R.id.couponBegin, false)
         //查看详情
         helper.addOnClickListener(R.id.couponDetail)
 
