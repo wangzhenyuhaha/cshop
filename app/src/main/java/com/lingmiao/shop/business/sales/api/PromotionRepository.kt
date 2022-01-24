@@ -74,7 +74,7 @@ object PromotionRepository {
         val map = mutableMapOf<String, Any>()
         map["page_no"] = pageNo
         map["page_size"] = 10
-        map["coupon_type"] = "GOODS"
+        map["coupon_type"] = "TICKET"
         return apiService.searchElectronicVoucher(map).awaitHiResponse()
     }
 

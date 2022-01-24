@@ -9,7 +9,6 @@ import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.DialogUtils
 import com.lingmiao.shop.R
 import com.lingmiao.shop.business.sales.adapter.ElectronicVouchersAdapter
-import com.lingmiao.shop.business.sales.bean.Coupon
 import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 import com.lingmiao.shop.business.sales.presenter.ElectronicVoucherPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.ElectronicVoucherPreImpl
@@ -43,18 +42,6 @@ class ElectronicVouchersActivity :
                     R.id.couponDetail -> {
                         EVouchersDetailActivity.openActivity(context, 0, item)
                     }
-
-                    R.id.couponBegin -> {
-                        val disabled = if (item.disabled == 0) -1 else 0
-                        item.couponID?.let {
-                            mPresenter.editElectronicVoucher(
-                                disabled,
-                                it,
-                                position
-                            )
-                        }
-                    }
-
                     R.id.couponDelete -> {
                         DialogUtils.showDialog(context,
                             "提示",
@@ -86,10 +73,6 @@ class ElectronicVouchersActivity :
         mAdapter.remove(position)
         mAdapter.notifyDataSetChanged()
         showToast("成功删除优电子券")
-    }
-
-    override fun editCouponSuccess(position: Int) {
-        mLoadMoreDelegate?.refresh()
     }
 
     override fun onResume() {

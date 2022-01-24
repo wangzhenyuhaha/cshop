@@ -38,21 +38,5 @@ class ElectronicVoucherPreImpl(val context: Context, val view: ElectronicVoucher
         }
     }
 
-    override fun editElectronicVoucher(disabled: Int, id: Int, position: Int) {
-        mCoroutine.launch {
-            view.showDialogLoading()
-            val resp = PromotionRepository.editCoupon(disabled, id)
-            view.hideDialogLoading()
-            handleResponse(resp)
-            {
-                view.editCouponSuccess(position)
-            }
-        }
-    }
-
-
-
-
-
 }
 

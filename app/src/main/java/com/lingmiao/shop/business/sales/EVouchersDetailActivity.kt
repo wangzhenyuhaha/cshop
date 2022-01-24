@@ -265,7 +265,39 @@ class EVouchersDetailActivity :
     }
 
     private fun readElectronicVoucher() {
-
+        mBinding.apply {
+            nameInput.text = electronicVouchers.title
+            val start = formatString(
+                electronicVouchers.useStartTime?.times(1000)?.let { Date(it) },
+                MINUTES_TIME_FORMAT_OTHER
+            )
+            val end = formatString(
+                electronicVouchers.useEndTime?.times(1000)?.let { Date(it) },
+                MINUTES_TIME_FORMAT_OTHER
+            )
+            if (
+                (
+                        (end?.substring(0, 4)?.toInt() ?: 0) - (start?.substring(0, 4)?.toInt()
+                            ?: 0)
+                        ) == 30
+            ) {
+                //长期有效
+                timeType1.isChecked = true
+                timeType2.isChecked = false
+                time.gone()
+            } else {
+                //固定时间
+                timeType1.isChecked = false
+                timeType2.isChecked = true
+                time.visiable()
+                useTimeStart.text = start
+                useTimeEnd.text = end
+            }
+            price.text = electronicVouchers.jianPrice.toString()
+            useGoods.text = electronicVouchers.goodsName.toString()
+            stock.text = electronicVouchers.createNum.toString()
+        }
+        mBinding.submit.gone()
     }
 
     override fun useLightMode() = false

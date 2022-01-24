@@ -13,11 +13,11 @@ class ElectronicVoucher: Serializable {
     @SerializedName("title")
     var title: String? = null
 
-    //电子券时效开始
+    //电子券领取时间开始
     @SerializedName("start_time")
     var couponStartTime: Long? = null
 
-    //电子券时效结束
+    //电子券领取时间结束
     @SerializedName("end_time")
     var couponEndTime: Long? = null
 
@@ -60,4 +60,9 @@ class ElectronicVoucher: Serializable {
     //电子券绑定的商品ID
     @SerializedName("goods_id")
     var goodsID: Int? = null
+
+    //电子券绑定的商品名称
+    @SerializedName("goods_name")
+    var goodsName: String? = null
+
 }
