@@ -6,11 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
-import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.BaseActivity
 import com.james.common.netcore.networking.http.core.HiResponse
 import com.james.common.utils.exts.*
@@ -18,6 +15,7 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.bean.FileResponse
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
+import com.lingmiao.shop.business.goods.adapter.SimpleAdapter
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
@@ -47,16 +45,6 @@ import java.io.File
  */
 
 @SuppressLint("NotifyDataSetChanged")
-class SimpleAdapter :
-    BaseQuickAdapter<Data, BaseViewHolder>(R.layout.adapter_one_textview) {
-
-    override fun convert(helper: BaseViewHolder, goodsVO: Data?) {
-        goodsVO?.apply {
-            helper.setText(R.id.goodsNameTv, goodsName)
-        }
-    }
-}
-
 class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublishNewPre.PublishView {
 
     companion object {
@@ -145,7 +133,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }
     }
 
-    //是否从中心库复制而来的商品(该页面默认不是来自中心库)
+    //是否从中心库复制而来的商品分类，菜单(该页面默认不是来自中心库)
     private var isFromCenter = 0
 
     // 编辑商品的商品ID
@@ -193,26 +181,25 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     override fun getLayoutId() = R.layout.goods_activity_publish_new
 
+    //获取从其他页面传过来的信息
     override fun initBundles() {
         //四种情况
         //1 scan false  goods_id null  添加商品
         //2 scan false  goods_id Not Null  编辑商品
         //3 scan true  goods_id null  中途goods_id可能会变为 Not Null,最后还要变为null   添加商品
         //4 scan true  goods_id not null 编辑完了需要赋值为Null    添加商品
-        //添加商品接口
-
-        //编辑商品接口
-
         goodsId = intent.getStringExtra(KEY_GOODS_ID)
         scan = intent.getBooleanExtra(KEY_SCAN, false)
         if (scan && goodsId == null) {
+            //这个是扫码时未查询到任何商品的情况，这时要求输入商品名时可以根据商品名查询商品
             searchGoods = true
         }
         //商品的条形码
         scanCode = intent.getStringExtra(KEY_SCAN_CODE) ?: ""
+        //如何扫码未查询到商品，会在这里保存商品图片
         pictureAddress = intent.getStringExtra(KEY_PICTURE_ADDRESS) ?: ""
 
-        //已经提前修改的商品信息
+        //如果在扫码之后查询到了商品，可以选择编辑进入编辑页面修改商品信息，并且会把之前页面中的商品信息带过来
         thumbnail = intent.getStringExtra(KEY_GOODS_THUMBNAIL)
         price = intent.getStringExtra(KEY_GOODS_PRICE)
         quantity = intent.getStringExtra(KEY_GOODS_QUANTITY)
@@ -229,6 +216,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         mToolBarDelegate.setMidTitle(if (goodsId.isNotBlank() && !scan) "编辑商品" else "发布商品")
 
         if (scan) {
+            //扫码添加商品时不能
             section4Row6Ll.gone()
         }
 
@@ -550,12 +538,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             //将分类菜单对应的值赋值给页面，不能调用方法，以免重置isFromCenter
 
             //显示分类名字
-            goodsCategoryTv.text =  this@GoodsPublishNewActivity.goodsVO.categoryName
+            goodsCategoryTv.text = this@GoodsPublishNewActivity.goodsVO.categoryName
             //显示菜单名字
             if (this@GoodsPublishNewActivity.goodsVO.shopCatId.isNullOrEmpty()) {
                 //显示分类名字
                 goodsGroupTv.text = this@GoodsPublishNewActivity.goodsVO.categoryName
-            }else{
+            } else {
                 //显示菜单名字
                 goodsGroupTv.text = this@GoodsPublishNewActivity.goodsVO.shopCatName
             }
@@ -894,9 +882,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     }
 
     //useless
-    override fun onUpdateUseTime(items: List<MultiPickerItemBean>?) {
-        val values = items?.map { it.value }?.joinToString(separator = ",")
-        val names = items?.map { it.name }?.joinToString(separator = ",")
+    override fun onUpdateUseTime(list: List<MultiPickerItemBean>?) {
+        val values = list?.map { it.value }?.joinToString(separator = ",")
+        val names = list?.map { it.name }?.joinToString(separator = ",")
         goodsVO.availableDate = values
         goodsVirtualUseTimeTv.text = if (names.isNotBlank()) names else "请设置"
     }

@@ -19,14 +19,15 @@ class SalesMarketingActivity : BaseVBActivity<ActivitySalesMarketingBinding, Sal
 
         mToolBarDelegate?.setMidTitle("营销活动")
 
-        //优惠券
-        mBinding.container1.singleClick {
-            ActivityUtils.startActivity(DiscountActivity::class.java)
-        }
 
         //满减活动
         mBinding.container2.singleClick {
             ActivityUtils.startActivity(SalesSettingActivity::class.java)
+        }
+
+        //优惠券
+        mBinding.container1.singleClick {
+            ActivityUtils.startActivity(DiscountActivity::class.java)
         }
 
         //电子券

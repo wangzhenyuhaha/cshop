@@ -23,8 +23,9 @@ class DiscountAdapter :
         //优惠券名字
         helper.setText(R.id.title, item?.title)
 
+        val number =  (item?.createNum?:0 )- (item?.receivedNum ?:0)
         //优惠券库存
-        helper.setText(R.id.createNum, "（库存${item?.createNum}）")
+        helper.setText(R.id.createNum, "（库存${number}）")
 
         //优惠券状态
         val start = formatString(

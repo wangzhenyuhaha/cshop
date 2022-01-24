@@ -41,6 +41,10 @@ class Coupon : Serializable {
     @SerializedName("create_num")
     var createNum: Int? = null
 
+    //已被领取的库存
+    @SerializedName("received_num")
+    var receivedNum : Int? = null
+
     //优惠规则   满
     @SerializedName("coupon_threshold_price")
     var manPrice: Double? = null

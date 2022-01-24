@@ -84,7 +84,7 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         mToolBarDelegate.setRightText(
             "新增",
             ContextCompat.getColor(context, R.color.white),
-            View.OnClickListener {
+            {
                 ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
             })
     }

@@ -19,8 +19,9 @@ class ElectronicVouchersAdapter :
         //电子券名字
         helper.setText(R.id.title, item?.title)
 
+        val number =  (item?.createNum?:0 )- (item?.receivedNum ?:0)
         //电子券库存
-        helper.setText(R.id.createNum, "（库存${item?.createNum}）")
+        helper.setText(R.id.createNum, "（库存${number}）")
 
         //电子券状态
         val start = formatString(
