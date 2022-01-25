@@ -22,6 +22,7 @@ import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
 import com.lingmiao.shop.business.photo.PhotoHelper
+import com.lingmiao.shop.business.sales.SelectGoodsActivity
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
 import com.luck.picture.lib.entity.LocalMedia
@@ -90,6 +91,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         const val REQUEST_CODE_SKU = 1002
         const val REQUEST_CODE_DESC = 1003
         const val REQUEST_CODE_INFO = 1004
+        const val REQUEST_CODE_TICKET = 22
 
         //编辑已有商品或者中心库中已有商品
         fun openActivity(
@@ -327,6 +329,12 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //实体商品在单规格和多规格之间切换
         switchBtn.setOnCheckedChangeListener { _, isChecked ->
             showSection45WithStatus(isChecked, isExpand)
+        }
+
+        //绑定对应的电子券
+        ticker_goods_name.singleClick {
+            val intent = Intent(this, SelectTicketActivity::class.java)
+            startActivityForResult(intent, 22)
         }
 
         //商品详情
@@ -647,6 +655,15 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     goodsDetailTv.text = if (goodsVO.intro.isNotBlank()) "已添加" else "未添加"
                     if (goodsVO.goodsParamsList?.size ?: 0 > 0) goodsDetailTv.text = "已添加"
                     if (!goodsVO.metaDescription.isNullOrEmpty()) goodsDetailTv.text = "已添加"
+                }
+            }
+            REQUEST_CODE_TICKET -> {
+
+                val goodsId: Int = data.getIntExtra("goods_id", 0)
+                val goodsName = data.getStringExtra("goods_name")
+                if (goodsId != 0) {
+                    goodsVO.couponID = goodsId
+                    ticker_goods_name.text = goodsName
                 }
             }
         }

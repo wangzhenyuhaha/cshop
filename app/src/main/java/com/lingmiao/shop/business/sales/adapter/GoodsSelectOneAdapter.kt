@@ -1,6 +1,5 @@
 package com.lingmiao.shop.business.sales.adapter
 
-import android.util.Log
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

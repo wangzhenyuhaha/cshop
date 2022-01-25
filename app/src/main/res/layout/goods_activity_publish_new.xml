@@ -155,7 +155,8 @@
                 android:visibility="gone"
                 app:ivBgColor="@color/color_ffffff"
                 app:ivRadius="@dimen/dimen_5"
-                tools:ignore="HardcodedText">
+                tools:ignore="HardcodedText"
+                tools:visibility="visible">
 
                 <LinearLayout style="@style/goods_publish_sub_container">
 
@@ -166,7 +167,7 @@
                         android:layout_marginStart="@dimen/dimen_5"
                         android:drawableStart="@mipmap/common_must_input"
                         android:gravity="start"
-                        android:text="适用商品"
+                        android:text="适用电子券"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/sp_13" />
 
@@ -239,7 +240,7 @@
             <!--商品打包费-->
             <include layout="@layout/goods_include_publish_section_package" />
 
-            <com.james.common.view.ILinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            <com.james.common.view.ILinearLayout
                 style="@style/goods_publish_container"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"

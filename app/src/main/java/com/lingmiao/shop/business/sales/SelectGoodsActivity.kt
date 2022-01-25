@@ -2,23 +2,17 @@ package com.lingmiao.shop.business.sales
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.util.Log
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.james.common.base.loadmore.BaseLoadMoreActivity
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
-import com.lingmiao.shop.business.goods.adapter.GoodsMenuNewAdapter
-import com.lingmiao.shop.business.goods.adapter.GoodsSelectAdapter
 import com.lingmiao.shop.business.goods.api.bean.CategoryVO
 import com.lingmiao.shop.business.goods.api.bean.GoodsVO
 import com.lingmiao.shop.business.sales.adapter.GoodsSelectOneAdapter
 import com.lingmiao.shop.business.sales.presenter.SelectGoodsPresenter
 import com.lingmiao.shop.business.sales.presenter.impl.SelectGoodsPreImpl
-import com.lingmiao.shop.databinding.ActivitySelectGoodsBinding
 import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.sales_activity_goods.*
 
@@ -63,7 +57,7 @@ class SelectGoodsActivity : BaseLoadMoreActivity<GoodsVO, SelectGoodsPresenter>(
         return GoodsSelectOneAdapter().apply {
             //menuIv
             setOnItemChildClickListener { adapter, view, position ->
-                val item = mAdapter.getItem(position) as GoodsVO;
+                val item = mAdapter.getItem(position) as GoodsVO
                 if (view.id == R.id.menuIv) {
                     setItem(item.goodsId)
                     goodsID = item.goodsId

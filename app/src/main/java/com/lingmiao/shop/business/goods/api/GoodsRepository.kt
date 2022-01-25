@@ -206,7 +206,7 @@ object GoodsRepository {
         is_up: String,
         is_from_center: Int = 0
     ): HiResponse<GoodsVOWrapper> {
-        return apiService.submitTicket(goods).awaitHiResponse()
+        return apiService.submitTicket(is_up, goods).awaitHiResponse()
     }
 
     /**

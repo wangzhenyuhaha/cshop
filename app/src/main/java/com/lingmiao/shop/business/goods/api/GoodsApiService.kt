@@ -70,8 +70,9 @@ interface GoodsApiService {
     ): Call<GoodsVOWrapper>
 
     //新增电子券
-    @POST("/seller/goods/ticket")
+    @POST("/seller/goods/ticket/add/{is_up}")
     fun submitTicket(
+        @Path(value = "is_up") is_up: String,
         @Body goods: GoodsVOWrapper
     ): Call<GoodsVOWrapper>
 
