@@ -267,7 +267,7 @@ class DiscountDetailActivity : BaseVBActivity<ActivityDiscountDetailBinding, Dis
 
         //优惠规则  减
         mBinding.rulerNumberJian.singleClick {
-            DialogUtils.showInputDialogNumber(
+            DialogUtils.showInputDialogNumberDecimal(
                 this,
                 "优惠券面额",
                 "",

@@ -18,6 +18,6 @@ class GoodsConfig {
 
         const val GOODS_TYPE_VIRTUAL = "VIRTUAL"
         const val GOODS_TYPE_NORMAL = "NORMAL"
-
+        const val GOODS_TYPE_E_VOUCHERS = "E_VOUCHERS"
     }
 }
