@@ -13,6 +13,14 @@ import java.io.Serializable
  */
 class GoodsVOWrapper : Serializable {
 
+    //券包  买一个商品送几张票
+    @SerializedName("num")
+    var num: Int? = null
+
+    //券包  关联的票的ID
+    @SerializedName("coupon_id")
+    var couponID: Int? = null
+
     @SerializedName("bar_code")
     var bar_code: String? = null //条形码
 
@@ -24,7 +32,7 @@ class GoodsVOWrapper : Serializable {
     var mktprice: String? = null //市场价格
 
     @SerializedName("package_price")
-    var packagePrice : Double? = 0.00 // 打包费
+    var packagePrice: Double? = 0.00 // 打包费
 
     @SerializedName("price")
     var price: String? = null //商品价格
@@ -79,7 +87,7 @@ class GoodsVOWrapper : Serializable {
     var goodsGalleryList: List<GoodsGalleryVO>? = null  //商品主图 List
 
     @SerializedName("thumbnail")
-    var thumbnail : String? = null
+    var thumbnail: String? = null
 
     @SerializedName("goods_id")
     var goodsId: String? = null
@@ -146,33 +154,37 @@ class GoodsVOWrapper : Serializable {
     var isAuth: Int = 0
 
     @SerializedName("auth_message")
-    var authMessage : String = ""
+    var authMessage: String = ""
+
     // 配送时效
-    var goodsDeliveryType : String ?= ""
+    var goodsDeliveryType: String? = ""
+
     // 配送方式
-    var goodsDeliveryModel : String ?= ""
+    var goodsDeliveryModel: String? = ""
 
 
     // 配送时效
-    var goodsWeight : String ?= ""
+    var goodsWeight: String? = ""
+
     // 配送方式
-    var goodsUnit : String ?= ""
+    var goodsUnit: String? = ""
 
     // ------------虚拟商品---------------------
     // VIRTUAL
     // NORMAL
     @SerializedName("goods_type")
-    var goodsType: String?= ""
+    var goodsType: String? = ""
 
     // 虚拟商品的可用日期
     @SerializedName("available_date")
-    var availableDate : String ?= ""
+    var availableDate: String? = ""
 
     // 虚拟商品自购买日后几天可用
     @SerializedName("expiry_day")
-    var expiryDay : String ?= ""
+    var expiryDay: String? = ""
+
     @SerializedName("expiry_day_text")
-    var expiryDayText : String ?= ""
+    var expiryDayText: String? = ""
 
 
     // ---------------------------------
@@ -189,8 +201,8 @@ class GoodsVOWrapper : Serializable {
     /**
      * 详情
      */
-     @SerializedName("meta_description")
-     var metaDescription : String ?= null
+    @SerializedName("meta_description")
+    var metaDescription: String? = null
 
     /**
      * 图片
@@ -226,7 +238,20 @@ class GoodsVOWrapper : Serializable {
         return 1 == hasSpec
     }
 
-    fun isVirtualGoods() : Boolean {
-        return GoodsConfig.GOODS_TYPE_VIRTUAL == goodsType
+    fun isVirtualGoods(): Int {
+        return when (goodsType) {
+            GoodsConfig.GOODS_TYPE_NORMAL -> {
+                0
+            }
+            GoodsConfig.GOODS_TYPE_VIRTUAL -> {
+                1
+            }
+            GoodsConfig.GOODS_TYPE_TICKET -> {
+                2
+            }
+            else -> {
+                0
+            }
+        }
     }
 }

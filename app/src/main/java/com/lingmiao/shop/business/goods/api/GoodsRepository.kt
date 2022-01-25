@@ -200,6 +200,15 @@ object GoodsRepository {
         return apiService.submitGoods(is_up, is_from_center, goods).awaitHiResponse()
     }
 
+    //新增券包
+    suspend fun submitTicket(
+        goods: GoodsVOWrapper,
+        is_up: String,
+        is_from_center: Int = 0
+    ): HiResponse<GoodsVOWrapper> {
+        return apiService.submitTicket(goods).awaitHiResponse()
+    }
+
     /**
      * 编辑商品
      */

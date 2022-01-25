@@ -47,6 +47,7 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
     }
 
     private var isVirtualGoods = false;
+
     // 底部按钮是否展开
     private var isExpand = false
 
@@ -99,20 +100,23 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
             }
             // 发货方式
             REQUEST_CODE_DELIVERY -> {
-                val deliveryVO = data.getSerializableExtra(DeliverySettingActivity.KEY_Delivery) as? DeliveryRequest
+                val deliveryVO =
+                    data.getSerializableExtra(DeliverySettingActivity.KEY_Delivery) as? DeliveryRequest
                 goodsVO.convert(deliveryVO)
                 goodsDeliveryTv.text = if (goodsVO.isSelectDeliveryWay()) "已选择" else "请选择"
             }
             // 规格设置
             REQUEST_CODE_SKU -> {
-                val specKeyList = data.getSerializableExtra(SpecSettingActivity.KEY_SPEC_KEY_LIST) as? List<SpecKeyVO>
-                val skuList = data.getSerializableExtra(SpecSettingActivity.KEY_SKU_LIST) as? List<GoodsSkuVOWrapper>
+                val specKeyList =
+                    data.getSerializableExtra(SpecSettingActivity.KEY_SPEC_KEY_LIST) as? List<SpecKeyVO>
+                val skuList =
+                    data.getSerializableExtra(SpecSettingActivity.KEY_SKU_LIST) as? List<GoodsSkuVOWrapper>
                 goodsVO.apply {
                     this.isAddSpec = true
                     this.skuList = skuList
                     this.specKeyList = specKeyList
                 }
-                if(isVirtualGoods) {
+                if (isVirtualGoods) {
                     goodsVirtualSpecTv.text = if (skuList.isNullOrEmpty()) "请设置" else "已设置";
                 } else {
                     goodsSpecTv.text = if (skuList.isNullOrEmpty()) "请设置规格" else "已设置"
@@ -129,20 +133,24 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
     }
 
     override fun onSetGoodsType(isVirtual: Boolean) {
-        isVirtualGoods = isVirtual ;
+        isVirtualGoods = isVirtual;
         setVirtualGoodsView();
+    }
+
+    override fun onSetGoodsTypeNew(type: String?) {
+        TODO("Not yet implemented")
     }
 
     override fun onSetUseTimeStr(useTime: String) {
         goodsVirtualUseTimeTv.text = useTime
     }
 
-    override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper,center:Boolean) {
+    override fun onLoadGoodsSuccess(goodsVO: GoodsVOWrapper, center: Boolean) {
         this.goodsVO = goodsVO
         goodsVO.apply {
             // 商品分类
 //            goodsCategoryTv.text = Html.fromHtml(categoryName)
-            goodsCategoryTv.text = categoryName?.replace("&gt;","/")
+            goodsCategoryTv.text = categoryName?.replace("&gt;", "/")
             // 商品名称
             goodsNameEdt.setText(goodsName)
             galleryRv.addDataList(goodsGalleryList)
@@ -150,8 +158,8 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
             if (isSelectDeliveryWay()) {
                 goodsDeliveryTv.text = "已选择"
             }
-            isVirtualGoods = isVirtualGoods()
-            if(isVirtualGoods) {
+            isVirtualGoods = isVirtualGoods() == 1
+            if (isVirtualGoods) {
                 // 虚拟商品
                 setVirtualGoodsView();
                 goodsVirtualExpireTv.text = expiryDayText;
@@ -173,13 +181,13 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
                     goodsSKUEdt.setText(upSkuId)
                     goodsIDEdt.setText(sn)
                     switchBtn.isChecked = false
-                    if(!goodsId.isNullOrBlank()) {
+                    if (!goodsId.isNullOrBlank()) {
                         goodsQuantityEdt.isEnabled = false;
                     }
                 }
             }
             // 商品分组
-            goodsGroupTv.text = shopCatName?.replace("&gt;","/")
+            goodsGroupTv.text = shopCatName?.replace("&gt;", "/")
             // 商品视频
             if (videoUrl.isNotBlank()) {
                 goodsVideoTv.text = "已选择"
@@ -212,7 +220,7 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
     private fun initSection1View() {
         // 切换商品类型
         goodsTypeTv.singleClick {
-            mPresenter.showGoodsType(isVirtualGoods)
+            mPresenter.showGoodsType(if (isVirtualGoods) 1 else 0)
         }
         // 分类
         goodsCategoryTv.singleClick {
@@ -220,11 +228,11 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
         }
         // 有效期至
         goodsVirtualExpireTv.singleClick {
-            mPresenter?.showExpirePop(goodsVO.expiryDay?:"")
+            mPresenter?.showExpirePop(goodsVO.expiryDay ?: "")
         }
         // 使用时间
         goodsVirtualUseTimeTv.singleClick {
-            mPresenter?.showUseTimePop(goodsVO.availableDate?:"")
+            mPresenter?.showUseTimePop(goodsVO.availableDate ?: "")
         }
         // 商品套餐
         goodsVirtualSpecTv.singleClick {
@@ -245,11 +253,11 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
         var values = items?.map { it?.value }?.joinToString(separator = ",");
         var names = items?.map { it?.name }?.joinToString(separator = ",");
         goodsVO.availableDate = values;
-        goodsVirtualUseTimeTv.text = if(names.isNotBlank()) names else "请设置";
+        goodsVirtualUseTimeTv.text = if (names.isNotBlank()) names else "请设置";
     }
 
     fun setVirtualGoodsView() {
-        goodsTypeTv.text = GoodsTypeVO.getName(isVirtualGoods)
+        goodsTypeTv.text = GoodsTypeVO.getName(if (isVirtualGoods) 1 else 0)
         section3RowDeliveryLL.show(!isVirtualGoods)
         // 有效期和使用时间
         sectionVirtualExpireTime.show(isVirtualGoods)
@@ -262,7 +270,11 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
 
     private fun initSection3View() {
         goodsDeliveryTv.singleClick {
-            DeliverySettingActivity.openActivity(this, REQUEST_CODE_DELIVERY, DeliveryRequest.convert(goodsVO))
+            DeliverySettingActivity.openActivity(
+                this,
+                REQUEST_CODE_DELIVERY,
+                DeliveryRequest.convert(goodsVO)
+            )
         }
     }
 
@@ -307,8 +319,8 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
             selling = goodsSellingDescEdt.getViewText()
             goodsGalleryList = galleryRv.getSelectPhotos()
 
-            goodsType = GoodsTypeVO.getValue(isVirtualGoods)
-            if(isVirtualGoods) {
+            goodsType = GoodsTypeVO.getValue(if (isVirtualGoods) 1 else 0)
+            if (isVirtualGoods) {
                 // 虚拟
                 price = null
                 mktprice = null
@@ -346,14 +358,14 @@ class GoodsPublishActivity : BaseActivity<GoodsPublishPre>(), GoodsPublishPre.Pu
             }
 
         }
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked,false,1,0)
+        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, false, 1, 0)
     }
 
     /**
      * 以下几个控件的显示隐藏和 "多规格的开关"、"底部展开/收起按钮"关联
      */
     private fun showSection45WithStatus(isChecked: Boolean, isExpand: Boolean) {
-        if(isVirtualGoods) {
+        if (isVirtualGoods) {
             section4Row1Ll.show(false)
             section4RowVirtualSpecLl.show(true)
 

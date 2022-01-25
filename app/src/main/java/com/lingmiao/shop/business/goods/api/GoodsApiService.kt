@@ -69,6 +69,12 @@ interface GoodsApiService {
         @Body goods: GoodsVOWrapper
     ): Call<GoodsVOWrapper>
 
+    //新增电子券
+    @POST("/seller/goods/ticket")
+    fun submitTicket(
+        @Body goods: GoodsVOWrapper
+    ): Call<GoodsVOWrapper>
+
     /**
      * 编辑商品
      */

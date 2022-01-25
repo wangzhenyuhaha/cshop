@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.goods.presenter
 
 import com.lingmiao.shop.business.goods.Data
+import com.lingmiao.shop.business.goods.api.bean.GoodsVOWrapper
 
 /**
 Create Date : 2021/3/94:34 PM
@@ -23,6 +24,16 @@ interface GoodsPublishNewPre : GoodsPublishPre {
     fun showGoodsUnitPop(id: String?);
 
     fun loadGoodsInfoFromCenter(id: String)
+
+    fun publishTicket(
+        goodsVO: GoodsVOWrapper,
+        isVirtualGoods: Boolean = false,
+        isMutilSpec: Boolean = false,
+        scan: Boolean,
+        type: Int,
+        isFromCenter: Int
+    )
+
 
     interface PublishView : GoodsPublishPre.PublishView {
 

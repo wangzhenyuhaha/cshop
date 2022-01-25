@@ -18,6 +18,7 @@ import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.goods.adapter.SimpleAdapter
 import com.lingmiao.shop.business.goods.api.bean.*
 import com.lingmiao.shop.business.goods.api.request.DeliveryRequest
+import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
 import com.lingmiao.shop.business.photo.PhotoHelper
@@ -152,8 +153,8 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
     //商品的条形码
     private var scanCode: String = ""
 
-    //是否是虚拟商品
-    private var isVirtualGoods = false
+    //是否是虚拟商品  1  虚拟商品   0   实体商品    2券包
+    private var isVirtualGoods = 0
 
     //底部按钮是否展开   useless
     private var isExpand = false
@@ -314,7 +315,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 SpecSettingActivity.openActivity(
                     this,
                     REQUEST_CODE_SKU,
-                    isVirtualGoods,
+                    isVirtualGoods != 0,
                     goodsVO,
                     scan = scan
                 )
@@ -336,7 +337,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 showToast("请先选择商品分类")
             }
         }
-
 
         //保存  0
         saveTv.singleClick {
@@ -375,10 +375,30 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
     }
 
-    //实体商品和虚拟商品切换
+    //切换商品类型
     override fun onSetGoodsType(isVirtual: Boolean) {
-        isVirtualGoods = isVirtual
-        setVirtualGoodsView()
+        // isVirtualGoods = isVirtual
+        //  setVirtualGoodsView()
+    }
+
+    override fun onSetGoodsTypeNew(type: String?) {
+        when (type) {
+            GoodsConfig.GOODS_TYPE_VIRTUAL -> {
+                isVirtualGoods = 1
+                setVirtualGoodsView()
+            }
+            GoodsConfig.GOODS_TYPE_NORMAL -> {
+                isVirtualGoods = 0
+                setVirtualGoodsView()
+            }
+            GoodsConfig.GOODS_TYPE_TICKET -> {
+                isVirtualGoods = 2
+                setVirtualGoodsView()
+            }
+            else -> {
+
+            }
+        }
     }
 
     //选择分类
@@ -447,40 +467,56 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 authFailLayout.gone()
             }
 
+            //券包相关信息
+            if (num != null) {
+                ticket_number.setText(num.toString())
+            }
+            if (couponID != null) {
+                ticker_goods_name.text = "已设置"
+            }
+
             //商品类型
             isVirtualGoods = isVirtualGoods()
-            if (isVirtualGoods) {
-                // 虚拟商品
-                setVirtualGoodsView()
-//                goodsVirtualExpireTv.text = expiryDayText
-//                goodsVirtualUseTimeTv.text = availableDate
-                goodsVirtualSpecTv.text = if (this.hasMultiSpec() && !scan) "已设置" else "请设置"
-            } else {
-                goodsVirtualSpecTv.text = if (this.hasMultiSpec() && !scan) "已设置" else "请设置"
-                if (this.hasMultiSpec()) {
-                    //goodsSpecTv.text = "已设置"
-                    switchBtn.isChecked = true
-                    showSection45WithStatus(switchBtn.isChecked, true)
-                } else {
+            when (isVirtualGoods) {
+                0 -> {
+                    //实体商品
+                    goodsVirtualSpecTv.text = if (this.hasMultiSpec() && !scan) "已设置" else "请设置"
+                    if (this.hasMultiSpec()) {
+                        //goodsSpecTv.text = "已设置"
+                        switchBtn.isChecked = true
+                        showSection45WithStatus(switchBtn.isChecked, true)
+                    } else {
+                        eventPriceEdt.setText(eventPrice)
+                        eventQuantityEdt.setText(eventQuantity)
+                        goodsPriceEdt.setText(price)
+                        marketPriceEdt.setText(mktprice)
+                        goodsQuantityEdt.setText(quantity)
+                        goodsCostEdt.setText(cost)
+                        switchBtn.isChecked = false
+                    }
+                }
+                1 -> {
+                    //虚拟商品
+                    setVirtualGoodsView()
+                    goodsVirtualSpecTv.text = if (this.hasMultiSpec() && !scan) "已设置" else "请设置"
+                }
+                2 -> {
+                    //券包
                     eventPriceEdt.setText(eventPrice)
                     eventQuantityEdt.setText(eventQuantity)
                     goodsPriceEdt.setText(price)
                     marketPriceEdt.setText(mktprice)
                     goodsQuantityEdt.setText(quantity)
                     goodsCostEdt.setText(cost)
-                    //goodsNoEdt.setText(sn)
-                    //goodsWeightEdt.setText(weight)
-                    // goodsSKUEdt.setText(upSkuId)
-                    //goodsIDEdt.setText(sn)
                     switchBtn.isChecked = false
-//                    if(!goodsId.isNullOrBlank()) {
-//                        goodsQuantityEdt.isEnabled = false;
-//                    }
                 }
+                else -> {
+
+                }
+
             }
 
             //商品分类
-            //goodsCategoryTv.text = Html.fromHtml(categoryName)
             goodsCategoryTv.text = categoryName?.replace("&gt;", "/")
 
             //商品菜单
@@ -582,9 +618,9 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     this.skuList = skuList
                     this.specKeyList = specKeyList
                 }
-                if (isVirtualGoods) {
+                if (isVirtualGoods == 1) {
                     goodsVirtualSpecTv.text = if (skuList.isNullOrEmpty()) "请设置" else "已设置"
-                } else {
+                } else if (isVirtualGoods == 0) {
                     goodsSpecTv.text = if (skuList.isNullOrEmpty()) "请设置规格" else "已设置"
                     goodsVirtualSpecTv.text = if (skuList.isNullOrEmpty()) "请设置" else "已设置"
                 }
@@ -641,7 +677,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         }.showPopupWindow()
     }
 
-
     override fun searchGoodsFailed() {
         searchGoodsLayout.gone()
     }
@@ -679,7 +714,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             )
         }
     }
-
 
     //上传图片
     private fun uploadImages(list: ArrayList<String>, fail: () -> Unit, success: () -> Unit) {
@@ -724,7 +758,6 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         goodsDeliveryTimeTv.text = name
     }
 
-
     private fun convert2GalleryVO(list: List<LocalMedia>): List<GoodsGalleryVO> {
         val galleryList = mutableListOf<GoodsGalleryVO>()
         list.forEach {
@@ -733,81 +766,130 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         return galleryList
     }
 
-
     override fun onUpdateModel(id: String?, name: String?) {
         goodsVO.goodsDeliveryModel = id
         goodsDeliveryTv.text = name
     }
 
-
     private fun clickConfirmView(type: Int) {
-        goodsVO.apply {
-            bar_code = if (scanCode.isNotBlank()) scanCode else null
-            goodsName = goodsNameEdt.getViewText()
-            selling = goodsSellingDescEdt.getViewText()
-            goodsGalleryList = galleryRv.getSelectPhotos()
-            goodsType = GoodsTypeVO.getValue(isVirtualGoods)
-            if (isVirtualGoods) {
-                // 虚拟
-                price = null
-                mktprice = null
-                eventPrice = null
-                eventQuantity = null
-                quantity = null
-                cost = null
-                sn = null
-                weight = null
-                upSkuId = null
-                upGoodsId = null
-            } else {
-                // 实物
+
+        if (isVirtualGoods == 2) {
+            //券包
+            goodsVO.apply {
+                num = try {
+                    ticket_number.getViewText().toInt()
+                } catch (e: Exception) {
+                    null
+                }
+                bar_code = if (scanCode.isNotBlank()) scanCode else null
+                goodsName = goodsNameEdt.getViewText()
+                selling = goodsSellingDescEdt.getViewText()
+                goodsGalleryList = galleryRv.getSelectPhotos()
+                goodsType = GoodsTypeVO.getValue(isVirtualGoods)
+
+
                 expiryDay = ""
                 availableDate = ""
 
-                if (switchBtn.isChecked) {
-                    eventPrice = null
-                    eventQuantity = null
+                eventPrice = eventPriceEdt.getViewText()
+                eventQuantity = eventQuantityEdt.getViewText()
+                price = goodsPriceEdt.getViewText()
+                mktprice = marketPriceEdt.getViewText()
+                quantity = goodsQuantityEdt.getViewText()
+                cost = goodsCostEdt.getViewText()
+                sn = goodsNoEdt.getViewText()
+                weight = goodsWeightEdt.getViewText()
+                upSkuId = goodsSKUEdt.getViewText()
+                upGoodsId = goodsIDEdt.getViewText()
+                skuList = null
+
+                packagePrice = try {
+                    goodsPackageFeeEdt.getViewText().toDouble()
+                } catch (e: Exception) {
+                    0.00
+                }
+
+            }
+
+            //type  0 保存  ，1  保存并上架
+            mPresenter.publishTicket(
+                goodsVO,
+                scan = scan,
+                type = type,
+                isFromCenter = isFromCenter
+            )
+
+        } else {
+            goodsVO.apply {
+                num = null
+                couponID = null
+                bar_code = if (scanCode.isNotBlank()) scanCode else null
+                goodsName = goodsNameEdt.getViewText()
+                selling = goodsSellingDescEdt.getViewText()
+                goodsGalleryList = galleryRv.getSelectPhotos()
+                goodsType = GoodsTypeVO.getValue(isVirtualGoods)
+                if (isVirtualGoods == 1) {
+                    // 虚拟
                     price = null
                     mktprice = null
+                    eventPrice = null
+                    eventQuantity = null
                     quantity = null
                     cost = null
                     sn = null
                     weight = null
                     upSkuId = null
                     upGoodsId = null
-                } else {
-                    eventPrice = eventPriceEdt.getViewText()
-                    eventQuantity = eventQuantityEdt.getViewText()
-                    price = goodsPriceEdt.getViewText()
-                    mktprice = marketPriceEdt.getViewText()
-                    quantity = goodsQuantityEdt.getViewText()
-                    cost = goodsCostEdt.getViewText()
-                    sn = goodsNoEdt.getViewText()
-                    weight = goodsWeightEdt.getViewText()
-                    upSkuId = goodsSKUEdt.getViewText()
-                    upGoodsId = goodsIDEdt.getViewText()
-                    skuList = null
+                } else if (isVirtualGoods == 0) {
+                    // 实物
+                    expiryDay = ""
+                    availableDate = ""
+
+                    if (switchBtn.isChecked) {
+                        eventPrice = null
+                        eventQuantity = null
+                        price = null
+                        mktprice = null
+                        quantity = null
+                        cost = null
+                        sn = null
+                        weight = null
+                        upSkuId = null
+                        upGoodsId = null
+                    } else {
+                        eventPrice = eventPriceEdt.getViewText()
+                        eventQuantity = eventQuantityEdt.getViewText()
+                        price = goodsPriceEdt.getViewText()
+                        mktprice = marketPriceEdt.getViewText()
+                        quantity = goodsQuantityEdt.getViewText()
+                        cost = goodsCostEdt.getViewText()
+                        sn = goodsNoEdt.getViewText()
+                        weight = goodsWeightEdt.getViewText()
+                        upSkuId = goodsSKUEdt.getViewText()
+                        upGoodsId = goodsIDEdt.getViewText()
+                        skuList = null
+                    }
+                }
+                // 打包费
+                packagePrice = try {
+                    goodsPackageFeeEdt.getViewText().toDouble()
+                } catch (e: Exception) {
+                    0.00
                 }
             }
-            // 打包费
-            //
-            packagePrice = try {
-                goodsPackageFeeEdt.getViewText().toDouble()
-            } catch (e: Exception) {
-                0.00
-            }
 
-            // 默认
-//            if (this.shopCatId == null) {
-//                this.shopCatId = categoryId
-//                this.shopCatName = categoryName
-//            }
+            //type  0 保存  ，1  保存并上架
+            mPresenter.publish(
+                goodsVO,
+                isVirtualGoods == 1,
+                switchBtn.isChecked,
+                scan,
+                type,
+                isFromCenter
+            )
         }
 
-        //type  0 保存  ，1  保存并上架
-        mPresenter.publish(goodsVO, isVirtualGoods, switchBtn.isChecked, scan, type, isFromCenter)
     }
-
 
     override fun onUpdateGoodsWeight(id: String?, name: String?) {
         goodsVO.goodsWeight = id
@@ -827,25 +909,42 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         goodsTypeTv.text = GoodsTypeVO.getName(isVirtualGoods)
 
         //设置实体虚拟商品UI显示(主要是规格)
-        if (isVirtualGoods) {
-            //虚拟商品
-            //隐藏UI
-            showSection45WithStatus(false, isExpand)
-        } else {
-            //实体商品,显示多规格切换按钮
-            section4Row6Ll.show(true)
-            if (scan) {
-                section4Row6Ll.gone()
+        when (isVirtualGoods) {
+            0 -> {
+                //实体商品,显示多规格切换按钮
+                section4Row6Ll.show(true)
+                if (scan) {
+                    section4Row6Ll.gone()
+                }
+                //根据多规格按钮选中情况显示单规格还是多规格
+                section4Row1Ll.show(!switchBtn.isChecked)
+                section4RowVirtualSpecLl.show(switchBtn.isChecked)
+                ticket.gone()
             }
-            //根据多规格按钮选中情况显示单规格还是多规格
-            section4Row1Ll.show(!switchBtn.isChecked)
-            section4RowVirtualSpecLl.show(switchBtn.isChecked)
+            1 -> {
+                //虚拟商品
+                //隐藏UI
+                showSection45WithStatus(false, isExpand)
+                ticket.gone()
+            }
+            2 -> {
+                //券包
+                ticket.visiable()
+                //隐藏实体商品设置多规格按钮
+                section4Row6Ll.show(false)
+                section4Row1Ll.show(true)
+                //显示设置多规格
+                section4RowVirtualSpecLl.show(false)
+            }
+            else -> {
+
+            }
         }
     }
 
     //设置规格的显示与useless
     private fun showSection45WithStatus(isChecked: Boolean, isExpand: Boolean) {
-        if (isVirtualGoods) {
+        if (isVirtualGoods == 1) {
             //虚拟商品
             //隐藏实体商品设置单规格
             section4Row1Ll.show(false)
@@ -856,7 +955,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             }
             //显示设置多规格
             section4RowVirtualSpecLl.show(true)
-        } else {
+        } else if (isVirtualGoods == 0) {
             //实体商品
             //显示实体商品多规格按钮
             section4Row6Ll.show(true)

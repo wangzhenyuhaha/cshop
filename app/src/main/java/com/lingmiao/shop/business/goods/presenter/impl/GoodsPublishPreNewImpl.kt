@@ -38,9 +38,9 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     //切换商品类型
     private val mGoodsTypePreImpl: GoodsTypePopPreImpl by lazy { GoodsTypePopPreImpl(view) }
-    override fun showGoodsType(isVirtual: Boolean) {
+    override fun showGoodsType(isVirtual: Int) {
         mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(isVirtual)) { item ->
-            view.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value))
+            view.onSetGoodsTypeNew(item?.value)
         }
     }
 
@@ -174,6 +174,88 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
+
+    //发布券包
+    override fun publishTicket(
+        goodsVO: GoodsVOWrapper,
+        isVirtualGoods: Boolean,
+        isMutilSpec: Boolean,
+        scan: Boolean,
+        type: Int,
+        isFromCenter: Int
+    ) {
+        loadSpecKeyList(goodsVO, isMutilSpec) {
+
+            try {
+                checkNotNull(goodsVO.num) { "请输入券包内电子券的数量" }
+                checkNotNull(goodsVO.couponID) { "请输入券包绑定的商品" }
+                checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
+                checkNotBlack(goodsVO.goodsName) { "请输入商品名称" }
+                checkNotBlack(goodsVO.thumbnail) { "请添加缩略图" }
+                checkBoolean(goodsVO.goodsGalleryList.isNotEmpty()) { "请添加商品主图" }
+                if (isVirtualGoods) {
+                    //useless
+                    checkBoolean(goodsVO.skuList.isNotEmpty()) { "请添加商品规格" }
+                    checkNotBlack(goodsVO.availableDate) { "请设置使用时间" }
+                    checkNotBlack(goodsVO.availableDate) { "请设置有效期" }
+                } else {
+                    if (isMutilSpec) {
+                        //useless
+                        checkBoolean(goodsVO.skuList.isNotEmpty()) { "请添加商品规格" }
+                        checkBoolean(goodsVO.skuList?.get(0)?.specList?.isNotEmpty() == true) { "请完善商品多规格" }
+                    } else {
+                        checkNotBlack(goodsVO.price) { "请输入商品价格" }
+                        checkNotBlack(goodsVO.quantity) { "请输入商品库存" }
+                    }
+                }
+                // 上传图片
+                view.showDialogLoading("正在发布...")
+                uploadImages(goodsVO, fail = {
+                    view.showToast("图片上传失败，请重试")
+                    view.hideDialogLoading()
+                    return@uploadImages
+                }) {
+                    uploadThumbnailImage(goodsVO, fail = {
+                        view.showToast("商品缩略图片上传失败，请重试")
+                        view.hideDialogLoading()
+                        return@uploadThumbnailImage
+                    }) {
+                        //goodsVO.intro 不是必须
+                        if (goodsVO.intro.isNotBlank() && (goodsVO.intro?.startsWith("<p>") != true)) {
+                            uploadDesImages(goodsVO, fail = {
+                                view.showToast("图片上传失败，请重试")
+                                view.hideDialogLoading()
+                            }) {
+                                if (scan) {
+                                    goodsVO.goodsId = null
+                                }
+                                if (goodsVO.goodsId.isNullOrBlank()) {
+                                    submitTicket(goodsVO, scan, type, isFromCenter) // 添加商品
+                                } else {
+                                    //编辑券包
+                                    //modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
+                                }
+                            }
+                        } else {
+                            if (scan) {
+                                goodsVO.goodsId = null
+                            }
+                            if (goodsVO.goodsId.isNullOrBlank()) {
+                                submitTicket(goodsVO, scan, type, isFromCenter) // 添加商品
+                            } else {
+
+                                //编辑券包
+                                //modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
+                            }
+                        }
+                    }
+                }
+            } catch (e: BizException) {
+                view.showToast(e.message.check())
+            }
+        }
+    }
+
     /**
      * 发布
      */
@@ -281,6 +363,29 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
             val resp = GoodsRepository.addGoodsSkuBarCodeLog(id, bar_code, url)
             handleResponse(resp) {
+
+            }
+        }
+    }
+
+    private fun submitTicket(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int, isFromCenter: Int) {
+        mCoroutine.launch {
+            val resp =
+                GoodsRepository.submitTicket(goodsVO, type.toString(), isFromCenter)
+
+            view.hideDialogLoading()
+            handleResponse(resp) {
+                if (type == 0) {
+                    //仅保存
+                    view.showToast("商品保存成功")
+                } else {
+                    //保存上架
+                    view.showToast("商品上架成功")
+                }
+                EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
+                EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
+
 
             }
         }

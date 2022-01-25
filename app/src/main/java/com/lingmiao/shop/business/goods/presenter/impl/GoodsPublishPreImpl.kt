@@ -169,8 +169,8 @@ class GoodsPublishPreImpl(var context: Context, val view: GoodsPublishPre.Publis
         }
     }
 
-    override fun showGoodsType(str: Boolean) {
-        mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(str)) { item ->
+    override fun showGoodsType(isVirtual: Int) {
+        mGoodsTypePreImpl.showPop(context, GoodsTypeVO.getValue(isVirtual)) { item ->
             view?.onSetGoodsType(GoodsTypeVO.isVirtual(item?.value));
         }
     }

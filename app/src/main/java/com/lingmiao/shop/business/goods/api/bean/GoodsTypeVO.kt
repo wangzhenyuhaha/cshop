@@ -15,25 +15,51 @@ class GoodsTypeVO {
 
     companion object {
 
-        const val TYPE_NORMAL_NAME = "实物商品"
+        private const val TYPE_NORMAL_NAME = "实物商品"
 
-        const val TYPE_VIRTUAL_NAME = "虚拟商品"
+        private const val TYPE_VIRTUAL_NAME = "虚拟商品"
 
-        const val TYPE_ELECTRONIC_VOUCHERS = "券包"
+        private const val TYPE_TICKET_NAME = "券包"
 
-        fun getName(isVirtual: Boolean, isEVouchers: Boolean = false): String {
-            return if (isEVouchers) TYPE_ELECTRONIC_VOUCHERS
-            else if (isVirtual) TYPE_VIRTUAL_NAME else TYPE_NORMAL_NAME
+        fun getName(isVirtual: Int): String {
+            return when (isVirtual) {
 
+                0 -> {
+                    TYPE_NORMAL_NAME
+                }
+                1 -> {
+                    TYPE_VIRTUAL_NAME
+                }
+                2 -> {
+                    TYPE_TICKET_NAME
+                }
+                else -> {
+                    TYPE_NORMAL_NAME
+                }
+            }
         }
 
-        fun getValue(isVirtual: Boolean): String {
-            return if (isVirtual) GoodsConfig.GOODS_TYPE_VIRTUAL else GoodsConfig.GOODS_TYPE_NORMAL;
+        fun getValue(isVirtual: Int): String {
+            return when (isVirtual) {
+                0 -> {
+                    GoodsConfig.GOODS_TYPE_NORMAL
+                }
+                1 -> {
+                    GoodsConfig.GOODS_TYPE_VIRTUAL
+                }
+                2 -> {
+                    GoodsConfig.GOODS_TYPE_TICKET
+                }
+                else -> {
+                    GoodsConfig.GOODS_TYPE_NORMAL
+                }
+            }
         }
 
         fun isVirtual(value: String?): Boolean {
             return GoodsConfig.GOODS_TYPE_VIRTUAL == value;
         }
+
 
         fun getGoodsTypeList(): MutableList<GoodsTypeVO> {
             val mList: MutableList<GoodsTypeVO> = mutableListOf()
@@ -50,9 +76,9 @@ class GoodsTypeVO {
             mList.add(item)
 
             item = GoodsTypeVO();
-            item.typeName = TYPE_ELECTRONIC_VOUCHERS
+            item.typeName = TYPE_TICKET_NAME
             item.typeDesc = "无需发货"
-            item.value = GoodsConfig.GOODS_TYPE_E_VOUCHERS
+            item.value = GoodsConfig.GOODS_TYPE_TICKET
             mList.add(item)
             return mList;
         }

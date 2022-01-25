@@ -12,7 +12,7 @@ import com.james.common.base.BaseView
 interface GoodsPublishPre : BasePresenter {
 
     //切换商品类型
-    fun showGoodsType(isVirtual: Boolean)
+    fun showGoodsType(isVirtual: Int)
 
     //设置商品分类
     fun showCategoryPop()
@@ -43,6 +43,9 @@ interface GoodsPublishPre : BasePresenter {
     interface PublishView : BaseView {
         //切换实体商品虚拟商品
         fun onSetGoodsType(isVirtual: Boolean)
+
+        //确定商品类型
+        fun onSetGoodsTypeNew(type: String?)
 
         //切换分类
         fun onUpdateCategory(categoryId: String?, categoryName: String?)
