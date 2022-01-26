@@ -370,9 +370,18 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
     private fun submitTicket(goodsVO: GoodsVOWrapper, scan: Boolean, type: Int, isFromCenter: Int) {
         mCoroutine.launch {
+            if (type == 0) {
+                //仅保存
+
+            } else {
+                //保存上架
+
+            }
             val resp =
                 GoodsRepository.submitTicket(goodsVO, type.toString(), isFromCenter)
-
+            Log.d("WZYSUD", resp.toString())
+            Log.d("WZYSUD","AAAAA")
+            Log.d("WZYSUD", resp.msg.toString())
             view.hideDialogLoading()
             handleResponse(resp) {
                 if (type == 0) {
@@ -388,6 +397,14 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
 
 
             }
+
+//             mCoroutine.launch {
+//                        val resp = GoodsRepository.makeGoodsEnable(goodsId)
+//                        handleResponse(resp) {
+//                            view.showToast("上架成功")
+//                            callback.invoke()
+//                        }
+//                    }
         }
     }
 
