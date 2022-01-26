@@ -22,6 +22,7 @@ import com.lingmiao.shop.business.goods.config.GoodsConfig
 import com.lingmiao.shop.business.goods.presenter.GoodsPublishNewPre
 import com.lingmiao.shop.business.goods.presenter.impl.GoodsPublishPreNewImpl
 import com.lingmiao.shop.business.photo.PhotoHelper
+import com.lingmiao.shop.business.sales.EVouchersDetailActivity
 import com.lingmiao.shop.business.sales.SelectGoodsActivity
 import com.lingmiao.shop.util.GlideUtils
 import com.lingmiao.shop.util.initAdapter
@@ -335,6 +336,10 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         ticker_goods_name.singleClick {
             val intent = Intent(this, SelectTicketActivity::class.java)
             startActivityForResult(intent, 22)
+        }
+
+        addEV.singleClick {
+            EVouchersDetailActivity.openActivity(this, 1)
         }
 
         //商品详情

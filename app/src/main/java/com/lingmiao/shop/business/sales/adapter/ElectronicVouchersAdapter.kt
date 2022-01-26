@@ -19,7 +19,7 @@ class ElectronicVouchersAdapter :
         //电子券名字
         helper.setText(R.id.title, item?.title)
 
-        val number =  (item?.createNum?:0 )- (item?.receivedNum ?:0)
+        val number = (item?.createNum ?: 0) - (item?.receivedNum ?: 0)
         //电子券库存
         helper.setText(R.id.createNum, "（库存${number}）")
 
@@ -32,6 +32,11 @@ class ElectronicVouchersAdapter :
             item?.useEndTime?.times(1000)?.let { Date(it) },
             MINUTES_TIME_FORMAT_OTHER
         )
+        val now = Date().time
+        if (now > item?.useEndTime?.times(1000) ?: 0) {
+            helper.setText(R.id.couponStatus, "已过期")
+        }
+
         helper.setText(R.id.couponStatus, "开始： $start\n结束： $end")
 
         //判断是否长期有效

@@ -50,6 +50,14 @@ class TicketSelectOneAdapter :
             helper.setText(R.id.couponStatus, "长期有效")
         }
 
+
+        //判断电子券是否过期
+        val now = Date().time
+        if (now > item?.useEndTime?.times(1000) ?: 0) {
+            helper.setText(R.id.couponStatus, "已过期")
+            helper.setGone(R.id.menuIv, false)
+        }
+
         item?.apply {
             if (item.couponID == selectedID) {
                 helper.setChecked(R.id.menuIv, true)
