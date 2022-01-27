@@ -262,7 +262,7 @@
                         android:drawableEnd="@mipmap/common_arrow_right"
                         android:drawablePadding="@dimen/dimen_10"
                         android:gravity="center_vertical"
-                        android:hint="请选择参加活动的商品"
+                        android:hint="请选择兑换的商品"
                         android:textColor="@color/color_666666" />
 
                 </LinearLayout>
