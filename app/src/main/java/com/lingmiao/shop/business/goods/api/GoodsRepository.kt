@@ -203,8 +203,7 @@ object GoodsRepository {
     //新增券包
     suspend fun submitTicket(
         goods: GoodsVOWrapper,
-        is_up: String,
-        is_from_center: Int = 0
+        is_up: String
     ): HiResponse<GoodsVOWrapper> {
         return apiService.submitTicket(is_up, goods).awaitHiResponse()
     }

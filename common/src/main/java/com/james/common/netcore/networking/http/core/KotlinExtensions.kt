@@ -40,12 +40,12 @@ inline fun <reified T> Retrofit.create(): T = create(T::class.java)
  * 等待请求返回。
  *
  */
-suspend fun <T : Any?> Call<T>.awaitHiResponse(): HiResponse<T>  {
+suspend fun <T : Any?> Call<T>.awaitHiResponse(): HiResponse<T> {
     return awaitHiResponseInner(false)
 }
 
 @Throws(CancellationException::class, Exception::class)
-suspend fun <T : Any?> Call<T>.awaitHiResponseWithException(): HiResponse<T>  {
+suspend fun <T : Any?> Call<T>.awaitHiResponseWithException(): HiResponse<T> {
     return awaitHiResponseInner(true)
 }
 
@@ -83,6 +83,8 @@ private suspend fun <T : Any?> Call<T>.awaitHiResponseInner(throwsException: Boo
                                     continuation.resume(body as HiResponse<T>)
                                 } else if (body is Unit) {
                                     continuation.resume(HiResponse<T>(0, "", body))
+                                } else {
+                                    continuation.resume(HiResponse<T>(0, "", body))
                                 }
                             }
                         }
@@ -108,7 +110,7 @@ private suspend fun <T : Any?> Call<T>.awaitHiResponseInner(throwsException: Boo
 
     } catch (e: Exception) {
         e.printStackTrace()
-        Log.d("KotlinExtensions.kt",e.message.toString())
+        Log.d("KotlinExtensions.kt", e.message.toString())
 
         val resp = HiResponse<Any>()
         resp.msg = ""

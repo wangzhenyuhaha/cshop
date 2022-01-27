@@ -372,39 +372,39 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         mCoroutine.launch {
             if (type == 0) {
                 //仅保存
+                val resp =
+                    GoodsRepository.submitTicket(goodsVO, type.toString())
+                view.hideDialogLoading()
+                handleResponse(resp) {
+                    view.showToast("商品保存成功")
+                    EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
+                    EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                    ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
+                }
 
             } else {
                 //保存上架
-
-            }
-            val resp =
-                GoodsRepository.submitTicket(goodsVO, type.toString(), isFromCenter)
-            Log.d("WZYSUD", resp.toString())
-            Log.d("WZYSUD","AAAAA")
-            Log.d("WZYSUD", resp.msg.toString())
-            view.hideDialogLoading()
-            handleResponse(resp) {
-                if (type == 0) {
-                    //仅保存
-                    view.showToast("商品保存成功")
-                } else {
-                    //保存上架
-                    view.showToast("商品上架成功")
+                val resp =
+                    GoodsRepository.submitTicket(goodsVO, "0")
+                if (resp.isSuccess) {
+                    resp.data.goodsId?.let { shangjiaTicket(it) }
                 }
+            }
+        }
+    }
+
+    //上架商品
+    private fun shangjiaTicket(goodsID: String) {
+        mCoroutine.launch {
+            val resp2 =
+                GoodsRepository.makeGoodsEnable(goodsID)
+            view.hideDialogLoading()
+            if (resp2.isSuccess) {
+                view.showToast("商品上架成功")
                 EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
                 EventBus.getDefault().post(RefreshGoodsStatusEvent())
                 ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
-
-
             }
-
-//             mCoroutine.launch {
-//                        val resp = GoodsRepository.makeGoodsEnable(goodsId)
-//                        handleResponse(resp) {
-//                            view.showToast("上架成功")
-//                            callback.invoke()
-//                        }
-//                    }
         }
     }
 
