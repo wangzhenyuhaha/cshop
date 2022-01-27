@@ -267,42 +267,6 @@
 
                 </LinearLayout>
 
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="62.5dp"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/dimen_5"
-                        android:drawableEnd="@mipmap/common_must_input"
-                        android:gravity="start"
-                        android:text="库存"
-                        android:textColor="@color/color_666666" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:id="@+id/stock"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginEnd="@dimen/dimen_10"
-                        android:background="@xml/setbar_bg_grey"
-                        android:padding="@dimen/dimen_5"
-                        android:paddingStart="@dimen/dimen_10"
-                        android:paddingEnd="0dp"
-                        android:textColor="@color/color_666666"
-                        tools:text="这里输入的是库存" />
-                </LinearLayout>
-
             </com.james.common.view.ILinearLayout>
 
         </androidx.core.widget.NestedScrollView>

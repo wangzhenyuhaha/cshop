@@ -200,29 +200,6 @@ class EVouchersDetailActivity :
             startActivityForResult(intent, 22)
         }
 
-        //库存
-        mBinding.stock.singleClick {
-            DialogUtils.showInputDialogNumber(
-                this,
-                "库存",
-                "",
-                "请输入电子券库存",
-                if (electronicVouchers.createNum == null) "" else electronicVouchers.createNum.toString(),
-                "取消",
-                "保存",
-                null
-            ) {
-                try {
-                    electronicVouchers.createNum = it.toInt()
-                    mBinding.stock.text = it
-                } catch (e: Exception) {
-                    electronicVouchers.createNum = null
-                    mBinding.stock.text = ""
-                    showToast("请输入数字")
-                }
-            }
-        }
-
         mBinding.submit.singleClick {
 
             //检查是否数据完全
@@ -239,10 +216,6 @@ class EVouchersDetailActivity :
             }
             if (electronicVouchers.jianPrice == null) {
                 showToast("请输入电子券金额")
-                return@singleClick
-            }
-            if (electronicVouchers.createNum == null) {
-                showToast("请输入电子券库存")
                 return@singleClick
             }
             if (electronicVouchers.goodsID == null) {
@@ -295,7 +268,6 @@ class EVouchersDetailActivity :
             }
             price.text = electronicVouchers.jianPrice.toString()
             useGoods.text = electronicVouchers.goodsName.toString()
-            stock.text = electronicVouchers.createNum.toString()
         }
         mBinding.submit.gone()
     }

@@ -52,10 +52,10 @@ object PromotionRepository {
             useTimeType?.let { map.put("use_time_type", it) }
             useStartTime?.let { map.put("use_start_time", it) }
             useEndTime?.let { map.put("use_end_time", it) }
-            createNum?.let { map.put("create_num", it) }
+            map["create_num"] = 0
             map["coupon_threshold_price"] = 1.0
             jianPrice?.let { map.put("coupon_price", it) }
-            createNum?.let { map["limit_num"] = it }
+            map["limit_num"] = 0
             map["coupon_type"] = "TICKET"
             goodsID?.let { map["goods_id"] = it }
         }
