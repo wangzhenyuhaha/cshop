@@ -336,6 +336,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //绑定对应的电子券
         ticker_goods_name.singleClick {
             val intent = Intent(this, SelectTicketActivity::class.java)
+            intent.putExtra("coupon_id",goodsVO.couponID)
             startActivityForResult(intent, 22)
         }
 

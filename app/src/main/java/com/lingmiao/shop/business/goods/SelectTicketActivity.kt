@@ -40,7 +40,13 @@ class SelectTicketActivity : BaseLoadMoreActivity<ElectronicVoucher, SelectTicke
             setResult(Activity.RESULT_OK, intent)
             finish()
         }
+
+        val temp = intent.getIntExtra("coupon_id", 0)
+        if (temp != 0) {
+            (mAdapter as TicketSelectOneAdapter).setItem(temp)
+        }
     }
+
 
     override fun getLayoutId() = R.layout.activity_select_ticket
 
