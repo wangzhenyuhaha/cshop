@@ -86,6 +86,14 @@ interface GoodsApiService {
         @Body goods: GoodsVOWrapper
     ): Call<GoodsVOWrapper>
 
+    //编辑券包
+    @PUT("/seller/goods/ticket/{id}/{is_up}")
+    @WithHiResponse
+    fun modifyTickets(
+        @Path(value = "id") goodsId: String, @Path(value = "is_up") is_up: String,
+        @Body goods: GoodsVOWrapper
+    ): Call<GoodsVOWrapper>
+
     /**
      * 查询商品
      */

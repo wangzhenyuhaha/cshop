@@ -254,4 +254,7 @@ class GoodsVOWrapper : Serializable {
             }
         }
     }
+
+    @SerializedName("goods_coupon")
+    var goodsCoupon: GoodsCoupon? = null
 }

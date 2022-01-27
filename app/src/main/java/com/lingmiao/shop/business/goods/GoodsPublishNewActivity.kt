@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseActivity
@@ -364,6 +365,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         if (scan) {
             goodsId?.let { mPresenter.loadGoodsInfoFromCenter(it) }
         } else {
+            //商品列表中查看时调用
             mPresenter.loadGoodsInfo(goodsId)
         }
 
@@ -481,11 +483,17 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             }
 
             //券包相关信息
-            if (num != null) {
-                ticket_number.setText(num.toString())
+            if (goodsCoupon != null) {
+                ticket_number.setText(goodsCoupon?.num.toString())
+                if (num == null) {
+                    num = goodsCoupon?.num
+                }
             }
-            if (couponID != null) {
+            if (goodsCoupon?.couponID != null) {
                 ticker_goods_name.text = "已设置"
+                if (couponID == null) {
+                    couponID = goodsCoupon?.couponID
+                }
             }
 
             //商品类型
@@ -515,6 +523,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 }
                 2 -> {
                     //券包
+                    setVirtualGoodsView()
                     eventPriceEdt.setText(eventPrice)
                     eventQuantityEdt.setText(eventQuantity)
                     goodsPriceEdt.setText(price)
@@ -942,15 +951,18 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                 section4Row1Ll.show(!switchBtn.isChecked)
                 section4RowVirtualSpecLl.show(switchBtn.isChecked)
                 ticket.gone()
+                sectionVirtualExpireTime.gone()
             }
             1 -> {
                 //虚拟商品
                 //隐藏UI
                 showSection45WithStatus(false, isExpand)
                 ticket.gone()
+                sectionVirtualExpireTime.visiable()
             }
             2 -> {
                 //券包
+                sectionVirtualExpireTime.gone()
                 ticket.visiable()
                 //隐藏实体商品设置多规格按钮
                 section4Row6Ll.show(false)
@@ -977,6 +989,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             }
             //显示设置多规格
             section4RowVirtualSpecLl.show(true)
+            sectionVirtualExpireTime.visiable()
         } else if (isVirtualGoods == 0) {
             //实体商品
             //显示实体商品多规格按钮
@@ -984,6 +997,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             if (scan) {
                 section4Row6Ll.gone()
             }
+            sectionVirtualExpireTime.gone()
             section4Row1Ll.show(!isChecked)
             section4RowVirtualSpecLl.show(isChecked)
         }

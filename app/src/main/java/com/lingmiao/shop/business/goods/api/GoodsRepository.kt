@@ -219,6 +219,15 @@ object GoodsRepository {
         return apiService.modifyGoods(goodsId, is_up, goods).awaitHiResponse()
     }
 
+    //编辑券包
+    suspend fun modifyTickets(
+        goodsId: String,
+        is_up: String,
+        goods: GoodsVOWrapper
+    ): HiResponse<GoodsVOWrapper> {
+        return apiService.modifyTickets(goodsId, is_up, goods).awaitHiResponse()
+    }
+
     /**
      * 查询商品
      */

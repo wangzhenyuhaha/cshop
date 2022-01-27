@@ -230,10 +230,10 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                     goodsVO.goodsId = null
                                 }
                                 if (goodsVO.goodsId.isNullOrBlank()) {
-                                    submitTicket(goodsVO, scan, type, isFromCenter) // 添加商品
+                                    submitTicket(goodsVO, scan, type, isFromCenter) // 添加券包
                                 } else {
                                     //编辑券包
-                                    //modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
+                                    modifyTicket(goodsVO, is_up = type.toString()) // 编辑券包
                                 }
                             }
                         } else {
@@ -241,11 +241,10 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
                                 goodsVO.goodsId = null
                             }
                             if (goodsVO.goodsId.isNullOrBlank()) {
-                                submitTicket(goodsVO, scan, type, isFromCenter) // 添加商品
+                                submitTicket(goodsVO, scan, type, isFromCenter) // 添加券包
                             } else {
-
                                 //编辑券包
-                                //modifyGoods(goodsVO, is_up = type.toString()) // 编辑商品
+                                modifyTicket(goodsVO, is_up = type.toString()) // 编辑券包
                             }
                         }
                     }
@@ -393,14 +392,53 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
         }
     }
 
+    private fun modifyTicket(goodsVO: GoodsVOWrapper, is_up: String) {
+        mCoroutine.launch {
+            if (is_up == "0") {
+                //仅保存
+                val resp = GoodsRepository.modifyTickets(goodsVO.goodsId!!, is_up, goodsVO)
+                view.hideDialogLoading()
+                if (resp.isSuccess) {
+                    view.showToast("商品修改成功")
+                    EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                    view.finish()
+                } else {
+                    handleErrorMsg(resp.msg)
+                    // 编辑的商品，如果没有设置过规格，如果接口调用失败，就置空规格。
+                    if (!goodsVO.isAddSpec) {
+                        goodsVO.skuList = null
+                    }
+                }
+            } else {
+                //保存上架
+                val resp = GoodsRepository.modifyTickets(goodsVO.goodsId!!, "0", goodsVO)
+                if (resp.isSuccess) {
+                    resp.data.goodsId?.let { shangjiaTicket(it, true) }
+                } else {
+                    handleErrorMsg(resp.msg)
+                    // 编辑的商品，如果没有设置过规格，如果接口调用失败，就置空规格。
+                    if (!goodsVO.isAddSpec) {
+                        goodsVO.skuList = null
+                    }
+                }
+
+            }
+        }
+    }
+
     //上架商品
-    private fun shangjiaTicket(goodsID: String) {
+    private fun shangjiaTicket(goodsID: String, type: Boolean = false) {
         mCoroutine.launch {
             val resp2 =
                 GoodsRepository.makeGoodsEnable(goodsID)
             view.hideDialogLoading()
             if (resp2.isSuccess) {
-                view.showToast("商品上架成功")
+                if (type) {
+                    view.showToast("商品修改成功")
+                } else {
+                    view.showToast("商品上架成功")
+                }
+
                 EventBus.getDefault().post(GoodsHomeTabEvent(GoodsFragment.GOODS_STATUS_ENABLE))
                 EventBus.getDefault().post(RefreshGoodsStatusEvent())
                 ActivityUtils.finishToActivity(GoodsListActivity::class.java, false)
