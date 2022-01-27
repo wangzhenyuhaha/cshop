@@ -66,6 +66,8 @@ class TicketSelectOneAdapter :
             }
             helper.addOnClickListener(R.id.menuIv)
         }
+
+        helper.setGone(R.id.manPrice,false)
     }
 
 
