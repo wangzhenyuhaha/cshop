@@ -39,9 +39,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
+            android:name=".business.me.ShopSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".business.me.OperationSettingActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".business.goods.SelectTicketActivity"
             android:exported="false"

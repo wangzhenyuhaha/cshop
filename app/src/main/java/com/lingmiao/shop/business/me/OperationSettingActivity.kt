@@ -1,11 +1,16 @@
 package com.lingmiao.shop.business.me
 
+import android.app.Activity
+import android.content.Intent
+import android.util.Log
+import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.presenter.OperationSettingPresenter
@@ -90,6 +95,23 @@ class OperationSettingActivity :
             shopReq.shopTemplateType = getTemplate()
             //提交设置
             mPresenter?.setSetting(shopReq)
+        }
+
+        mBinding.shopSetting.singleClick {
+            //跳转到店铺设置页面，返回时将数据带回
+            val intent = Intent(this, ShopSettingActivity::class.java)
+            intent.putExtra("item", shopReq)
+            startActivityForResult(intent, 22)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 22 && resultCode == Activity.RESULT_OK) {
+
+            shopReq = data?.getSerializableExtra("item") as ApplyShopInfo
+
         }
     }
 

@@ -30,9 +30,9 @@ class ShopWeChatApproveActivity :
             super.onBackPressed()
         } else {
             DialogUtils.showDialog(context!!, "商户认证", "认证成功后才能正常结算，确认微信商户认证成功？",
-                "取消", "确认已认证", View.OnClickListener {
+                "取消", "确认已认证", {
                     super.onBackPressed()
-                }, View.OnClickListener {
+                }, {
                     mPresenter?.approve()
                     super.onBackPressed()
                 })

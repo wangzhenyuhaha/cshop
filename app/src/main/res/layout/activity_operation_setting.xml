@@ -125,7 +125,6 @@
                         app:kswBackDrawable="@drawable/flyme_back_drawable"
                         app:kswTintColor="@color/white" />
 
-
                 </LinearLayout>
 
                 <View style="@style/DivideLineHorizontal" />
@@ -445,6 +444,46 @@
                     </LinearLayout>
 
                 </RelativeLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="店铺设置"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/shopSetting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableEnd="@mipmap/me_arrow_right"
+                        android:drawablePadding="@dimen/dimen_15"
+                        android:gravity="end"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="请设置" />
+                </LinearLayout>
 
             </com.james.common.view.ILinearLayout>
 
