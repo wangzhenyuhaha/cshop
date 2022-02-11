@@ -321,7 +321,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
         }
         tvShopStatus.singleClick {
             //shopReq.accept_carriage决定是否显示骑手配送
-            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.accept_carriage)
+            DeliveryManagerActivity.shop(mContext as Activity, mRiderItem, shopReq.shop_accept_carriage)
         }
         tvRiderStatus.singleClick {
             //默认使用骑手配送
@@ -367,7 +367,7 @@ class ShopOperateSettingFragment : BaseFragment<ShopOperateSettingPresenter>(),
             cb_model_shop.isChecked = shopTemplateType == FreightVoItem.TYPE_LOCAL
 
             //后台确定是否隐藏骑手
-            if (shopReq.accept_carriage == 0) {
+            if (shopReq.shop_accept_carriage == 0) {
                 //隐藏棋手
                 cb_model_rider.gone()
                 tvRiderStatus.gone()

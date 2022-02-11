@@ -24,10 +24,7 @@ import com.lingmiao.shop.business.main.*
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
-import com.lingmiao.shop.business.me.ApplyVipActivity
-import com.lingmiao.shop.business.me.HelpDocActivity
-import com.lingmiao.shop.business.me.ManagerSettingActivity
-import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
+import com.lingmiao.shop.business.me.*
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
@@ -487,6 +484,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //             GoodsPublishActivity.openActivity(context!!, "");
         }
         testNewFra.setOnClickListener {
+            ActivityUtils.startActivity(OperationSettingActivity::class.java)
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {
