@@ -15,10 +15,14 @@ import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.common.ui.PhotoListActivity
+import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.main.ShopAddressActivity
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.main.bean.ApplyShopPoiEvent
+import com.lingmiao.shop.business.me.bean.BannerBean
 import com.lingmiao.shop.business.me.bean.ShopManageImageEvent
+import com.lingmiao.shop.business.me.fragment.BannerActivity
+import com.lingmiao.shop.business.me.fragment.BannerItem
 import com.lingmiao.shop.business.me.presenter.ShopSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ShopSettingPresenterImpl
 import com.lingmiao.shop.business.photo.GlideEngine
@@ -30,6 +34,7 @@ import com.luck.picture.lib.config.PictureMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.listener.OnResultCallbackListener
 import kotlinx.android.synthetic.main.me_fragment_shop_base_setting.*
+import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -37,6 +42,109 @@ import org.greenrobot.eventbus.ThreadMode
 class ShopSettingActivity :
     BaseVBActivity<ActivityShopSettingBinding, ShopSettingPresenter>(),
     ShopSettingPresenter.View {
+
+    private val bannerArray = listOf(
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211126150741.jpg",
+            0
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142234.png",
+            1
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142243.jpg",
+            2
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142257.jpg",
+            3
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142306.jpg",
+            4
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142314.jpg",
+            5
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142321.jpg",
+            6
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142405.jpg",
+            7
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142634.jpg",
+            8
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142643.jpg",
+            9
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142650.jpg",
+            10
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142657.jpg",
+            11
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142705.jpg",
+            12
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211021142712.png",
+            13
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116101006.jpg",
+            14
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100955.jpg",
+            15
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100947.jpg",
+            16
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100940.jpg",
+            17
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100933.jpg",
+            18
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100925.jpg",
+            19
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100915.jpg",
+            20
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100905.jpg",
+            21
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20211116100853.jpg",
+            22
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20220110114334.jpg",
+            23
+        ),
+        BannerItem(
+            "https://c-shop-prod.oss-cn-hangzhou.aliyuncs.com/apk/banner/20220110114323.jpg",
+            24
+        )
+    )
 
     override fun useLightMode() = false
 
@@ -272,6 +380,49 @@ class ShopSettingActivity :
             }
         }
 
+        //图片库
+        photoSelect.singleClick {
+            val intent = Intent(this, BannerActivity::class.java)
+            intent.putExtra("number", galleryRv.getSelectPhotos().size)
+            startActivityForResult(intent, 22)
+        }
+
+        tvShopSettingSubmit.singleClick {
+            if (shopManage?.shopLogo.isNullOrEmpty()) {
+                showToast("请上传店铺LOGO")
+                return@singleClick
+            }
+            mPresenter?.setBanner(mBinding.galleryRv.getSelectPhotos())
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 22 && resultCode == Activity.RESULT_OK) {
+
+            //获得的Banner
+            val tempList = mutableListOf<GoodsGalleryVO>()
+            //获得的List
+            val list = data?.getStringExtra("list")?.split(",")
+
+            try {
+                list?.also {
+                    if (it.isNotEmpty()) {
+                        for (i in list) {
+                            if (i.isNotEmpty()) {
+                                tempList.add(GoodsGalleryVO(null, bannerArray[i.toInt()].url, null))
+                            }
+                        }
+                    }
+                }
+
+                mBinding.galleryRv.addDataList(tempList)
+            } catch (e: Exception) {
+                showToast("图片获取失败，请自行上传")
+            }
+        }
     }
 
     override fun onUpdateSloganSuccess(string: String?) {
@@ -311,7 +462,27 @@ class ShopSettingActivity :
         mBinding.tvShopManageRemark.text = bean.shopNotice
 
         licenceImg = bean.licenceImg
+
+
+        //设置Banner图
+        initBanner()
+        mPresenter?.getBanner()
     }
+
+    //设置Banner图上传
+    private fun initBanner() {
+        galleryRv.setCountLimit(1, 5)
+        galleryRv.setAspectRatio(750, 176)
+    }
+
+    override fun onSetBanner(bannerList: List<BannerBean>?) {
+        val list = mutableListOf<GoodsGalleryVO>()
+        bannerList?.forEachIndexed { _, bannerBean ->
+            list.add(GoodsGalleryVO(original = bannerBean.banner_url, sort = null))
+        }
+        mBinding.galleryRv.addDataList(list)
+    }
+
 
     override fun onShopManageError(code: Int) {
         hidePageLoading()
@@ -371,7 +542,7 @@ class ShopSettingActivity :
         mPresenter?.updateShopManage(request)
     }
 
-    var addressLatLng: LatLng? = null;
+    var addressLatLng: LatLng? = null
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun setAddress(event: ApplyShopPoiEvent) {
@@ -403,6 +574,5 @@ class ShopSettingActivity :
         setResult(Activity.RESULT_OK, intent)
         super.onBackPressed()
     }
-
 
 }

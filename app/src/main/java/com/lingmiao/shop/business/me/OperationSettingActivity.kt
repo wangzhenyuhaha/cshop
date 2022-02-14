@@ -90,6 +90,10 @@ class OperationSettingActivity :
             shopReq.companyPhone = mBinding.linkTelEt.text.toString()
             //配送设置
             shopReq.shopTemplateType = getTemplate()
+            if (shopReq.shopLogo.isNullOrEmpty()) {
+                showToast("请上传店铺LOGO")
+                return@setOnClickListener
+            }
             //提交设置
             mPresenter?.setSetting(shopReq)
         }
@@ -108,7 +112,11 @@ class OperationSettingActivity :
         if (requestCode == 22 && resultCode == Activity.RESULT_OK) {
 
             shopReq = data?.getSerializableExtra("item") as ApplyShopInfo
-
+            if (!shopReq.shopLogo.isNullOrEmpty()) {
+                mBinding.shopSetting.text = "已设置"
+            } else {
+                mBinding.shopSetting.text = "请设置"
+            }
         }
     }
 
@@ -204,6 +212,13 @@ class OperationSettingActivity :
                 //隐藏棋手
                 mBinding.cbModelRider.gone()
                 mBinding.cbModelShop.gone()
+            }
+
+            //店铺设置
+            if (!shopReq.shopLogo.isNullOrEmpty()) {
+                mBinding.shopSetting.text = "已设置"
+            } else {
+                mBinding.shopSetting.text = "请设置"
             }
         }
 
