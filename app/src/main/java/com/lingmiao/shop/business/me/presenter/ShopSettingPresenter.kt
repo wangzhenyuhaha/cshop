@@ -1,12 +1,18 @@
 package com.lingmiao.shop.business.me.presenter
 
-import com.james.common.base.BasePresenter
-import com.james.common.base.BaseView
+import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 
-interface ShopSettingPresenter : BasePresenter {
+interface ShopSettingPresenter : ShopManagePresenter {
 
-    interface View : BaseView {
+    fun updateShopSlogan(bean: ApplyShopInfo);
 
+    fun updateShopNotice(bean: ApplyShopInfo);
+
+    interface View : ShopManagePresenter.View {
+
+        fun onUpdateSloganSuccess(string: String?);
+
+        fun onUpdateNoticeSuccess(string: String?);
     }
 
 }

@@ -458,8 +458,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/dimen_5"
-                        android:src="@mipmap/common_must_input"
-                        android:visibility="invisible" />
+                        android:src="@mipmap/common_must_input" />
 
                     <TextView
                         android:layout_width="wrap_content"

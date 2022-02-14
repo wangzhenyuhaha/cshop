@@ -2,15 +2,12 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.presenter.OperationSettingPresenter

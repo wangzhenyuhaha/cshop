@@ -18,7 +18,6 @@ class MyApp : BaseApplication() {
     companion object {
         private lateinit var application: MyApp
 
-
         fun getInstance(): MyApp {
             return application
         }
