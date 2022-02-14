@@ -46,6 +46,11 @@ class ShopWeChatApproveActivity :
         } else {
             warningLayout.visiable()
         }
+        //长按图片下载
+        mBinding.ivQRCode.setOnLongClickListener {
+            showToast("长安了")
+            false
+        }
     }
 
     override fun approved() {

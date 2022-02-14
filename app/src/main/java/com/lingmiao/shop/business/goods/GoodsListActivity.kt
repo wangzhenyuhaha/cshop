@@ -83,10 +83,10 @@ class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.V
         mToolBarDelegate.setMidTitle(getString(R.string.goods_manager_title))
         mToolBarDelegate.setRightText(
             "新增",
-            ContextCompat.getColor(context, R.color.white),
-            {
-                ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
-            })
+            ContextCompat.getColor(context, R.color.white)
+        ) {
+            ActivityUtils.startActivity(GoodsPublishTypeActivity::class.java)
+        }
     }
 
     private fun initTabLayout() {
