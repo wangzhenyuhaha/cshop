@@ -153,7 +153,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 ApplyShopInfoActivity.openActivity(requireActivity(), true)
             }
             R.id.tvShopInfo -> {
-
+                ActivityUtils.startActivity(ShopInfoActivity::class.java)
             }
         }
     }
