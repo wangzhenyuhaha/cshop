@@ -79,6 +79,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         rlHelpDoc.setOnClickListener(this)
         tvApplyShopInfo.setOnClickListener(this)
 //        rlMySetting.setOnClickListener(this)
+        tvShopInfo.setOnClickListener(this)
         mPresenter?.onCreate()
 
         refreshData()
@@ -150,6 +151,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
             }
             R.id.tvApplyShopInfo -> {
                 ApplyShopInfoActivity.openActivity(requireActivity(), true)
+            }
+            R.id.tvShopInfo -> {
+
             }
         }
     }

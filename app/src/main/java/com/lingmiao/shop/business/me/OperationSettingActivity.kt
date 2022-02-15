@@ -211,7 +211,7 @@ class OperationSettingActivity :
             if (shopReq.shop_accept_carriage == 0) {
                 //隐藏棋手
                 mBinding.cbModelRider.gone()
-                mBinding.cbModelShop.gone()
+                mBinding.tvRiderStatus.gone()
             }
 
             //店铺设置

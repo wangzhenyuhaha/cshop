@@ -430,6 +430,13 @@
                 app:ivBgColor="#fff"
                 app:ivRadius="4dp">
 
+                <TextView
+                    android:id="@+id/tvShopInfo"
+                    style="@style/my_part_item"
+                    android:drawableStart="@drawable/ic_code_blue"
+                    android:text="店铺信息" />
+
+                <View style="@style/DivideLineHorizontal" />
 
                 <TextView
                     android:id="@+id/tvApplyShopInfo"
