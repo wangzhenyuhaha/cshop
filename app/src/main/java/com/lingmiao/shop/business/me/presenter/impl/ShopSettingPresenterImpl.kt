@@ -12,7 +12,6 @@ import com.lingmiao.shop.business.goods.api.bean.GoodsGalleryVO
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.bean.BannerBean
-import com.lingmiao.shop.business.me.presenter.ShopManagePresenter
 import com.lingmiao.shop.business.me.presenter.ShopSettingPresenter
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -127,7 +126,7 @@ class ShopSettingPresenterImpl(val context: Context, val view: ShopSettingPresen
 
     override fun updateShopNotice(bean: ApplyShopInfo) {
         mCoroutine.launch {
-           // view.showDialogLoading()
+            // view.showDialogLoading()
             val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
             if (resp.isSuccess) {
                 view.onUpdateNoticeSuccess(bean.shopNotice)
@@ -140,7 +139,7 @@ class ShopSettingPresenterImpl(val context: Context, val view: ShopSettingPresen
 
     override fun requestShopManageData() {
         mCoroutine.launch {
-          //  view.showDialogLoading()
+            //  view.showDialogLoading()
             val resp = MeRepository.apiService.getShop().awaitHiResponse()
             if (resp.isSuccess) {
                 view.onShopManageSuccess(resp.data)
@@ -154,7 +153,7 @@ class ShopSettingPresenterImpl(val context: Context, val view: ShopSettingPresen
 
     override fun updateShopManage(bean: ApplyShopInfo) {
         mCoroutine.launch {
-           // view.showDialogLoading()
+            // view.showDialogLoading()
             val resp = MeRepository.apiService.updateShop(bean).awaitHiResponse()
             if (resp.isSuccess) {
                 val info = UserManager.getLoginInfo()
