@@ -2,10 +2,14 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
@@ -28,6 +32,16 @@ class OperationSettingActivity :
     //骑手配送模板
     private var mRiderItem: FreightVoItem? = null
 
+    //true不可见  false可见
+    //接单设置可见行
+    private val jiedanVisibility: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
+
+    //订单打印可见性
+    private val dingdandayingVisibility: MutableLiveData<Boolean> = MutableLiveData()
+
+    //取货方式可见行
+    private val quhuofanshiVisibility: MutableLiveData<Boolean> = MutableLiveData()
+
     override fun useLightMode() = false
 
     override fun createPresenter() = OperationSettingPreImpl(this, this)
@@ -44,9 +58,6 @@ class OperationSettingActivity :
     }
 
     override fun onLoadedShopInfo(bean: ApplyShopInfo) {
-
-        //在本地保存是否自动打印
-        UserManager.setAutoPrint(bean.autoPrint == 1)
         shopReq = bean
 
         // 营业时间
@@ -54,8 +65,81 @@ class OperationSettingActivity :
             mPresenter?.showWorkTimePop(it)
         }
 
+        //接单设置
+        mBinding.more1.singleClick {
+            val temp = jiedanVisibility.value ?: true
+            jiedanVisibility.value = !temp
+        }
+        mBinding.less1.singleClick {
+            val temp = jiedanVisibility.value ?: true
+            jiedanVisibility.value = !temp
+        }
+        jiedanVisibility.observe(this) {
+            if (it) {
+                //不可见
+                mBinding.more1.visiable()
+                mBinding.less1.gone()
+                mBinding.jiedanxuanze.gone()
+                mBinding.jiedanshijian.gone()
+            } else {
+                //可见
+                mBinding.more1.gone()
+                mBinding.less1.visiable()
+                mBinding.jiedanxuanze.visiable()
+                mBinding.jiedanshijian.visiable()
+            }
+        }
+
+        //订单打印
+        mBinding.more2.singleClick {
+            val temp = dingdandayingVisibility.value ?: true
+            dingdandayingVisibility.value = !temp
+        }
+        mBinding.less2.singleClick {
+            val temp = dingdandayingVisibility.value ?: true
+            dingdandayingVisibility.value = !temp
+        }
+        dingdandayingVisibility.observe(this) {
+            if (it) {
+                //不可见
+                mBinding.more2.visiable()
+                mBinding.less2.gone()
+                mBinding.dindandaying.gone()
+            } else {
+                mBinding.more2.gone()
+                mBinding.less2.visiable()
+                mBinding.dindandaying.visiable()
+            }
+        }
+        UserManager.setAutoPrint(bean.autoPrint == 1)
+
+        //取货方式
+        mBinding.more3.singleClick {
+            val temp = quhuofanshiVisibility.value ?: true
+            quhuofanshiVisibility.value = !temp
+        }
+        mBinding.less3.singleClick {
+            val temp = quhuofanshiVisibility.value ?: true
+            quhuofanshiVisibility.value = !temp
+        }
+        quhuofanshiVisibility.observe(this) {
+            if (it) {
+                //不可见
+                mBinding.more3.visiable()
+                mBinding.less3.gone()
+                mBinding.daodianziti.gone()
+                mBinding.rlShopManageDelivery.gone()
+            } else {
+                mBinding.more3.gone()
+                mBinding.less3.visiable()
+                mBinding.daodianziti.visiable()
+                mBinding.rlShopManageDelivery.visiable()
+            }
+        }
+
         //加载设置
         onLoadedShopSetting(shopReq)
+
 
         //配送设置
         mPresenter?.loadTemplate()
@@ -81,9 +165,9 @@ class OperationSettingActivity :
             }
             //未完待续:增加对营业时间未设置时的判断
             //自动接单
-            shopReq.autoAccept = if (mBinding.autoOrderSb.isChecked) 1 else 0
+            shopReq.autoAccept = if (mBinding.jiedanyes.isChecked) 1 else 0
             // 自动打印
-            shopReq.autoPrint = if (mBinding.autoPrinterSb.isChecked) 1 else 0
+            shopReq.autoPrint = if (mBinding.dayingyes.isChecked) 1 else 0
             // 取消订单
             shopReq.cancelOrderTime = cancelOrderTime
             // 联系电话
@@ -186,11 +270,25 @@ class OperationSettingActivity :
         vo.apply {
             orderSetting?.apply {
                 //自动接单
-                mBinding.autoOrderSb.isChecked = autoAccept == 1
-                //是否自动打印
-                mBinding.autoPrinterSb.isChecked = autoPrint == 1
+                if (autoAccept == 1) {
+                    //自动接单
+                    mBinding.jiedanyes.isChecked = true
+                    mBinding.jiedanno.isChecked = false
+                } else {
+                    mBinding.jiedanyes.isChecked = false
+                    mBinding.jiedanno.isChecked = true
+                }
                 //未接订单自动取消时间
                 mBinding.tvShopManageNumber.setText(cancelOrderDay?.toString())
+                //是否自动打印
+                if (autoPrint == 1) {
+                    //自动打印
+                    mBinding.dayingyes.isChecked = true
+                    mBinding.dayingno.isChecked = false
+                } else {
+                    mBinding.dayingyes.isChecked = false
+                    mBinding.dayingno.isChecked = true
+                }
             }
             //营业时间
             shopReq.openStartTime = vo.openStartTime
@@ -239,6 +337,7 @@ class OperationSettingActivity :
     }
 
     override fun onSetSetting() {
-        UserManager.setAutoPrint(autoPrinterSb.isChecked)
+        UserManager.setAutoPrint(mBinding.dayingyes.isChecked)
+
     }
 }

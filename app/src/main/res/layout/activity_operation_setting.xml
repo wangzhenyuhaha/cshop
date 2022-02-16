@@ -21,7 +21,8 @@
         <androidx.core.widget.NestedScrollView
             android:id="@+id/firstMenu"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp">
 
             <com.james.common.view.ILinearLayout
                 android:layout_width="match_parent"
@@ -90,7 +91,9 @@
 
                 <View style="@style/DivideLineHorizontal" />
 
+                <!--                控制接单选择 -->
                 <LinearLayout
+                    android:id="@+id/jiedanshezhi"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center_vertical"
@@ -101,13 +104,12 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/dimen_5"
-                        android:src="@mipmap/common_must_input"
-                        android:visibility="invisible" />
+                        android:src="@mipmap/common_must_input" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="自动接单"
+                        android:text="接单设置"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 
@@ -115,103 +117,68 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
-
-                    <com.kyleduo.switchbutton.SwitchButton
-                        android:id="@+id/autoOrderSb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginStart="@dimen/dimen_20"
-                        app:kswBackDrawable="@drawable/flyme_back_drawable"
-                        app:kswTintColor="@color/white" />
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/more1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/dimen_5"
-                        android:src="@mipmap/common_must_input"
-                        android:visibility="invisible" />
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_right" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="到店自提"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <com.kyleduo.switchbutton.SwitchButton
-                        android:id="@+id/takeSelf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginStart="@dimen/dimen_20"
-                        app:kswBackDrawable="@drawable/flyme_back_drawable"
-                        app:kswTintColor="@color/white" />
-
-
-                </LinearLayout>
-
-                <View style="@style/DivideLineHorizontal" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
 
                     <ImageView
+                        android:id="@+id/less1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/dimen_5"
-                        android:src="@mipmap/common_must_input"
-                        android:visibility="invisible" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="是否自动打印(选否为手动打印)"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1" />
-
-                    <com.kyleduo.switchbutton.SwitchButton
-                        android:id="@+id/autoPrinterSb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginStart="@dimen/dimen_20"
-                        app:kswBackDrawable="@drawable/flyme_back_drawable"
-                        app:kswTintColor="@color/white" />
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_down"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
-                <View style="@style/DivideLineHorizontal" />
+                <RadioGroup
+                    android:id="@+id/jiedanxuanze"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDeliver"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <RadioButton
+                        android:id="@+id/jiedanno"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15"
+                        android:text="手动接单" />
+
+                    <RadioButton
+                        android:id="@+id/jiedanyes"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15"
+                        android:text="自动接单" />
+                </RadioGroup>
 
                 <LinearLayout
+                    android:id="@+id/jiedanshijian"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -251,6 +218,272 @@
                         android:textSize="@dimen/sp_13" />
 
                 </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="订单打印(“手动/自动”二选一)"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/more2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_right" />
+
+
+                    <ImageView
+                        android:id="@+id/less2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/dindandaying"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvDeliver"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <RadioButton
+                        android:id="@+id/dayingno"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15"
+                        android:text="手动打印" />
+
+                    <RadioButton
+                        android:id="@+id/dayingyes"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="@dimen/dimen_15"
+                        android:text="自动打印" />
+                </RadioGroup>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <!--                取货方式-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="取货方式"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/more3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_right" />
+
+
+                    <ImageView
+                        android:id="@+id/less3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_down"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/daodianziti"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="到店自提"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <com.kyleduo.switchbutton.SwitchButton
+                        android:id="@+id/takeSelf"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:layout_marginStart="@dimen/dimen_20"
+                        app:kswBackDrawable="@drawable/flyme_back_drawable"
+                        app:kswTintColor="@color/white" />
+
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:id="@+id/rlShopManageDelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvDeliver"
+                        style="@style/goods_spce_item_left_mark"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="@dimen/dimen_15"
+                        android:text="配送设置"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvShopManageDelivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:drawableEnd="@mipmap/me_arrow_right"
+                        android:drawablePadding="@dimen/dimen_10"
+                        android:ellipsize="end"
+                        android:hint="请选择"
+                        android:singleLine="true"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
+
+                    <RadioGroup
+                        android:id="@+id/layoutShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvDeliver"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/cb_model_shop"
+                            style="@style/tools_sub_item_radio_box"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dimen_15"
+                            android:text="商家配送" />
+
+                        <RadioButton
+                            android:id="@+id/cb_model_rider"
+                            style="@style/tools_sub_item_radio_box"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:padding="@dimen/dimen_15"
+                            android:text="骑手配送" />
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/layoutRider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvDeliver"
+                        android:layout_alignParentEnd="true"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvShopStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableEnd="@mipmap/me_arrow_right"
+                            android:drawablePadding="@dimen/dimen_15"
+                            android:gravity="end"
+                            android:paddingVertical="@dimen/dimen_15"
+                            android:text="请设置" />
+
+                        <TextView
+                            android:id="@+id/tvRiderStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableEnd="@mipmap/me_arrow_right"
+                            android:drawablePadding="@dimen/dimen_15"
+                            android:gravity="end"
+                            android:paddingVertical="@dimen/dimen_15"
+                            android:text="请设置" />
+
+                    </LinearLayout>
+
+                </RelativeLayout>
 
                 <View style="@style/DivideLineHorizontal" />
 
@@ -357,95 +590,6 @@
 
                 <View style="@style/DivideLineHorizontal" />
 
-                <RelativeLayout
-                    android:id="@+id/rlShopManageDelivery"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tvDeliver"
-                        style="@style/goods_spce_item_left_mark"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingVertical="@dimen/dimen_15"
-                        android:text="配送设置"
-                        android:textColor="#ff333333"
-                        android:textSize="13sp" />
-
-                    <TextView
-                        android:id="@+id/tvShopManageDelivery"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:drawableEnd="@mipmap/me_arrow_right"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:ellipsize="end"
-                        android:hint="请选择"
-                        android:singleLine="true"
-                        android:textColor="#ff999999"
-                        android:textSize="12sp"
-                        android:visibility="gone" />
-
-                    <RadioGroup
-                        android:id="@+id/layoutShop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvDeliver"
-                        android:orientation="vertical">
-
-                        <RadioButton
-                            android:id="@+id/cb_model_shop"
-                            style="@style/tools_sub_item_radio_box"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="@dimen/dimen_15"
-                            android:text="商家配送" />
-
-                        <RadioButton
-                            android:id="@+id/cb_model_rider"
-                            style="@style/tools_sub_item_radio_box"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:padding="@dimen/dimen_15"
-                            android:text="骑手配送" />
-                    </RadioGroup>
-
-                    <LinearLayout
-                        android:id="@+id/layoutRider"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvDeliver"
-                        android:layout_alignParentEnd="true"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tvShopStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableEnd="@mipmap/me_arrow_right"
-                            android:drawablePadding="@dimen/dimen_15"
-                            android:gravity="end"
-                            android:paddingVertical="@dimen/dimen_15"
-                            android:text="请设置" />
-
-                        <TextView
-                            android:id="@+id/tvRiderStatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawableEnd="@mipmap/me_arrow_right"
-                            android:drawablePadding="@dimen/dimen_15"
-                            android:gravity="end"
-                            android:paddingVertical="@dimen/dimen_15"
-                            android:text="请设置" />
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-                <View style="@style/DivideLineHorizontal" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
