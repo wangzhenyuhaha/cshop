@@ -167,6 +167,7 @@ class ShopSettingActivity :
 
     override fun initView() {
 
+        mToolBarDelegate?.setMidTitle("店铺设置")
         //加载数据
         if (shopManage != null) {
             onShopManageSuccess(shopManage!!)

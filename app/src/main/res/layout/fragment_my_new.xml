@@ -433,7 +433,7 @@
                 <TextView
                     android:id="@+id/tvShopInfo"
                     style="@style/my_part_item"
-                    android:drawableStart="@drawable/ic_code_blue"
+                    android:drawableStart="@mipmap/my_shop_info"
                     android:text="店铺信息" />
 
                 <View style="@style/DivideLineHorizontal" />

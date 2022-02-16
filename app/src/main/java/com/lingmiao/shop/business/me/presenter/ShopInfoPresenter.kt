@@ -1,4 +1,9 @@
 package com.lingmiao.shop.business.me.presenter
 
-class ShopInfoPresenter {
+import com.james.common.base.BasePresenter
+import com.james.common.base.BaseView
+
+interface ShopInfoPresenter : BasePresenter {
+    interface View : BaseView {}
+
 }
