@@ -227,27 +227,27 @@ class ShopSettingActivity :
             pop.showPopupWindow()
         }
 
-        //店铺名字
-        mBinding.rlShopManageName.setOnClickListener {
-            DialogUtils.showInputDialog(
-                this,
-                "店铺名称",
-                "",
-                "请输入",
-                shopManage?.shopName,
-                "取消",
-                "保存",
-                null
-            ) {
-                mBinding.tvShopManageName.text = it
-                shopManage?.shopName = it
-                val request = ApplyShopInfo()
-                val loginInfo = UserManager.getLoginInfo()
-                loginInfo?.let { info -> request.shopId = info.shopId }
-                request.shopName = it
-                mPresenter?.updateShopManage(request)
-            }
-        }
+        //店铺名字,不给修改
+//        mBinding.rlShopManageName.setOnClickListener {
+//            DialogUtils.showInputDialog(
+//                this,
+//                "店铺名称",
+//                "",
+//                "请输入",
+//                shopManage?.shopName,
+//                "取消",
+//                "保存",
+//                null
+//            ) {
+//                mBinding.tvShopManageName.text = it
+//                shopManage?.shopName = it
+//                val request = ApplyShopInfo()
+//                val loginInfo = UserManager.getLoginInfo()
+//                loginInfo?.let { info -> request.shopId = info.shopId }
+//                request.shopName = it
+//                mPresenter?.updateShopManage(request)
+//            }
+//        }
 
         //店铺口号
         mBinding.tvShopManageSlogan.setOnClickListener {

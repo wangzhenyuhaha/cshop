@@ -2,9 +2,8 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
@@ -37,10 +36,10 @@ class OperationSettingActivity :
     private val jiedanVisibility: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     //订单打印可见性
-    private val dingdandayingVisibility: MutableLiveData<Boolean> = MutableLiveData()
+    private val dingdandayingVisibility: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     //取货方式可见行
-    private val quhuofanshiVisibility: MutableLiveData<Boolean> = MutableLiveData()
+    private val quhuofanshiVisibility: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
     override fun useLightMode() = false
 
@@ -50,7 +49,7 @@ class OperationSettingActivity :
 
     override fun initView() {
 
-        mToolBarDelegate?.setMidTitle("运营管理")
+        mToolBarDelegate?.setMidTitle("店铺管理")
 
         //加载数据
         mPresenter?.loadShopInfo()
@@ -66,11 +65,11 @@ class OperationSettingActivity :
         }
 
         //接单设置
-        mBinding.more1.singleClick {
+        mBinding.more1.setOnClickListener {
             val temp = jiedanVisibility.value ?: true
             jiedanVisibility.value = !temp
         }
-        mBinding.less1.singleClick {
+        mBinding.less1.setOnClickListener {
             val temp = jiedanVisibility.value ?: true
             jiedanVisibility.value = !temp
         }
@@ -91,11 +90,11 @@ class OperationSettingActivity :
         }
 
         //订单打印
-        mBinding.more2.singleClick {
+        mBinding.more2.setOnClickListener {
             val temp = dingdandayingVisibility.value ?: true
             dingdandayingVisibility.value = !temp
         }
-        mBinding.less2.singleClick {
+        mBinding.less2.setOnClickListener {
             val temp = dingdandayingVisibility.value ?: true
             dingdandayingVisibility.value = !temp
         }
@@ -114,11 +113,11 @@ class OperationSettingActivity :
         UserManager.setAutoPrint(bean.autoPrint == 1)
 
         //取货方式
-        mBinding.more3.singleClick {
+        mBinding.more3.setOnClickListener {
             val temp = quhuofanshiVisibility.value ?: true
             quhuofanshiVisibility.value = !temp
         }
-        mBinding.less3.singleClick {
+        mBinding.less3.setOnClickListener {
             val temp = quhuofanshiVisibility.value ?: true
             quhuofanshiVisibility.value = !temp
         }
@@ -129,11 +128,13 @@ class OperationSettingActivity :
                 mBinding.less3.gone()
                 mBinding.daodianziti.gone()
                 mBinding.rlShopManageDelivery.gone()
+                mBinding.waimaipesong.gone()
             } else {
                 mBinding.more3.gone()
                 mBinding.less3.visiable()
                 mBinding.daodianziti.visiable()
                 mBinding.rlShopManageDelivery.visiable()
+                mBinding.waimaipesong.visiable()
             }
         }
 

@@ -250,7 +250,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
         if (mItem?.is_rider_to_seller == 1) {
             shiftDeliveryCb.isChecked = true
             try {
-                deliveryShiftTimeEt.setText(mItem?.rider_to_seller_time.toString() )
+                deliveryShiftTimeEt.setText(mItem?.rider_to_seller_time.toString())
             } catch (e: Exception) {
             }
         } else {
