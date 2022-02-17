@@ -86,7 +86,6 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:drawableEnd="@mipmap/me_arrow_right"
                             android:drawablePadding="@dimen/dimen_10"
                             android:ellipsize="end"
                             android:gravity="center|end"

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.amap.api.maps.model.LatLng
 import com.james.common.base.BaseVBActivity
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.common.ui.PhotoListActivity
@@ -52,14 +53,34 @@ class ShopInfoActivity :
             }
         }
         //店铺地址
-//        mBinding.rlShopManageAddress.singleClick {
-//            ShopAddressActivity.openActivity(context!!, shopManage)
-//        }
+        //店铺名字,不给修改
+        mBinding.rlShopManageName.setOnClickListener {
+            DialogUtils.showInputDialog(
+                this,
+                "店铺名称",
+                "",
+                "请输入",
+                shopManage?.shopName,
+                "取消",
+                "保存",
+                null
+            ) {
+                mBinding.tvShopManageName.text = it
+                shopManage?.shopName = it
+                val request = ApplyShopInfo()
+                val loginInfo = UserManager.getLoginInfo()
+                loginInfo?.let { info -> request.shopId = info.shopId }
+                request.shopName = it
+                mPresenter?.updateShopManage(request)
+            }
+        }
     }
 
 
     override fun onLoadedShopInfo(bean: ApplyShopInfo) {
         shopManage = bean
+        //店铺名称
+        mBinding.tvShopManageName.text = bean.shopName
         //店铺编号
         mBinding.tvShopManageNumber.text = String.format("%s", bean.shopId)
         //店铺类型

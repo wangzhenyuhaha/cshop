@@ -38,6 +38,37 @@
                     app:ivBgColor="@color/white"
                     app:ivRadius="5dp">
 
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/rlShopManageName"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_10"
+                            android:text="店铺名称"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvShopManageName"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:drawableEnd="@mipmap/me_arrow_right"
+                            android:drawablePadding="@dimen/dimen_10"
+                            android:ellipsize="end"
+                            android:gravity="center|end"
+                            android:singleLine="true"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp"
+                            tools:text="贵宾公子饰品旗舰店" />
+
+                    </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/rlShopManageNumber"
                         android:layout_width="match_parent"
