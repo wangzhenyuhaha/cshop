@@ -27,7 +27,6 @@
             android:layout_weight="1" />
 
         <EditText
-
             android:minWidth="140dp"
             android:id="@+id/et_model_km_price"
             android:layout_width="wrap_content"

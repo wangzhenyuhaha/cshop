@@ -50,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
             android:orientation="horizontal"
+            android:layout_marginEnd="@dimen/dimen_15"
             android:paddingStart="@dimen/dimen_15"
             android:paddingEnd="0dp">
 
@@ -63,31 +64,40 @@
                 android:layout_width="wrap_content"
                 android:text="骑手未接单转商家配送时间：" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
             <EditText
                 android:id="@+id/deliveryShiftTimeEt"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:background="@null"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/dimen_5"
+                android:layout_marginBottom="10dp"
+                android:background="@xml/setbar_bg_grey"
                 android:drawablePadding="@dimen/dimen_10"
                 android:gravity="end"
                 android:hint="请输入配货时间"
                 android:inputType="numberDecimal"
+                android:minWidth="140dp"
                 android:orientation="horizontal"
                 android:paddingStart="0dp"
-                android:paddingTop="@dimen/dimen_15"
+                android:paddingTop="@dimen/dimen_10"
                 android:paddingEnd="@dimen/dimen_5"
-                android:paddingBottom="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_10"
                 android:singleLine="true"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_CACACA"
                 android:textSize="13sp" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:layout_gravity="center"
+                android:gravity="start"
                 android:paddingTop="@dimen/dimen_15"
                 android:paddingBottom="@dimen/dimen_15"
                 android:text="分钟"
@@ -185,9 +195,11 @@
         </LinearLayout>
 
         <LinearLayout
-            style="@style/tools_sub_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/white"
+            android:layout_marginEnd="@dimen/dimen_15"
             android:orientation="horizontal">
 
             <TextView
@@ -198,31 +210,40 @@
                 style="@style/tools_sub_item_left"
                 android:text="配货时间" />
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
             <EditText
                 android:id="@+id/deliveryThingEt"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_weight="1"
-                android:background="@null"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/dimen_5"
+                android:layout_marginBottom="10dp"
+                android:background="@xml/setbar_bg_grey"
                 android:drawablePadding="@dimen/dimen_10"
                 android:gravity="end"
                 android:hint="请输入配货时间"
                 android:inputType="numberDecimal"
+                android:minWidth="140dp"
                 android:orientation="horizontal"
                 android:paddingStart="0dp"
-                android:paddingTop="@dimen/dimen_15"
+                android:paddingTop="@dimen/dimen_10"
                 android:paddingEnd="@dimen/dimen_5"
-                android:paddingBottom="@dimen/dimen_15"
+                android:paddingBottom="@dimen/dimen_10"
                 android:singleLine="true"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_CACACA"
                 android:textSize="@dimen/sp_13" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
-                android:gravity="end"
+                android:layout_gravity="center"
+                android:gravity="start"
                 android:paddingTop="@dimen/dimen_15"
                 android:paddingBottom="@dimen/dimen_15"
                 android:text="分钟"
