@@ -20,8 +20,8 @@
             style="@style/tools_sub_item_left"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:paddingEnd="@dimen/dimen_10"
             android:paddingStart="0dp"
+            android:paddingEnd="@dimen/dimen_10"
             android:text="配送时效" />
 
     </LinearLayout>
@@ -56,8 +56,11 @@
                 <EditText
                     android:id="@+id/et_model_time_km"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -76,8 +79,12 @@
                 <EditText
                     android:id="@+id/et_model_time_minute"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -111,8 +118,12 @@
                 <EditText
                     android:id="@+id/et_model_time_km_out"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -121,7 +132,7 @@
                     android:singleLine="true"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CACACA"
-                    android:textSize="@dimen/sp_13"/>
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -131,8 +142,12 @@
                 <EditText
                     android:id="@+id/et_model_time_minute_more"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -141,7 +156,7 @@
                     android:singleLine="true"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CACACA"
-                    android:textSize="@dimen/sp_13"/>
+                    android:textSize="@dimen/sp_13" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,8 +179,8 @@
             android:id="@+id/rv_model_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:visibility="visible"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
     </RadioGroup>
 

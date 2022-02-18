@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,ContentDescription">
 
     <LinearLayout
         android:id="@+id/ll_model_time_date"
@@ -17,11 +17,16 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="0dp"
-            android:paddingEnd="18dp"
+            android:src="@mipmap/tools_down"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:text="当日" />
 
         <TextView
@@ -29,14 +34,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@null"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:background="@xml/setbar_bg_grey"
             android:drawableStart="@mipmap/tools_time"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="center"
             android:hint="请选择"
             android:orientation="horizontal"
-            android:paddingStart="0dp"
-            android:paddingEnd="@dimen/dimen_5"
+            android:paddingStart="@dimen/dimen_5"
+            android:paddingTop="@dimen/dimen_5"
+            android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/dimen_5"
             android:singleLine="true"
             android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CACACA"
@@ -58,28 +69,40 @@
         android:orientation="horizontal"
         app:layout_constraintTop_toBottomOf="@+id/ll_model_time_date">
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/tools_down" />
+
         <TextView
             android:id="@+id/tv_model_time_type"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@mipmap/tools_down"
-            android:paddingStart="@dimen/dimen_5"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="0dp"
             android:paddingEnd="0dp"
             android:text="当日" />
 
-<!--        送达时间上界-->
+        <!--        送达时间上界-->
         <TextView
             android:id="@+id/et_model_km_endo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:background="@xml/setbar_bg_grey"
             android:drawableStart="@mipmap/tools_time"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="center"
             android:hint="请选择"
             android:orientation="horizontal"
             android:paddingStart="@dimen/dimen_5"
+            android:paddingTop="@dimen/dimen_5"
             android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/dimen_5"
             android:singleLine="true"
             android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CACACA"
@@ -90,19 +113,26 @@
             android:layout_height="wrap_content"
             android:text="至" />
 
-<!--        送达时间下界-->
+        <!--        送达时间下界-->
         <TextView
             android:id="@+id/et_model_km_end"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/dimen_5"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:background="@xml/setbar_bg_grey"
             android:drawableStart="@mipmap/tools_time"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="center"
             android:hint="请选择"
             android:orientation="horizontal"
             android:paddingStart="@dimen/dimen_5"
+            android:paddingTop="@dimen/dimen_5"
             android:paddingEnd="0dp"
+            android:paddingBottom="@dimen/dimen_5"
             android:singleLine="true"
             android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CACACA"

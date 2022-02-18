@@ -21,34 +21,44 @@
             style="@style/tools_sub_item_left"
             android:text="起送价" />
 
-        <EditText
-            android:id="@+id/et_model_km_price"
+        <View
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <EditText
+
+            android:minWidth="140dp"
+            android:id="@+id/et_model_km_price"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_weight="1"
-            android:background="@null"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:layout_marginBottom="10dp"
+            android:background="@xml/setbar_bg_grey"
             android:drawablePadding="@dimen/dimen_10"
             android:gravity="end"
             android:hint="请输入起送价，必填"
             android:inputType="numberDecimal"
             android:orientation="horizontal"
-            android:paddingTop="@dimen/dimen_15"
-            android:paddingEnd="@dimen/dimen_5"
             android:paddingStart="0dp"
-            android:paddingBottom="@dimen/dimen_15"
+            android:paddingTop="@dimen/dimen_10"
+            android:paddingEnd="@dimen/dimen_5"
+            android:paddingBottom="@dimen/dimen_10"
             android:singleLine="true"
             android:textColor="@color/color_333333"
             android:textColorHint="@color/color_CACACA"
             android:textSize="@dimen/sp_13" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
-            android:gravity="end"
+            android:layout_gravity="center"
+            android:gravity="start"
             android:paddingTop="@dimen/dimen_15"
             android:paddingBottom="@dimen/dimen_15"
-            android:text="元"
+            android:text="元 "
             android:textColor="@color/color_333333"
             android:textSize="@dimen/sp_13" />
 
@@ -80,7 +90,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_model_price"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            tools:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/ll_model_price_section"
@@ -100,8 +111,11 @@
                 <EditText
                     android:id="@+id/et_model_price_km"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -120,8 +134,12 @@
                 <EditText
                     android:id="@+id/et_model_price_price"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -155,8 +173,12 @@
                 <EditText
                     android:id="@+id/et_model_price_km_out"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
@@ -175,8 +197,12 @@
                 <EditText
                     android:id="@+id/et_model_price_minute_more"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_5"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_5"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:background="@xml/setbar_bg_grey"
                     android:drawablePadding="@dimen/dimen_10"
                     android:gravity="center"
                     android:hint="请输入"
