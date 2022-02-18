@@ -129,12 +129,14 @@ class OperationSettingActivity :
                 mBinding.daodianziti.gone()
                 mBinding.rlShopManageDelivery.gone()
                 mBinding.waimaipesong.gone()
+                mBinding.qishouchaoshi.gone()
             } else {
                 mBinding.more3.gone()
                 mBinding.less3.visiable()
                 mBinding.daodianziti.visiable()
                 mBinding.rlShopManageDelivery.visiable()
                 mBinding.waimaipesong.visiable()
+                mBinding.qishouchaoshi.visiable()
             }
         }
 
@@ -311,6 +313,7 @@ class OperationSettingActivity :
                 //隐藏棋手
                 mBinding.cbModelRider.gone()
                 mBinding.tvRiderStatus.gone()
+                mBinding.qishouchaoshi.gone()
             }
 
             //店铺设置

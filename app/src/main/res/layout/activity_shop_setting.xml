@@ -466,6 +466,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="@dimen/dimen_5"
                             android:text="图片库"
+                            android:drawableEnd="@mipmap/me_arrow_right"
                             android:textColor="@color/color_999999"
                             android:textSize="13sp" />
                     </LinearLayout>

@@ -373,7 +373,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="到店自提"
+                        android:text="到店自提(可以与外卖配送同时打开)"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
 
@@ -526,6 +526,53 @@
                     </LinearLayout>
 
                 </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/qishouchaoshi"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:visibility="invisible"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="骑手超时未接单系统提示时间"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <EditText
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="@dimen/dimen_5"
+                        android:textColor="#ff999999"
+                        android:textSize="12sp"
+                        tools:text="10" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:paddingTop="@dimen/dimen_15"
+                        android:paddingBottom="@dimen/dimen_15"
+                        android:text="分钟"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/sp_13" />
+
+                </LinearLayout>
 
                 <View style="@style/DivideLineHorizontal" />
 
