@@ -30,7 +30,7 @@ object IConstant {
     var official = false
 
     const val PRO_URL = "https://api.base.c-dian.cn";
-    const val TEST_URL = "http://47.117.112.134";
+    const val TEST_URL = "http://47.96.68.215";
 
     fun getPrivacyServiceH5(): String {
         return "https://docs.qq.com/doc/DR2lkRUNpWFJobmxE"
@@ -46,12 +46,12 @@ object IConstant {
 
     fun getSellerUrl(): String {
         if(official) return String.format("%s:7003", "http://api.seller.c-dian.cn");
-        return "http://47.116.78.248:7003";
+        return "http://47.96.68.215:7003";
     }
 
     fun getCommonUrl() : String {
         if(official) return String.format("%s", PRO_URL);
-        return "http://47.117.112.134:7000";
+        return "http://47.96.68.215:7000";
     }
 
     fun getUploadFileUrl(): String {
@@ -60,7 +60,7 @@ object IConstant {
 
     fun getCaptchaUrl(): String {
         if(official) return String.format("%s:7003/captcha.html", "http://api.base.c-dian.cn");
-        return "http://47.117.112.134:9527/captcha.html";
+        return "http://47.96.68.215:9527/captcha.html";
     }
 
     fun getGoodsDetailH5(): String {
