@@ -102,7 +102,11 @@
         android:id="@+id/tv_model_range_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="@dimen/dimen_10"
+        android:paddingStart="@dimen/dimen_20"
+        android:paddingTop="@dimen/dimen_10"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/dimen_10"
+        android:gravity="end"
         android:text="删除" />
 
 </LinearLayout>

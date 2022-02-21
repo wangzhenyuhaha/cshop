@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_model_add"
     style="@style/tools_sub_item_add"
-    android:gravity="end"
-    android:drawableEnd="@mipmap/goods_spec_plus"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:drawableEnd="@mipmap/goods_spec_plus"
+    android:gravity="end"
     android:text="添加加收时段"
     tools:ignore="HardcodedText" />

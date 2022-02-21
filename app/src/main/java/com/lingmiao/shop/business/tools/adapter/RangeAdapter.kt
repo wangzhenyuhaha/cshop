@@ -13,7 +13,7 @@ class RangeAdapter : BaseQuickAdapter<PeekTime, BaseViewHolder>(R.layout.tools_a
         //删除按钮
         helper.addOnClickListener(R.id.tv_model_range_delete)
         //第一行删除按钮隐藏
-        helper.setVisible(R.id.tv_model_range_delete, helper.adapterPosition != 0)
+        //helper.setVisible(R.id.tv_model_range_delete, helper.adapterPosition != 0)
         //结束时间
         helper.addOnClickListener(R.id.et_model_range_end)
         //开始时间
