@@ -465,7 +465,7 @@
                             android:drawablePadding="@dimen/dimen_10"
                             android:gravity="center|end"
                             android:text="图片库"
-                            android:textColor="#ff999999"
+                            android:textColor="@color/primary"
                             android:textSize="12sp" />
 
 
