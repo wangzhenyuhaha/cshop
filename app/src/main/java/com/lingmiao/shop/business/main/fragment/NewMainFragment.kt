@@ -448,7 +448,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
         // 管理设置
         tvManagerSetting.setOnClickListener {
-            ActivityUtils.startActivity(ManagerSettingActivity::class.java)
+            ActivityUtils.startActivity(OperationSettingActivity::class.java)
         }
         // 商品管理
         tvGoodsManager.setOnClickListener {
@@ -484,7 +484,6 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //             GoodsPublishActivity.openActivity(context!!, "");
         }
         testNewFra.setOnClickListener {
-            ActivityUtils.startActivity(OperationSettingActivity::class.java)
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {

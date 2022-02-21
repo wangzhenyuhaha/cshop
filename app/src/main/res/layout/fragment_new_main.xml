@@ -412,7 +412,7 @@
                                 android:id="@+id/tvManagerSetting"
                                 style="@style/main_tools"
                                 android:drawableTop="@mipmap/main_ic_shop_manager"
-                                android:text="管理设置" />
+                                android:text="店铺管理" />
 
                             <TextView
                                 android:id="@+id/tvGoodsManager"

@@ -137,6 +137,10 @@ class OperationSettingActivity :
                 mBinding.rlShopManageDelivery.visiable()
                 mBinding.waimaipesong.visiable()
                 mBinding.qishouchaoshi.visiable()
+                if (shopReq.shop_accept_carriage == 0) {
+                    //隐藏棋手
+                    mBinding.qishouchaoshi.gone()
+                }
             }
         }
 
