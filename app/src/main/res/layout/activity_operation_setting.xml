@@ -236,9 +236,15 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="订单打印(“手动/自动”二选一)"
+                        android:text="订单打印"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(“手动/自动”二选一)"
+                        android:textSize="11sp" />
 
                     <View
                         android:layout_width="0dp"
@@ -450,9 +456,9 @@
                         android:layout_height="wrap_content"
                         android:paddingVertical="@dimen/dimen_15"
                         android:text="配送设置"
-                        android:visibility="gone"
                         android:textColor="#ff333333"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/tvShopManageDelivery"
@@ -539,9 +545,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:visibility="invisible"
                         android:layout_marginEnd="@dimen/dimen_5"
-                        android:src="@mipmap/common_must_input" />
+                        android:src="@mipmap/common_must_input"
+                        android:visibility="invisible" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -610,7 +616,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="体现在顾客端 供用户联系" />
+                            android:text="（体现在顾客端 供用户联系）"
+                            android:textSize="@dimen/sp_11" />
 
                     </LinearLayout>
 

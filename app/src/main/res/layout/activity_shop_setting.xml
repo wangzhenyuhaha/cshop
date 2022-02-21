@@ -429,11 +429,10 @@
                     app:ivRadius="5dp">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingTop="@dimen/dimen_15">
-
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -446,7 +445,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="店铺广告图上传" />
+                            android:text="店铺广告图上传"
+                            android:textColor="#ff333333"
+                            android:textSize="13sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -455,20 +456,19 @@
                             android:textColor="@color/color_999999"
                             android:textSize="11sp" />
 
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1" />
-
                         <TextView
                             android:id="@+id/photoSelect"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="@dimen/dimen_5"
-                            android:text="图片库"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:drawableEnd="@mipmap/me_arrow_right"
-                            android:textColor="@color/color_999999"
-                            android:textSize="13sp" />
+                            android:drawablePadding="@dimen/dimen_10"
+                            android:gravity="center|end"
+                            android:text="图片库"
+                            android:textColor="#ff999999"
+                            android:textSize="12sp" />
+
+
                     </LinearLayout>
 
                     <com.lingmiao.shop.business.me.view.OtherGalleryRecyclerView
