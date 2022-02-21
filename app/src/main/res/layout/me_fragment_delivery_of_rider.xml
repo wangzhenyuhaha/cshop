@@ -605,7 +605,201 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/ll_model_range">
 
-            <include layout="@layout/tools_include_model_time" />
+            <LinearLayout
+                style="@style/tools_sub_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                tools:ignore="HardcodedText">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        style="@style/tools_sub_item_star"
+                        android:text="*" />
+
+                    <TextView
+                        style="@style/tools_sub_item_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="@dimen/dimen_10"
+                        android:text="配送时效" />
+
+                </LinearLayout>
+
+                <RadioGroup
+                    android:id="@+id/rg_model_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:id="@+id/cb_model_time_km_rider"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="40dp"
+                        android:checked="true"
+                        android:text="按公里数" />
+
+                    <LinearLayout
+                        android:id="@+id/ll_model_km"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@+id/ll_model_time_date">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_weight="1" />
+
+                            <EditText
+                                android:id="@+id/et_model_time_km_rider"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:layout_marginEnd="@dimen/dimen_5"
+                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:background="@null"
+                                android:drawablePadding="@dimen/dimen_10"
+                                android:gravity="center"
+                                android:hint="请输入"
+                                android:inputType="numberDecimal"
+                                android:orientation="horizontal"
+                                android:singleLine="true"
+                                android:textColor="@color/color_333333"
+                                android:textColorHint="@color/color_CACACA"
+                                android:textSize="@dimen/sp_13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="km内约" />
+
+                            <EditText
+                                android:id="@+id/et_model_time_minute_rider"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dimen_5"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:layout_marginEnd="@dimen/dimen_5"
+                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:background="@null"
+                                android:drawablePadding="@dimen/dimen_10"
+                                android:gravity="center"
+                                android:hint="请输入"
+                                android:inputType="numberDecimal"
+                                android:orientation="horizontal"
+                                android:singleLine="true"
+                                android:textColor="@color/color_333333"
+                                android:textColorHint="@color/color_CACACA"
+                                android:textSize="@dimen/sp_13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="分钟送达," />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toBottomOf="@+id/ll_model_time_date">
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="5dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="每超出" />
+
+                            <EditText
+                                android:id="@+id/et_model_time_km_out_rider"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dimen_5"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:layout_marginEnd="@dimen/dimen_5"
+                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:background="@null"
+                                android:drawablePadding="@dimen/dimen_10"
+                                android:gravity="center"
+                                android:hint="请输入"
+                                android:inputType="numberDecimal"
+                                android:orientation="horizontal"
+                                android:singleLine="true"
+                                android:textColor="@color/color_333333"
+                                android:textColorHint="@color/color_CACACA"
+                                android:textSize="@dimen/sp_13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="km时间增加" />
+
+                            <EditText
+                                android:id="@+id/et_model_time_minute_more_rider"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="@dimen/dimen_5"
+                                android:layout_marginTop="@dimen/dimen_5"
+                                android:layout_marginEnd="@dimen/dimen_5"
+                                android:layout_marginBottom="@dimen/dimen_5"
+                                android:background="@null"
+                                android:drawablePadding="@dimen/dimen_10"
+                                android:gravity="center"
+                                android:hint="请输入"
+                                android:inputType="numberDecimal"
+                                android:orientation="horizontal"
+                                android:singleLine="true"
+                                android:textColor="@color/color_333333"
+                                android:textColorHint="@color/color_CACACA"
+                                android:textSize="@dimen/sp_13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="分钟" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View style="@style/DivideLineHorizontal" />
+
+                    <RadioButton
+                        android:id="@+id/cb_model_time_section_rider"
+                        style="@style/tools_sub_item_radio_box"
+                        android:layout_height="40dp"
+                        android:text="按时间段" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_model_time_rider"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible" />
+
+                </RadioGroup>
+
+
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -90,13 +90,13 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
 
         //配送时效
         //按公里数
-        et_model_time_km.isEnabled = false
-        et_model_time_minute.isEnabled = false
-        et_model_time_km_out.isEnabled = false
-        et_model_time_minute_more.isEnabled = false
+        et_model_time_km_rider.isEnabled = false
+        et_model_time_minute_rider.isEnabled = false
+        et_model_time_km_out_rider.isEnabled = false
+        et_model_time_minute_more_rider.isEnabled = false
 
-        cb_model_time_km.isEnabled = false
-        cb_model_time_section.isEnabled = false
+        cb_model_time_km_rider.isEnabled = false
+        cb_model_time_section_rider.isEnabled = false
 
         tvShopSettingSubmit.singleClick {
 
@@ -185,7 +185,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
         mTimeList.add(TimeSection())
 
         mTimeAdapter = TimeAdapter()
-        rv_model_time.initAdapter(mTimeAdapter)
+        rv_model_time_rider.initAdapter(mTimeAdapter)
         mTimeAdapter.replaceData(mTimeList)
     }
 
@@ -255,16 +255,16 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
         mTimeSetting.apply {
             if (isBaseTimeType()) {
                 //按公里数
-                cb_model_time_km.isChecked = true
-                et_model_time_km.setText(String.format("%s", mTimeSetting.baseDistance))
-                et_model_time_minute.setText(String.format("%s", mTimeSetting.baseTime))
-                et_model_time_km_out.setText(String.format("%s", mTimeSetting.unitDistance))
-                et_model_time_minute_more.setText(String.format("%s", mTimeSetting.unitTime))
+                cb_model_time_km_rider.isChecked = true
+                et_model_time_km_rider.setText(String.format("%s", mTimeSetting.baseDistance))
+                et_model_time_minute_rider.setText(String.format("%s", mTimeSetting.baseTime))
+                et_model_time_km_out_rider.setText(String.format("%s", mTimeSetting.unitDistance))
+                et_model_time_minute_more_rider.setText(String.format("%s", mTimeSetting.unitTime))
                 //配送时间
                 deliveryThingEt.setText(String.format("%s", mTimeSetting.readyTime))
             } else {
                 //按时间段
-                cb_model_time_section.isChecked = true
+                cb_model_time_section_rider.isChecked = true
                 mTimeList = mTimeSetting.timeSections ?: arrayListOf()
                 mTimeAdapter.replaceData(mTimeList)
             }
