@@ -1,7 +1,6 @@
 package com.lingmiao.shop.business.me.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
@@ -10,14 +9,11 @@ import com.lingmiao.shop.R
 import com.lingmiao.shop.business.me.presenter.DeliveryOfRiderPresenter
 import com.lingmiao.shop.business.me.presenter.impl.DeliveryInOfRiderPresenterImpl
 import com.lingmiao.shop.business.tools.adapter.PriceAdapter
-import com.lingmiao.shop.business.tools.adapter.RangeAdapter
+import com.lingmiao.shop.business.tools.adapter.RangeRiderAdapter
 import com.lingmiao.shop.business.tools.adapter.TimeAdapter
 import com.lingmiao.shop.business.tools.bean.*
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_of_rider.*
-import kotlinx.android.synthetic.main.tools_adapter_time.*
-import kotlinx.android.synthetic.main.tools_include_model_price.*
-import kotlinx.android.synthetic.main.tools_include_model_range.*
 import kotlinx.android.synthetic.main.tools_include_model_time.*
 
 /**
@@ -29,7 +25,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
     DeliveryOfRiderPresenter.View {
 
     private lateinit var mPriceAdapter: PriceAdapter
-    private lateinit var mRangeAdapter: RangeAdapter
+    private lateinit var mRangeAdapter: RangeRiderAdapter
     private lateinit var mTimeAdapter: TimeAdapter
 
     private lateinit var mTimeList: MutableList<TimeSection>
@@ -83,14 +79,14 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
         //配货时间
         deliveryThingEt.isEnabled = false
         //起送价
-        et_model_km_price.isEnabled = false
+        model_km_price.isEnabled = false
         //配送费
-        et_model_price_km.isEnabled = false
-        et_model_price_price.isEnabled = false
-        et_model_price_km_out.isEnabled = false
-        et_model_price_minute_more.isEnabled = false
+        model_price_km.isEnabled = false
+        model_price_price.isEnabled = false
+        model_price_km_out.isEnabled = false
+        model_price_minute_more.isEnabled = false
         //配送范围
-        et_model_out_range_km.isEnabled = false
+        model_out_range_km.isEnabled = false
 
         //配送时效
         //按公里数
@@ -155,15 +151,15 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
     private fun updateCityExpressPayTypeCheckBox() {
         rg_model_pay_km.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.cb_model_pay_km_section) {
-                rv_model_price.visibility = View.VISIBLE
-                ll_model_price_section.visibility = View.GONE
+                rider_rv_model_price.visibility = View.VISIBLE
+                model_price_section.visibility = View.GONE
             } else if (checkedId == R.id.cb_model_pay_km_num) {
-                rv_model_price.visibility = View.GONE
-                ll_model_price_section.visibility = View.VISIBLE
+                rider_rv_model_price.visibility = View.GONE
+                model_price_section.visibility = View.VISIBLE
             }
         }
-        rv_model_price.visibility = View.GONE
-        ll_model_price_section.visibility = View.VISIBLE
+        rider_rv_model_price.visibility = View.GONE
+        model_price_section.visibility = View.VISIBLE
     }
 
     private fun initRangePart() {
@@ -172,9 +168,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
             enable = false
         }
         mRangeList.add(temp)
-        mRangeAdapter = RangeAdapter().apply {
+        mRangeAdapter = RangeRiderAdapter().apply {
         }
-        rv_model_range.initAdapter(mRangeAdapter)
+        rider_rv_model_range.initAdapter(mRangeAdapter)
         mRangeAdapter.replaceData(mRangeList)
     }
 
@@ -213,7 +209,7 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
             addFooterView(footer)
         }
 
-        rv_model_price.initAdapter(mPriceAdapter)
+        rider_rv_model_price.initAdapter(mPriceAdapter)
 
         mPriceAdapter.replaceData(mPriceList)
     }
@@ -225,9 +221,9 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
     private fun setUi() {
 
         // 起送价
-        et_model_km_price.setText(String.format("%s", mItem?.baseShipPrice))
+        model_km_price.setText(String.format("%s", mItem?.baseShipPrice))
         // 配送范围
-        et_model_out_range_km.setText(String.format("%s", mItem?.shipRange))
+        model_out_range_km.setText(String.format("%s", mItem?.shipRange))
 
         mFeeSetting = mPresenter?.getFeeSetting(mItem) ?: FeeSettingVo()
         mTimeSetting = mPresenter?.getTimeSetting(mItem) ?: TimeSettingVo()
@@ -241,10 +237,10 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
             mRangeAdapter.replaceData(mRangeList)
             //配送费
             cb_model_pay_km_num.isChecked = true
-            et_model_price_km.setText(String.format("%s", mFeeSetting.baseDistance))
-            et_model_price_price.setText(String.format("%s", mFeeSetting.basePrice))
-            et_model_price_km_out.setText(String.format("%s", mFeeSetting.unitDistance))
-            et_model_price_minute_more.setText(String.format("%s", mFeeSetting.unitPrice))
+            model_price_km.setText(String.format("%s", mFeeSetting.baseDistance))
+            model_price_price.setText(String.format("%s", mFeeSetting.basePrice))
+            model_price_km_out.setText(String.format("%s", mFeeSetting.unitDistance))
+            model_price_minute_more.setText(String.format("%s", mFeeSetting.unitPrice))
         }
 
         if (mItem?.is_rider_to_seller == 1) {

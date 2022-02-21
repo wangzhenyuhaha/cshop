@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal"
+    tools:ignore="HardcodedText">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="从" />
+
+    <TextView
+        android:id="@+id/et_model_range_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginEnd="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:layout_weight="1"
+        android:background="@null"
+        android:drawableStart="@mipmap/tools_time"
+        android:hint="请选择"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingTop="@dimen/dimen_5"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/dimen_5"
+        android:singleLine="true"
+        android:textColor="@color/color_333333"
+        android:textColorHint="@color/color_CACACA"
+        android:textSize="@dimen/sp_13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="到" />
+
+    <TextView
+        android:id="@+id/et_model_range_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginEnd="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:layout_weight="1"
+        android:background="@null"
+        android:drawableStart="@mipmap/tools_time"
+        android:hint="请选择"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingTop="@dimen/dimen_5"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/dimen_5"
+        android:singleLine="true"
+        android:textColor="@color/color_333333"
+        android:textColorHint="@color/color_CACACA"
+        android:textSize="@dimen/sp_13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="加收" />
+
+    <EditText
+        android:id="@+id/et_model_range_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/dimen_5"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:layout_marginEnd="@dimen/dimen_5"
+        android:layout_marginBottom="@dimen/dimen_5"
+        android:layout_weight="1"
+        android:background="@null"
+        android:drawablePadding="@dimen/dimen_10"
+        android:gravity="center"
+        android:hint="请输入"
+        android:inputType="numberDecimal"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/dimen_5"
+        android:paddingTop="@dimen/dimen_5"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/dimen_5"
+        android:singleLine="true"
+        android:textColor="@color/color_333333"
+        android:textColorHint="@color/color_CACACA"
+        android:textSize="@dimen/sp_13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dimen_10"
+        android:paddingBottom="@dimen/dimen_10"
+        android:text="元" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tv_model_range_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dimen_20"
+        android:paddingTop="@dimen/dimen_10"
+        android:paddingEnd="0dp"
+        android:paddingBottom="@dimen/dimen_10"
+        android:gravity="end"
+        android:text="删除" />
+
+</LinearLayout>
