@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.goods_activity_spec_key.toolbarView
 class SpecKeyActivity : BaseActivity<SpecKeyPre>(), SpecKeyPre.SpceKeyView {
 
     companion object {
-        const val MAX_SPEC_SELECTED = 5 //规格最大选择数量
+        const val MAX_SPEC_SELECTED = 100 //规格最大选择数量
 
         const val KEY_CATEGORY_ID = "KEY_CATEGORY_ID"
         const val KEY_SPEC_LIST = "KEY_SPEC_LIST"
