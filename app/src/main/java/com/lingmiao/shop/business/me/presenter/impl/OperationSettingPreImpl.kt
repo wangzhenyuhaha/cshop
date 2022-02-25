@@ -4,6 +4,7 @@ import android.content.Context
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
+import com.lingmiao.shop.business.goods.api.request.RiderSettingVo
 import com.lingmiao.shop.business.goods.presenter.impl.ItemPopPreImpl
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.api.MeRepository
@@ -44,6 +45,15 @@ class OperationSettingPreImpl(val context: Context, val view: OperationSettingPr
                 val qsItem = if (qssp.data?.size ?: 0 > 0) qssp.data?.get(0) else null
                 view.onLoadedTemplate(tcItem, qsItem)
             }
+        }
+    }
+
+    override fun updateModel(id: String, isToSeller: Int, toRiderTime: Int) {
+        mCoroutine.launch {
+            val req = RiderSettingVo()
+            req.toSeller = isToSeller
+            req.toSellerTime = toRiderTime
+            ToolsRepository.updateRiderSetting(id, req)
         }
     }
 

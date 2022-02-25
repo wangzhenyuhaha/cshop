@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.getViewText
@@ -16,6 +15,7 @@ import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.me.presenter.OperationSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.OperationSettingPreImpl
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
+import com.lingmiao.shop.business.tools.bean.TimeSettingVo
 import com.lingmiao.shop.databinding.ActivityOperationSettingBinding
 import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 
@@ -185,6 +185,26 @@ class OperationSettingActivity :
                 showToast("请上传店铺LOGO")
                 return@setOnClickListener
             }
+            //如果选了骑手配送则需要填写骑手超时未接单系统提示时间
+            if (mBinding.cbModelRider.isChecked) {
+                if (mBinding.riderToShop.getViewText().isEmpty()) {
+                    showToast("请填写骑手超时未接单系统提示时间")
+                    return@setOnClickListener
+                }
+                if (mLocalItem == null || mLocalItem?.id == null || mLocalItem?.id?.length == 0) {
+                    showToast("请先配置商家配送")
+                    return@setOnClickListener
+                }
+                val setting = TimeSettingVo()
+                setting.isAllowTransTemp = 0
+                setting.transTempLimitTime = mBinding.riderToShop.getViewText().toInt()
+
+                mPresenter?.updateModel(
+                    mLocalItem?.id!!,
+                    setting.isAllowTransTemp!!,
+                    setting.transTempLimitTime!!
+                )
+            }
             //提交设置
             mPresenter?.setSetting(shopReq)
         }
@@ -224,6 +244,8 @@ class OperationSettingActivity :
         qsItem?.apply {
             mBinding.tvRiderStatus.text = "已设置"
         }
+
+        qsItem?.rider_to_seller_time?.let { mBinding.riderToShop.setText(it.toString()) }
 
         mBinding.layoutShop.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.cb_model_shop) {

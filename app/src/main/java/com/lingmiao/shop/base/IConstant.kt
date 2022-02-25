@@ -15,6 +15,8 @@ object IConstant {
     const val MESSAGE_ORDER_PAY_SUCCESS = "2"
     const val MESSAGE_ORDER_CANCEL = "3"
     const val MESSAGE_APPLY_SHOP_REFUSE = "4"
+    //骑手长时间未接单
+    const val MESSAGE_RIDER_NOT_APPLY = "5"
 
     const val TAB_WAIT_SEND_GOODS = 0
     const val TAB_WAIT_REFUND = 2
@@ -22,9 +24,9 @@ object IConstant {
     const val JPUSH_TYPE = "jpush_type"
 
     //    配送方式
-    const val  SHIP_TYPE_GLOBAL = "GLOBAL"  //快递公司
-    const val  SHIP_TYPE_LOCAL = "LOCAL"    //同城
-    const val  SHIP_TYPE_SELF = "SELF"      //自提
+    const val SHIP_TYPE_GLOBAL = "GLOBAL"  //快递公司
+    const val SHIP_TYPE_LOCAL = "LOCAL"    //同城
+    const val SHIP_TYPE_SELF = "SELF"      //自提
 
     //true 表示生产 false 表示测试
     var official = false
@@ -40,26 +42,26 @@ object IConstant {
         return "https://docs.qq.com/doc/DR2FpbEJNcmdCSFNn"
     }
 
-    fun getSecurityH5() : String {
+    fun getSecurityH5(): String {
         return "https://docs.qq.com/doc/DR3dJUEVyZGlLb1VE"
     }
 
     fun getSellerUrl(): String {
-        if(official) return String.format("%s:7003", "http://api.seller.c-dian.cn");
+        if (official) return String.format("%s:7003", "http://api.seller.c-dian.cn");
         return "http://47.96.68.215:7003";
     }
 
-    fun getCommonUrl() : String {
-        if(official) return String.format("%s", PRO_URL);
+    fun getCommonUrl(): String {
+        if (official) return String.format("%s", PRO_URL);
         return "http://120.26.92.116:7000";
     }
 
     fun getUploadFileUrl(): String {
-        return  String.format("%s/uploaders", getCommonUrl());
+        return String.format("%s/uploaders", getCommonUrl());
     }
 
     fun getCaptchaUrl(): String {
-        if(official) return String.format("%s:7003/captcha.html", "http://api.base.c-dian.cn");
+        if (official) return String.format("%s:7003/captcha.html", "http://api.base.c-dian.cn");
         return "http://120.26.92.116:9527/captcha.html";
     }
 
@@ -78,6 +80,7 @@ object IConstant {
      * 传递的内容项
      */
     const val BUNDLE_KEY_OF_ITEM = "KEY_ITEM";
+
     /**
      * 传递的内容项唯一码
      */

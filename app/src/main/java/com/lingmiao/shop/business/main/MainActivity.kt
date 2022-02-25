@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.KeyEvent
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -132,8 +133,10 @@ class MainActivity : AppCompatActivity() {
         LogUtils.d("jpushType:$jpushType")
         if (jpushType == IConstant.MESSAGE_ORDER_PAY_SUCCESS) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
-        } else if(jpushType == IConstant.MESSAGE_ORDER_CANCEL) {
+        } else if (jpushType == IConstant.MESSAGE_ORDER_CANCEL) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
+        } else if (jpushType == IConstant.MESSAGE_RIDER_NOT_APPLY) {
+            Toast.makeText(this, "乌拉", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -141,8 +144,8 @@ class MainActivity : AppCompatActivity() {
     // 1，蓝牙权限
     // 2，蓝牙打印设置
     private fun initPrintSetting() {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(!PrinterPermission.isBluetoothPermissionGranted(this)) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!PrinterPermission.isBluetoothPermissionGranted(this)) {
                 PrinterPermission.askForBluetoothPermissions(this)
             } else {
                 handPrintSetting()
@@ -153,7 +156,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handPrintSetting() {
-        if(PrinterPermission.isBluetoothEnable()) {
+        if (PrinterPermission.isBluetoothEnable()) {
             // 蓝牙可用则绑定服务
             PrinterModule.bind(this)
         } else {
@@ -163,7 +166,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(resultCode == RESULT_OK && requestCode == PrinterPermission.PERMISSION_ASK) {
+        if (resultCode == RESULT_OK && requestCode == PrinterPermission.PERMISSION_ASK) {
             handPrintSetting()
         }
     }
@@ -211,11 +214,11 @@ class MainActivity : AppCompatActivity() {
     private var mExitTime: Long = 0
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(vpMain.currentItem > 0) {
+            if (vpMain.currentItem > 0) {
                 vpMain.currentItem = 0;
                 return true
             }
-            if(System.currentTimeMillis() - mExitTime > 2000) {
+            if (System.currentTimeMillis() - mExitTime > 2000) {
                 ToastUtils.showLong("再按一次返回桌面")
                 mExitTime = System.currentTimeMillis()
             } else {

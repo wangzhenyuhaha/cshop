@@ -564,6 +564,7 @@
                         android:textSize="13sp" />
 
                     <EditText
+                        android:id="@+id/rider_to_shop"
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
                         android:gravity="center"

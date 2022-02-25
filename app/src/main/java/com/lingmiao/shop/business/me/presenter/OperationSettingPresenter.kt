@@ -10,6 +10,8 @@ interface OperationSettingPresenter : BasePresenter {
 
     fun loadShopInfo()
 
+    fun updateModel(id : String, isToSeller : Int, toRiderTime : Int)
+
     fun showWorkTimePop(target: android.view.View)
 
     fun setSetting(data: ApplyShopInfo)

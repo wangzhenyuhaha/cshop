@@ -47,9 +47,6 @@ class DeliveryInOfRiderPresenterImpl (val view : DeliveryOfRiderPresenter.View) 
             val req = RiderSettingVo()
             req.toSeller = isToSeller
             req.toSellerTime = toRiderTime
-            Log.d("WZYJJGB", id.toString())
-            Log.d("WZYJJGB",req.toString())
-            Log.d("WZYJJGB", isToSeller.toString())
             val resp = ToolsRepository.updateRiderSetting(id, req)
             handleResponse(resp) {
                 view.updateModelSuccess(true);

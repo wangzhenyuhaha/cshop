@@ -21,7 +21,8 @@
             android:orientation="horizontal"
             android:paddingStart="@dimen/dimen_15"
             android:paddingEnd="0dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
                 style="@style/tools_sub_item_star"
@@ -54,7 +55,8 @@
             android:orientation="horizontal"
             android:paddingStart="@dimen/dimen_15"
             android:paddingEnd="0dp"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <TextView
                 style="@style/tools_sub_item_star"
@@ -289,7 +291,6 @@
                         android:layout_weight="1" />
 
                     <EditText
-                        android:minWidth="140dp"
                         android:id="@+id/model_km_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -302,6 +303,7 @@
                         android:gravity="end"
                         android:hint="请输入起送价，必填"
                         android:inputType="numberDecimal"
+                        android:minWidth="140dp"
                         android:orientation="horizontal"
                         android:paddingStart="0dp"
                         android:paddingTop="@dimen/dimen_10"
