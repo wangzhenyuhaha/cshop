@@ -136,9 +136,6 @@ class MainActivity : AppCompatActivity() {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_SEND_GOODS))
         } else if (jpushType == IConstant.MESSAGE_ORDER_CANCEL) {
             changeTabPosition(TabChangeEvent(IConstant.TAB_WAIT_REFUND))
-        } else if (jpushType == IConstant.MESSAGE_RIDER_NOT_APPLY) {
-            Toast.makeText(this, "乌拉", Toast.LENGTH_LONG).show()
-            Log.d("WZYSTSS","乌拉")
         }
     }
 

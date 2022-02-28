@@ -3,17 +3,22 @@ package com.lingmiao.shop.sdk
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import cn.jpush.android.api.*
 import cn.jpush.android.service.JPushMessageReceiver
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.Utils
+import com.lingmiao.shop.MyApp
 import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.business.common.ui.DialogActivity
 import com.lingmiao.shop.business.main.MainActivity
 import com.lingmiao.shop.business.main.ShopWaitApplyActivity
 import com.lingmiao.shop.util.VoiceUtils
+import kotlinx.android.synthetic.main.common_pop_media.*
 
-class MyJPushReceiver: JPushMessageReceiver() {
+class MyJPushReceiver : JPushMessageReceiver() {
     private val TAG = "PushMessageReceiver"
     override fun onMessage(
         context: Context,
@@ -35,12 +40,13 @@ class MyJPushReceiver: JPushMessageReceiver() {
             val bundle = Bundle()
             bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE, message.notificationTitle)
             bundle.putString(JPushInterface.EXTRA_ALERT, message.notificationContent)
-            val jpushExtra:JpushExtra? = GsonUtils.fromJson(message.notificationExtras, JpushExtra::class.java)
+            val jpushExtra: JpushExtra? =
+                GsonUtils.fromJson(message.notificationExtras, JpushExtra::class.java)
             jpushExtra?.let {
 //                LogUtils.i(TAG, "jpushExtra:$jpushExtra")
-                if(IConstant.MESSAGE_ORDER_PAY_SUCCESS == jpushExtra.type){
+                if (IConstant.MESSAGE_ORDER_PAY_SUCCESS == jpushExtra.type) {
                     bundle.putString(IConstant.JPUSH_TYPE, IConstant.MESSAGE_ORDER_PAY_SUCCESS)
-                } else if(IConstant.MESSAGE_APPLY_SHOP_REFUSE == jpushExtra.type){
+                } else if (IConstant.MESSAGE_APPLY_SHOP_REFUSE == jpushExtra.type) {
                     i = Intent(context, ShopWaitApplyActivity::class.java)
                 }
             }
@@ -80,16 +86,32 @@ class MyJPushReceiver: JPushMessageReceiver() {
     ) {
         LogUtils.i(TAG, "[onNotifyMessageArrived] $message")
         try {
-            val jpushExtra:JpushExtra? = GsonUtils.fromJson(message.notificationExtras, JpushExtra::class.java)
+            val jpushExtra: JpushExtra? =
+                GsonUtils.fromJson(message.notificationExtras, JpushExtra::class.java)
             jpushExtra?.let {
 //                LogUtils.i(TAG, "jpushExtra:$jpushExtra")
-                if(IConstant.MESSAGE_ORDER_PAY_SUCCESS == jpushExtra.type){
+                if (IConstant.MESSAGE_ORDER_PAY_SUCCESS == jpushExtra.type) {
                     VoiceUtils.playVoiceOfNewOrder(Utils.getApp())
-                } else if(IConstant.MESSAGE_ORDER_CANCEL == jpushExtra.type) {
+                } else if (IConstant.MESSAGE_ORDER_CANCEL == jpushExtra.type) {
                     VoiceUtils.playVoiceOfOrderCancel(Utils.getApp())
                 }
             }
-        }catch (e:Exception){
+            if (jpushExtra?.type == IConstant.MESSAGE_RIDER_NOT_APPLY) {
+                Log.d("WZYDDU", "啊啊啊骑手没接单")
+                Log.d("WZYDDU", "AAA")
+                var i = Intent(context, DialogActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                Log.d("WZYDDU", "BBB")
+                context?.startActivity(i)
+                Log.d("WZYDDU", "CCC")
+                MyApp.getInstance()
+                    .startActivity(Intent(MyApp.getInstance(), DialogActivity::class.java))
+                Log.d("WZYDDU", "DDD")
+            }
+        } catch (e: Exception) {
+            Log.d("WZYDDU", e.toString())
+            Log.d("WZYDDU", e.message.toString())
+           // Log.d("WZYDDU", e.)
             e.printStackTrace()
         }
 

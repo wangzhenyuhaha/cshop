@@ -39,6 +39,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
+            android:name=".business.common.ui.DialogActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.ActivityDialogStyle" />
+        <activity
             android:name=".business.me.ShopInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

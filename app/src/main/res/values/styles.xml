@@ -1,13 +1,11 @@
-<resources
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorControlNormal">?android:attr/textColorPrimary</item>
-<!--        <item name="colorAccent">@color/colorAccent</item>-->
+        <!--        <item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
     <style name="divide_line">
@@ -101,8 +99,8 @@
     <style name="goods_publish_container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-<!--        <item name="android:layout_marginLeft">@dimen/dimen_14</item>-->
-<!--        <item name="android:layout_marginRight">@dimen/dimen_14</item>-->
+        <!--        <item name="android:layout_marginLeft">@dimen/dimen_14</item>-->
+        <!--        <item name="android:layout_marginRight">@dimen/dimen_14</item>-->
         <item name="android:paddingLeft">@dimen/dimen_10</item>
         <item name="android:paddingRight">@dimen/dimen_10</item>
         <item name="android:layout_marginTop">@dimen/dimen_14</item>
@@ -154,6 +152,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:orientation">horizontal</item>
     </style>
+
     <style name="goods_spce_item_left">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -162,6 +161,7 @@
         <item name="android:textColor">@color/color_333333</item>
         <item name="android:textSize">@dimen/dimen_13</item>
     </style>
+
     <style name="goods_spce_item_left_mark" parent="goods_spce_item_left">
         <item name="android:drawableStart">@mipmap/common_must_input</item>
         <item name="android:drawablePadding">@dimen/dimen_5</item>
@@ -241,7 +241,7 @@
         <item name="android:inputType">numberDecimal</item>
     </style>
 
-    <style name="goods_delivery_right_arrow" parent="goods_publish_right_arrow"/>
+    <style name="goods_delivery_right_arrow" parent="goods_publish_right_arrow" />
 
     <!--  发货方式 end -->
 
@@ -269,6 +269,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="main_data_layout_item">
         <item name="android:layout_weight">1</item>
         <item name="android:layout_width">0dp</item>
@@ -276,6 +277,7 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:orientation">vertical</item>
     </style>
+
     <style name="yesterday_data_value">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -283,6 +285,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="yesterday_data_hint">
         <item name="android:layout_marginTop">8dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -291,6 +294,7 @@
         <item name="android:textSize">12sp</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="today_data_value">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -298,6 +302,7 @@
         <item name="android:textSize">28sp</item>
         <item name="android:layout_gravity">center</item>
     </style>
+
     <style name="today_data_hint">
         <item name="android:layout_marginTop">4dp</item>
         <item name="android:layout_width">wrap_content</item>
@@ -308,6 +313,7 @@
         <item name="android:drawablePadding">@dimen/dimen_5</item>
         <item name="android:drawableBottom">@mipmap/ic_triangle_down_white</item>
     </style>
+
     <style name="main_tools">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -318,6 +324,7 @@
         <item name="android:padding">15dp</item>
         <item name="android:drawablePadding">10dp</item>
     </style>
+
     <style name="main_parts_hint">
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
@@ -410,6 +417,7 @@
         <item name="android:textSize">@dimen/sp_12</item>
 
     </style>
+
     <style name="tools_sub_area_text_2">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -484,6 +492,7 @@
         <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
     </style>
+
     <style name="tuan_goods_item_title" parent="@style/common_weight1_center">
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/color_666666</item>
@@ -491,6 +500,7 @@
         <item name="android:paddingTop">@dimen/dimen_5</item>
         <item name="android:paddingBottom">@dimen/dimen_5</item>
     </style>
+
     <style name="tuan_goods_item_1" parent="@style/common_weight1_center">
         <item name="android:textSize">@dimen/sp_12</item>
         <item name="android:textColor">@color/color_999999</item>
@@ -615,8 +625,15 @@
 
     </style>
 
-    android:textStyle=""
-
+    <!--   透明的Layout-->
+    <style name="Theme.ActivityDialogStyle" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
 
 
 </resources>
