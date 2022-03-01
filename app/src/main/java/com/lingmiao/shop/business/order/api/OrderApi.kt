@@ -62,6 +62,12 @@ interface OrderApi {
         @Query("remark") desc: String
     ): Response<ResponseBody>
 
+    //订单转商家配送
+    @PUT("seller/trade/orders/updateShippingTypeToLocal/{order_sn}")
+    suspend fun updateShippingTypeToLocal(
+        @Path("order_sn") orderId: String
+    ): Response<ResponseBody>
+
     //    删除订单
     @DELETE("seller/trade/orders/{order_sn}")
     suspend fun deleteOrder(

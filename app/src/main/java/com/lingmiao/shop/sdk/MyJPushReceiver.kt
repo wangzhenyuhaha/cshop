@@ -35,7 +35,6 @@ class MyJPushReceiver : JPushMessageReceiver() {
         LogUtils.i(TAG, "[onNotifyMessageOpened] $message")
         try {
             //打开自定义的Activity
-
             var i = Intent(context, MainActivity::class.java)
             val bundle = Bundle()
             bundle.putString(JPushInterface.EXTRA_NOTIFICATION_TITLE, message.notificationTitle)
@@ -97,21 +96,14 @@ class MyJPushReceiver : JPushMessageReceiver() {
                 }
             }
             if (jpushExtra?.type == IConstant.MESSAGE_RIDER_NOT_APPLY) {
-                Log.d("WZYDDU", "啊啊啊骑手没接单")
-                Log.d("WZYDDU", "AAA")
-                var i = Intent(context, DialogActivity::class.java)
+                val i = Intent(context, DialogActivity::class.java)
+                i.putExtra("ORDER_SN", jpushExtra.orderSN)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                Log.d("WZYDDU", "BBB")
                 context?.startActivity(i)
-                Log.d("WZYDDU", "CCC")
                 MyApp.getInstance()
                     .startActivity(Intent(MyApp.getInstance(), DialogActivity::class.java))
-                Log.d("WZYDDU", "DDD")
             }
         } catch (e: Exception) {
-            Log.d("WZYDDU", e.toString())
-            Log.d("WZYDDU", e.message.toString())
-           // Log.d("WZYDDU", e.)
             e.printStackTrace()
         }
 

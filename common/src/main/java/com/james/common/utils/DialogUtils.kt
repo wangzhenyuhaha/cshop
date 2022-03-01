@@ -33,6 +33,17 @@ class DialogUtils {
             showDialog(context, title, content, "取消", "确定", leftClick, rightClick)
         }
 
+        fun showCancelableDialog(
+            cancel: Boolean,
+            context: Activity,
+            title: String,
+            content: String,
+            leftClick: View.OnClickListener?,
+            rightClick: View.OnClickListener?
+        ) {
+            showCancelableDialog(cancel, context, title, content, "取消", "确定", leftClick, rightClick)
+        }
+
 
         fun showDialog(
             context: Activity,
@@ -47,6 +58,41 @@ class DialogUtils {
             val defaultView =
                 View.inflate(context, R.layout.dialog_common, null)
             dialog.setContentView(defaultView)
+            val tvTitle = defaultView.findViewById<TextView>(R.id.tvTitle)
+            val tvContent = defaultView.findViewById<TextView>(R.id.tvContent)
+            val tvLeft = defaultView.findViewById<TextView>(R.id.tvLeft)
+            val tvRight = defaultView.findViewById<TextView>(R.id.tvRight)
+            tvTitle.text = title
+            tvContent.text = content
+            tvLeft.text = left
+            tvRight.text = right
+            tvLeft.setOnClickListener { v ->
+                dialog.dismiss()
+                leftClick?.onClick(v)
+            }
+            tvRight.setOnClickListener { v ->
+                dialog.dismiss()
+                rightClick?.onClick(v)
+            }
+            dialog.show()
+        }
+
+        //不能取消的Dialog
+        fun showCancelableDialog(
+            cancel: Boolean,
+            context: Activity,
+            title: String,
+            content: String,
+            left: String,
+            right: String,
+            leftClick: View.OnClickListener?,
+            rightClick: View.OnClickListener?
+        ) {
+            val dialog = AppCompatDialog(context, R.style.TransparentDialog)
+            val defaultView =
+                View.inflate(context, R.layout.dialog_common, null)
+            dialog.setContentView(defaultView)
+            dialog.setCancelable(false)
             val tvTitle = defaultView.findViewById<TextView>(R.id.tvTitle)
             val tvContent = defaultView.findViewById<TextView>(R.id.tvContent)
             val tvLeft = defaultView.findViewById<TextView>(R.id.tvLeft)
@@ -508,7 +554,7 @@ class DialogUtils {
 
             val screenWidth = ScreenUtils.getScreenWidth()
 
-            val w = (screenWidth)*8/10
+            val w = (screenWidth) * 8 / 10
             val h = w * height / width
             defaultView.layoutParams = FrameLayout.LayoutParams(w, h)
             dialog.setContentView(defaultView)
