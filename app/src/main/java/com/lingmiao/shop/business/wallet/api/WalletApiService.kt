@@ -29,6 +29,11 @@ interface WalletApiService {
     @GET("account/depositIndex")
     fun getDepositInfo(): Call<DataVO<WalletVo>>;
 
+    //查询骑手备付金
+    @WithHiResponse
+    @GET("account/riderDepositIndex")
+    fun getRiderMoney(): Call<DataVO<WalletVo>>
+
     /**
      * 交易记录列表
      */

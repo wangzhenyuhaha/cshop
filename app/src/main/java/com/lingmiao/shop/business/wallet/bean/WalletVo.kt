@@ -12,7 +12,11 @@ class WalletVo(
     /**
      * 余额
      */
-    var balanceAccount: AccountVo? = null
+    var balanceAccount: AccountVo? = null,
+
+
+    //骑手备付金
+    var riderDepositAccountVO: AccountVo? = null
 ) : Serializable {
 
     fun getDepositAccountId(): String {

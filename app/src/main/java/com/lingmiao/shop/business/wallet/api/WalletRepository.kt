@@ -1,4 +1,5 @@
 package com.lingmiao.shop.business.wallet.api
+
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.wallet.bean.*
 import com.lingmiao.shop.net.Fetch
@@ -33,6 +34,11 @@ object WalletRepository {
         return apiService.getBalanceInfo().awaitHiResponse();
     }
 
+    //骑手备付金
+    suspend fun getRiderMoney(): HiResponse<DataVO<WalletVo>> {
+        return apiService.getRiderMoney().awaitHiResponse()
+    }
+
     /**
      * 押金数据
      */
@@ -43,7 +49,10 @@ object WalletRepository {
     /**
      * 交易记录列表
      */
-    suspend fun getRecordList(pageNo: Int, accountId : String): HiResponse<DataVO<PageRecordVo<DepositVo>>> {
+    suspend fun getRecordList(
+        pageNo: Int,
+        accountId: String
+    ): HiResponse<DataVO<PageRecordVo<DepositVo>>> {
         val body = TradeReqBody();
         body.accountId = accountId;
 
@@ -59,13 +68,13 @@ object WalletRepository {
     查询会员订单列表
      */
     suspend fun getOrderList(pageNo: Int): HiResponse<PageVO<OrderList>> {
-        return apiService.queryTradeOrdersList(pageNo,10).awaitHiResponse()
+        return apiService.queryTradeOrdersList(pageNo, 10).awaitHiResponse()
     }
 
     /**
      * 提现费率
      */
-    suspend fun queryServiceChargeRate() : HiResponse<RateVo> {
+    suspend fun queryServiceChargeRate(): HiResponse<RateVo> {
         return apiService.queryServiceChargeRate().awaitHiResponse()
     }
 
@@ -86,7 +95,7 @@ object WalletRepository {
     /**
      * 修改提现账户信息
      */
-    suspend fun updateWithdrawAccount(data : WithdrawAccountBean) : HiResponse<DataVO<Unit>> {
+    suspend fun updateWithdrawAccount(data: WithdrawAccountBean): HiResponse<DataVO<Unit>> {
         return apiService.updateWithdrawAccount(data).awaitHiResponse();
     }
 
@@ -105,7 +114,7 @@ object WalletRepository {
     /**
      * 解绑
      */
-    suspend fun unbindBankCard(id : String) : HiResponse<Unit> {
+    suspend fun unbindBankCard(id: String): HiResponse<Unit> {
         val map = mutableMapOf<String, Any>()
         map.put("bank_card_id", id)
         return apiService.unbindBankCard(map).awaitHiResponse();
@@ -121,14 +130,14 @@ object WalletRepository {
     /**
      * 申请提现
      */
-    suspend fun applyWithdraw(data: WithdrawApplyVo) : HiResponse<ApplyWithdrawVo> {
+    suspend fun applyWithdraw(data: WithdrawApplyVo): HiResponse<ApplyWithdrawVo> {
         return apiService.applyWithdraw(data).awaitHiResponse();
     }
 
     /**
      * 提现记录
      */
-    suspend fun queryWithdrawList(pageNo: Int) : HiResponse<PageRecordVo<BalanceVo>> {
+    suspend fun queryWithdrawList(pageNo: Int): HiResponse<PageRecordVo<BalanceVo>> {
         val map = mutableMapOf<String, Any>()
         map.put("page_num", pageNo)
         map.put("page_size", IConstant.PAGE_SIZE);
@@ -137,7 +146,7 @@ object WalletRepository {
     }
 
     //获取订单详情
-    suspend fun queryOrderDetail(orderNo:String):HiResponse<OrderList>{
+    suspend fun queryOrderDetail(orderNo: String): HiResponse<OrderList> {
         return apiService.getOrderDetail(orderNo).awaitHiResponse()
     }
 }
