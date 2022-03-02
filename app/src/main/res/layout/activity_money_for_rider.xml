@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
+
+    <include layout="@layout/include_toolbar" />
+
+    <include layout="@layout/include_view" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/common_bg"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_10">
+
+                <include layout="@layout/wallet_view_wallet_sum" />
+
+                <FrameLayout
+                    android:id="@+id/f_wallet_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include layout="@layout/include_empty" />
+
+    </FrameLayout>
+</LinearLayout>

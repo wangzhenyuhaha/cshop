@@ -94,6 +94,57 @@
 
     </com.james.common.view.ILinearLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:gravity="center_vertical"
+        android:text="付给骑手的钱"
+        android:textColor="#333"
+        android:textSize="15sp" />
+
+    <com.james.common.view.ILinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginRight="@dimen/dimen_15"
+        android:orientation="vertical"
+        app:ivBgColor="@color/white"
+        app:ivRadius="5dp">
+
+        <LinearLayout
+            android:id="@+id/ll_wallet_rider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/dimen_10"
+            android:paddingVertical="@dimen/dimen_20">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="付给骑手的钱"
+                android:textColor="#333"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_wallet_rider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableEnd="@mipmap/goods_group_manager_right_arrow"
+                android:drawablePadding="10dp"
+                android:text=""
+                android:textColor="#999"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+
+    </com.james.common.view.ILinearLayout>
 
     <TextView
         android:id="@+id/accountBind"

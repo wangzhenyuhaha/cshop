@@ -60,6 +60,10 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
             WalletInfoActivity.openBalanceActivity(this)
         }
 
+        ll_wallet_rider.setOnClickListener {
+            MoneyForRiderActivity.openActivity(this)
+        }
+
         ll_wallet_deposit.setOnClickListener {
             WalletInfoActivity.openDepositActivity(this)
         }
