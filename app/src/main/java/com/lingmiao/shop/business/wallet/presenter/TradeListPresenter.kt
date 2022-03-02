@@ -25,6 +25,21 @@ interface TradeListPresenter : BasePresenter {
     }
 }
 
+//骑手交易列表
+interface RiderListPresenter : BasePresenter {
+
+    /**
+     * 加载列表
+     */
+    fun loadList(
+        page: IPage,
+        accountId : String,
+        data: MutableList<DepositVo>)
+
+    interface View : BaseView, BaseLoadMoreView<DepositVo> {
+
+    }
+}
 
 interface OrderListPresenter : BasePresenter {
 

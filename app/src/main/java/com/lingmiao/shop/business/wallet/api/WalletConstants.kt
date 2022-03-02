@@ -23,6 +23,10 @@ object WalletConstants {
      */
     const val DEPOSIT_ACCOUNT_ID : String = "DEPOSIT_ACCOUNT_ID"
 
+
+    //骑手账户id
+    const val RIDER_ACCOUNT_ID : String = "RIDER_ACCOUNT_ID"
+
     /**
      * 个人账户
      */

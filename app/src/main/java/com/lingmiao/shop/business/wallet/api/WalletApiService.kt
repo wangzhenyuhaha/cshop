@@ -34,12 +34,20 @@ interface WalletApiService {
     @GET("account/riderDepositIndex")
     fun getRiderMoney(): Call<DataVO<WalletVo>>
 
+
     /**
      * 交易记录列表
      */
     @WithHiResponse
     @POST("account/queryTradeRecordList")
     fun queryTradeRecordList(@Body body: TradeReqVo): Call<DataVO<PageRecordVo<DepositVo>>>
+
+
+    //查询与骑手有关的交易记录
+    @WithHiResponse
+    @POST("account/queryRiderDepositTradeRecordList")
+    fun queryRiderRecordList(@Body body: TradeReqVo): Call<DataVO<PageRecordVo<DepositVo>>>
+
 
     /**
      * 交易记录列表

@@ -63,6 +63,21 @@ object WalletRepository {
         return apiService.queryTradeRecordList(req).awaitHiResponse()
     }
 
+    //与骑手的交易记录列表
+    suspend fun getRiderRecordList(
+        pageNo: Int,
+        accountId: String
+    ): HiResponse<DataVO<PageRecordVo<DepositVo>>> {
+        val body = TradeReqBody()
+        body.accountId = accountId
+
+        val req = TradeReqVo()
+        req.pageNum = pageNo
+        req.pageSize = IConstant.PAGE_SIZE
+        req.body = body
+        return apiService.queryRiderRecordList(req).awaitHiResponse()
+    }
+
     /**
      *
     查询会员订单列表

@@ -27,4 +27,8 @@ class WalletVo(
         return balanceAccount?.id ?: "";
     }
 
+    fun getRiderAccountId(): String {
+        return riderDepositAccountVO?.id ?: "";
+    }
+
 }
