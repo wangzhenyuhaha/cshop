@@ -69,11 +69,11 @@ class GoodsTypeVO {
             item.value = GoodsConfig.GOODS_TYPE_NORMAL
             mList.add(item);
 
-            item = GoodsTypeVO();
-            item.typeName = TYPE_VIRTUAL_NAME
-            item.typeDesc = "无需发货"
-            item.value = GoodsConfig.GOODS_TYPE_VIRTUAL
-            mList.add(item)
+//            item = GoodsTypeVO();
+//            item.typeName = TYPE_VIRTUAL_NAME
+//            item.typeDesc = "无需发货"
+//            item.value = GoodsConfig.GOODS_TYPE_VIRTUAL
+//            mList.add(item)
 
             item = GoodsTypeVO();
             item.typeName = TYPE_TICKET_NAME
