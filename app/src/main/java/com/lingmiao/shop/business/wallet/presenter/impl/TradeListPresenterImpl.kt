@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.wallet.presenter.impl
 
+import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.james.common.base.BasePreImpl
 import com.james.common.base.loadmore.RefreshLoadMoreFacade
@@ -74,8 +75,9 @@ class RiderListPresenterImpl(var view: RiderListPresenter.View) : BasePreImpl(vi
             }
             val resp = WalletRepository.getRiderRecordList(page.getPageIndex(), accountId)
             if (resp.isSuccess) {
-                val list = resp.data?.data?.records ?: arrayListOf()
+                val list = resp.data?.data?.records
                 view.onLoadMoreSuccess(list, list.isNotEmpty())
+
             } else {
                 view.onLoadMoreFailed()
             }

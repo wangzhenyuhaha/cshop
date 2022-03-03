@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.goods.presenter.impl
 
 //import com.lingmiao.shop.business.goods.event.GoodsNumberEvent
 import android.content.Context
+import android.util.Log
 import android.view.View
 import com.james.common.base.loadmore.core.IPage
 import com.james.common.utils.exts.isNotEmpty

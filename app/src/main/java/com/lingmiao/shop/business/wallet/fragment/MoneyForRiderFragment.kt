@@ -40,7 +40,7 @@ class MoneyForRiderFragment : BaseLoadMoreFragment<DepositVo, RiderListPresenter
 
     override fun initOthers(rootView: View) {
         accountId = SPUtils.getInstance().getString(WalletConstants.RIDER_ACCOUNT_ID)
-        mSmartRefreshLayout.isNestedScrollingEnabled = false
+     //   mSmartRefreshLayout.isNestedScrollingEnabled = false
     }
 
     override fun executePageRequest(page: IPage) {
