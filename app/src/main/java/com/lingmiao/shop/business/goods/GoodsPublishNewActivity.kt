@@ -289,6 +289,38 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
 
             })
         }
+
+
+        //监听券包内电子券数量的变化
+
+        ticket_number.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val goodsName: String = goodsNameEdt.getViewText()
+                if (goodsName.endsWith("张电子券）")) {
+                    //将数字替换
+                    val index = goodsName.indexOfLast { it == '（' }
+                    val temp = goodsName.subSequence(0, index).toString() + "（内含${s.toString()}张电子券）"
+                    goodsNameEdt.setText(temp)
+                } else {
+                    //重置券包名
+                    val temp = goodsName + "（内含${s.toString()}张电子券）"
+                    goodsNameEdt.setText(temp)
+                }
+            }
+        })
+
+
         adapter = SimpleAdapter()
         adapter?.also {
             goodsSearch.initAdapter(it)
@@ -336,7 +368,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
         //绑定对应的电子券
         ticker_goods_name.singleClick {
             val intent = Intent(this, SelectTicketActivity::class.java)
-            intent.putExtra("coupon_id",goodsVO.couponID)
+            intent.putExtra("coupon_id", goodsVO.couponID)
             startActivityForResult(intent, 22)
         }
 
