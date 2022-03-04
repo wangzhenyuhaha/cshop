@@ -8,9 +8,9 @@ import com.lingmiao.shop.business.wallet.bean.AccountVo
 interface MoneyForRiderPresenter : BasePresenter {
 
     fun loadInfo()
-
+    //充值
     fun riderMoneyApply(mWallet: AccountVo?)
-
+    //提现
     interface View : BaseView {
         /**
          * 加载账户信息成功

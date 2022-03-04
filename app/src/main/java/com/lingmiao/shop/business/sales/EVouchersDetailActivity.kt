@@ -173,7 +173,7 @@ class EVouchersDetailActivity :
 
         //价值金额
         mBinding.price.singleClick {
-            DialogUtils.showInputDialogNumber(
+            DialogUtils.showInputDialogNumberDecimal(
                 this,
                 "价值金额",
                 "",
