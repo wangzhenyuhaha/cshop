@@ -22,6 +22,7 @@ import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.presenter.MyPresenter
 import com.lingmiao.shop.business.me.presenter.impl.MyPreImpl
 import com.lingmiao.shop.business.wallet.MyWalletActivity
+import com.lingmiao.shop.business.wallet.bean.AccountVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.util.GlideUtils
@@ -216,6 +217,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
      * 加载失败
      */
     override fun onLoadWalletDataError(code: Int) {
+
+    }
+
+    override fun loadRiderMoneySuccess(info: AccountVo?) {
 
     }
 

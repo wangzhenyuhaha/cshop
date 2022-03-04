@@ -95,4 +95,8 @@ class MyPreImpl(val context: Context, private var view: MyPresenter.View) : Base
 		mWallet.loadWalletData();
 	}
 
+	override fun loadRiderMoneyInfo() {
+
+	}
+
 }

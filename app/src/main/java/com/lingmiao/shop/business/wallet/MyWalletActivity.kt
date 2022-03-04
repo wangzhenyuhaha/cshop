@@ -52,6 +52,9 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
 
         mPresenter.onCreate()
 
+        //付给骑手的钱
+        mPresenter.loadRiderMoneyInfo()
+
         mPresenter.loadWalletData()
     }
 
@@ -107,6 +110,10 @@ class MyWalletActivity : BaseActivity<MyWalletPresenter>(), MyWalletPresenter.Vi
 
     override fun onLoadWalletDataError(code: Int) {
 
+    }
+
+    override fun loadRiderMoneySuccess(info: AccountVo?) {
+        tv_wallet_rider.text = info?.balanceAmount.toString()
     }
 
 }

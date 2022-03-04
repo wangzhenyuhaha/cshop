@@ -22,6 +22,7 @@ import com.lingmiao.shop.business.me.event.ApplyVipEvent
 import com.lingmiao.shop.business.me.event.PaySuccessEvent
 import com.lingmiao.shop.business.me.presenter.ApplyVipPresenter
 import com.lingmiao.shop.business.me.presenter.impl.ApplyVipPreImpl
+import com.lingmiao.shop.business.wallet.bean.AccountVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import com.lingmiao.shop.util.GlideUtils
@@ -275,6 +276,10 @@ class ApplyVipActivity : BaseActivity<ApplyVipPresenter>(), ApplyVipPresenter.Vi
      * 加载失败
      */
     override fun onLoadWalletDataError(code: Int) {
+
+    }
+
+    override fun loadRiderMoneySuccess(info: AccountVo?) {
 
     }
 

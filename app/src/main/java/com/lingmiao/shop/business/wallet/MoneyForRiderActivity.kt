@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.blankj.utilcode.util.FragmentUtils
 import com.james.common.base.BaseVBActivity
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IWXConstant
@@ -49,7 +50,24 @@ class MoneyForRiderActivity :
 
         //充值
         mBinding.tvRecharge.singleClick {
-            mPresenter?.riderMoneyApply(account)
+            DialogUtils.showInputDialogNumberDecimal(
+                this,
+                "充值金额",
+                "",
+                "请输入您需要充值的金额",
+                "",
+                "取消",
+                "保存",
+                null
+            ) {
+                try {
+                    val temp = it.toDouble()
+                    mPresenter?.riderMoneyApply(account)
+                } catch (e: Exception) {
+                    showToast("请输入数字")
+                }
+            }
+
         }
 
         //提现

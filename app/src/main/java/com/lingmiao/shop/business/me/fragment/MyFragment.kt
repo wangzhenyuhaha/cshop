@@ -22,6 +22,7 @@ import com.james.common.base.BaseFragment
 import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.lingmiao.shop.business.me.bean.IdentityVo
+import com.lingmiao.shop.business.wallet.bean.AccountVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
 import com.lingmiao.shop.business.wallet.bean.WithdrawAccountVo
 import kotlinx.android.synthetic.main.fragment_my.*
@@ -141,6 +142,10 @@ class MyFragment : BaseFragment<MyPresenter>(), View.OnClickListener,MyPresenter
      * 加载失败
      */
     override fun onLoadWalletDataError(code: Int) {
+    }
+
+    override fun loadRiderMoneySuccess(info: AccountVo?) {
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

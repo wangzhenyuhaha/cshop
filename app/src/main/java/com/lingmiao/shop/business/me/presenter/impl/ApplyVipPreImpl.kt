@@ -101,6 +101,10 @@ class ApplyVipPreImpl(private var view: ApplyVipPresenter.View) : BasePreImpl(vi
         mWallet.loadWalletData()
     }
 
+    override fun loadRiderMoneyInfo() {
+
+    }
+
     data class ApplyVipReason(
         var account_id: String = "",
         var account_type: Int = 0,
