@@ -57,12 +57,12 @@ class MoneyForRiderActivity :
                 "请输入您需要充值的金额",
                 "",
                 "取消",
-                "保存",
+                "充值",
                 null
             ) {
                 try {
                     val temp = it.toDouble()
-                    mPresenter?.riderMoneyApply(account)
+                    mPresenter?.riderMoneyApply(account,temp)
                 } catch (e: Exception) {
                     showToast("请输入数字")
                 }

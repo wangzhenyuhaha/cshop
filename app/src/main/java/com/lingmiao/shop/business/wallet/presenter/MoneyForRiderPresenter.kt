@@ -9,7 +9,7 @@ interface MoneyForRiderPresenter : BasePresenter {
 
     fun loadInfo()
     //充值
-    fun riderMoneyApply(mWallet: AccountVo?)
+    fun riderMoneyApply(mWallet: AccountVo?,value:Double)
     //提现
     interface View : BaseView {
         /**

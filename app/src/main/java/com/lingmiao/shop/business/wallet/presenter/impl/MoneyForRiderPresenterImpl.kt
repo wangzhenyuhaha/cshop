@@ -25,7 +25,8 @@ class MoneyForRiderPresenterImpl(val context: Context, val view: MoneyForRiderPr
 
             handleResponse(resp) {
                 if (resp.isSuccess) {
-                    SPUtils.getInstance().put(WalletConstants.RIDER_ACCOUNT_ID, resp.data?.data?.getRiderAccountId())
+                    SPUtils.getInstance()
+                        .put(WalletConstants.RIDER_ACCOUNT_ID, resp.data?.data?.getRiderAccountId())
                     view.loadInfoSuccess(resp.data?.data?.riderDepositAccountVO)
                 } else {
                     view.loadInfoError(resp.code)
@@ -34,12 +35,15 @@ class MoneyForRiderPresenterImpl(val context: Context, val view: MoneyForRiderPr
         }
     }
 
-    override fun riderMoneyApply(mWallet: AccountVo?) {
+    override fun riderMoneyApply(mWallet: AccountVo?, value: Double) {
+        if (mWallet == null) {
+            return
+        }
         mCoroutine.launch {
             view.showDialogLoading()
             val recharge = RechargeReqVo(
-                mWallet?.id,
-                0.01,
+                mWallet.id,
+                value,
                 RechargeReqVo.PAY_TRADE_CHANNEL_OF_WECHAT
             )
             val resp = MainRepository.apiService.recharge(recharge).awaitHiResponse()
