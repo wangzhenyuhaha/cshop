@@ -58,4 +58,15 @@ class MoneyForRiderPresenterImpl(val context: Context, val view: MoneyForRiderPr
         }
     }
 
+    override fun riderMoneyWithdrawal(value: Double) {
+        mCoroutine.launch {
+            view.showDialogLoading()
+            val resp = MainRepository.apiService.riderWithdraw(value).awaitHiResponse()
+            if (resp.isSuccess) {
+                view.onWithdrawSuccess()
+            }
+            view.hideDialogLoading()
+        }
+    }
+
 }

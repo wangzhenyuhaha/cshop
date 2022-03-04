@@ -101,6 +101,11 @@ interface MainApi {
     @WithHiResponse
     fun recharge(@Body data: RechargeReqVo): Call<DataVO<WxPayReqVo>>;
 
+    //发起提现
+    @POST("account/withdraw/applyRiderDepositWithdraw")
+    @WithHiResponse
+    fun riderWithdraw(@Query("amount") number: Double): Call<Unit>
+
     //    检测升级
     @GET("seller/app/upgrade")
     @WithHiResponse

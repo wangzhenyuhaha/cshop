@@ -8,9 +8,13 @@ import com.lingmiao.shop.business.wallet.bean.AccountVo
 interface MoneyForRiderPresenter : BasePresenter {
 
     fun loadInfo()
+
     //充值
-    fun riderMoneyApply(mWallet: AccountVo?,value:Double)
+    fun riderMoneyApply(mWallet: AccountVo?, value: Double)
+
     //提现
+    fun riderMoneyWithdrawal(value: Double)
+
     interface View : BaseView {
         /**
          * 加载账户信息成功
@@ -21,6 +25,8 @@ interface MoneyForRiderPresenter : BasePresenter {
          * 加载账户信息失败
          */
         fun loadInfoError(code: Int)
+
+        fun onWithdrawSuccess()
 
         fun onApplied(value: WxPayReqVo?)
     }

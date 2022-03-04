@@ -72,7 +72,23 @@ class MoneyForRiderActivity :
 
         //提现
         mBinding.tvWithdrawal.singleClick {
-
+            DialogUtils.showInputDialogNumberDecimal(
+                this,
+                "提现金额",
+                "",
+                "请输入您需要提现的金额",
+                "",
+                "取消",
+                "提现",
+                null
+            ) {
+                try {
+                    val temp = it.toDouble()
+                    mPresenter?.riderMoneyWithdrawal(temp)
+                } catch (e: Exception) {
+                    showToast("请输入数字")
+                }
+            }
         }
 
         //加载骑手备付金交易记录
@@ -93,6 +109,10 @@ class MoneyForRiderActivity :
 
     override fun loadInfoError(code: Int) {
         finish()
+    }
+
+    override fun onWithdrawSuccess() {
+        showToast("提现成功")
     }
 
     override fun onApplied(value: WxPayReqVo?) {
