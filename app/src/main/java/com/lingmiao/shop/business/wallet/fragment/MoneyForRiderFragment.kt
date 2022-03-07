@@ -50,17 +50,50 @@ class MoneyForRiderFragment : BaseLoadMoreFragment<DepositVo, RiderListPresenter
 
             helper.setText(R.id.tv_wallet_deposit_item_type, item?.tradeTypeName)
             helper.setText(R.id.tv_wallet_deposit_item_date, item?.tradeTime)
-            helper.setText(R.id.tv_wallet_deposit_item_amount, String.format("%s", item?.amount))
             helper.setText(R.id.tv_wallet_deposit_sn, item?.tradeVoucherNo)
-            //支付是红色的  提现是蓝的
-            helper.setTextColor(
-                R.id.tv_wallet_deposit_item_amount,
-                if (item?.tradeTypeName == "支付") ContextCompat.getColor(
-                    mContext,
-                    R.color.red
-                ) else
+
+            //如果是提现
+            if (item?.tradeTypeName == "提现") {
+                helper.setText(
+                    R.id.tv_wallet_deposit_item_amount,
+                    String.format("%s", item.amount)
+                )
+                helper.setTextColor(
+                    R.id.tv_wallet_deposit_item_amount,
                     ContextCompat.getColor(mContext, R.color.primary)
-            )
+                )
+            } else {
+                //支付
+                //trade_status
+                //(1, "交易等待"),
+                //(2, "交易中"),
+                //(3, "交易成功"),
+                //(4, "交易关闭");
+                when (item?.tradeStatus) {
+                    1 -> {
+                        helper.setText(R.id.tv_wallet_deposit_item_amount, "交易等待中")
+                    }
+                    2 -> {
+                        helper.setText(R.id.tv_wallet_deposit_item_amount, "交易中")
+                    }
+                    3 -> {
+                        helper.setText(
+                            R.id.tv_wallet_deposit_item_amount,
+                            String.format("%s", item.amount)
+                        )
+                        helper.setTextColor(
+                            R.id.tv_wallet_deposit_item_amount,
+                            ContextCompat.getColor(mContext, R.color.red)
+                        )
+                    }
+                    4 -> {
+                        helper.setText(
+                            R.id.tv_wallet_deposit_item_amount,
+                            "交易失败，钱已退回"
+                        )
+                    }
+                }
+            }
         }
     }
 
