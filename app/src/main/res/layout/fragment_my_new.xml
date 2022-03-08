@@ -441,7 +441,7 @@
                 <TextView
                     android:id="@+id/tvApplyShopInfo"
                     style="@style/my_part_item"
-                    android:drawableStart="@drawable/ic_apply_data"
+                    android:drawableStart="@mipmap/ic_apply_data"
                     android:text="进件资料" />
 
                 <View style="@style/DivideLineHorizontal" />
@@ -449,7 +449,7 @@
                 <TextView
                     android:id="@+id/tvWeChatApprove"
                     style="@style/my_part_item"
-                    android:drawableStart="@drawable/ic_code_blue"
+                    android:drawableStart="@mipmap/ic_code_blue"
                     android:text="微信认证" />
 
                 <View style="@style/DivideLineHorizontal" />
