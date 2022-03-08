@@ -17,6 +17,10 @@ import com.lingmiao.shop.business.order.presenter.impl.OrderDetailPresenterImpl
 import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.stampToDate
 import kotlinx.android.synthetic.main.order_activity_order_show.*
+import kotlinx.android.synthetic.main.order_activity_order_show.couponDetail
+import kotlinx.android.synthetic.main.order_activity_order_show.couponView
+import kotlinx.android.synthetic.main.order_activity_order_show.ticketPrice
+import kotlinx.android.synthetic.main.order_activity_self_order_detail.*
 
 /**
 Create Date : 2021/4/119:42 AM
@@ -73,6 +77,22 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
     private fun refreshView() {
         goodsItemC.addItems(mItem?.skuList)
+
+        //电子券
+        if (mItem?.ticketList.isNullOrEmpty()) {
+            ticketPrice.text = "未使用电子券"
+        } else {
+            val temp = StringBuilder()
+            mItem?.ticketList?.let {
+                for ((index, element) in it.withIndex()) {
+                    if (index > 0) temp.append("，")
+                    temp.append(element.title)
+                    temp.append(" ${element.countNum}张")
+                }
+            }
+            ticketPrice.text = temp
+        }
+
 
         tvOrderSn.text = String.format("订单编号：%s", mItem?.sn)
         tvOrderStatus.text = mItem?.orderStatusText

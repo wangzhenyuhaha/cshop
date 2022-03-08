@@ -1,34 +1,46 @@
 package com.lingmiao.shop.business.order.bean
 
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 import java.io.Serializable
 
 data class OrderList(
+
+    //使用的电子券
+    @SerializedName("order_used_ticket_list")
+    var ticketList: List<ElectronicVoucher>? = null,
 
     //满减金额
     @SerializedName("full_minus")
     var fullMinus: Double? = null,
 
-    //优惠券减的金额
+//优惠券减的金额
     @SerializedName("coupon_price")
     var couponPrice: Double? = null,
 
-    //自提时间
+//自提时间
     @SerializedName("pick_time")
     var pickTime: Long?,
-    // 打包费
+
+// 打包费
     @SerializedName("package_price")
     var packagePrice: Double? = 0.0,
+
     @SerializedName("cancel_left_time")
     var cancelLeftTime: Long?,
+
     @SerializedName("cancel_reason")
     var cancelReason: String?,
+
     @SerializedName("client_type")
     var clientType: String?,
+
     @SerializedName("comment_status")
     var commentStatus: String?,
+
     @SerializedName("complete_time")
     var completeTime: Long?,
+
 //    @SerializedName("coupon_list")
 //    var couponList: Any?,
     @SerializedName("create_time")
@@ -36,56 +48,79 @@ data class OrderList(
 
     @SerializedName("discount_price")
     var discountPrice: Double?,
+
 //    @SerializedName("gift_list")
 //    var giftList: Any?,
 //    @SerializedName("item_list")
 //    var itemList: Any?,
     @SerializedName("logi_id")
     var logiId: Int?,
+
     @SerializedName("logi_name")
     var logiName: String?,
+
     @SerializedName("member_id")
     var memberId: Int?,
+
     @SerializedName("member_name")
     var memberName: String?,
+
     @SerializedName("member_nick_name")
     var member_nick_name: String?,
+
     @SerializedName("order_amount")
     var orderAmount: Double?,
+
     @SerializedName("order_id")
     var orderId: Int?,
+
     @SerializedName("order_status")
     var orderStatus: String?,
+
     @SerializedName("order_status_text")
     var orderStatusText: String?,
+
     @SerializedName("order_type")
     var orderType: String?,
+
     @SerializedName("pay_money")
     var payMoney: Double?,
+
     @SerializedName("pay_status")
     var payStatus: String?,
+
     @SerializedName("pay_status_text")
     var payStatusText: String?,
+
     @SerializedName("payment_method_name")
     var paymentMethodName: String?,
+
     @SerializedName("payment_name")
     var paymentName: String?,
+
     @SerializedName("payment_time")
     var paymentTime: Long?,
+
     @SerializedName("payment_type")
     var paymentType: String?,
+
     @SerializedName("ping_tuan_status")
     var pingTuanStatus: String?,//拼团状态
+
 //    @SerializedName("promotion_tags")
 //    var promotionTags: Any?,
     @SerializedName("remark")
     var remark: String?,
+
     @SerializedName("seller_id")
     var sellerId: Int?,
+
     @SerializedName("seller_logo")
     var sellerLogo: String?,
+
     @SerializedName("seller_name")
     var sellerName: String?,
+
     /**
      * /** 未申请 */
     NOT_APPLY("未申请"),
@@ -104,68 +139,97 @@ data class OrderList(
      */
     @SerializedName("service_status")
     var serviceStatus: String?,
+
     @SerializedName("ship_addr")
     var shipAddr: String?,
+
     @SerializedName("ship_city")
     var shipCity: String?,
+
     @SerializedName("ship_county")
     var shipCounty: String?,
+
     @SerializedName("ship_mobile")
     var shipMobile: String?,
+
     @SerializedName("rider_mobile")
     var riderMobile: String?,
+
     @SerializedName("seller_phone")
     var sellerMobile: String?,
+
     @SerializedName("ship_name")
     var shipName: String?,
+
     @SerializedName("ship_no")
     var shipNo: String?,
+
     @SerializedName("ship_province")
     var shipProvince: String?,
+
     @SerializedName("ship_status")
     var shipStatus: String?,
+
     @SerializedName("ship_status_text")
     var shipStatusText: String?,
+
     @SerializedName("ship_time")
     var shipTime: Long?,
+
     @SerializedName("ship_town")
     var shipTown: String?,
+
     @SerializedName("shipping_amount")
     var shippingAmount: Double?,
+
     @SerializedName("shipping_type")
     var shippingType: String?,
+
     @SerializedName("signing_time")
     var signingTime: Long?,
+
     @SerializedName("sku_list")
     var skuList: List<Sku>,
+
     @SerializedName("sn")
     var sn: String?,
+
     @SerializedName("order_sn")
     var orderSn: String?,
+
     @SerializedName("total_num")
     var totalNum: Int,
+
     @SerializedName("is_virtual_order")
     var isVirtualOrder: Int,
+
     @SerializedName("virtual_status")
     var virtualStatus: Int,
+
     @SerializedName("verification_code")
     var verificationCode: String?,
+
     @SerializedName("trade_sn")
     var tradeSn: String?,
+
     @SerializedName("waiting_group_nums")
     var waitingGroupNums: Int?,
+
     @SerializedName("order_operate_allowable_vo")
     var orderOperateAllowable: OrderOperateAllowable?,
-    // 补充费用
+
+// 补充费用
     @SerializedName("replenish_price")
     var replenishPrice: Double? = 0.0,
-    // 补充说明
+
+// 补充说明
     @SerializedName("replenish_remark")
     var replenishRemark: String? = "",
 
     @SerializedName("tableware_type")
     var tablewareType: Int?,
-    // 是否备货完成 1是 0否
+
+// 是否备货完成 1是 0否
     @SerializedName("is_prepare")
     var isPrepare: Int? = -1
 

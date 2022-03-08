@@ -23,6 +23,24 @@ class OrderListAdapter :
     BaseQuickAdapter<OrderList, BaseViewHolder>(R.layout.order_adapter_order_list) {
     override fun convert(helper: BaseViewHolder, item: OrderList) {
 
+        //电子券的使用情况
+        //判断是否使用了电子券
+        if (item.ticketList.isNullOrEmpty()) {
+            helper.setGone(R.id.dainziquanUser, false)
+        } else {
+            helper.setGone(R.id.dainziquanUser, true)
+            val temp = StringBuilder()
+            item.ticketList?.let {
+                for ((index, element) in it.withIndex()) {
+                    if (index > 0) temp.append("，")
+                    temp.append(element.title)
+                }
+            }
+            helper.setText(R.id.dainziquanUser, "使用的电子券：${temp}")
+        }
+//        helper.setGone(R.id.dainziquanUser,true)
+//        helper.setText(R.id.dainziquanUser,item.ticketList?.size.toString())
+
         //订单编号
         helper.setText(R.id.tvOrderSn, "订单编号：" + item.sn)
         //复制订单编号

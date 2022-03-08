@@ -161,12 +161,27 @@ class SelfOrderDetailActivity : BaseActivity<OrderDetailPresenter>(), OrderDetai
         "￥${order?.orderPrice}".also {
             selfOrderzonge.text = it
         }
-        //电子券/优惠券
+        //优惠券
         couponView.visiable()
         couponDetail.visiable()
         "-￥${order?.couponPrice}".also {
             couponPrice.text = it
         }
+        //电子券
+        if (order?.ticketList.isNullOrEmpty()) {
+            ticketPrice.text = "未使用电子券"
+        } else {
+            val temp = StringBuilder()
+            order?.ticketList?.let {
+                for ((index, element) in it.withIndex()) {
+                    if (index > 0) temp.append("，")
+                    temp.append(element.title)
+                    temp.append(" ${element.countNum}张")
+                }
+            }
+            ticketPrice.text = temp
+        }
+
         //优惠金额
         "-￥${order?.discountPrice}".also {
             selfOrderyouhui.text = it

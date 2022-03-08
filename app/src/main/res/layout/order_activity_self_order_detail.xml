@@ -322,12 +322,39 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="优惠券/电子券："
+                        android:text="优惠券："
                         android:textColor="#ff000000"
                         android:textSize="14sp" />
 
                     <TextView
                         android:id="@+id/couponPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentEnd="true"
+                        android:gravity="center_vertical"
+                        android:textColor="#FF0000"
+                        android:textSize="14sp"
+                        tools:text="￥170.00" />
+                </RelativeLayout>
+
+                <View
+                    style="@style/DivideLineHorizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/ticket"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="电子券："
+                        android:textColor="#ff000000"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/ticketPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"

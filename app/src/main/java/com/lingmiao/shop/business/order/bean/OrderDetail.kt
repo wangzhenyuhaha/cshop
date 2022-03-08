@@ -1,11 +1,15 @@
 package com.lingmiao.shop.business.order.bean
 
 import com.google.gson.annotations.SerializedName
+import com.lingmiao.shop.business.sales.bean.ElectronicVoucher
 import java.text.SimpleDateFormat
 import java.util.*
 
 data class OrderDetail(
 
+    //使用的电子券
+    @SerializedName("order_used_ticket_list")
+    var ticketList: List<ElectronicVoucher>? = null,
     //提货时间
     @SerializedName("pick_time")
     var pick_time: Long? = null,

@@ -69,4 +69,7 @@ class ElectronicVoucher: Serializable {
     @SerializedName("goods_name")
     var goodsName: String? = null
 
+    //电子券使用的数量
+    @SerializedName("count_num")
+    var countNum: String? = null
 }
