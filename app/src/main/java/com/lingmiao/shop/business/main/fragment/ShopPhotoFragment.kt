@@ -1,9 +1,11 @@
 package com.lingmiao.shop.business.main.fragment
 
+import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -178,9 +180,14 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                 }
                 model.companyAccount.value?.openAccountName = null
                 binding.imageView.setImageBitmap(null)
-// android:src="@mipmap/main_shop_image_upload
-              //  binding.imageView.setImageBitmap(R.mipmap.main_shop_image_upload)
-
+                binding.imageView.setImageBitmap(
+                    BitmapFactory.decodeResource(
+                        resources,
+                        R.mipmap.main_shop_image_upload,
+                        null
+                    )
+                )
+                //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.rest_work_stack, null);
             }
         }
 
