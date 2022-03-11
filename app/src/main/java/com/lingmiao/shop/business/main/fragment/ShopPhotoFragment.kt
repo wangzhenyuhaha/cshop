@@ -12,6 +12,7 @@ import com.james.common.base.BasePreImpl
 import com.james.common.base.BasePresenter
 import com.james.common.base.BaseVBFragment
 import com.james.common.utils.exts.visiable
+import com.lingmiao.shop.R
 import com.lingmiao.shop.base.CommonRepository
 import com.lingmiao.shop.business.common.pop.MediaMenuPop
 import com.lingmiao.shop.business.main.ApplyShopInfoActivity
@@ -158,6 +159,30 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
     }
 
     private fun initListener() {
+
+        //可以删除营业执照
+        if (type == ApplyShopInfoActivity.LICENSE) {
+            binding.deleteTextView.visiable()
+            binding.deleteTextView.setOnClickListener {
+//  model.applyShopInfo.value?.licenceImg = uploadFile.data.url
+
+
+                model.applyShopInfo.value?.licenceImg = null
+                //营业执照没了，相关的数据也需要去除
+                model.applyShopInfo.value?.also { info ->
+                    info.companyName = null
+                    info.licenseNum = null
+                    info.licenceEnd = null
+                    info.scope = null
+                    info.regMoney = 1
+                }
+                model.companyAccount.value?.openAccountName = null
+                binding.imageView.setImageBitmap(null)
+// android:src="@mipmap/main_shop_image_upload
+              //  binding.imageView.setImageBitmap(R.mipmap.main_shop_image_upload)
+
+            }
+        }
 
         if (!model.shopOpenOrNot) {
             binding.shopFront.setOnClickListener {
