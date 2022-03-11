@@ -187,7 +187,6 @@ class ShopPhotoFragment : BaseVBFragment<FragmentShopPhotoBinding, BasePresenter
                         null
                     )
                 )
-                //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.rest_work_stack, null);
             }
         }
 
