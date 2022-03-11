@@ -91,6 +91,10 @@ class MoneyForRiderFragment : BaseLoadMoreFragment<DepositVo, RiderListPresenter
                             R.id.tv_wallet_deposit_item_amount,
                             "交易失败，钱已退回"
                         )
+                        helper.setTextColor(
+                            R.id.tv_wallet_deposit_item_amount,
+                            ContextCompat.getColor(mContext, R.color.color_666666)
+                        )
                     }
                 }
             }
