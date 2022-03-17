@@ -5,13 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Environment
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.GsonUtils
-import com.blankj.utilcode.util.PermissionUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.james.common.base.BaseActivity
 import com.james.common.net.BaseResponse
@@ -24,9 +22,6 @@ import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.presenter.ApplyShopInfoPresenter
 import com.lingmiao.shop.business.main.presenter.impl.ApplyShopInfoPresenterImpl
-import com.lingmiao.shop.business.me.ApplyVipActivity
-import com.lingmiao.shop.business.me.bean.IdentityVo
-import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.util.dateTime3Date
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -112,7 +107,9 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
         initObserver()
 
         val loginInfo = UserManager.getLoginInfo()
-
+        //通过uid判断是不是同一账号
+        val nowUID = loginInfo?.uid
+        val lastUID = UserManager.getLastUID()
 
         loginInfo?.also { it ->
             if (it.shopStatus != null && it.shopStatus != "UN_APPLY") {
@@ -131,25 +128,38 @@ class ApplyShopInfoActivity : BaseActivity<ApplyShopInfoPresenter>(), ApplyShopI
                 //第一次申请店铺
                 viewModel.firstApplyShop = true
 
-                //从本地获取数据
-                //从SP中获取ApplyShopInfo
-                UserManager.getApplyShopInfo()?.also { info ->
-                    viewModel.onShopInfoSuccess(info)
-                    setOtherDate()
+                //先判断是否和上一次是同一账号
+                if (nowUID == lastUID) {
+                    //是同一账号，什么都不管，照旧
+                    //从本地获取数据
+                    //从SP中获取ApplyShopInfo
+                    UserManager.getApplyShopInfo()?.also { info ->
+                        viewModel.onShopInfoSuccess(info)
+                        setOtherDate()
+                    }
+
+                    //获取对公账户信息
+                    UserManager.getCompanyAccount()?.also { account ->
+                        viewModel.companyAccount.value = account
+                    }
+
+                    //获取对私账户信息
+                    UserManager.getPersonalAccount()?.also { account ->
+                        viewModel.personalAccount.value = account
+                    }
+
+                    //考虑到极端情况，此处也许获取已绑定的银行卡
+                    it.uid?.also { uid -> mPresenter.searchBankList(uid) }
+                } else {
+                    //换了账号
+                    //保存新账号的UID
+                    UserManager.setLastUID(nowUID ?: 0)
+
+                    //考虑到极端情况，此处也许获取已绑定的银行卡
+                    it.uid?.also { uid -> mPresenter.searchBankList(uid) }
                 }
 
-                //获取对公账户信息
-                UserManager.getCompanyAccount()?.also { account ->
-                    viewModel.companyAccount.value = account
-                }
 
-                //获取对私账户信息
-                UserManager.getPersonalAccount()?.also { account ->
-                    viewModel.personalAccount.value = account
-                }
-
-                //考虑到极端情况，此处也许获取已绑定的银行卡
-                it.uid?.also { uid -> mPresenter.searchBankList(uid) }
             }
 
         }

@@ -17,6 +17,9 @@ class UserManager {
         private var loginInfo: LoginInfo? = null
         private var applyShopInfo: ApplyShopInfo? = null
 
+        //上一个账号的UID
+        private var uid: Int? = null
+
         //保存的对公账户信息
         private var companyAccount: BindBankCardDTO? = null
 
@@ -41,6 +44,16 @@ class UserManager {
         //保存推广码
         fun setPromCode(promCode: String) {
             SPUtils.getInstance().put("promCode", promCode)
+        }
+
+
+        fun getLastUID(): Int {
+            return SPUtils.getInstance().getInt("lastuid", 0)
+        }
+
+
+        fun setLastUID(uid: Int) {
+            SPUtils.getInstance().put("lastuid", uid)
         }
 
         //获取ApplyShopInfo数据
