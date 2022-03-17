@@ -101,7 +101,7 @@
         android:layout_marginTop="@dimen/dimen_15"
         android:layout_marginBottom="@dimen/dimen_10"
         android:gravity="center_vertical"
-        android:text="付给骑手的钱"
+        android:text="配送费代扣金"
         android:textColor="#333"
         android:textSize="15sp" />
 
@@ -126,7 +126,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="付给骑手的钱"
+                android:text="配送费代扣金"
                 android:textColor="#333"
                 android:textSize="14sp" />
 
