@@ -60,7 +60,7 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
     }
 
     override fun createPresenter(): IStateGoodsDataPresenter? {
-        return StatsGoodsDataPreImpl(context!!, this);
+        return StatsGoodsDataPreImpl(requireContext(), this);
     }
 
     override fun initViewsAndData(rootView: View) {
@@ -307,7 +307,7 @@ class StatsDateGoodsFragment : BaseFragment<IStateGoodsDataPresenter>(), IStateG
 //            .subtitle("virtual data")
             .dataLabelsEnabled(true)//是否直接显示扇形图数据
             .yAxisTitle("℃")
-            .series(list)
+            //.series(list)
     }
 
 }
