@@ -438,7 +438,7 @@
                                 android:id="@+id/tvMenuManager"
                                 style="@style/main_tools"
                                 android:drawableTop="@mipmap/main_ic_logistic_manager"
-                                android:text="菜单管理" />
+                                android:text="展示管理" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvSaleSetting"
