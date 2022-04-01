@@ -1,10 +1,13 @@
 package com.lingmiao.shop.business.me
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseVBActivity
+import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
@@ -17,6 +20,7 @@ import com.lingmiao.shop.business.me.presenter.OperationSettingPresenter
 import com.lingmiao.shop.business.me.presenter.impl.OperationSettingPreImpl
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
 import com.lingmiao.shop.business.tools.bean.TimeSettingVo
+import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.lingmiao.shop.databinding.ActivityOperationSettingBinding
 import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 
@@ -287,6 +291,17 @@ class OperationSettingActivity :
                 if ((mRiderItem == null || mRiderItem?.id == null) && mBinding.cbModelRider.isChecked) {
                     showToast("请先设置骑手配送模板")
                 }
+                //提示充钱
+                DialogUtils.showDialog(
+                    this,
+                    "提示",
+                    "需要充足的骑手费用扣款才能接单(可在配送费代扣金中充值)",
+                    "确认",
+                    "去充值",
+                    {},
+                    {
+                        ActivityUtils.startActivity(MyWalletActivity::class.java)
+                    })
             }
         }
         mBinding.tvShopStatus.singleClick {
