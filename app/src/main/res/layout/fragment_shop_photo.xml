@@ -26,6 +26,17 @@
             android:visibility="gone"
             tools:visibility="visible" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_marginEnd="@dimen/dimen_40"
+            android:gravity="center"
+            android:text="如需替换已上传图片，请直接点击图片重新上传"
+            android:textColor="#ff999999"
+            android:textSize="15sp" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
