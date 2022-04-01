@@ -7,6 +7,7 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
 import com.blankj.utilcode.util.*
@@ -22,6 +23,7 @@ import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.*
 import com.lingmiao.shop.business.main.bean.*
+import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
 import com.lingmiao.shop.business.me.*
@@ -53,6 +55,11 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
     private var fromMain: Boolean? = null
     private var versionUpdateDialog: AppCompatDialog? = null
     private var accountSetting: AccountSetting? = null
+
+    //信息选择
+    //弹出的东西
+    private var pop: ApplyInfoPop? = null
+
 
     //今日开始时间
     var startTime: Long? = null
@@ -89,6 +96,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //        fromMain = arguments?.getBoolean("fromMain", false)
         ToastUtils.setGravity(Gravity.CENTER, 0, 0)
 
+        pop = ApplyInfoPop(requireContext())
 
         smartRefreshLayout.setRefreshHeader(ClassicsHeader(context))
         smartRefreshLayout.setOnRefreshListener {
@@ -167,13 +175,13 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                 requireActivity(),
                 "退出登录",
                 "确定退出登录吗？",
-                null,
-                {
-                    UserManager.loginOut()
-                    ActivityUtils.startActivity(LoginActivity::class.java)
-                    ActivityUtils.finishAllActivitiesExceptNewest()
-                    activity?.finish()
-                })
+                null
+            ) {
+                UserManager.loginOut()
+                ActivityUtils.startActivity(LoginActivity::class.java)
+                ActivityUtils.finishAllActivitiesExceptNewest()
+                activity?.finish()
+            }
         }
 
 
@@ -187,6 +195,18 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         showPageLoading()
         mPresenter?.requestMainInfoData()
         mPresenter?.requestAccountSettingData()
+
+        pop?.liveData?.observe(this, Observer {
+            if (it == 0) {
+                //补充进件资料
+                WebCameraUtil.permissionHandle(activity, callBack)
+            } else {
+                //重新提交店铺资料
+                ApplyShopInfoActivity.openActivity(requireContext(), false)
+            }
+
+            pop?.dismiss()
+        })
     }
 
     override fun useEventBus() = true
@@ -291,7 +311,7 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
                         // 进见补充资料
                         authLayout.visiable()
-                        shopAuthStatus.text = "店铺信息不完善，请补充资料"
+                        shopAuthStatus.text = "店铺信息审核异常，请及时处理"
                         shopAuthHint.visiable()
                     } else if (loginInfo.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_APPROVED) {
                         // 微信认证中
@@ -406,7 +426,12 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         authLayout.setOnClickListener {
             if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_COMPLIANCE_REFUSED) {
                 // 进见补填
-                WebCameraUtil.permissionHandle(activity, callBack)
+                pop?.apply {
+                    setList(listOf("店铺信息不完善，点击前去补充资料", "店铺资料有变动，点击重新申请"))
+                    setTitle("提示")
+                    showPopupWindow()
+                }
+
             } else if (loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_APPROVED
                 || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_ING
                 || loginInfo?.shopStatus == ShopStatusConstants.ALLINPAY_ELECTSIGN_REFUSED
