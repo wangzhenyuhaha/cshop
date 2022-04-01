@@ -14,7 +14,6 @@ import com.lingmiao.shop.business.tools.adapter.TimeAdapter
 import com.lingmiao.shop.business.tools.bean.*
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_of_rider.*
-import kotlinx.android.synthetic.main.tools_include_model_time.*
 
 /**
 Create Date : 2021/3/53:40 PM

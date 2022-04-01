@@ -2,7 +2,6 @@ package com.lingmiao.shop.business.me.fragment
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
@@ -59,6 +58,9 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
     //配送时效
     private var mTimeSetting: TimeSettingVo = TimeSettingVo()
+
+    //解决第一次显示的问题
+    private var times: Int = 0
 
     companion object {
         fun newInstance(item: FreightVoItem?): DeliveryInTimeFragment {
@@ -253,63 +255,66 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                     }
                     when (type) {
                         1 -> {
-                            DialogUtils.showDialog(requireActivity(),
+                            DialogUtils.showDialog(
+                                requireActivity(),
                                 "配送时效与加收费用未填写完整", "请选择填写完整或删除未完整数据",
                                 "重新填写", "确定删除",
-                                null,
-                                {
-                                    for (i in temp1) {
-                                        temp2.add(mTimeList[i])
-                                    }
-                                    setting.timeSections = temp2
-                                    timeSettingVo = TimeSettingReqVo(setting)
-                                    timeSetting = JsonUtil.instance.toJson(setting)
+                                null
+                            ) {
+                                for (i in temp1) {
+                                    temp2.add(mTimeList[i])
+                                }
+                                setting.timeSections = temp2
+                                timeSettingVo = TimeSettingReqVo(setting)
+                                timeSetting = JsonUtil.instance.toJson(setting)
 
-                                    for (i in temp3) {
-                                        mFeeSetting.peekTimes?.get(i)?.let { it1 -> temp4.add(it1) }
-                                    }
-                                    mFeeSetting.peekTimes = temp4
-                                    feeSetting = JsonUtil.instance.toJson(mFeeSetting)
-                                    feeSettingVo = FeeSettingReqVo(mFeeSetting)
-                                    mPresenter?.addModel(mItem!!, true)
-                                })
+                                for (i in temp3) {
+                                    mFeeSetting.peekTimes?.get(i)?.let { it1 -> temp4.add(it1) }
+                                }
+                                mFeeSetting.peekTimes = temp4
+                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                mPresenter?.addModel(mItem!!, true)
+                            }
                         }
                         2 -> {
-                            DialogUtils.showDialog(requireActivity(),
+                            DialogUtils.showDialog(
+                                requireActivity(),
                                 "配送时效未填写完整", "请选择填写完整或删除未完整数据",
                                 "重新填写", "确定删除",
-                                null,
-                                {
-                                    for (i in temp1) {
-                                        temp2.add(mTimeList[i])
-                                    }
-                                    setting.timeSections = temp2
-                                    timeSettingVo = TimeSettingReqVo(setting)
-                                    timeSetting = JsonUtil.instance.toJson(setting)
+                                null
+                            ) {
+                                for (i in temp1) {
+                                    temp2.add(mTimeList[i])
+                                }
+                                setting.timeSections = temp2
+                                timeSettingVo = TimeSettingReqVo(setting)
+                                timeSetting = JsonUtil.instance.toJson(setting)
 
-                                    feeSetting = JsonUtil.instance.toJson(mFeeSetting)
-                                    feeSettingVo = FeeSettingReqVo(mFeeSetting)
-                                    mPresenter?.addModel(mItem!!, true)
-                                })
+                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                mPresenter?.addModel(mItem!!, true)
+                            }
 
                         }
                         3 -> {
-                            DialogUtils.showDialog(requireActivity(),
+                            DialogUtils.showDialog(
+                                requireActivity(),
                                 "加收费用未填写完整", "请选择填写完整或删除未完整数据",
                                 "重新填写", "确定删除",
-                                null,
-                                {
-                                    timeSettingVo = TimeSettingReqVo(setting)
-                                    timeSetting = JsonUtil.instance.toJson(setting)
+                                null
+                            ) {
+                                timeSettingVo = TimeSettingReqVo(setting)
+                                timeSetting = JsonUtil.instance.toJson(setting)
 
-                                    for (i in temp3) {
-                                        mFeeSetting.peekTimes?.get(i)?.let { it1 -> temp4.add(it1) }
-                                    }
-                                    mFeeSetting.peekTimes = temp4
-                                    feeSetting = JsonUtil.instance.toJson(mFeeSetting)
-                                    feeSettingVo = FeeSettingReqVo(mFeeSetting)
-                                    mPresenter?.addModel(mItem!!, true)
-                                })
+                                for (i in temp3) {
+                                    mFeeSetting.peekTimes?.get(i)?.let { it1 -> temp4.add(it1) }
+                                }
+                                mFeeSetting.peekTimes = temp4
+                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                                mPresenter?.addModel(mItem!!, true)
+                            }
                         }
                         4 -> {
                             timeSettingVo = TimeSettingReqVo(setting)
@@ -328,19 +333,20 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
                     if (temp3.size < mFeeSetting.peekTimes?.size ?: 0) {
                         //加收费用不完整
-                        DialogUtils.showDialog(requireActivity(),
+                        DialogUtils.showDialog(
+                            requireActivity(),
                             "加收费用未填写完整", "请选择填写完整或删除未完整数据",
                             "重新填写", "确定删除",
-                            null,
-                            {
-                                for (i in temp3) {
-                                    mFeeSetting.peekTimes?.get(i)?.let { it1 -> temp4.add(it1) }
-                                }
-                                mFeeSetting.peekTimes = temp4
-                                feeSetting = JsonUtil.instance.toJson(mFeeSetting)
-                                feeSettingVo = FeeSettingReqVo(mFeeSetting)
-                                mPresenter?.addModel(mItem!!, true)
-                            })
+                            null
+                        ) {
+                            for (i in temp3) {
+                                mFeeSetting.peekTimes?.get(i)?.let { it1 -> temp4.add(it1) }
+                            }
+                            mFeeSetting.peekTimes = temp4
+                            feeSetting = JsonUtil.instance.toJson(mFeeSetting)
+                            feeSettingVo = FeeSettingReqVo(mFeeSetting)
+                            mPresenter?.addModel(mItem!!, true)
+                        }
 
 
                     } else {
@@ -525,10 +531,18 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     private fun updateTimeCheckBox() {
         rg_model_time.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.cb_model_time_km) {
+                if (times > 0) {
+                    showToast("即时配送")
+                }
+                times++
                 ll_model_km.visibility = View.VISIBLE
                 rv_model_time.visibility = View.GONE
 
             } else if (checkedId == R.id.cb_model_time_section) {
+                if (times > 0) {
+                    showToast("定时配送")
+                }
+                times++
                 ll_model_km.visibility = View.GONE
                 rv_model_time.visibility = View.VISIBLE
             }
