@@ -2,6 +2,7 @@ package com.lingmiao.shop.business.me
 
 import android.app.Activity
 import android.content.Intent
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.getViewText
@@ -73,6 +74,24 @@ class OperationSettingActivity :
             val temp = jiedanVisibility.value ?: true
             jiedanVisibility.value = !temp
         }
+
+
+        //监听接单设置
+        mBinding.jiedanxuanze.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.jiedanno) {
+                //手动接单(只在展开的时候有效)
+                if (mBinding.less1.visibility == View.VISIBLE) {
+                    mBinding.jiedanshijian.visiable()
+                } else {
+                    mBinding.jiedanshijian.gone()
+                }
+
+            } else if (checkedId == R.id.jiedanyes) {
+                //自动接单
+                mBinding.jiedanshijian.gone()
+            }
+        }
+
         jiedanVisibility.observe(this) {
             if (it) {
                 //不可见
@@ -85,9 +104,15 @@ class OperationSettingActivity :
                 mBinding.more1.gone()
                 mBinding.less1.visiable()
                 mBinding.jiedanxuanze.visiable()
-                mBinding.jiedanshijian.visiable()
+                if (mBinding.jiedanno.isChecked) {
+                    mBinding.jiedanshijian.visiable()
+                } else {
+                    mBinding.jiedanshijian.gone()
+                }
+
             }
         }
+
 
         //订单打印
         mBinding.more2.setOnClickListener {
@@ -158,12 +183,18 @@ class OperationSettingActivity :
 
         //保存
         mBinding.tvShopOperateSubmit.setOnClickListener {
-            //未接订单自动取消时间
-            if (mBinding.tvShopManageNumber.getViewText().isEmpty()) {
+            //未接订单自动取消时间(只在手动接单时有效)
+            if (mBinding.jiedanno.isChecked && mBinding.tvShopManageNumber.getViewText()
+                    .isEmpty()
+            ) {
                 showToast("请输入未接订单自动取消时间")
                 return@setOnClickListener
             }
-            val cancelOrderTime = mBinding.tvShopManageNumber.text?.toString()?.toInt() ?: 0
+
+            val cancelOrderTime =
+                if (mBinding.jiedanno.isChecked) mBinding.tvShopManageNumber.text?.toString()
+                    ?.toInt() ?: 0
+                else 5
 
             //输入手机号码
             if (mBinding.linkTelEt.text.toString().isEmpty()) {
