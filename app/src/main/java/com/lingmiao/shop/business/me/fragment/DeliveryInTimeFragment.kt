@@ -492,7 +492,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 }
                 //更换类型
                 else if (view.id == R.id.tv_model_time_type) {
-                    val pop = DayPop(requireContext(), mDayTypeList)
+                    val pop = DayPop(requireContext(), mDayTypeList,"请选择配送日期")
                     pop.setOnClickListener { it, position1 ->
 
                         run {

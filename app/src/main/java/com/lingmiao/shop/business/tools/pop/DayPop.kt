@@ -5,6 +5,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.Animation
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -18,7 +19,7 @@ import razerdp.basepopup.BaseLazyPopupWindow
 /**
  * 日期类开
  */
-class DayPop(context: Context, var data: List<String>) :
+class DayPop(context: Context, var data: List<String>, private val topTitle: String? = null) :
     BaseLazyPopupWindow(context) {
 
     private var listener: ((String, Int) -> Unit)? = null
@@ -32,6 +33,10 @@ class DayPop(context: Context, var data: List<String>) :
     }
 
     override fun onViewCreated(contentView: View) {
+
+        topTitle?.let {
+            contentView.findViewById<TextView>(R.id.tv_bank_pop_hint).text = it
+        }
         popupGravity = Gravity.BOTTOM or Gravity.CENTER_VERTICAL
         val rvLogisticsCompanyList =
             contentView.findViewById<RecyclerView>(R.id.rv_bank_card)
@@ -52,7 +57,8 @@ class DayPop(context: Context, var data: List<String>) :
             }
         }
 
-        contentView.findViewById<ImageView>(R.id.iv_bank_card_close).setOnClickListener { dismiss() }
+        contentView.findViewById<ImageView>(R.id.iv_bank_card_close)
+            .setOnClickListener { dismiss() }
     }
 
     override fun onCreateShowAnimation(): Animation? {
