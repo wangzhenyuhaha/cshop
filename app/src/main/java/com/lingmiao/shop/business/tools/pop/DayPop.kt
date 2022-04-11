@@ -52,7 +52,7 @@ class DayPop(context: Context, var data: List<String>, private val topTitle: Str
         adapter.setNewData(data)
         adapter.setOnItemClickListener { _, _, position ->
             run {
-                listener?.invoke(data[position], position);
+                listener?.invoke(data[position], position)
                 dismiss()
             }
         }
@@ -61,11 +61,11 @@ class DayPop(context: Context, var data: List<String>, private val topTitle: Str
             .setOnClickListener { dismiss() }
     }
 
-    override fun onCreateShowAnimation(): Animation? {
+    override fun onCreateShowAnimation(): Animation {
         return showYTranslateAnim(300)
     }
 
-    override fun onCreateDismissAnimation(): Animation? {
+    override fun onCreateDismissAnimation(): Animation {
         return hideYTranslateAnim(300)
     }
 }

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.me.fragment
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
 import com.james.common.utils.exts.getViewText
@@ -497,6 +498,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
 
                         run {
                             if (position1 == 0) {
+                                //选了当日
                                 item.shiftToday()
                                 if (item.arriveTimeCount ?: 0 <= item.shipTimeCount ?: 0) {
                                     item.arriveTime = null
@@ -504,9 +506,11 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                                     mTimeAdapter.notifyDataSetChanged()
                                 }
                             } else {
+                                //选择了次日
                                 item.shiftTomorrow()
                             }
-                            tv_model_time_type.text = it
+                            view.findViewById<TextView>(R.id.tv_model_time_type).text = it
+                           /// tv_model_time_type.text = it
                         }
                     }
                     pop.showPopupWindow()
