@@ -1,7 +1,11 @@
 package com.lingmiao.shop.business.me.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
 import com.james.common.base.BaseFragment
@@ -20,7 +24,6 @@ import com.lingmiao.shop.business.tools.pop.TimeListPop
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.*
 import kotlinx.android.synthetic.main.me_fragment_delivery_in_time.et_model_out_range_km
-import kotlinx.android.synthetic.main.tools_adapter_time.*
 import kotlinx.android.synthetic.main.tools_include_model_price.*
 import kotlinx.android.synthetic.main.tools_include_model_range.*
 import kotlinx.android.synthetic.main.tools_include_model_time.*
@@ -60,8 +63,6 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     //配送时效
     private var mTimeSetting: TimeSettingVo = TimeSettingVo()
 
-    //解决第一次显示的问题
-    private var times: Int = 0
 
     companion object {
         fun newInstance(item: FreightVoItem?): DeliveryInTimeFragment {
@@ -82,6 +83,17 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     override fun createPresenter() = DeliveryInTimePresenterImpl(this)
 
     override fun initViewsAndData(rootView: View) {
+
+        val text1 = "按公里数（即时配送）"
+        val text2 = "按时间段（定时配送）"
+        val builder1 = SpannableStringBuilder(text1)
+        val builder2 = SpannableStringBuilder(text2)
+        val blueSpan1 = ForegroundColorSpan(Color.parseColor("#CACACA"))
+        val blueSpan2 = ForegroundColorSpan(Color.parseColor("#CACACA"))
+        builder1.setSpan(blueSpan1, 4, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder2.setSpan(blueSpan2, 4, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        cb_model_time_km.text = builder1
+        cb_model_time_section.text = builder2
 
         //加收费用
         initRangePart()
@@ -493,7 +505,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                 }
                 //更换类型
                 else if (view.id == R.id.tv_model_time_type) {
-                    val pop = DayPop(requireContext(), mDayTypeList,"请选择配送日期")
+                    val pop = DayPop(requireContext(), mDayTypeList, "请选择配送日期")
                     pop.setOnClickListener { it, position1 ->
 
                         run {
@@ -510,7 +522,7 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
                                 item.shiftTomorrow()
                             }
                             view.findViewById<TextView>(R.id.tv_model_time_type).text = it
-                           /// tv_model_time_type.text = it
+                            /// tv_model_time_type.text = it
                         }
                     }
                     pop.showPopupWindow()
@@ -535,18 +547,10 @@ class DeliveryInTimeFragment : BaseFragment<DeliveryInTimePresenter>(),
     private fun updateTimeCheckBox() {
         rg_model_time.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.cb_model_time_km) {
-                if (times > 0) {
-                    showToast("即时配送")
-                }
-                times++
                 ll_model_km.visibility = View.VISIBLE
                 rv_model_time.visibility = View.GONE
 
             } else if (checkedId == R.id.cb_model_time_section) {
-                if (times > 0) {
-                    showToast("定时配送")
-                }
-                times++
                 ll_model_km.visibility = View.GONE
                 rv_model_time.visibility = View.VISIBLE
             }

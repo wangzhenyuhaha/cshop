@@ -37,7 +37,8 @@
             style="@style/tools_sub_item_radio_box"
             android:layout_height="40dp"
             android:checked="true"
-            android:text="按公里数" />
+            android:text="按公里数（即时配送）"
+            android:textColor="@color/color_333333" />
 
         <LinearLayout
             android:id="@+id/ll_model_km"
@@ -183,7 +184,8 @@
             android:id="@+id/cb_model_time_section"
             style="@style/tools_sub_item_radio_box"
             android:layout_height="40dp"
-            android:text="按时间段" />
+            android:text="按时间段（定时配送）"
+            android:textColor="@color/color_333333" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_model_time"

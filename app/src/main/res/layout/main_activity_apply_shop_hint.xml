@@ -142,7 +142,7 @@
         <TextView
             android:id="@+id/tvApplyShopHintService"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:text="《C店商家服务条款》"
             android:textColor="#3870EA"

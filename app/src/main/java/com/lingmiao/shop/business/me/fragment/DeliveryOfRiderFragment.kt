@@ -1,6 +1,10 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import com.james.common.base.BaseFragment
 import com.james.common.utils.exts.getViewText
@@ -14,6 +18,7 @@ import com.lingmiao.shop.business.tools.adapter.TimeAdapter
 import com.lingmiao.shop.business.tools.bean.*
 import com.lingmiao.shop.util.initAdapter
 import kotlinx.android.synthetic.main.me_fragment_delivery_of_rider.*
+import kotlinx.android.synthetic.main.tools_include_model_time.*
 
 /**
 Create Date : 2021/3/53:40 PM
@@ -63,6 +68,18 @@ class DeliveryOfRiderFragment : BaseFragment<DeliveryOfRiderPresenter>(),
     override fun createPresenter() = DeliveryInOfRiderPresenterImpl(this)
 
     override fun initViewsAndData(rootView: View) {
+
+
+        val text1 = "按公里数（即时配送）"
+        val text2 = "按时间段（定时配送）"
+        val builder1 = SpannableStringBuilder(text1)
+        val builder2 = SpannableStringBuilder(text2)
+        val blueSpan1 = ForegroundColorSpan(Color.parseColor("#CACACA"))
+        val blueSpan2 = ForegroundColorSpan(Color.parseColor("#CACACA"))
+        builder1.setSpan(blueSpan1, 4, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        builder2.setSpan(blueSpan2, 4, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        cb_model_time_km_rider.text = builder1
+        cb_model_time_section_rider.text = builder2
 
         //无用
         initPricePart()
