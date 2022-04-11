@@ -1,6 +1,7 @@
 package com.lingmiao.shop.business.me.presenter.impl
 
 import android.content.Context
+import com.blankj.utilcode.util.SPUtils
 import com.james.common.base.BasePreImpl
 import com.james.common.netcore.networking.http.core.awaitHiResponse
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
@@ -11,6 +12,8 @@ import com.lingmiao.shop.business.me.api.MeRepository
 import com.lingmiao.shop.business.me.presenter.OperationSettingPresenter
 import com.lingmiao.shop.business.tools.api.ToolsRepository
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
+import com.lingmiao.shop.business.wallet.api.WalletConstants
+import com.lingmiao.shop.business.wallet.api.WalletRepository
 import kotlinx.coroutines.launch
 
 class OperationSettingPreImpl(val context: Context, val view: OperationSettingPresenter.View) :
@@ -90,6 +93,19 @@ class OperationSettingPreImpl(val context: Context, val view: OperationSettingPr
                 view.showToast("保存失败")
             }
             view.hideDialogLoading()
+        }
+    }
+
+
+    override fun loadRiderMoneyInfo() {
+        mCoroutine.launch {
+            val resp = WalletRepository.getRiderMoney()
+
+            handleResponse(resp) {
+                if (resp.isSuccess) {
+                    view.loadRiderMoneySuccess(resp.data?.data?.riderDepositAccountVO)
+                }
+            }
         }
     }
 }

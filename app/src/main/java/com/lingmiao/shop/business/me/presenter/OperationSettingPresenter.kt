@@ -5,6 +5,7 @@ import com.james.common.base.BaseView
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
+import com.lingmiao.shop.business.wallet.bean.AccountVo
 
 interface OperationSettingPresenter : BasePresenter {
 
@@ -17,6 +18,9 @@ interface OperationSettingPresenter : BasePresenter {
     fun setSetting(data: ApplyShopInfo)
 
     fun loadTemplate()
+
+    fun loadRiderMoneyInfo()
+
 
     //到店自提
     fun takeSelf(type: Int)
@@ -34,5 +38,8 @@ interface OperationSettingPresenter : BasePresenter {
         fun setTakeSelfFailed()
 
         fun onSetSetting()
+
+        fun loadRiderMoneySuccess(info: AccountVo?)
+
     }
 }

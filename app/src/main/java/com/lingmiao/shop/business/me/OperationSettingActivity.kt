@@ -21,8 +21,10 @@ import com.lingmiao.shop.business.me.presenter.impl.OperationSettingPreImpl
 import com.lingmiao.shop.business.tools.bean.FreightVoItem
 import com.lingmiao.shop.business.tools.bean.TimeSettingVo
 import com.lingmiao.shop.business.wallet.MyWalletActivity
+import com.lingmiao.shop.business.wallet.bean.AccountVo
 import com.lingmiao.shop.databinding.ActivityOperationSettingBinding
 import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
+import kotlinx.android.synthetic.main.wallet_activity_my_wallet.*
 
 class OperationSettingActivity :
     BaseVBActivity<ActivityOperationSettingBinding, OperationSettingPresenter>(),
@@ -46,6 +48,9 @@ class OperationSettingActivity :
     //取货方式可见行
     private val quhuofanshiVisibility: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
+    //骑手备付金
+    private var riderPrice: Double? = null
+
     override fun useLightMode() = false
 
     override fun createPresenter() = OperationSettingPreImpl(this, this)
@@ -58,6 +63,11 @@ class OperationSettingActivity :
 
         //加载数据
         mPresenter?.loadShopInfo()
+
+
+        //加载骑手备付金余额
+        mPresenter?.loadRiderMoneyInfo()
+
 
     }
 
@@ -292,16 +302,17 @@ class OperationSettingActivity :
                     showToast("请先设置骑手配送模板")
                 }
                 //提示充钱
-                DialogUtils.showDialog(
-                    this,
-                    "提示",
-                    "需要充足的骑手费用扣款才能接单(可在配送费代扣金中充值)",
-                    "确认",
-                    "去充值",
-                    {},
-                    {
-                        ActivityUtils.startActivity(MyWalletActivity::class.java)
-                    })
+                if (riderPrice == null || riderPrice ?: 0.0 < 10.0)
+                    DialogUtils.showDialog(
+                        this,
+                        "提示",
+                        "需要充足的骑手费用扣款才能接单(可在配送费代扣金中充值)",
+                        "确认",
+                        "去充值",
+                        {},
+                        {
+                            ActivityUtils.startActivity(MyWalletActivity::class.java)
+                        })
             }
         }
         mBinding.tvShopStatus.singleClick {
@@ -415,5 +426,9 @@ class OperationSettingActivity :
     override fun onSetSetting() {
         UserManager.setAutoPrint(mBinding.dayingyes.isChecked)
 
+    }
+
+    override fun loadRiderMoneySuccess(info: AccountVo?) {
+        riderPrice = info?.balanceAmount
     }
 }
