@@ -43,7 +43,7 @@ class ShopQRCodeActivity : BaseVBActivity<ActivityViewpagerBinding, BasePreImpl>
                 mToolBarDelegate?.setMidTitle("扫码立牌")
             }
             1 -> {
-
+                mToolBarDelegate?.setMidTitle("扫码广告")
             }
             2 -> {
 

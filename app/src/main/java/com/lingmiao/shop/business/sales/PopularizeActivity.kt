@@ -43,7 +43,18 @@ class PopularizeActivity : BaseVBActivity<ActivityPopularizeBinding, PopularizeP
         }
 
         mBinding.container2.singleClick {
-
+            if (isAudited()) {
+                //ShopStatusConstants.FINAL_OPEN
+                val context = ActivityUtils.getTopActivity()
+                val intent = Intent(context, ShopQRCodeActivity::class.java)
+                intent.putExtra("SHOP_ID", my?.shopId)
+                intent.putExtra("QRCODE_TYPE",1)
+                context.startActivity(intent)
+            } else if (UserManager.getLoginInfo()?.shopStatus == ShopStatusConstants.OVERDUE) {
+                showToast(UserManager.getLoginInfo()?.statusReason)
+            } else {
+                showToast("店铺审核中，审核通过后即可查看二维码")
+            }
         }
 
         mBinding.container3.singleClick {
