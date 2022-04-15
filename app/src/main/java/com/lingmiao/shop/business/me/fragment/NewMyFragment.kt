@@ -1,12 +1,12 @@
 package com.lingmiao.shop.business.me.fragment
 
+import android.content.ComponentName
 import android.content.Intent
+import android.net.Uri
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import com.blankj.utilcode.util.ActivityUtils
 import com.james.common.base.BaseFragment
-import com.james.common.utils.exts.getViewText
 import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
@@ -81,6 +81,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         tvApplyShopInfo.setOnClickListener(this)
 //        rlMySetting.setOnClickListener(this)
         tvShopInfo.setOnClickListener(this)
+        tvWeChatPublic.setOnClickListener(this)
         mPresenter?.onCreate()
 
         refreshData()
@@ -117,6 +118,12 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                     }
                 } else {
                     showToast("店铺审核中，审核通过后即可店铺分享");
+                }
+            }
+            R.id.tvWeChatPublic -> {
+                val uri = Uri.parse("weixin://")
+                Intent(Intent.ACTION_VIEW, uri).apply {
+                    requireActivity().startActivity(this)
                 }
             }
             R.id.tvWeChatApprove -> {

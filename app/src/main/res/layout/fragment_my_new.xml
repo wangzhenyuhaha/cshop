@@ -455,6 +455,14 @@
                 <View style="@style/DivideLineHorizontal" />
 
                 <TextView
+                    android:id="@+id/tvWeChatPublic"
+                    style="@style/my_part_item"
+                    android:drawableStart="@mipmap/ic_wechat_public"
+                    android:text="C店公众号" />
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <TextView
                     android:id="@+id/tvManagerSetting"
                     style="@style/my_part_item"
                     android:drawableStart="@mipmap/my_setting"
