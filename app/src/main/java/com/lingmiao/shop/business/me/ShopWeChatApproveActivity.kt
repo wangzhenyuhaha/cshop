@@ -39,27 +39,27 @@ class ShopWeChatApproveActivity :
     override fun useBaseLayout() = true
 
 
-    override fun onBackPressed() {
-
-        if (ShopStatusConstants.isFinalOpen(UserManager.getLoginInfo()?.shopStatus)) {
-            super.onBackPressed()
-        } else {
-            DialogUtils.showDialog(context!!, "商户认证", "认证成功后才能正常结算，确认微信商户认证成功？",
-                "取消", "确认已认证", {
-                    super.onBackPressed()
-                }, {
-                    mPresenter?.approve()
-                    super.onBackPressed()
-                })
-        }
-    }
+//    override fun onBackPressed() {
+//
+//        if (ShopStatusConstants.isFinalOpen(UserManager.getLoginInfo()?.shopStatus)) {
+//            super.onBackPressed()
+//        } else {
+//            DialogUtils.showDialog(context!!, "商户认证", "认证成功后才能正常结算，确认微信商户认证成功？",
+//                "取消", "确认已认证", {
+//                    super.onBackPressed()
+//                }, {
+//                    mPresenter?.approve()
+//                    super.onBackPressed()
+//                })
+//        }
+//    }
 
     override fun initView() {
         mToolBarDelegate?.setMidTitle("微信认证")
         if (ShopStatusConstants.isFinalOpen(UserManager.getLoginInfo()?.shopStatus)) {
             warningLayout.gone()
         } else {
-            warningLayout.visiable()
+            warningLayout.gone()
         }
         //长按图片下载
         mBinding.ivQRCode.setOnLongClickListener {
