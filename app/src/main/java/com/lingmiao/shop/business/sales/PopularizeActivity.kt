@@ -62,7 +62,13 @@ class PopularizeActivity : BaseVBActivity<ActivityPopularizeBinding, PopularizeP
         }
 
         mBinding.container4.singleClick {
-
+            if (isAudited()) {
+                my?.shopId?.apply {
+                    mPresenter?.getShareInfo(this)
+                }
+            } else {
+                showToast("店铺审核中，审核通过后即可店铺分享");
+            }
         }
 
 

@@ -7,6 +7,7 @@ import com.lingmiao.shop.business.me.bean.My
 interface PopularizePre : BasePresenter {
 
     fun getMyData()
+    fun getShareInfo(shopId : Int)
 
     interface View : BaseView {
         fun onMyDataSuccess(bean: My)
