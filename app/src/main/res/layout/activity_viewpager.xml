@@ -9,7 +9,7 @@
 
     <include layout="@layout/include_view" />
 
-    <include layout="@layout/include_tab" />
+
 
     <View
         android:layout_width="match_parent"

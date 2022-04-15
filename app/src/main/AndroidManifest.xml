@@ -39,6 +39,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="LockedOrientationActivity">
         <activity
+            android:name=".business.sales.PopularizeActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".business.wallet.MoneyForRiderActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -423,7 +423,7 @@
                             <TextView
                                 android:id="@+id/tvCategoryManager"
                                 style="@style/main_tools"
-                                android:drawableTop="@mipmap/main_ic_goods_group"
+                                android:drawableTop="@mipmap/main_ic_goods_category"
                                 android:text="分类管理" />
 
                         </LinearLayout>
@@ -529,8 +529,31 @@
                                 android:text="扫码上架" />
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/testNewFra"
+                                android:id="@+id/tvPopularize"
                                 style="@style/main_tools"
+                                android:drawableTop="@mipmap/ic_popularize"
+                                android:text="店铺推广" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            style="@style/main_tool_layout"
+                            android:layout_marginTop="0dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/main_tools"
+                                android:drawableTop="@drawable/ic_more"
+                                android:text="敬请期待..." />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/main_tools"
+                                android:visibility="invisible"
+                                android:drawableTop="@drawable/ic_more"
+                                android:text="敬请期待..." />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/main_tools"
+                                android:visibility="invisible"
                                 android:drawableTop="@drawable/ic_more"
                                 android:text="敬请期待..." />
 

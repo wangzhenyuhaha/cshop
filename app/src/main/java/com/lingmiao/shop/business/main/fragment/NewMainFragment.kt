@@ -508,7 +508,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 //             ActivityUtils.startActivity(GoodsPublishActivity::class.java)
 //             GoodsPublishActivity.openActivity(context!!, "");
         }
-        testNewFra.setOnClickListener {
+        tvPopularize.setOnClickListener {
+            ActivityUtils.startActivity(PopularizeActivity::class.java)
         }
         // 营销设置
         tvSaleSetting.setOnClickListener {

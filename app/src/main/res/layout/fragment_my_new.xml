@@ -352,6 +352,8 @@
                 android:layout_marginTop="@dimen/dimen_15"
                 android:layout_marginRight="15dp"
                 android:gravity="center"
+                android:visibility="gone"
+                tools:visibility="visible"
                 android:orientation="vertical"
                 app:ivBgColor="#fff"
                 app:ivRadius="4dp">

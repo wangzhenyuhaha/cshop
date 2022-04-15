@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/common_bg"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,ContentDescription">
+
+    <include layout="@layout/include_toolbar" />
+
+    <include layout="@layout/include_view" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/firstMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.james.common.view.ILinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
+
+                        <TextView
+                            android:id="@+id/container1_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="扫码立牌"
+                            android:textColor="@color/color_333333"
+                            app:layout_constraintBottom_toBottomOf="@+id/container1"
+                            app:layout_constraintEnd_toEndOf="@+id/container1"
+                            app:layout_constraintStart_toStartOf="@+id/container1"
+                            app:layout_constraintTop_toTopOf="@+id/container1" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+                <com.james.common.view.ILinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container2"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
+
+                        <TextView
+                            android:id="@+id/container2_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="扫码广告"
+                            android:textColor="@color/color_333333"
+                            app:layout_constraintBottom_toBottomOf="@+id/container2"
+                            app:layout_constraintEnd_toEndOf="@+id/container2"
+                            app:layout_constraintStart_toStartOf="@+id/container2"
+                            app:layout_constraintTop_toTopOf="@+id/container2" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+                <com.james.common.view.ILinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container3"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
+
+                        <TextView
+                            android:id="@+id/container3_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="扫码二维码"
+                            android:textColor="@color/color_333333"
+                            app:layout_constraintBottom_toBottomOf="@+id/container3"
+                            app:layout_constraintEnd_toEndOf="@+id/container3"
+                            app:layout_constraintStart_toStartOf="@+id/container3"
+                            app:layout_constraintTop_toTopOf="@+id/container3" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+                <com.james.common.view.ILinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container4"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
+
+                        <TextView
+                            android:id="@+id/container4_TV1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="店铺分享(分享到微信个人、微信群)"
+                            android:textColor="@color/color_333333"
+                            app:layout_constraintBottom_toBottomOf="@+id/container4"
+                            app:layout_constraintEnd_toEndOf="@+id/container4"
+                            app:layout_constraintStart_toStartOf="@+id/container4"
+                            app:layout_constraintTop_toTopOf="@+id/container4" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include layout="@layout/include_empty" />
+
+    </FrameLayout>
+
+</LinearLayout>
