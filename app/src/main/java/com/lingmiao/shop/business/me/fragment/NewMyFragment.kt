@@ -21,6 +21,7 @@ import com.lingmiao.shop.business.me.bean.My
 import com.lingmiao.shop.business.me.bean.PersonInfoRequest
 import com.lingmiao.shop.business.me.presenter.MyPresenter
 import com.lingmiao.shop.business.me.presenter.impl.MyPreImpl
+import com.lingmiao.shop.business.sales.WechatPublicActivity
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.lingmiao.shop.business.wallet.bean.AccountVo
 import com.lingmiao.shop.business.wallet.bean.WalletVo
@@ -121,10 +122,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
                 }
             }
             R.id.tvWeChatPublic -> {
-                val uri = Uri.parse("weixin://")
-                Intent(Intent.ACTION_VIEW, uri).apply {
-                    requireActivity().startActivity(this)
-                }
+                ActivityUtils.startActivity(requireActivity(), WechatPublicActivity::class.java)
             }
             R.id.tvWeChatApprove -> {
 
