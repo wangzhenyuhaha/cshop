@@ -10,12 +10,12 @@
 
     <!--    头部-->
     <LinearLayout
-        tools:visibility="gone"
         android:id="@+id/llHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:visibility="gone">
 
         <!--        第一条，有头像-->
         <RelativeLayout
@@ -409,6 +409,12 @@
                             android:layout_marginTop="0dp">
 
                             <TextView
+                                android:id="@+id/tvPopularize"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/ic_popularize"
+                                android:text="店铺推广" />
+
+                            <TextView
                                 android:id="@+id/tvManagerSetting"
                                 style="@style/main_tools"
                                 android:drawableTop="@mipmap/main_ic_shop_manager"
@@ -420,12 +426,6 @@
                                 android:drawableTop="@mipmap/main_ic_goods_group"
                                 android:text="商品管理" />
 
-                            <TextView
-                                android:id="@+id/tvCategoryManager"
-                                style="@style/main_tools"
-                                android:drawableTop="@mipmap/main_ic_goods_category"
-                                android:text="分类管理" />
-
                         </LinearLayout>
                         <!--第一行end-->
 
@@ -433,6 +433,12 @@
                         <LinearLayout
                             style="@style/main_tool_layout"
                             android:layout_marginTop="0dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvCategoryManager"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_goods_category"
+                                android:text="分类管理" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvMenuManager"
@@ -445,6 +451,14 @@
                                 style="@style/main_tools"
                                 android:drawableTop="@mipmap/main_ic_tuan_register"
                                 android:text="营销设置" />
+
+                        </LinearLayout>
+                        <!--第二行end-->
+
+                        <!--第3行start-->
+                        <LinearLayout
+                            style="@style/main_tool_layout"
+                            android:layout_marginTop="0dp">
 
                             <FrameLayout
                                 android:layout_width="0dp"
@@ -480,14 +494,6 @@
 
                             </FrameLayout>
 
-                        </LinearLayout>
-                        <!--第二行end-->
-
-                        <!--第3行start-->
-                        <LinearLayout
-                            style="@style/main_tool_layout"
-                            android:layout_marginTop="0dp">
-
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvUserManager"
                                 style="@style/main_tools"
@@ -501,11 +507,6 @@
                                 android:drawableTop="@mipmap/main_ic_comming_soon"
                                 android:text="数据统计" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvWalletAccount"
-                                style="@style/main_tools"
-                                android:drawableTop="@mipmap/main_ic_wallet_account"
-                                android:text="钱包账户" />
 
                         </LinearLayout>
                         <!--第3行end-->
@@ -514,6 +515,12 @@
                         <LinearLayout
                             style="@style/main_tool_layout"
                             android:layout_marginTop="0dp">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvWalletAccount"
+                                style="@style/main_tools"
+                                android:drawableTop="@mipmap/main_ic_wallet_account"
+                                android:text="钱包账户" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/tvHelpDoc"
@@ -528,12 +535,6 @@
                                 android:drawableTop="@mipmap/ic_scan"
                                 android:text="扫码上架" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvPopularize"
-                                style="@style/main_tools"
-                                android:drawableTop="@mipmap/ic_popularize"
-                                android:text="店铺推广" />
-
                         </LinearLayout>
 
                         <LinearLayout
@@ -547,15 +548,15 @@
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/main_tools"
-                                android:visibility="invisible"
                                 android:drawableTop="@drawable/ic_more"
-                                android:text="敬请期待..." />
+                                android:text="敬请期待..."
+                                android:visibility="invisible" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 style="@style/main_tools"
-                                android:visibility="invisible"
                                 android:drawableTop="@drawable/ic_more"
-                                android:text="敬请期待..." />
+                                android:text="敬请期待..."
+                                android:visibility="invisible" />
 
                         </LinearLayout>
                         <!--第4行end-->
