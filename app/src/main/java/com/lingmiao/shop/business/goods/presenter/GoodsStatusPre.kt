@@ -13,7 +13,16 @@ import com.lingmiao.shop.business.goods.api.bean.GoodsVO
  */
 interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
 
-    fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, list: List<*>,order:String?,isDesc:Int?)
+    fun loadListData(
+        page: IPage,
+        groupPath: String?,
+        catePath: String?,
+        isEvent: Int?,
+        list: List<*>,
+        order: String?,
+        isDesc: Int?,
+        pageNumber :Int?
+    )
 
     fun clickMenuView(item: GoodsVO?, position: Int, view: View)
 
@@ -25,6 +34,7 @@ interface GoodsStatusPre : BasePresenter, GoodsBatchPre {
         fun onGoodsQuantity(quantity: String?, position: Int)
         fun onGoodsDelete(goodsId: String?, position: Int)
         fun onSetTotalCount(count: Int?)
+        fun setNowPosition(position: Int)
     }
 
 }

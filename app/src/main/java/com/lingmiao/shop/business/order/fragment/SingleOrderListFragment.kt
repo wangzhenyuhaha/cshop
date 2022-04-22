@@ -582,9 +582,4 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        mLoadMoreDelegate?.refresh()
-    }
-
 }

@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.goods.fragment
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.RadioGroup
@@ -11,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.james.common.base.loadmore.BaseLoadMoreFragment
 import com.james.common.base.loadmore.core.IPage
@@ -31,6 +33,7 @@ import com.lingmiao.shop.widget.EmptyView
 import kotlinx.android.synthetic.main.fragment_shop_info.*
 import kotlinx.android.synthetic.main.goods_activity_spec_setting.view.*
 import kotlinx.android.synthetic.main.goods_fragment_goods_list.*
+import kotlinx.coroutines.launch
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -54,6 +57,12 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
             }
         }
     }
+
+    //现在正在使用的Item
+    private var position: Int = 0
+
+    //是否前往目标Item
+    private var toPosition: Boolean = false
 
     //当前加载商品的种类
     private var goodsStatus: Int? = null
@@ -431,18 +440,40 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         list?.forEachIndexed { _, goodsVO ->
             goodsVO.isChecked = cb_goods_list_check_all.isChecked
         }
+        toPosition =false
+    }
+
+    override fun setNowPosition(position: Int) {
+        this.position = position
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(
-            page,
-            groupPath,
-            catePath,
-            isSales,
-            mAdapter.data,
-            orderColumn,
-            isDESC
-        )
+        if (toPosition) {
+            //计算出要滚动的页数
+            val temp: Int = position / 10
+            mPresenter?.loadListData(
+                page,
+                groupPath,
+                catePath,
+                isSales,
+                mAdapter.data,
+                orderColumn,
+                isDESC,
+                10 * (temp + 1)
+            )
+        } else {
+            mPresenter?.loadListData(
+                page,
+                groupPath,
+                catePath,
+                isSales,
+                mAdapter.data,
+                orderColumn,
+                isDESC,
+                null
+            )
+        }
+
     }
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {
@@ -490,7 +521,13 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onRefreshEvent(event: RefreshGoodsStatusEvent) {
         if (event.isRefresh(goodsStatus)) {
-            mLoadMoreDelegate?.refresh()
+            if (event.type == 1) {
+                //需要滚到之前的位置
+                rollingToPosition()
+            } else {
+                mLoadMoreDelegate?.refresh()
+            }
+
         }
     }
 
@@ -501,9 +538,9 @@ class GoodsStatusNewFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
         }
     }
 
-
-    override fun onResume() {
-        super.onResume()
+    //该方法使列表滚到适合的位置
+    private fun rollingToPosition() {
+        toPosition = true
         mLoadMoreDelegate?.refresh()
     }
 }

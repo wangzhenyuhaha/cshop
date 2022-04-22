@@ -156,7 +156,7 @@ class GoodsStatusFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, "", "", 0, mAdapter.data,null,null)
+        mPresenter?.loadListData(page, "", "", 0, mAdapter.data,null,null,null)
     }
 
     override fun onGoodsEnable(goodsId: String?, position: Int) {
@@ -176,6 +176,10 @@ class GoodsStatusFragment : BaseLoadMoreFragment<GoodsVO, GoodsStatusPre>(),
     }
 
     override fun onSetTotalCount(count: Int?) {
+
+    }
+
+    override fun setNowPosition(position: Int) {
 
     }
 

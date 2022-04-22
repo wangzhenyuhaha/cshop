@@ -517,7 +517,7 @@ class GoodsPublishPreNewImpl(var context: Context, val view: GoodsPublishNewPre.
             view.hideDialogLoading()
             if (resp.isSuccess) {
                 view.showToast("商品修改成功")
-                EventBus.getDefault().post(RefreshGoodsStatusEvent())
+                EventBus.getDefault().post(RefreshGoodsStatusEvent(type = 1))
                 view.finish()
             } else {
                 handleErrorMsg(resp.msg)

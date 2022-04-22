@@ -33,7 +33,7 @@ Desc        :
 class GoodsListActivity : BaseActivity<GoodsTabNumberPre>(), GoodsTabNumberPre.View,
     ViewPager.OnPageChangeListener {
 
-    companion object {
+    companion  object {
 
         const val GOODS_STATUS_ALL = 1
 

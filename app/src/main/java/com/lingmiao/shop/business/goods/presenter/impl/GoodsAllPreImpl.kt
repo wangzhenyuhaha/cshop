@@ -23,16 +23,16 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
 
     private val menuPopPre: GoodsMenuPreImpl by lazy { GoodsMenuPreImpl(context, view) }
 
-    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>,order:String?,isDesc:Int?) {
+    override fun loadListData(page: IPage, groupPath : String?, catePath: String?, isEvent : Int?, datas: List<*>,order:String?,isDesc:Int?,pageNumber:Int?) {
         mCoroutine.launch {
             if (datas.isEmpty()) {
                 view.showPageLoading()
             }
             val resp =
-                GoodsRepository.loadAllGoodsList(page.getPageIndex(), groupPath, catePath, isEvent,order,isDesc)
+                GoodsRepository.loadAllGoodsList(page.getPageIndex(), groupPath, catePath, isEvent,order,isDesc,pageNumber)
             if (resp.isSuccess) {
                 val goodsList = resp.data.data
-                view.onSetTotalCount(resp.data.dataTotal);
+                view.onSetTotalCount(resp.data.dataTotal)
                 //EventBus.getDefault().post(GoodsNumberEvent(GoodsNewFragment.GOODS_STATUS_ALL,resp.data.dataTotal));
                 view.onLoadMoreSuccess(goodsList, goodsList.isNotEmpty())
             } else {
@@ -55,6 +55,7 @@ class GoodsAllPreImpl(override var context: Context, override var view: GoodsSta
                     }
                 }
                 GoodsMenuPop.TYPE_EDIT -> {
+                    view.setNowPosition(position)
                     menuPopPre.clickEditGoods(context, goodsVO)
                 }
                 GoodsMenuPop.TYPE_ENABLE -> {
