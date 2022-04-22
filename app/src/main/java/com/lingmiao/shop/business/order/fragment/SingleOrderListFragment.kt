@@ -3,6 +3,7 @@ package com.lingmiao.shop.business.order.fragment
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -61,6 +62,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     var pvCustomTime2: TimePickerView? = null
     var mStart: Long? = null
     var mEnd: Long? = null
+
+    private var resetOne: Int = 0
 
     companion object {
 
@@ -135,10 +138,19 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
         //备货中等状态重置
         orderStatusResetTv.singleClick {
-            rgEnable.clearCheck()
+            showDialogLoading()
             mCStatus = null
+            rgEnable.clearCheck()
             orderStatusTv.text = ""
-            mLoadMoreDelegate?.refresh()
+            //未知BUG，refresh()无效,再次对orderStatusResetTv点击
+            if (resetOne < 1) {
+                clickAgain()
+            } else {
+                resetOne--
+                hideDialogLoading()
+                mLoadMoreDelegate?.refresh()
+            }
+
         }
 
         //选择备货中等状态
@@ -204,6 +216,16 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         rbComplete = headView.findViewById(R.id.rbComplete)
         rbCancel = headView.findViewById(R.id.rbCancel)
 
+    }
+
+    private fun clickAgain() {
+        lifecycleScope.launch(Dispatchers.Main)
+        {
+            // network  bu  zhao
+            delay(800)
+            resetOne++
+            orderStatusResetTv.performClick()
+        }
     }
 
     private fun initDate() {
@@ -461,7 +483,27 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     }
 
     override fun executePageRequest(page: IPage) {
-        mPresenter?.loadListData(page, mCStatus ?: orderType!!, mStart, mEnd, mAdapter.data)
+        //分情况
+        //
+        when (orderType) {
+            "WAIT_ACCEPT" -> {
+                mPresenter?.loadListData(page, "WAIT_ACCEPT", null, null, mAdapter.data)
+            }
+            "PROCESSING" -> {
+                mPresenter?.loadListData(page, mCStatus ?: orderType!!, null, null, mAdapter.data)
+            }
+            else -> {
+                mPresenter?.loadListData(page, mCStatus ?: orderType!!, mStart, mEnd, mAdapter.data)
+            }
+        }
+        //
+        //REFUND
+        //COMPLETE
+        //ALL
+        Log.d("WZYDDDD", mCStatus ?: orderType!!.toString())
+        Log.d("WZYDDDD", mStart.toString())
+        Log.d("WZYDDDD", mEnd.toString())
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
