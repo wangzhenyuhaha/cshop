@@ -60,32 +60,25 @@ class WechatPublicActivity : BaseVBActivity<ActivityWechatPublicBinding, WechatP
 
         //分享二维码
         pop.setShareListener {
-//            downloadImage { result ->
-//                SnackbarUtils.with(ivQRCode)
-//                    .setDuration(SnackbarUtils.LENGTH_LONG)
-//                    .apply {
-//                        if (result?.exists() == true) {
-//                            val api = WXAPIFactory.createWXAPI(
-//                                this@WechatPublicActivity,
-//                                IWXConstant.APP_ID
-//                            )
-//                            val share = WxShare(this@WechatPublicActivity, api)
-//                            share.shareToFriend()
-//                            share.shareFile(result.path)
-//                            pop.dismiss()
-//                        } else {
-//                            setMessage("分享失败.").showError(true)
-//                            pop.dismiss()
-//                        }
-//                    }
-//            }
-            val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
-            val req = WXLaunchMiniProgram.Req()
-            req.userName = IWXConstant.APP_ORIGINAL_ID
-            req.path = "pages/cshop-follow/cshop-follow"
-            req.miniprogramType =
-                if (IConstant.official) WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE else WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW
-            api.sendReq(req)
+            downloadImage { result ->
+                SnackbarUtils.with(ivQRCode)
+                    .setDuration(SnackbarUtils.LENGTH_LONG)
+                    .apply {
+                        if (result?.exists() == true) {
+                            val api = WXAPIFactory.createWXAPI(
+                                this@WechatPublicActivity,
+                                IWXConstant.APP_ID
+                            )
+                            val share = WxShare(this@WechatPublicActivity, api)
+                            share.shareToFriend()
+                            share.shareFile(result.path)
+                            pop.dismiss()
+                        } else {
+                            setMessage("分享失败.").showError(true)
+                            pop.dismiss()
+                        }
+                    }
+            }
         }
 
         //打开相册
@@ -103,6 +96,9 @@ class WechatPublicActivity : BaseVBActivity<ActivityWechatPublicBinding, WechatP
             pop.showPopupWindow()
         }
 
+        mBinding.toPublic.singleClick {
+            openPublic()
+        }
 
     }
 
@@ -140,6 +136,17 @@ class WechatPublicActivity : BaseVBActivity<ActivityWechatPublicBinding, WechatP
                 arrayOf("image/jpeg"),
                 { path, uri -> })
         }
+    }
+
+    //打开我微信小程序
+    private fun openPublic() {
+        val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
+        val req = WXLaunchMiniProgram.Req()
+        req.userName = IWXConstant.APP_ORIGINAL_ID
+        req.path = "pages/cshop-follow/cshop-follow"
+        req.miniprogramType =
+            if (IConstant.official) WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE else WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW
+        api.sendReq(req)
     }
 
 

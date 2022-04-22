@@ -32,17 +32,25 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent" />
 
-            <TextView
-                android:id="@+id/textViewTitle"
+            <com.james.common.view.ITextView
+                android:id="@+id/toPublic"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:layout_height="38dp"
+                android:layout_gravity="bottom"
+                android:layout_marginStart="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:layout_marginEnd="@dimen/dimen_15"
+                android:layout_marginBottom="11dp"
                 android:gravity="center"
-                android:textColor="@color/primary"
-                android:text="C店公众号（长按保存二维码或在微信中关注公众号）"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="关注C店+公众号"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_goneMarginBottom="@dimen/dimen_30"
+                android:textColor="#fff"
+                android:textSize="13sp"
+                app:ivBgColor="#207AE1"
+                app:ivRadius="18dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
