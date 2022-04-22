@@ -64,6 +64,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     var mEnd: Long? = null
 
     private var resetOne: Int = 0
+    private var resetTwo: Int = 0
 
     companion object {
 
@@ -157,15 +158,12 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         rgEnable.setOnCheckedChangeListener { _, checkedId ->
             mCStatus = when (checkedId) {
                 R.id.rbTaking -> {
-                    orderStatusTv.text = "备货中"
                     "ACCEPT"
                 }
                 R.id.rbShipping -> {
-                    orderStatusTv.text = "配送中"
                     "SHIPPED"
                 }
                 R.id.rbSign -> {
-                    orderStatusTv.text = "已送达"
                     "ROG"
                 }
                 else -> {
@@ -279,19 +277,35 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             pvCustomTime2?.show()
         }
         orderResetTv.singleClick {
-            if (orderType == "COMPLETE" || orderType == "ALL") {
-                mStart = null
-                mEnd = null
-                mCStatus = null
-                orderStatusTv.text = ""
-                startOrderDateTv.text = ""
-                endOrderDateTv.text = ""
-                rbContinue?.isChecked = false
-                rbComplete?.isChecked = false
-                rbCancel?.isChecked = false
+            showDialogLoading()
+            mStart = null
+            mEnd = null
+            mCStatus = null
+            orderStatusTv.text = ""
+            startOrderDateTv.text = ""
+            endOrderDateTv.text = ""
+            rbContinue?.isChecked = false
+            rbComplete?.isChecked = false
+            rbCancel?.isChecked = false
+            if (resetTwo < 1) {
+                clickAgainTwo()
+            } else {
+                resetTwo--
+                hideDialogLoading()
                 mLoadMoreDelegate?.refresh()
             }
         }
+    }
+
+    private fun clickAgainTwo() {
+        lifecycleScope.launch(Dispatchers.Main)
+        {
+            // network  bu  zhao
+            delay(800)
+            resetTwo++
+            orderResetTv.performClick()
+        }
+
     }
 
     override fun initAdapter(): OrderListAdapter {
@@ -492,18 +506,29 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             "PROCESSING" -> {
                 mPresenter?.loadListData(page, mCStatus ?: orderType!!, null, null, mAdapter.data)
             }
+            "REFUND" -> {
+                mPresenter?.loadListData(page, "REFUND", null, null, mAdapter.data)
+            }
+            "COMPLETE" -> {
+                mPresenter?.loadListData(page, "COMPLETE", mStart, mEnd, mAdapter.data)
+            }
+            "ALL" -> {
+                var temp = "ALL"
+                if (rbContinue?.isChecked == true) {
+                    temp = "PROCESSING"
+                }
+                if (rbComplete?.isChecked == true) {
+                    temp = "COMPLETE"
+                }
+                if (rbCancel?.isChecked == true) {
+                    temp = "CANCELLED"
+                }
+                mPresenter?.loadListData(page, temp, mStart, mEnd, mAdapter.data)
+            }
             else -> {
                 mPresenter?.loadListData(page, mCStatus ?: orderType!!, mStart, mEnd, mAdapter.data)
             }
         }
-        //
-        //REFUND
-        //COMPLETE
-        //ALL
-        Log.d("WZYDDDD", mCStatus ?: orderType!!.toString())
-        Log.d("WZYDDDD", mStart.toString())
-        Log.d("WZYDDDD", mEnd.toString())
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
