@@ -16,12 +16,14 @@ import com.fox7.wx.WxShare
 import com.james.common.base.BaseVBActivity
 import com.james.common.utils.exts.singleClick
 import com.lingmiao.shop.MyApp
+import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.business.me.pop.ShopQRCodePop
 import com.lingmiao.shop.business.sales.presenter.WechatPublicPre
 import com.lingmiao.shop.business.sales.presenter.impl.WechatPublicPreImpl
 import com.lingmiao.shop.databinding.ActivityWechatPublicBinding
 import com.luck.picture.lib.config.PictureMimeType
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
 import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.me_fragment_qr_image.*
 import java.io.File
@@ -58,25 +60,32 @@ class WechatPublicActivity : BaseVBActivity<ActivityWechatPublicBinding, WechatP
 
         //分享二维码
         pop.setShareListener {
-            downloadImage { result ->
-                SnackbarUtils.with(ivQRCode)
-                    .setDuration(SnackbarUtils.LENGTH_LONG)
-                    .apply {
-                        if (result?.exists() == true) {
-                            val api = WXAPIFactory.createWXAPI(
-                                this@WechatPublicActivity,
-                                IWXConstant.APP_ID
-                            )
-                            val share = WxShare(this@WechatPublicActivity, api)
-                            share.shareToFriend()
-                            share.shareFile(result.path)
-                            pop.dismiss()
-                        } else {
-                            setMessage("分享失败.").showError(true)
-                            pop.dismiss()
-                        }
-                    }
-            }
+//            downloadImage { result ->
+//                SnackbarUtils.with(ivQRCode)
+//                    .setDuration(SnackbarUtils.LENGTH_LONG)
+//                    .apply {
+//                        if (result?.exists() == true) {
+//                            val api = WXAPIFactory.createWXAPI(
+//                                this@WechatPublicActivity,
+//                                IWXConstant.APP_ID
+//                            )
+//                            val share = WxShare(this@WechatPublicActivity, api)
+//                            share.shareToFriend()
+//                            share.shareFile(result.path)
+//                            pop.dismiss()
+//                        } else {
+//                            setMessage("分享失败.").showError(true)
+//                            pop.dismiss()
+//                        }
+//                    }
+//            }
+            val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
+            val req = WXLaunchMiniProgram.Req()
+            req.userName = IWXConstant.APP_ORIGINAL_ID
+            req.path = "pages/cshop-follow/cshop-follow"
+            req.miniprogramType =
+                if (IConstant.official) WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE else WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW
+            api.sendReq(req)
         }
 
         //打开相册

@@ -39,7 +39,7 @@
                 android:layout_marginTop="@dimen/dimen_20"
                 android:gravity="center"
                 android:textColor="@color/primary"
-                android:text="C店公众号（长按保存或分享二维码）"
+                android:text="C店公众号（长按保存二维码或在微信中关注公众号）"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
