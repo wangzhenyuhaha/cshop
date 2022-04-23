@@ -12,7 +12,8 @@ interface OrderListPresenter: BasePresenter {
         status: String,
         start: Long?,
         end: Long?,
-        data: MutableList<OrderList>
+        data: MutableList<OrderList>,
+        size:Int
     )
 
     fun deleteOrder(tradeSn: String)

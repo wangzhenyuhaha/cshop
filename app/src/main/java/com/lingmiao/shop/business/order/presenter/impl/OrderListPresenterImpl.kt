@@ -1,5 +1,6 @@
 package com.lingmiao.shop.business.order.presenter.impl
 
+import android.util.Log
 import com.blankj.utilcode.util.LogUtils
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.business.order.api.OrderRepository
@@ -21,10 +22,11 @@ class OrderListPresenterImpl(var view: OrderListPresenter.StatusView) : BasePreI
         status: String,
         start: Long?,
         end: Long?,
-        datas: MutableList<OrderList>
+        data: MutableList<OrderList>,
+        size:Int
     ) {
         mCoroutine.launch {
-            val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),IConstant.PAGE_SIZE.toString(),
+            val resp = OrderRepository.apiService.getOrderList(page.getPageIndex().toString(),size.toString(),
                 status, start, end).awaitHiResponse()
             if (resp.isSuccess) {
                 val orderList = resp.data.data

@@ -51,6 +51,7 @@ private const val STATUS = "param1"
 class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresenter>(),
     OrderListPresenter.StatusView {
 
+    private var itemPosition: Int = 0
 
     //当前页面类型，默认为ALL
     private var orderType: String? = "ALL"
@@ -312,6 +313,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         return OrderListAdapter().apply {
             setOnItemChildClickListener { adapter, view, position ->
                 val orderBean = adapter.data[position] as OrderList
+                itemPosition = position
                 when (view.id) {
                     R.id.tvPhoneUser -> {
                         OtherUtils.goToDialApp(activity, orderBean.shipMobile)
@@ -404,7 +406,7 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
             }
             setOnItemClickListener { adapter, _, position ->
                 val temp = adapter.data[position] as OrderList
-
+                itemPosition = position
                 if (temp.shippingType == IConstant.SHIP_TYPE_SELF) {
                     //自提
                     val intent =
@@ -498,19 +500,28 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
 
     override fun executePageRequest(page: IPage) {
         //分情况
-        //
+        val size1: Int = itemPosition / 10
+        val size = size1 + 1
+
         when (orderType) {
             "WAIT_ACCEPT" -> {
-                mPresenter?.loadListData(page, "WAIT_ACCEPT", null, null, mAdapter.data)
+                mPresenter?.loadListData(page, "WAIT_ACCEPT", null, null, mAdapter.data, size * 10)
             }
             "PROCESSING" -> {
-                mPresenter?.loadListData(page, mCStatus ?: orderType!!, null, null, mAdapter.data)
+                mPresenter?.loadListData(
+                    page,
+                    mCStatus ?: orderType!!,
+                    null,
+                    null,
+                    mAdapter.data,
+                    size * 10
+                )
             }
             "REFUND" -> {
-                mPresenter?.loadListData(page, "REFUND", null, null, mAdapter.data)
+                mPresenter?.loadListData(page, "REFUND", null, null, mAdapter.data, size * 10)
             }
             "COMPLETE" -> {
-                mPresenter?.loadListData(page, "COMPLETE", mStart, mEnd, mAdapter.data)
+                mPresenter?.loadListData(page, "COMPLETE", mStart, mEnd, mAdapter.data, size * 10)
             }
             "ALL" -> {
                 var temp = "ALL"
@@ -523,12 +534,24 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 if (rbCancel?.isChecked == true) {
                     temp = "CANCELLED"
                 }
-                mPresenter?.loadListData(page, temp, mStart, mEnd, mAdapter.data)
+                mPresenter?.loadListData(page, temp, mStart, mEnd, mAdapter.data, size * 10)
             }
             else -> {
-                mPresenter?.loadListData(page, mCStatus ?: orderType!!, mStart, mEnd, mAdapter.data)
+                mPresenter?.loadListData(
+                    page,
+                    mCStatus ?: orderType!!,
+                    mStart,
+                    mEnd,
+                    mAdapter.data,
+                    size * 10
+                )
             }
         }
+    }
+
+    override fun onLoadMoreSuccess(list: List<OrderList>?, hasMore: Boolean) {
+        super.onLoadMoreSuccess(list, hasMore)
+        itemPosition = 0
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
