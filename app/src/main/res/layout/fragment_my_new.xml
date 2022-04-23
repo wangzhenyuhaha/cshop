@@ -352,11 +352,11 @@
                 android:layout_marginTop="@dimen/dimen_15"
                 android:layout_marginRight="15dp"
                 android:gravity="center"
-                android:visibility="gone"
-                tools:visibility="visible"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:ivBgColor="#fff"
-                app:ivRadius="4dp">
+                app:ivRadius="4dp"
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/tvShopQRCode"
@@ -446,13 +446,16 @@
                     android:drawableStart="@mipmap/ic_apply_data"
                     android:text="进件资料" />
 
-                <View style="@style/DivideLineHorizontal" />
+                <View
+                    style="@style/DivideLineHorizontal"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvWeChatApprove"
                     style="@style/my_part_item"
                     android:drawableStart="@mipmap/ic_code_blue"
-                    android:text="微信认证" />
+                    android:text="微信认证"
+                    android:visibility="gone" />
 
                 <View style="@style/DivideLineHorizontal" />
 

@@ -40,6 +40,42 @@
                     app:ivRadius="5dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/container4"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_margin="@dimen/dimen_5"
+                        android:background="@color/common_ffffff">
+
+                        <TextView
+                            android:id="@+id/container4_TV1"
+                            style="@style/my_part_item"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableEnd="@mipmap/common_arrow_right"
+                            android:text="店铺分享(分享到微信个人、微信群)"
+                            android:textColor="@color/color_333333"
+                            app:layout_constraintBottom_toBottomOf="@+id/container4"
+                            app:layout_constraintEnd_toEndOf="@+id/container4"
+                            app:layout_constraintStart_toStartOf="@+id/container4"
+                            app:layout_constraintTop_toTopOf="@+id/container4" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.james.common.view.ILinearLayout>
+
+                <com.james.common.view.ILinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_5"
+                    android:layout_marginEnd="@dimen/dimen_10"
+                    android:layout_marginBottom="@dimen/dimen_5"
+                    android:orientation="horizontal"
+                    app:ivBgColor="@color/white"
+                    app:ivRadius="5dp">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/container1"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -134,41 +170,6 @@
 
                 </com.james.common.view.ILinearLayout>
 
-                <com.james.common.view.ILinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:layout_marginEnd="@dimen/dimen_10"
-                    android:layout_marginBottom="@dimen/dimen_5"
-                    android:orientation="horizontal"
-                    app:ivBgColor="@color/white"
-                    app:ivRadius="5dp">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/container4"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_margin="@dimen/dimen_5"
-                        android:background="@color/common_ffffff">
-
-                        <TextView
-                            android:id="@+id/container4_TV1"
-                            style="@style/my_part_item"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:drawableEnd="@mipmap/common_arrow_right"
-                            android:text="店铺分享(分享到微信个人、微信群)"
-                            android:textColor="@color/color_333333"
-                            app:layout_constraintBottom_toBottomOf="@+id/container4"
-                            app:layout_constraintEnd_toEndOf="@+id/container4"
-                            app:layout_constraintStart_toStartOf="@+id/container4"
-                            app:layout_constraintTop_toTopOf="@+id/container4" />
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.james.common.view.ILinearLayout>
 
             </LinearLayout>
 
