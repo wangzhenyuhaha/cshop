@@ -446,16 +446,13 @@
                     android:drawableStart="@mipmap/ic_apply_data"
                     android:text="进件资料" />
 
-                <View
-                    style="@style/DivideLineHorizontal"
-                    android:visibility="gone" />
+                <View style="@style/DivideLineHorizontal" />
 
                 <TextView
                     android:id="@+id/tvWeChatApprove"
                     style="@style/my_part_item"
                     android:drawableStart="@mipmap/ic_code_blue"
-                    android:text="微信认证"
-                    android:visibility="gone" />
+                    android:text="微信认证" />
 
                 <View style="@style/DivideLineHorizontal" />
 

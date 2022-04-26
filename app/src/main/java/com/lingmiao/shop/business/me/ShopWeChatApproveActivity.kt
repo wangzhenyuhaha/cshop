@@ -38,20 +38,28 @@ class ShopWeChatApproveActivity :
 
     override fun useBaseLayout() = true
 
+    private var type: Int = 0
+
 
     override fun onBackPressed() {
-
-        if (ShopStatusConstants.isFinalOpen(UserManager.getLoginInfo()?.shopStatus)) {
-            super.onBackPressed()
-        } else {
-            DialogUtils.showDialog(context!!, "商户认证", "认证成功后才能正常结算，确认微信商户认证成功？",
-                "取消", "确认已认证", {
-                    super.onBackPressed()
-                }, {
-                    mPresenter?.approve()
-                    super.onBackPressed()
-                })
+        if (type != 1) {
+            if (ShopStatusConstants.isFinalOpen(UserManager.getLoginInfo()?.shopStatus)) {
+                super.onBackPressed()
+            } else {
+                DialogUtils.showDialog(context!!, "商户认证", "认证成功后才能正常结算，确认微信商户认证成功？",
+                    "取消", "确认已认证", {
+                        super.onBackPressed()
+                    }, {
+                        mPresenter?.approve()
+                        super.onBackPressed()
+                    })
+            }
         }
+    }
+
+    override fun initBundles() {
+        super.initBundles()
+        type = intent.getIntExtra("type", 0)
     }
 
     override fun initView() {

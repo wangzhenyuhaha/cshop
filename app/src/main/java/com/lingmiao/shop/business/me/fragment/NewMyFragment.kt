@@ -128,6 +128,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
 
                 val context = ActivityUtils.getTopActivity()
                 val intent = Intent(context, ShopWeChatApproveActivity::class.java)
+                intent.putExtra("type", 1)
                 context.startActivity(intent)
             }
             R.id.tvManagerSetting,
