@@ -13,6 +13,8 @@ import com.james.common.utils.exts.gone
 import com.james.common.utils.exts.singleClick
 import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
+import com.lingmiao.shop.base.IConstant
+import com.lingmiao.shop.base.IWXConstant
 import com.lingmiao.shop.base.UserManager
 import com.lingmiao.shop.business.goods.api.bean.WorkTimeVo
 import com.lingmiao.shop.business.main.bean.ApplyShopInfo
@@ -23,6 +25,8 @@ import com.lingmiao.shop.business.tools.bean.TimeSettingVo
 import com.lingmiao.shop.business.wallet.MyWalletActivity
 import com.lingmiao.shop.business.wallet.bean.AccountVo
 import com.lingmiao.shop.databinding.ActivityOperationSettingBinding
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram
+import com.tencent.mm.opensdk.openapi.WXAPIFactory
 import kotlinx.android.synthetic.main.me_fragment_shop_operate_setting.*
 import kotlinx.android.synthetic.main.wallet_activity_my_wallet.*
 
@@ -89,6 +93,16 @@ class OperationSettingActivity :
             jiedanVisibility.value = !temp
         }
 
+        //关注微信公众号
+        mBinding.toWeChatPublic.setOnClickListener {
+            val api = WXAPIFactory.createWXAPI(context, IWXConstant.APP_ID)
+            val req = WXLaunchMiniProgram.Req()
+            req.userName = IWXConstant.APP_ORIGINAL_ID
+            req.path = "pages/cshop-follow/cshop-follow"
+            req.miniprogramType =
+                if (IConstant.official) WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE else WXLaunchMiniProgram.Req.MINIPROGRAM_TYPE_PREVIEW
+            api.sendReq(req)
+        }
 
         //监听接单设置
         mBinding.jiedanxuanze.setOnCheckedChangeListener { _, checkedId ->

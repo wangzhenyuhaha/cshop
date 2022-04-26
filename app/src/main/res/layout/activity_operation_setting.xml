@@ -236,6 +236,59 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="关注公众号可获取最新订单提醒"
+                        android:textColor="#ff333333"
+                        android:textSize="13sp" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/toWeChatPublic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_right" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:paddingStart="@dimen/dimen_60"
+                        android:paddingTop="@dimen/dimen_10"
+                        android:paddingEnd="0dp"
+                        android:paddingBottom="@dimen/dimen_10"
+                        android:src="@mipmap/me_arrow_down"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <View style="@style/DivideLineHorizontal" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/dimen_5"
+                        android:src="@mipmap/common_must_input" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="订单打印"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
