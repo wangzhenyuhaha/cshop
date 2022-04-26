@@ -7,18 +7,27 @@ import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AppCompatDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.allenliu.versionchecklib.v2.AllenVersionChecker
 import com.allenliu.versionchecklib.v2.builder.UIData
-import com.blankj.utilcode.util.*
+import com.blankj.utilcode.util.ActivityUtils
+import com.blankj.utilcode.util.SpanUtils
+import com.blankj.utilcode.util.ToastUtils
+import com.blankj.utilcode.util.Utils
 import com.james.common.base.BaseFragment
 import com.james.common.utils.DialogUtils
-import com.james.common.utils.exts.*
+import com.james.common.utils.exts.gone
+import com.james.common.utils.exts.singleClick
+import com.james.common.utils.exts.visiable
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.ShopStatusConstants
 import com.lingmiao.shop.base.UserManager
-import com.lingmiao.shop.business.goods.*
+import com.lingmiao.shop.business.goods.GoodsCategoryActivity
+import com.lingmiao.shop.business.goods.GoodsListActivity
+import com.lingmiao.shop.business.goods.GoodsScanActivity
+import com.lingmiao.shop.business.goods.MenuGoodsManagerActivity
 import com.lingmiao.shop.business.login.LoginActivity
 import com.lingmiao.shop.business.login.bean.LoginInfo
 import com.lingmiao.shop.business.main.*
@@ -26,7 +35,10 @@ import com.lingmiao.shop.business.main.bean.*
 import com.lingmiao.shop.business.main.pop.ApplyInfoPop
 import com.lingmiao.shop.business.main.presenter.MainPresenter
 import com.lingmiao.shop.business.main.presenter.impl.MainPresenterImpl
-import com.lingmiao.shop.business.me.*
+import com.lingmiao.shop.business.me.ApplyVipActivity
+import com.lingmiao.shop.business.me.HelpDocActivity
+import com.lingmiao.shop.business.me.OperationSettingActivity
+import com.lingmiao.shop.business.me.ShopWeChatApproveActivity
 import com.lingmiao.shop.business.me.bean.AccountSetting
 import com.lingmiao.shop.business.me.bean.IdentityVo
 import com.lingmiao.shop.business.me.bean.My
@@ -38,7 +50,6 @@ import com.lingmiao.shop.util.OtherUtils
 import com.lingmiao.shop.util.WebCameraUtil
 import com.lingmiao.shop.util.WebCameraUtil.CallBack
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
-import kotlinx.android.synthetic.main.fragment_bind_account.*
 import kotlinx.android.synthetic.main.fragment_new_main.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -48,6 +59,8 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
 
     // 店铺状态及信息
     private var shopStatus: ShopStatus? = null
+
+    private val model by activityViewModels<MainViewModel>()
 
     // 首页订单统计数据
     private var mainInfo: MainInfoVo? = null
@@ -567,7 +580,9 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         }
         // 已完成
         layoutTodayFinish.setOnClickListener {
-            EventBus.getDefault().post(TabChangeEvent(3, startTime = startTime, endTime = endTime))
+            //修改ViewModel中的时间
+            model.setTime(startTime, endTime,3)
+            EventBus.getDefault().post(TabChangeEvent(3))
         }
         // 失效
         layoutTodayInvalid.setOnClickListener {

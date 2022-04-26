@@ -10,6 +10,7 @@ import android.view.KeyEvent
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -45,6 +46,8 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
 
     private val fragmentList: ArrayList<Fragment> = ArrayList()
+
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

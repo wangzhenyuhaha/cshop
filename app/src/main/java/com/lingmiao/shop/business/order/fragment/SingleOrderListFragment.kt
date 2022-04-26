@@ -9,6 +9,7 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bigkoo.pickerview.view.TimePickerView
 import com.blankj.utilcode.util.ActivityUtils
@@ -24,6 +25,7 @@ import com.james.common.view.ITextView
 import com.lingmiao.shop.R
 import com.lingmiao.shop.base.IConstant
 import com.lingmiao.shop.base.UserManager
+import com.lingmiao.shop.business.main.MainViewModel
 import com.lingmiao.shop.business.main.bean.TabChangeEvent
 import com.lingmiao.shop.business.order.*
 import com.lingmiao.shop.business.order.adapter.OrderListAdapter
@@ -34,6 +36,7 @@ import com.lingmiao.shop.business.order.presenter.impl.OrderListPresenterImpl
 import com.lingmiao.shop.printer.PrinterModule
 import com.lingmiao.shop.util.*
 import com.lingmiao.shop.widget.EmptyView
+import kotlinx.android.synthetic.main.activity_goods_scan.*
 import kotlinx.android.synthetic.main.order_fragment_single_order.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -52,6 +55,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     OrderListPresenter.StatusView {
 
     private var itemPosition: Int = 0
+
+    private val model by activityViewModels<MainViewModel>()
 
     //当前页面类型，默认为ALL
     private var orderType: String? = "ALL"
@@ -215,6 +220,31 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
         rbComplete = headView.findViewById(R.id.rbComplete)
         rbCancel = headView.findViewById(R.id.rbCancel)
 
+
+        model.timeLiveData.observe(this) {
+
+            when (it.type) {
+                3 -> {
+                    //已完成
+                    if (orderType == "COMPLETE") {
+                        mStart = it.startTime
+                        mEnd = it.endTime
+                        //UI上显示
+                        startOrderDateTv.text =
+                            formatString(Date(it.startTime!! * 1000), DATE_FORMAT)
+                        endOrderDateTv.text = formatString(Date(it.endTime!! * 1000), DATE_FORMAT)
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            delay(500)
+                            mLoadMoreDelegate?.refresh()
+                        }
+                    }
+                }
+                else -> {
+
+                }
+            }
+
+        }
     }
 
     private fun clickAgain() {
