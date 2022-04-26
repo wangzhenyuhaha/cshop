@@ -71,7 +71,9 @@ class OrderListAdapter :
         //设置订单状态的颜色
         helper.setTextColor(
             R.id.tvOrderStatus,
-            MyApp.getInstance().resources.getColor(R.color.color_3870EA)
+            if (item.orderStatusText == "售后中") MyApp.getInstance().resources.getColor(R.color.color_FF0202) else MyApp.getInstance().resources.getColor(
+                R.color.color_black
+            )
         )
 
         //加购商品
