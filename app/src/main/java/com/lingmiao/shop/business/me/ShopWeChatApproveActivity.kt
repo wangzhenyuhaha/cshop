@@ -54,6 +54,8 @@ class ShopWeChatApproveActivity :
                         super.onBackPressed()
                     })
             }
+        }else{
+            super.onBackPressed()
         }
     }
 
