@@ -581,13 +581,14 @@ class NewMainFragment : BaseFragment<MainPresenter>(), MainPresenter.View {
         // 已完成
         layoutTodayFinish.setOnClickListener {
             //修改ViewModel中的时间
-            model.setTime(startTime, endTime,3)
+            model.setTime(startTime, endTime, 3)
             EventBus.getDefault().post(TabChangeEvent(3))
         }
         // 失效
         layoutTodayInvalid.setOnClickListener {
+            model.setTime(startTime, endTime, 4)
             EventBus.getDefault()
-                .post(TabChangeEvent(4, "CANCELLED", startTime = startTime, endTime = endTime))
+                .post(TabChangeEvent(4))
         }
         tvHelpDoc.setOnClickListener {
             ActivityUtils.startActivity(HelpDocActivity::class.java)

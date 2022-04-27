@@ -232,7 +232,26 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         //UI上显示
                         startOrderDateTv.text =
                             formatString(Date(it.startTime!! * 1000), MINUTES_TIME_FORMAT)
-                        endOrderDateTv.text = formatString(Date(it.endTime!! * 1000), MINUTES_TIME_FORMAT)
+                        endOrderDateTv.text =
+                            formatString(Date(it.endTime!! * 1000), MINUTES_TIME_FORMAT)
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            delay(500)
+                            mLoadMoreDelegate?.refresh()
+                        }
+                    }
+                }
+                4 -> {
+                    //失效订单
+                    if (orderType == "ALL") {
+                        mCStatus = "CANCELLED"
+                        rbCancel?.isChecked = true
+                        mStart = it.startTime
+                        mEnd = it.endTime
+                        //UI上显示
+                        startOrderDateTv.text =
+                            formatString(Date(it.startTime!! * 1000), MINUTES_TIME_FORMAT)
+                        endOrderDateTv.text =
+                            formatString(Date(it.endTime!! * 1000), MINUTES_TIME_FORMAT)
                         lifecycleScope.launch(Dispatchers.Main) {
                             delay(500)
                             mLoadMoreDelegate?.refresh()
@@ -554,17 +573,23 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                 mPresenter?.loadListData(page, "COMPLETE", mStart, mEnd, mAdapter.data, size * 10)
             }
             "ALL" -> {
-                var temp = "ALL"
                 if (rbContinue?.isChecked == true) {
-                    temp = "PROCESSING"
+                    mCStatus = "PROCESSING"
                 }
                 if (rbComplete?.isChecked == true) {
-                    temp = "COMPLETE"
+                    mCStatus = "COMPLETE"
                 }
                 if (rbCancel?.isChecked == true) {
-                    temp = "CANCELLED"
+                    mCStatus = "CANCELLED"
                 }
-                mPresenter?.loadListData(page, temp, mStart, mEnd, mAdapter.data, size * 10)
+                mPresenter?.loadListData(
+                    page,
+                    mCStatus ?: "ALL",
+                    mStart,
+                    mEnd,
+                    mAdapter.data,
+                    size * 10
+                )
             }
             else -> {
                 mPresenter?.loadListData(
@@ -596,25 +621,6 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun changeTabPosition(event: TabChangeEvent) {
         LogUtils.d("changeTabPosition:$event")
-        if ("ALL" == orderType && event.type == 4 && "CANCELLED" == event.status) {
-            mCStatus = event.status
-            rbCancel?.isChecked = true
-        }
-        if (event.startTime != null && event.endTime != null) {
-
-            startTime = event.startTime
-            endTime = event.endTime
-            if (startTime != null && endTime != null) {
-                mStart = startTime
-                mEnd = endTime
-                lifecycleScope.launch(Dispatchers.Main) {
-                    delay(500)
-                    mLoadMoreDelegate?.refresh()
-                }
-            }
-            startOrderDateTv.text = formatString(Date(event.startTime!! * 1000), DATE_FORMAT)
-            endOrderDateTv.text = formatString(Date(event.endTime!! * 1000), DATE_FORMAT)
-        }
         if (event.type == 1 && event.status == "ACCEPT") {
             //备货中
             mCStatus = "ACCEPT"
