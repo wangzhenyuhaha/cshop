@@ -267,12 +267,10 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         rbCancel?.isChecked = false
                         mCStatus = null
 
-                        mStart = it.startTime
-                        mEnd = it.endTime
-                        startOrderDateTv.text =
-                            formatString(Date(it.startTime!! * 1000), MINUTES_TIME_FORMAT)
-                        endOrderDateTv.text =
-                            formatString(Date(it.endTime!! * 1000), MINUTES_TIME_FORMAT)
+                        mStart = null
+                        mEnd = null
+                        startOrderDateTv.text = ""
+                        endOrderDateTv.text = ""
                         lifecycleScope.launch(Dispatchers.Main) {
                             delay(500)
                             mLoadMoreDelegate?.refresh()

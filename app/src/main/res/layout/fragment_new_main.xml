@@ -314,7 +314,7 @@
                                 style="@style/main_parts_hint"
                                 android:layout_weight="1"
                                 android:paddingTop="15dp"
-                                android:text="今日数据"
+                                android:text="数据统计"
                                 android:textColor="@color/white" />
 
                             <ImageView
@@ -359,7 +359,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center"
                                     android:paddingTop="@dimen/dimen_5"
-                                    android:text="销售额"
+                                    android:text="今日销售额"
                                     android:textColor="@color/white"
                                     android:textSize="14sp" />
 

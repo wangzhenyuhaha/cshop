@@ -18,7 +18,7 @@ class MainInfoVo : Serializable {
     // 今日总量
     @SerializedName("all_num")
     var allNum: Int? = 0
-    // 今日数量
+    // 今日销售额
     @SerializedName("trade_amount")
     var tradeAmount: Double? = 0.0
     // 今日用户数
