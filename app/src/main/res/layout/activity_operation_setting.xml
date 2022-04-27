@@ -231,14 +231,20 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginEnd="@dimen/dimen_5"
+                        android:visibility="invisible"
                         android:src="@mipmap/common_must_input" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="关注公众号可获取最新订单提醒"
+                        android:text="关注微信公众号可获取最新订单消息"
                         android:textColor="#ff333333"
                         android:textSize="13sp" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="点击去关注"
+                        android:textSize="11sp" />
 
                     <View
                         android:layout_width="0dp"
