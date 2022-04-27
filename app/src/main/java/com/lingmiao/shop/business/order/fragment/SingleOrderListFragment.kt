@@ -231,8 +231,8 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         mEnd = it.endTime
                         //UI上显示
                         startOrderDateTv.text =
-                            formatString(Date(it.startTime!! * 1000), DATE_FORMAT)
-                        endOrderDateTv.text = formatString(Date(it.endTime!! * 1000), DATE_FORMAT)
+                            formatString(Date(it.startTime!! * 1000), MINUTES_TIME_FORMAT)
+                        endOrderDateTv.text = formatString(Date(it.endTime!! * 1000), MINUTES_TIME_FORMAT)
                         lifecycleScope.launch(Dispatchers.Main) {
                             delay(500)
                             mLoadMoreDelegate?.refresh()
