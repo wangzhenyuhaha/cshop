@@ -258,6 +258,27 @@ class SingleOrderListFragment : BaseLoadMoreFragment<OrderList, OrderListPresent
                         }
                     }
                 }
+                5 -> {
+                    //今日订单总量
+                    if (orderType == "ALL") {
+                        orderStatusTv.text = ""
+                        rbContinue?.isChecked = false
+                        rbComplete?.isChecked = false
+                        rbCancel?.isChecked = false
+                        mCStatus = null
+
+                        mStart = it.startTime
+                        mEnd = it.endTime
+                        startOrderDateTv.text =
+                            formatString(Date(it.startTime!! * 1000), MINUTES_TIME_FORMAT)
+                        endOrderDateTv.text =
+                            formatString(Date(it.endTime!! * 1000), MINUTES_TIME_FORMAT)
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            delay(500)
+                            mLoadMoreDelegate?.refresh()
+                        }
+                    }
+                }
                 else -> {
 
                 }
