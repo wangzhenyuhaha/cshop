@@ -544,7 +544,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                         eventQuantityEdt.setText(eventQuantity)
                         goodsPriceEdt.setText(price)
                         marketPriceEdt.setText(mktprice)
-                        goodsQuantityEdt.setText(quantity)
+                        goodsQuantityEdt.setText(enableQuantity)
                         goodsCostEdt.setText(cost)
                         switchBtn.isChecked = false
                     }
@@ -561,7 +561,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
                     eventQuantityEdt.setText(eventQuantity)
                     goodsPriceEdt.setText(price)
                     marketPriceEdt.setText(mktprice)
-                    goodsQuantityEdt.setText(quantity)
+                    goodsQuantityEdt.setText(enableQuantity)
                     goodsCostEdt.setText(cost)
                     switchBtn.isChecked = false
                 }
@@ -625,7 +625,7 @@ class GoodsPublishNewActivity : BaseActivity<GoodsPublishNewPre>(), GoodsPublish
             //更新UI显示
             GlideUtils.setImageUrl(imageView, this.goodsVO.thumbnail, R.mipmap.goods_selected_img)
             goodsPriceEdt.setText(this.goodsVO.price)
-            goodsQuantityEdt.setText(this.goodsVO.quantity)
+            goodsQuantityEdt.setText(this.goodsVO.enableQuantity)
             //将分类菜单对应的值赋值给页面，不能调用方法，以免重置isFromCenter
 
             //显示分类名字

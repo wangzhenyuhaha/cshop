@@ -20,12 +20,12 @@ class MultiQuantityAndPriceAdapter :
 
         helper.setText(R.id.quantityNameTv, quantityVO.quantitiyName)
         helper.setGone(R.id.quantityNameTv, quantityVO.quantitiyName?.length?:0 > 0)
-        helper.setText(R.id.priceEdt, quantityVO.eventPrice)
-        helper.setText(R.id.quantityEdt, quantityVO.eventQuantity)
+        helper.setText(R.id.priceEdt, quantityVO.price)
+        helper.setText(R.id.quantityEdt, quantityVO.enableQuantity)
         helper.setText(R.id.event_priceEdt, quantityVO.eventPrice)
         helper.setText(R.id.event_quantityEdt, quantityVO.eventQuantity)
-        addTextChangeListener(helper.getView(R.id.quantityEdt), quantityVO.quantity) {
-            quantityVO.quantity = it
+        addTextChangeListener(helper.getView(R.id.quantityEdt), quantityVO.enableQuantity) {
+            quantityVO.enableQuantity = it
         }
         addTextChangeListener(helper.getView(R.id.priceEdt), quantityVO.price) {
             quantityVO.price = it

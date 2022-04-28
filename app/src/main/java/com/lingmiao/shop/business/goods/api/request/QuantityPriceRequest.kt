@@ -20,6 +20,9 @@ class QuantityPriceRequest {
     @SerializedName("quantity_count")
     var quantity: String? = null //库存
 
+    @SerializedName("enable_quantity")
+    var enableQuantity: String? = null //实时库存
+
     @SerializedName("event_price")
     var eventPrice: String? = null //活动价格
 
@@ -38,6 +41,7 @@ class QuantityPriceRequest {
                 quantitiyName = skuVO.skuNameDesc
                 price = skuVO.price
                 quantity = skuVO.quantity
+                enableQuantity = skuVO.enableQuantity
                 eventPrice = skuVO.eventPrice
                 eventQuantity = skuVO.eventQuantity
                 skuId = skuVO.skuId

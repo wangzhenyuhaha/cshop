@@ -230,7 +230,7 @@ class GoodsMenuPreImpl(var context: Context, var view: BaseView) : BasePreImpl(v
      */
     private fun showSingleQuantityPop(goodsId: String, skuVO: GoodsSkuVOWrapper, callback: (String) -> Unit) {
         val singleQuantityPop = GoodsQuantityPop(context)
-        singleQuantityPop.setQuantity(skuVO.quantity)
+        singleQuantityPop.setQuantity(skuVO.enableQuantity)
 
         singleQuantityPop.setConfirmListener {
             if (it.isNullOrBlank()) {

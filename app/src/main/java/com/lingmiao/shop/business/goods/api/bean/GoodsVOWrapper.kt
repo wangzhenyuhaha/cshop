@@ -40,6 +40,9 @@ class GoodsVOWrapper : Serializable {
     @SerializedName("quantity")
     var quantity: String? = null //库存
 
+    @SerializedName("enable_quantity")
+    var enableQuantity: String? = null //实时库存
+
     @SerializedName("event_price")
     var eventPrice: String? = null //活动价格
 

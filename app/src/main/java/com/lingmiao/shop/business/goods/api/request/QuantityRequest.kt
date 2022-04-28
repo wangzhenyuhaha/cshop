@@ -25,7 +25,7 @@ class QuantityRequest {
             skuVO.addSpecList(skuVO.specList)
             return QuantityRequest().apply {
                 quantitiyName = skuVO.skuNameDesc
-                quantityCount = skuVO.quantity
+                quantityCount = skuVO.enableQuantity
                 skuId = skuVO.skuId
             }
         }
