@@ -43,12 +43,20 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="15dp"
                         android:background="@xml/setbar_bg_menu_title"
-                        android:gravity="center"
+                        android:gravity="bottom|center"
                         android:text="（置顶菜单）"
                         android:textColor="@color/color_333333"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="top|center"
+                        android:text="（拖动排序）"
+                        android:background="@color/common_f9"
+                        android:textColor="@color/color_C3C3C3"
                         android:textSize="11sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -73,12 +81,20 @@
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
+                        android:layout_height="30dp"
                         android:layout_marginTop="2dp"
                         android:background="@color/common_f9"
-                        android:gravity="center"
+                        android:gravity="bottom|center"
                         android:text="（常用菜单）"
                         android:textColor="@color/color_333333"
+                        android:textSize="11sp" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:gravity="top|center"
+                        android:text="（拖动排序）"
+                        android:background="@color/common_f9"
+                        android:textColor="@color/color_C3C3C3"
                         android:textSize="11sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
