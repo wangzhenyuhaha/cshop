@@ -268,4 +268,9 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
         mPresenter?.loadWalletData()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        mPresenter?.loadWalletData()
+    }
 }

@@ -64,7 +64,7 @@ class MenuGoodsManagerActivity :
 
     override fun initView() {
 
-        mToolBarDelegate?.setMidTitle("菜单管理")
+        mToolBarDelegate?.setMidTitle("展示管理")
 
         allSecondMenu = ShopGroupVO().also {
             it.isButton = true
