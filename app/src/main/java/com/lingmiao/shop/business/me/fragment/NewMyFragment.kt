@@ -41,6 +41,7 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
 
     private var identity: IdentityVo? = null
     private var my: My? = null
+    private var times: Int = 0
 
     companion object {
         fun newInstance(): NewMyFragment {
@@ -271,6 +272,10 @@ class NewMyFragment : BaseFragment<MyPresenter>(), View.OnClickListener, MyPrese
 
     override fun onResume() {
         super.onResume()
-        mPresenter?.loadWalletData()
+        if (times == 0) {
+            times++
+        } else {
+            mPresenter?.loadWalletData()
+        }
     }
 }
