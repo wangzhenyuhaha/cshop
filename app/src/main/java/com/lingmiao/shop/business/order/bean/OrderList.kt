@@ -6,6 +6,11 @@ import java.io.Serializable
 
 data class OrderList(
 
+
+    //店铺的序号
+    @SerializedName("order_sequence")
+    var orderSequence: String? = null,
+
     //使用的电子券
     @SerializedName("order_used_ticket_list")
     var ticketList: List<ElectronicVoucher>? = null,

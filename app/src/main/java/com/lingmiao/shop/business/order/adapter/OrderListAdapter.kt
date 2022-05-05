@@ -58,6 +58,9 @@ class OrderListAdapter :
             peisongfanshi.text = "配送"
         }
 
+        //订单序号
+        helper.setText(R.id.tvOrderXuHao, item.orderSequence)
+
         //下单时间
         helper.setText(R.id.tvOrderTime, "下单时间：" + stampToDate(item.createTime))
 
