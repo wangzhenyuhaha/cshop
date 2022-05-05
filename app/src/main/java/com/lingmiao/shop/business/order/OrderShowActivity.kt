@@ -96,6 +96,11 @@ class OrderShowActivity : BaseActivity<OrderDetailPresenter>(), OrderDetailPrese
 
         //订单序号
         tvOrderXuHao.text = "# ${mItem?.orderSequence}"
+        if (mItem?.orderSequence == null) {
+            tvOrderXuHao.gone()
+        } else {
+            tvOrderXuHao.visiable()
+        }
         tvOrderSn.text = String.format("订单编号：%s", mItem?.sn)
         tvOrderStatus.text = mItem?.orderStatusText
         tvOrderTime.text = String.format("下单时间：%s", stampToDate(mItem?.createTime))
