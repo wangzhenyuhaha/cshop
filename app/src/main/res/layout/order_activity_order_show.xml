@@ -26,9 +26,20 @@
                 tools:src="@color/common_bg" />
 
             <TextView
+                android:id="@+id/tvOrderXuHao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:textColor="#ff000000"
+                android:textSize="16sp"
+                tools:text="订单序号" />
+
+            <TextView
                 android:id="@+id/tvOrderSn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tvOrderXuHao"
+                android:layout_marginTop="@dimen/dimen_10"
                 android:text="订单编号：232432134143215"
                 android:textColor="#ff000000"
                 android:textSize="13sp" />
@@ -37,6 +48,7 @@
                 android:id="@+id/tvOrderStatus"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tvOrderXuHao"
                 android:layout_alignParentEnd="true"
                 android:text="待付款"
                 android:textColor="@color/primary"
@@ -264,8 +276,7 @@
 
         </RelativeLayout>
 
-        <View
-            style="@style/DivideLineHorizontal" />
+        <View style="@style/DivideLineHorizontal" />
 
         <RelativeLayout
             android:id="@+id/ticket"
